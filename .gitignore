@@ -1,0 +1,46 @@
+# World data
+world/
+world_nether/
+world_the_end/
+*.mca
+*.mcabackup
+session.lock
+
+# Player data
+playerdata/
+advancements/
+stats/
+banned-players.json
+banned-ips.json
+usercache.json
+whitelist.json
+ops.json
+
+# Logs and crash reports
+logs/
+crash-reports/
+debug/
+
+# Server runtime files
+libraries/
+versions/
+server.jar
+fabric-server-launch.jar
+fabric-installer-*.jar
+fabric-server-launcher.properties
+eula.txt
+
+# Mod jars (track manifest instead, not binaries)
+mods/*.jar
+
+# Cobblemon runtime data
+showdown/
+cobblemonplayerdata/
+pokedex/
+pokemon/
+legendary-monuments-data/
+
+# Misc
+*.lock
+.DS_Store
+Thumbs.db

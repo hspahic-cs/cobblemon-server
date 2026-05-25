@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=east": { "model": "cobblemon_npc:block/hut_gym_leader", "y": 0 },
+    "facing=south": { "model": "cobblemon_npc:block/hut_gym_leader", "y": 90 },
+    "facing=west": { "model": "cobblemon_npc:block/hut_gym_leader", "y": 180 },
+    "facing=north": { "model": "cobblemon_npc:block/hut_gym_leader", "y": 270 }
+  }
+}

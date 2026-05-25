@@ -2,21 +2,73 @@
 
 ## Platform
 
-| Component  | Version |
-|------------|---------|
-| Minecraft  | 1.21.1  |
-| Mod Loader | Fabric  |
-| Cobblemon  | 1.7.3   |
+| Component     | Version     |
+|---------------|-------------|
+| Minecraft     | 1.21.1      |
+| Mod Loader    | NeoForge    |
+| NeoForge      | 21.1.227    |
+| Java          | 21          |
+| Cobblemon     | 1.7.3       |
 
 ## Mods
 
+Grouped by purpose. Everything below is installed on the live server unless
+marked otherwise.
+
+### Core gameplay
 | Mod | Purpose |
 |-----|---------|
 | Cobblemon | Core Pokemon mod |
-| Cobblemon: Legendary Monuments | Structure-based legendary quests (45+ legendaries) |
-| falcraft | AI-powered in-world structure generation *(build-time only, not on live server)* |
-| Impactor | Economy backbone — currency storage and API |
-| Cobblemon Economy | Pokemart NPC shop front-end |
+| Cobblemon: Legendary Monuments | Structure-based legendary quests (45+ legendaries) — runs via Sinytra Connector |
+| mega_showdown | Mega evolutions, Z-moves, Dynamax in Cobblemon battles |
+| Cobblemon Ranked | PvP Elo ladder backbone |
+| CobbleFurnies | Cobblemon-themed decoration blocks |
+| Cobblemon Integrations | Bridges Cobblemon with Waystones, JEI, Jade, Serene Seasons, Enhanced Celestials |
+| Serene Seasons | Seasonal spawns + regional form variants (Spring Espeon, Summer Glaceon, Fall Sylveon, Winter Jolteon) |
+| Enhanced Celestials | Lunar events affect shiny rates / EVs + variants (Blood Moon Umbreon, Harvest Moon Leafeon, Blue Moon Flareon) |
+| Terralith | Expanded biome set that Cobblemon already spawns Pokemon into |
+
+### NPCs and towns
+| Mod | Purpose |
+|-----|---------|
+| Minecolonies | Villager-citizen colony mechanic — provides the NPC substrate for gym leaders and generic trainers |
+| Structurize, BlockUI, MultiPiston, Domum Ornamentum | Minecolonies' required libs (building, UI, custom blocks) |
+| cobblemon-npc *(custom, in-repo)* | Gym-leader hut + job, profession-based team generation, battle handler, tier progression |
+| Waystones | Player-placed teleport network (bridged into Pokemon interactions via Cobblemon Integrations) |
+
+### World tools
+| Mod | Purpose |
+|-----|---------|
+| WorldEdit | Build tooling, schematic import/export |
+| Multiworld | Hosts separate dimensions for spawn, arenas, Elite Four |
+
+### Cross-loader bridges (only needed for Connector-wrapped Fabric mods)
+| Mod | Purpose |
+|-----|---------|
+| Sinytra Connector | Runs Fabric mods on NeoForge (specifically LegendaryMonuments) |
+| Forgified Fabric API | Neo port of Fabric API — Connector dependency |
+| accessories, owo-lib | Mega Showdown / LegendaryMonuments accessory system |
+| TerraBlender, chipped, resourcefullib | LegendaryMonuments world-gen / block deps |
+
+### Libraries
+| Mod | Purpose |
+|-----|---------|
+| Kotlin for Forge | Kotlin runtime for Cobblemon + cobblemon-npc |
+| Architectury | Cross-loader API used by several mods |
+| balm | Shared lib (Waystones) |
+| GlitchCore, CorgiLib, Data Anchor | Shared libs (Serene Seasons, Enhanced Celestials) |
+
+### Performance and ops
+| Mod | Purpose |
+|-----|---------|
+| Lithium (NeoForge) | Server-tick + chunk-ticking optimizations |
+| FerriteCore | Memory dedup for blockstates/models |
+| ModernFix | Startup + dynamic-resource + leak fixes |
+| Spark | Profiler — `/spark profiler` for diagnosing lag spikes |
+
+### Client-only (not installed on server; see `client-extras/`)
+Sodium, ImmediatelyFast, EntityCulling, Fast IP Ping, Xaero's Minimap,
+Xaero's World Map, JEI.
 
 ## Gym System
 
@@ -26,39 +78,81 @@ The server hub town. Contains:
 - A Pokemon Center
 - A Pokemart
 - **10-floor Gym Tower** — 10 permanent gym leaders, one per floor, part of normal progression
-- **3-floor Challenge Tower** — standalone gauntlet; beat all 3 floors in one run (no leaving) for $3,000 cash; all trainers are max tier (level 45); no progression credit
+- **3-floor Challenge Tower** — standalone gauntlet; beat all 3 floors in one run (no leaving) for $3,000 cash; trainers are fixed at competitive level; no progression credit
 - The Elite Four (separate map, teleport command)
 - 2 singles arenas + 1 doubles/triples arena for PvP
 - EV training area
 
-### Progression
+### Gym Leader Progression
 
-Gyms use a tiered level cap system. All gyms scale to the player's current tier — not a fixed order.
+Each gym leader has their own persistent team that grows over time. They do
+NOT scale to the challenging player — a gym leader is a character on the
+server, not a difficulty slider.
 
-| Tier | Level Cap | Requirement to Advance    |
-|------|-----------|---------------------------|
-| 1    | 15        | Beat any 3 of 10 gyms     |
-| 2    | 25        | Beat any 3 of 10 gyms     |
-| 3    | 35        | Beat any 3 of 10 gyms     |
-| 4    | 45        | Beat any 3 of 10 gyms     |
-| E4   | 50        | Beat the Elite Four       |
+#### Level caps by hut tier
 
-- Gym leaders use a team matching YOUR current level tier
-- Beating 3 gyms at your tier raises the level cap — your Pokemon can now level past it
-- ALL gym leaders advance to the new tier for you (per-player scaling)
-- Once you beat all gyms at tier 4, you challenge the Elite Four at level 50 (competitive standard)
-- Any gym rematches after E4 use a competitive level 50 team
+| Hut Tier | Team Level Cap |
+|----------|----------------|
+| 1        | 20             |
+| 2        | 40             |
+| 3        | 60             |
+| 4        | 80             |
+| 5        | 100            |
+
+- **Fresh leader:** a newly-hired gym leader starts with 3 Pokemon (their
+  theme's `startingThree`) at the hut tier's level cap.
+- **Growth:** every battle the leader *loses* grants each Pokemon on their
+  team 4–6 levels (weighted — stragglers catch up faster than flagships),
+  clamped at the current cap.
+- **Wins don't grow them.** If players keep winning, the leader stays put.
+  Growth is earned by the community beating on them.
+- **Hut upgrade:** raises the cap. Team stays at its current levels and
+  continues to grow toward the new ceiling battle by battle.
+- **Hut downgrade:** cap drops, but existing team levels are preserved
+  (one-way ratchet — demoting a hut does not nerf its leader).
+
+#### Team escalation bands (within any cap)
+
+| Team avg level | Roster                              |
+|----------------|-------------------------------------|
+| 1–15           | 3 Pokemon, no items                 |
+| 16–30          | 4 Pokemon, basic items              |
+| 31–50          | 5 Pokemon, full items               |
+| 51–65          | 6 Pokemon, full items               |
+| 66–80          | 6 Pokemon + mega stone active       |
+| 81+            | 6 Pokemon + mega + legendary slot   |
+
+New team slots are added as the leader levels into the next band, drawn from
+the theme's `maxTeam` order. Legendary slots unlock only at hut tier 5.
+
+### AI Difficulty
+
+- **Gym leaders:** always use `StrongBattleAI(skill=5)` — fully optimal, no
+  randomness in decision-making. Every gym leader battle is maximally
+  challenging regardless of team level or tier.
+- **Normal NPCs:** use `StrongBattleAI` with `skill` derived from the
+  citizen's average Minecolonies skill stats (across all 11 skills):
+
+  | Avg citizen stat | AI skill | Feel |
+  |------------------|----------|------|
+  | < 15             | 1        | Rookie — mostly random from own moveset |
+  | 15–22            | 2        | Apprentice — 40% optimal |
+  | 23–30            | 3        | Experienced — 60% optimal |
+  | 31–40            | 4        | Veteran — 80% optimal |
+  | 41+              | 5        | Master — fully optimal |
+
+  This keeps fights with normal villagers readable and scales difficulty
+  naturally with colony maturity.
 
 ### Player Flow
 
 1. Walk up to any gym leader → dialogue offers "Battle" or "Cancel"
-2. Gym leader uses a team scaled to your current tier
-3. Win the battle
-4. Talk to the gym leader again → they give gym-leader-specific rewards and mark the gym as beaten for your current tier
-5. Already beaten them this tier → friendly rematch, no reward
-6. Beat 3 gyms at your tier → tier advances, level cap raises, all gym leaders scale to new tier
+2. Gym leader uses their persistent team at its current levels
+3. Win or lose, talk to the gym leader again for one-time rewards if you've
+   never beaten them before; otherwise friendly rematch
+4. Losses grow the leader; wins leave them unchanged
 
-No gatekeeping — you can challenge any gym leader at any time. Victories only count toward tier progression if you haven't already beaten that leader at your current tier. Rewards are one-time per gym per tier and scale with tier difficulty. After claiming, you can still rematch for fun but get nothing.
+No gatekeeping — you can challenge any gym leader at any time.
 
 ### Rewards
 
@@ -91,15 +185,17 @@ Unlocked after beating the Elite Four. Each gym leader gains a level 100 battle 
 - Reward granting via `run_command` / `give_item`
 - Battle initiation via `q.npc.start_battle()`
 
-**Requires a custom Fabric mod (`cobblemon-gym`):**
-- Level cap enforcement — intercept `EXPERIENCE_GAINED_EVENT_PRE` and block XP if Pokemon would exceed current tier cap
-- Block Rare Candy and Exp Candy from pushing Pokemon past the current tier cap
-- Cash granted on gym win via Impactor Economy API (`EconomyService.deposit()`)
+**Implemented by `cobblemon-npc` (NeoForge, `custom-mods/cobblemon-npc/`):**
+- Minecolonies `JobGymLeader` + gym-leader hut block — assigns citizens as gym leaders via normal colony hiring flow
+- Per-leader persistent team state (species, levels, progression) stored as NBT attachment data
+- Tier progression driven by battle losses (see `TeamProgressionManager`); hut tier caps team level
+- AI difficulty selection: `skill=5` for gym leaders, avg-skill mapping for normal citizens
+- Cash rewards on `BATTLE_VICTORY` (CobbleDollars bridge currently disabled — rewards logged only)
 
 ### Open Questions
 
 - Pokemart stock and prices (cash amounts proposed: T1 $100 / T2 $250 / T3 $500 / T4 $1,000 / E4 $5,000)
-- Confirm ShopGUI+ (or alternative) is compatible with Fabric 1.21.1 + Impactor
+- Confirm ShopGUI+ (or alternative) is compatible with NeoForge 1.21.1 + Impactor
 - Gym leader team compositions per type per tier (reference YouTube series)
 - Elite Four team compositions
 
@@ -151,7 +247,7 @@ Cobblemon already has player-to-player challenges (singles, doubles, triples, mu
 - `BattleFormat` — singles/doubles/triples with level scaling
 - `BATTLE_VICTORY` event — winner/loser callbacks
 
-**Custom Fabric mod (`cobblemon-pvp`) adds:**
+**Custom NeoForge mod (`cobblemon-pvp`, not yet built) adds:**
 - Elo tracking per player (persistent storage)
 - Standard Elo formula (K-factor: 32)
 - `/leaderboard`, `/rankchallenge`, and `/bet` commands
@@ -168,6 +264,20 @@ Cobblemon already has player-to-player challenges (singles, doubles, triples, mu
 ### Open Questions
 
 - *(no open questions)*
+
+## Repo layout
+
+```
+cobblemon-server/
+├── custom-mods/             # mods this repo builds (CI ships them on tag)
+│   └── cobblemon-npc/
+├── modpack/                 # packwiz source for the client .mrpack
+├── client-extras/           # client-only jars not in the modpack
+├── docs/                    # design notes, install guides, upstream links
+└── mods/                    # gitignored — local clones of upstream mod
+                             # source for reference / compileOnly jars.
+                             # See docs/upstream-sources.md
+```
 
 ## Setup
 

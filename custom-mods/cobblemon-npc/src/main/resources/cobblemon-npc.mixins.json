@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.cobblemonserver.npc.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8.5",
+  "refmap": "cobblemon-npc.refmap.json",
+  "mixins": [
+    "MixinEntityCitizen"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

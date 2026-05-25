@@ -30,8 +30,16 @@ fabric-installer-*.jar
 fabric-server-launcher.properties
 eula.txt
 
-# Mod jars (track manifest instead, not binaries)
-mods/*.jar
+# Reference clones of upstream mod sources (kept locally for dev,
+# not vendored in this repo — see docs/upstream-sources.md).
+mods/
+
+# Live-server mod jars (CI builds + uploads to GitHub Releases)
+server-mods/*.jar
+
+# Modpack export artifacts (built on demand, not tracked)
+modpack/*.mrpack
+modpack/mods/*.jar
 
 # Cobblemon runtime data
 showdown/
@@ -39,6 +47,12 @@ cobblemonplayerdata/
 pokedex/
 pokemon/
 legendary-monuments-data/
+
+# Gradle build outputs (custom-mods/)
+**/.gradle/
+**/build/
+**/.kotlin/
+**/.idea/
 
 # Misc
 *.lock

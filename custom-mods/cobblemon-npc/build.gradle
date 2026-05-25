@@ -1,0 +1,125 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.78'
+    id 'org.jetbrains.kotlin.jvm' version '2.2.20'
+}
+
+version = project.mod_version
+group = project.mod_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(project.java_version.toInteger())
+}
+
+kotlin {
+    jvmToolchain(project.java_version.toInteger())
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'Kotlin For Forge'
+        url 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
+}
+
+neoForge {
+    version = project.neoforge_version
+
+    // Register the mixin config with NeoForge so mixins apply at runtime.
+    mods {
+        "${project.mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+
+    runs {
+        server {
+            server()
+            gameDirectory = file('run/server')
+            programArgument '--nogui'
+        }
+    }
+
+    parchment {
+        // Mappings for human-readable parameter names. Pin conservatively against 1.21.1.
+        minecraftVersion = '1.21.1'
+        mappingsVersion = '2024.11.17'
+    }
+}
+
+// Resolve the latest Minecolonies jar in mods/minecolonies/build/libs/ matching the configured glob.
+def minecoloniesJar = {
+    def glob = file(project.minecolonies_jar_glob as String)
+    def dir = glob.parentFile
+    def pattern = glob.name
+    if (!dir.exists()) {
+        return null
+    }
+    def prefix = pattern.substring(0, pattern.indexOf('*'))
+    def suffix = pattern.substring(pattern.indexOf('*') + 1)
+    def match = dir.listFiles().findAll { f ->
+        f.name.startsWith(prefix) && f.name.endsWith(suffix)
+    }.sort { it.lastModified() }.reverse().find { true }
+    return match
+}()
+
+dependencies {
+    implementation "thedarkcolour:kotlinforforge-neoforge:${project.kotlin_for_forge_version}"
+
+    // Cobblemon — local dev-shadow jar with named (Mojang) mappings.
+    if (file(project.cobblemon_jar as String).exists()) {
+        compileOnly files(project.cobblemon_jar as String)
+    } else {
+        logger.warn("Cobblemon jar not found at ${project.cobblemon_jar} — build will fail at compile.")
+    }
+
+    // Minecolonies — resolved glob picks the latest universal jar after `./gradlew build` in mods/minecolonies.
+    if (minecoloniesJar != null) {
+        compileOnly files(minecoloniesJar)
+    } else {
+        logger.warn("Minecolonies jar not found at ${project.minecolonies_jar_glob} — build will fail at compile. " +
+                "Run: cd ../minecolonies && ./gradlew build")
+    }
+
+    // Structurize — transitive dep of Minecolonies; supplies IAnchorBlock supertype chain on AbstractBlockHut.
+    // Pulled from the same Gradle cache populated during Minecolonies' build.
+    def ldtRoot = new File(System.getProperty('user.home'), '.gradle/caches/modules-2/files-2.1/com.ldtteam')
+    ['structurize', 'blockui', 'multipiston', 'domum-ornamentum'].each { artifact ->
+        def base = new File(ldtRoot, artifact)
+        if (base.exists()) {
+            def jar = base.listFiles()
+                    ?.collectMany { (it.listFiles() ?: []).toList() }
+                    ?.collectMany { (it.listFiles() ?: []).toList() }
+                    ?.findAll { it.name.endsWith('.jar') && !it.name.contains('sources') && !it.name.contains('javadoc') }
+                    ?.sort { it.lastModified() }
+                    ?.reverse()
+                    ?.find { true }
+            if (jar != null) {
+                compileOnly files(jar)
+            }
+        }
+    }
+}
+
+processResources {
+    def expandProps = [
+        'mod_id'           : project.mod_id,
+        'mod_version'      : project.mod_version,
+        'minecraft_version': project.minecraft_version,
+        'neoforge_version' : project.neoforge_version,
+    ]
+    inputs.properties(expandProps)
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand(expandProps)
+    }
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${archives_base_name}" }
+    }
+}

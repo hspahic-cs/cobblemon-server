@@ -1,0 +1,14 @@
+{
+  "name": "Cobblemon NPC",
+  "authors": [
+    "cobblemon-server"
+  ],
+  "desc": "Gym leader arenas for the cobblemon-npc mod.",
+  "mods": [
+    "structurize",
+    "minecolonies",
+    "cobblemon_npc"
+  ],
+  "version": "1",
+  "pack-format": "1"
+}

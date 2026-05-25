@@ -1,0 +1,433 @@
+{
+  "version": "2.0",
+  "notes": {
+    "source": "Minecolonies 1.21.1 job roster — one pool per job entry in com.minecolonies.api.colony.jobs.ModJobs. Trainee / passive jobs (placeholder, student, pupil, teacher, archertraining, combattraining) remap to the unemployed pool at load time in ProfessionPoolLoader.professionKeyToPoolId.",
+    "pokemonFormat": "Species names match pokedex.txt (no hyphens, lowercase). e.g. hooh, tapulele, farfetchd.",
+    "noLegendaries": "No legendaries or mythicals in any NPC pool. Gym leaders are a separate tier with their own pools in gym-leader-pool.json.",
+    "noMegas": "NPCs do not use mega evolution. That is a gym leader mechanic.",
+    "rewards": "Players receive a small CobbleDollar reward when they beat an NPC in battle (see RewardsConfig / EconomyBridge).",
+    "spawnPool": "All NPCs spawn with the unemployed pool regardless of their assigned profession. Profession only determines which pool future Pokemon are drawn from, not the starting team.",
+    "lossProgression": "Each loss raises every Pokemon on the NPC's team by 4–6 levels (random per Pokemon, weighted toward team average so stragglers catch up). Wins do not increase levels.",
+    "tierUnlocks": "When ALL Pokemon on the current team reach a level threshold, the next tier activates — team size grows and item access improves. See levelTiers array for thresholds. For gym leaders, tier is also capped by the hut's building level (hut level N caps team tier at N).",
+    "professionTag": "Each Pokemon on an NPC's team is tagged with the pool it was drawn from. Tags persist for the life of the Pokemon.",
+    "switchOutMechanic": "Every 3 battles (win or loss, tracked per NPC), if any Pokemon on the team is tagged from a different pool than the NPC's current profession, one mismatched Pokemon is picked at random and replaced with one from the profession pool not already on the team. No swap if all Pokemon are profession-tagged or the citizen is unemployed.",
+    "gymLeaderNote": "Gym leaders are a proper Minecolonies job (cobblemon_npc:gym_leader) backed by the hut_gym_leader building. See gym-leader-pool.json for the leader roster."
+  },
+  "levelTiers": [
+    { "tier": 1, "levelThreshold": "spawn", "teamSize": 1, "items": "none", "description": "Starting state. Single Pokemon, no items." },
+    { "tier": 2, "levelThreshold": 15, "teamSize": 2, "items": "none", "description": "All Pokemon reach level 15. Second Pokemon added, still no items." },
+    { "tier": 3, "levelThreshold": 30, "teamSize": 3, "items": "basic", "description": "All Pokemon reach level 30. Third Pokemon added. Basic held items." },
+    { "tier": 4, "levelThreshold": 45, "teamSize": 4, "items": "full", "description": "All Pokemon reach level 45. Fourth Pokemon added. Full held items." },
+    { "tier": 5, "levelThreshold": 55, "teamSize": 5, "items": "full", "description": "All Pokemon reach level 55. Fifth Pokemon added. Full held items." },
+    { "tier": 6, "levelThreshold": 65, "teamSize": 6, "items": "full", "description": "All Pokemon reach level 65. Full team of six. Soft cap for regular NPCs; gym leaders may promote further depending on hut level." }
+  ],
+  "professions": [
+    {
+      "id": "unemployed",
+      "displayName": "Unemployed",
+      "theme": "A colonist without an assigned hut. Generic spawn pool — balanced, common, early-game species. Every NPC spawns with this pool regardless of their future job.",
+      "pokemonPool": [
+        "eevee", "growlithe", "vulpix", "poliwag", "bellsprout", "geodude",
+        "machop", "gastly", "doduo", "ekans", "mankey", "meowth"
+      ]
+    },
+    {
+      "id": "signature",
+      "displayName": "Signature Companion",
+      "theme": "Every citizen has one lifelong partner Pokemon rolled deterministically from this pool at first battle. Persists across job changes and is never swapped out. Focused on early-stage, storybook-companion species — the Pokemon this villager grew up with.",
+      "note": "Not assigned as a profession. Used by SignaturePokemon seeding in TeamProgressionManager. See NpcTeamData.signatureSpecies.",
+      "pokemonPool": [
+        "pikachu", "pichu", "eevee", "growlithe", "vulpix", "poliwag",
+        "bellsprout", "geodude", "machop", "gastly", "doduo", "ekans",
+        "mankey", "meowth", "caterpie", "weedle", "rattata", "spearow",
+        "nidoranm", "nidoranf", "clefairy", "cleffa", "jigglypuff", "igglybuff",
+        "oddish", "paras", "venonat", "psyduck", "slowpoke",
+        "togepi", "marill", "azurill", "hoppip", "sunkern",
+        "phanpy", "zigzagoon", "skitty", "budew", "shinx",
+        "buneary", "bunnelby", "lillipup", "minccino", "fletchling",
+        "yungoos", "litleo", "litten", "scorbunny", "wooloo", "applin"
+      ]
+    },
+    {
+      "id": "builder",
+      "displayName": "Builder",
+      "theme": "Construction, hauling, and stone. Fighting / rock / steel species that embody hard labor and endurance.",
+      "pokemonPool": [
+        "machop", "machoke", "machamp", "timburr", "gurdurr", "conkeldurr",
+        "riolu", "lucario", "roggenrola", "boldore", "gigalith", "crustle"
+      ]
+    },
+    {
+      "id": "deliveryman",
+      "displayName": "Courier",
+      "theme": "Speed and travel across the colony. Fast normal / flying / electric species that carry things quickly.",
+      "pokemonPool": [
+        "pidgey", "pidgeotto", "pidgeot", "doduo", "dodrio", "linoone",
+        "staraptor", "swellow", "talonflame", "electrode", "accelgor", "delibird"
+      ]
+    },
+    {
+      "id": "miner",
+      "displayName": "Miner",
+      "theme": "Underground, ore, and shafts. Rock / ground / dark species that live below the surface.",
+      "pokemonPool": [
+        "geodude", "graveler", "golem", "onix", "steelix", "diglett",
+        "dugtrio", "sandshrew", "sandslash", "drilbur", "excadrill", "roggenrola"
+      ]
+    },
+    {
+      "id": "quarrier",
+      "displayName": "Quarrier",
+      "theme": "Large-scale excavation. Rock / ground heavyweights that tear through stone.",
+      "pokemonPool": [
+        "rhyhorn", "rhydon", "rhyperior", "boldore", "gigalith", "graveler",
+        "golem", "drilbur", "excadrill", "carbink", "bonsly", "sudowoodo"
+      ]
+    },
+    {
+      "id": "lumberjack",
+      "displayName": "Lumberjack",
+      "theme": "Trees, woods, and forest clearings. Grass / bug species from deep woodland.",
+      "pokemonPool": [
+        "treecko", "grovyle", "sceptile", "chikorita", "bayleef", "meganium",
+        "pinsir", "heracross", "scyther", "scizor", "tropius", "leafeon"
+      ]
+    },
+    {
+      "id": "sawmill",
+      "displayName": "Sawyer",
+      "theme": "Cutting, sawing, and shaping wood. Bug / grass species with sharp edges.",
+      "pokemonPool": [
+        "scyther", "scizor", "pinsir", "heracross", "karrablast", "escavalier",
+        "shelmet", "accelgor", "phantump", "trevenant", "pumpkaboo", "gourgeist"
+      ]
+    },
+    {
+      "id": "farmer",
+      "displayName": "Farmer",
+      "theme": "Working the land — crops, livestock guardians, pest control, and weather-watchers. Mostly grass with field-dwelling partners that keep a farm running.",
+      "pokemonPool": [
+        "sawsbuck", "gogoat", "tropius", "maractus",
+        "cutiefly", "ribombee",
+        "yungoos", "gumshoos",
+        "mimikyu", "castform",
+        "miltank", "bouffalant"
+      ]
+    },
+    {
+      "id": "planter",
+      "displayName": "Planter",
+      "theme": "Raising saplings into forests — grass starters plus the diggers, waterers, and decomposers that make a nursery work.",
+      "pokemonPool": [
+        "bulbasaur", "ivysaur", "venusaur", "rowlet", "dartrix", "decidueye",
+        "drilbur", "lotad",
+        "trubbish", "foongus",
+        "cherubi", "cherrim"
+      ]
+    },
+    {
+      "id": "florist",
+      "displayName": "Florist",
+      "theme": "Flowers and bloom. Grass / fairy species with petals, pollen, and color.",
+      "pokemonPool": [
+        "oddish", "gloom", "bellossom", "bellsprout", "weepinbell", "victreebel",
+        "budew", "roselia", "roserade", "flabebe", "floette", "florges"
+      ]
+    },
+    {
+      "id": "composter",
+      "displayName": "Composter",
+      "theme": "Rot and regrowth. Poison / grass species that thrive on decay.",
+      "pokemonPool": [
+        "gloom", "vileplume", "grimer", "muk", "trubbish", "garbodor",
+        "foongus", "amoonguss", "phantump", "trevenant", "weepinbell", "victreebel"
+      ]
+    },
+    {
+      "id": "shepherd",
+      "displayName": "Shepherd",
+      "theme": "Wool, flocks, and pastoral life.",
+      "pokemonPool": [
+        "wooloo", "dubwool", "mareep", "flaaffy", "ampharos", "miltank",
+        "stantler", "togetic", "togekiss", "furret", "chansey", "blissey"
+      ]
+    },
+    {
+      "id": "cowboy",
+      "displayName": "Cowhand",
+      "theme": "Cattle, bulls, and open range.",
+      "pokemonPool": [
+        "tauros", "miltank", "bouffalant", "mudbray", "mudsdale", "gogoat",
+        "donphan", "phanpy", "girafarig", "stantler", "sawsbuck", "zebstrika"
+      ]
+    },
+    {
+      "id": "swineherder",
+      "displayName": "Swineherder",
+      "theme": "Pigs and mud wallows. Ground / fire pigs that dig and roam.",
+      "pokemonPool": [
+        "swinub", "piloswine", "mamoswine", "spoink", "grumpig", "tepig",
+        "pignite", "emboar", "hippopotas", "hippowdon", "bouffalant", "donphan"
+      ]
+    },
+    {
+      "id": "chickenherder",
+      "displayName": "Poulterer",
+      "theme": "Poultry and barnyard fowl. Bird species that cluck, crow, or charge.",
+      "pokemonPool": [
+        "torchic", "combusken", "blaziken", "fletchling", "fletchinder", "talonflame",
+        "hoothoot", "noctowl", "pidove", "tranquill", "unfezant", "chatot"
+      ]
+    },
+    {
+      "id": "rabbitherder",
+      "displayName": "Rabbit Hutch Keeper",
+      "theme": "Bunnies and quick hoppers. Normal / fairy / electric species with cute mobility.",
+      "pokemonPool": [
+        "buneary", "lopunny", "bunnelby", "diggersby", "azurill", "marill",
+        "azumarill", "scorbunny", "raboot", "cinderace", "minccino", "cinccino"
+      ]
+    },
+    {
+      "id": "beekeeper",
+      "displayName": "Beekeeper",
+      "theme": "Hives and swarms. Bug species that buzz, sting, and pollinate.",
+      "pokemonPool": [
+        "combee", "vespiquen", "cutiefly", "ribombee", "butterfree", "beautifly",
+        "volbeat", "illumise", "beedrill", "venomoth", "ledyba", "ariados"
+      ]
+    },
+    {
+      "id": "fisherman",
+      "displayName": "Fisher",
+      "theme": "Rivers, seas, and the catch of the day.",
+      "pokemonPool": [
+        "magikarp", "gyarados", "feebas", "milotic", "remoraid", "octillery",
+        "finneon", "lumineon", "basculin", "seaking", "lanturn", "corsola"
+      ]
+    },
+    {
+      "id": "cook",
+      "displayName": "Cook",
+      "theme": "Home kitchen basics. Normal / fire / grass species that suggest stews, fruits, and cozy meals.",
+      "pokemonPool": [
+        "slurpuff", "swirlix", "lickitung", "lickilicky", "munchlax", "snorlax",
+        "spinda", "skitty", "delcatty", "gulpin", "swalot", "darumaka"
+      ]
+    },
+    {
+      "id": "chef",
+      "displayName": "Chef",
+      "theme": "A real kitchen — fire for heat, but also the ingredients: poultry, produce, dairy, and the odd signature dish.",
+      "pokemonPool": [
+        "magmar", "magmortar", "torkoal", "darmanitan",
+        "farfetchd", "sirfetchd",
+        "lickilicky", "appletun",
+        "gourgeist", "alomomola",
+        "slurpuff", "miltank"
+      ]
+    },
+    {
+      "id": "baker",
+      "displayName": "Baker",
+      "theme": "Bread, pastry, and sweetness. Soft / fluffy / apple species.",
+      "pokemonPool": [
+        "swirlix", "slurpuff", "alomomola", "cherubi", "cherrim", "tropius",
+        "applin", "flapple", "appletun", "combee", "vespiquen", "sinistea"
+      ]
+    },
+    {
+      "id": "smelter",
+      "displayName": "Smelter",
+      "theme": "Furnaces and molten metal. Fire species tied to heat, ash, and slag.",
+      "pokemonPool": [
+        "magmar", "magmortar", "slugma", "magcargo", "numel", "camerupt",
+        "torkoal", "ponyta", "rapidash", "heatmor", "darmanitan", "charmeleon"
+      ]
+    },
+    {
+      "id": "stonesmeltery",
+      "displayName": "Stone Smeltery Worker",
+      "theme": "Rock that has passed through fire. Stone + lava species.",
+      "pokemonPool": [
+        "torkoal", "camerupt", "slugma", "magcargo", "numel", "graveler",
+        "golem", "boldore", "gigalith", "coalossal", "carkol", "turtonator"
+      ]
+    },
+    {
+      "id": "blacksmith",
+      "displayName": "Blacksmith",
+      "theme": "The forge — steel for the blades, muscle at the anvil, and fire at the hearth.",
+      "pokemonPool": [
+        "honedge", "doublade", "aegislash", "bisharp", "scizor", "aggron",
+        "hariyama", "gurdurr", "conkeldurr",
+        "magmar", "magmortar", "magcargo"
+      ]
+    },
+    {
+      "id": "stonemason",
+      "displayName": "Stonemason",
+      "theme": "Shaped stone and masonry. Rock / ground species associated with pillars and construction.",
+      "pokemonPool": [
+        "geodude", "graveler", "golem", "onix", "steelix", "sudowoodo",
+        "rhyhorn", "rhydon", "rhyperior", "bonsly", "carbink", "crustle"
+      ]
+    },
+    {
+      "id": "mechanic",
+      "displayName": "Mechanic",
+      "theme": "Gears, circuitry, and machines. Steel / electric mechanical species.",
+      "pokemonPool": [
+        "klink", "klang", "klinklang", "magneton", "magnezone", "porygon",
+        "porygon2", "beldum", "metang", "metagross", "bronzor", "bronzong"
+      ]
+    },
+    {
+      "id": "crusher",
+      "displayName": "Crusher",
+      "theme": "Brute force and heavy impact. Pure strength species.",
+      "pokemonPool": [
+        "machamp", "hariyama", "conkeldurr", "gurdurr", "timburr", "rhydon",
+        "rhyperior", "golem", "gigalith", "crustle", "slaking", "drampa"
+      ]
+    },
+    {
+      "id": "sifter",
+      "displayName": "Sifter",
+      "theme": "Digging through dirt and waste for something useful. Ground / poison scavengers.",
+      "pokemonPool": [
+        "drilbur", "excadrill", "diglett", "dugtrio", "sandshrew", "sandslash",
+        "trubbish", "garbodor", "grimer", "muk", "yungoos", "gumshoos"
+      ]
+    },
+    {
+      "id": "concretemixer",
+      "displayName": "Concrete Mixer",
+      "theme": "Wet earth and heavy pours. Ground / rock builders.",
+      "pokemonPool": [
+        "rhyhorn", "rhydon", "golem", "graveler", "boldore", "gigalith",
+        "cubone", "marowak", "hippopotas", "hippowdon", "mudbray", "mudsdale"
+      ]
+    },
+    {
+      "id": "glassblower",
+      "displayName": "Glassblower",
+      "theme": "Sand, flame, and delicate glass. Ice / crystal / fire hybrids.",
+      "pokemonPool": [
+        "vanillite", "vanillish", "vanilluxe", "cryogonal", "castform", "carbink",
+        "sableye", "glaceon", "snorunt", "froslass", "glalie", "sandslash"
+      ]
+    },
+    {
+      "id": "dyer",
+      "displayName": "Dyer",
+      "theme": "Color, pigment, and vibrant cloth. Fairy / bug / grass species with bold palettes.",
+      "pokemonPool": [
+        "gossifleur", "eldegoss", "flabebe", "floette", "florges", "minior",
+        "spinda", "sewaddle", "swadloon", "leavanny", "skrelp", "dragalge"
+      ]
+    },
+    {
+      "id": "fletcher",
+      "displayName": "Fletcher",
+      "theme": "Arrows, wind, and precision. Flying species with swift strikes.",
+      "pokemonPool": [
+        "rufflet", "braviary", "spearow", "fearow", "pidgeot", "unfezant",
+        "staraptor", "swellow", "talonflame", "fletchling", "scyther", "ninjask"
+      ]
+    },
+    {
+      "id": "ranger",
+      "displayName": "Ranger",
+      "theme": "Scouts and marksmen. Bug / flying / dark species with ranged precision.",
+      "pokemonPool": [
+        "decidueye", "greninja", "ninjask", "hawlucha", "talonflame", "scyther",
+        "yanmega", "remoraid", "octillery", "jolteon", "crobat", "accelgor"
+      ]
+    },
+    {
+      "id": "knight",
+      "displayName": "Knight",
+      "theme": "Armored melee champions. Steel / fighting / fairy knights.",
+      "pokemonPool": [
+        "aegislash", "doublade", "gallade", "lucario", "bisharp", "hitmonlee",
+        "hitmonchan", "hitmontop", "machamp", "conkeldurr", "chesnaught", "pangoro"
+      ]
+    },
+    {
+      "id": "undertaker",
+      "displayName": "Undertaker",
+      "theme": "Graves and the restless dead. Ghost species tending the final rest.",
+      "pokemonPool": [
+        "gastly", "haunter", "gengar", "misdreavus", "mismagius", "shuppet",
+        "banette", "duskull", "dusclops", "dusknoir", "yamask", "cofagrigus"
+      ]
+    },
+    {
+      "id": "researcher",
+      "displayName": "Researcher",
+      "theme": "A working lab — raw intellect, plus the gadgets, specimens, and reference creatures a scholar actually studies.",
+      "pokemonPool": [
+        "alakazam", "metagross", "slowking", "beheeyem",
+        "porygon", "porygon2", "porygonz",
+        "rotom", "klefki", "bronzong",
+        "galvantula", "elgyem"
+      ]
+    },
+    {
+      "id": "enchanter",
+      "displayName": "Enchanter",
+      "theme": "Charms, glamours, and fae magic. Psychic / fairy casters.",
+      "pokemonPool": [
+        "gardevoir", "mismagius", "aromatisse", "clefable", "togekiss", "slurpuff",
+        "klefki", "granbull", "wigglytuff", "gothitelle", "spiritomb", "reuniclus"
+      ]
+    },
+    {
+      "id": "healer",
+      "displayName": "Healer",
+      "theme": "Cures, comfort, and soft care. Normal / fairy support species.",
+      "pokemonPool": [
+        "chansey", "blissey", "audino", "happiny", "miltank", "alomomola",
+        "gardevoir", "clefairy", "clefable", "wigglytuff", "jigglypuff", "togekiss"
+      ]
+    },
+    {
+      "id": "druid",
+      "displayName": "Druid",
+      "theme": "Nature's deeper currents. Grass / fairy mystics and spirit guides.",
+      "pokemonPool": [
+        "gardevoir", "gallade", "bellossom", "whimsicott", "florges", "sylveon",
+        "tsareena", "lilligant", "roserade", "mismagius", "serperior", "trevenant"
+      ]
+    },
+    {
+      "id": "alchemist",
+      "displayName": "Alchemist",
+      "theme": "The laboratory — potions and poisons, but also the mystics and test subjects that make transmutation work.",
+      "pokemonPool": [
+        "koffing", "weezing", "salazzle", "toxapex",
+        "nidoqueen", "nidoking",
+        "reuniclus", "gothitelle",
+        "alakazam", "audino",
+        "foongus", "amoonguss"
+      ]
+    },
+    {
+      "id": "netherworker",
+      "displayName": "Netherworker",
+      "theme": "Hellish heat and restless shadow. Fire / ghost / dark species that thrive in the Nether.",
+      "pokemonPool": [
+        "magmortar", "torkoal", "houndoom", "charizard", "infernape", "chandelure",
+        "gengar", "sableye", "skeledirge", "litwick", "lampent", "drapion"
+      ]
+    },
+    {
+      "id": "gym_leader",
+      "displayName": "Gym Leader",
+      "theme": "Each gym leader has a unique thematic team defined in gym-leader-pool.json. Hut level (1–5) caps the leader's team tier.",
+      "note": "Pool is not defined here. See gym-leader-pool.json for the roster.",
+      "pokemonPool": []
+    }
+  ]
+}

@@ -279,6 +279,21 @@ cobblemon-server/
                              # See docs/upstream-sources.md
 ```
 
+## Releasing
+
+One version covers both the modpack and `cobblemon-npc`. Bump it like this:
+
+```
+scripts/bump-version.sh 0.3.0
+# update CHANGELOG.md — move [Unreleased] entries into a new [0.3.0] section
+git add CHANGELOG.md modpack/pack.toml custom-mods/cobblemon-npc/gradle.properties
+git commit -m "release: 0.3.0"
+git tag v0.3.0
+git push origin main --tags
+```
+
+The tag is what CI (Phase 3, not yet wired) will key off to build and publish.
+
 ## Setup
 
 <!-- TBD -->

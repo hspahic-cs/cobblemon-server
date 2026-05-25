@@ -31,7 +31,9 @@ cd ../../modpack
 ~/go/bin/packwiz mr export
 ```
 
-Bump `version` in `pack.toml` before export if the output should look like a new release.
+For an actual release, don't bump `pack.toml` by hand — see the Releasing
+section in the root README. The CI workflow rebuilds and exports on tag push.
+This local export is for testing changes before tagging.
 
 ### When bumping MC / NeoForge versions
 ```

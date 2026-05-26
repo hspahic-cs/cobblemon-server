@@ -1,0 +1,135 @@
+name: Deploy dev
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Tag to deploy (e.g. v0.3.2). Must already exist.'
+        required: true
+
+jobs:
+  deploy:
+    # Self-hosted runner in the K8s cluster (see gemini-server repo for the
+    # ARC scale-set). Same LAN as the MC VM, so rsync is fast.
+    runs-on: cobblemon-server
+    concurrency:
+      # One dev deploy at a time. A queued tag waits behind the current one.
+      group: deploy-dev
+      cancel-in-progress: false
+    env:
+      VM_HOST: 192.168.1.20
+      VM_USER: deployer
+      ENV_NAME: dev
+      SERVICE: cobblemon-dev
+      INSTALL_DIR: /opt/cobblemon-dev
+      KEEP_VERSIONS: 5
+    steps:
+      - name: Resolve target ref
+        id: ref
+        run: |
+          REF="${{ inputs.ref || github.ref_name }}"
+          VERSION="${REF#v}"
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.ref.outputs.ref }}
+
+      - name: Install build/deploy deps
+        # Bare upstream runner image — install per-run. If this gets slow
+        # we'll bake a custom image (see gh-runners.md caveats).
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq rsync openssh-client
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Go (for packwiz)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: Build cobblemon-npc jar
+        working-directory: custom-mods/cobblemon-npc
+        run: ./gradlew build --no-daemon -Pmod_version=${{ steps.ref.outputs.version }}
+
+      - name: Stage jar into modpack
+        run: |
+          mkdir -p modpack/mods
+          rm -f modpack/mods/cobblemon-npc-*.jar
+          cp custom-mods/cobblemon-npc/build/libs/cobblemon-npc-${{ steps.ref.outputs.version }}.jar modpack/mods/
+
+      - name: Resolve modpack server tree
+        # packwiz-installer-bootstrap downloads everything pack.toml references
+        # (server side) into the current dir. After this, modpack/mods/ holds
+        # the actual jars next to the *.pw.toml manifests.
+        working-directory: modpack
+        run: |
+          sed -i 's/^version = ".*"/version = "${{ steps.ref.outputs.version }}"/' pack.toml
+          packwiz refresh
+          curl -sSL -o packwiz-installer-bootstrap.jar \
+            https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar
+          java -jar packwiz-installer-bootstrap.jar -g -s server "$(pwd)/pack.toml"
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          install -m 0600 /etc/deploy-keys/id_ed25519 ~/.ssh/id_ed25519
+          install -m 0644 /etc/deploy-keys/known_hosts ~/.ssh/known_hosts
+
+      - name: Rsync mods to VM staging
+        run: |
+          VERSION_DIR="mods.v${{ steps.ref.outputs.version }}"
+          # Exclude the *.pw.toml manifests — only resolved jars belong on the
+          # server. Trailing slash on src means "contents of"; without it
+          # rsync would create modpack/mods/ on the remote.
+          rsync -az --delete \
+            --exclude='*.pw.toml' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            modpack/mods/ \
+            ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/staging/${VERSION_DIR}/
+
+      - name: Atomic swap and restart
+        run: |
+          VERSION_DIR="mods.v${{ steps.ref.outputs.version }}"
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} "set -euo pipefail
+            cd ${{ env.INSTALL_DIR }}
+            # Move the freshly-rsynced dir out of staging into place.
+            # If the version dir already exists (re-deploy of the same tag),
+            # rsync above already updated it; just no-op the move.
+            if [ -d staging/${VERSION_DIR} ]; then
+              rm -rf ${VERSION_DIR}
+              mv staging/${VERSION_DIR} ./
+            fi
+            ln -sfn ${VERSION_DIR} mods
+            sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
+            # Prune old mods.v* dirs, keeping the most recent N.
+            ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
+          "
+
+      - name: Wait for service to come up
+        run: |
+          for i in $(seq 1 30); do
+            if ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+              "sudo -n /usr/bin/systemctl is-active ${{ env.SERVICE }}" | grep -q '^active$'; then
+              echo "${{ env.SERVICE }} is active"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "${{ env.SERVICE }} did not become active within 60s" >&2
+          exit 1

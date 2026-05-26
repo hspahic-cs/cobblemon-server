@@ -34,17 +34,29 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle.properties') }}
+          # Exclude gradle.properties from the hash: it contains mod_version,
+          # which bumps every release and would otherwise invalidate the cache.
+          # Dependency versions live in *.gradle files.
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle', '**/*.gradle.kts') }}
           restore-keys: gradle-${{ runner.os }}-
 
       - name: Build cobblemon-npc
         working-directory: custom-mods/cobblemon-npc
         run: ./gradlew build --no-daemon -Pmod_version=${{ steps.version.outputs.version }}
 
+      - name: Cache packwiz binary
+        id: cache-packwiz
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin/packwiz
+          key: packwiz-${{ runner.os }}-dfd8b68a4796c763e25bad50265ea1f1233e24f1
+
       - name: Install packwiz
-        run: |
-          go install github.com/packwiz/packwiz@latest
-          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+        if: steps.cache-packwiz.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
+
+      - name: Add packwiz to PATH
+        run: echo "$HOME/go/bin" >> "$GITHUB_PATH"
 
       - name: Stage cobblemon-npc jar into modpack
         run: |

@@ -12,11 +12,22 @@ root README.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-05-25
+
+### Changed
+- CI: gradle cache key no longer hashes `gradle.properties`, so `mod_version`
+  bumps don't invalidate the cache on every release.
+- CI: packwiz binary cached by commit SHA; `go install` only runs on cache miss.
+
+## [0.3.0] - 2026-05-25
+
 ### Changed
 - Repo restructure: custom mod moved to `custom-mods/cobblemon-npc/`; reference
   clones of upstream mod sources are no longer tracked (gitignored under
   `mods/`). See `docs/upstream-sources.md` for upstream links and expected
   local layout.
+- Tag-driven release CI: `vX.Y.Z` tag triggers a draft GitHub Release with the
+  custom mod jar and exported `.mrpack` attached.
 
 ## [0.2.2] - 2026-04-25
 

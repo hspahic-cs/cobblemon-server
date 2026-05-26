@@ -5,15 +5,6 @@ on:
     tags:
       - 'v*.*.*'
 
-# Minecolonies has not yet published a 1.21.1 artifact to a public Maven, so
-# this workflow clones their version/1.21 branch at a pinned commit, builds it,
-# installs it to mavenLocal, then builds cobblemon-npc against it. When ldtteam
-# starts publishing 1.21.1 to ldtteam.jfrog.io, drop the minecolonies job and
-# point cobblemon-npc's build.gradle at the public coordinate instead.
-env:
-  MINECOLONIES_REF: dd437dcb0dae9f732f33fdca767626742c64e4f2
-  MINECOLONIES_VERSION: 0.0.11-1.21.1
-
 permissions:
   contents: write  # required to create the GitHub Release
 
@@ -43,34 +34,8 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            ~/.m2/repository
-          key: gradle-${{ runner.os }}-${{ env.MINECOLONIES_REF }}-${{ hashFiles('**/*.gradle*', '**/gradle.properties') }}
-          restore-keys: gradle-${{ runner.os }}-${{ env.MINECOLONIES_REF }}-
-
-      - name: Build Minecolonies and install to mavenLocal
-        run: |
-          if [ -f ~/.m2/repository/com/minecolonies/minecolonies/${MINECOLONIES_VERSION}/minecolonies-${MINECOLONIES_VERSION}.jar ]; then
-            echo "Cached Minecolonies jar present, skipping build."
-            exit 0
-          fi
-          git clone --depth 1 --branch version/1.21 https://github.com/ldtteam/minecolonies.git /tmp/minecolonies
-          cd /tmp/minecolonies
-          git fetch --depth 1 origin "$MINECOLONIES_REF"
-          git checkout "$MINECOLONIES_REF"
-          ./gradlew build -x test --no-daemon
-          DIR="$HOME/.m2/repository/com/minecolonies/minecolonies/${MINECOLONIES_VERSION}"
-          mkdir -p "$DIR"
-          cp build/libs/minecolonies-${MINECOLONIES_VERSION}.jar "$DIR/"
-          cat > "$DIR/minecolonies-${MINECOLONIES_VERSION}.pom" <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <project xmlns="http://maven.apache.org/POM/4.0.0">
-            <modelVersion>4.0.0</modelVersion>
-            <groupId>com.minecolonies</groupId>
-            <artifactId>minecolonies</artifactId>
-            <version>${MINECOLONIES_VERSION}</version>
-            <packaging>jar</packaging>
-          </project>
-          EOF
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
 
       - name: Build cobblemon-npc
         working-directory: custom-mods/cobblemon-npc
@@ -83,14 +48,13 @@ jobs:
 
       - name: Stage cobblemon-npc jar into modpack
         run: |
-          # Remove any older cobblemon-npc-*.jar so packwiz only sees the new one.
+          mkdir -p modpack/mods
           rm -f modpack/mods/cobblemon-npc-*.jar
           cp custom-mods/cobblemon-npc/build/libs/cobblemon-npc-${{ steps.version.outputs.version }}.jar modpack/mods/
 
       - name: Set pack version and export .mrpack
         working-directory: modpack
         run: |
-          # Match scripts/bump-version.sh — pack.toml version line.
           sed -i 's/^version = ".*"/version = "${{ steps.version.outputs.version }}"/' pack.toml
           packwiz refresh
           packwiz mr export

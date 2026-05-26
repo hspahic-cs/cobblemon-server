@@ -19,7 +19,6 @@ kotlin {
 }
 
 repositories {
-    mavenLocal() // Minecolonies (built from source, no public 1.21.1 maven yet)
     mavenCentral()
     maven {
         name 'Kotlin For Forge'
@@ -31,7 +30,7 @@ repositories {
     }
     maven {
         name 'ldtteam'
-        url 'https://ldtteam.jfrog.io/artifactory/mods-maven/'
+        url 'https://ldtteam.jfrog.io/artifactory/modding/'
     }
 }
 
@@ -65,8 +64,7 @@ dependencies {
 
     compileOnly "com.cobblemon:neoforge:${project.cobblemon_version}"
 
-    // Minecolonies — resolved from mavenLocal() (built from source, see README).
-    compileOnly "com.minecolonies:minecolonies:${project.minecolonies_version}"
+    compileOnly "com.ldtteam:minecolonies:${project.minecolonies_version}"
 
     // Structurize and friends supply IAnchorBlock supertypes used via JobGymLeader.
     compileOnly "com.ldtteam:structurize:${project.structurize_version}"

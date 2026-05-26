@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-05-25
+
 ### Added
 - CI: `cache-warm.yml` workflow runs on push to main when build inputs change,
   saving a gradle cache on the default branch that tag-triggered releases can

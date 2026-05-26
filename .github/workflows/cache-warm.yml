@@ -1,0 +1,44 @@
+name: Cache warm
+
+# Builds cobblemon-npc on push to main so the gradle cache is saved on the
+# default branch. Tag-triggered release runs cannot read caches scoped to
+# other tags, but they CAN read caches saved on main — so this populates the
+# cache pile that release.yml reads from.
+#
+# Skipped unless build inputs change (build.gradle / wrapper / gradle.properties),
+# since cobblemon-npc Kotlin source changes don't affect cached dependencies.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'custom-mods/cobblemon-npc/build.gradle'
+      - 'custom-mods/cobblemon-npc/gradle.properties'
+      - 'custom-mods/cobblemon-npc/gradle/**'
+      - 'custom-mods/cobblemon-npc/gradlew'
+      - '.github/workflows/cache-warm.yml'
+  workflow_dispatch:
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle', '**/*.gradle.kts') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Build cobblemon-npc
+        working-directory: custom-mods/cobblemon-npc
+        run: ./gradlew build --no-daemon

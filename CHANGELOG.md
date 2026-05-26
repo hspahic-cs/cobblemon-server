@@ -12,6 +12,12 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- CI: `cache-warm.yml` workflow runs on push to main when build inputs change,
+  saving a gradle cache on the default branch that tag-triggered releases can
+  read. Tag-scoped caches are invisible to other tag runs, so releases were
+  always cold without this.
+
 ## [0.3.1] - 2026-05-25
 
 ### Changed

@@ -1,0 +1,13 @@
+name = "Cobblemon Server"
+author = "Harris Spahic"
+version = "0.2.2"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "c5f3fe9e7d49e65b7a53397caebdc733383a1d0a67280f4b2208c9baf48c3dbc"
+
+[versions]
+minecraft = "1.21.1"
+neoforge = "21.1.227"

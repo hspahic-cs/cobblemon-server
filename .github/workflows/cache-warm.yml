@@ -17,6 +17,7 @@ on:
       - 'custom-mods/cobblemon-npc/gradle/**'
       - 'custom-mods/cobblemon-npc/gradlew'
       - '.github/workflows/cache-warm.yml'
+      - '.github/workflows/release.yml'
   workflow_dispatch:
 
 jobs:
@@ -42,3 +43,14 @@ jobs:
       - name: Build cobblemon-npc
         working-directory: custom-mods/cobblemon-npc
         run: ./gradlew build --no-daemon
+
+      - name: Cache packwiz binary
+        id: cache-packwiz
+        uses: actions/cache@v4
+        with:
+          path: ~/go/bin/packwiz
+          key: packwiz-${{ runner.os }}-dfd8b68a4796c763e25bad50265ea1f1233e24f1
+
+      - name: Install packwiz
+        if: steps.cache-packwiz.outputs.cache-hit != 'true'
+        run: go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1

@@ -127,7 +127,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if git diff --quiet modpack/server-overrides/config/; then
+          # `git status --porcelain` lists both modified and untracked files
+          # under the path. `git diff --quiet` only checks tracked files,
+          # which would miss the (likely-untracked) authored configs we
+          # just pulled down for the first time.
+          if [[ -z "$(git status --porcelain modpack/server-overrides/config/)" ]]; then
             echo "No diff vs main; skipping PR (configs in repo already match prod)."
             exit 0
           fi

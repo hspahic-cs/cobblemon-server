@@ -21,6 +21,10 @@ on:
         description: 'Version to deploy (e.g. 0.4.0). Defaults to latest CHANGELOG entry.'
         required: false
 
+permissions:
+  # Needed to overwrite the rolling `dev-latest` pre-release with each new mrpack.
+  contents: write
+
 jobs:
   deploy:
     # Self-hosted runner in the K8s cluster (see gemini-server repo for the
@@ -195,9 +199,51 @@ jobs:
             if ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
               "sudo -n /usr/bin/systemctl is-active ${{ env.SERVICE }}" | grep -q '^active$'; then
               echo "${{ env.SERVICE }} is active"
-              exit 0
+              break
             fi
             sleep 2
+            if [[ $i -eq 30 ]]; then
+              echo "${{ env.SERVICE }} did not become active within 60s" >&2
+              exit 1
+            fi
           done
-          echo "${{ env.SERVICE }} did not become active within 60s" >&2
-          exit 1
+
+      # ─── publish mrpack to rolling `dev-latest` pre-release ─────────────────────
+      # So players testing on dev can grab a fresh modpack from the same URL every
+      # time without needing to tag an official release.
+
+      - name: Export .mrpack
+        if: steps.idempotency.outputs.skip != 'true'
+        working-directory: modpack
+        run: |
+          packwiz mr export
+          ls *.mrpack
+
+      - name: Overwrite dev-latest pre-release
+        if: steps.idempotency.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MRPACK=$(ls modpack/*.mrpack | head -1)
+          NOTES="Rolling pre-release of the dev modpack — overwritten on every deploy to cobblemon-dev.
+
+          - **Version**: ${{ steps.ver.outputs.version }}
+          - **Built**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+          - **Server**: \`108.21.168.120:25566\`
+
+          For PrismLauncher: Add Instance → Import → use the asset URL below.
+
+          ⚠️ Pre-release: this is the latest dev build, not necessarily stable.
+          For prod, use a tagged \`vX.Y.Z\` release."
+
+          # Delete any existing dev-latest release (and its assets) so we can
+          # cleanly reupload. `gh release delete` removes the release but keeps
+          # the tag; we delete the tag too for a fully clean recreation.
+          gh release delete dev-latest --yes --cleanup-tag 2>/dev/null || true
+
+          gh release create dev-latest \
+            --prerelease \
+            --target main \
+            --title "dev-latest (built from ${{ steps.ver.outputs.version }})" \
+            --notes "$NOTES" \
+            "$MRPACK"

@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-05-27
+
+### Fixed
+- Add `cloth-config` (15.0.140-neoforge) packwiz manifest. Cobbreeding declares
+  `cloth_config` as a CLIENT-side required dep; server didn't need it (dev VM
+  loaded fine without it) but PrismLauncher imports of the mrpack failed at
+  client-side mod loading with "Mod cobbreeding requires cloth_config 15 or above".
+
 ## [0.4.0] - 2026-05-26
 
 ### Added

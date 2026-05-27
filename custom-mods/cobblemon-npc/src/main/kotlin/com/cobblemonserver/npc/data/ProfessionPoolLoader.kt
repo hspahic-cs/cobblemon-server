@@ -45,7 +45,7 @@ object ProfessionPoolLoader {
         }
 
         parse(json)
-        CobblemonNpc.logger.info("cobblemon-npc: loaded ${pools.size} profession pools")
+        CobblemonNpc.logger.info("cobblemon-npc: loaded ${pools.size} profession pools (deploy-flow test marker)")
     }
 
     private fun parse(json: String) {

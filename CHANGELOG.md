@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-05-27
+
+### Added
+- `docs/working-with-mods.md` — end-to-end developer guide covering editing
+  mods, deploys, troubleshooting, and rollback.
+- README links to the new guide above the Releasing section.
+
+### Changed
+- `cobblemon-npc`: profession-pool load log line now appends a deploy-flow
+  test marker. Added to verify the CHANGELOG-bump → dev-deploy → prod-deploy
+  pipeline works end-to-end. Will be removed in the next release.
+
 ## [0.4.1] - 2026-05-27
 
 ### Fixed

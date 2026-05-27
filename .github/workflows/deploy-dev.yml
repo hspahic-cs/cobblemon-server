@@ -21,10 +21,6 @@ on:
         description: 'Version to deploy (e.g. 0.4.0). Defaults to latest CHANGELOG entry.'
         required: false
 
-permissions:
-  # Needed to overwrite the rolling `dev-latest` pre-release with each new mrpack.
-  contents: write
-
 jobs:
   deploy:
     # Self-hosted runner in the K8s cluster (see gemini-server repo for the
@@ -34,9 +30,6 @@ jobs:
       # One dev deploy at a time. A queued deploy waits behind the current one.
       group: deploy-dev
       cancel-in-progress: false
-    outputs:
-      version: ${{ steps.ver.outputs.version }}
-      skipped: ${{ steps.idempotency.outputs.skip }}
     env:
       VM_HOST: 192.168.1.20
       VM_USER: deployer
@@ -227,107 +220,39 @@ jobs:
             fi
           done
 
-  # ─── publish mrpack to rolling `dev-latest` pre-release ───────────────────────
-  # So players testing on dev can grab a fresh modpack from the same URL every
-  # time without needing to tag an official release.
-  #
-  # Runs on ubuntu-latest (not the cobblemon-server self-hosted runner) because
-  # the self-hosted pod kept dying with SIGINT during the GH asset upload —
-  # likely runner-pod resource limits. GitHub-hosted runners handle the
-  # 127 MB asset upload reliably.
-  publish-mrpack:
-    needs: deploy
-    if: needs.deploy.outputs.skipped != 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('custom-mods/*/build.gradle*', 'custom-mods/*/settings.gradle*') }}
-          restore-keys: gradle-${{ runner.os }}-
-
-      - name: Build all custom mods
-        run: |
-          set -euo pipefail
-          for m in custom-mods/*/; do
-            echo "::group::Build $m"
-            (cd "$m" && ./gradlew build --no-daemon -Pmod_version=${{ needs.deploy.outputs.version }})
-            echo "::endgroup::"
-          done
-
-      - name: Cache packwiz binary
-        id: cache-packwiz
-        uses: actions/cache@v4
-        with:
-          path: ~/go/bin/packwiz
-          key: packwiz-${{ runner.os }}-dfd8b68a4796c763e25bad50265ea1f1233e24f1
-
-      - name: Set up Go (for packwiz)
-        if: steps.cache-packwiz.outputs.cache-hit != 'true'
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
-
-      - name: Install packwiz
-        if: steps.cache-packwiz.outputs.cache-hit != 'true'
-        run: go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
-
-      - name: Stage built jars into modpack
-        run: |
-          set -euo pipefail
-          mkdir -p modpack/mods
-          rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked}-*.jar
-          for m in custom-mods/*/; do
-            jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
-            cp "$jar" modpack/mods/
-          done
+      # ─── export the mrpack and attach it to this run ───────────────────────────
+      # Reuses what we already built — the resolved modpack tree is sitting in
+      # modpack/. Just runs `packwiz mr export` to bundle and uploads it as a
+      # workflow artifact. Players visit the run summary, click the artifact
+      # link, get the .mrpack. No separate GitHub Release needed.
 
       - name: Export .mrpack
+        if: steps.idempotency.outputs.skip != 'true'
         working-directory: modpack
         run: |
-          export PATH="$HOME/go/bin:$PATH"
-          sed -i 's/^version = ".*"/version = "${{ needs.deploy.outputs.version }}"/' pack.toml
-          packwiz refresh
           packwiz mr export
           ls *.mrpack
 
-      - name: Delete existing dev-latest release
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release delete dev-latest --yes --cleanup-tag 2>/dev/null || true
-
-      - name: Publish dev-latest pre-release
-        uses: softprops/action-gh-release@v2
+      - name: Upload .mrpack as workflow artifact
+        if: steps.idempotency.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: dev-latest
-          name: dev-latest (built from ${{ needs.deploy.outputs.version }})
-          prerelease: true
-          target_commitish: main
-          body: |
-            Rolling pre-release of the dev modpack — overwritten on every deploy to cobblemon-dev.
+          name: cobblemon-server-${{ steps.ver.outputs.version }}-mrpack
+          path: modpack/*.mrpack
+          retention-days: 30
 
-            - **Version**: ${{ needs.deploy.outputs.version }}
-            - **Server**: `108.21.168.120:25566`
-
-            For PrismLauncher: Add Instance → Import → use the asset URL below.
-
-            ⚠️ Pre-release: this is the latest dev build, not necessarily stable.
-            For prod, use a tagged `vX.Y.Z` release.
-          files: |
-            modpack/*.mrpack
+      - name: Add download link to run summary
+        if: steps.idempotency.outputs.skip != 'true'
+        run: |
+          MRPACK=$(ls modpack/*.mrpack | head -1)
+          ARTIFACT_NAME="cobblemon-server-${{ steps.ver.outputs.version }}-mrpack"
+          {
+            echo "## Modpack download"
+            echo
+            echo "**Version:** ${{ steps.ver.outputs.version }}"
+            echo "**Dev server:** \`108.21.168.120:25566\`"
+            echo
+            echo "Grab the \`.mrpack\` from the **Artifacts** section at the bottom of this page (\`$ARTIFACT_NAME\`)."
+            echo "In PrismLauncher: **Add Instance → Import → file →** select the downloaded \`.mrpack\`."
+          } >> "$GITHUB_STEP_SUMMARY"
 

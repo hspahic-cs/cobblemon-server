@@ -44,13 +44,12 @@ before they go to prod.
 
 ## Where players get the modpack
 
-| Audience | URL | Updated when |
+| Audience | Where | Updated when |
 |---|---|---|
-| **Dev testers** | https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest | Every dev deploy (overwritten in place) |
+| **Dev testers** | The latest [`Deploy dev` workflow run](https://github.com/hspahic-cs/cobblemon-server/actions/workflows/deploy-dev.yml) → Artifacts at the bottom of the run page | Every dev deploy (each run produces its own artifact, kept 30 days) |
 | **Prod players** | https://github.com/hspahic-cs/cobblemon-server/releases/latest | Only on tagged `vX.Y.Z` releases |
 
-Players bookmark either URL once and re-download when they need the new pack.
-PrismLauncher: Add Instance → Import → paste URL.
+PrismLauncher: download the `.mrpack`, then **Add Instance → Import → file →** select it.
 
 **Code merges without a CHANGELOG bump don't deploy anywhere.** The
 CHANGELOG entry is the explicit signal that says "this is ready to ship."
@@ -171,10 +170,10 @@ When green, dev is on 0.4.2.
 
 ### 7. Connect to dev and test
 
-`Deploy dev` also overwrites the `dev-latest` GitHub pre-release with a
-freshly-built `.mrpack`. Players testing on dev can re-import from
-https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest
-in PrismLauncher each time they need to pick up new mods.
+`Deploy dev` attaches the freshly-built `.mrpack` as a **workflow artifact**
+on the run summary page. Players testing on dev open the run from the
+[Actions tab](https://github.com/hspahic-cs/cobblemon-server/actions/workflows/deploy-dev.yml),
+scroll to the bottom, and download the artifact (kept 30 days).
 
 Then add server `108.21.168.120:25566` in your MC client and join. Verify
 your change works.

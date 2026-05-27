@@ -133,7 +133,7 @@ jobs:
 
       - name: Rsync datapacks (overlay onto live world, non-destructive)
         run: |
-          rsync -az \
+          rsync -rltz \
             -e "ssh -o StrictHostKeyChecking=yes" \
             modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/

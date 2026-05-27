@@ -162,9 +162,9 @@ jobs:
         if: steps.idempotency.outputs.skip != 'true'
         run: |
           # No --delete: don't remove datapacks the live world has that we don't ship.
-          # Our managed datapack dirs (server-gyms, server-quests, server-lootballs)
-          # are replaced in place by rsync's content-level update.
-          rsync -az \
+          # No --owner / --group: deployer doesn't own world/datapacks/, but is in
+          # the sysadmin group with g+w; -rltz preserves perms+times only.
+          rsync -rltz \
             -e "ssh -o StrictHostKeyChecking=yes" \
             modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/

@@ -244,31 +244,30 @@ jobs:
           packwiz mr export
           ls *.mrpack
 
-      - name: Overwrite dev-latest pre-release
+      - name: Delete existing dev-latest release (so the new asset replaces cleanly)
         if: steps.idempotency.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          MRPACK=$(ls modpack/*.mrpack | head -1)
-          NOTES="Rolling pre-release of the dev modpack — overwritten on every deploy to cobblemon-dev.
-
-          - **Version**: ${{ steps.ver.outputs.version }}
-          - **Built**: $(date -u +%Y-%m-%dT%H:%M:%SZ)
-          - **Server**: \`108.21.168.120:25566\`
-
-          For PrismLauncher: Add Instance → Import → use the asset URL below.
-
-          ⚠️ Pre-release: this is the latest dev build, not necessarily stable.
-          For prod, use a tagged \`vX.Y.Z\` release."
-
-          # Delete any existing dev-latest release (and its assets) so we can
-          # cleanly reupload. `gh release delete` removes the release but keeps
-          # the tag; we delete the tag too for a fully clean recreation.
           gh release delete dev-latest --yes --cleanup-tag 2>/dev/null || true
 
-          gh release create dev-latest \
-            --prerelease \
-            --target main \
-            --title "dev-latest (built from ${{ steps.ver.outputs.version }})" \
-            --notes "$NOTES" \
-            "$MRPACK"
+      - name: Overwrite dev-latest pre-release
+        if: steps.idempotency.outputs.skip != 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: dev-latest
+          name: dev-latest (built from ${{ steps.ver.outputs.version }})
+          prerelease: true
+          target_commitish: main
+          body: |
+            Rolling pre-release of the dev modpack — overwritten on every deploy to cobblemon-dev.
+
+            - **Version**: ${{ steps.ver.outputs.version }}
+            - **Server**: `108.21.168.120:25566`
+
+            For PrismLauncher: Add Instance → Import → use the asset URL below.
+
+            ⚠️ Pre-release: this is the latest dev build, not necessarily stable.
+            For prod, use a tagged `vX.Y.Z` release.
+          files: |
+            modpack/*.mrpack

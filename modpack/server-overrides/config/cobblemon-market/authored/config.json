@@ -1,0 +1,6 @@
+{
+  "restockRatePerHour": 0.07,
+  "leaderboardSize": 10,
+  "priceHistorySize": 500,
+  "priceHistoryTimeZone": "America/New_York"
+}

@@ -1,0 +1,445 @@
+{
+  "ultra_rare": [
+    {
+      "id": "dratini",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "larvitar",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "beldum",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "bagon",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "gible",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "deino",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "goomy",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "jangmo-o",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "dreepy",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "frigibax",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "torchic",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "froakie",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "scorbunny",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    }
+  ],
+  "rare": [
+    {
+      "id": "pawniard",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "gligar",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "togepi",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "mimikyu",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "honedge",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "cleffa",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "sneasel",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "larvesta",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "fletchling",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "magnemite",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "chansey",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "axew",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "ditto",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "lapras",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "litwick",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "shellder",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "tyrunt",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "spiritomb",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "toxel",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "salandit",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    }
+  ],
+  "uncommon": [
+    {
+      "id": "cyndaquil",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "totodile",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "treecko",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "chimchar",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "piplup",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "snivy",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "oshawott",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "litten",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "popplio",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "grookey",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "sprigatito",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "quaxly",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "turtwig",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "sobble",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "zorua",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "absol",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "scyther",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "marill",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "drilbur",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "rotom",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "rockruff",
+      "hasHiddenAbility": true,
+      "notes": "Own Tempo"
+    },
+    {
+      "id": "sandile",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "vulpix",
+      "hasHiddenAbility": true,
+      "notes": "Yes (both forms)"
+    },
+    {
+      "id": "rookidee",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    }
+  ],
+  "common": [
+    {
+      "id": "bulbasaur",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "charmander",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "squirtle",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "mudkip",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "rowlet",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "fuecoco",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "chikorita",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "tepig",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "fennekin",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "chespin",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "eevee",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "pichu",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "gastly",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "magikarp",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "growlithe",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "shinx",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "riolu",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "ralts",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "abra",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "munchlax",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "cubone",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "foongus",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "ferroseed",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "hippopotas",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "torkoal",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "mareanie",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "hatenna",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "wooper",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "shellos",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "wingull",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    }
+  ]
+}

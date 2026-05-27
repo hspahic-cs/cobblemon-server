@@ -1,0 +1,8 @@
+{
+  "hpPerCarrot": 30,
+  "healerReviveCarrotCost": 3,
+  "healerMinCarrots": 4,
+  "carrotPrice": 5,
+  "allowInventoryRevive": false,
+  "inventoryReviveCarrotCost": 4
+}

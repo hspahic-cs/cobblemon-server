@@ -1,0 +1,13 @@
+[Unit]
+Description=Snapshot cobblemon-prod world + cobblemon configs to /opt/snapshots/
+Wants=cobblemon-prod.service
+After=cobblemon-prod.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/snapshots/prod-snapshot.sh
+# Owner of /opt/cobblemon-prod files. Needs to read world/ + write /opt/snapshots/.
+User=sysadmin
+Group=sysadmin
+StandardOutput=journal
+StandardError=journal

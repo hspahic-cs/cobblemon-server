@@ -12,6 +12,47 @@ root README.
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-05-26
+
+### Added
+- **5 NeoForge mods from almutwakel/cobblemon-mods** (merged into `custom-mods/`):
+  - `cobblemon-bridge` — tag-driven hooks for level cap, gym progression, E4
+    gauntlet, command aliases, egg-by-defeats, RCTmod/Cobreeding/economy
+    reflection bridges.
+  - `cobblemon-carrots` — carrot-based healing (right-click Pokémon, Poké Healer
+    block charges $5/missing carrot).
+  - `cobblemon-gacha` — Common/Rare/Ultra lootbox crates with daily/ranked/gym keys.
+  - `cobblemon-market` — dynamic-pricing stock market on 6 items with hourly restock.
+  - `cobblemon-ranked` — ELO PvP ladder with `/challenge`, `/accept`, decay,
+    leaderboard. Replaces the previously-shipped Modrinth `cobblemon-ranked`
+    (modid clash).
+- **Datapacks** under `modpack/server-overlays/world/datapacks/`:
+  `server-quests` (40 mainline quests + reward dispatchers), `server-gyms`
+  (24 trainer JSONs), `server-lootballs` (carrot drop fallback). Deploy
+  overlays them onto the live world non-destructively.
+- **Third-party mod manifests** for bridge runtime deps: `rctmod`, `rctapi`
+  (auto), `cobbreeding`, `cobblemon-economy` (Fabric, via Sinytra Connector),
+  `flan`.
+
+### Changed
+- **CI deploy model**: `deploy-dev` now triggers on CHANGELOG.md changes to
+  main (not on tags). Idempotent via `/opt/cobblemon-dev/.deployed_version`.
+  `deploy-prod` is workflow_dispatch-only with a "must-be-on-dev-first" guard.
+  Tagged releases still draft GitHub Releases via `release.yml`.
+- **`pr-validation.yml`** now builds all `custom-mods/*` modules and runs
+  `packwiz refresh` on every PR touching modpack or custom-mods.
+- All build steps loop over `custom-mods/*/` so adding a new in-house mod
+  requires no workflow edits.
+- Renamed `mods/` to `reference/` to clarify those folders hold vendored
+  upstream sources never built or shipped.
+
+### Removed
+- Modrinth `cobblemon-ranked.pw.toml` (modid `cobblemon_ranked` collides with
+  the in-house `custom-mods/cobblemon-ranked/`).
+
+### Notes
+- `cobblemon-showcase` (Fabric, WIP per friend) deferred for a follow-up.
+
 ## [0.3.2] - 2026-05-25
 
 ### Added

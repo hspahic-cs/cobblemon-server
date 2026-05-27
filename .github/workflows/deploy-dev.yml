@@ -166,7 +166,7 @@ jobs:
           # are replaced in place by rsync's content-level update.
           rsync -az \
             -e "ssh -o StrictHostKeyChecking=yes" \
-            modpack/server-overrides/world/datapacks/ \
+            modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/
 
       - name: Atomic swap and restart

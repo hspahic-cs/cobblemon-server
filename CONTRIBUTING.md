@@ -24,7 +24,7 @@ Branch off `main` for every change. Never push directly to `main`.
 | `modpack/pack.toml` | packwiz pack manifest | yes |
 | `modpack/mods/*.pw.toml` | Per-mod manifest (third-party, fetched at deploy time) | yes |
 | `modpack/mods/*.jar` | Built jars staged in by CI | no (gitignored) |
-| `modpack/server-overrides/world/datapacks/` | Datapacks rsynced to live world on deploy | yes |
+| `modpack/server-overrides/datapacks/` | Datapacks rsynced to live `world/datapacks/` on deploy | yes |
 | `modpack/overrides/` | Client-side options.txt etc. shipped in `.mrpack` | yes |
 | `reference/` | Local clones of upstream mod source for reference only | no (gitignored) |
 | `docs/` | Design notes, install guides | yes |

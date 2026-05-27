@@ -138,6 +138,19 @@ jobs:
             modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/
 
+      - name: Rsync authored configs (overlay onto live config/, non-destructive)
+        run: |
+          # See docs/design/mod-state-vs-config.md. Ships only authored/
+          # files; runtime/ and third-party configs untouched.
+          if [[ -d modpack/server-overrides/config ]]; then
+            rsync -rltzO \
+              -e "ssh -o StrictHostKeyChecking=yes" \
+              modpack/server-overrides/config/ \
+              ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/config/
+          else
+            echo "modpack/server-overrides/config/ doesn't exist yet; skipping authored-config rsync"
+          fi
+
       - name: Atomic swap and restart
         run: |
           VERSION_DIR="mods.v${{ steps.ref.outputs.version }}"

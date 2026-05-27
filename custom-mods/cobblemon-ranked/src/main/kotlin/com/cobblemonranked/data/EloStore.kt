@@ -1,6 +1,7 @@
 package com.cobblemonranked.data
 
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -13,7 +14,7 @@ import kotlin.io.path.writeText
 
 class EloStore(private val configDir: Path) {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-    private val file = configDir.resolve("cobblemon-ranked").resolve("elo.json")
+    private val file = ConfigPaths.runtime(configDir, "elo.json")
     private val players: MutableMap<String, PlayerEloData> = mutableMapOf()
 
     fun load() {
@@ -29,7 +30,7 @@ class EloStore(private val configDir: Path) {
     }
 
     fun save() {
-        configDir.resolve("cobblemon-ranked").createDirectories()
+        file.parent.createDirectories()
         file.writeText(gson.toJson(players))
     }
 

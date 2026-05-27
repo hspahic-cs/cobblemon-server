@@ -2,6 +2,7 @@ package com.cobblemongacha.config
 
 import com.cobblemongacha.CobblemonGacha
 import com.cobblemongacha.data.KeyTier
+import com.cobblemongacha.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.nio.file.Path
@@ -43,7 +44,9 @@ data class GachaConfig(
         private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
         fun load(configDir: Path): GachaConfig {
-            val file = configDir.resolve("cobblemon-gacha").resolve("config.json")
+            // config.json holds crate coords (per-world) + animation knobs (authored-ish).
+            // Treated as runtime because the dominant write-path is /gacha admin setcrate.
+            val file = ConfigPaths.runtime(configDir, "config.json")
             if (!file.exists()) {
                 val default = GachaConfig()
                 save(configDir, default)
@@ -58,9 +61,9 @@ data class GachaConfig(
         }
 
         fun save(configDir: Path, config: GachaConfig) {
-            val dir = configDir.resolve("cobblemon-gacha")
-            dir.createDirectories()
-            dir.resolve("config.json").writeText(gson.toJson(config))
+            val file = ConfigPaths.runtime(configDir, "config.json")
+            file.parent.createDirectories()
+            file.writeText(gson.toJson(config))
         }
     }
 }

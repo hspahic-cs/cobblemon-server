@@ -3,6 +3,7 @@ package com.cobblemongacha.config
 import com.cobblemongacha.CobblemonGacha
 import com.cobblemongacha.data.EggPools
 import com.cobblemongacha.data.EggSpecies
+import com.cobblemongacha.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.nio.file.Files
@@ -28,9 +29,8 @@ object EggPoolLoader {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     fun loadAll(configDir: Path): EggPools {
-        val dir = configDir.resolve("cobblemon-gacha")
-        dir.createDirectories()
-        val jsonFile = dir.resolve("egg_pools.json")
+        val jsonFile = ConfigPaths.authored(configDir, "egg_pools.json")
+        jsonFile.parent.createDirectories()
         return if (jsonFile.exists()) {
             loadJson(jsonFile)
         } else {

@@ -1,6 +1,7 @@
 package com.cobblemonmarket.config
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.nio.file.Path
@@ -32,7 +33,7 @@ data class MarketConfig(
         private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
         fun load(configDir: Path): MarketConfig {
-            val file = configDir.resolve("cobblemon-market").resolve("config.json")
+            val file = ConfigPaths.authored(configDir, "config.json")
             if (!file.exists()) {
                 val default = MarketConfig()
                 save(configDir, default)
@@ -47,9 +48,9 @@ data class MarketConfig(
         }
 
         fun save(configDir: Path, config: MarketConfig) {
-            val dir = configDir.resolve("cobblemon-market")
-            dir.createDirectories()
-            dir.resolve("config.json").writeText(gson.toJson(config))
+            val file = ConfigPaths.authored(configDir, "config.json")
+            file.parent.createDirectories()
+            file.writeText(gson.toJson(config))
         }
     }
 }

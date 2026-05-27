@@ -1,6 +1,7 @@
 package com.cobblemonranked.config
 
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.nio.file.Path
@@ -46,7 +47,10 @@ data class RankedConfig(
         private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
         fun load(configDir: Path): RankedConfig {
-            val file = configDir.resolve("cobblemon-ranked").resolve("config.json")
+            // config.json mixes design (ELO knobs) and per-world data (arena coords).
+            // Treated as runtime so operator edits via /ranked admin setarena don't
+            // get overwritten by deploys.
+            val file = ConfigPaths.runtime(configDir, "config.json")
             if (!file.exists()) {
                 val default = RankedConfig()
                 save(configDir, default)
@@ -61,9 +65,9 @@ data class RankedConfig(
         }
 
         fun save(configDir: Path, config: RankedConfig) {
-            val dir = configDir.resolve("cobblemon-ranked")
-            dir.createDirectories()
-            dir.resolve("config.json").writeText(gson.toJson(config))
+            val file = ConfigPaths.runtime(configDir, "config.json")
+            file.parent.createDirectories()
+            file.writeText(gson.toJson(config))
         }
     }
 }

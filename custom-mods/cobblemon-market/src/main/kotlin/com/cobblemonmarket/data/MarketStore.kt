@@ -2,6 +2,7 @@ package com.cobblemonmarket.data
 
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemEntry
+import com.cobblemonmarket.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -13,7 +14,7 @@ import kotlin.io.path.writeText
 
 class MarketStore(private val configDir: Path) {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-    private val file = configDir.resolve("cobblemon-market").resolve("state.json")
+    private val file = ConfigPaths.runtime(configDir, "state.json")
     private val states: MutableMap<String, ItemState> = mutableMapOf()
 
     fun load() {
@@ -29,7 +30,7 @@ class MarketStore(private val configDir: Path) {
     }
 
     fun save() {
-        configDir.resolve("cobblemon-market").createDirectories()
+        file.parent.createDirectories()
         file.writeText(gson.toJson(states))
     }
 

@@ -1,6 +1,7 @@
 package com.cobblemonmarket.config
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -32,7 +33,7 @@ object ItemConfig {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
     fun load(configDir: Path): Map<String, ItemEntry> {
-        val file = configDir.resolve("cobblemon-market").resolve("items.json")
+        val file = ConfigPaths.authored(configDir, "items.json")
         if (!file.exists()) {
             val defaults = defaultItems()
             save(configDir, defaults)
@@ -48,9 +49,9 @@ object ItemConfig {
     }
 
     fun save(configDir: Path, items: Map<String, ItemEntry>) {
-        val dir = configDir.resolve("cobblemon-market")
-        dir.createDirectories()
-        dir.resolve("items.json").writeText(gson.toJson(items))
+        val file = ConfigPaths.authored(configDir, "items.json")
+        file.parent.createDirectories()
+        file.writeText(gson.toJson(items))
     }
 
     // baseBuyPrice ≈ 3× baseSellPrice mirrors the previous spread; tune in items.json.

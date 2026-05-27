@@ -1,0 +1,39 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "cobblemon_bridge"
+version = "${version}"
+displayName = "Cobblemon Bridge"
+description = "Tag-driven hooks that bridge Cobblemon's systems (battle level scaling, future progression flags, etc.)"
+authors = "almutwakel"
+# Server-side only — listens to public Cobblemon events and mutates server-side battle state.
+# IGNORE_ALL_VERSION skips the version handshake so vanilla / mismatched clients can connect.
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.cobblemon_bridge]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemon_bridge]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "[5,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemon_bridge]]
+modId = "cobblemon"
+type = "required"
+versionRange = "[1.7.1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# Mixin config — patches RCTmod's DataPackManager.findResource so non-rctmod-namespaced
+# trainer IDs don't crash the client renderer. See DataPackManagerMixin.
+[[mixins]]
+config = "cobblemon_bridge.mixins.json"

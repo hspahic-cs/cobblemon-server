@@ -33,7 +33,8 @@ eula.txt
 # Reference clones of upstream mod sources (kept locally for dev,
 # not vendored in this repo — see docs/upstream-sources.md).
 # Anchored to repo root: does NOT ignore modpack/mods (packwiz manifests).
-/mods/
+/reference/*
+!/reference/README.md
 
 # Live-server mod jars (CI builds + uploads to GitHub Releases)
 server-mods/*.jar

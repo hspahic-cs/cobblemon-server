@@ -1,0 +1,13 @@
+name = "Flan"
+filename = "flan-1.21.1-1.12.7-neoforge.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/Si383TIH/versions/2PanOvza/flan-1.21.1-1.12.7-neoforge.jar"
+hash-format = "sha512"
+hash = "753ed55fa287e2cdea93042258d875de1a15c8f6e39ddd7fddc242ad5866e5ebbae71815b4a12af9347d4ce46af9b716dcc2cf9ec0c2da3765d96611f1e2aac4"
+
+[update]
+[update.modrinth]
+mod-id = "Si383TIH"
+version = "2PanOvza"

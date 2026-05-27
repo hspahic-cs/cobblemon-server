@@ -1,33 +1,17 @@
-name: Cache warm
+name: PR validation
 
-# Builds every module under custom-mods/ on push to main when build inputs
-# change, so the gradle cache lives on the default branch. Tag-triggered
-# release runs cannot read caches scoped to other tags but CAN read main's
-# cache — this populates the pile that release.yml and deploy-dev.yml read.
-#
-# Skipped unless build inputs (gradle scripts/wrapper/properties or these
-# workflow files) change. Source-only edits to mod code don't affect the
-# cached dependency graph.
+# Builds every custom mod and validates the modpack manifest on every PR
+# touching the modpack or custom-mods. No deploy. Acts as the merge gate.
 
 on:
-  push:
-    branches: [main]
+  pull_request:
     paths:
-      - 'custom-mods/*/build.gradle'
-      - 'custom-mods/*/build.gradle.kts'
-      - 'custom-mods/*/settings.gradle'
-      - 'custom-mods/*/settings.gradle.kts'
-      - 'custom-mods/*/gradle.properties'
-      - 'custom-mods/*/gradle/**'
-      - 'custom-mods/*/gradlew'
-      - '.github/workflows/cache-warm.yml'
-      - '.github/workflows/release.yml'
-      - '.github/workflows/deploy-dev.yml'
-      - '.github/workflows/deploy-prod.yml'
-  workflow_dispatch:
+      - 'custom-mods/**'
+      - 'modpack/**'
+      - '.github/workflows/pr-validation.yml'
 
 jobs:
-  warm:
+  build-and-validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -55,6 +39,10 @@ jobs:
             echo "::endgroup::"
           done
 
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
       - name: Cache packwiz binary
         id: cache-packwiz
         uses: actions/cache@v4
@@ -65,3 +53,12 @@ jobs:
       - name: Install packwiz
         if: steps.cache-packwiz.outputs.cache-hit != 'true'
         run: go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
+
+      - name: Validate modpack manifest
+        working-directory: modpack
+        run: |
+          ~/go/bin/packwiz refresh
+          # If refresh produced any unexpected diff, surface it.
+          if ! git diff --exit-code -- index.toml; then
+            echo "::warning::packwiz refresh changed index.toml — committed index is stale."
+          fi

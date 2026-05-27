@@ -1,0 +1,167 @@
+name: Deploy prod
+
+# Manually-triggered prod deploy. Takes a tag (e.g. v0.4.0), checks out that
+# ref, builds all custom mods at that version, and deploys to cobblemon-prod
+# on the same VM as dev.
+#
+# Promotion gate: refuses to deploy a version that hasn't already been deployed
+# to dev (verified by reading /opt/cobblemon-dev/.deployed_version on the VM).
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to deploy (e.g. v0.4.0). Must already exist on origin.'
+        required: true
+      skip_dev_check:
+        description: 'Skip the "deployed-to-dev-first" check (use with caution).'
+        type: boolean
+        default: false
+
+jobs:
+  deploy:
+    runs-on: cobblemon-server
+    concurrency:
+      group: deploy-prod
+      cancel-in-progress: false
+    env:
+      VM_HOST: 192.168.1.20
+      VM_USER: deployer
+      ENV_NAME: prod
+      SERVICE: cobblemon-prod
+      INSTALL_DIR: /opt/cobblemon-prod
+      DEV_INSTALL_DIR: /opt/cobblemon-dev
+      KEEP_VERSIONS: 5
+    steps:
+      - name: Resolve target ref
+        id: ref
+        run: |
+          REF="${{ inputs.tag }}"
+          if [[ ! "$REF" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::Tag must be of the form vX.Y.Z (got: $REF)"
+            exit 1
+          fi
+          VERSION="${REF#v}"
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.ref.outputs.ref }}
+
+      - name: Install build/deploy deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq rsync openssh-client
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          install -m 0600 /etc/deploy-keys/id_ed25519 ~/.ssh/id_ed25519
+          install -m 0644 /etc/deploy-keys/known_hosts ~/.ssh/known_hosts
+
+      - name: Confirm version already deployed to dev
+        if: ${{ !inputs.skip_dev_check }}
+        run: |
+          DEV_VERSION=$(ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+            "cat ${{ env.DEV_INSTALL_DIR }}/.deployed_version 2>/dev/null || true")
+          if [[ "$DEV_VERSION" != "${{ steps.ref.outputs.version }}" ]]; then
+            echo "::error::Dev is on version '${DEV_VERSION:-(none)}' but you're trying to promote ${{ steps.ref.outputs.version }} to prod."
+            echo "Either deploy to dev first (CHANGELOG bump or workflow_dispatch on deploy-dev), or rerun this workflow with skip_dev_check=true."
+            exit 1
+          fi
+          echo "Dev is on ${{ steps.ref.outputs.version }} — proceeding to prod."
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Go (for packwiz)
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install packwiz
+        run: |
+          go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+      - name: Build all custom mods
+        run: |
+          set -euo pipefail
+          for m in custom-mods/*/; do
+            echo "::group::Build $m"
+            (cd "$m" && ./gradlew build --no-daemon -Pmod_version=${{ steps.ref.outputs.version }})
+            echo "::endgroup::"
+          done
+
+      - name: Stage built jars into modpack
+        run: |
+          set -euo pipefail
+          mkdir -p modpack/mods
+          rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked}-*.jar
+          for m in custom-mods/*/; do
+            jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
+            if [[ -z "$jar" ]]; then
+              echo "::error::No runtime jar found in $m"
+              exit 1
+            fi
+            cp "$jar" modpack/mods/
+            echo "Staged: $(basename "$jar")"
+          done
+
+      - name: Resolve modpack server tree
+        working-directory: modpack
+        run: |
+          sed -i 's/^version = ".*"/version = "${{ steps.ref.outputs.version }}"/' pack.toml
+          packwiz refresh
+          curl -sSL -o packwiz-installer-bootstrap.jar \
+            https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar
+          java -jar packwiz-installer-bootstrap.jar -g -s server "$(pwd)/pack.toml"
+
+      - name: Rsync mods to VM staging
+        run: |
+          VERSION_DIR="mods.v${{ steps.ref.outputs.version }}"
+          rsync -az --delete \
+            --exclude='*.pw.toml' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            modpack/mods/ \
+            ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/staging/${VERSION_DIR}/
+
+      - name: Rsync datapacks (overlay onto live world, non-destructive)
+        run: |
+          rsync -az \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            modpack/server-overrides/world/datapacks/ \
+            ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/
+
+      - name: Atomic swap and restart
+        run: |
+          VERSION_DIR="mods.v${{ steps.ref.outputs.version }}"
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} "set -euo pipefail
+            cd ${{ env.INSTALL_DIR }}
+            if [ -d staging/${VERSION_DIR} ]; then
+              rm -rf ${VERSION_DIR}
+              mv staging/${VERSION_DIR} ./
+            fi
+            ln -sfn ${VERSION_DIR} mods
+            sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
+            ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
+            echo '${{ steps.ref.outputs.version }}' > .deployed_version
+          "
+
+      - name: Wait for service to come up
+        run: |
+          for i in $(seq 1 30); do
+            if ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+              "sudo -n /usr/bin/systemctl is-active ${{ env.SERVICE }}" | grep -q '^active$'; then
+              echo "${{ env.SERVICE }} is active"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "${{ env.SERVICE }} did not become active within 60s" >&2
+          exit 1

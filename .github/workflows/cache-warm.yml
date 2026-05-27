@@ -1,23 +1,29 @@
 name: Cache warm
 
-# Builds cobblemon-npc on push to main so the gradle cache is saved on the
-# default branch. Tag-triggered release runs cannot read caches scoped to
-# other tags, but they CAN read caches saved on main — so this populates the
-# cache pile that release.yml reads from.
+# Builds every module under custom-mods/ on push to main when build inputs
+# change, so the gradle cache lives on the default branch. Tag-triggered
+# release runs cannot read caches scoped to other tags but CAN read main's
+# cache — this populates the pile that release.yml and deploy-dev.yml read.
 #
-# Skipped unless build inputs change (build.gradle / wrapper / gradle.properties),
-# since cobblemon-npc Kotlin source changes don't affect cached dependencies.
+# Skipped unless build inputs (gradle scripts/wrapper/properties or these
+# workflow files) change. Source-only edits to mod code don't affect the
+# cached dependency graph.
 
 on:
   push:
     branches: [main]
     paths:
-      - 'custom-mods/cobblemon-npc/build.gradle'
-      - 'custom-mods/cobblemon-npc/gradle.properties'
-      - 'custom-mods/cobblemon-npc/gradle/**'
-      - 'custom-mods/cobblemon-npc/gradlew'
+      - 'custom-mods/*/build.gradle'
+      - 'custom-mods/*/build.gradle.kts'
+      - 'custom-mods/*/settings.gradle'
+      - 'custom-mods/*/settings.gradle.kts'
+      - 'custom-mods/*/gradle.properties'
+      - 'custom-mods/*/gradle/**'
+      - 'custom-mods/*/gradlew'
       - '.github/workflows/cache-warm.yml'
       - '.github/workflows/release.yml'
+      - '.github/workflows/deploy-dev.yml'
+      - '.github/workflows/deploy-prod.yml'
   workflow_dispatch:
 
 jobs:
@@ -37,12 +43,17 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle', '**/*.gradle.kts') }}
+          key: gradle-${{ runner.os }}-${{ hashFiles('custom-mods/*/build.gradle*', 'custom-mods/*/settings.gradle*') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Build cobblemon-npc
-        working-directory: custom-mods/cobblemon-npc
-        run: ./gradlew build --no-daemon
+      - name: Build all custom mods
+        run: |
+          set -euo pipefail
+          for m in custom-mods/*/; do
+            echo "::group::Build $m"
+            (cd "$m" && ./gradlew build --no-daemon)
+            echo "::endgroup::"
+          done
 
       - name: Cache packwiz binary
         id: cache-packwiz

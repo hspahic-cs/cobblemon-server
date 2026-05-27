@@ -1,5 +1,10 @@
 name: Release
 
+# Tag-triggered: builds all custom mods at the tagged version, exports a .mrpack,
+# and drafts a GitHub Release with the jars + mrpack attached. Does NOT deploy
+# anywhere — deploys are driven by deploy-dev (CHANGELOG-bump on main) and
+# deploy-prod (manual workflow_dispatch on a tag).
+
 on:
   push:
     tags:
@@ -34,15 +39,19 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          # Exclude gradle.properties from the hash: it contains mod_version,
-          # which bumps every release and would otherwise invalidate the cache.
-          # Dependency versions live in *.gradle files.
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle', '**/*.gradle.kts') }}
+          # Excludes gradle.properties (mod_version bumps every release; we
+          # pass -Pmod_version anyway). Dependency versions live in *.gradle*.
+          key: gradle-${{ runner.os }}-${{ hashFiles('custom-mods/*/build.gradle*', 'custom-mods/*/settings.gradle*') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Build cobblemon-npc
-        working-directory: custom-mods/cobblemon-npc
-        run: ./gradlew build --no-daemon -Pmod_version=${{ steps.version.outputs.version }}
+      - name: Build all custom mods
+        run: |
+          set -euo pipefail
+          for m in custom-mods/*/; do
+            echo "::group::Build $m"
+            (cd "$m" && ./gradlew build --no-daemon -Pmod_version=${{ steps.version.outputs.version }})
+            echo "::endgroup::"
+          done
 
       - name: Cache packwiz binary
         id: cache-packwiz
@@ -58,11 +67,20 @@ jobs:
       - name: Add packwiz to PATH
         run: echo "$HOME/go/bin" >> "$GITHUB_PATH"
 
-      - name: Stage cobblemon-npc jar into modpack
+      - name: Stage built jars into modpack
         run: |
+          set -euo pipefail
           mkdir -p modpack/mods
-          rm -f modpack/mods/cobblemon-npc-*.jar
-          cp custom-mods/cobblemon-npc/build/libs/cobblemon-npc-${{ steps.version.outputs.version }}.jar modpack/mods/
+          rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked}-*.jar
+          for m in custom-mods/*/; do
+            jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
+            if [[ -z "$jar" ]]; then
+              echo "::error::No runtime jar found in $m"
+              exit 1
+            fi
+            cp "$jar" modpack/mods/
+            echo "Staged: $(basename "$jar")"
+          done
 
       - name: Set pack version and export .mrpack
         working-directory: modpack
@@ -78,6 +96,18 @@ jobs:
           echo "path=$MRPACK" >> "$GITHUB_OUTPUT"
           echo "Found: $MRPACK"
 
+      - name: Collect built jars for release
+        id: jars
+        run: |
+          # Build a multi-line file list for the release artifacts.
+          {
+            for m in custom-mods/*/; do
+              jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
+              [[ -n "$jar" ]] && echo "$jar"
+            done
+          } > /tmp/release-files.txt
+          cat /tmp/release-files.txt
+
       - name: Create draft release
         uses: softprops/action-gh-release@v2
         with:
@@ -88,5 +118,5 @@ jobs:
           body: |
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/${{ github.ref_name }}/CHANGELOG.md) for changes.
           files: |
-            custom-mods/cobblemon-npc/build/libs/cobblemon-npc-${{ steps.version.outputs.version }}.jar
+            custom-mods/*/build/libs/cobblemon-*-${{ steps.version.outputs.version }}.jar
             ${{ steps.mrpack.outputs.path }}

@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "gymLeaderMultiplier": 2.5,
+  "tier1Reward": 25,
+  "tier2Reward": 60,
+  "tier3Reward": 120,
+  "tier4Reward": 220,
+  "tier5Reward": 360,
+  "tier6Reward": 550
+}

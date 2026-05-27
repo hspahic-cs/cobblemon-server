@@ -1,0 +1,280 @@
+{
+  "tier": "COMMON",
+  "totalWeightPct": 100.0,
+  "entries": [
+    {
+      "lootTier": "Floor",
+      "label": "20 Poké Balls",
+      "weightPct": 18.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:poke_ball",
+          "count": 20
+        }
+      ],
+      "notes": "Bread and butter, always useful"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "10 Great Balls",
+      "weightPct": 15.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:great_ball",
+          "count": 10
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "Floor",
+      "label": "3 Revives",
+      "weightPct": 12.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:revive",
+          "count": 3
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "Floor",
+      "label": "3 Max Potions",
+      "weightPct": 10.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:max_potion",
+          "count": 3
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "Floor",
+      "label": "5 Exp Candy S",
+      "weightPct": 7.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:exp_candy_s",
+          "count": 5
+        }
+      ],
+      "notes": "Small XP boost"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "5 Ultra Balls",
+      "weightPct": 6.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:ultra_ball",
+          "count": 5
+        }
+      ],
+      "notes": "Solid upgrade over floor"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "1 Max Revive",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:max_revive",
+          "count": 1
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "Mid",
+      "label": "5 EV Vitamin (random)",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:hp_up",
+          "count": 5
+        }
+      ],
+      "notes": "HP Up, Protein, etc."
+    },
+    {
+      "lootTier": "Mid",
+      "label": "1 Evolution Stone (random)",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:fire_stone",
+          "count": 1
+        }
+      ],
+      "notes": "Fire/Water/Thunder/Leaf/etc."
+    },
+    {
+      "lootTier": "Mid",
+      "label": "3 Exp Candy M",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:exp_candy_m",
+          "count": 3
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "Mid",
+      "label": "3 PP Up",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:pp_up",
+          "count": 3
+        }
+      ],
+      "notes": "Modest but PvP-relevant"
+    },
+    {
+      "lootTier": "High",
+      "label": "1 Rare Candy",
+      "weightPct": 1.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:rare_candy",
+          "count": 1
+        }
+      ],
+      "notes": "The benchmark 1% item"
+    },
+    {
+      "lootTier": "High",
+      "label": "1 Nature Mint (random)",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:nature_mint",
+          "count": 1
+        }
+      ],
+      "notes": "PvP utility"
+    },
+    {
+      "lootTier": "High",
+      "label": "2 EXP Candy L",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:exp_candy_l",
+          "count": 2
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "High",
+      "label": "Leftovers",
+      "weightPct": 1.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:leftovers",
+          "count": 1
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "lootTier": "High",
+      "label": "Common egg placeholder, no guaranteed IVs",
+      "weightPct": 0.0,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "common",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "No guaranteed IVs"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "1 Bottle Cap (single stat hyper train)",
+      "weightPct": 0.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:bottle_cap",
+          "count": 1
+        }
+      ],
+      "notes": "Best possible common pull"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "2 Common Keys",
+      "weightPct": 0.5,
+      "items": [
+        {
+          "type": "gacha_key",
+          "tier": "common",
+          "count": 2
+        }
+      ],
+      "notes": "Fun double-up"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "1 Rare Key",
+      "weightPct": 0.5,
+      "items": [
+        {
+          "type": "gacha_key",
+          "tier": "rare",
+          "count": 1
+        }
+      ],
+      "notes": "Upgrade"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "1 Lucky Egg",
+      "weightPct": 0.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:lucky_egg",
+          "count": 1
+        }
+      ],
+      "notes": "XP boost held item"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "1 Exp Share",
+      "weightPct": 0.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:exp_share",
+          "count": 1
+        }
+      ],
+      "notes": ""
+    }
+  ]
+}

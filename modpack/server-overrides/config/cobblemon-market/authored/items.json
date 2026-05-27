@@ -1,0 +1,44 @@
+{
+  "cobblemon:rare_candy": {
+    "baseBuyPrice": 6000,
+    "baseSellPrice": 2000,
+    "baseStock": 100,
+    "elasticity": 2.0,
+    "maxStockMultiplier": 10.0
+  },
+  "cobblemon:ultra_ball": {
+    "baseBuyPrice": 900,
+    "baseSellPrice": 300,
+    "baseStock": 100,
+    "elasticity": 0.5,
+    "maxStockMultiplier": 10.0
+  },
+  "cobblemon:great_ball": {
+    "baseBuyPrice": 300,
+    "baseSellPrice": 100,
+    "baseStock": 100,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0
+  },
+  "cobblemon:poke_ball": {
+    "baseBuyPrice": 90,
+    "baseSellPrice": 30,
+    "baseStock": 100,
+    "elasticity": 0.3,
+    "maxStockMultiplier": 10.0
+  },
+  "cobblemon:revive": {
+    "baseBuyPrice": 1500,
+    "baseSellPrice": 500,
+    "baseStock": 100,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0
+  },
+  "minecraft:carrot": {
+    "baseBuyPrice": 6,
+    "baseSellPrice": 3,
+    "baseStock": 1000,
+    "elasticity": 0.7,
+    "maxStockMultiplier": 10.0
+  }
+}

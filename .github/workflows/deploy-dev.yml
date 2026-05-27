@@ -162,9 +162,10 @@ jobs:
         if: steps.idempotency.outputs.skip != 'true'
         run: |
           # No --delete: don't remove datapacks the live world has that we don't ship.
-          # No --owner / --group: deployer doesn't own world/datapacks/, but is in
-          # the sysadmin group with g+w; -rltz preserves perms+times only.
-          rsync -rltz \
+          # No --owner / --group / --omit-dir-times: deployer doesn't own
+          # world/datapacks/ (sysadmin does), only has group write via the
+          # sysadmin group. utime() on the dir itself fails for non-owners.
+          rsync -rltzO \
             -e "ssh -o StrictHostKeyChecking=yes" \
             modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/

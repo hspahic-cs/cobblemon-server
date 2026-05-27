@@ -317,11 +317,11 @@ object LootTableLoader {
      * resulting `LootTable` to disk as JSON.
      */
     fun loadAll(configDir: java.nio.file.Path): Map<KeyTier, LootTable> {
-        val tablesDir = configDir.resolve("cobblemon-gacha").resolve("tables")
-        java.nio.file.Files.createDirectories(tablesDir)
         val out = mutableMapOf<KeyTier, LootTable>()
         for (tier in KeyTier.entries) {
-            val jsonFile = tablesDir.resolve("${tier.key}.json")
+            // tables/ is a subdir under authored/. Migrate per-file via ConfigPaths.
+            val jsonFile = com.cobblemongacha.internal.ConfigPaths.authored(configDir, "tables/${tier.key}.json")
+            java.nio.file.Files.createDirectories(jsonFile.parent)
             val table = if (java.nio.file.Files.exists(jsonFile)) {
                 loadJson(tier, jsonFile)
             } else {

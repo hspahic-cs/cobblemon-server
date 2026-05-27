@@ -1,6 +1,7 @@
 package com.cobblemonmarket.data
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -18,7 +19,7 @@ data class PlayerSpendData(
 
 class PlayerSpendStore(private val configDir: Path) {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-    private val file = configDir.resolve("cobblemon-market").resolve("player_spend.json")
+    private val file = ConfigPaths.runtime(configDir, "player_spend.json")
     private val players: MutableMap<String, PlayerSpendData> = mutableMapOf()
 
     fun load() {
@@ -34,7 +35,7 @@ class PlayerSpendStore(private val configDir: Path) {
     }
 
     fun save() {
-        configDir.resolve("cobblemon-market").createDirectories()
+        file.parent.createDirectories()
         file.writeText(gson.toJson(players))
     }
 

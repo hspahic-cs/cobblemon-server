@@ -1,17 +1,17 @@
 package com.cobblemonserver.npc.data
 
 import com.cobblemonserver.npc.CobblemonNpc
+import com.cobblemonserver.npc.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import net.minecraft.server.MinecraftServer
-import net.neoforged.fml.loading.FMLPaths
 
 /**
  * Loads npc-profession-pools.json and builds a map of professionId → List<species>.
  *
  * Resolution order:
- *   1. config/cobblemon-npc/profession-pools.json  (server operator override)
- *   2. /data/cobblemon-npc/profession-pools.json   (bundled in the mod jar)
+ *   1. config/cobblemon-npc/authored/profession-pools.json  (server operator override)
+ *   2. /data/cobblemon-npc/profession-pools.json            (bundled in the mod jar)
  */
 object ProfessionPoolLoader {
 
@@ -21,9 +21,7 @@ object ProfessionPoolLoader {
     private val pools: MutableMap<String, List<String>> = mutableMapOf()
 
     fun load(server: MinecraftServer) {
-        val configFile = FMLPaths.CONFIGDIR.get()
-            .resolve("cobblemon-npc/profession-pools.json")
-            .toFile()
+        val configFile = ConfigPaths.authored("profession-pools.json").toFile()
 
         val json = when {
             configFile.exists() -> {
@@ -45,7 +43,7 @@ object ProfessionPoolLoader {
         }
 
         parse(json)
-        CobblemonNpc.logger.info("cobblemon-npc: loaded ${pools.size} profession pools (deploy-flow test marker)")
+        CobblemonNpc.logger.info("cobblemon-npc: loaded ${pools.size} profession pools")
     }
 
     private fun parse(json: String) {

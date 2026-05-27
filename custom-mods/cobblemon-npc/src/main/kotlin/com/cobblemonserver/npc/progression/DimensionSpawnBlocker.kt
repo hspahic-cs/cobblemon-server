@@ -2,12 +2,12 @@ package com.cobblemonserver.npc.progression
 
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemonserver.npc.CobblemonNpc
+import com.cobblemonserver.npc.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import net.minecraft.resources.ResourceLocation
-import net.neoforged.fml.loading.FMLPaths
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -62,6 +62,5 @@ object DimensionSpawnBlocker {
         }
     }
 
-    private fun configPath(): Path =
-        FMLPaths.CONFIGDIR.get().resolve("cobblemon-npc").resolve("spawn-blocker.json")
+    private fun configPath(): Path = ConfigPaths.authored("spawn-blocker.json")
 }

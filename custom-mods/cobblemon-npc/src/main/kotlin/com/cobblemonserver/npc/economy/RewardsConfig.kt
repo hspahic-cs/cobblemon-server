@@ -1,10 +1,10 @@
 package com.cobblemonserver.npc.economy
 
 import com.cobblemonserver.npc.CobblemonNpc
+import com.cobblemonserver.npc.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
-import net.neoforged.fml.loading.FMLPaths
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -77,6 +77,5 @@ object RewardsConfig {
         }
     }
 
-    private fun configPath(): Path =
-        FMLPaths.CONFIGDIR.get().resolve("cobblemon-npc").resolve("rewards.json")
+    private fun configPath(): Path = ConfigPaths.authored("rewards.json")
 }

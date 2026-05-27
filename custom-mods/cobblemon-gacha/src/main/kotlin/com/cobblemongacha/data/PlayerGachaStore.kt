@@ -1,6 +1,7 @@
 package com.cobblemongacha.data
 
 import com.cobblemongacha.CobblemonGacha
+import com.cobblemongacha.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -17,7 +18,7 @@ import kotlin.io.path.writeText
  */
 class PlayerGachaStore(private val configDir: Path) {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-    private val file = configDir.resolve("cobblemon-gacha").resolve("players.json")
+    private val file = ConfigPaths.runtime(configDir, "players.json")
     private val players: MutableMap<String, PlayerGachaData> = mutableMapOf()
 
     fun load() {
@@ -33,7 +34,7 @@ class PlayerGachaStore(private val configDir: Path) {
     }
 
     fun save() {
-        configDir.resolve("cobblemon-gacha").createDirectories()
+        file.parent.createDirectories()
         file.writeText(gson.toJson(players))
     }
 

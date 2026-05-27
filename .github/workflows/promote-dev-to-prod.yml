@@ -1,0 +1,152 @@
+name: Promote dev configs to prod
+
+# Manually-triggered dev → prod authored-config sync.
+#
+# Workflow:
+#   1. SSHes to the VM, rsyncs /opt/cobblemon-dev/config/cobblemon-*/authored/
+#      → /opt/cobblemon-prod/config/cobblemon-*/authored/.
+#   2. Restarts cobblemon-prod so the new authored configs are picked up.
+#   3. Opens an automatic backup PR adding the dev-side authored configs
+#      to the repo. Optional to merge (the live edit is already on prod);
+#      it exists so a destroyed prod VM can be restored from the repo.
+#
+# See docs/design/mod-state-vs-config.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Short reason for the promote (recorded in the PR title)'
+        required: true
+        default: 'tweaks'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  promote:
+    runs-on: cobblemon-server
+    concurrency:
+      group: promote-prod
+      cancel-in-progress: false
+    env:
+      VM_HOST: 192.168.1.20
+      VM_USER: deployer
+      DEV_DIR: /opt/cobblemon-dev
+      PROD_DIR: /opt/cobblemon-prod
+      PROD_SERVICE: cobblemon-prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # PRs need real commits; can't use the default detached HEAD.
+          ref: main
+          fetch-depth: 0
+
+      - name: Install rsync + ssh
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq rsync openssh-client
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          install -m 0600 /etc/deploy-keys/id_ed25519 ~/.ssh/id_ed25519
+          install -m 0644 /etc/deploy-keys/known_hosts ~/.ssh/known_hosts
+
+      # ─── 1. Promote dev → prod on the VM ─────────────────────────────────────
+
+      - name: Rsync dev:authored/ → prod:authored/ (per-mod glob)
+        run: |
+          set -euo pipefail
+          # We have to run this via ssh on the VM because deployer can't rsync
+          # between two paths it doesn't own from a third machine. Inside the
+          # VM, deployer is in the sysadmin group with g+w on both sides.
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} "set -euo pipefail
+            shopt -s nullglob
+            promoted=0
+            for dir in ${{ env.DEV_DIR }}/config/cobblemon-*/authored; do
+              mod=\$(basename \$(dirname \"\$dir\"))
+              dest=${{ env.PROD_DIR }}/config/\$mod/authored/
+              mkdir -p \"\$dest\"
+              rsync -rltO \"\$dir/\" \"\$dest\"
+              echo \"promoted \$mod/authored/\"
+              promoted=\$((promoted + 1))
+            done
+            if [[ \$promoted -eq 0 ]]; then
+              echo '::warning::No authored configs found on dev; nothing to promote.'
+            fi
+          "
+
+      - name: Restart cobblemon-prod
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+            "sudo -n /usr/bin/systemctl restart ${{ env.PROD_SERVICE }}"
+
+      - name: Wait for cobblemon-prod
+        run: |
+          for i in $(seq 1 30); do
+            if ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+              "sudo -n /usr/bin/systemctl is-active ${{ env.PROD_SERVICE }}" | grep -q '^active$'; then
+              echo "${{ env.PROD_SERVICE }} is active"
+              break
+            fi
+            sleep 2
+            if [[ $i -eq 30 ]]; then
+              echo "${{ env.PROD_SERVICE }} did not become active within 60s" >&2
+              exit 1
+            fi
+          done
+
+      # ─── 2. Open backup PR with the promoted configs ────────────────────────
+
+      - name: Pull prod's authored configs back into the repo
+        run: |
+          set -euo pipefail
+          # Fetch each mod's authored/ dir into the repo, mirroring whatever
+          # we just rsynced onto prod. This becomes the PR diff.
+          mkdir -p modpack/server-overrides/config
+          rsync -rltzO \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            --include='cobblemon-*/' \
+            --include='cobblemon-*/authored/***' \
+            --exclude='*' \
+            ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.PROD_DIR }}/config/ \
+            modpack/server-overrides/config/
+
+      - name: Open backup PR (if there's a diff)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet modpack/server-overrides/config/; then
+            echo "No diff vs main; skipping PR (configs in repo already match prod)."
+            exit 0
+          fi
+
+          BRANCH="promote/$(date -u +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add modpack/server-overrides/config/
+          git commit -m "promote: ${{ inputs.reason }}
+
+          Authored configs promoted from dev → prod via Promote workflow.
+          See docs/design/mod-state-vs-config.md.
+
+          This PR is a backup — the live configs are already on prod. Merge
+          to keep the repo as source-of-truth, or close to discard."
+          git push -u origin "$BRANCH"
+
+          gh pr create \
+            --base main \
+            --head "$BRANCH" \
+            --title "promote(dev→prod): ${{ inputs.reason }}" \
+            --body "Authored configs promoted from dev to prod via the **Promote** workflow.
+
+          The live edits are already on prod — this PR exists so the repo stays
+          as a source-of-truth backup. Merging keeps git in sync; closing
+          discards the record but the live configs persist.
+
+          Triggered by @${{ github.actor }} on $(date -u +%Y-%m-%dT%H:%M:%SZ)."

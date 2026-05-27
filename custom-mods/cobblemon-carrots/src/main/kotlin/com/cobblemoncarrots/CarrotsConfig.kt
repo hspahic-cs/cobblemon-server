@@ -1,5 +1,6 @@
 package com.cobblemoncarrots
 
+import com.cobblemoncarrots.internal.ConfigPaths
 import com.google.gson.GsonBuilder
 import org.slf4j.LoggerFactory
 import java.nio.file.Files
@@ -31,12 +32,10 @@ data class CarrotsConfig(
         private val log = LoggerFactory.getLogger("cobblemon-carrots/config")
         private val gson = GsonBuilder().setPrettyPrinting().create()
         private const val FILE_NAME = "config.json"
-        private const val DIR_NAME = "cobblemon-carrots"
 
         fun load(configDir: Path): CarrotsConfig {
-            val dir = configDir.resolve(DIR_NAME)
-            Files.createDirectories(dir)
-            val file = dir.resolve(FILE_NAME)
+            val file = ConfigPaths.authored(configDir, FILE_NAME)
+            Files.createDirectories(file.parent)
             if (!Files.exists(file)) {
                 val defaults = CarrotsConfig()
                 Files.writeString(file, gson.toJson(defaults))

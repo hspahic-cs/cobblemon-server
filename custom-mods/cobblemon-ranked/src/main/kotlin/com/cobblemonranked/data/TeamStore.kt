@@ -1,6 +1,7 @@
 package com.cobblemonranked.data
 
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.internal.ConfigPaths
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -25,7 +26,12 @@ data class SavedTeam(
 
 class TeamStore(private val configDir: Path) {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
-    private val teamsDir = configDir.resolve("cobblemon-ranked").resolve("teams")
+    // Directory of per-player team files (<uuid>.json). Runtime: each file is
+    // an individual player's saved team. Per-file legacy migration would be
+    // unwieldy, so we just resolve the new dir; old `teams/` from before the
+    // refactor remains at the legacy path for any operator who wants to manually
+    // copy it.
+    private val teamsDir: Path = configDir.resolve("cobblemon-ranked").resolve("runtime").resolve("teams")
 
     fun saveTeam(uuid: UUID, pokemonList: List<Pokemon>) {
         teamsDir.createDirectories()

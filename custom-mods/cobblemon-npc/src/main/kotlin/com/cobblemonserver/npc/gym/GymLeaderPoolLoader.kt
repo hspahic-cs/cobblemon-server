@@ -1,17 +1,17 @@
 package com.cobblemonserver.npc.gym
 
 import com.cobblemonserver.npc.CobblemonNpc
+import com.cobblemonserver.npc.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import net.minecraft.server.MinecraftServer
-import net.neoforged.fml.loading.FMLPaths
 
 /**
  * Loads gym-leader-pool.json and exposes themed team data.
  *
  * Resolution order mirrors ProfessionPoolLoader:
- *   1. config/cobblemon-npc/gym-leader-pool.json  (server operator override)
- *   2. /data/cobblemon-npc/gym-leader-pool.json   (bundled in the mod jar)
+ *   1. config/cobblemon-npc/authored/gym-leader-pool.json  (server operator override)
+ *   2. /data/cobblemon-npc/gym-leader-pool.json            (bundled in the mod jar)
  */
 object GymLeaderPoolLoader {
 
@@ -34,9 +34,7 @@ object GymLeaderPoolLoader {
     )
 
     fun load(server: MinecraftServer) {
-        val configFile = FMLPaths.CONFIGDIR.get()
-            .resolve("cobblemon-npc/gym-leader-pool.json")
-            .toFile()
+        val configFile = ConfigPaths.authored("gym-leader-pool.json").toFile()
 
         val json = when {
             configFile.exists() -> {

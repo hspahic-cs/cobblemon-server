@@ -12,6 +12,28 @@ root README.
 
 ## [Unreleased]
 
+## [0.4.3] - 2026-05-27
+
+### Added
+- **Authored vs runtime config convention** — every in-house mod now writes
+  authored data (design choices like market prices, gym rewards) to
+  `config/cobblemon-<mod>/authored/` and runtime data (per-instance state
+  like ELO, market stock) to `runtime/`. Deploys ship `authored/`; `runtime/`
+  is never touched. See `docs/design/mod-state-vs-config.md`.
+- **`Deploy dev` / `Deploy prod`** now rsync `modpack/server-overrides/config/`
+  onto the live `config/` directory. Authored config changes ship through CI.
+- **`Promote` workflow** (manual `workflow_dispatch`): rsyncs dev's
+  `authored/` → prod's, restarts prod, opens an automatic backup PR
+  recording the change in the repo.
+
+### Changed
+- All 6 in-house mods (cobblemon-{npc,bridge,carrots,gacha,market,ranked})
+  refactored to read/write through a per-mod `internal.ConfigPaths` helper.
+  Legacy flat-layout configs auto-migrate to the new subdirectories on
+  first boot.
+- `cobblemon-npc`: removed the deploy-flow test marker from the
+  `loaded N profession pools` log line.
+
 ## [0.4.2] - 2026-05-27
 
 ### Added

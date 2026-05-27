@@ -38,9 +38,19 @@ before they go to prod.
 | Action on the repo | What deploys |
 |---|---|
 | Open a PR touching `custom-mods/` or `modpack/` | CI builds all 6 mods to verify |
-| **Merge a PR that bumps CHANGELOG.md** | dev auto-deploys ← *this is the deploy signal* |
-| Push a `vX.Y.Z` git tag | GitHub Release with .mrpack drafted (no deploy) |
+| **Merge a PR that bumps CHANGELOG.md** | dev auto-deploys + `dev-latest` mrpack updated ← *this is the deploy signal* |
+| Push a `vX.Y.Z` git tag | Tagged GitHub Release drafted with .mrpack (no deploy) |
 | Manually run "Deploy prod" workflow against a tag | prod deploys |
+
+## Where players get the modpack
+
+| Audience | URL | Updated when |
+|---|---|---|
+| **Dev testers** | https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest | Every dev deploy (overwritten in place) |
+| **Prod players** | https://github.com/hspahic-cs/cobblemon-server/releases/latest | Only on tagged `vX.Y.Z` releases |
+
+Players bookmark either URL once and re-download when they need the new pack.
+PrismLauncher: Add Instance → Import → paste URL.
 
 **Code merges without a CHANGELOG bump don't deploy anywhere.** The
 CHANGELOG entry is the explicit signal that says "this is ready to ship."
@@ -161,8 +171,13 @@ When green, dev is on 0.4.2.
 
 ### 7. Connect to dev and test
 
-In your NeoForge MC client (with the modpack installed via PrismLauncher),
-add server `108.21.168.120:25566` and join. Verify your change works.
+`Deploy dev` also overwrites the `dev-latest` GitHub pre-release with a
+freshly-built `.mrpack`. Players testing on dev can re-import from
+https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest
+in PrismLauncher each time they need to pick up new mods.
+
+Then add server `108.21.168.120:25566` in your MC client and join. Verify
+your change works.
 
 You can tail server logs from your Mac to confirm mods loaded correctly:
 

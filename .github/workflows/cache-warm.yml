@@ -20,10 +20,6 @@ on:
       - 'custom-mods/*/gradle.properties'
       - 'custom-mods/*/gradle/**'
       - 'custom-mods/*/gradlew'
-      - '.github/workflows/cache-warm.yml'
-      - '.github/workflows/release.yml'
-      - '.github/workflows/deploy-dev.yml'
-      - '.github/workflows/deploy-prod.yml'
   workflow_dispatch:
 
 jobs:

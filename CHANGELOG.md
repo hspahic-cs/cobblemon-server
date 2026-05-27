@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-05-27
+
+### Added
+- **`cobblemon-feedback` mod** — in-game `/feedback bug <text>` and
+  `/feedback suggest <text>` commands. Server captures rich metadata
+  (player username + UUID, dimension + biome + coords, TPS, party,
+  recent chat buffer, server log tail) and POSTs a labeled GitHub Issue
+  to `hspahic-cs/cobblemon-server`.
+- Per-player cooldown (60s default, configurable).
+- Async HTTP — the player isn't blocked while the issue creates.
+- Token + repo configured in `config/cobblemon-feedback/runtime/config.json`
+  (runtime path: never shipped via deploy, never in repo).
+
+### Notes
+- Phase 1 = server-side only. Phase 2 (later) will add a client mod for
+  screenshot capture and Cloudflare R2 upload.
+
 ## [0.4.4] - 2026-05-27
 
 ### Fixed

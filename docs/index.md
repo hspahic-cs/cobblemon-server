@@ -16,6 +16,8 @@ What the systems are and why they're designed that way.
 
 - **[design/gym-system.md](design/gym-system.md)** — gym tower, leader progression, AI difficulty, rewards
 - **[design/pvp-elo.md](design/pvp-elo.md)** — ranked ladder, betting, Elo math
+- **[design/player-feedback.md](design/player-feedback.md)** — `/feedback bug` and `/feedback suggest` → GitHub Issues
+- **[design/mod-state-vs-config.md](design/mod-state-vs-config.md)** — authored vs runtime config convention
 
 ## Reference data
 

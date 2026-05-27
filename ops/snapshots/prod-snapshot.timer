@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly cobblemon-prod snapshot (Wed 5am)
+
+[Timer]
+# Wed 05:00 local time. Persistent=true catches up on boot if the timer was missed.
+OnCalendar=Wed 05:00
+Persistent=true
+Unit=prod-snapshot.service
+
+[Install]
+WantedBy=timers.target

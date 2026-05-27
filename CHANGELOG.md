@@ -12,6 +12,13 @@ root README.
 
 ## [Unreleased]
 
+## [0.4.4] - 2026-05-27
+
+### Fixed
+- CI: dev-latest pre-release publish step in `Deploy dev` now installs the
+  gh CLI on the self-hosted runner before invoking it. Bare runner image
+  doesn't ship gh.
+
 ## [0.4.3] - 2026-05-27
 
 ### Added

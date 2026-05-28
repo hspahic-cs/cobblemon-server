@@ -8,10 +8,13 @@ import com.cobblemonbridge.battle.GymBattleAdjustHook
 import com.cobblemonbridge.battle.GymDefeatHook
 import com.cobblemonbridge.battle.GymPrereqHook
 import com.cobblemonbridge.commands.CommandAliases
+import com.cobblemonbridge.commands.GymTpCommands
 import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
 import com.cobblemonbridge.commands.WildCommand
 import com.cobblemonbridge.eggs.EggDefeatHook
+import com.cobblemonbridge.gymtp.GymTpNpcHook
+import com.cobblemonbridge.gymtp.GymTpRegistry
 import com.cobblemonbridge.quests.HealQuestHook
 import com.cobblemonbridge.quests.PartyLevelHook
 import com.cobblemonbridge.quests.SetHomeHook
@@ -24,6 +27,7 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import net.neoforged.neoforge.event.server.ServerStartingEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -61,12 +65,15 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)
 
+        NeoForge.EVENT_BUS.register(GymTpNpcHook)
+
         val cobbleloots = CobbleloootsAdapter.isPresent()
         if (cobbleloots) {
             NeoForge.EVENT_BUS.register(CobbleloootsAdapter)
         }
 
         NeoForge.EVENT_BUS.addListener(::onRegisterCommands)
+        NeoForge.EVENT_BUS.addListener(::onServerStarting)
 
         logger.info(
             "Cobblemon Bridge initialized — adjust_level + give_party_exp + party_level + " +
@@ -80,6 +87,12 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         HomeAliases.register(event.dispatcher)
         CommandAliases.register(event.dispatcher)
         WildCommand.register(event.dispatcher)
+        GymTpCommands.register(event.dispatcher)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun onServerStarting(event: ServerStartingEvent) {
+        GymTpRegistry.init()
     }
 
     companion object {

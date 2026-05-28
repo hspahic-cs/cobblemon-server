@@ -373,6 +373,10 @@ file = "server-overrides/config/cobblemon-npc/authored/spawn-blocker.json"
 hash = "d1b10a95165c1fa80d2bfb3fca9554f987e314e499dd116ea065d1a3d7db06b6"
 
 [[files]]
+file = "server-overrides/config/starterkit/kits/Default.txt"
+hash = "d9e6509c274ea60c78b1d5506b5111b67e6cf3ce0a12679511d8c835a5d454ae"
+
+[[files]]
 file = "server-overrides/datapacks/server-gyms/README.md"
 hash = "7c94dc8af589065d3636d145569d4dcf75e0768216ac43478356f47a4bbf035b"
 
@@ -1122,7 +1126,7 @@ hash = "ce5d80b6abfd1248f49eb68a9193e4f8d9703cecd710e70225da3cbb654ad610"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/_finalize.mcfunction"
-hash = "5b67a3328bbf6275b307b75a1f9b47b239a874a55a5420b096542dd62d02258c"
+hash = "2af6ba5c5545c26d609c1a47167e77e96cccda24bb1c4b32ff6244d6253c2416"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_gym_1.mcfunction"

@@ -19,8 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build all custom mods
+      - name: Build all custom mods (with tests)
         uses: ./.github/actions/build-modpack
+        with:
+          # PR validation runs the full `build` task which includes unit tests.
+          # Deploy workflows use the default (`assemble`) since the PR that
+          # bumped CHANGELOG already validated tests.
+          gradle-task: build
 
       - name: Validate modpack manifest
         working-directory: modpack

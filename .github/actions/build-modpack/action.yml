@@ -1,16 +1,23 @@
 name: Build modpack
 description: |
   Sets up JDK 21 + Go + restored caches, builds every custom mod under
-  custom-mods/, and stages the runtime jars into modpack/mods/. Optionally
+  custom-mods/ (with per-mod source-hash caching — unchanged mods skip
+  rebuild), and stages the runtime jars into modpack/mods/. Optionally
   resolves the full server tree via packwiz-installer-bootstrap (used by
   deploy workflows that need to ship resolved third-party jars to the VM).
+
+  ⚠️  ADDING A NEW MOD: extend the per-mod cache list below AND the
+  CACHE_HITS env block in the build step. The verification step at the
+  end of the build block fails loudly if you forget.
 
 inputs:
   mod-version:
     description: |
       Value passed as -Pmod_version to gradle. Bakes into each jar's
-      filename and mods.toml. If empty, gradle uses the default declared
-      in each mod's gradle.properties.
+      filename and mods.toml. NOTE: per-mod caching keys off source hash
+      only — bumping mod-version for an unchanged mod hits the cache and
+      ships the jar with its previous mod_version. That's by design:
+      per-mod versions reflect when their source last changed.
     required: false
     default: ''
   resolve-server-tree:
@@ -24,9 +31,18 @@ inputs:
     description: |
       If non-empty, sed pack.toml's `version = "..."` to this value before
       packwiz refresh. Used by release/deploy paths so the exported .mrpack
-      reports the right version.
+      reports the right version. The modpack-level version always tracks
+      the deploy/release tag, even when individual mod jars are cached.
     required: false
     default: ''
+  gradle-task:
+    description: |
+      Gradle task to run per mod. Defaults to `assemble` (build jars
+      only, skip tests) for fast deploys. Use `build` to also run tests
+      — pr-validation sets this. Deploys default to `assemble` since
+      tests already ran on the PR that bumped CHANGELOG.
+    required: false
+    default: 'assemble'
 
 runs:
   using: composite
@@ -42,7 +58,7 @@ runs:
       with:
         go-version: '1.22'
 
-    - name: Cache Gradle
+    - name: Cache Gradle (deps + wrapper)
       uses: actions/cache@v4
       with:
         path: |
@@ -69,21 +85,125 @@ runs:
       shell: bash
       run: echo "$HOME/go/bin" >> "$GITHUB_PATH"
 
-    - name: Build all custom mods
+    # ─── Per-mod jar cache ─────────────────────────────────────────────────────
+    # Each mod gets its own cache keyed by a hash of its sources + build files.
+    # Cache hit  → restore build/libs/, skip gradle build for that mod (~5s).
+    # Cache miss → run gradle assemble/build for that mod (~30-60s per mod).
+    #
+    # Composite actions can't strategy.matrix, so we enumerate mods statically.
+    # The verification step in "Build only mods missing from cache" fails the
+    # workflow if a custom-mods/<dir> exists without a matching cache stanza.
+
+    - name: Cache cobblemon-bridge build
+      id: cache-bridge
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-bridge/build/libs
+        key: jar-cobblemon-bridge-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-bridge/src/**', 'custom-mods/cobblemon-bridge/build.gradle*', 'custom-mods/cobblemon-bridge/gradle.properties') }}
+
+    - name: Cache cobblemon-carrots build
+      id: cache-carrots
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-carrots/build/libs
+        key: jar-cobblemon-carrots-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-carrots/src/**', 'custom-mods/cobblemon-carrots/build.gradle*', 'custom-mods/cobblemon-carrots/gradle.properties') }}
+
+    - name: Cache cobblemon-feedback build
+      id: cache-feedback
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-feedback/build/libs
+        key: jar-cobblemon-feedback-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-feedback/src/**', 'custom-mods/cobblemon-feedback/build.gradle*', 'custom-mods/cobblemon-feedback/gradle.properties') }}
+
+    - name: Cache cobblemon-gacha build
+      id: cache-gacha
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-gacha/build/libs
+        key: jar-cobblemon-gacha-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-gacha/src/**', 'custom-mods/cobblemon-gacha/build.gradle*', 'custom-mods/cobblemon-gacha/gradle.properties') }}
+
+    - name: Cache cobblemon-market build
+      id: cache-market
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-market/build/libs
+        key: jar-cobblemon-market-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-market/src/**', 'custom-mods/cobblemon-market/build.gradle*', 'custom-mods/cobblemon-market/gradle.properties') }}
+
+    - name: Cache cobblemon-npc build
+      id: cache-npc
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-npc/build/libs
+        key: jar-cobblemon-npc-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-npc/src/**', 'custom-mods/cobblemon-npc/build.gradle*', 'custom-mods/cobblemon-npc/gradle.properties') }}
+
+    - name: Cache cobblemon-ranked build
+      id: cache-ranked
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-ranked/build/libs
+        key: jar-cobblemon-ranked-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-ranked/src/**', 'custom-mods/cobblemon-ranked/build.gradle*', 'custom-mods/cobblemon-ranked/gradle.properties') }}
+
+    - name: Build only mods missing from cache
       shell: bash
       env:
         MOD_VERSION: ${{ inputs.mod-version }}
+        GRADLE_TASK: ${{ inputs.gradle-task }}
+        # Two-column "<mod>:<hit>" lines. Update when adding a new mod.
+        CACHE_HITS: |
+          cobblemon-bridge:${{ steps.cache-bridge.outputs.cache-hit }}
+          cobblemon-carrots:${{ steps.cache-carrots.outputs.cache-hit }}
+          cobblemon-feedback:${{ steps.cache-feedback.outputs.cache-hit }}
+          cobblemon-gacha:${{ steps.cache-gacha.outputs.cache-hit }}
+          cobblemon-market:${{ steps.cache-market.outputs.cache-hit }}
+          cobblemon-npc:${{ steps.cache-npc.outputs.cache-hit }}
+          cobblemon-ranked:${{ steps.cache-ranked.outputs.cache-hit }}
       run: |
         set -euo pipefail
-        for m in custom-mods/*/; do
-          echo "::group::Build $m"
+
+        # Parse CACHE_HITS into an associative array.
+        declare -A HIT
+        while IFS=':' read -r mod hit; do
+          mod="${mod#"${mod%%[![:space:]]*}"}"  # ltrim
+          [[ -n "$mod" ]] && HIT["$mod"]="$hit"
+        done <<< "$CACHE_HITS"
+
+        # Verify every directory under custom-mods/ is enumerated. Anyone
+        # adding a new mod must extend the cache stanzas + CACHE_HITS list
+        # in this composite. Fail loudly with a clear error if not.
+        missing=()
+        for dir in custom-mods/*/; do
+          mod=$(basename "$dir")
+          [[ -z "${HIT[$mod]+x}" ]] && missing+=("$mod")
+        done
+        if (( ${#missing[@]} > 0 )); then
+          echo "::error::Mods missing from build-modpack/action.yml: ${missing[*]}"
+          echo "::error::Add a 'Cache cobblemon-<name> build' step AND a CACHE_HITS line for each."
+          echo "::error::See the comment block above the cache list in .github/actions/build-modpack/action.yml."
+          exit 1
+        fi
+
+        # Build only the mods that cache-missed (or whose cached build/libs/
+        # is somehow empty — defense in depth).
+        rebuilt=0
+        for mod in "${!HIT[@]}"; do
+          dir="custom-mods/$mod"
+          jar=$(ls "$dir/build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1 || true)
+          if [[ "${HIT[$mod]}" == "true" && -n "$jar" ]]; then
+            echo "::group::cache hit: $mod (skipping build, will ship $(basename "$jar"))"
+            ls -la "$dir/build/libs/"
+            echo "::endgroup::"
+            continue
+          fi
+          echo "::group::cache miss: building $mod (gradle $GRADLE_TASK)"
           if [[ -n "$MOD_VERSION" ]]; then
-            (cd "$m" && ./gradlew build --no-daemon -Pmod_version="$MOD_VERSION")
+            (cd "$dir" && ./gradlew "$GRADLE_TASK" --no-daemon -Pmod_version="$MOD_VERSION")
           else
-            (cd "$m" && ./gradlew build --no-daemon)
+            (cd "$dir" && ./gradlew "$GRADLE_TASK" --no-daemon)
           fi
           echo "::endgroup::"
+          rebuilt=$((rebuilt + 1))
         done
+        echo "Rebuilt $rebuilt of ${#HIT[@]} mods (rest were cache hits)."
 
     - name: Stage built jars into modpack
       shell: bash

@@ -1,0 +1,127 @@
+name: Build modpack
+description: |
+  Sets up JDK 21 + Go + restored caches, builds every custom mod under
+  custom-mods/, and stages the runtime jars into modpack/mods/. Optionally
+  resolves the full server tree via packwiz-installer-bootstrap (used by
+  deploy workflows that need to ship resolved third-party jars to the VM).
+
+inputs:
+  mod-version:
+    description: |
+      Value passed as -Pmod_version to gradle. Bakes into each jar's
+      filename and mods.toml. If empty, gradle uses the default declared
+      in each mod's gradle.properties.
+    required: false
+    default: ''
+  resolve-server-tree:
+    description: |
+      If 'true', also runs packwiz-installer-bootstrap -s server to
+      download the resolved third-party server jars into modpack/mods/.
+      Deploy workflows need this; pr-validation and release.yml don't.
+    required: false
+    default: 'false'
+  set-pack-version:
+    description: |
+      If non-empty, sed pack.toml's `version = "..."` to this value before
+      packwiz refresh. Used by release/deploy paths so the exported .mrpack
+      reports the right version.
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Set up Go (for packwiz)
+      uses: actions/setup-go@v5
+      with:
+        go-version: '1.22'
+
+    - name: Cache Gradle
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        # Excludes gradle.properties (mod_version bumps every release; we
+        # pass -Pmod_version anyway). Dependency versions live in *.gradle*.
+        key: gradle-${{ runner.os }}-${{ hashFiles('custom-mods/*/build.gradle*', 'custom-mods/*/settings.gradle*') }}
+        restore-keys: gradle-${{ runner.os }}-
+
+    - name: Cache packwiz binary
+      id: cache-packwiz
+      uses: actions/cache@v4
+      with:
+        path: ~/go/bin/packwiz
+        key: packwiz-${{ runner.os }}-dfd8b68a4796c763e25bad50265ea1f1233e24f1
+
+    - name: Install packwiz
+      if: steps.cache-packwiz.outputs.cache-hit != 'true'
+      shell: bash
+      run: go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
+
+    - name: Add packwiz to PATH
+      shell: bash
+      run: echo "$HOME/go/bin" >> "$GITHUB_PATH"
+
+    - name: Build all custom mods
+      shell: bash
+      env:
+        MOD_VERSION: ${{ inputs.mod-version }}
+      run: |
+        set -euo pipefail
+        for m in custom-mods/*/; do
+          echo "::group::Build $m"
+          if [[ -n "$MOD_VERSION" ]]; then
+            (cd "$m" && ./gradlew build --no-daemon -Pmod_version="$MOD_VERSION")
+          else
+            (cd "$m" && ./gradlew build --no-daemon)
+          fi
+          echo "::endgroup::"
+        done
+
+    - name: Stage built jars into modpack
+      shell: bash
+      run: |
+        set -euo pipefail
+        mkdir -p modpack/mods
+        # Remove prior versions of in-house mods only — keep .pw.toml manifests
+        # for the third-party mods packwiz will resolve.
+        rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked,feedback}-*.jar
+        for m in custom-mods/*/; do
+          # Ship the runtime jar, NOT the -sources.jar.
+          jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
+          if [[ -z "$jar" ]]; then
+            echo "::error::No runtime jar found in $m"
+            exit 1
+          fi
+          cp "$jar" modpack/mods/
+          echo "Staged: $(basename "$jar")"
+        done
+
+    - name: Set pack version (if requested)
+      if: inputs.set-pack-version != ''
+      shell: bash
+      working-directory: modpack
+      env:
+        PACK_VERSION: ${{ inputs.set-pack-version }}
+      run: |
+        sed -i "s/^version = \".*\"/version = \"$PACK_VERSION\"/" pack.toml
+        packwiz refresh
+
+    - name: Resolve modpack server tree (if requested)
+      if: inputs.resolve-server-tree == 'true'
+      shell: bash
+      working-directory: modpack
+      run: |
+        # packwiz-installer-bootstrap downloads everything pack.toml references
+        # (server side) into the current dir. After this, modpack/mods/ holds
+        # the actual jars next to the *.pw.toml manifests.
+        curl -sSL -o packwiz-installer-bootstrap.jar \
+          https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar
+        java -jar packwiz-installer-bootstrap.jar -g -s server "$(pwd)/pack.toml"

@@ -1,0 +1,49 @@
+name: Tailscale + SSH setup
+description: |
+  Joins our tailnet (tag:ci-runner) and prepares ~/.ssh with the deployer
+  private key + a known_hosts entry harvested from the target host. After
+  this runs, the workflow can `ssh deployer@<vm-host>` and `rsync ... -e ssh`
+  with `StrictHostKeyChecking=yes` against the VM via tailnet.
+
+  The Tailscale ACL only allows tag:ci-runner → tag:cobblemon-vm:22, so the
+  blast radius is limited to that single connection target.
+
+inputs:
+  ts-oauth-client-id:
+    description: Tailscale OAuth client ID (TS_OAUTH_CLIENT_ID secret)
+    required: true
+  ts-oauth-secret:
+    description: Tailscale OAuth client secret (TS_OAUTH_SECRET secret)
+    required: true
+  ssh-private-key:
+    description: PEM-format ed25519 private key for the deployer user (DEPLOYER_SSH_KEY secret)
+    required: true
+  vm-host:
+    description: Tailnet hostname of the target VM (e.g. cobblemon-dev)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Tailscale connect
+      uses: tailscale/github-action@v3
+      with:
+        oauth-client-id: ${{ inputs.ts-oauth-client-id }}
+        oauth-secret: ${{ inputs.ts-oauth-secret }}
+        tags: tag:ci-runner
+
+    - name: Prepare SSH
+      shell: bash
+      env:
+        SSH_KEY: ${{ inputs.ssh-private-key }}
+        VM_HOST: ${{ inputs.vm-host }}
+      run: |
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        umask 077
+        printf '%s\n' "$SSH_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        # Capture host key on first connect over the tailnet. The connection
+        # is already authenticated by Tailscale's ACL; this lets subsequent
+        # ssh calls use StrictHostKeyChecking=yes.
+        ssh-keyscan -H "$VM_HOST" >> ~/.ssh/known_hosts 2>/dev/null

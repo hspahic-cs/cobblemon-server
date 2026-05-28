@@ -1,0 +1,81 @@
+name: Publish .mrpack to GitHub Release
+description: |
+  Exports modpack/*.mrpack via packwiz, optionally clears prior assets on
+  a rolling release tag, and uploads the new mrpack via softprops. Used
+  by deploy-dev (rolling dev-latest pre-release) and release.yml (per-tag
+  release).
+
+inputs:
+  tag-name:
+    description: Release tag to publish to (e.g. dev-latest, v1.2.3)
+    required: true
+  release-name:
+    description: Display name for the release
+    required: true
+  prerelease:
+    description: 'true' for pre-release (rolling), 'false' for tagged
+    required: false
+    default: 'false'
+  draft:
+    description: 'true' to leave as draft (release.yml does this)
+    required: false
+    default: 'false'
+  body:
+    description: Markdown body for the release
+    required: false
+    default: ''
+  rolling:
+    description: |
+      'true' if this is a rolling release tag (e.g. dev-latest) — clears
+      prior assets before upload so versioned filenames don't accumulate.
+    required: false
+    default: 'false'
+  extra-files:
+    description: |
+      Newline-separated additional file globs to attach (e.g. custom-mods/*/build/libs/*.jar).
+      The exported .mrpack is always included.
+    required: false
+    default: ''
+  github-token:
+    description: GITHUB_TOKEN for API auth
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Export .mrpack
+      shell: bash
+      working-directory: modpack
+      run: |
+        packwiz mr export
+        ls *.mrpack
+
+    - name: Clear prior assets on rolling tag
+      if: inputs.rolling == 'true'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+        TAG: ${{ inputs.tag-name }}
+        REPO: ${{ github.repository }}
+      run: |
+        # The .mrpack filename includes the pack version, so without this the
+        # rolling release would accumulate one stale .mrpack per dev deploy.
+        if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+          gh release view "$TAG" --repo "$REPO" --json assets -q '.assets[].name' \
+            | while read -r asset; do
+                [[ -n "$asset" ]] && gh release delete-asset "$TAG" "$asset" --repo "$REPO" --yes || true
+              done
+        fi
+
+    - name: Publish release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ inputs.tag-name }}
+        name: ${{ inputs.release-name }}
+        prerelease: ${{ inputs.prerelease }}
+        draft: ${{ inputs.draft }}
+        make_latest: false
+        body: ${{ inputs.body }}
+        files: |
+          modpack/*.mrpack
+          ${{ inputs.extra-files }}

@@ -7,9 +7,7 @@ name: Deploy prod
 # Promotion gate: refuses to deploy a version that hasn't already been deployed
 # to dev (verified by reading /opt/cobblemon-dev/.deployed_version on the VM).
 #
-# Runs on ubuntu-latest. Reaches the LAN-only Minecraft VM via Tailscale —
-# the workflow joins our tailnet with an ephemeral OAuth-minted auth key,
-# then SSH/rsync's to the VM's tailnet hostname.
+# Runs on ubuntu-latest. Reaches the LAN-only Minecraft VM via Tailscale.
 
 on:
   workflow_dispatch:
@@ -49,29 +47,17 @@ jobs:
           echo "ref=$REF" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: ${{ steps.ref.outputs.ref }}
 
-      # Join the tailnet. Tailscale's OAuth client mints a short-lived
-      # ephemeral auth key per workflow run, tagged tag:ci-runner. The
-      # ACL only allows tag:ci-runner → tag:cobblemon-vm:22.
-      - name: Tailscale connect
-        uses: tailscale/github-action@v3
+      - name: Tailscale + SSH setup
+        uses: ./.github/actions/tailscale-ssh
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci-runner
-
-      - name: Prepare SSH
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          umask 077
-          printf '%s\n' "${{ secrets.DEPLOYER_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ env.VM_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+          ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          ssh-private-key: ${{ secrets.DEPLOYER_SSH_KEY }}
+          vm-host: ${{ env.VM_HOST }}
 
       - name: Confirm version already deployed to dev
         if: ${{ !inputs.skip_dev_check }}
@@ -85,73 +71,12 @@ jobs:
           fi
           echo "Dev is on ${{ steps.ref.outputs.version }} — proceeding to prod."
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Set up Go (for packwiz)
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
-
-      - name: Cache packwiz binary
-        id: cache-packwiz
-        uses: actions/cache@v4
-        with:
-          path: ~/go/bin/packwiz
-          key: packwiz-${{ runner.os }}-dfd8b68a4796c763e25bad50265ea1f1233e24f1
-
-      - name: Install packwiz
-        if: steps.cache-packwiz.outputs.cache-hit != 'true'
-        run: |
-          go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
-
-      - name: Add packwiz to PATH
-        run: echo "$HOME/go/bin" >> "$GITHUB_PATH"
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('custom-mods/*/build.gradle*', 'custom-mods/*/settings.gradle*') }}
-          restore-keys: gradle-${{ runner.os }}-
-
       - name: Build all custom mods
-        run: |
-          set -euo pipefail
-          for m in custom-mods/*/; do
-            echo "::group::Build $m"
-            (cd "$m" && ./gradlew build --no-daemon -Pmod_version=${{ steps.ref.outputs.version }})
-            echo "::endgroup::"
-          done
-
-      - name: Stage built jars into modpack
-        run: |
-          set -euo pipefail
-          mkdir -p modpack/mods
-          rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked}-*.jar
-          for m in custom-mods/*/; do
-            jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
-            if [[ -z "$jar" ]]; then
-              echo "::error::No runtime jar found in $m"
-              exit 1
-            fi
-            cp "$jar" modpack/mods/
-            echo "Staged: $(basename "$jar")"
-          done
-
-      - name: Resolve modpack server tree
-        working-directory: modpack
-        run: |
-          sed -i 's/^version = ".*"/version = "${{ steps.ref.outputs.version }}"/' pack.toml
-          packwiz refresh
-          curl -sSL -o packwiz-installer-bootstrap.jar \
-            https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar
-          java -jar packwiz-installer-bootstrap.jar -g -s server "$(pwd)/pack.toml"
+        uses: ./.github/actions/build-modpack
+        with:
+          mod-version: ${{ steps.ref.outputs.version }}
+          set-pack-version: ${{ steps.ref.outputs.version }}
+          resolve-server-tree: 'true'
 
       - name: Rsync mods to VM staging
         run: |
@@ -171,8 +96,6 @@ jobs:
 
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         run: |
-          # See docs/design/mod-state-vs-config.md. Ships only authored/
-          # files; runtime/ and third-party configs untouched.
           if [[ -d modpack/server-overrides/config ]]; then
             rsync -rltzO \
               -e "ssh -o StrictHostKeyChecking=yes" \

@@ -7,9 +7,6 @@ name: Deploy dev
 # Idempotent: stores the deployed version on the VM at .deployed_version; reruns
 # for the same version are no-ops.
 #
-# workflow_dispatch input lets you force-deploy any version on demand (e.g. after
-# fixing a deploy-time issue without bumping CHANGELOG again).
-#
 # Runs on ubuntu-latest. Reaches the LAN-only Minecraft VM via Tailscale —
 # the workflow joins our tailnet with an ephemeral OAuth-minted auth key,
 # then SSH/rsync's to the VM's tailnet hostname.
@@ -29,19 +26,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     concurrency:
-      # One dev deploy at a time. A queued deploy waits behind the current one.
       group: deploy-dev
       cancel-in-progress: false
     env:
-      VM_HOST: cobblemon-dev          # tailnet hostname (see Tailscale setup)
+      VM_HOST: cobblemon-dev          # tailnet hostname
       VM_USER: deployer
       ENV_NAME: dev
       SERVICE: cobblemon-dev
       INSTALL_DIR: /opt/cobblemon-dev
       KEEP_VERSIONS: 5
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Resolve target version
         id: ver
@@ -51,7 +46,6 @@ jobs:
             echo "Using workflow_dispatch input: $VERSION"
           else
             # Topmost `## [X.Y.Z] - YYYY-MM-DD` heading in CHANGELOG.md.
-            # Skips `## [Unreleased]`. First match wins.
             VERSION=$(awk '
               /^## \[Unreleased\]/ { next }
               /^## \[[0-9]+\.[0-9]+\.[0-9]+\]/ {
@@ -65,32 +59,13 @@ jobs:
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      # Join the tailnet. Tailscale's OAuth client mints a short-lived
-      # ephemeral auth key per workflow run, tagged tag:ci-runner. The
-      # ACL only allows tag:ci-runner → tag:cobblemon-vm:22.
-      - name: Tailscale connect
-        uses: tailscale/github-action@v3
+      - name: Tailscale + SSH setup
+        uses: ./.github/actions/tailscale-ssh
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci-runner
-
-      - name: Prepare SSH
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          # Deployer private key from repo secret. Same key as the prior
-          # k8s-secret-mounted runner.
-          umask 077
-          printf '%s\n' "${{ secrets.DEPLOYER_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          # Trust the VM on first contact via tailnet hostname. We can't
-          # pre-pin a host key here because the VM's host key wasn't tied
-          # to a tailnet hostname before — but the connection is already
-          # encrypted and authenticated by Tailscale's tag:ci-runner →
-          # tag:cobblemon-vm ACL. Capture the host key on first connect
-          # so subsequent steps can use StrictHostKeyChecking=yes.
-          ssh-keyscan -H ${{ env.VM_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+          ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          ssh-private-key: ${{ secrets.DEPLOYER_SSH_KEY }}
+          vm-host: ${{ env.VM_HOST }}
 
       - name: Skip if version already deployed
         id: idempotency
@@ -105,87 +80,13 @@ jobs:
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Set up JDK 21
-        if: steps.idempotency.outputs.skip != 'true'
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Set up Go (for packwiz)
-        if: steps.idempotency.outputs.skip != 'true'
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.22'
-
-      - name: Cache packwiz binary
-        if: steps.idempotency.outputs.skip != 'true'
-        id: cache-packwiz
-        uses: actions/cache@v4
-        with:
-          path: ~/go/bin/packwiz
-          key: packwiz-${{ runner.os }}-dfd8b68a4796c763e25bad50265ea1f1233e24f1
-
-      - name: Install packwiz
-        if: steps.idempotency.outputs.skip != 'true' && steps.cache-packwiz.outputs.cache-hit != 'true'
-        run: |
-          go install github.com/packwiz/packwiz@dfd8b68a4796c763e25bad50265ea1f1233e24f1
-
-      - name: Add packwiz to PATH
-        if: steps.idempotency.outputs.skip != 'true'
-        run: echo "$HOME/go/bin" >> "$GITHUB_PATH"
-
-      - name: Cache Gradle
-        if: steps.idempotency.outputs.skip != 'true'
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('custom-mods/*/build.gradle*', 'custom-mods/*/settings.gradle*') }}
-          restore-keys: gradle-${{ runner.os }}-
-
       - name: Build all custom mods
         if: steps.idempotency.outputs.skip != 'true'
-        run: |
-          set -euo pipefail
-          for m in custom-mods/*/; do
-            echo "::group::Build $m"
-            (cd "$m" && ./gradlew build --no-daemon -Pmod_version=${{ steps.ver.outputs.version }})
-            echo "::endgroup::"
-          done
-
-      - name: Stage built jars into modpack
-        if: steps.idempotency.outputs.skip != 'true'
-        run: |
-          set -euo pipefail
-          mkdir -p modpack/mods
-          # Remove prior versions of our custom mods only — keep .pw.toml manifests
-          # for the third-party mods packwiz will resolve.
-          rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked}-*.jar
-          for m in custom-mods/*/; do
-            # Ship the runtime jar, NOT the -sources.jar.
-            jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
-            if [[ -z "$jar" ]]; then
-              echo "::error::No runtime jar found in $m"
-              exit 1
-            fi
-            cp "$jar" modpack/mods/
-            echo "Staged: $(basename "$jar")"
-          done
-
-      - name: Resolve modpack server tree
-        # packwiz-installer-bootstrap downloads everything pack.toml references
-        # (server side) into the current dir. After this, modpack/mods/ holds
-        # the actual jars next to the *.pw.toml manifests.
-        if: steps.idempotency.outputs.skip != 'true'
-        working-directory: modpack
-        run: |
-          sed -i 's/^version = ".*"/version = "${{ steps.ver.outputs.version }}"/' pack.toml
-          packwiz refresh
-          curl -sSL -o packwiz-installer-bootstrap.jar \
-            https://github.com/packwiz/packwiz-installer-bootstrap/releases/latest/download/packwiz-installer-bootstrap.jar
-          java -jar packwiz-installer-bootstrap.jar -g -s server "$(pwd)/pack.toml"
+        uses: ./.github/actions/build-modpack
+        with:
+          mod-version: ${{ steps.ver.outputs.version }}
+          set-pack-version: ${{ steps.ver.outputs.version }}
+          resolve-server-tree: 'true'
 
       - name: Rsync mods to VM staging
         if: steps.idempotency.outputs.skip != 'true'
@@ -201,9 +102,6 @@ jobs:
         if: steps.idempotency.outputs.skip != 'true'
         run: |
           # No --delete: don't remove datapacks the live world has that we don't ship.
-          # No --owner / --group / --omit-dir-times: deployer doesn't own
-          # world/datapacks/ (sysadmin does), only has group write via the
-          # sysadmin group. utime() on the dir itself fails for non-owners.
           rsync -rltzO \
             -e "ssh -o StrictHostKeyChecking=yes" \
             modpack/server-overrides/datapacks/ \
@@ -212,10 +110,7 @@ jobs:
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         if: steps.idempotency.outputs.skip != 'true'
         run: |
-          # Ships any cobblemon-*/authored/ files committed in the repo into
-          # the live config/. No --delete (preserves runtime/ and any third-
-          # party config we don't manage). Same flag set as datapacks rsync.
-          # See docs/design/mod-state-vs-config.md for the convention.
+          # See docs/design/mod-state-vs-config.md.
           if [[ -d modpack/server-overrides/config ]]; then
             rsync -rltzO \
               -e "ssh -o StrictHostKeyChecking=yes" \
@@ -237,9 +132,7 @@ jobs:
             fi
             ln -sfn ${VERSION_DIR} mods
             sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
-            # Prune old mods.v* dirs, keeping the most recent N.
             ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
-            # Record the deployed version for idempotency.
             echo '${{ steps.ver.outputs.version }}' > .deployed_version
           "
 
@@ -259,43 +152,15 @@ jobs:
             fi
           done
 
-      # ─── publish the mrpack to the rolling dev-latest pre-release ──────────────
-      # Now that we run on ubuntu-latest, GitHub's datacenter has full upstream
-      # bandwidth to uploads.github.com. The split deploy/publish-artifact dance
-      # we needed for the self-hosted runner is gone — single softprops upload
-      # finishes in seconds and is reliable.
-
-      - name: Export .mrpack
-        if: steps.idempotency.outputs.skip != 'true'
-        working-directory: modpack
-        run: |
-          packwiz mr export
-          ls *.mrpack
-
-      - name: Clear prior dev-latest assets
-        if: steps.idempotency.outputs.skip != 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-        run: |
-          # The .mrpack filename includes the pack version, so without this the
-          # rolling release would accumulate one stale .mrpack per dev deploy.
-          if gh release view dev-latest --repo "$REPO" >/dev/null 2>&1; then
-            gh release view dev-latest --repo "$REPO" --json assets -q '.assets[].name' \
-              | while read -r asset; do
-                  [[ -n "$asset" ]] && gh release delete-asset dev-latest "$asset" --repo "$REPO" --yes || true
-                done
-          fi
-
       - name: Publish dev-latest pre-release
         if: steps.idempotency.outputs.skip != 'true'
-        uses: softprops/action-gh-release@v2
+        uses: ./.github/actions/publish-mrpack
         with:
-          tag_name: dev-latest
-          name: "Dev latest (${{ steps.ver.outputs.version }})"
-          prerelease: true
-          make_latest: false
-          files: modpack/*.mrpack
+          tag-name: dev-latest
+          release-name: "Dev latest (${{ steps.ver.outputs.version }})"
+          prerelease: 'true'
+          rolling: 'true'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             Rolling pre-release tracking the head of `cobblemon-dev`.
 

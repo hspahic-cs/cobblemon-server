@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-05-28
+
 ### Fixed
 - **cobblemon-gacha**: quest reward grants now actually fire. The reward chain
   (advancement → reward function → `_finalize.mcfunction` → `gacha admin grant`)

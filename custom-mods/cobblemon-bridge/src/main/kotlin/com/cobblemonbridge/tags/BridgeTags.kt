@@ -107,4 +107,13 @@ object BridgeTags {
 
     fun isGymChallenge(tags: Iterable<String>): Boolean =
         tags.any { it == GYM_CHALLENGE }
+
+    /**
+     * Tag marking a vanilla villager as a gym-TP NPC. Right-clicking the tagged villager opens
+     * [com.cobblemonbridge.gymtp.GymTpMenu]. Stamped by `/gymtp spawn`.
+     */
+    const val GYM_TP_NPC: String = "$NAMESPACE.gym_tp_npc"
+
+    fun isGymTpNpc(tags: Iterable<String>): Boolean =
+        tags.any { it == GYM_TP_NPC }
 }

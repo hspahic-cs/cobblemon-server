@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **cobblemon-bridge**: gym-warp villager NPC. Tag a vanilla villager
+  `cobblemon_bridge.gym_tp_npc` (or use `/gymtp spawn` to create one) and
+  right-clicking it opens a chest GUI listing each warp target the player
+  has unlocked. Visibility is computed from `server:beat_gym_<N>` advancements:
+  gym 1 always shows; gym `N` shows once the player holds `beat_gym_<N-1>`
+  (next-up) or `beat_gym_<N>` (revisit). Non-numeric entry ids (e.g. `rotating`,
+  `elite4`) require an explicit `unlockAdvancement` set with
+  `/gymtp set <id> unlock <advancement>`. Coordinates persisted to
+  `config/cobblemon-bridge/runtime/gym_tps.json` (atomic write).
+- **cobblemon-bridge**: `/gymtp` admin commands — `set`, `clear`, `list`,
+  `spawn`, `delete`. Op level 2.
+- **cobblemon-ranked**: `/ranked admin setarena 1|2 [pos rot dim]`,
+  `clearpos 1|2`, `showarena` — replace manual edits to `runtime/config.json`.
+- **ops/dev-wipe-players.sh**: idempotent wipe of per-player state on
+  `cobblemon-dev` (vanilla playerdata/advancements/stats, Cobblemon party/PC/
+  pokedex, counter, gacha login history, starter-kit tracking, rctmod player
+  stat files). Stops + restarts the dev service.
+
 ## [0.5.6] - 2026-05-28
 
 ### Changed

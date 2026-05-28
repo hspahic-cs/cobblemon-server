@@ -2,14 +2,19 @@ package com.cobblemonranked.commands
 
 import com.cobblemonranked.CobblemonRanked
 import com.cobblemonranked.battle.RankedBattleManager
+import com.cobblemonranked.config.ArenaPos
 import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.decay.DecayManager
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
+import com.mojang.brigadier.context.CommandContext
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
+import net.minecraft.commands.arguments.DimensionArgument
 import net.minecraft.commands.arguments.EntityArgument
+import net.minecraft.commands.arguments.coordinates.RotationArgument
+import net.minecraft.commands.arguments.coordinates.Vec3Argument
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.fml.loading.FMLPaths
@@ -129,6 +134,38 @@ object RankedCommands {
                             )
                         )
                     )
+                    .then(Commands.literal("setarena")
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
+                            .executes { ctx ->
+                                adminSetArenaFromSender(
+                                    ctx.source,
+                                    IntegerArgumentType.getInteger(ctx, "slot"),
+                                )
+                            }
+                            .then(Commands.argument("pos", Vec3Argument.vec3(true))
+                                .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = false, includeDim = false) }
+                                .then(Commands.argument("rot", RotationArgument.rotation())
+                                    .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = true, includeDim = false) }
+                                    .then(Commands.argument("dimension", DimensionArgument.dimension())
+                                        .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = true, includeDim = true) }
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    .then(Commands.literal("clearpos")
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
+                            .executes { ctx ->
+                                adminClearArena(
+                                    ctx.source,
+                                    IntegerArgumentType.getInteger(ctx, "slot"),
+                                )
+                            }
+                        )
+                    )
+                    .then(Commands.literal("showarena")
+                        .executes { ctx -> adminShowArena(ctx.source); 1 }
+                    )
                 )
         )
     }
@@ -150,6 +187,9 @@ object RankedCommands {
                 "§7  /ranked admin force <player1> <player2> §f— force a match (bypasses daily limit)",
                 "§7  /ranked admin reload §f— reload config.json from disk",
                 "§7  /ranked admin simulate <name1> <name2> §f— simulate a match (winner picked by ELO odds; offline-friendly)",
+                "§7  /ranked admin setarena 1|2 [<x y z> [yaw pitch] [dim]] §f— set arena teleport point",
+                "§7  /ranked admin clearpos 1|2 §f— clear an arena teleport point",
+                "§7  /ranked admin showarena §f— print current arena positions",
             )
         }
         lines.forEach { source.sendSystemMessage(Component.literal(it)) }
@@ -289,4 +329,83 @@ object RankedCommands {
         ))
         RankedBattleManager.startTeamSelection(p1, p2)
     }
+
+    /**
+     * Capture sender's current position + facing + dimension into `arenaPos<slot>` and persist.
+     * `slot` is validated as 1..2 by the Brigadier IntegerArgumentType range.
+     */
+    private fun adminSetArenaFromSender(source: CommandSourceStack, slot: Int): Int {
+        val pos = source.position
+        val rot = source.rotation
+        val dim = source.level.dimension().location().toString()
+        val arena = ArenaPos(pos.x, pos.y, pos.z, dim, rot.y, rot.x)
+        applyArena(source, slot, arena, captured = true)
+        return 1
+    }
+
+    private fun adminSetArenaExplicit(
+        ctx: CommandContext<CommandSourceStack>,
+        includeRotation: Boolean,
+        includeDim: Boolean,
+    ): Int {
+        val source = ctx.source
+        val slot = IntegerArgumentType.getInteger(ctx, "slot")
+        val coord = Vec3Argument.getVec3(ctx, "pos")
+        val (yaw, pitch) = if (includeRotation) {
+            val r = RotationArgument.getRotation(ctx, "rot").getRotation(source)
+            r.y to r.x
+        } else 0f to 0f
+        val dim = if (includeDim) {
+            DimensionArgument.getDimension(ctx, "dimension").dimension().location().toString()
+        } else source.level.dimension().location().toString()
+        val arena = ArenaPos(coord.x, coord.y, coord.z, dim, yaw, pitch)
+        applyArena(source, slot, arena, captured = false)
+        return 1
+    }
+
+    private fun applyArena(source: CommandSourceStack, slot: Int, arena: ArenaPos, captured: Boolean) {
+        val updated = when (slot) {
+            1 -> CobblemonRanked.config.copy(arenaPos1 = arena)
+            2 -> CobblemonRanked.config.copy(arenaPos2 = arena)
+            else -> return  // Brigadier guards this, but be defensive.
+        }
+        CobblemonRanked.config = updated
+        RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
+        val verb = if (captured) "Captured" else "Set"
+        source.sendSystemMessage(Component.literal(
+            "§a[Ranked] $verb arena $slot → ${formatArena(arena)}"
+        ))
+        if (updated.isArenaConfigured()) {
+            source.sendSystemMessage(Component.literal("§7[Ranked] Both arenas configured — battles will teleport."))
+        } else {
+            val missing = if (updated.arenaPos1 == null) 1 else 2
+            source.sendSystemMessage(Component.literal(
+                "§7[Ranked] Arena $missing still unset — battles run wherever players are."
+            ))
+        }
+    }
+
+    private fun adminClearArena(source: CommandSourceStack, slot: Int): Int {
+        val updated = when (slot) {
+            1 -> CobblemonRanked.config.copy(arenaPos1 = null)
+            2 -> CobblemonRanked.config.copy(arenaPos2 = null)
+            else -> return 0
+        }
+        CobblemonRanked.config = updated
+        RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
+        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared arena $slot"))
+        return 1
+    }
+
+    private fun adminShowArena(source: CommandSourceStack) {
+        val cfg = CobblemonRanked.config
+        source.sendSystemMessage(Component.literal("§e[Ranked] §fArena positions:"))
+        source.sendSystemMessage(Component.literal("§7  1: §f${cfg.arenaPos1?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§7  2: §f${cfg.arenaPos2?.let { formatArena(it) } ?: "§8(unset)"}"))
+        val state = if (cfg.isArenaConfigured()) "§aenabled" else "§7disabled (both must be set)"
+        source.sendSystemMessage(Component.literal("§7  Teleport: $state"))
+    }
+
+    private fun formatArena(a: ArenaPos): String =
+        "${"%.1f".format(a.x)}, ${"%.1f".format(a.y)}, ${"%.1f".format(a.z)} §8(${a.world}, yaw ${"%.1f".format(a.yaw)}, pitch ${"%.1f".format(a.pitch)})"
 }

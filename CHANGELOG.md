@@ -31,6 +31,44 @@ root README.
   pokedex, counter, gacha login history, starter-kit tracking, rctmod player
   stat files). Stops + restarts the dev service.
 
+## [0.5.6] - 2026-05-28
+
+### Changed
+- `Deploy dev` split into two jobs: `deploy` (self-hosted, unchanged
+  behavior except no longer publishes) and `publish-dev-latest`
+  (ubuntu-latest, downloads the mrpack as a workflow artifact and pushes
+  it to the rolling `dev-latest` pre-release). Reasons:
+  - The self-hosted runner sits behind a residential ~4 MB/s upstream.
+    Pushing 120 MB to `uploads.github.com` from there reliably trips
+    GitHub Actions' job watchdog and the publish step gets cancelled
+    mid-upload (regardless of upload tool — observed with both
+    `actions/upload-artifact@v4` and `softprops/action-gh-release@v2`).
+  - GitHub Actions internal blob storage *is* fast from this cluster
+    (~50 MB/s observed), so handing the mrpack between jobs via a
+    workflow artifact is cheap. The publish job runs in GitHub's
+    datacenter and pushes to `uploads.github.com` over the backbone.
+- Companion change in `gemini-server`: bumped runner pod
+  `terminationGracePeriodSeconds` to 600 (was default 30s) to defuse a
+  separate ARC scale-down race uncovered during the investigation.
+
+## [0.5.5] - 2026-05-28
+
+### Changed
+- `Deploy dev` no longer uses `actions/upload-artifact` for the .mrpack.
+  The artifact upload kept racing with the ARC ephemeral-runner lifecycle —
+  the controller terminated the pod mid-stream during the ~120 MB upload,
+  failing the run with `runner has received a shutdown signal` even though
+  the actual deploy succeeded. Workflow artifacts also require sign-in,
+  which is incompatible with making the repo public-facing.
+- `Deploy dev` now publishes/updates a rolling `dev-latest` GitHub
+  pre-release with the .mrpack via `softprops/action-gh-release`, on the
+  same self-hosted runner. Stable URL:
+  `https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest`.
+  Adds a "Clear prior dev-latest assets" step (versioned filenames would
+  otherwise accumulate).
+- Re-introduced the gh CLI install in the Install build/deploy deps step,
+  matching the pattern from `promote-dev-to-prod.yml`.
+
 ## [0.5.4] - 2026-05-28
 
 ### Fixed

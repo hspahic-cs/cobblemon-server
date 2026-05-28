@@ -1,0 +1,13 @@
+name = "Cobblemon: Run & Bun(Advanced Trainer AI)"
+filename = "rbrctai-neoforge-1.21.1-0.15.3-beta.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/KWljXemF/versions/D5b4Ml5S/rbrctai-neoforge-1.21.1-0.15.3-beta.jar"
+hash-format = "sha512"
+hash = "5cd4419c34b930aafab9847dfcd1711e947eff56050353e287dcb196c37544cb87b8a1da64c57cfce8d5d4e3eba8d6c06b67464ebc394a11b897835e9332554b"
+
+[update]
+[update.modrinth]
+mod-id = "KWljXemF"
+version = "D5b4Ml5S"

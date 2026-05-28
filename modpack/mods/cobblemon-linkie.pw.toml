@@ -1,0 +1,13 @@
+name = "Cobblemon Linkie"
+filename = "cobblemonlinkie-neoforge-1.7.3-1.1.0.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/CJd9sbE5/versions/7zgm9lJd/cobblemonlinkie-neoforge-1.7.3-1.1.0.jar"
+hash-format = "sha512"
+hash = "2ab03608cb7a4d546425c880e7bb98d8d0e3067aef97841e60915e0b56b9936d53a6b7b39d8eacc65d7b61cca1eb5a72449af1400711d8d2db044f9bae65408e"
+
+[update]
+[update.modrinth]
+mod-id = "CJd9sbE5"
+version = "7zgm9lJd"

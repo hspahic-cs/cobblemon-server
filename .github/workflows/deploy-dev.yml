@@ -259,7 +259,15 @@ jobs:
   # Stable public URL: github.com/<repo>/releases/tag/dev-latest
   publish-dev-latest:
     needs: deploy
-    if: needs.deploy.outputs.skip != 'true'
+    # Run regardless of deploy job's overall conclusion, as long as it actually
+    # ran (skip != true) and the deploy steps that matter — including the
+    # artifact upload — finished. The deploy job has been observed to complete
+    # all real work and then mark itself "failed" because of a transient ARC
+    # post-cleanup hiccup ("Post Checkout" failing during teardown). We don't
+    # want that cosmetic failure to skip the publish.
+    # actions/download-artifact below will fail loudly if the deploy job
+    # genuinely didn't produce an artifact, so this is still safe.
+    if: always() && needs.deploy.outputs.skip != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Download .mrpack artifact

@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-05-28
+
+### Fixed
+- `cobblemon-tim-core` packwiz manifest flipped from `side = "server"` to
+  `side = "both"`. Modrinth tags tim-core as `client: unsupported` so packwiz
+  auto-set it server-side, but `cobblemon-counter` (`side = "both"`) declares
+  tim-core as a hard dep at NeoForge load time. PrismLauncher import of 0.5.2
+  failed at client startup with `Mod cobbled_counter requires tim_core ...
+  Currently, tim_core is not installed`. Other server-tagged mods
+  (cobblemon-linkie, cobblemon-unchained, cobbleworkers, flan, in-control,
+  neoessentials, worldedit) audited — none are required deps of any
+  `side = "both"` mod, so they stay server-only.
+
 ## [0.5.2] - 2026-05-28
 
 ### Fixed

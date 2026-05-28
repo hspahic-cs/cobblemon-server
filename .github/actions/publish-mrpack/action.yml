@@ -13,11 +13,11 @@ inputs:
     description: Display name for the release
     required: true
   prerelease:
-    description: 'true' for pre-release (rolling), 'false' for tagged
+    description: "Pass 'true' for pre-release (rolling), 'false' for tagged"
     required: false
     default: 'false'
   draft:
-    description: 'true' to leave as draft (release.yml does this)
+    description: "Pass 'true' to leave as draft (release.yml does this)"
     required: false
     default: 'false'
   body:

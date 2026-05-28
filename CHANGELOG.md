@@ -12,6 +12,41 @@ root README.
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-05-28
+
+### Fixed
+- **cobblemon-bridge** — carrot-heal + Poké Healer quest now actually awards
+  `server:heal_pokemon`. `HealQuestHook`'s `EntityInteract` /
+  `RightClickBlock` subscribers ran at NORMAL priority, but Cobblemon's own
+  carrot-feed + healing-machine handlers also run at NORMAL and SUCCEED the
+  `InteractionResult`, which cancels the event for later subscribers. Bumped
+  both to `EventPriority.HIGHEST` so we see the click before Cobblemon
+  cancels it.
+- **cobblemon-gacha** — `OddsMenu` now shows 0%-weight loot entries
+  (Pokémon egg placeholders) with a "Coming soon — not rolling yet" lore
+  line, sorted after rollable entries. The old filter hid them entirely so
+  the preview looked empty in slots that hadn't shipped a weight yet.
+
+### Added
+- **cobblemon-bridge** — global `/spawn` (any player) + `/setspawn` (op
+  level 2) + `/clearspawn`. Overrides neoessentials' per-world spawn
+  behavior; a single point persisted at
+  `config/cobblemon-bridge/runtime/spawn.json` works from every dimension.
+- **cobblemon-bridge** — world-rules hook. Pokémon and `rctmod:trainer`
+  natural spawns are blocked outside `minecraft:overworld /
+  minecraft:the_nether / minecraft:the_end`. Non-op players entering a
+  non-progression dimension are forced into Adventure mode + block
+  break/place cancelled. Their prior gamemode is restored on exit back to
+  a progression dimension. Ops bypass all restrictions; entities tagged
+  `cobblemon_bridge.*` (op-summoned trainers, gym leaders, gym-TP NPCs)
+  still spawn through.
+- **server-hide-advancements** datapack — overrides the five vanilla
+  advancement roots (`minecraft:story/root`, `nether/root`,
+  `adventure/root`, `husbandry/root`, `end/root`) and `cobblemon:root` with
+  no-display versions so the F screen only shows `server:*` progression.
+  Mod-namespace tabs from new mods (minecolonies, cobbleworkers, …) will
+  still appear — add overrides as needed.
+
 ## [0.6.1] - 2026-05-28
 
 ### Changed

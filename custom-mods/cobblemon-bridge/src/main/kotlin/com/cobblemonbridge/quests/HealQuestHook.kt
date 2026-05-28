@@ -7,12 +7,18 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.Items
+import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 
 /**
  * Awards `server:heal_pokemon` ("Nurse Joy") when the player first interacts with
  * healing mechanics: feeding a carrot to a Pokémon or using a Poké Healer block.
+ *
+ * Both handlers run at HIGHEST priority. Cobblemon's own carrot-feed / healing-machine
+ * handlers run at NORMAL priority and SUCCEED the InteractionResult, which cancels the
+ * event. NeoForge skips cancelled events for later subscribers, so a NORMAL-priority
+ * subscriber here would never see the click. We fire first (and don't touch the event).
  */
 object HealQuestHook {
 
@@ -20,7 +26,7 @@ object HealQuestHook {
     private val HEALING_MACHINE_ID = ResourceLocation.fromNamespaceAndPath("cobblemon", "healing_machine")
 
     /** Carrot + Pokémon entity → award quest. */
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onEntityInteract(event: PlayerInteractEvent.EntityInteract) {
         if (event.level.isClientSide) return
         if (event.hand != InteractionHand.MAIN_HAND) return
@@ -36,7 +42,7 @@ object HealQuestHook {
     }
 
     /** Right-click Poké Healer block → award quest. */
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onUseBlock(event: PlayerInteractEvent.RightClickBlock) {
         if (event.level.isClientSide) return
         val player = event.entity as? ServerPlayer ?: return

@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "Hide non-server advancement tabs from the F screen. Overrides each non-server: root advancement with a no-display version so its tab and children don't render. Server progression (server:*) advancements stay untouched.",
+    "pack_format": 48
+  }
+}

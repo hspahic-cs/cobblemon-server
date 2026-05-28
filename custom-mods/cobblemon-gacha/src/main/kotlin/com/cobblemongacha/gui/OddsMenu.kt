@@ -22,19 +22,30 @@ import net.minecraft.world.item.component.ItemLore
 object OddsMenu {
 
     fun openFor(player: ServerPlayer, tier: KeyTier, table: LootTable) {
-        val nonZero = table.entries.filter { it.weightPct > 0.0 }
-        // Pick 1, 2, or 3 rows depending on entry count (vanilla chest supports 1..6 rows).
-        val rows = ((nonZero.size + 8) / 9).coerceAtMost(3).coerceAtLeast(1)
+        // Show all entries — including 0%-weight placeholders. Players were asking "what's in
+        // this box?" and missing the coming-soon eggs entirely because they used to be filtered
+        // out. Rollable entries first (highest chance → lowest), placeholders after, so the box
+        // reads top-to-bottom as "what you'll actually get" then "what's planned".
+        val rollable = table.entries.filter { it.weightPct > 0.0 }
+            .sortedByDescending { it.weightPct }
+        val placeholders = table.entries.filter { it.weightPct <= 0.0 }
+        val all = rollable + placeholders
+        val rows = ((all.size + 8) / 9).coerceAtMost(6).coerceAtLeast(1)
         val cap = rows * 9
         val display = SimpleContainer(cap)
-        nonZero.take(cap).forEachIndexed { i, entry ->
+        all.take(cap).forEachIndexed { i, entry ->
             val stack = RewardGranter.representative(entry).copy()
             if (stack.isEmpty) return@forEachIndexed
-            val newName = "${tierColor(entry.lootTier.name)}${entry.label}"
-            stack.set(DataComponents.CUSTOM_NAME, Component.literal(newName))
+            val isPlaceholder = entry.weightPct <= 0.0
+            val namePrefix = if (isPlaceholder) "§8" else tierColor(entry.lootTier.name)
+            stack.set(DataComponents.CUSTOM_NAME, Component.literal("$namePrefix${entry.label}"))
             val lore = mutableListOf<Component>(
                 Component.literal("§7Tier: §f${entry.lootTier.name}"),
-                Component.literal("§7Chance: §a${"%.1f".format(entry.weightPct)}%"),
+                if (isPlaceholder) {
+                    Component.literal("§8Coming soon — not rolling yet")
+                } else {
+                    Component.literal("§7Chance: §a${"%.1f".format(entry.weightPct)}%")
+                },
             )
             if (entry.notes.isNotBlank()) lore += Component.literal("§8${entry.notes}")
             stack.set(DataComponents.LORE, ItemLore(lore))

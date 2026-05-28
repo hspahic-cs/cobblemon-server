@@ -52,18 +52,71 @@ object GachaCommands {
                             OddsMenu.openFor(sp, tier, table); 1
                         })
                 )
-                .then(Commands.literal("admin")
-                    .requires { it.hasPermission(4) }
-                    .then(Commands.literal("grant")
-                        .then(Commands.argument("player", EntityArgument.player())
-                            .then(Commands.argument("tier", StringArgumentType.string())
-                                .suggests { _, b -> KeyTier.entries.forEach { b.suggest(it.key) }; b.buildFuture() }
-                                .executes { ctx -> adminGrant(ctx.source, EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "tier"), 1) }
-                                .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
-                                    .executes { ctx -> adminGrant(ctx.source, EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "tier"), IntegerArgumentType.getInteger(ctx, "count")) })
-                            )
+                // Reward grants live at the top level (not under `admin`) so they're callable
+                // from datapack reward functions running at the default `function-permission-level`
+                // (2). The hasPermission(2) gate means non-op players can't run them from chat
+                // but ops still can — and any /function call inherits ops-level perms. The
+                // quest reward pipeline (server-quests datapack → _finalize.mcfunction → here)
+                // depends on this working without elevating function-permission-level globally.
+                .then(Commands.literal("grant")
+                    .requires { it.hasPermission(2) }
+                    .then(Commands.argument("player", EntityArgument.player())
+                        .then(Commands.argument("tier", StringArgumentType.string())
+                            .suggests { _, b -> KeyTier.entries.forEach { b.suggest(it.key) }; b.buildFuture() }
+                            .executes { ctx -> adminGrant(ctx.source, EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "tier"), 1) }
+                            .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
+                                .executes { ctx -> adminGrant(ctx.source, EntityArgument.getPlayer(ctx, "player"), StringArgumentType.getString(ctx, "tier"), IntegerArgumentType.getInteger(ctx, "count")) })
                         )
                     )
+                )
+                .then(Commands.literal("giveegg")
+                    .requires { it.hasPermission(2) }
+                    .then(Commands.argument("player", EntityArgument.player())
+                        .then(Commands.argument("tier", StringArgumentType.string())
+                            .suggests { _, b ->
+                                listOf("common", "uncommon", "rare", "ultra_rare").forEach { b.suggest(it) }
+                                b.buildFuture()
+                            }
+                            .executes { ctx ->
+                                adminGiveEgg(
+                                    ctx.source,
+                                    EntityArgument.getPlayer(ctx, "player"),
+                                    StringArgumentType.getString(ctx, "tier"),
+                                    shiny = false, requireHa = false,
+                                )
+                            }
+                            .then(Commands.literal("shiny")
+                                .executes { ctx ->
+                                    adminGiveEgg(
+                                        ctx.source,
+                                        EntityArgument.getPlayer(ctx, "player"),
+                                        StringArgumentType.getString(ctx, "tier"),
+                                        shiny = true, requireHa = false,
+                                    )
+                                }
+                                .then(Commands.literal("ha")
+                                    .executes { ctx ->
+                                        adminGiveEgg(
+                                            ctx.source,
+                                            EntityArgument.getPlayer(ctx, "player"),
+                                            StringArgumentType.getString(ctx, "tier"),
+                                            shiny = true, requireHa = true,
+                                        )
+                                    }))
+                            .then(Commands.literal("ha")
+                                .executes { ctx ->
+                                    adminGiveEgg(
+                                        ctx.source,
+                                        EntityArgument.getPlayer(ctx, "player"),
+                                        StringArgumentType.getString(ctx, "tier"),
+                                        shiny = false, requireHa = true,
+                                    )
+                                })
+                        )
+                    )
+                )
+                .then(Commands.literal("admin")
+                    .requires { it.hasPermission(4) }
                     .then(Commands.literal("setcrate")
                         .then(Commands.argument("tier", StringArgumentType.string())
                             .suggests { _, b -> KeyTier.entries.forEach { b.suggest(it.key) }; b.buildFuture() }
@@ -83,51 +136,6 @@ object GachaCommands {
                     )
                     .then(Commands.literal("reload")
                         .executes { ctx -> adminReload(ctx.source) })
-                    .then(Commands.literal("giveegg")
-                        .then(Commands.argument("player", EntityArgument.player())
-                            .then(Commands.argument("tier", StringArgumentType.string())
-                                .suggests { _, b ->
-                                    listOf("common", "uncommon", "rare", "ultra_rare").forEach { b.suggest(it) }
-                                    b.buildFuture()
-                                }
-                                .executes { ctx ->
-                                    adminGiveEgg(
-                                        ctx.source,
-                                        EntityArgument.getPlayer(ctx, "player"),
-                                        StringArgumentType.getString(ctx, "tier"),
-                                        shiny = false, requireHa = false,
-                                    )
-                                }
-                                .then(Commands.literal("shiny")
-                                    .executes { ctx ->
-                                        adminGiveEgg(
-                                            ctx.source,
-                                            EntityArgument.getPlayer(ctx, "player"),
-                                            StringArgumentType.getString(ctx, "tier"),
-                                            shiny = true, requireHa = false,
-                                        )
-                                    }
-                                    .then(Commands.literal("ha")
-                                        .executes { ctx ->
-                                            adminGiveEgg(
-                                                ctx.source,
-                                                EntityArgument.getPlayer(ctx, "player"),
-                                                StringArgumentType.getString(ctx, "tier"),
-                                                shiny = true, requireHa = true,
-                                            )
-                                        }))
-                                .then(Commands.literal("ha")
-                                    .executes { ctx ->
-                                        adminGiveEgg(
-                                            ctx.source,
-                                            EntityArgument.getPlayer(ctx, "player"),
-                                            StringArgumentType.getString(ctx, "tier"),
-                                            shiny = false, requireHa = true,
-                                        )
-                                    })
-                            )
-                        )
-                    )
                 )
         )
     }
@@ -140,13 +148,14 @@ object GachaCommands {
         )
         if (includeAdmin) {
             lines += listOf(
+                "§e[Gacha] §fReward grants (op level 2, datapack-callable):",
+                "§7  /gacha grant <player> <tier> [count] §f— give keys",
+                "§7  /gacha giveegg <player> <pool> [shiny] [ha] §f— grant a random species egg",
                 "§e[Gacha] §fAdmin (op level 4):",
-                "§7  /gacha admin grant <player> <tier> [count] §f— give keys",
                 "§7  /gacha admin setcrate <tier> §f— bind your targeted block as that tier's crate",
                 "§7  /gacha admin clearcrate <tier> §f— unbind a crate",
                 "§7  /gacha admin force <player> <tier> §f— roll without consuming a key",
                 "§7  /gacha admin reload §f— reload config + tables from disk",
-                "§7  /gacha admin giveegg <player> <pool> [shiny] [ha] §f— grant a random species egg",
             )
         }
         lines.forEach { source.sendSystemMessage(Component.literal(it)) }

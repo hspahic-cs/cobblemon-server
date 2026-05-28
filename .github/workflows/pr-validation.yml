@@ -2,8 +2,8 @@ name: PR validation
 
 # Builds every custom mod and validates the modpack manifest on every PR
 # touching the modpack or custom-mods. No deploy. Acts as the merge gate
-# AND populates the gradle/packwiz cache that downstream workflows
-# (deploy-dev, deploy-prod, release) restore from.
+# AND populates the gradle/packwiz/per-mod jar caches that downstream
+# workflows (deploy-dev, deploy-prod, release) restore from.
 
 on:
   pull_request:
@@ -19,13 +19,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build all custom mods (with tests)
+      - name: Build all custom mods
         uses: ./.github/actions/build-modpack
-        with:
-          # PR validation runs the full `build` task which includes unit tests.
-          # Deploy workflows use the default (`assemble`) since the PR that
-          # bumped CHANGELOG already validated tests.
-          gradle-task: build
+
+      - name: Run unit tests
+        run: |
+          set -euo pipefail
+          for m in custom-mods/*/; do
+            echo "::group::Test $m"
+            (cd "$m" && ./gradlew test --no-daemon)
+            echo "::endgroup::"
+          done
 
       - name: Validate modpack manifest
         working-directory: modpack

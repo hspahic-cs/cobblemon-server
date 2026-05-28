@@ -35,14 +35,6 @@ inputs:
       the deploy/release tag, even when individual mod jars are cached.
     required: false
     default: ''
-  gradle-task:
-    description: |
-      Gradle task to run per mod. Defaults to `assemble` (build jars
-      only, skip tests) for fast deploys. Use `build` to also run tests
-      — pr-validation sets this. Deploys default to `assemble` since
-      tests already ran on the PR that bumped CHANGELOG.
-    required: false
-    default: 'assemble'
 
 runs:
   using: composite
@@ -99,55 +91,57 @@ runs:
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-bridge/build/libs
-        key: jar-cobblemon-bridge-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-bridge/src/**', 'custom-mods/cobblemon-bridge/build.gradle*', 'custom-mods/cobblemon-bridge/gradle.properties') }}
+        key: jar-cobblemon-bridge-${{ hashFiles('custom-mods/cobblemon-bridge/src/**', 'custom-mods/cobblemon-bridge/build.gradle*', 'custom-mods/cobblemon-bridge/gradle.properties') }}
 
     - name: Cache cobblemon-carrots build
       id: cache-carrots
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-carrots/build/libs
-        key: jar-cobblemon-carrots-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-carrots/src/**', 'custom-mods/cobblemon-carrots/build.gradle*', 'custom-mods/cobblemon-carrots/gradle.properties') }}
+        key: jar-cobblemon-carrots-${{ hashFiles('custom-mods/cobblemon-carrots/src/**', 'custom-mods/cobblemon-carrots/build.gradle*', 'custom-mods/cobblemon-carrots/gradle.properties') }}
 
     - name: Cache cobblemon-feedback build
       id: cache-feedback
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-feedback/build/libs
-        key: jar-cobblemon-feedback-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-feedback/src/**', 'custom-mods/cobblemon-feedback/build.gradle*', 'custom-mods/cobblemon-feedback/gradle.properties') }}
+        key: jar-cobblemon-feedback-${{ hashFiles('custom-mods/cobblemon-feedback/src/**', 'custom-mods/cobblemon-feedback/build.gradle*', 'custom-mods/cobblemon-feedback/gradle.properties') }}
 
     - name: Cache cobblemon-gacha build
       id: cache-gacha
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-gacha/build/libs
-        key: jar-cobblemon-gacha-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-gacha/src/**', 'custom-mods/cobblemon-gacha/build.gradle*', 'custom-mods/cobblemon-gacha/gradle.properties') }}
+        key: jar-cobblemon-gacha-${{ hashFiles('custom-mods/cobblemon-gacha/src/**', 'custom-mods/cobblemon-gacha/build.gradle*', 'custom-mods/cobblemon-gacha/gradle.properties') }}
 
     - name: Cache cobblemon-market build
       id: cache-market
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-market/build/libs
-        key: jar-cobblemon-market-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-market/src/**', 'custom-mods/cobblemon-market/build.gradle*', 'custom-mods/cobblemon-market/gradle.properties') }}
+        key: jar-cobblemon-market-${{ hashFiles('custom-mods/cobblemon-market/src/**', 'custom-mods/cobblemon-market/build.gradle*', 'custom-mods/cobblemon-market/gradle.properties') }}
 
     - name: Cache cobblemon-npc build
       id: cache-npc
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-npc/build/libs
-        key: jar-cobblemon-npc-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-npc/src/**', 'custom-mods/cobblemon-npc/build.gradle*', 'custom-mods/cobblemon-npc/gradle.properties') }}
+        key: jar-cobblemon-npc-${{ hashFiles('custom-mods/cobblemon-npc/src/**', 'custom-mods/cobblemon-npc/build.gradle*', 'custom-mods/cobblemon-npc/gradle.properties') }}
 
     - name: Cache cobblemon-ranked build
       id: cache-ranked
       uses: actions/cache@v4
       with:
         path: custom-mods/cobblemon-ranked/build/libs
-        key: jar-cobblemon-ranked-${{ inputs.gradle-task }}-${{ hashFiles('custom-mods/cobblemon-ranked/src/**', 'custom-mods/cobblemon-ranked/build.gradle*', 'custom-mods/cobblemon-ranked/gradle.properties') }}
+        key: jar-cobblemon-ranked-${{ hashFiles('custom-mods/cobblemon-ranked/src/**', 'custom-mods/cobblemon-ranked/build.gradle*', 'custom-mods/cobblemon-ranked/gradle.properties') }}
 
     - name: Build only mods missing from cache
       shell: bash
       env:
         MOD_VERSION: ${{ inputs.mod-version }}
-        GRADLE_TASK: ${{ inputs.gradle-task }}
+        # Always `assemble` (jars only, no tests). Tests run as a separate
+        # step in pr-validation only — keeps caches unified across pr/deploy.
+        GRADLE_TASK: assemble
         # Two-column "<mod>:<hit>" lines. Update when adding a new mod.
         CACHE_HITS: |
           cobblemon-bridge:${{ steps.cache-bridge.outputs.cache-hit }}

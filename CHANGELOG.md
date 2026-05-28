@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-05-28
+
+### Fixed
+- Pin `cobblemon-tim-core` to `1.7.3-neoforge-1.32.0`. The 0.5.1 deploy
+  pulled the latest version (`1.8.0-neoforge-1.32.0-r1`) which requires
+  Cobblemon 1.8.0; we're on Cobblemon 1.7.3. Hard mod-load failure on
+  the dev server. Now matches what cobblemonvalley actually shipped.
+
 ## [0.5.1] - 2026-05-28
 
 ### Synced from upstream (almutwakel/cobblemon-mods, 5 commits since 2026-05-26)

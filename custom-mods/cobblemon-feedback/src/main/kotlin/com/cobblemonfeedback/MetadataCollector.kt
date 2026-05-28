@@ -13,14 +13,18 @@ import java.time.format.DateTimeFormatter
 
 /**
  * Builds the markdown body for a feedback issue. Captures:
- *   - player username + UUID
+ *   - reporter ID (HMAC-anonymized — see [Anonymizer])
  *   - submitted timestamp + server version
  *   - dimension + biome + coords
  *   - server TPS (best-effort)
  *   - Cobblemon party (species + level)
- *   - recent chat buffer
+ *   - recent chat buffer (other players' names also anonymized)
  *   - tail of the server log
  *   - loaded mod count + a short summary
+ *
+ * Player username + UUID are intentionally NOT included; the repo is public
+ * and we don't want raw identities in issue bodies. Maintainers recover the
+ * mapping via /feedback whois (in-memory) or grep on the runtime audit log.
  */
 internal object MetadataCollector {
     private val log = LoggerFactory.getLogger("cobblemon-feedback/metadata")
@@ -42,16 +46,22 @@ internal object MetadataCollector {
         }
         val tps = runCatching { tpsSummary(server) }.getOrElse { "<unable to read tps>" }
         val recentChat = RecentChatBuffer.snapshot().joinToString("\n") { line ->
-            "[${line.timestamp}] <${line.player}> ${line.message}"
+            // Anonymize the speaker's name; the message body itself isn't
+            // scrubbed (mentions of other players in chat content stay as-is
+            // — best-effort, not perfect).
+            val speaker = Anonymizer.reporterId(line.playerUuid, line.playerName)
+            "[${line.timestamp}] <$speaker> ${line.message}"
         }.ifBlank { "(no recent chat)" }
         val logTail = runCatching { tailServerLog(CobblemonFeedback.config.logTailLines) }.getOrElse {
             "<unable to read server log: ${it.message}>"
         }
         val modCount = ModList.get().mods.size
 
+        val reporterId = Anonymizer.reporterId(player.uuid, player.gameProfile.name)
+
         return buildString {
             appendLine("**Type:** ${type.replaceFirstChar { it.uppercase() }}")
-            appendLine("**Player:** ${player.gameProfile.name} (`${player.uuid}`)")
+            appendLine("**Reporter:** `$reporterId`")
             appendLine("**Submitted:** ${DATE_FMT.format(now)}")
             appendLine("**Server version:** ${runCatching { Files.readString(Path.of("/opt/cobblemon-prod/.deployed_version")).trim() }.getOrElse { Files.exists(Paths.get("/opt/cobblemon-dev/.deployed_version")).let { onDev -> if (onDev) Files.readString(Path.of("/opt/cobblemon-dev/.deployed_version")).trim() else "unknown" } }}")
             appendLine("**Mods loaded:** $modCount")
@@ -83,7 +93,7 @@ internal object MetadataCollector {
             appendLine("```")
             appendLine()
             appendLine("---")
-            appendLine("*Submitted via in-game `/feedback $type` by ${player.gameProfile.name}*")
+            appendLine("*Submitted via in-game `/feedback $type` by `$reporterId`*")
         }
     }
 

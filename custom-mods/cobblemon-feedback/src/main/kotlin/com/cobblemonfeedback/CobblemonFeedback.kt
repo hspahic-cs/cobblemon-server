@@ -47,8 +47,14 @@ class CobblemonFeedback(modBus: IEventBus) {
     }
 
     private fun onServerChat(event: ServerChatEvent) {
-        // Buffer the last N chat lines so reports include nearby conversation context.
-        RecentChatBuffer.add(event.player.gameProfile.name, event.message.string)
+        // Buffer the last N chat lines so reports include nearby conversation
+        // context. Store UUID alongside the name so MetadataCollector can
+        // anonymize names when rendering the issue body.
+        RecentChatBuffer.add(
+            event.player.uuid,
+            event.player.gameProfile.name,
+            event.message.string,
+        )
     }
 
     companion object {

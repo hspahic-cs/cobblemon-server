@@ -113,6 +113,10 @@ Adding these requires a companion client mod and is deferred to Phase 2.
 
 ### Privacy
 
-This repo is **private** (friends-only). Player username + UUID land in
-issue bodies. If the repo were ever made public, those identifiers should
-be stripped before publishing.
+This repo is **public**. Player username + UUID are NOT included in
+issue bodies — they're replaced by an HMAC-derived `anon-XXXXXXXX`
+reporter ID. Maintainers reverse the lookup with op-only `/feedback whois`
+(in-memory, since last server start) or by grepping the runtime audit
+log at `config/cobblemon-feedback/runtime/audit.log`. See
+[player-feedback-phase2.md](player-feedback-phase2.md) for the full
+anonymization design.

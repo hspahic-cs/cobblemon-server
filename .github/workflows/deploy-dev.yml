@@ -241,14 +241,45 @@ jobs:
           packwiz mr export
           ls *.mrpack
 
-      - name: Upload .mrpack as workflow artifact
+      # Upload the .mrpack as a workflow artifact. The publish-dev-latest job
+      # picks it up. Upload to GitHub blob storage from this cluster is mostly
+      # fast (~50 MB/s) but intermittently gets cancelled mid-stream — origin
+      # is unclear, doesn't correlate with ARC scale-down or pod resources.
+      # Retry up to 3 times. Each attempt sets overwrite: true so a partial
+      # prior upload doesn't block the next attempt.
+      - name: Upload .mrpack (attempt 1)
+        id: upload1
         if: steps.idempotency.outputs.skip != 'true'
+        continue-on-error: true
         uses: actions/upload-artifact@v4
         with:
           name: dev-latest-mrpack
           path: modpack/*.mrpack
           retention-days: 1
           if-no-files-found: error
+          overwrite: true
+
+      - name: Upload .mrpack (attempt 2)
+        id: upload2
+        if: steps.idempotency.outputs.skip != 'true' && steps.upload1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-latest-mrpack
+          path: modpack/*.mrpack
+          retention-days: 1
+          if-no-files-found: error
+          overwrite: true
+
+      - name: Upload .mrpack (attempt 3)
+        if: steps.idempotency.outputs.skip != 'true' && steps.upload1.outcome == 'failure' && steps.upload2.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-latest-mrpack
+          path: modpack/*.mrpack
+          retention-days: 1
+          if-no-files-found: error
+          overwrite: true
 
   # ─── publish-dev-latest ────────────────────────────────────────────────────
   # Runs on a GitHub-hosted ubuntu-latest runner. Downloads the .mrpack the

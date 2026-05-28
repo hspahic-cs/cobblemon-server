@@ -50,11 +50,49 @@ internal object FeedbackCommand {
                         1
                     }
             )
+            .then(
+                // Op-only reverse lookup. Maintainer triages a public issue,
+                // sees `Reporter: anon-7f3e2c1b`, runs this to recover the
+                // player's name + UUID. In-memory cache only — for older
+                // submissions, grep config/cobblemon-feedback/runtime/audit.log.
+                Commands.literal("whois")
+                    .requires { it.hasPermission(2) }
+                    .then(
+                        Commands.argument("id", StringArgumentType.word())
+                            .executes { ctx ->
+                                whois(ctx.source, StringArgumentType.getString(ctx, "id"))
+                            }
+                    )
+                    .executes { ctx ->
+                        ctx.source.sendSystemMessage(
+                            Component.literal("Usage: /feedback whois <anon-id>")
+                                .withStyle(ChatFormatting.GRAY)
+                        )
+                        1
+                    }
+            )
             .executes { ctx ->
                 usage(ctx.source, null)
                 1
             }
         dispatcher.register(root)
+    }
+
+    private fun whois(source: CommandSourceStack, reporterId: String): Int {
+        val match = com.cobblemonfeedback.Anonymizer.lookup(reporterId)
+        if (match != null) {
+            val (uuid, name) = match
+            source.sendSystemMessage(
+                Component.literal("$reporterId → $name ($uuid)").withStyle(ChatFormatting.AQUA)
+            )
+        } else {
+            source.sendSystemMessage(
+                Component.literal(
+                    "No active mapping for $reporterId — grep config/cobblemon-feedback/runtime/audit.log."
+                ).withStyle(ChatFormatting.GRAY)
+            )
+        }
+        return 1
     }
 
     private fun textArg(handler: (com.mojang.brigadier.context.CommandContext<CommandSourceStack>) -> Int) =
@@ -107,8 +145,12 @@ internal object FeedbackCommand {
         // Build metadata synchronously on the server thread (we're touching server
         // state — party, level, log file). Then dispatch the HTTP call to a worker
         // thread so we don't block the tick.
-        val title = buildTitle(type, text, player.gameProfile.name)
+        val reporterId = com.cobblemonfeedback.Anonymizer.reporterId(player.uuid, player.gameProfile.name)
+        val title = buildTitle(type, text, reporterId)
         val body = MetadataCollector.build(type, text, player)
+        // Append to the audit log so maintainers can recover the (anon-id → uuid +
+        // name) mapping after a server restart, when the in-memory cache is empty.
+        com.cobblemonfeedback.AuditLog.append(reporterId, player.uuid, player.gameProfile.name, type)
         val labels = listOf(
             when (type) {
                 "bug" -> cfg.bugLabel
@@ -143,10 +185,12 @@ internal object FeedbackCommand {
         return 1
     }
 
-    private fun buildTitle(type: String, text: String, playerName: String): String {
+    private fun buildTitle(type: String, text: String, reporterId: String): String {
         val prefix = if (type == "bug") "[bug]" else "[suggest]"
         // Trim the body to a reasonable issue title — first line, max 80 chars.
         val firstLine = text.lineSequence().firstOrNull().orEmpty().take(80)
-        return "$prefix $firstLine — by $playerName"
+        // Reporter ID instead of username — title is publicly visible and we
+        // don't want raw player names in it.
+        return "$prefix $firstLine — by $reporterId"
     }
 }

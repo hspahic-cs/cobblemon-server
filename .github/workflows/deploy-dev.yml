@@ -24,7 +24,11 @@ on:
 jobs:
   deploy:
     # Self-hosted runner in the K8s cluster (see gemini-server repo for the
-    # ARC scale-set). Same LAN as the MC VM, so rsync is fast.
+    # ARC scale-set). Same LAN as the MC VM, so rsync is fast. The pod's
+    # upstream upload bandwidth (~4 MB/s home internet) is too slow to
+    # publish a 120 MB mrpack to GitHub Releases reliably — that step lives
+    # on the publish-dev-latest job below, which runs in a GitHub-hosted
+    # datacenter and has no upstream bottleneck.
     runs-on: cobblemon-server
     concurrency:
       # One dev deploy at a time. A queued deploy waits behind the current one.
@@ -37,6 +41,9 @@ jobs:
       SERVICE: cobblemon-dev
       INSTALL_DIR: /opt/cobblemon-dev
       KEEP_VERSIONS: 5
+    outputs:
+      version: ${{ steps.ver.outputs.version }}
+      skip: ${{ steps.idempotency.outputs.skip }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -66,17 +73,7 @@ jobs:
       - name: Install build/deploy deps
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq rsync openssh-client curl
-          # gh CLI: used by the dev-latest publish step to clear stale assets
-          # before softprops uploads the fresh .mrpack. Bare ARC runner image
-          # doesn't ship gh. Same install pattern as promote-dev-to-prod.yml.
-          if ! command -v gh >/dev/null; then
-            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-            sudo chmod a+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq gh
-          fi
+          sudo apt-get install -y -qq rsync openssh-client
 
       - name: Prepare SSH
         run: |
@@ -230,17 +227,12 @@ jobs:
             fi
           done
 
-      # ─── export the mrpack and publish it to the rolling dev-latest release ────
-      # Reuses what we already built — the resolved modpack tree is sitting in
-      # modpack/. Runs `packwiz mr export` and publishes/updates a `dev-latest`
-      # GitHub pre-release with the .mrpack as an asset. Stable URL:
-      # https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest
-      #
-      # Why a pre-release instead of actions/upload-artifact: workflow artifacts
-      # require sign-in to download (broken once we go public-facing), and the
-      # upload-artifact step kept racing with the ARC pod lifecycle and getting
-      # killed mid-stream. softprops/action-gh-release uploads in chunks via the
-      # GitHub API and tolerates transient network blips.
+      # ─── export the mrpack and stash it as a workflow artifact ─────────────────
+      # actions/upload-artifact uploads to GitHub's internal blob storage, which
+      # is fast from this cluster (~50 MB/s observed, vs ~4 MB/s to user-facing
+      # uploads.github.com). The publish-dev-latest job picks the artifact up
+      # and republishes it to the dev-latest GitHub Release from a runner that
+      # has datacenter-grade upstream.
 
       - name: Export .mrpack
         if: steps.idempotency.outputs.skip != 'true'
@@ -249,15 +241,40 @@ jobs:
           packwiz mr export
           ls *.mrpack
 
-      # The .mrpack filename includes the pack version, so without this the
-      # dev-latest release would accumulate one stale .mrpack per dev deploy.
-      # Wipe the prior asset list before softprops uploads.
-      - name: Clear prior dev-latest assets
+      - name: Upload .mrpack as workflow artifact
         if: steps.idempotency.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dev-latest-mrpack
+          path: modpack/*.mrpack
+          retention-days: 1
+          if-no-files-found: error
+
+  # ─── publish-dev-latest ────────────────────────────────────────────────────
+  # Runs on a GitHub-hosted ubuntu-latest runner. Downloads the .mrpack the
+  # deploy job uploaded as a workflow artifact and republishes it to the
+  # rolling `dev-latest` GitHub pre-release. Lives off the self-hosted
+  # runner because the home upload bandwidth is too slow to push a 120 MB
+  # asset to uploads.github.com without GitHub's job watchdog cancelling it.
+  # Stable public URL: github.com/<repo>/releases/tag/dev-latest
+  publish-dev-latest:
+    needs: deploy
+    if: needs.deploy.outputs.skip != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download .mrpack artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dev-latest-mrpack
+          path: ./mrpack-out
+
+      - name: Clear prior dev-latest assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
+          # The .mrpack filename includes the pack version, so without this the
+          # rolling release would accumulate one stale .mrpack per dev deploy.
           if gh release view dev-latest --repo "$REPO" >/dev/null 2>&1; then
             gh release view dev-latest --repo "$REPO" --json assets -q '.assets[].name' \
               | while read -r asset; do
@@ -266,31 +283,27 @@ jobs:
           fi
 
       - name: Publish dev-latest pre-release
-        if: steps.idempotency.outputs.skip != 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: dev-latest
-          name: "Dev latest (${{ steps.ver.outputs.version }})"
+          name: "Dev latest (${{ needs.deploy.outputs.version }})"
           prerelease: true
-          # Replace the rolling tag's existing assets so dev-latest always points
-          # at the most recent dev deploy.
           make_latest: false
-          files: modpack/*.mrpack
+          files: ./mrpack-out/*.mrpack
           body: |
             Rolling pre-release tracking the head of `cobblemon-dev`.
 
-            **Version:** ${{ steps.ver.outputs.version }}
+            **Version:** ${{ needs.deploy.outputs.version }}
             **Dev server:** `108.21.168.120:25566`
 
-            Grab `Cobblemon.Server-${{ steps.ver.outputs.version }}.mrpack` below and import into PrismLauncher: **Add Instance → Import → file**.
+            Grab the `.mrpack` below and import into PrismLauncher: **Add Instance → Import → file**.
 
       - name: Add download link to run summary
-        if: steps.idempotency.outputs.skip != 'true'
         run: |
           {
             echo "## Modpack download"
             echo
-            echo "**Version:** ${{ steps.ver.outputs.version }}"
+            echo "**Version:** ${{ needs.deploy.outputs.version }}"
             echo "**Dev server:** \`108.21.168.120:25566\`"
             echo
             echo "[Download .mrpack from the dev-latest release](https://github.com/${{ github.repository }}/releases/tag/dev-latest)"

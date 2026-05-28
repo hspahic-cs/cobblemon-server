@@ -194,8 +194,15 @@ object RewardGranter {
         return "$shinyTag$speciesTitle Egg$haTag"
     }
 
+    /**
+     * Visual stack used for OddsMenu rows and the RollMenu centre slot reveal. The icon used to
+     * be `Items.EGG` (vanilla chicken throwing egg) which renders identically to any other egg
+     * item — players couldn't tell which rows were Pokémon eggs vs. flavor items. Switched to
+     * `Items.TURTLE_EGG` (distinct green-spotted block sprite) and stamped a lore line so the
+     * row reads unambiguously as a Pokémon egg.
+     */
     private fun eggDisplayStack(spec: ItemSpec.CobbreedingEgg, species: String? = null): ItemStack {
-        val stack = ItemStack(Items.EGG)
+        val stack = ItemStack(Items.TURTLE_EGG)
         val tierLabel = spec.pool.replace('_', ' ').replaceFirstChar { it.uppercase() }
         val shinyPrefix = if (spec.shiny) "§e✦ Shiny " else "§a"
         val base = if (species != null) {
@@ -205,6 +212,12 @@ object RewardGranter {
         }
         val name = if (spec.requireHiddenAbility) "$base §d(HA)" else base
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(name))
+        stack.set(
+            DataComponents.LORE,
+            net.minecraft.world.item.component.ItemLore(listOf(
+                Component.literal("§7Pokémon Egg — $tierLabel pool"),
+            )),
+        )
         return stack
     }
 }

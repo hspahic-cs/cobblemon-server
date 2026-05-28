@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.6] - 2026-05-28
+
+### Changed
+- `Deploy dev` split into two jobs: `deploy` (self-hosted, unchanged
+  behavior except no longer publishes) and `publish-dev-latest`
+  (ubuntu-latest, downloads the mrpack as a workflow artifact and pushes
+  it to the rolling `dev-latest` pre-release). Reasons:
+  - The self-hosted runner sits behind a residential ~4 MB/s upstream.
+    Pushing 120 MB to `uploads.github.com` from there reliably trips
+    GitHub Actions' job watchdog and the publish step gets cancelled
+    mid-upload (regardless of upload tool — observed with both
+    `actions/upload-artifact@v4` and `softprops/action-gh-release@v2`).
+  - GitHub Actions internal blob storage *is* fast from this cluster
+    (~50 MB/s observed), so handing the mrpack between jobs via a
+    workflow artifact is cheap. The publish job runs in GitHub's
+    datacenter and pushes to `uploads.github.com` over the backbone.
+- Companion change in `gemini-server`: bumped runner pod
+  `terminationGracePeriodSeconds` to 600 (was default 30s) to defuse a
+  separate ARC scale-down race uncovered during the investigation.
+
 ## [0.5.5] - 2026-05-28
 
 ### Changed

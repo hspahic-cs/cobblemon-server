@@ -26,12 +26,12 @@ permissions:
 
 jobs:
   promote:
-    runs-on: cobblemon-server
+    runs-on: ubuntu-latest
     concurrency:
       group: promote-prod
       cancel-in-progress: false
     env:
-      VM_HOST: 192.168.1.20
+      VM_HOST: cobblemon-dev          # tailnet hostname (same VM hosts dev + prod)
       VM_USER: deployer
       DEV_DIR: /opt/cobblemon-dev
       PROD_DIR: /opt/cobblemon-prod
@@ -44,23 +44,23 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      - name: Install rsync + ssh + gh
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq rsync openssh-client curl
-          if ! command -v gh >/dev/null; then
-            curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
-            sudo chmod a+r /usr/share/keyrings/githubcli-archive-keyring.gpg
-            echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
-            sudo apt-get update -qq
-            sudo apt-get install -y -qq gh
-          fi
+      # Join the tailnet. ubuntu-latest reaches the LAN-only MC VM via
+      # Tailscale's tag:ci-runner → tag:cobblemon-vm:22 ACL.
+      - name: Tailscale connect
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci-runner
 
       - name: Prepare SSH
         run: |
           mkdir -p ~/.ssh
-          install -m 0600 /etc/deploy-keys/id_ed25519 ~/.ssh/id_ed25519
-          install -m 0644 /etc/deploy-keys/known_hosts ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
+          umask 077
+          printf '%s\n' "${{ secrets.DEPLOYER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ env.VM_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
       # ─── 1. Promote dev → prod on the VM ─────────────────────────────────────
 

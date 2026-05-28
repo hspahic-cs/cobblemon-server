@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.5] - 2026-05-28
+
+### Changed
+- `Deploy dev` no longer uses `actions/upload-artifact` for the .mrpack.
+  The artifact upload kept racing with the ARC ephemeral-runner lifecycle —
+  the controller terminated the pod mid-stream during the ~120 MB upload,
+  failing the run with `runner has received a shutdown signal` even though
+  the actual deploy succeeded. Workflow artifacts also require sign-in,
+  which is incompatible with making the repo public-facing.
+- `Deploy dev` now publishes/updates a rolling `dev-latest` GitHub
+  pre-release with the .mrpack via `softprops/action-gh-release`, on the
+  same self-hosted runner. Stable URL:
+  `https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest`.
+  Adds a "Clear prior dev-latest assets" step (versioned filenames would
+  otherwise accumulate).
+- Re-introduced the gh CLI install in the Install build/deploy deps step,
+  matching the pattern from `promote-dev-to-prod.yml`.
+
 ## [0.5.4] - 2026-05-28
 
 ### Fixed

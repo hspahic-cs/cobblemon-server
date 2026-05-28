@@ -1,6 +1,6 @@
 name = "Cobblemon Unchained"
 filename = "unchained-neoforge-1.7.3-1.7.1.jar"
-side = "server"
+side = "both"
 
 [download]
 url = "https://cdn.modrinth.com/data/wh0wnzrT/versions/I5oNveU5/unchained-neoforge-1.7.3-1.7.1.jar"

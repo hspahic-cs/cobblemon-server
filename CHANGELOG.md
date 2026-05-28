@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.4] - 2026-05-28
+
+### Fixed
+- Flip the remaining `side = "server"` manifests to `side = "both"`:
+  cobbleworkers, cobblemon-linkie, cobblemon-unchained, flan, in-control,
+  neoessentials, worldedit. NeoForge networking refused client connection
+  to 0.5.3 dev/prod with `Channel of mod "Cobbleworkers" failed to connect:
+  This channel is missing on the client side, but required on the server`
+  (cobbleworkers + 1 other). These mods register network channels at
+  startup, so the client must have the jar to negotiate the channel —
+  Modrinth's `client_side: unsupported` flag is misleading. Same root cause
+  as the 0.5.3 tim-core fix; flipping the rest in one batch closes the
+  category.
+
 ## [0.5.3] - 2026-05-28
 
 ### Fixed

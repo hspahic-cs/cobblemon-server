@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+### Fixed
+- **cobblemon-gacha**: quest reward grants now actually fire. The reward chain
+  (advancement → reward function → `_finalize.mcfunction` → `gacha admin grant`)
+  was silently failing because datapack functions run at
+  `function-permission-level=2` while `gacha admin grant` required permission 4.
+  Moved `grant` and `giveegg` out of the `admin` subtree (gated at permission 2
+  instead) and updated `_finalize.mcfunction` to call `gacha grant` /
+  `gacha giveegg`. The `admin` subtree keeps `setcrate`, `clearcrate`, `force`,
+  `reload`.
+- **starterkit/Default.txt**: replaced the bundled default kit (leather boots,
+  shield, wooden sword, 9 bread) with stone pickaxe + axe + shovel + hoe +
+  Cobblemon Pokédex. Now lives in `modpack/server-overrides/config/starterkit/`
+  so deploys keep it in sync. (Note: uses `cobblemon:pokedex`. Swap to
+  `cobblenav:pokenav_item` if you wanted the PokéNav instead.)
+
 ### Added
 - **cobblemon-bridge**: gym-warp villager NPC. Tag a vanilla villager
   `cobblemon_bridge.gym_tp_npc` (or use `/gymtp spawn` to create one) and

@@ -1,0 +1,13 @@
+name = "Chatbubbles"
+filename = "chatbubbles-1.0.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/WOqCNEFC/versions/zWKm3FWD/chatbubbles-1.0.1.jar"
+hash-format = "sha512"
+hash = "ff376d098968a0ff3540bfb30bec7605f100b7b94f15178f7fe30565927df121a7bd537755251b405e5d135f3fa04b6dfdd5755f86a8ad731c784d9ce8315231"
+
+[update]
+[update.modrinth]
+mod-id = "WOqCNEFC"
+version = "zWKm3FWD"

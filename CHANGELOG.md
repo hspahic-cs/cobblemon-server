@@ -12,6 +12,50 @@ root README.
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-05-28
+
+### Synced from upstream (almutwakel/cobblemon-mods, 5 commits since 2026-05-26)
+- **server-quests datapack**: full sync to friend's production-aligned version.
+  91 → 193 files. New reward fns (`reach_income_250`, `reach_party_level_20`,
+  `root`, `select_pokemon`, `use_wild`); `reach_party_level_15` removed.
+- **cobblemon-ranked**: TeamSelectionMenu reworked to use vanilla
+  GENERIC_9x6 MenuType (no client-side menu registration needed).
+  `MenuRegistry.kt` deleted.
+- **cobblemon-bridge**:
+  - New `/wild` command — random surface teleport centered on X=350 Z=−700
+    with chunk preloading.
+  - New `HealQuestHook` — grants `heal_pokemon` advancement on carrot heal.
+- **client keybinds**: appended PokeNav (`O`), location overlay (`'`),
+  Xaero waypoint (`;`) to options.txt.
+
+### Added
+- **15 third-party mods** that were on cobblemonvalley but missing from the
+  packwiz manifests. Adding closes the gap between dev's modpack and the
+  upstream server friend has been running. Mods added (with auto-deps in
+  parens):
+  - **Core gameplay**: neoessentials (homes/warps/tpa — bridge expects this),
+    cobbleworkers, cobblemon-unchained (+ counter), starter-kit
+  - **Cobblemon QoL**: cobblemon-linkie (+ tim-core), cobblemon-counter,
+    cobblemon-pokenav, cobblemon-recobbled (rbrctai trainer AI)
+  - **General QoL**: chatbubbles, sophisticated-backpacks (+ sophisticated-core),
+    collective, coroutil, what-are-they-up-to (watut)
+- Mirrored cobblemonvalley's tuned authored configs into dev for the 6
+  in-house cobblemon mods (carrots/config, gacha/{egg_pools,tables},
+  market/{config,items}, npc/{rewards,spawn-blocker}, ranked arena coords).
+
+### Fixed
+- `options.txt` is now correctly placed in the mrpack. Was at
+  `overrides/overrides/options.txt` (double-nested) inside the .mrpack zip,
+  which made PrismLauncher lay it down at `<instance>/.minecraft/overrides/options.txt`
+  instead of the instance root. MC never saw the keybind/FOV/gamma overrides.
+  Moved from `modpack/overrides/options.txt` → `modpack/options.txt` (packwiz
+  already wraps everything in `overrides/` during mrpack export — the extra
+  folder was decorative and broke the path).
+
+### Skipped (intentionally)
+- `cobblemonalphas` and `fightorflight` — friend's notes flag both as
+  currently disabled.
+
 ## [0.5.0] - 2026-05-27
 
 ### Added

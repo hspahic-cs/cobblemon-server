@@ -30,6 +30,11 @@ hash = "05abf6fafe4a8adf5aaa24f09b7dedfbe199a8727d925e816fc608d6357f5ba8"
 metafile = true
 
 [[files]]
+file = "mods/chatbubbles.pw.toml"
+hash = "ba8af07fffdda61ad4c1a51000d84b50579eb1c3a9d1835bcc29077e6ee05a50"
+metafile = true
+
+[[files]]
 file = "mods/chipped.pw.toml"
 hash = "24c6c3fe917ffbcef04e788dec3e003d0ed03433bc00f9cf4f23fe9b85636aa7"
 metafile = true
@@ -45,6 +50,11 @@ hash = "bd1f2508c571574e76ae32614a353eb900063c0e2bf54bb29ac98e7d6ab36eb6"
 metafile = true
 
 [[files]]
+file = "mods/cobblemon-counter.pw.toml"
+hash = "5298e216aa91dc3463ddd92d31b3b9fd43ee47d2b1ffce486ae4c725bfeec9ce"
+metafile = true
+
+[[files]]
 file = "mods/cobblemon-economy.pw.toml"
 hash = "44abfccf36ac82c6176252987a67a73e63533ed88e15608e65c12386fd0b1f4c"
 metafile = true
@@ -52,6 +62,11 @@ metafile = true
 [[files]]
 file = "mods/cobblemon-integrations.pw.toml"
 hash = "c70e86c727c484964831bf18f88f66b42d54dc057be20bc99ce0abdbecdeea41"
+metafile = true
+
+[[files]]
+file = "mods/cobblemon-linkie.pw.toml"
+hash = "93f9e7ddf1fc3429c015259b3c344955da4bee198b54d8a6100f9e780eb784f7"
 metafile = true
 
 [[files]]
@@ -64,13 +79,43 @@ file = "mods/cobblemon-npc-0.1.0.jar"
 hash = "bc08a787efe7ed75c0d3427eff72494a8c9f76a4349cec7ef424e8ffeec07126"
 
 [[files]]
+file = "mods/cobblemon-pokenav.pw.toml"
+hash = "6dc0747f249a105ef38d1a75a74736ec276bbf791a5bafd87a47a93a23b25b43"
+metafile = true
+
+[[files]]
+file = "mods/cobblemon-recobbled-(advanced-trainer-ai).pw.toml"
+hash = "7d29e2d070b4d5e87af1607796389018c23af8fe84723b472bda2e03b0454f14"
+metafile = true
+
+[[files]]
+file = "mods/cobblemon-tim-core.pw.toml"
+hash = "7037595acf8de74a22f043f5a5894ced2b876ae26b2f148c8b7008de248c5151"
+metafile = true
+
+[[files]]
+file = "mods/cobblemon-unchained.pw.toml"
+hash = "02abffe0573f313139ecb089e243fc2c2c1cb39008a382192bd16809c8ab36d1"
+metafile = true
+
+[[files]]
 file = "mods/cobblemon.pw.toml"
 hash = "bd0dd7ceb00c37cfaa945dfba23b5b2406e12be20709df8d9f82ba12a5a3a2be"
 metafile = true
 
 [[files]]
+file = "mods/cobbleworkers.pw.toml"
+hash = "a94d86d7cd772d2f14c2a1ab81f6c2700a95fa0f9dd472d1b30c6d51cdc6b551"
+metafile = true
+
+[[files]]
 file = "mods/cobbreeding.pw.toml"
 hash = "bd78ebd2b96cdfd35557a337bafe9bdaf7c743a6a80eb6b9f38e4c9fd17ae21b"
+metafile = true
+
+[[files]]
+file = "mods/collective.pw.toml"
+hash = "34cb9102708e368a116c6b11e98728e0c4b471a6afdf7ce9602f93cb75174509"
 metafile = true
 
 [[files]]
@@ -81,6 +126,11 @@ metafile = true
 [[files]]
 file = "mods/corgilib.pw.toml"
 hash = "2b8c5286980b8d864085d02a6b2153cefa401a965833139ffac8e7661a322f7c"
+metafile = true
+
+[[files]]
+file = "mods/coroutil.pw.toml"
+hash = "d901f874a1e09747b8d0d072c38c426eceead1f29c8ba36680f8f0082996b152"
 metafile = true
 
 [[files]]
@@ -179,6 +229,11 @@ hash = "7b329b1c605a86df77d5bc601fac60f84b269145ccbbc01c0907215eaec6f54f"
 metafile = true
 
 [[files]]
+file = "mods/neoessentials.pw.toml"
+hash = "efc09d97c549b0ea37daf25e82e78883ed6727bb40361931990262373a653055"
+metafile = true
+
+[[files]]
 file = "mods/owo-lib.pw.toml"
 hash = "46831c04077a06df823bcd0f254833a90a9a9ccc78f5069f4b4c27fa301ac0cf"
 metafile = true
@@ -209,8 +264,23 @@ hash = "0281ed9713f3141bdac363056a791845510e14761ea65b4b2813cf96d664b20a"
 metafile = true
 
 [[files]]
+file = "mods/sophisticated-backpacks.pw.toml"
+hash = "b656cd4d01f562e4222b9e872770f9517d123d752019aa37946f3264163a6bcc"
+metafile = true
+
+[[files]]
+file = "mods/sophisticated-core.pw.toml"
+hash = "57ca1699559cc3e23320e27b1cca02b5c3687bc7c6d4506cd663570971e60dfc"
+metafile = true
+
+[[files]]
 file = "mods/spark.pw.toml"
 hash = "593fa7b30ab016aa45be07bd6bef3a9f160ed0f24689850d60bf84995d69b843"
+metafile = true
+
+[[files]]
+file = "mods/starter-kit.pw.toml"
+hash = "184c63d81d401e2e8b1e63d446afeaa577e4836cd29c147edff387a57f08f9e4"
 metafile = true
 
 [[files]]
@@ -239,6 +309,11 @@ hash = "e2978597c04f24e2e0536a6aa666ef5cc0b1d515c09af1f763c65587faa73333"
 metafile = true
 
 [[files]]
+file = "mods/what-are-they-up-to.pw.toml"
+hash = "9ce52d07c0c3d146a2a44f8bc187138ce7a5558a4e3ab540c86234702b6de274"
+metafile = true
+
+[[files]]
 file = "mods/worldedit.pw.toml"
 hash = "08d4775f8546564ad812b09062633ffc48f44b76328efe3832c021651af86b14"
 metafile = true
@@ -254,8 +329,48 @@ hash = "192a4685f8a182d1fa2fae67e2fad8b74ba547726beecfe8868174b4172d76a8"
 metafile = true
 
 [[files]]
-file = "overrides/options.txt"
+file = "options.txt"
 hash = "cc84ae4129d91bc59f5bcac0dd086da521cfecbd86262549dfc1f3d5ce8c0e5d"
+
+[[files]]
+file = "server-overrides/config/README.md"
+hash = "2f9e0d3d3d3c549855eb3178b5d8ef4bc23f7e0bd899b1a741fa24f8e3447f57"
+
+[[files]]
+file = "server-overrides/config/cobblemon-carrots/authored/config.json"
+hash = "c3eb9ba34d8c2ff9d4e20f0011eb2f0df4e1a7098d0f2331bae2bc6edf3dae81"
+
+[[files]]
+file = "server-overrides/config/cobblemon-gacha/authored/egg_pools.json"
+hash = "cc886a88c8a1df27f331420af8b0b80a687cc726515957052d95f0cf455836ea"
+
+[[files]]
+file = "server-overrides/config/cobblemon-gacha/authored/tables/common.json"
+hash = "98a44b045b6100c5b6951bc6dedf0b9a753acdddafe55488eb6066a9aee70205"
+
+[[files]]
+file = "server-overrides/config/cobblemon-gacha/authored/tables/rare.json"
+hash = "fb9879577811e62e63993c7670e492d2a0507b247f979c28c13242d5b70005cb"
+
+[[files]]
+file = "server-overrides/config/cobblemon-gacha/authored/tables/ultra.json"
+hash = "0fd0e0e730ba6804bfd3f7cef7882cb72b1d096ddba054f172fa0e9fbc9584a0"
+
+[[files]]
+file = "server-overrides/config/cobblemon-market/authored/config.json"
+hash = "9688ad3df5c52a57269768abc7adcab37c4848e33e8dc17dc31a4acfcdec8266"
+
+[[files]]
+file = "server-overrides/config/cobblemon-market/authored/items.json"
+hash = "baae8e5a4a7e3eed85734df46e108b1020617f70c52a42f2127075ecace8fabf"
+
+[[files]]
+file = "server-overrides/config/cobblemon-npc/authored/rewards.json"
+hash = "584a6ca524f43f286f6e4ea6a1ad9377b135d709c4a50b8be0d5082a6ff14d56"
+
+[[files]]
+file = "server-overrides/config/cobblemon-npc/authored/spawn-blocker.json"
+hash = "d1b10a95165c1fa80d2bfb3fca9554f987e314e499dd116ea065d1a3d7db06b6"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/README.md"

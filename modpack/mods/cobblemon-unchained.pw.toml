@@ -1,0 +1,13 @@
+name = "Cobblemon Unchained"
+filename = "unchained-neoforge-1.7.3-1.7.1.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/wh0wnzrT/versions/I5oNveU5/unchained-neoforge-1.7.3-1.7.1.jar"
+hash-format = "sha512"
+hash = "b527bc4896492b85c1956499ba26cc38a2d5277843ba2924b922f13c2eb9105c7a076e98ea3508c9f24e535cb957cb19f0b0d1b2b92d29dd58eedc6beabc6b95"
+
+[update]
+[update.modrinth]
+mod-id = "wh0wnzrT"
+version = "I5oNveU5"

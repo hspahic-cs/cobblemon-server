@@ -7,23 +7,23 @@
 #   - item: a per-quest bundle key
 
 # ─── Egg rewards ─────────────────────────────────────────────────────────
-execute as @a[tag=cq_reward_egg_common] at @s run gacha admin giveegg @s common
+execute as @a[tag=cq_reward_egg_common] at @s run gacha giveegg @s common
 tag @a[tag=cq_reward_egg_common] remove cq_reward_egg_common
 
-execute as @a[tag=cq_reward_egg_uncommon] at @s run gacha admin giveegg @s uncommon
+execute as @a[tag=cq_reward_egg_uncommon] at @s run gacha giveegg @s uncommon
 tag @a[tag=cq_reward_egg_uncommon] remove cq_reward_egg_uncommon
 
 # ─── Key rewards (count always 1 for current quest layout) ──────────────
-execute as @a[tag=cq_reward_key_common_1] at @s run gacha admin grant @s common 1
+execute as @a[tag=cq_reward_key_common_1] at @s run gacha grant @s common 1
 tag @a[tag=cq_reward_key_common_1] remove cq_reward_key_common_1
 
-execute as @a[tag=cq_reward_key_uncommon_1] at @s run gacha admin grant @s uncommon 1
+execute as @a[tag=cq_reward_key_uncommon_1] at @s run gacha grant @s uncommon 1
 tag @a[tag=cq_reward_key_uncommon_1] remove cq_reward_key_uncommon_1
 
-execute as @a[tag=cq_reward_key_rare_1] at @s run gacha admin grant @s rare 1
+execute as @a[tag=cq_reward_key_rare_1] at @s run gacha grant @s rare 1
 tag @a[tag=cq_reward_key_rare_1] remove cq_reward_key_rare_1
 
-execute as @a[tag=cq_reward_key_ultra_1] at @s run gacha admin grant @s ultra 1
+execute as @a[tag=cq_reward_key_ultra_1] at @s run gacha grant @s ultra 1
 tag @a[tag=cq_reward_key_ultra_1] remove cq_reward_key_ultra_1
 
 # ─── Item bundles per quest ─────────────────────────────────────────────

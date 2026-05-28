@@ -44,23 +44,13 @@ jobs:
           ref: main
           fetch-depth: 0
 
-      # Join the tailnet. ubuntu-latest reaches the LAN-only MC VM via
-      # Tailscale's tag:ci-runner → tag:cobblemon-vm:22 ACL.
-      - name: Tailscale connect
-        uses: tailscale/github-action@v3
+      - name: Tailscale + SSH setup
+        uses: ./.github/actions/tailscale-ssh
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci-runner
-
-      - name: Prepare SSH
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          umask 077
-          printf '%s\n' "${{ secrets.DEPLOYER_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H ${{ env.VM_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
+          ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          ssh-private-key: ${{ secrets.DEPLOYER_SSH_KEY }}
+          vm-host: ${{ env.VM_HOST }}
 
       # ─── 1. Promote dev → prod on the VM ─────────────────────────────────────
 

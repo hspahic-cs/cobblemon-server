@@ -1,0 +1,12 @@
+# Default reviewers for any PR. Either listed user can approve.
+# Required when branch protection has "Require review from Code Owners" on.
+#
+# Order matters — last matching pattern wins. Most specific rules go last.
+
+# Catch-all: every PR routes to both maintainers.
+*  @hspahic-cs @almutwakel
+
+# CI / infra: harris owns. Workflows, ArgoCD app definitions, and ops scripts
+# touch the deploy pipeline and cluster — keep that review path narrow.
+/.github/                @hspahic-cs
+/ops/                    @hspahic-cs

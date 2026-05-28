@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-05-28
+
+### Changed
+- **cobblemon-feedback**: replace raw player username + UUID in public
+  GitHub issue bodies with HMAC-derived `anon-XXXXXXXX` reporter IDs.
+  Now that the repo is public, raw player identifiers in issue bodies
+  expose more than necessary. Maintainers reverse the lookup with the
+  new op-only `/feedback whois <anon-id>` (in-memory, since last
+  server start) or by grepping `config/cobblemon-feedback/runtime/audit.log`
+  on the VM.
+- HMAC secret (`anonHmacSecret`) is auto-generated on first boot and
+  persisted to the per-instance runtime config. Different secrets on
+  dev vs prod produce different anon-IDs for the same player — intentional.
+
+### Notes
+- Existing dev/prod configs auto-backfill `anonHmacSecret` on next
+  restart. No manual config edit required.
+- See `docs/design/player-feedback-phase2.md` for the full design and
+  the upcoming Phase 2b/2c work (client mod with screenshot capture,
+  Cloudflare R2 upload).
+
 ## [0.6.0] - 2026-05-28
 
 ### Fixed

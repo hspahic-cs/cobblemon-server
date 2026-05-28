@@ -1,6 +1,6 @@
 name = "Flan"
 filename = "flan-1.21.1-1.12.7-neoforge.jar"
-side = "server"
+side = "both"
 
 [download]
 url = "https://cdn.modrinth.com/data/Si383TIH/versions/2PanOvza/flan-1.21.1-1.12.7-neoforge.jar"

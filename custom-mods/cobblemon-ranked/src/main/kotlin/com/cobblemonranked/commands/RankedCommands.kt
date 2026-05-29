@@ -150,34 +150,66 @@ object RankedCommands {
                             )
                         )
                     )
+                    // Arena 1 — slot 1 = player1 landing, slot 2 = player2 landing.
                     .then(Commands.literal("setarena")
                         .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
-                            .executes { ctx ->
-                                adminSetArenaFromSender(
-                                    ctx.source,
-                                    IntegerArgumentType.getInteger(ctx, "slot"),
-                                )
-                            }
+                            .executes { ctx -> adminSetArenaFromSender(ctx.source, arenaNum = 1,
+                                IntegerArgumentType.getInteger(ctx, "slot")) }
                             .then(Commands.argument("pos", Vec3Argument.vec3(true))
-                                .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = false, includeDim = false) }
+                                .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 1, includeRotation = false, includeDim = false) }
                                 .then(Commands.argument("rot", RotationArgument.rotation())
-                                    .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = true, includeDim = false) }
+                                    .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 1, includeRotation = true, includeDim = false) }
                                     .then(Commands.argument("dimension", DimensionArgument.dimension())
-                                        .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = true, includeDim = true) }
+                                        .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 1, includeRotation = true, includeDim = true) }
                                     )
+                                )
+                            )
+                        )
+                    )
+                    // Arena 2 — slot 1 = player1 landing, slot 2 = player2 landing.
+                    .then(Commands.literal("setarena2")
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
+                            .executes { ctx -> adminSetArenaFromSender(ctx.source, arenaNum = 2,
+                                IntegerArgumentType.getInteger(ctx, "slot")) }
+                            .then(Commands.argument("pos", Vec3Argument.vec3(true))
+                                .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 2, includeRotation = false, includeDim = false) }
+                                .then(Commands.argument("rot", RotationArgument.rotation())
+                                    .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 2, includeRotation = true, includeDim = false) }
+                                    .then(Commands.argument("dimension", DimensionArgument.dimension())
+                                        .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 2, includeRotation = true, includeDim = true) }
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    // Overflow spawn — shared landing point when both arenas are in use. One
+                    // position; both players land there.
+                    .then(Commands.literal("setoverflow")
+                        .executes { ctx -> adminSetOverflowFromSender(ctx.source); 1 }
+                        .then(Commands.argument("pos", Vec3Argument.vec3(true))
+                            .executes { ctx -> adminSetOverflowExplicit(ctx, includeRotation = false, includeDim = false) }
+                            .then(Commands.argument("rot", RotationArgument.rotation())
+                                .executes { ctx -> adminSetOverflowExplicit(ctx, includeRotation = true, includeDim = false) }
+                                .then(Commands.argument("dimension", DimensionArgument.dimension())
+                                    .executes { ctx -> adminSetOverflowExplicit(ctx, includeRotation = true, includeDim = true) }
                                 )
                             )
                         )
                     )
                     .then(Commands.literal("clearpos")
                         .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
-                            .executes { ctx ->
-                                adminClearArena(
-                                    ctx.source,
-                                    IntegerArgumentType.getInteger(ctx, "slot"),
-                                )
-                            }
+                            .executes { ctx -> adminClearArena(ctx.source, arenaNum = 1,
+                                IntegerArgumentType.getInteger(ctx, "slot")); 1 }
                         )
+                    )
+                    .then(Commands.literal("clearpos2")
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
+                            .executes { ctx -> adminClearArena(ctx.source, arenaNum = 2,
+                                IntegerArgumentType.getInteger(ctx, "slot")); 1 }
+                        )
+                    )
+                    .then(Commands.literal("clearoverflow")
+                        .executes { ctx -> adminClearOverflow(ctx.source); 1 }
                     )
                     .then(Commands.literal("showarena")
                         .executes { ctx -> adminShowArena(ctx.source); 1 }
@@ -351,22 +383,50 @@ object RankedCommands {
      * Capture sender's current position + facing + dimension into `arenaPos<slot>` and persist.
      * `slot` is validated as 1..2 by the Brigadier IntegerArgumentType range.
      */
-    private fun adminSetArenaFromSender(source: CommandSourceStack, slot: Int): Int {
+    private fun adminSetArenaFromSender(source: CommandSourceStack, arenaNum: Int, slot: Int): Int {
         val pos = source.position
         val rot = source.rotation
         val dim = source.level.dimension().location().toString()
         val arena = ArenaPos(pos.x, pos.y, pos.z, dim, rot.y, rot.x)
-        applyArena(source, slot, arena, captured = true)
+        applyArena(source, arenaNum, slot, arena, captured = true)
         return 1
     }
 
     private fun adminSetArenaExplicit(
         ctx: CommandContext<CommandSourceStack>,
+        arenaNum: Int,
         includeRotation: Boolean,
         includeDim: Boolean,
     ): Int {
         val source = ctx.source
         val slot = IntegerArgumentType.getInteger(ctx, "slot")
+        val arena = readArenaPos(ctx, includeRotation, includeDim)
+        applyArena(source, arenaNum, slot, arena, captured = false)
+        return 1
+    }
+
+    private fun adminSetOverflowFromSender(source: CommandSourceStack) {
+        val pos = source.position
+        val rot = source.rotation
+        val dim = source.level.dimension().location().toString()
+        applyOverflow(source, ArenaPos(pos.x, pos.y, pos.z, dim, rot.y, rot.x), captured = true)
+    }
+
+    private fun adminSetOverflowExplicit(
+        ctx: CommandContext<CommandSourceStack>,
+        includeRotation: Boolean,
+        includeDim: Boolean,
+    ): Int {
+        applyOverflow(ctx.source, readArenaPos(ctx, includeRotation, includeDim), captured = false)
+        return 1
+    }
+
+    private fun readArenaPos(
+        ctx: CommandContext<CommandSourceStack>,
+        includeRotation: Boolean,
+        includeDim: Boolean,
+    ): ArenaPos {
+        val source = ctx.source
         val coord = Vec3Argument.getVec3(ctx, "pos")
         val (yaw, pitch) = if (includeRotation) {
             val r = RotationArgument.getRotation(ctx, "rot").getRotation(source)
@@ -375,52 +435,78 @@ object RankedCommands {
         val dim = if (includeDim) {
             DimensionArgument.getDimension(ctx, "dimension").dimension().location().toString()
         } else source.level.dimension().location().toString()
-        val arena = ArenaPos(coord.x, coord.y, coord.z, dim, yaw, pitch)
-        applyArena(source, slot, arena, captured = false)
-        return 1
+        return ArenaPos(coord.x, coord.y, coord.z, dim, yaw, pitch)
     }
 
-    private fun applyArena(source: CommandSourceStack, slot: Int, arena: ArenaPos, captured: Boolean) {
-        val updated = when (slot) {
-            1 -> CobblemonRanked.config.copy(arenaPos1 = arena)
-            2 -> CobblemonRanked.config.copy(arenaPos2 = arena)
+    private fun applyArena(source: CommandSourceStack, arenaNum: Int, slot: Int, arena: ArenaPos, captured: Boolean) {
+        val updated = when (arenaNum to slot) {
+            1 to 1 -> CobblemonRanked.config.copy(arenaPos1 = arena)
+            1 to 2 -> CobblemonRanked.config.copy(arenaPos2 = arena)
+            2 to 1 -> CobblemonRanked.config.copy(arena2Pos1 = arena)
+            2 to 2 -> CobblemonRanked.config.copy(arena2Pos2 = arena)
             else -> return  // Brigadier guards this, but be defensive.
         }
         CobblemonRanked.config = updated
         RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
         val verb = if (captured) "Captured" else "Set"
         source.sendSystemMessage(Component.literal(
-            "§a[Ranked] $verb arena $slot → ${formatArena(arena)}"
+            "§a[Ranked] $verb arena $arenaNum slot $slot → ${formatArena(arena)}"
         ))
-        if (updated.isArenaConfigured()) {
-            source.sendSystemMessage(Component.literal("§7[Ranked] Both arenas configured — battles will teleport."))
-        } else {
-            val missing = if (updated.arenaPos1 == null) 1 else 2
-            source.sendSystemMessage(Component.literal(
-                "§7[Ranked] Arena $missing still unset — battles run wherever players are."
-            ))
-        }
+        reportArenaState(source, updated)
     }
 
-    private fun adminClearArena(source: CommandSourceStack, slot: Int): Int {
-        val updated = when (slot) {
-            1 -> CobblemonRanked.config.copy(arenaPos1 = null)
-            2 -> CobblemonRanked.config.copy(arenaPos2 = null)
-            else -> return 0
+    private fun applyOverflow(source: CommandSourceStack, arena: ArenaPos, captured: Boolean) {
+        val updated = CobblemonRanked.config.copy(spawnPos = arena)
+        CobblemonRanked.config = updated
+        RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
+        val verb = if (captured) "Captured" else "Set"
+        source.sendSystemMessage(Component.literal(
+            "§a[Ranked] $verb overflow spawn → ${formatArena(arena)}"
+        ))
+        reportArenaState(source, updated)
+    }
+
+    private fun adminClearArena(source: CommandSourceStack, arenaNum: Int, slot: Int) {
+        val updated = when (arenaNum to slot) {
+            1 to 1 -> CobblemonRanked.config.copy(arenaPos1 = null)
+            1 to 2 -> CobblemonRanked.config.copy(arenaPos2 = null)
+            2 to 1 -> CobblemonRanked.config.copy(arena2Pos1 = null)
+            2 to 2 -> CobblemonRanked.config.copy(arena2Pos2 = null)
+            else -> return
         }
         CobblemonRanked.config = updated
         RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
-        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared arena $slot"))
-        return 1
+        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared arena $arenaNum slot $slot"))
+    }
+
+    private fun adminClearOverflow(source: CommandSourceStack) {
+        val updated = CobblemonRanked.config.copy(spawnPos = null)
+        CobblemonRanked.config = updated
+        RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
+        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared overflow spawn"))
+    }
+
+    private fun reportArenaState(source: CommandSourceStack, cfg: RankedConfig) {
+        val a1 = if (cfg.isArenaConfigured()) "§a✓" else "§7—"
+        val a2 = if (cfg.isArena2Configured()) "§a✓" else "§7—"
+        val sp = if (cfg.isSpawnConfigured()) "§a✓" else "§7—"
+        source.sendSystemMessage(Component.literal(
+            "§7[Ranked] Allocation order — arena1 $a1§7 · arena2 $a2§7 · overflow $sp"
+        ))
     }
 
     private fun adminShowArena(source: CommandSourceStack) {
         val cfg = CobblemonRanked.config
-        source.sendSystemMessage(Component.literal("§e[Ranked] §fArena positions:"))
-        source.sendSystemMessage(Component.literal("§7  1: §f${cfg.arenaPos1?.let { formatArena(it) } ?: "§8(unset)"}"))
-        source.sendSystemMessage(Component.literal("§7  2: §f${cfg.arenaPos2?.let { formatArena(it) } ?: "§8(unset)"}"))
-        val state = if (cfg.isArenaConfigured()) "§aenabled" else "§7disabled (both must be set)"
-        source.sendSystemMessage(Component.literal("§7  Teleport: $state"))
+        source.sendSystemMessage(Component.literal("§e[Ranked] §fTeleport configuration:"))
+        source.sendSystemMessage(Component.literal("§e  Arena 1 §7(/warp arena1)"))
+        source.sendSystemMessage(Component.literal("§7    slot 1: §f${cfg.arenaPos1?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§7    slot 2: §f${cfg.arenaPos2?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§e  Arena 2 §7(/warp arena2)"))
+        source.sendSystemMessage(Component.literal("§7    slot 1: §f${cfg.arena2Pos1?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§7    slot 2: §f${cfg.arena2Pos2?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§e  Overflow §7(shared)"))
+        source.sendSystemMessage(Component.literal("§7    spawn:  §f${cfg.spawnPos?.let { formatArena(it) } ?: "§8(unset)"}"))
+        reportArenaState(source, cfg)
     }
 
     private fun formatArena(a: ArenaPos): String =

@@ -35,14 +35,27 @@ data class RankedConfig(
     val decayEnabled: Boolean = true,
     val leaderboardSize: Int = 10,
     /**
-     * Optional arena positions. When **both** are non-null, players are teleported there
-     * at battle start and back to their original locations on victory/flee/cancel.
-     * Leave either null to disable arena teleport (battles run wherever players are).
+     * Arena 1 — primary battlefield. `arenaPos1` is where player 1 lands, `arenaPos2` is
+     * where player 2 lands. Both must be set for arena 1 to be usable.
      */
     val arenaPos1: ArenaPos? = null,
-    val arenaPos2: ArenaPos? = null
+    val arenaPos2: ArenaPos? = null,
+    /**
+     * Arena 2 — secondary battlefield used when arena 1 is already in use by another
+     * ranked match. Same shape: `arena2Pos1` for player 1, `arena2Pos2` for player 2.
+     */
+    val arena2Pos1: ArenaPos? = null,
+    val arena2Pos2: ArenaPos? = null,
+    /**
+     * Overflow spawn point. When both arenas are in use the next concurrent match teleports
+     * both players to this single position (multiple matches can share — no mutex). Distinct
+     * from cobblemon-bridge's `/setspawn` so each subsystem can pick its own coords.
+     */
+    val spawnPos: ArenaPos? = null,
 ) {
     fun isArenaConfigured(): Boolean = arenaPos1 != null && arenaPos2 != null
+    fun isArena2Configured(): Boolean = arena2Pos1 != null && arena2Pos2 != null
+    fun isSpawnConfigured(): Boolean = spawnPos != null
     companion object {
         private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 

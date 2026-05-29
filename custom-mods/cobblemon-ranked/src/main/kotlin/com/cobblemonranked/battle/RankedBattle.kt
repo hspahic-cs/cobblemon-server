@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.CobblemonRanked
 import com.cobblemonranked.config.ArenaPos
+import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.decay.DecayManager
 import com.cobblemonranked.elo.EloCalculator
 import com.cobblemonranked.gui.TeamSelectionGui
@@ -39,12 +40,22 @@ data class OriginalLocation(
     val pitch: Float,
 )
 
+/**
+ * Which arena (if any) a match occupies. The mutex on ARENA_1 / ARENA_2 is "at most one
+ * active match each at a time"; SPAWN can be shared by any number of overflow matches; NONE
+ * means no teleport happened (no arena was configured at start) so the battle runs wherever
+ * the players were.
+ */
+enum class ArenaSlot { ARENA_1, ARENA_2, SPAWN, NONE }
+
 data class ActiveRankedMatch(
     val player1Uuid: UUID,
     val player2Uuid: UUID,
     val battleId: UUID? = null,
     /** Original locations keyed by player UUID; empty when arena teleport is disabled. */
     val originalLocations: Map<UUID, OriginalLocation> = emptyMap(),
+    /** Which arena this match is occupying — used for the spectate hint + the slot mutex. */
+    val slot: ArenaSlot = ArenaSlot.NONE,
 )
 
 /** Result of [RankedBattleManager.applyMatchResult]. */
@@ -154,14 +165,20 @@ object RankedBattleManager {
         CobblemonRanked.teamStore.saveTeam(player1.uuid, team1)
         CobblemonRanked.teamStore.saveTeam(player2.uuid, team2)
 
-        // Capture original locations and teleport to arena if configured.
-        val originals: Map<UUID, OriginalLocation> = if (config.isArenaConfigured()) {
+        // Pick an arena slot for this match. Allocation priority: arena 1 → arena 2 → spawn.
+        // ARENA_1 / ARENA_2 are mutexed (one active match at a time, gated by [rankedBattles]),
+        // SPAWN is a shared overflow with no mutex so a 3rd+ concurrent match always has
+        // somewhere to land. If no arena is configured at all, [ArenaSlot.NONE] means players
+        // battle in place — no teleport, no teleport-back.
+        val slot = allocateSlot(config)
+        val originals: Map<UUID, OriginalLocation> = if (slot != ArenaSlot.NONE) {
             val map = mapOf(
                 player1.uuid to captureLocation(player1),
                 player2.uuid to captureLocation(player2),
             )
-            teleport(player1, config.arenaPos1!!)
-            teleport(player2, config.arenaPos2!!)
+            val (p1Pos, p2Pos) = positionsFor(slot, config)
+            teleport(player1, p1Pos)
+            teleport(player2, p2Pos)
             map
         } else {
             emptyMap()
@@ -194,10 +211,23 @@ object RankedBattleManager {
         }
 
         result.ifSuccessful { battle ->
-            val match = ActiveRankedMatch(player1.uuid, player2.uuid, battle.battleId, originals)
+            val match = ActiveRankedMatch(
+                player1.uuid, player2.uuid, battle.battleId, originals, slot,
+            )
             rankedBattles[battle.battleId] = match
-            broadcast(player1.server,
-                "[Ranked] Battle started: ${player1.name.string} vs ${player2.name.string}!")
+
+            // Match announcement: tell every online player who's fighting and where to spectate.
+            val store = CobblemonRanked.eloStore
+            val e1 = store.getOrCreate(player1.uuid, player1.name.string).elo
+            val e2 = store.getOrCreate(player2.uuid, player2.name.string).elo
+            val warp = warpNameFor(slot)
+            val spectate = if (slot == ArenaSlot.NONE)
+                "§7 (no spectate location — battling in place)"
+            else
+                "§7 — Spectate at §f/warp $warp"
+            broadcast(player1.server, "§6§l[Ranked Match] §r§f" +
+                "${player1.name.string} §7($e1) §fvs §f${player2.name.string} §7($e2)" +
+                spectate)
         }
 
         result.ifErrored {
@@ -209,6 +239,39 @@ object RankedBattleManager {
         }
 
         cleanup(player1.uuid, player2.uuid)
+    }
+
+    /**
+     * Pick the next arena for a new match. Priority: arena 1 → arena 2 → spawn → NONE.
+     * The two arenas are mutexed (a slot is "in use" iff some [ActiveRankedMatch] in
+     * [rankedBattles] currently holds it); spawn is shared and never mutexed.
+     */
+    private fun allocateSlot(config: RankedConfig): ArenaSlot {
+        val inUse = rankedBattles.values.mapTo(hashSetOf()) { it.slot }
+        return when {
+            config.isArenaConfigured() && ArenaSlot.ARENA_1 !in inUse -> ArenaSlot.ARENA_1
+            config.isArena2Configured() && ArenaSlot.ARENA_2 !in inUse -> ArenaSlot.ARENA_2
+            config.isSpawnConfigured() -> ArenaSlot.SPAWN
+            else -> ArenaSlot.NONE
+        }
+    }
+
+    /** Returns (player1 landing pos, player2 landing pos) for the given slot. */
+    private fun positionsFor(slot: ArenaSlot, config: RankedConfig): Pair<ArenaPos, ArenaPos> =
+        when (slot) {
+            ArenaSlot.ARENA_1 -> config.arenaPos1!! to config.arenaPos2!!
+            ArenaSlot.ARENA_2 -> config.arena2Pos1!! to config.arena2Pos2!!
+            // Spawn is a single shared point — both players land on the same coords.
+            ArenaSlot.SPAWN -> config.spawnPos!! to config.spawnPos
+            ArenaSlot.NONE -> error("positionsFor(NONE) shouldn't be called — gate on slot first")
+        }
+
+    /** Maps a slot to the warp name shown in the match-start broadcast / spectate hint. */
+    fun warpNameFor(slot: ArenaSlot): String = when (slot) {
+        ArenaSlot.ARENA_1 -> "arena1"
+        ArenaSlot.ARENA_2 -> "arena2"
+        ArenaSlot.SPAWN -> "spawn"
+        ArenaSlot.NONE -> "(no arena)"
     }
 
     private fun captureLocation(player: ServerPlayer): OriginalLocation {

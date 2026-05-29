@@ -2,6 +2,8 @@ package com.cobblemonmarket.gui
 
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemEntry
+import com.cobblemonmarket.config.isSellable
+import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
 import com.cobblemonmarket.economy.TradeOps
 import com.cobblemonmarket.economy.TradeResult
@@ -78,7 +80,7 @@ object MarketMenu {
 
     /** Returns the entries the menu should show in stable order, scoped by vendor. */
     private fun visibleItems(vendorTag: String): List<Map.Entry<String, ItemEntry>> =
-        CobblemonMarket.items.entries.filter { it.value.vendorTag == vendorTag }
+        CobblemonMarket.items.entries.filter { it.value.vendorScope == vendorTag }
 
     /** (Re)populate every slot from current market state. Called on open + after each trade. */
     private fun populate(container: Container, player: ServerPlayer, vendorTag: String) {
@@ -119,7 +121,7 @@ object MarketMenu {
         val stack = ItemStack(item)
         val lore = mutableListOf<MutableComponent>()
         lore += line("§aBuy: §f\$$buy §8(per unit)")
-        if (entry.sellable) {
+        if (entry.isSellable) {
             lore += line("§cSell: §f\$$sell §8(per unit)")
             lore += line("§7Stock: §f$stockNow §8/ ${entry.baseStock} target")
             lore += line("")
@@ -164,7 +166,7 @@ object MarketMenu {
                 button == 1 && clickType == ClickType.QUICK_MOVE -> "sell" to 64
                 else -> return
             }
-            if (action == "sell" && !entry.sellable) {
+            if (action == "sell" && !entry.isSellable) {
                 sp.sendSystemMessage(Component.literal("§c[Market] This vendor doesn't buy items back."))
                 return
             }
@@ -201,7 +203,7 @@ object MarketMenu {
             val entry = CobblemonMarket.items[itemId] ?: return ItemStack.EMPTY
             // Refuse shift-sell against a vendor that doesn't carry this item, or against a
             // buy-only entry — otherwise the player'd silently lose the stack.
-            if (entry.vendorTag != vendorTag || !entry.sellable) return ItemStack.EMPTY
+            if (entry.vendorScope != vendorTag || !entry.isSellable) return ItemStack.EMPTY
             val qty = stack.count
             val result = TradeOps.sell(sp, itemId, qty)
             reportTrade(sp, "sell", itemId, qty, result)

@@ -30,15 +30,28 @@ import kotlin.io.path.writeText
  * - `sellable` — when false, the right-click sell paths in the GUI are no-ops and the slot
  *   lore reads "Buy only". For TM vendors and other one-way shops.
  */
+/**
+ * Note on nullable fields: Gson constructs Kotlin data classes via Unsafe (bypassing the
+ * constructor), so Kotlin default-parameter values like `vendorTag: String = ""` are NOT
+ * applied — a missing JSON field deserializes to `null` / primitive zero, not the data-class
+ * default. Hand-edited items.json files that omit `vendorTag` would land with `vendorTag = null`
+ * at runtime and silently disappear from the default-vendor menu. Making these fields nullable
+ * and reading through [vendorScope] / [isSellable] forces every caller to handle the null and
+ * keeps the default-vendor and "sellable" semantics correct even if a field is missing.
+ */
 data class ItemEntry(
     val baseBuyPrice: Int,
     val baseSellPrice: Int,
     val baseStock: Int = 100,
     val elasticity: Double = 1.0,
     val maxStockMultiplier: Double = 10.0,
-    val vendorTag: String = "",
-    val sellable: Boolean = true,
+    val vendorTag: String? = "",
+    val sellable: Boolean? = true,
 )
+
+/** Empty string = the default unscoped vendor. */
+val ItemEntry.vendorScope: String get() = vendorTag ?: ""
+val ItemEntry.isSellable: Boolean get() = sellable ?: true
 
 object ItemConfig {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()

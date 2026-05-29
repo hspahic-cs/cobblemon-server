@@ -15,6 +15,22 @@ root README.
 ## [0.7.5] - 2026-05-29
 
 ### Fixed
+- **cobblemon-market / default vendor shows empty**: the unscoped market
+  shopkeeper opened an empty 9×N grid. 0.7.4 added `vendorTag` and
+  `sellable` to `ItemEntry` but the six pre-0.7.4 entries
+  (`cobblemon:rare_candy`, `…:ultra_ball`, `…:great_ball`,
+  `…:poke_ball`, `…:revive`, `minecraft:carrot`) in
+  `items.json` never had those fields filled in. Gson constructs Kotlin
+  data classes via Unsafe (skipping the constructor), so the Kotlin
+  default-parameter values like `vendorTag: String = ""` were NOT
+  applied — at runtime those fields were `null`, the menu filter
+  `vendorTag == ""` skipped every legacy entry, and the default shop
+  rendered empty. Fixed by (1) backfilling explicit `vendorTag: ""` and
+  `sellable: true` for the six legacy entries in `items.json`, and (2)
+  making both fields nullable in `ItemEntry` with `vendorScope` /
+  `isSellable` helpers that treat null as the documented default
+  (`""` / `true`). Hand-edited entries that omit either field now do
+  the right thing instead of silently disappearing.
 - **build / .mrpack routing**: every 0.7.4 client got rejected at
   connect-time with `Connection Lost — cobblemonfeedback:chunk/ready/
   request channel missing on client side, but required on the server`.

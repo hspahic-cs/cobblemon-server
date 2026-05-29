@@ -21,6 +21,8 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import java.time.LocalDate
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
@@ -412,11 +414,88 @@ object RankedBattleManager {
         UUID.nameUUIDFromBytes("OfflinePlayer:$name".toByteArray(Charsets.UTF_8))
 
     private fun cancelMatch(player: ServerPlayer) {
+        // If a real battle is already in flight for this player, treat the cancel as a forfeit
+        // — the team-select menu shouldn't have been re-openable past startBattle, but cover it.
+        if (findActiveMatchByPlayer(player.uuid) != null) {
+            forfeitMatch(player, reason = "cancelled the match")
+            return
+        }
         val opponentUuid = pendingMatches[player.uuid] ?: return
         val opponent = player.server.playerList.getPlayer(opponentUuid)
         opponent?.sendSystemMessage(Component.literal("[Ranked] ${player.name.string} cancelled the match."))
         player.sendSystemMessage(Component.literal("[Ranked] Match cancelled."))
         cleanup(player.uuid, opponentUuid)
+    }
+
+    /**
+     * Returns the active match containing [playerUuid], or null if the player isn't in one.
+     * Used by the leave/forfeit handlers (logout, /ranked admin forfeit) to find the right
+     * match without having to know its battleId.
+     */
+    private fun findActiveMatchByPlayer(playerUuid: UUID): Pair<UUID, ActiveRankedMatch>? {
+        return rankedBattles.entries.firstNotNullOfOrNull { (battleId, match) ->
+            if (match.player1Uuid == playerUuid || match.player2Uuid == playerUuid)
+                battleId to match else null
+        }
+    }
+
+    /**
+     * Public: treat [leaver] as having forfeited any active ranked battle they're in. The
+     * opponent (still online) gets the ELO win, both players are teleported back to their
+     * captured pre-arena positions, and the match is removed from [rankedBattles] so the
+     * Cobblemon-side BATTLE_FLED / BATTLE_VICTORY handlers won't double-resolve it.
+     *
+     * Returns true iff a match was found and resolved. Safe to call when the player isn't in
+     * a match (returns false).
+     *
+     * Called from:
+     *  - [onPlayerLogOut]: disconnect mid-battle
+     *  - `/ranked admin forfeit <player>`: admin unblocks a hung match
+     *  - [cancelMatch] edge-case: cancel triggered after battle already started
+     */
+    fun forfeitMatch(leaver: ServerPlayer, reason: String = "left the match"): Boolean {
+        val (battleId, match) = findActiveMatchByPlayer(leaver.uuid) ?: return false
+        val server = leaver.server
+        val opponentUuid = if (match.player1Uuid == leaver.uuid) match.player2Uuid else match.player1Uuid
+        val opponent = server.playerList.getPlayer(opponentUuid)
+
+        // End the underlying Cobblemon battle so it doesn't keep ticking (and so its own
+        // BATTLE_VICTORY / BATTLE_FLED can't fire afterwards for the same battleId).
+        rankedBattles.remove(battleId)
+        val cobBattle = Cobblemon.battleRegistry.getBattle(battleId)
+        try { cobBattle?.end() } catch (e: Exception) {
+            CobblemonRanked.logger.warn("forfeit: failed to end Cobblemon battle {}: {}", battleId, e.message)
+        }
+
+        if (opponent != null) {
+            // Real ELO update: leaver loses, opponent gains.
+            resolveMatch(opponent, leaver)
+            opponent.sendSystemMessage(Component.literal("[Ranked] ${leaver.name.string} $reason. You win by forfeit."))
+        } else {
+            // Both gone — void.
+            broadcast(server, "[Ranked] ${leaver.name.string} $reason and opponent is offline. Match voided.")
+        }
+        leaver.sendSystemMessage(Component.literal("[Ranked] You forfeited the match."))
+
+        teleportBack(server, match)
+        return true
+    }
+
+    /**
+     * Disconnect-during-battle = forfeit. NeoForge subscriber registered via the EVENT_BUS so we
+     * see logout before the player object is invalidated. [forfeitMatch] handles the rest;
+     * we also clean up pendingMatches for the team-select-stage logout case (no ELO change there).
+     */
+    @SubscribeEvent
+    fun onPlayerLogOut(event: PlayerEvent.PlayerLoggedOutEvent) {
+        val player = event.entity as? ServerPlayer ?: return
+        if (!forfeitMatch(player, reason = "disconnected")) {
+            // Not in an active battle — but might be in team-select.
+            val opponentUuid = pendingMatches[player.uuid] ?: return
+            val opponent = player.server.playerList.getPlayer(opponentUuid)
+            opponent?.sendSystemMessage(Component.literal("[Ranked] ${player.name.string} disconnected. Match cancelled."))
+            cleanup(player.uuid, opponentUuid)
+        }
     }
 
     private fun cleanup(uuid1: UUID, uuid2: UUID) {

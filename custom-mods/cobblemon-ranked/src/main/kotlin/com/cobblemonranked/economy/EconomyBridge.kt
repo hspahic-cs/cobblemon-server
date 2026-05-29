@@ -7,7 +7,7 @@ import java.util.UUID
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Reflection bridge to Cobblemon Economy 0.0.17 (Fabric, loaded via Sinytra Connector).
+ * Reflection bridge to NeoEssentials Economy (active Vault provider on the server, replaces Cobblemon Economy which never loaded — see 0.7.8 release notes).
  *
  * Each custom mod that touches currency keeps its own local copy of this file rather than
  * importing a shared one — keeps each mod independent of the others at compile time. The
@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 object EconomyBridge {
 
     private val log = LoggerFactory.getLogger("cobblemon-ranked/economy")
-    private const val ECONOMY_CLASS = "com.cobblemon.economy.fabric.CobblemonEconomy"
+    private const val ECONOMY_CLASS = "com.zerog.neoessentials.economy.managers.EconomyManager"
 
     @Volatile private var resolvedManager: Any? = null
     @Volatile private var getBalanceMethod: Method? = null
@@ -28,17 +28,17 @@ object EconomyBridge {
         resolvedManager?.let { return it }
         return try {
             val cls = Class.forName(ECONOMY_CLASS)
-            val mgr = cls.getMethod("getEconomyManager").invoke(null)
+            val mgr = cls.getMethod("getInstance").invoke(null)
             resolvedManager = mgr
             getBalanceMethod = mgr.javaClass.getMethod("getBalance", UUID::class.java)
             addBalanceMethod = mgr.javaClass.getMethod("addBalance", UUID::class.java, BigDecimal::class.java)
             subBalanceMethod = mgr.javaClass.getMethod("subtractBalance", UUID::class.java, BigDecimal::class.java)
             mgr
         } catch (e: ClassNotFoundException) {
-            warnOnce("Cobblemon Economy not loaded — wager operations disabled")
+            warnOnce("NeoEssentials Economy not loaded — wager operations disabled")
             null
         } catch (e: Throwable) {
-            warnOnce("Cobblemon Economy reflection failed: ${e.javaClass.simpleName}: ${e.message}")
+            warnOnce("NeoEssentials Economy reflection failed: ${e.javaClass.simpleName}: ${e.message}")
             null
         }
     }

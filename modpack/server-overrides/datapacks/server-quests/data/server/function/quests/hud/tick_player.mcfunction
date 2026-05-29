@@ -44,9 +44,9 @@ execute if entity @s[tag=!cq_hud_done,advancements={server:reach_party_level_20=
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_1=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 1: Clay","color":"white","bold":false},{"text":" §7— find him at §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_1=false}] run tag @s add cq_hud_done
 
-# --- reach_income_250 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:reach_income_250=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Reach $250","color":"white","bold":false},{"text":" §7— sell items on §f/market"}]
-execute if entity @s[tag=!cq_hud_done,advancements={server:reach_income_250=false}] run tag @s add cq_hud_done
+# --- reach_income_100 ---
+execute if entity @s[tag=!cq_hud_done,advancements={server:reach_income_100=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Reach $100","color":"white","bold":false},{"text":" §7— sell items at §f/warp market §7(tip: §f/market prices§7)"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:reach_income_100=false}] run tag @s add cq_hud_done
 
 # --- first_pvp_win ---
 execute if entity @s[tag=!cq_hud_done,advancements={server:first_pvp_win=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Win a Ranked Battle","color":"white","bold":false},{"text":" §7— §f/challenge <player>"}]

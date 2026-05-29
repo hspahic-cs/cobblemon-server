@@ -68,6 +68,32 @@ root README.
   closing and re-opening returns to page 1.
 
 ### Changed
+- **cobblemon-bridge / GymDefeatHook**: first-time gym defeats now
+  deposit money on top of the advancement reward. Table:
+  - Gyms 1-10 (mainline ladder): `$50 + $25×(N-1)` → 50, 75, 100,
+    125, 150, 175, 200, 225, 250, 275
+  - Gyms 11-19 (rotating roster): flat $200 per defeat
+  - Gyms 20-23 (Elite Four): flat $300 per trainer
+  - Gym 24 (Champion): $500
+  Gated by the advancement, so each tier pays exactly once per
+  player. Challenge ("Hard Mode") variants currently match the base
+  reward — bump `gymBounty` if you want them to differ.
+- **server-quests / reach_income_250 → reach_income_100**: pocket-
+  change milestone threshold lowered $250 → $100 so first-server-day
+  players hit it during the carrots/wild loop instead of grinding to
+  the second hour. Renamed files, every datapack + Kotlin reference
+  (`first_pvp_win.json`, `reach_elo_1100.json`, `reach_income_1000.json`,
+  `_finalize.mcfunction`, `tick_player.mcfunction`,
+  `QuestCommand.kt`, `QuestRewards.INCOME_THRESHOLDS`) updated to
+  point to the new advancement id. Reward bundle (Pasture Block) is
+  unchanged.
+- **server-quests / HUD + reward chat**: the income-quest HUD
+  actionbar now reads `Reach $100 — sell items at /warp market
+  (tip: /market prices)`. Every quest-grant `tellraw` upgraded the
+  `Reward:` line from `§7Reward: §f...` (gray on white) to
+  `§6§l✦ Reward: §e§l...` (bold gold label, bold yellow item) so
+  what was just-granted reads as the dominant line in the chat
+  block. Applied across all 54 reward mcfunctions in a single sweep.
 - **server-gyms / battleRules**: trainer JSONs flipped
   `"maxItemUses": 0` → `"maxItemUses": 999` across all 34 gym +
   challenge fights, so players can use bag items (potions, revives,

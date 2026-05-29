@@ -7,8 +7,10 @@ import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor
 import com.cobblemonbridge.CobblemonBridge
+import com.cobblemonbridge.economy.EconomyBridge
 import com.cobblemonbridge.quests.QuestAdvancements
 import com.cobblemonbridge.tags.BridgeTags
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.neoforged.bus.api.SubscribeEvent
@@ -127,6 +129,7 @@ object GymDefeatHook {
                     CobblemonBridge.logger.info(
                         "cobblemon-bridge: awarded {} to {}", advancementId, player.gameProfile.name,
                     )
+                    payGymBounty(player, pending.gymId, pending.isChallenge)
                 }
                 continue
             }
@@ -142,6 +145,39 @@ object GymDefeatHook {
                 }
             }
         }
+    }
+
+    /**
+     * Income payout for a first-time gym defeat. Tiered per server design:
+     *   - Gyms 1-10 (mainline ladder):   $50 + $25×(N-1)  → 50, 75, 100, 125, … 275
+     *   - Gyms 11-19 (rotating roster):  flat $200 each
+     *   - Gyms 20-23 (Elite Four):       flat $300 per trainer
+     *   - Gym  24    (Champion):         $500
+     *
+     * Challenge (Hard Mode) variants match the base reward — silent on the user spec, so
+     * defaulting to "rematch pays again" rather than zero. Bump to a separate table here if
+     * Hard Mode should pay differently.
+     *
+     * Called only when [QuestAdvancements.award] returns true, so already gated to first-beat.
+     */
+    internal fun gymBounty(gymId: Int, isChallenge: Boolean): Int {
+        val base = when (gymId) {
+            in 1..10  -> 50 + 25 * (gymId - 1)
+            in 11..19 -> 200
+            in 20..23 -> 300
+            24        -> 500
+            else      -> 0
+        }
+        return base  // isChallenge unused for now — see kdoc.
+    }
+
+    private fun payGymBounty(player: ServerPlayer, gymId: Int, isChallenge: Boolean) {
+        val amount = gymBounty(gymId, isChallenge)
+        if (amount <= 0) return
+        EconomyBridge.deposit(player.uuid, amount)
+        player.sendSystemMessage(Component.literal(
+            "§6§l+ §e§l\$$amount §6§lfor defeating gym ${gymId}${if (isChallenge) " (Hard Mode)" else ""}"
+        ))
     }
 
     /** Test seam. */

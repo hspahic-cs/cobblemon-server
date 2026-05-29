@@ -10,6 +10,7 @@ import com.cobblemonbridge.battle.GymPrereqHook
 import com.cobblemonbridge.commands.CommandAliases
 import com.cobblemonbridge.commands.GymTpCommands
 import com.cobblemonbridge.commands.HologramCommands
+import com.cobblemonbridge.commands.ProfileCommand
 import com.cobblemonbridge.commands.SpawnCommands
 import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
@@ -94,6 +95,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         GymTpCommands.register(event.dispatcher)
         SpawnCommands.register(event.dispatcher)
         HologramCommands.register(event.dispatcher)
+        ProfileCommand.register(event.dispatcher)
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -102,6 +104,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         SpawnCommands.init()
         WildCommand.init()
         HologramCommands.init()
+        com.cobblemonbridge.profile.FavoriteTracker.init()
     }
 
     companion object {

@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Korrina",
+  "name": "Hard Mode: Gym Leader Korrina",
   "identity": "Fighting",
   "ai": {
     "type": "rb",

@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Morty",
+  "name": "Hard Mode: Gym Leader Morty",
   "identity": "Ghost",
   "ai": {
     "type": "rb",

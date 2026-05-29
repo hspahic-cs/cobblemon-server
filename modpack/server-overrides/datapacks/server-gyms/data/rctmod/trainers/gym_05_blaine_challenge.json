@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Blaine",
+  "name": "Hard Mode: Gym Leader Blaine",
   "identity": "Fire",
   "ai": {
     "type": "rb",

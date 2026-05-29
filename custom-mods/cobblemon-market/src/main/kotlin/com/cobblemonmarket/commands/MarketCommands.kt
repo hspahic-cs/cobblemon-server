@@ -3,6 +3,7 @@ package com.cobblemonmarket.commands
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemConfig
 import com.cobblemonmarket.config.MarketConfig
+import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
 import com.cobblemonmarket.data.Candle
 import com.cobblemonmarket.data.PriceHistory
@@ -180,7 +181,7 @@ object MarketCommands {
                         .then(Commands.argument("vendorTag", StringArgumentType.word())
                             .suggests { _, builder ->
                                 CobblemonMarket.items.values
-                                    .map { it.vendorTag }
+                                    .map { it.vendorScope }
                                     .filter { it.isNotEmpty() }
                                     .toSortedSet()
                                     .forEach { builder.suggest(it) }

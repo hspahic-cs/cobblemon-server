@@ -117,6 +117,22 @@ object RankedCommands {
                             1
                         }
                     )
+                    .then(Commands.literal("forfeit")
+                        .then(Commands.argument("player", EntityArgument.player())
+                            .executes { ctx ->
+                                val target = EntityArgument.getPlayer(ctx, "player")
+                                val forfeited = RankedBattleManager.forfeitMatch(target, reason = "was forfeited by admin")
+                                if (forfeited) {
+                                    ctx.source.sendSystemMessage(Component.literal(
+                                        "§a[Ranked] Forfeited ${target.name.string}'s active match (opponent gets the win)."))
+                                } else {
+                                    ctx.source.sendSystemMessage(Component.literal(
+                                        "§c[Ranked] ${target.name.string} isn't in an active match."))
+                                }
+                                1
+                            }
+                        )
+                    )
                     .then(Commands.literal("simulate")
                         .then(Commands.argument("name1", StringArgumentType.string())
                             .then(Commands.argument("name2", StringArgumentType.string())
@@ -185,6 +201,7 @@ object RankedCommands {
                 "§7  /ranked admin setelo <player> <value> §f— override a player's ELO",
                 "§7  /ranked admin decay §f— manually trigger daily decay",
                 "§7  /ranked admin force <player1> <player2> §f— force a match (bypasses daily limit)",
+                "§7  /ranked admin forfeit <player> §f— end <player>'s active match as a forfeit (opponent wins, both TP back)",
                 "§7  /ranked admin reload §f— reload config.json from disk",
                 "§7  /ranked admin simulate <name1> <name2> §f— simulate a match (winner picked by ELO odds; offline-friendly)",
                 "§7  /ranked admin setarena 1|2 [<x y z> [yaw pitch] [dim]] §f— set arena teleport point",

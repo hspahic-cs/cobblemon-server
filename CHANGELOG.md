@@ -68,6 +68,26 @@ root README.
   closing and re-opening returns to page 1.
 
 ### Changed
+- **SimpleTMs / TM acquisition locked to market vendors**: 0.7.4
+  disabled trainer-defeat drops but other paths (chest loot in
+  structures + blank-TM crafting) were still open. Closed three more:
+  - `simpletms/main.json`: `blankTMsUsable` + `blankTRsUsable` flipped
+    `true → false`. Even if players craft a blank TM/TR via the mod's
+    recipes, the item can't be used to receive a move — so the
+    "blank → typed via Pokémon snapshot" path is dead.
+  - `simpletms/main.json`: `dropRateTMFractionInBattle` +
+    `dropRateTMFractionOutsideOfBattle` zeroed for cleanliness
+    (already gated by `dropInBattle`/`dropOutsideOfBattle = false`).
+  - **server-no-tm-loot** (new datapack): 45 empty-pool overrides for
+    every SimpleTMs structure-injection loot table (vanilla chests,
+    cobblemon ruins/shipwrecks/villages, pokeloot blocks, BCA
+    structures). Match each `data/simpletms/loot_table/injection/<…>.json`
+    with our own `{ "type": "minecraft:chest", "pools": [] }` so the
+    mod's appended loot is a no-op. Generation lives in
+    `ops/seed_simpletms_loot_blockers.py`; rerun to refresh against a
+    new SimpleTMs version that adds injection paths.
+  Net: the type-vendor market shop (`/market admin spawn tm_<type>`)
+  is the only player path; admin `/give` still works.
 - **server-gyms / Gym 6 swapped Roxie → Volkner (Poison → Electric)**:
   gym 6 is now Volkner with an electric-typed roster. Volkner has a
   bundled RCT skin (`gym_leader_volkner_03db`) so the swap fills in a

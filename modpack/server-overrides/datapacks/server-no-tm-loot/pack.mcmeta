@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Overrides every SimpleTMs structure-injection loot table with an empty pool. TM acquisition is restricted to the type-vendor market — no chest-loot drops in vanilla / cobblemon / pokeloot structures."
+  }
+}

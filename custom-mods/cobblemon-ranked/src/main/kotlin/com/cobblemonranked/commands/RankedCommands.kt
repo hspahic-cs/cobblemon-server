@@ -300,9 +300,7 @@ object RankedCommands {
 
     private fun showStats(viewer: ServerPlayer, target: ServerPlayer) {
         val data = CobblemonRanked.eloStore.getOrCreate(target.uuid, target.name.string)
-        viewer.sendSystemMessage(Component.literal(
-            "[Ranked] ${target.name.string}: ELO ${data.elo} | ${data.wins}W / ${data.losses}L | Last battle: ${data.lastBattleDate ?: "never"}"
-        ))
+        sendStatsCard(viewer::sendSystemMessage, target.name.string, data.elo, data.wins, data.losses, data.lastBattleDate, offline = false)
     }
 
     /**
@@ -315,9 +313,7 @@ object RankedCommands {
         val online = source.server.playerList.players.firstOrNull { it.name.string.equals(name, ignoreCase = true) }
         if (online != null) {
             val data = CobblemonRanked.eloStore.getOrCreate(online.uuid, online.name.string)
-            source.sendSystemMessage(Component.literal(
-                "[Ranked] ${online.name.string}: ELO ${data.elo} | ${data.wins}W / ${data.losses}L | Last battle: ${data.lastBattleDate ?: "never"}"
-            ))
+            sendStatsCard(source::sendSystemMessage, online.name.string, data.elo, data.wins, data.losses, data.lastBattleDate, offline = false)
             return
         }
         val existing = CobblemonRanked.eloStore.getAll().entries.firstOrNull {
@@ -325,40 +321,64 @@ object RankedCommands {
         }
         if (existing != null) {
             val data = existing.value
-            source.sendSystemMessage(Component.literal(
-                "[Ranked] ${data.name}: ELO ${data.elo} | ${data.wins}W / ${data.losses}L | Last battle: ${data.lastBattleDate ?: "never"} (offline)"
-            ))
+            sendStatsCard(source::sendSystemMessage, data.name, data.elo, data.wins, data.losses, data.lastBattleDate, offline = true)
             return
         }
-        source.sendSystemMessage(Component.literal("§c[Ranked] No record for '$name' (player has not battled and is not online)"))
+        source.sendSystemMessage(Component.literal("§c[Ranked] No record for '$name' — they haven't battled yet."))
+    }
+
+    private fun sendStatsCard(
+        send: (Component) -> Unit,
+        name: String, elo: Int, wins: Int, losses: Int,
+        lastBattle: String?, offline: Boolean,
+    ) {
+        val total = wins + losses
+        val wr = if (total == 0) "—" else "${(100.0 * wins / total).toInt()}%"
+        val tag = if (offline) " §8(offline record)" else ""
+        send(Component.literal("§e§l[Ranked] §r§6═══ §f$name$tag §6═══"))
+        send(Component.literal("§7  ELO:        §f$elo"))
+        send(Component.literal("§7  Record:     §a${wins}W§7 / §c${losses}L§7  ($wr win rate)"))
+        send(Component.literal("§7  Last match: §f${lastBattle ?: "§8never"}"))
     }
 
     private fun showLeaderboard(source: CommandSourceStack) {
         val config = CobblemonRanked.config
         val leaderboard = CobblemonRanked.eloStore.getLeaderboard()
-        source.sendSystemMessage(Component.literal("[Ranked] === ELO Leaderboard ==="))
+        source.sendSystemMessage(Component.literal("§e§l[Ranked] §r§6═══════════ §fELO Leaderboard §6═══════════"))
         if (leaderboard.isEmpty()) {
-            source.sendSystemMessage(Component.literal("  No players ranked yet."))
+            source.sendSystemMessage(Component.literal("§7  (no players ranked yet — be the first!)"))
             return
         }
+
+        // Column widths sized to the data we're about to render so things line up cleanly in
+        // chat's monospaced rendering.
         val topN = leaderboard.take(config.leaderboardSize)
-        topN.forEachIndexed { i, (_, data) ->
-            source.sendSystemMessage(Component.literal(
-                "  ${i + 1}. ${data.name}: ${data.elo} (${data.wins}W/${data.losses}L)"
-            ))
+        val nameWidth = topN.maxOf { (_, d) -> d.name.length }.coerceAtLeast(8)
+        for ((i, e) in topN.withIndex()) {
+            val (_, data) = e
+            source.sendSystemMessage(Component.literal(formatLeaderboardRow(i + 1, data.name, data.elo, data.wins, data.losses, nameWidth)))
         }
 
-        // Show caller's rank if not in top N
+        // Show caller's rank if not in top N — separator + their row.
         val player = source.player ?: return
         val playerUuid = player.uuid.toString()
         val playerIndex = leaderboard.indexOfFirst { it.first == playerUuid }
         if (playerIndex >= config.leaderboardSize) {
-            val (_, playerData) = leaderboard[playerIndex]
-            source.sendSystemMessage(Component.literal("  ---"))
-            source.sendSystemMessage(Component.literal(
-                "  ${playerIndex + 1}. ${playerData.name}: ${playerData.elo} (${playerData.wins}W/${playerData.losses}L)"
-            ))
+            val (_, pdata) = leaderboard[playerIndex]
+            source.sendSystemMessage(Component.literal("§8  ─────  (your rank)  ─────"))
+            source.sendSystemMessage(Component.literal(formatLeaderboardRow(playerIndex + 1, pdata.name, pdata.elo, pdata.wins, pdata.losses, nameWidth)))
         }
+    }
+
+    private fun formatLeaderboardRow(rank: Int, name: String, elo: Int, wins: Int, losses: Int, nameWidth: Int): String {
+        val medal = when (rank) {
+            1 -> "§6①"   // gold
+            2 -> "§7②"   // silver
+            3 -> "§c③"   // bronze (close enough in chat)
+            else -> "§7${rank.toString().padStart(2)}"
+        }
+        val paddedName = name.padEnd(nameWidth)
+        return "$medal§7 §f$paddedName §7│ §fELO §e$elo §7│ §a${wins}W§7/§c${losses}L"
     }
 
     private fun adminSetElo(source: CommandSourceStack, target: ServerPlayer, value: Int) {

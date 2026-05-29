@@ -40,5 +40,5684 @@
     "baseStock": 1000,
     "elasticity": 0.7,
     "maxStockMultiplier": 10.0
+  },
+  "simpletms:tm_absorb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_acid": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_acidarmor": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_acidspray": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_acrobatics": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_acupressure": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_aerialace": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_afteryou": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_agility": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_aircutter": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_airslash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_alluringvoice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_allyswitch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_amnesia": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_ancientpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_aquacutter": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_aquajet": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_aquaring": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_aquatail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_armthrust": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_aromatherapy": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_aromaticmist": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_assist": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_assurance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_astonish": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_attract": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_aurasphere": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_aurorabeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_auroraveil": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_autotomize": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_avalanche": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_axekick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_babydolleyes": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_barrier": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_batonpass": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_beatup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_belch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_bellydrum": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_bestow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_bide": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_bind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_bite": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_blastburn": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_blazekick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_blizzard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_block": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_bodypress": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_bodyslam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_boomburst": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_bounce": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_bravebird": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_breakingswipe": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_brickbreak": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_brine": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_brutalswing": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_bubble": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_bubblebeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_bugbite": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_bugbuzz": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_bulkup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_bulldoze": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_bulletpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_bulletseed": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_burningjealousy": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_burnup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_calmmind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_camouflage": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_captivate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_celebrate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_charge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_chargebeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_charm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_chillingwater": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_chipaway": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_circlethrow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_clamp": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_clearsmog": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_closecombat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_coaching": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_coil": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_cometpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_comeuppance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_confide": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_confuseray": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_confusion": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_constrict": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_copycat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_corrosivegas": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_cosmicpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_cottonguard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_cottonspore": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_counter": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_covet": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_crabhammer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_craftyshield": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_crosschop": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_crosspoison": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_crunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_crushclaw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_curse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_cut": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_darkestlariat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_darkpulse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_dazzlinggleam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_defensecurl": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_defog": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_destinybond": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_detect": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_dig": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_disable": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_disarmingvoice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_discharge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_dive": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_dizzypunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_doubleedge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_doublehit": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_doublekick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_doubleslap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_doubleteam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_dracometeor": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragonbreath": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragoncheer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragonclaw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragondance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragonhammer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragonpulse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragonrage": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragonrush": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dragontail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_drainingkiss": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_drainpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_dreameater": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_drillpeck": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_drillrun": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_dualchop": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_dualwingbeat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_dynamicpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_earthpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_earthquake": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_echoedvoice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_eerieimpulse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_eggbomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_electricterrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_electrify": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_electroball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_electroweb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_embargo": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_ember": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_encore": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_endeavor": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_endure": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_energyball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_entrainment": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_eruption": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_expandingforce": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_explosion": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_extrasensory": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_extremespeed": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_facade": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_fairywind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_fakeout": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_faketears": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_falseswipe": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_featherdance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_feint": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_feintattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_fellstinger": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_fierywrath": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_finalgambit": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_fireblast": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_firefang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_firelash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_firepledge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_firepunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_firespin": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_firstimpression": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_fissure": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_flail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_flameburst": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_flamecharge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_flamethrower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_flamewheel": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_flareblitz": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_flash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_flashcannon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_flatter": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_fling": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_flipturn": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_flowershield": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_fly": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_focusblast": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_focusenergy": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_focuspunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_followme": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_forcepalm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_foresight": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_foulplay": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_freezedry": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_frenzyplant": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_frostbreath": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_frustration": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_furyattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_furycutter": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_furyswipes": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_futuresight": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_gastroacid": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_gigadrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_gigaimpact": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_glare": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_grassknot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_grasspledge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_grasswhistle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_grassyglide": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_grassyterrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_gravity": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_growl": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_growth": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_grudge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_guardsplit": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_guardswap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_guillotine": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_gunkshot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_gust": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_gyroball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_hail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_hammerarm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_happyhour": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_harden": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hardpress": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_haze": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_headbutt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_headlongrush": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_headsmash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_healbell": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_healblock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_healingwish": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_healpulse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_heartstamp": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_heartswap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_heatcrash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_heatwave": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_heavyslam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_helpinghand": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hex": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_hiddenpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_highhorsepower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_highjumpkick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_holdback": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_holdhands": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_honeclaws": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_hornattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_horndrill": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hornleech": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_howl": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hurricane": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_hydrocannon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_hydropump": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_hyperbeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hyperfang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hypervoice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_hypnosis": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_iceball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_icebeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_icefang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_icehammer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_icepunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_iceshard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_icespinner": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_iciclecrash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_iciclespear": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_icywind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_imprison": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_incinerate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_inferno": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_infestation": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_ingrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_iondeluge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_irondefense": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_ironhead": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_irontail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_jumpkick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_karatechop": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_knockoff": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_laserfocus": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_lashout": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_lastresort": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_lastrespects": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_lavaplume": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_leafage": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_leafblade": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_leafstorm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_leaftornado": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_leechlife": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_leechseed": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_leer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_lick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_lifedew": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_lightscreen": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_liquidation": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_lockon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_lowkick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_lowsweep": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_luckychant": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_lunge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_machpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_magicalleaf": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_magiccoat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_magicroom": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_magnetbomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_magneticflux": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_magnetrise": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_magnitude": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_matblock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_meanlook": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_meditate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_mefirst": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_megadrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_megahorn": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_megakick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_megapunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_memento": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_metalburst": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_metalclaw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_metalsound": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_meteorbeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_meteormash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_metronome": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_milkdrink": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_mimic": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_mindreader": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_minimize": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_miracleeye": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_mirrorcoat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_mirrormove": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_mirrorshot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_mist": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_mistyexplosion": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_mistyterrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_moonblast": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_moonlight": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_morningsun": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_mudbomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_muddywater": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_mudshot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_mudslap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_mudsport": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_mysticalfire": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_nastyplot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_naturalgift": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_naturepower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_needlearm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_nightmare": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_nightshade": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_nightslash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_nobleroar": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_nuzzle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_octazooka": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_odorsleuth": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_ominouswind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_orderup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_outrage": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_overheat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_painsplit": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_paraboliccharge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_partingshot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_payback": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_payday": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_peck": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_perishsong": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_petalblizzard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_petaldance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_phantomforce": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_photongeyser": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_pinmissile": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_playnice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_playrough": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_pluck": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_poisonfang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_poisongas": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_poisonjab": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_poisonpowder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_poisonsting": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_poisontail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_pollenpuff": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_poltergeist": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_pounce": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_pound": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_powdersnow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_powergem": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_powershift": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_powersplit": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_powerswap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_powertrick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_powertrip": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_poweruppunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_powerwhip": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_protect": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_psybeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychic": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychicfangs": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychicnoise": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychicterrain": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychocut": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychoshift": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psychup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_psyshock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_psywave": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_punishment": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_pursuit": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_quash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_quickattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_quickguard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_quiverdance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_rage": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_ragepowder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_ragingfury": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_raindance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_rapidspin": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_razorleaf": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_razorshell": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_razorwind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_recover": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_recycle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_reflect": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_reflecttype": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_refresh": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_rest": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_retaliate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_return": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_revenge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_reversal": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_risingvoltage": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_roar": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_rockblast": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_rockclimb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_rockpolish": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_rockslide": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_rocksmash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_rockthrow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_rocktomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_rockwrecker": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_roleplay": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_rollingkick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_rollout": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_roost": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_rototiller": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_round": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sacredfire": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_sacredsword": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_safeguard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sandattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_sandstorm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_sandtomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_scald": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_scaleshot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_scaryface": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_scorchingsands": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_scratch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_screech": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_secretpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_seedbomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_seismictoss": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_selfdestruct": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_shadowball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_shadowclaw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_shadowpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_shadowsneak": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_sharpen": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_shedtail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sheercold": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_shellsidearm": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_shellsmash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_shiftgear": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_shockwave": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_signalbeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_silverwind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_simplebeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sing": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_skillswap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_skittersmack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_skullbash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_skyattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_skydrop": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_skyuppercut": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_slackoff": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_slam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_slash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sleeppowder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_sleeptalk": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sludge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_sludgebomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_sludgewave": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_smackdown": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_smartstrike": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_smellingsalts": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_smog": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_smokescreen": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_snarl": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_snatch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_snore": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_snowscape": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_soak": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_solarbeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_solarblade": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_sonicboom": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_spark": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_speedswap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_spiderweb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_spikecannon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_spikes": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_spikyshield": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_spinout": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_spite": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ghost",
+    "sellable": false
+  },
+  "simpletms:tm_spitup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_splash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_spore": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_spotlight": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_stealthrock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_steamroller": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_steelbeam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_steelroller": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_steelwing": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_steel",
+    "sellable": false
+  },
+  "simpletms:tm_stickyweb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_stockpile": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_stomp": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_stompingtantrum": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ground",
+    "sellable": false
+  },
+  "simpletms:tm_stoneedge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_storedpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_stormthrow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_strength": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_strengthsap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_stringshot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_struggle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_strugglebug": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_stuffcheeks": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_stunspore": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_submission": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_substitute": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_suckerpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_sunnyday": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_supercellslam": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_superfang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_superpower": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_supersonic": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_surf": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_swagger": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_swallow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_sweetkiss": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fairy",
+    "sellable": false
+  },
+  "simpletms:tm_sweetscent": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_swift": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_switcheroo": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_swordsdance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_synchronoise": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_synthesis": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_syrupbomb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_tackle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_tailslap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_tailwhip": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_tailwind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_takedown": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_taunt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_tearfullook": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_teeterdance": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_telekinesis": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_teleport": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_temperflare": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_terablast": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_terrainpulse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_thief": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_thrash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_throatchop": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_thunder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_thunderbolt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_thunderfang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_thunderouskick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_thunderpunch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_thundershock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_thunderwave": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_tickle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_tidyup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_torment": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dark",
+    "sellable": false
+  },
+  "simpletms:tm_toxic": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_toxicspikes": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_trailblaze": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_transform": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_triattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_trick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_trickroom": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_tripleaxel": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_ice",
+    "sellable": false
+  },
+  "simpletms:tm_triplekick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_trumpcard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_twineedle": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_twister": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_dragon",
+    "sellable": false
+  },
+  "simpletms:tm_upperhand": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_uproar": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_uturn": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_vacuumwave": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_venomdrench": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_venoshock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_poison",
+    "sellable": false
+  },
+  "simpletms:tm_vinewhip": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_visegrip": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_vitalthrow": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_voltswitch": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_wakeupslap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fighting",
+    "sellable": false
+  },
+  "simpletms:tm_waterfall": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_watergun": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_waterpledge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_waterpulse": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_watersport": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_waterspout": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_wavecrash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_weatherball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_whirlpool": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_whirlwind": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_wideguard": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_rock",
+    "sellable": false
+  },
+  "simpletms:tm_wildcharge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_willowisp": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_fire",
+    "sellable": false
+  },
+  "simpletms:tm_wingattack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_flying",
+    "sellable": false
+  },
+  "simpletms:tm_wish": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_withdraw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_water",
+    "sellable": false
+  },
+  "simpletms:tm_wonderroom": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_woodhammer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_workup": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_worryseed": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_grass",
+    "sellable": false
+  },
+  "simpletms:tm_wrap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_wringout": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_xscissor": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_bug",
+    "sellable": false
+  },
+  "simpletms:tm_yawn": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_normal",
+    "sellable": false
+  },
+  "simpletms:tm_zapcannon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
+  },
+  "simpletms:tm_zenheadbutt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_psychic",
+    "sellable": false
+  },
+  "simpletms:tm_zingzap": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "tm_electric",
+    "sellable": false
   }
 }

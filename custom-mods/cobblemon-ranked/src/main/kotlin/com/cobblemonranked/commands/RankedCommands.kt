@@ -216,6 +216,55 @@ object RankedCommands {
                     )
                 )
         )
+
+        // Top-level /queue tree — separate root so players don't need to remember /ranked queue.
+        dispatcher.register(
+            Commands.literal("queue")
+                .executes { ctx -> joinQueue(ctx.source, auto = false); 1 }
+                .then(Commands.literal("auto")
+                    .executes { ctx -> joinQueue(ctx.source, auto = true); 1 }
+                )
+                .then(Commands.literal("cancel")
+                    .executes { ctx -> leaveQueue(ctx.source); 1 }
+                )
+                .then(Commands.literal("list")
+                    .executes { ctx -> com.cobblemonranked.queue.QueueManager.showQueue(ctx.source.playerOrException); 1 }
+                )
+        )
+    }
+
+    private fun joinQueue(source: CommandSourceStack, auto: Boolean) {
+        val player = source.player ?: run {
+            source.sendSystemMessage(Component.literal("§c[Queue] /queue must be run by a player."))
+            return
+        }
+        when (val r = com.cobblemonranked.queue.QueueManager.join(player, auto)) {
+            is com.cobblemonranked.queue.QueueManager.JoinResult.Matched ->
+                player.sendSystemMessage(Component.literal("§a[Queue] Matched with §f${r.partnerName}§a — opening team select."))
+            com.cobblemonranked.queue.QueueManager.JoinResult.WaitingForPartner ->
+                player.sendSystemMessage(Component.literal(
+                    "§e[Queue] You're in the queue. " +
+                    (if (auto) "Auto-rejoin enabled. " else "") +
+                    "Anyone else who /queues that you haven't already played will be paired with you."
+                ))
+            is com.cobblemonranked.queue.QueueManager.JoinResult.AlreadyQueued ->
+                player.sendSystemMessage(Component.literal(
+                    if (r.autoFlipped) "§e[Queue] Auto-rejoin enabled — you're still queued."
+                    else "§e[Queue] You're already in the queue. /queue cancel to leave."
+                ))
+        }
+    }
+
+    private fun leaveQueue(source: CommandSourceStack) {
+        val player = source.player ?: run {
+            source.sendSystemMessage(Component.literal("§c[Queue] /queue cancel must be run by a player."))
+            return
+        }
+        val wasQueued = com.cobblemonranked.queue.QueueManager.leave(player.uuid)
+        player.sendSystemMessage(Component.literal(
+            if (wasQueued) "§a[Queue] You left the queue."
+            else "§7[Queue] You weren't in the queue."
+        ))
     }
 
     private fun showHelp(source: CommandSourceStack, includeAdmin: Boolean) {
@@ -226,6 +275,10 @@ object RankedCommands {
             "§7  /ranked decline §f— decline a pending challenge",
             "§7  /ranked stats [player] §f— view ELO, wins, losses",
             "§7  /ranked leaderboard §f— top players by ELO",
+            "§7  /queue §f— join open matchmaking",
+            "§7  /queue auto §f— rejoin queue automatically after each match",
+            "§7  /queue cancel §f— leave the queue",
+            "§7  /queue list §f— who's currently queued",
         )
         if (includeAdmin) {
             lines += listOf(

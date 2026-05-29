@@ -311,6 +311,15 @@ object RankedBattleManager {
      * No-op when the match has no captured locations (arena was disabled at start).
      * Players who logged out are skipped — they'll wake up at the arena, a known limitation.
      */
+    /**
+     * Called whenever a ranked match concludes (victory, flee, forfeit, disconnect). Lets
+     * [QueueManager] mark the pair as having played each other and re-queue either player
+     * who had /queue auto enabled.
+     */
+    private fun notifyMatchEnded(server: MinecraftServer, match: ActiveRankedMatch) {
+        com.cobblemonranked.queue.QueueManager.onMatchEnded(server, match.player1Uuid, match.player2Uuid)
+    }
+
     private fun teleportBack(server: MinecraftServer, match: ActiveRankedMatch) {
         if (match.originalLocations.isEmpty()) return
         for ((uuid, loc) in match.originalLocations) {
@@ -382,6 +391,7 @@ object RankedBattleManager {
                 if (winnerPlayer != null && loserPlayer != null) {
                     resolveMatch(winnerPlayer, loserPlayer)
                     teleportBack(winnerPlayer.server, match)
+                    notifyMatchEnded(winnerPlayer.server, match)
                 }
             }
         }
@@ -411,6 +421,7 @@ object RankedBattleManager {
                 }
             }
             teleportBack(server, match)
+            notifyMatchEnded(server, match)
         }
     }
 
@@ -601,6 +612,7 @@ object RankedBattleManager {
         leaver.sendSystemMessage(Component.literal("[Ranked] You forfeited the match."))
 
         teleportBack(server, match)
+        notifyMatchEnded(server, match)
         return true
     }
 

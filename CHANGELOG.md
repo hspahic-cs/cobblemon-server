@@ -68,6 +68,29 @@ root README.
   closing and re-opening returns to page 1.
 
 ### Changed
+- **server-gyms / Gym 6 swapped Roxie → Volkner (Poison → Electric)**:
+  gym 6 is now Volkner with an electric-typed roster. Volkner has a
+  bundled RCT skin (`gym_leader_volkner_03db`) so the swap fills in a
+  proper trainer model at the same time. Team (level 40): Galvantula
+  / Magnezone / Lanturn / Jolteon / Electivire / Luxray, with a
+  Hard Mode variant at level 45 + max IVs. All gym 6 references
+  (advancements, HUD, chat, spawn/delete/list mcfunctions, README,
+  trainer mob registration) renamed `gym_06_roxie*` →
+  `gym_06_volkner*`.
+- **server-gyms / RCT trainer skins**: 12 named gym leaders + Volkner
+  (gym 6) now declare `textureResource` pointing at a bundled RCT
+  texture, so the entity renders with a real skin instead of the
+  default trainer model. Coverage:
+  - Exact gym-leader skins (8): Gardenia (2), Byron (4), Crasher Wake
+    (7), Volkner (6 — new), Oak (19), Lorelei (20), Cynthia (21),
+    Agatha (22), Lance (23).
+  - Close `leader_*` matches (4): Blaine (5), Sabrina (8), Morty (10),
+    Lt. Surge (13).
+  - The remaining 11 gym leaders (Clay, Korrina, Roxie-was-here,
+    Drayden, Viola, Cheren, Grant, Skyla, Brycen, Valerie, Marnie,
+    Champion) have no bundled match — they keep the default skin
+    until/unless a resource pack ships their textures. Wiring lives
+    in `ops/wire_trainer_skins.py` for repeatable runs.
 - **cobblemon-bridge / GymDefeatHook**: first-time gym defeats now
   deposit money on top of the advancement reward. Table:
   - Gyms 1-10 (mainline ladder): `$50 + $25×(N-1)` → 50, 75, 100,

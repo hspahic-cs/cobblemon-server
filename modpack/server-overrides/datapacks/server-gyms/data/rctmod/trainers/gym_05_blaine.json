@@ -1,6 +1,7 @@
 {
   "name": "Gym Leader Blaine",
   "identity": "Fire",
+  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
   "ai": {
     "type": "rb",
     "data": {}

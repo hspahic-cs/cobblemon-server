@@ -1,6 +1,7 @@
 {
   "name": "Elite Four Agatha",
   "identity": "Stall",
+  "textureResource": "rctmod:textures/trainers/single/elite_four_agatha_0053.png",
   "ai": {
     "type": "rb",
     "data": {}

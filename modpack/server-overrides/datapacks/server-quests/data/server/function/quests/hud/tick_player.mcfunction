@@ -69,7 +69,7 @@ execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_5=false}] ru
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_5=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_6 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_6=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 6: Roxie","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_6=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 6: Volkner","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_6=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_7 ---

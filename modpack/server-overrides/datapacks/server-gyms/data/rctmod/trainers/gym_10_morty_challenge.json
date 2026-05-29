@@ -1,6 +1,7 @@
 {
   "name": "Hard Mode: Gym Leader Morty",
   "identity": "Ghost",
+  "textureResource": "rctmod:textures/trainers/single/leader_morty_001c.png",
   "ai": {
     "type": "rb",
     "data": {}

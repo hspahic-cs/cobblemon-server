@@ -1,6 +1,7 @@
 {
   "name": "Gym Leader Sabrina",
   "identity": "Psychic",
+  "textureResource": "rctmod:textures/trainers/single/leader_sabrina_01a4.png",
   "ai": {
     "type": "rb",
     "data": {}

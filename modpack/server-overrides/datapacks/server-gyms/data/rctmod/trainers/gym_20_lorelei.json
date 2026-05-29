@@ -1,6 +1,7 @@
 {
   "name": "Elite Four Lorelei",
   "identity": "Weather Wars",
+  "textureResource": "rctmod:textures/trainers/single/elite_four_lorelei_004d.png",
   "ai": {
     "type": "rb",
     "data": {}

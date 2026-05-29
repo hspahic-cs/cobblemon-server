@@ -87,6 +87,14 @@ root README.
   `QuestCommand.kt`, `QuestRewards.INCOME_THRESHOLDS`) updated to
   point to the new advancement id. Reward bundle (Pasture Block) is
   unchanged.
+- **server-quests / inline upcoming-reward hint**: every quest-complete
+  `tellraw` now appends `§8(Reward: <X>§8)` to its `Next:` line, so
+  the player sees the upcoming reward without running `/quests`. e.g.
+  `Next: Set a Home (/sethome) §8(Reward: §f3 Red Apricorn Sprouts§8)`.
+  Multi-target hints (Gym 1's "Reach $100 or Gym 2") list both
+  rewards; duplicate labels deduplicate. Source of truth for the
+  mapping lives in `ops/inline_quest_rewards.py` (mirrors the
+  `QuestCommand.REWARDS` map + chain shape).
 - **server-quests / HUD + reward chat**: the income-quest HUD
   actionbar now reads `Reach $100 — sell items at /warp market
   (tip: /market prices)`. Every quest-grant `tellraw` upgraded the

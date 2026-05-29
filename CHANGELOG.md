@@ -12,6 +12,108 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.4] - 2026-05-29
+
+### Added
+- **cobblemon-ranked / queue**: new `/queue`, `/queue auto`, `/queue cancel`,
+  `/queue list` commands. Plain `/queue` adds you to the rotation queue;
+  `auto` mode auto-pairs the next compatible player. Pairing broadcasts a
+  clickable `[/queue]` / `[/challenge]` chat prompt to all online players so
+  third parties can challenge into the lobby. Queue state is per-session and
+  re-queues on match end (when a `notifyMatchEnded()` fires from
+  `RankedBattle`).
+- **cobblemon-ranked / wager**: `/ranked challenge <player> <wager>` plus
+  top-level `/challenge`, `/accept`, `/decline` aliases. Wagers are escrowed
+  from both sides at battle start (uses the existing Cobblemon Economy via
+  reflection bridge) and paid out to the winner on `BATTLE_VICTORY`, with
+  refund on `BATTLE_FLED` or any allocation error. Wager is capped at 50%
+  of the challenger's balance and 25% of the target's so a rich player
+  can't bait a poor one into an unwinnable stake.
+- **cobblemon-ranked / arenas**: second PvP arena (`arena2`) and an
+  overflow `spawn` slot, with mutex on each. Admin commands:
+  `/ranked admin setarena2 <pos1|pos2>`, `setoverflow`,
+  `clearpos2`, `clearoverflow`. When all arenas are full the overflow
+  pads the queue instead of failing. PvP match start now broadcasts a
+  global announcement so spectators can warp in.
+- **cobblemon-ranked / team-select GUI**: replaces the stained-glass-pane
+  team picker with `PokemonItem.from(pokemon)` so each slot renders the
+  actual Pokemon model (selected state via `§a✓ ` name prefix). Drops the
+  LIME/WHITE/GRAY palette — selection is now visually unambiguous.
+- **cobblemon-ranked / leaderboard**: `/ranked leaderboard` rewrite with
+  medal glyphs (🥇🥈🥉), padded columns, and win-rate column. New
+  `/ranked stats <player>` command prints a single-player card.
+- **cobblemon-ranked / Cobblemon Battle integration**: right-click on a
+  player → Battle now routes through the ranked flow (subscribes
+  `BATTLE_STARTED_PRE`, vetoes the raw Cobblemon battle, opens the
+  team-select GUI). Eliminates the duplicate "raw" battle path that
+  bypassed ELO updates.
+- **cobblemon-bridge / /profile**: 6×9 chest GUI showcasing the player's
+  badges (gym advancement count), ELO, level cap, income, MineColonies
+  colony (reflection), last team (with `PokemonItem` rendering), and
+  "favorite" Pokemon (most HP healed at a healing machine — tracked by
+  the new `FavoriteTracker`, persisted at
+  `config/cobblemon-bridge/runtime/favorites.json`). `/profile` opens
+  self; `/profile <name>` works for online players and offline ones via
+  the profile cache.
+- **cobblemon-bridge / admin commands**: `/wild` runtime config
+  (per-dimension wild encounter toggle) and `/hologram` admin commands
+  (place, list, remove vanilla `text_display` holograms with color +
+  bold markdown).
+- **server-market**: 18 type-keyed TM vendor NPCs (poison, ghost, fire,
+  etc.) plus the existing scoped per-vendor shop infrastructure. Each
+  vendor sells every SimpleTMs TM of its type for 5000 cobble dollars
+  (buy-only). Pricing and stock are easy to revisit later.
+- **server-gyms**: gym challenge variants relabelled "Hard Mode" so it's
+  clear which RCT NPC is the optional harder fight. Galarian Weezing
+  added to one team via the `aspects:["galarian"]` form.
+- **cobblemon-bridge / pokedex_red**: a custom Pokédex item ID swap so
+  the in-game Pokédex matches the new red model used in starter kits.
+- **content tweaks**: baked potatoes added to the carrot-farm reward
+  chain; bonemeal grant +5; Great Ball recipe lore line updated for
+  clarity; neoessentials config pinned so per-version regenerations
+  don't reset our overrides.
+
+### Changed
+- **cobblemon-bridge / WorldRulesHook.onFinalizeSpawn**: structure
+  consolidated into three explicit rules — (1) Pokemon/trainer veto in
+  locked dims, (2) all `Mob` veto in `multiworld:*` dims, (3)
+  global hostile-monster veto (server runs Easy difficulty with
+  no hostile spawns). Op-initiated spawn types
+  (`COMMAND`/`SPAWN_EGG`/`MOB_SUMMONED`/`DISPENSER`) pass through at
+  the top so all rules honour the op-bypass uniformly.
+
+### Fixed
+- **cobblemon-bridge / WorldRulesHook**: trainers spawned via
+  `/function server:gym/spawn_<N>` no longer immediately die. The
+  `EntityJoinLevelEvent` veto added in 0.7.3 over-blocked: the
+  mcfunctions stamp the `cobblemon_bridge.gym_id.<N>` tag AFTER
+  `rctmod trainer summon_persistent`, so at `EntityJoinLevel` time the
+  tag isn't on yet and the spawn was being cancelled before its own
+  tag command could run. The `FinalizeSpawnEvent` gate above already
+  distinguishes op-initiated spawn types from natural spawns — the
+  belt-and-suspenders `onEntityJoin` was redundant. The note in the
+  0.7.3 release about gym-summon being vetoed by the entity-join check
+  no longer applies.
+- **server-quests / hud**: hotbar quest HUD `/warp gym<N>` →
+  `/warp gyms` (and `/warp elite4` for entries 20-24) for all 24 gym
+  entries. Previous fix lived only on `feat/holograms-0.6.3` and never
+  reached `main`; this rebase brings it forward.
+- **cobblemon-ranked / forfeit**: leaving a ranked battle now correctly
+  forfeits with ELO update + teleports both players back to their
+  pre-battle locations. Adds an admin force-cancel command for stuck
+  matches. SimpleTMs mod added to the modpack alongside this fix.
+- **server-trainers / RCT**: clears all "trainer validation failed"
+  log spam by completing missing aspect arrays in the RCT trainer
+  JSONs. Disables SimpleTMs random-drop loot from trainer defeats —
+  TM acquisition is now strictly via the type vendors.
+
+### Notes
+- Rebased onto 0.7.3 (which introduced the upstream WorldRulesHook
+  overhaul). The 0.7.3 `onEntityJoin` belt-and-suspenders check is
+  removed in this release (see Fixed above). The
+  `LivingIncomingDamageEvent` invulnerability hook from 0.7.3 is
+  preserved unchanged.
+
 ## [0.7.3] - 2026-05-29
 
 ### Added

@@ -12,6 +12,38 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.3] - 2026-05-29
+
+### Added
+- **cobblemon-bridge / WorldRulesHook**: stricter rules for `multiworld:*`
+  dimensions (spawn, elite4, arena1, arena2, and any future `multiworld:`
+  worlds). Two new behaviors on top of the existing locked-dim treatment
+  (Adventure mode + no block edits + no Pokemon/trainer natural spawns):
+  - **All natural mob spawns blocked.** Hostile, passive, ambient — any
+    `Mob` entity. Removes any incentive for players to explore the
+    showcase worlds for resources or fights. Op-summoned entities
+    (`COMMAND` / `SPAWN_EGG` / `MOB_SUMMONED` / `DISPENSER`) and any
+    entity tagged with `cobblemon_bridge.*` still go through.
+  - **Tagged entities are invulnerable to non-op players.** Anything
+    carrying a `cobblemon_bridge.*` tag (gym leaders, gym-TP villagers,
+    etc.) takes zero damage from regular players in `multiworld:*`
+    worlds. Ops can still damage them for cleanup. Pokemon battles are
+    unaffected — those use Showdown, not the vanilla damage path.
+
+### Notes
+- Other locked dims (anything outside vanilla overworld/nether/end that
+  isn't `multiworld:*`) are unchanged: same Pokemon/trainer veto +
+  Adventure-mode treatment as before.
+- Existing mobs already in `multiworld:*` worlds aren't auto-cleared by
+  this change. Use `/kill @e[type=!minecraft:player,...]` per world to
+  flush them once.
+- Gym leaders summoned via the rctmod trainer spawner block still need
+  the existing `cobblemon_bridge.gym_id.<N>` and
+  `cobblemon_bridge.adjust_level.<N>` tags applied manually after spawn
+  (see `server-gyms` datapack README). Without a tag they're vetoed by
+  the entity-join check. A `/gymsummon <N>` helper is planned for a
+  future release.
+
 ## [0.7.2] - 2026-05-29
 
 ### Changed

@@ -12,6 +12,35 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.5] - 2026-05-29
+
+### Fixed
+- **build / .mrpack routing**: every 0.7.4 client got rejected at
+  connect-time with `Connection Lost — cobblemonfeedback:chunk/ready/
+  request channel missing on client side, but required on the server`.
+  Root cause: 0.7.4 moved `cobblemon-feedback-client` from
+  `modpack/mods/` to `modpack/client-overrides/mods/`, but `packwiz mr
+  export` nests that path under the mrpack's `overrides/`, so on
+  install the jar landed at `<mc>/client-overrides/mods/...` rather
+  than `<mc>/mods/...`. NeoForge never loaded the mod → the required
+  custom payload channels were never registered → connection rejected.
+  `cobblemon-feedback-client` is back in `modpack/mods/` (its
+  `@Mod(dist = [Dist.CLIENT])` annotation already prevents the server
+  JVM from loading it, so cross-side delivery is harmless). The
+  server-only routing
+  (`modpack/server-overrides/mods/{bridge,carrots,feedback,gacha,market,ranked}-*.jar`)
+  is unchanged from 0.7.4 — those jars work correctly because their
+  delivery path on the server is via the deploy workflows' second
+  rsync, not via the mrpack install.
+
+### Notes
+- The mrpack still ships the server-only jars (nested under
+  `overrides/server-overrides/mods/`), so clients still download
+  bytes they don't load. Reclaiming that bandwidth requires either
+  contributing the `client-overrides/`/`server-overrides/` split to
+  packwiz upstream or post-processing the mrpack zip after export —
+  both out of scope for this hotfix.
+
 ## [0.7.4] - 2026-05-29
 
 ### Added

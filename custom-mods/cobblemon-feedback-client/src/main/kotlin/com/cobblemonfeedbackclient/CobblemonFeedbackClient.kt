@@ -1,5 +1,6 @@
 package com.cobblemonfeedbackclient
 
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory
  *
  * See docs/design/player-feedback-phase2.md.
  */
-@Mod("cobblemon_feedback_client")
+@Mod(value = "cobblemon_feedback_client", dist = [Dist.CLIENT])
 class CobblemonFeedbackClient(modBus: IEventBus) {
 
     init {

@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.CobblemonRanked
 import com.cobblemonranked.config.ArenaPos
+import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.decay.DecayManager
 import com.cobblemonranked.elo.EloCalculator
 import com.cobblemonranked.gui.TeamSelectionGui
@@ -21,6 +22,8 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import java.time.LocalDate
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
@@ -37,12 +40,27 @@ data class OriginalLocation(
     val pitch: Float,
 )
 
+/**
+ * Which arena (if any) a match occupies. The mutex on ARENA_1 / ARENA_2 is "at most one
+ * active match each at a time"; SPAWN can be shared by any number of overflow matches; NONE
+ * means no teleport happened (no arena was configured at start) so the battle runs wherever
+ * the players were.
+ */
+enum class ArenaSlot { ARENA_1, ARENA_2, SPAWN, NONE }
+
 data class ActiveRankedMatch(
     val player1Uuid: UUID,
     val player2Uuid: UUID,
     val battleId: UUID? = null,
     /** Original locations keyed by player UUID; empty when arena teleport is disabled. */
     val originalLocations: Map<UUID, OriginalLocation> = emptyMap(),
+    /** Which arena this match is occupying — used for the spectate hint + the slot mutex. */
+    val slot: ArenaSlot = ArenaSlot.NONE,
+    /**
+     * Cobble dollars escrowed PER SIDE at team-select time. Total pool is `2 * wagerPerSide`;
+     * winner receives it all. Voided matches (both flee, both disconnect) refund both sides.
+     */
+    val wagerPerSide: Int = 0,
 )
 
 /** Result of [RankedBattleManager.applyMatchResult]. */
@@ -69,14 +87,35 @@ object RankedBattleManager {
     private val pendingTeams: ConcurrentHashMap<UUID, List<Pokemon>> = ConcurrentHashMap()
     private val pendingMatches: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
 
-    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer) {
+    /**
+     * Players currently in [startBattle]'s `BattleBuilder.pvp1v1` call. The BATTLE_STARTED_PRE
+     * subscriber in [registerEvents] uses this to allow our own ranked battles through while
+     * vetoing any other PvP path (Cobblemon's right-click → Battle menu, future mod-added /battle
+     * commands, etc.) — that way `/ranked challenge` is the only player-vs-player flow that
+     * actually starts a battle. Keyed both directions so either actor's UUID looks up the other.
+     */
+    private val expectedRankedMatch: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
+
+    /**
+     * Begin the team-select phase of a ranked match. [wagerPerSide] is the cobble-dollar
+     * amount each player will be charged when both confirm their teams. Escrow happens at
+     * startBattle time, not here, so a cancelled team-select doesn't touch money.
+     */
+    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer, wagerPerSide: Int = 0) {
         val config = CobblemonRanked.config
         pendingMatches[player1.uuid] = player2.uuid
         pendingMatches[player2.uuid] = player1.uuid
+        if (wagerPerSide > 0) {
+            pendingWager[player1.uuid] = wagerPerSide
+            pendingWager[player2.uuid] = wagerPerSide
+        }
 
         openSelectionGui(player1, config.maxLegendaries)
         openSelectionGui(player2, config.maxLegendaries)
     }
+
+    /** Wager per side for the next-starting match, keyed by either player's UUID. */
+    private val pendingWager: ConcurrentHashMap<UUID, Int> = ConcurrentHashMap()
 
     private fun openSelectionGui(player: ServerPlayer, maxLegendaries: Int) {
         TeamSelectionGui(
@@ -139,18 +178,56 @@ object RankedBattleManager {
             return
         }
 
+        // Escrow wager: withdraw from BOTH players. Re-cap to the per-player limits in case
+        // balances changed between challenge and accept. If either withdraw fails, refund
+        // any partial deduction and void the match.
+        val intendedWager = pendingWager[player1.uuid] ?: pendingWager[player2.uuid] ?: 0
+        val actualWager = if (intendedWager > 0) {
+            val challengerCap = com.cobblemonranked.economy.EconomyBridge.getBalance(player1.uuid) / 2
+            val targetCap = com.cobblemonranked.economy.EconomyBridge.getBalance(player2.uuid) / 4
+            val effective = minOf(intendedWager, challengerCap, targetCap).coerceAtLeast(0)
+            if (effective <= 0) {
+                player1.sendSystemMessage(Component.literal(
+                    "§c[Ranked] Wager voided — one of you no longer has enough to cover \$$intendedWager."))
+                player2.sendSystemMessage(Component.literal(
+                    "§c[Ranked] Wager voided — one of you no longer has enough to cover \$$intendedWager."))
+                0
+            } else {
+                val w1Ok = com.cobblemonranked.economy.EconomyBridge.withdraw(player1.uuid, effective)
+                val w2Ok = if (w1Ok) com.cobblemonranked.economy.EconomyBridge.withdraw(player2.uuid, effective) else false
+                if (!w1Ok || !w2Ok) {
+                    if (w1Ok && !w2Ok) com.cobblemonranked.economy.EconomyBridge.deposit(player1.uuid, effective)
+                    player1.sendSystemMessage(Component.literal("§c[Ranked] Wager escrow failed — match voided."))
+                    player2.sendSystemMessage(Component.literal("§c[Ranked] Wager escrow failed — match voided."))
+                    pendingWager.remove(player1.uuid); pendingWager.remove(player2.uuid)
+                    cleanup(player1.uuid, player2.uuid)
+                    return
+                }
+                broadcast(player1.server,
+                    "[Ranked] Wager \$$effective from each player escrowed — winner takes the pool.")
+                effective
+            }
+        } else 0
+        pendingWager.remove(player1.uuid); pendingWager.remove(player2.uuid)
+
         // Save teams for showcase
         CobblemonRanked.teamStore.saveTeam(player1.uuid, team1)
         CobblemonRanked.teamStore.saveTeam(player2.uuid, team2)
 
-        // Capture original locations and teleport to arena if configured.
-        val originals: Map<UUID, OriginalLocation> = if (config.isArenaConfigured()) {
+        // Pick an arena slot for this match. Allocation priority: arena 1 → arena 2 → spawn.
+        // ARENA_1 / ARENA_2 are mutexed (one active match at a time, gated by [rankedBattles]),
+        // SPAWN is a shared overflow with no mutex so a 3rd+ concurrent match always has
+        // somewhere to land. If no arena is configured at all, [ArenaSlot.NONE] means players
+        // battle in place — no teleport, no teleport-back.
+        val slot = allocateSlot(config)
+        val originals: Map<UUID, OriginalLocation> = if (slot != ArenaSlot.NONE) {
             val map = mapOf(
                 player1.uuid to captureLocation(player1),
                 player2.uuid to captureLocation(player2),
             )
-            teleport(player1, config.arenaPos1!!)
-            teleport(player2, config.arenaPos2!!)
+            val (p1Pos, p2Pos) = positionsFor(slot, config)
+            teleport(player1, p1Pos)
+            teleport(player2, p2Pos)
             map
         } else {
             emptyMap()
@@ -163,20 +240,43 @@ object RankedBattleManager {
 
         val format = BattleFormat.GEN_9_SINGLES.copy(adjustLevel = config.levelCap)
 
-        val result = BattleBuilder.pvp1v1(
-            player1 = player1,
-            player2 = player2,
-            battleFormat = format,
-            healFirst = true,
-            cloneParties = true,
-            partyAccessor = { teamMap[it.uuid] ?: Cobblemon.storage.getParty(it) }
-        )
+        // Flag the about-to-start match so our BATTLE_STARTED_PRE veto in [registerEvents]
+        // lets it through. The flag must be set BEFORE pvp1v1 because the PRE event fires
+        // synchronously during that call, before we'd otherwise have a battleId to track.
+        expectedRankedMatch[player1.uuid] = player2.uuid
+        expectedRankedMatch[player2.uuid] = player1.uuid
+        val result = try {
+            BattleBuilder.pvp1v1(
+                player1 = player1,
+                player2 = player2,
+                battleFormat = format,
+                healFirst = true,
+                cloneParties = true,
+                partyAccessor = { teamMap[it.uuid] ?: Cobblemon.storage.getParty(it) }
+            )
+        } finally {
+            expectedRankedMatch.remove(player1.uuid)
+            expectedRankedMatch.remove(player2.uuid)
+        }
 
         result.ifSuccessful { battle ->
-            val match = ActiveRankedMatch(player1.uuid, player2.uuid, battle.battleId, originals)
+            val match = ActiveRankedMatch(
+                player1.uuid, player2.uuid, battle.battleId, originals, slot, actualWager,
+            )
             rankedBattles[battle.battleId] = match
-            broadcast(player1.server,
-                "[Ranked] Battle started: ${player1.name.string} vs ${player2.name.string}!")
+
+            // Match announcement: tell every online player who's fighting and where to spectate.
+            val store = CobblemonRanked.eloStore
+            val e1 = store.getOrCreate(player1.uuid, player1.name.string).elo
+            val e2 = store.getOrCreate(player2.uuid, player2.name.string).elo
+            val warp = warpNameFor(slot)
+            val spectate = if (slot == ArenaSlot.NONE)
+                "§7 (no spectate location — battling in place)"
+            else
+                "§7 — Spectate at §f/warp $warp"
+            broadcast(player1.server, "§6§l[Ranked Match] §r§f" +
+                "${player1.name.string} §7($e1) §fvs §f${player2.name.string} §7($e2)" +
+                spectate)
         }
 
         result.ifErrored {
@@ -185,9 +285,49 @@ object RankedBattleManager {
             // Battle never started — teleport back immediately if we already moved them.
             originals[player1.uuid]?.let { restore(player1, it) }
             originals[player2.uuid]?.let { restore(player2, it) }
+            // …and refund the escrowed wager, since no actual battle happened.
+            if (actualWager > 0) {
+                com.cobblemonranked.economy.EconomyBridge.deposit(player1.uuid, actualWager)
+                com.cobblemonranked.economy.EconomyBridge.deposit(player2.uuid, actualWager)
+                player1.sendSystemMessage(Component.literal("§7[Ranked] Wager \$$actualWager refunded."))
+                player2.sendSystemMessage(Component.literal("§7[Ranked] Wager \$$actualWager refunded."))
+            }
         }
 
         cleanup(player1.uuid, player2.uuid)
+    }
+
+    /**
+     * Pick the next arena for a new match. Priority: arena 1 → arena 2 → spawn → NONE.
+     * The two arenas are mutexed (a slot is "in use" iff some [ActiveRankedMatch] in
+     * [rankedBattles] currently holds it); spawn is shared and never mutexed.
+     */
+    private fun allocateSlot(config: RankedConfig): ArenaSlot {
+        val inUse = rankedBattles.values.mapTo(hashSetOf()) { it.slot }
+        return when {
+            config.isArenaConfigured() && ArenaSlot.ARENA_1 !in inUse -> ArenaSlot.ARENA_1
+            config.isArena2Configured() && ArenaSlot.ARENA_2 !in inUse -> ArenaSlot.ARENA_2
+            config.isSpawnConfigured() -> ArenaSlot.SPAWN
+            else -> ArenaSlot.NONE
+        }
+    }
+
+    /** Returns (player1 landing pos, player2 landing pos) for the given slot. */
+    private fun positionsFor(slot: ArenaSlot, config: RankedConfig): Pair<ArenaPos, ArenaPos> =
+        when (slot) {
+            ArenaSlot.ARENA_1 -> config.arenaPos1!! to config.arenaPos2!!
+            ArenaSlot.ARENA_2 -> config.arena2Pos1!! to config.arena2Pos2!!
+            // Spawn is a single shared point — both players land on the same coords.
+            ArenaSlot.SPAWN -> config.spawnPos!! to config.spawnPos
+            ArenaSlot.NONE -> error("positionsFor(NONE) shouldn't be called — gate on slot first")
+        }
+
+    /** Maps a slot to the warp name shown in the match-start broadcast / spectate hint. */
+    fun warpNameFor(slot: ArenaSlot): String = when (slot) {
+        ArenaSlot.ARENA_1 -> "arena1"
+        ArenaSlot.ARENA_2 -> "arena2"
+        ArenaSlot.SPAWN -> "spawn"
+        ArenaSlot.NONE -> "(no arena)"
     }
 
     private fun captureLocation(player: ServerPlayer): OriginalLocation {
@@ -227,6 +367,35 @@ object RankedBattleManager {
      * No-op when the match has no captured locations (arena was disabled at start).
      * Players who logged out are skipped — they'll wake up at the arena, a known limitation.
      */
+    /**
+     * Called whenever a ranked match concludes (victory, flee, forfeit, disconnect). Lets
+     * [QueueManager] mark the pair as having played each other and re-queue either player
+     * who had /queue auto enabled.
+     */
+    private fun notifyMatchEnded(server: MinecraftServer, match: ActiveRankedMatch) {
+        com.cobblemonranked.queue.QueueManager.onMatchEnded(server, match.player1Uuid, match.player2Uuid)
+    }
+
+    /** Pay the entire 2× wager pool to the winner; no-op for non-wager matches. */
+    private fun payWagerToWinner(match: ActiveRankedMatch, winner: ServerPlayer) {
+        if (match.wagerPerSide <= 0) return
+        val pool = match.wagerPerSide * 2
+        com.cobblemonranked.economy.EconomyBridge.deposit(winner.uuid, pool)
+        winner.sendSystemMessage(Component.literal(
+            "§6[Ranked] §fWager pool §e\$$pool §fcredited to your balance."))
+    }
+
+    /** Refund each side their escrowed wager — used on voided matches. */
+    private fun refundWager(match: ActiveRankedMatch, server: MinecraftServer) {
+        if (match.wagerPerSide <= 0) return
+        com.cobblemonranked.economy.EconomyBridge.deposit(match.player1Uuid, match.wagerPerSide)
+        com.cobblemonranked.economy.EconomyBridge.deposit(match.player2Uuid, match.wagerPerSide)
+        for (uuid in listOf(match.player1Uuid, match.player2Uuid)) {
+            server.playerList.getPlayer(uuid)?.sendSystemMessage(Component.literal(
+                "§7[Ranked] Wager \$${match.wagerPerSide} refunded."))
+        }
+    }
+
     private fun teleportBack(server: MinecraftServer, match: ActiveRankedMatch) {
         if (match.originalLocations.isEmpty()) return
         for ((uuid, loc) in match.originalLocations) {
@@ -246,6 +415,47 @@ object RankedBattleManager {
     }
 
     fun registerEvents() {
+        // Route every PvP battle through the ranked system. The Cobblemon right-click → Battle
+        // flow ends in BattleBuilder.pvp1v1 (same as our own [startBattle]) which fires
+        // BATTLE_STARTED_PRE; if that battle isn't one we started (checked via
+        // [expectedRankedMatch]) we cancel the Cobblemon path and redirect both players into
+        // our team-select flow. The two clicks they already performed in Cobblemon's UI
+        // (initiator's "Battle" + target's accept) are treated as the equivalent of
+        // /ranked challenge + /ranked accept — they explicitly consented to fight each other,
+        // we just enforce that the fight uses ranked rules + ELO + arena teleport.
+        //
+        // Single-PlayerBattleActor battles (wild, NPC trainer, gym, E4 gauntlet) fall through
+        // the size < 2 early exit untouched.
+        CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.HIGHEST) { event ->
+            val playerActors = event.battle.actors.filterIsInstance<PlayerBattleActor>()
+            if (playerActors.size < 2) return@subscribe
+            val a = playerActors[0].entity ?: return@subscribe
+            val b = playerActors[1].entity ?: return@subscribe
+            if (expectedRankedMatch[a.uuid] == b.uuid) return@subscribe  // it's our ranked match
+
+            event.cancel()
+
+            // Already mid-flow check — don't double-trigger team-select if these players are
+            // already in a ranked match or team-selecting elsewhere.
+            val alreadyBusy = pendingMatches.containsKey(a.uuid) ||
+                pendingMatches.containsKey(b.uuid) ||
+                rankedBattles.values.any { m ->
+                    m.player1Uuid == a.uuid || m.player2Uuid == a.uuid ||
+                        m.player1Uuid == b.uuid || m.player2Uuid == b.uuid
+                }
+            if (alreadyBusy) {
+                a.sendSystemMessage(Component.literal(
+                    "§c[Ranked] One of you is already in another ranked flow — finish it first."))
+                return@subscribe
+            }
+
+            a.sendSystemMessage(Component.literal(
+                "§a[Ranked] §fRouting to ranked team selection. Pick up to 6 Pokémon, then Confirm."))
+            b.sendSystemMessage(Component.literal(
+                "§a[Ranked] §fRouting to ranked team selection. Pick up to 6 Pokémon, then Confirm."))
+            startTeamSelection(a, b)
+        }
+
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
             val match = rankedBattles.remove(event.battle.battleId) ?: return@subscribe
             val winners = event.winners.filterIsInstance<PlayerBattleActor>()
@@ -256,13 +466,16 @@ object RankedBattleManager {
                 val loserPlayer = losers.first().entity
                 if (winnerPlayer != null && loserPlayer != null) {
                     resolveMatch(winnerPlayer, loserPlayer)
+                    payWagerToWinner(match, winnerPlayer)
                     teleportBack(winnerPlayer.server, match)
+                    notifyMatchEnded(winnerPlayer.server, match)
                 }
             }
         }
 
         CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL) { event ->
             val match = rankedBattles.remove(event.battle.battleId) ?: return@subscribe
+            // Outer scope so the when-branches below can pay or refund without re-looking-up.
             // Determine who fled — the player who is no longer in the battle
             val actors = event.battle.actors.filterIsInstance<PlayerBattleActor>()
             val server = actors.firstOrNull()?.entity?.server ?: return@subscribe
@@ -277,15 +490,17 @@ object RankedBattleManager {
                 val p2InBattle = Cobblemon.battleRegistry.getBattleByParticipatingPlayer(p2) != null
 
                 when {
-                    !p1InBattle && p2InBattle -> resolveMatch(p2, p1)
-                    !p2InBattle && p1InBattle -> resolveMatch(p1, p2)
+                    !p1InBattle && p2InBattle -> { resolveMatch(p2, p1); payWagerToWinner(match, p2) }
+                    !p2InBattle && p1InBattle -> { resolveMatch(p1, p2); payWagerToWinner(match, p1) }
                     else -> {
-                        // Both left — void the match
+                        // Both left — void the match and refund.
                         broadcast(server, "[Ranked] Both players fled. Match voided.")
+                        refundWager(match, server)
                     }
                 }
             }
             teleportBack(server, match)
+            notifyMatchEnded(server, match)
         }
     }
 
@@ -412,11 +627,91 @@ object RankedBattleManager {
         UUID.nameUUIDFromBytes("OfflinePlayer:$name".toByteArray(Charsets.UTF_8))
 
     private fun cancelMatch(player: ServerPlayer) {
+        // If a real battle is already in flight for this player, treat the cancel as a forfeit
+        // — the team-select menu shouldn't have been re-openable past startBattle, but cover it.
+        if (findActiveMatchByPlayer(player.uuid) != null) {
+            forfeitMatch(player, reason = "cancelled the match")
+            return
+        }
         val opponentUuid = pendingMatches[player.uuid] ?: return
         val opponent = player.server.playerList.getPlayer(opponentUuid)
         opponent?.sendSystemMessage(Component.literal("[Ranked] ${player.name.string} cancelled the match."))
         player.sendSystemMessage(Component.literal("[Ranked] Match cancelled."))
         cleanup(player.uuid, opponentUuid)
+    }
+
+    /**
+     * Returns the active match containing [playerUuid], or null if the player isn't in one.
+     * Used by the leave/forfeit handlers (logout, /ranked admin forfeit) to find the right
+     * match without having to know its battleId.
+     */
+    private fun findActiveMatchByPlayer(playerUuid: UUID): Pair<UUID, ActiveRankedMatch>? {
+        return rankedBattles.entries.firstNotNullOfOrNull { (battleId, match) ->
+            if (match.player1Uuid == playerUuid || match.player2Uuid == playerUuid)
+                battleId to match else null
+        }
+    }
+
+    /**
+     * Public: treat [leaver] as having forfeited any active ranked battle they're in. The
+     * opponent (still online) gets the ELO win, both players are teleported back to their
+     * captured pre-arena positions, and the match is removed from [rankedBattles] so the
+     * Cobblemon-side BATTLE_FLED / BATTLE_VICTORY handlers won't double-resolve it.
+     *
+     * Returns true iff a match was found and resolved. Safe to call when the player isn't in
+     * a match (returns false).
+     *
+     * Called from:
+     *  - [onPlayerLogOut]: disconnect mid-battle
+     *  - `/ranked admin forfeit <player>`: admin unblocks a hung match
+     *  - [cancelMatch] edge-case: cancel triggered after battle already started
+     */
+    fun forfeitMatch(leaver: ServerPlayer, reason: String = "left the match"): Boolean {
+        val (battleId, match) = findActiveMatchByPlayer(leaver.uuid) ?: return false
+        val server = leaver.server
+        val opponentUuid = if (match.player1Uuid == leaver.uuid) match.player2Uuid else match.player1Uuid
+        val opponent = server.playerList.getPlayer(opponentUuid)
+
+        // End the underlying Cobblemon battle so it doesn't keep ticking (and so its own
+        // BATTLE_VICTORY / BATTLE_FLED can't fire afterwards for the same battleId).
+        rankedBattles.remove(battleId)
+        val cobBattle = Cobblemon.battleRegistry.getBattle(battleId)
+        try { cobBattle?.end() } catch (e: Exception) {
+            CobblemonRanked.logger.warn("forfeit: failed to end Cobblemon battle {}: {}", battleId, e.message)
+        }
+
+        if (opponent != null) {
+            // Real ELO update: leaver loses, opponent gains.
+            resolveMatch(opponent, leaver)
+            payWagerToWinner(match, opponent)
+            opponent.sendSystemMessage(Component.literal("[Ranked] ${leaver.name.string} $reason. You win by forfeit."))
+        } else {
+            // Both gone — void and refund.
+            broadcast(server, "[Ranked] ${leaver.name.string} $reason and opponent is offline. Match voided.")
+            refundWager(match, server)
+        }
+        leaver.sendSystemMessage(Component.literal("[Ranked] You forfeited the match."))
+
+        teleportBack(server, match)
+        notifyMatchEnded(server, match)
+        return true
+    }
+
+    /**
+     * Disconnect-during-battle = forfeit. NeoForge subscriber registered via the EVENT_BUS so we
+     * see logout before the player object is invalidated. [forfeitMatch] handles the rest;
+     * we also clean up pendingMatches for the team-select-stage logout case (no ELO change there).
+     */
+    @SubscribeEvent
+    fun onPlayerLogOut(event: PlayerEvent.PlayerLoggedOutEvent) {
+        val player = event.entity as? ServerPlayer ?: return
+        if (!forfeitMatch(player, reason = "disconnected")) {
+            // Not in an active battle — but might be in team-select.
+            val opponentUuid = pendingMatches[player.uuid] ?: return
+            val opponent = player.server.playerList.getPlayer(opponentUuid)
+            opponent?.sendSystemMessage(Component.literal("[Ranked] ${player.name.string} disconnected. Match cancelled."))
+            cleanup(player.uuid, opponentUuid)
+        }
     }
 
     private fun cleanup(uuid1: UUID, uuid2: UUID) {

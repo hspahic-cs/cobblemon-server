@@ -5,6 +5,7 @@ import com.cobblemoncarrots.interact.CarrotHealHandler
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -14,7 +15,7 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Mod(CobblemonCarrots.MOD_ID)
+@Mod(value = CobblemonCarrots.MOD_ID, dist = [Dist.DEDICATED_SERVER])
 class CobblemonCarrots(modBus: IEventBus, container: ModContainer) {
 
     init {

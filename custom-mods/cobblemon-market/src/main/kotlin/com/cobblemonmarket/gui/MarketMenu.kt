@@ -52,21 +52,39 @@ object MarketMenu {
     private const val FIRST_ITEM_SLOT = 9            // row 1 col 0
     private const val MAX_ITEMS = SLOTS - FIRST_ITEM_SLOT
 
-    fun open(player: ServerPlayer) {
+    /**
+     * Open the market GUI scoped to a specific vendor.
+     *
+     * @param vendorTag The vendor identifier. `""` = the legacy default market (every entry
+     *   whose `vendorTag` is empty). Non-empty = only items whose `vendorTag` matches —
+     *   e.g. `"tm_fire"` for the Fire-TM shop.
+     */
+    fun open(player: ServerPlayer, vendorTag: String = "") {
         val container = SimpleContainer(SLOTS)
-        populate(container, player)
+        populate(container, player, vendorTag)
+        val title = if (vendorTag.isEmpty()) "§0Market"
+                    else "§0Market — ${formatTag(vendorTag)}"
         val provider = SimpleMenuProvider(
-            { syncId, inv, _ -> Impl(syncId, inv, container, player) },
-            Component.literal("§0Market"),
+            { syncId, inv, _ -> Impl(syncId, inv, container, player, vendorTag) },
+            Component.literal(title),
         )
         player.openMenu(provider)
     }
 
+    /** "tm_fire" → "Fire TMs"; falls back to the raw tag if it doesn't match the known shape. */
+    private fun formatTag(tag: String): String =
+        if (tag.startsWith("tm_")) tag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
+        else tag.replace('_', ' ').replaceFirstChar { it.uppercase() }
+
+    /** Returns the entries the menu should show in stable order, scoped by vendor. */
+    private fun visibleItems(vendorTag: String): List<Map.Entry<String, ItemEntry>> =
+        CobblemonMarket.items.entries.filter { it.value.vendorTag == vendorTag }
+
     /** (Re)populate every slot from current market state. Called on open + after each trade. */
-    private fun populate(container: Container, player: ServerPlayer) {
+    private fun populate(container: Container, player: ServerPlayer, vendorTag: String) {
         for (i in 0 until container.containerSize) container.setItem(i, ItemStack.EMPTY)
         container.setItem(BALANCE_SLOT, balanceStack(player))
-        val items = CobblemonMarket.items.entries.toList()
+        val items = visibleItems(vendorTag)
         for ((index, kv) in items.withIndex()) {
             if (index >= MAX_ITEMS) break
             container.setItem(FIRST_ITEM_SLOT + index, itemStackFor(kv.key, kv.value))
@@ -99,14 +117,20 @@ object MarketMenu {
         val sell = PricingEngine.sellPrice(entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity)
         val stockNow = state.stock.toInt()
         val stack = ItemStack(item)
-        stack.set(DataComponents.LORE, ItemLore(listOf(
-            line("§aBuy: §f\$$buy §8(per unit)"),
-            line("§cSell: §f\$$sell §8(per unit)"),
-            line("§7Stock: §f$stockNow §8/ ${entry.baseStock} target"),
-            line(""),
-            line("§8Left-click: buy 1  ·  Shift: buy 16"),
-            line("§8Right-click: sell 1  ·  Shift: sell 64"),
-        )))
+        val lore = mutableListOf<MutableComponent>()
+        lore += line("§aBuy: §f\$$buy §8(per unit)")
+        if (entry.sellable) {
+            lore += line("§cSell: §f\$$sell §8(per unit)")
+            lore += line("§7Stock: §f$stockNow §8/ ${entry.baseStock} target")
+            lore += line("")
+            lore += line("§8Left-click: buy 1  ·  Shift: buy 16")
+            lore += line("§8Right-click: sell 1  ·  Shift: sell 64")
+        } else {
+            lore += line("§8(Buy only — not resold)")
+            lore += line("")
+            lore += line("§8Left-click: buy 1  ·  Shift: buy 16")
+        }
+        stack.set(DataComponents.LORE, ItemLore(lore.map { it as Component }))
         return stack
     }
 
@@ -115,6 +139,7 @@ object MarketMenu {
         inv: Inventory,
         private val container: Container,
         private val viewer: ServerPlayer,
+        private val vendorTag: String,
     ) : ChestMenu(MenuType.GENERIC_9x6, syncId, inv, container, ROWS) {
 
         override fun clicked(slotId: Int, button: Int, clickType: ClickType, player: Player) {
@@ -126,10 +151,10 @@ object MarketMenu {
             }
             if (slotId == BALANCE_SLOT) return
             if (slotId < FIRST_ITEM_SLOT) return
-            val items = CobblemonMarket.items.entries.toList()
+            val items = visibleItems(vendorTag)
             val itemIndex = slotId - FIRST_ITEM_SLOT
             if (itemIndex !in items.indices) return
-            val itemId = items[itemIndex].key
+            val (itemId, entry) = items[itemIndex]
             val sp = player as? ServerPlayer ?: return
 
             val (action, qty) = when {
@@ -139,10 +164,14 @@ object MarketMenu {
                 button == 1 && clickType == ClickType.QUICK_MOVE -> "sell" to 64
                 else -> return
             }
+            if (action == "sell" && !entry.sellable) {
+                sp.sendSystemMessage(Component.literal("§c[Market] This vendor doesn't buy items back."))
+                return
+            }
 
             val result: TradeResult = if (action == "buy") TradeOps.buy(sp, itemId, qty) else TradeOps.sell(sp, itemId, qty)
             reportTrade(sp, action, itemId, qty, result)
-            populate(container, viewer)
+            populate(container, viewer, vendorTag)
             broadcastChanges()
         }
 
@@ -169,14 +198,14 @@ object MarketMenu {
             val stack = slot.item
             if (stack.isEmpty) return ItemStack.EMPTY
             val itemId = BuiltInRegistries.ITEM.getKey(stack.item).toString()
-            if (itemId !in CobblemonMarket.items) {
-                // Not a market item; refuse the move so the stack stays put.
-                return ItemStack.EMPTY
-            }
+            val entry = CobblemonMarket.items[itemId] ?: return ItemStack.EMPTY
+            // Refuse shift-sell against a vendor that doesn't carry this item, or against a
+            // buy-only entry — otherwise the player'd silently lose the stack.
+            if (entry.vendorTag != vendorTag || !entry.sellable) return ItemStack.EMPTY
             val qty = stack.count
             val result = TradeOps.sell(sp, itemId, qty)
             reportTrade(sp, "sell", itemId, qty, result)
-            populate(container, viewer)
+            populate(container, viewer, vendorTag)
             broadcastChanges()
             return ItemStack.EMPTY
         }

@@ -13,6 +13,7 @@ import com.cobblemongacha.interaction.CrateInteractionHandler
 import com.cobblemongacha.interaction.KeyGrantHooks
 import com.cobblemongacha.util.TickScheduler
 import net.minecraft.server.level.ServerPlayer
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModContainer
@@ -26,7 +27,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Mod(CobblemonGacha.MOD_ID)
+@Mod(value = CobblemonGacha.MOD_ID, dist = [Dist.DEDICATED_SERVER])
 class CobblemonGacha(modBus: IEventBus, container: ModContainer) {
 
     init {

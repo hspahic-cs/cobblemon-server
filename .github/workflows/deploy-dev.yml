@@ -92,11 +92,20 @@ jobs:
         if: steps.idempotency.outputs.skip != 'true'
         run: |
           VERSION_DIR="mods.v${{ steps.ver.outputs.version }}"
+          # 1) Both-sides + third-party (resolved by packwiz-installer-bootstrap).
           rsync -az --delete \
             --exclude='*.pw.toml' \
             -e "ssh -o StrictHostKeyChecking=yes" \
             modpack/mods/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/staging/${VERSION_DIR}/
+          # 2) Server-only custom mods (staged outside modpack/mods/ so they're
+          #    not in the client .mrpack). Overlay, no --delete.
+          if compgen -G 'modpack/server-overrides/mods/*.jar' >/dev/null; then
+            rsync -az \
+              -e "ssh -o StrictHostKeyChecking=yes" \
+              modpack/server-overrides/mods/ \
+              ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/staging/${VERSION_DIR}/
+          fi
 
       - name: Rsync datapacks (overlay onto live world, non-destructive)
         if: steps.idempotency.outputs.skip != 'true'

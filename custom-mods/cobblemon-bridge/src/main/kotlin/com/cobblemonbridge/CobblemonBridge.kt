@@ -9,6 +9,8 @@ import com.cobblemonbridge.battle.GymDefeatHook
 import com.cobblemonbridge.battle.GymPrereqHook
 import com.cobblemonbridge.commands.CommandAliases
 import com.cobblemonbridge.commands.GymTpCommands
+import com.cobblemonbridge.commands.HologramCommands
+import com.cobblemonbridge.commands.ProfileCommand
 import com.cobblemonbridge.commands.SpawnCommands
 import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
@@ -24,6 +26,7 @@ import com.cobblemonbridge.wild.WildBattleAdjustHook
 import com.cobblemonbridge.wild.WildBattleRewardHook
 import com.cobblemonbridge.wild.WildSpawnLevelCapHook
 import com.cobblemonbridge.worldrules.WorldRulesHook
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -38,7 +41,7 @@ import org.slf4j.LoggerFactory
  * activated by a `cobblemon_bridge:<hook>/<arg>` tag on an entity, a Cobblemon event, or a
  * NeoForge event. Adding a new hook means: add the file, register it here.
  */
-@Mod(CobblemonBridge.MOD_ID)
+@Mod(value = CobblemonBridge.MOD_ID, dist = [Dist.DEDICATED_SERVER])
 class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
 
     init {
@@ -92,12 +95,17 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         WildCommand.register(event.dispatcher)
         GymTpCommands.register(event.dispatcher)
         SpawnCommands.register(event.dispatcher)
+        HologramCommands.register(event.dispatcher)
+        ProfileCommand.register(event.dispatcher)
     }
 
     @Suppress("UNUSED_PARAMETER")
     private fun onServerStarting(event: ServerStartingEvent) {
         GymTpRegistry.init()
         SpawnCommands.init()
+        WildCommand.init()
+        HologramCommands.init()
+        com.cobblemonbridge.profile.FavoriteTracker.init()
     }
 
     companion object {

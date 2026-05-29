@@ -18,8 +18,17 @@ import kotlin.io.path.writeText
  *   spread between them is the merchant's margin).
  * - `baseStock` — target/equilibrium quantity. Restock pulls stock toward this value.
  * - `elasticity` — how sharply price reacts to deviation from `baseStock`.
- *   1.0 ≈ inversely proportional, <1 = stable (consumables like Poké Balls), >1 = volatile (rare items).
+ *   1.0 ≈ inversely proportional, <1 = stable (consumables like Poké Balls), >1 = volatile
+ *   (rare items). **Set to 0.0 for a fixed price** — scale is x^0 = 1 always, so buy/sell
+ *   equals the base regardless of stock.
  * - `maxStockMultiplier` — sells are rejected when stock would exceed `baseStock × maxStockMultiplier`.
+ * - `vendorTag` — which vendor NPC carries this item. Empty string is the legacy default
+ *   vendor (tag `cobblemon_bridge.market_vendor`). Non-empty maps to a vendor tagged
+ *   `cobblemon_bridge.market_vendor.<tag>` — spawned with `/market admin spawn <tag>`.
+ *   The same item id can appear under different tags if you want it sold by multiple shops
+ *   (each entry tracks its own stock and price independently).
+ * - `sellable` — when false, the right-click sell paths in the GUI are no-ops and the slot
+ *   lore reads "Buy only". For TM vendors and other one-way shops.
  */
 data class ItemEntry(
     val baseBuyPrice: Int,
@@ -27,6 +36,8 @@ data class ItemEntry(
     val baseStock: Int = 100,
     val elasticity: Double = 1.0,
     val maxStockMultiplier: Double = 10.0,
+    val vendorTag: String = "",
+    val sellable: Boolean = true,
 )
 
 object ItemConfig {

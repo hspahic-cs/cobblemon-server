@@ -1,7 +1,6 @@
 package com.cobblemonbridge.worldrules
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
-import com.cobblemonbridge.CobblemonBridge
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -11,7 +10,6 @@ import net.minecraft.world.level.GameType
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
@@ -142,50 +140,52 @@ object WorldRulesHook {
     // ─── Spawn restrictions ──────────────────────────────────────────────────
 
     /**
-     * True if [entity] is something this hook should veto from the given [level].
-     * In a locked dim we veto Pokemon + RCT trainers; in a NO_MOB dim we additionally
-     * veto every other [Mob] (hostile, passive, ambient — anything that's a Mob
-     * in the MC class hierarchy). Non-Mob entities like item frames, paintings,
-     * boats, XP orbs, etc. are never targeted.
-     */
-    private fun shouldVetoSpawn(entity: net.minecraft.world.entity.Entity, level: Level): Boolean {
-        if (entity is PokemonEntity) return true
-        if (EntityType.getKey(entity.type) == RCT_TRAINER_ID) return true
-        if (isNoMobDim(level) && entity is Mob) return true
-        return false
-    }
-
-    /**
-     * Cancel natural spawns of vetoed entities in locked worlds. Run at HIGH (not
-     * HIGHEST) so other mods can still influence pre-spawn checks; we just want to be the last
-     * vetoer before vanilla allows the spawn.
+     * Cancel natural spawns of vetoed entities. Run at HIGH (not HIGHEST) so other mods can
+     * still influence pre-spawn checks; we just want to be the last vetoer before vanilla
+     * allows the spawn.
      */
     @SubscribeEvent(priority = EventPriority.HIGH)
     fun onFinalizeSpawn(event: FinalizeSpawnEvent) {
-        val level = event.level.level
-        if (!isLocked(level)) return
-        if (!shouldVetoSpawn(event.entity, level)) return
-        // MobSpawnType.NATURAL, CHUNK_GENERATION, STRUCTURE, JOCKEY, REINFORCEMENT, BREEDING,
-        // EVENT, PATROL — anything that isn't explicit command/spawn-egg/summoned. We only allow
-        // op-initiated spawns (COMMAND, SPAWN_EGG, MOB_SUMMONED).
+        // Op-initiated spawns (commands, spawn eggs, /summon, dispensers) always pass through —
+        // regardless of dimension or mob category. This is checked once at the top so all rules
+        // below honour it.
         when (event.spawnType) {
             net.minecraft.world.entity.MobSpawnType.COMMAND,
             net.minecraft.world.entity.MobSpawnType.SPAWN_EGG,
             net.minecraft.world.entity.MobSpawnType.MOB_SUMMONED,
             net.minecraft.world.entity.MobSpawnType.DISPENSER -> return
-            else -> {
+            else -> Unit
+        }
+
+        val level = event.level.level
+        val entity = event.entity
+
+        // Rule 1 — non-progression dimensions: no Pokémon or RCT trainer natural spawns.
+        if (isLocked(level)) {
+            val isPokeOrTrainer = entity is PokemonEntity || EntityType.getKey(entity.type) == RCT_TRAINER_ID
+            if (isPokeOrTrainer) {
                 event.isSpawnCancelled = true
+                return
             }
+        }
+
+        // Rule 2 — NO_MOB dims (multiworld:*): block every natural Mob spawn (hostile,
+        // passive, ambient). Removes any incentive to wander the static showcase worlds
+        // for resources or fights.
+        if (isNoMobDim(level) && entity is Mob) {
+            event.isSpawnCancelled = true
+            return
+        }
+
+        // Rule 3 — globally: no vanilla hostile-mob natural spawns. We play on Easy difficulty
+        // but with no hostile spawning so the gameplay loop centres on Pokémon. Peaceful mobs
+        // (CREATURE / AMBIENT / WATER_* categories) still spawn normally. Op-initiated spawns
+        // were already let through above.
+        if (entity.type.category == net.minecraft.world.entity.MobCategory.MONSTER) {
+            event.isSpawnCancelled = true
         }
     }
 
-    /**
-     * Belt-and-suspenders: some Pokemon/trainer code paths bypass FinalizeSpawn (e.g. direct
-     * `level.addFreshEntity(...)` without going through `MobSpawnType` finalisation). Veto at
-     * EntityJoinLevel for entities matching our criteria — but ONLY when the level is locked
-     * AND the entity has no NBT marker indicating a command spawn (we use the
-     * `cobblemon_bridge.gym_id.*` / `gym_tp_npc` tag presence as a hint that an op put it there).
-     */
     // ─── Tagged-entity invulnerability ───────────────────────────────────────
 
     /**
@@ -209,19 +209,12 @@ object WorldRulesHook {
         event.isCanceled = true
     }
 
-    @SubscribeEvent
-    fun onEntityJoin(event: EntityJoinLevelEvent) {
-        val level = event.level
-        if (!isLocked(level)) return
-        val entity = event.entity
-        if (!shouldVetoSpawn(entity, level)) return
-        // If the entity has any cobblemon_bridge.* tag (the ones our admin commands stamp at
-        // spawn time), it's an op-summoned entity — let it through.
-        if (entity.tags.any { it.startsWith("cobblemon_bridge.") }) return
-        event.isCanceled = true
-        CobblemonBridge.logger.debug(
-            "worldrules: blocked {} from {} (no admin tag)",
-            entity.type, level.dimension().location(),
-        )
-    }
+    // Note: a previous belt-and-suspenders `onEntityJoin` hook that vetoed at
+    // EntityJoinLevelEvent was removed — it over-blocked because the
+    // `/function server:gym/spawn_<N>` mcfunctions tag the trainer AFTER `rctmod trainer
+    // summon_persistent`, so at EntityJoin time the `cobblemon_bridge.*` tag isn't on yet and
+    // the function's spawn was being canceled before its own tag command could run. The
+    // FinalizeSpawnEvent above already distinguishes COMMAND/SPAWN_EGG/MOB_SUMMONED from
+    // natural spawn types and is the correct gate. If a future natural spawn path bypasses
+    // FinalizeSpawn entirely, re-introduce a more targeted check here.
 }

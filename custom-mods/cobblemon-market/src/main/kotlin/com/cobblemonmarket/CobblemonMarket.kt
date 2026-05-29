@@ -8,6 +8,7 @@ import com.cobblemonmarket.config.MarketConfig
 import com.cobblemonmarket.data.MarketStore
 import com.cobblemonmarket.data.PlayerSpendStore
 import com.cobblemonmarket.pricing.PricingEngine
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -18,7 +19,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Mod(CobblemonMarket.MOD_ID)
+@Mod(value = CobblemonMarket.MOD_ID, dist = [Dist.DEDICATED_SERVER])
 class CobblemonMarket(modBus: IEventBus, container: ModContainer) {
 
     init {

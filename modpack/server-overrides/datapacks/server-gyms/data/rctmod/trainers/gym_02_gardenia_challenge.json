@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Gardenia",
+  "name": "Hard Mode: Gym Leader Gardenia",
   "identity": "Grass",
   "ai": {
     "type": "rb",
@@ -69,7 +69,7 @@
         "leafstorm",
         "glare",
         "gigadrain",
-        "hiddenpowerfire"
+        "hiddenpower"
       ]
     },
     {

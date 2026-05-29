@@ -44,7 +44,7 @@
       ]
     },
     {
-      "species": "weezinggalar",
+      "species": "weezing",
       "level": 40,
       "nature": "hardy",
       "ivs": {
@@ -70,6 +70,9 @@
         "willowisp",
         "painsplit",
         "taunt"
+      ],
+      "aspects": [
+        "galarian"
       ]
     },
     {

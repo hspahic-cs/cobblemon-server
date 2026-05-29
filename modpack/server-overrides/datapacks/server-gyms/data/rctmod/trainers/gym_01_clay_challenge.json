@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Clay",
+  "name": "Hard Mode: Gym Leader Clay",
   "identity": "Ground",
   "ai": {
     "type": "rb",

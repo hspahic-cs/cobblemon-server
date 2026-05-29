@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Drayden",
+  "name": "Hard Mode: Gym Leader Drayden",
   "identity": "Dragon",
   "ai": {
     "type": "rb",

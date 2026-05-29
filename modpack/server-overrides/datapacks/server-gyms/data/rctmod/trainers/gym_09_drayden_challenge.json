@@ -1,0 +1,192 @@
+{
+  "name": "Challenge: Gym Leader Drayden",
+  "identity": "Dragon",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 0,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "garchomp",
+      "level": 60,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "roughskin",
+      "heldItem": "cobblemon:rocky_helmet",
+      "moveset": [
+        "stealthrock",
+        "swordsdance",
+        "earthquake",
+        "scaleshot"
+      ]
+    },
+    {
+      "species": "salamence",
+      "level": 60,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "moxie",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "dragondance",
+        "dualwingbeat",
+        "earthquake",
+        "dragonclaw"
+      ]
+    },
+    {
+      "species": "haxorus",
+      "level": 60,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "moldbreaker",
+      "heldItem": "cobblemon:choice_scarf",
+      "moveset": [
+        "outrage",
+        "closecombat",
+        "earthquake",
+        "firstimpression"
+      ]
+    },
+    {
+      "species": "kommoo",
+      "level": 60,
+      "nature": "impish",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "bulletproof",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "stealthrock",
+        "bodypress",
+        "dragontail",
+        "toxic"
+      ]
+    },
+    {
+      "species": "goodra",
+      "level": 60,
+      "nature": "calm",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 4,
+        "spd": 252,
+        "spe": 0
+      },
+      "ability": "sapsipper",
+      "heldItem": "cobblemon:assault_vest",
+      "moveset": [
+        "dracometeor",
+        "sludgebomb",
+        "flamethrower",
+        "thunderbolt"
+      ]
+    },
+    {
+      "species": "kingdra",
+      "level": 60,
+      "nature": "modest",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "sniper",
+      "heldItem": "cobblemon:scope_lens",
+      "moveset": [
+        "focusenergy",
+        "dracometeor",
+        "hydropump",
+        "icebeam"
+      ]
+    }
+  ]
+}

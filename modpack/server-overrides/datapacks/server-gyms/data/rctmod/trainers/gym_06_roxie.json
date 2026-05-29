@@ -1,0 +1,192 @@
+{
+  "name": "Gym Leader Roxie",
+  "identity": "Poison",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 0,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "scolipede",
+      "level": 40,
+      "nature": "hardy",
+      "ivs": {
+        "hp": 15,
+        "atk": 15,
+        "def": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "evs": {
+        "hp": 85,
+        "atk": 85,
+        "def": 85,
+        "spa": 85,
+        "spd": 85,
+        "spe": 85
+      },
+      "ability": "speedboost",
+      "heldItem": "cobblemon:focus_sash",
+      "moveset": [
+        "toxicspikes",
+        "megahorn",
+        "poisonjab",
+        "swordsdance"
+      ]
+    },
+    {
+      "species": "weezinggalar",
+      "level": 40,
+      "nature": "hardy",
+      "ivs": {
+        "hp": 15,
+        "atk": 15,
+        "def": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "evs": {
+        "hp": 85,
+        "atk": 85,
+        "def": 85,
+        "spa": 85,
+        "spd": 85,
+        "spe": 85
+      },
+      "ability": "neutralizinggas",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "strangesteam",
+        "willowisp",
+        "painsplit",
+        "taunt"
+      ]
+    },
+    {
+      "species": "gengar",
+      "level": 40,
+      "nature": "hardy",
+      "ivs": {
+        "hp": 15,
+        "atk": 15,
+        "def": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "evs": {
+        "hp": 85,
+        "atk": 85,
+        "def": 85,
+        "spa": 85,
+        "spd": 85,
+        "spe": 85
+      },
+      "ability": "cursedbody",
+      "heldItem": "cobblemon:black_sludge",
+      "moveset": [
+        "substitute",
+        "disable",
+        "shadowball",
+        "sludgewave"
+      ]
+    },
+    {
+      "species": "nidoking",
+      "level": 40,
+      "nature": "hardy",
+      "ivs": {
+        "hp": 15,
+        "atk": 15,
+        "def": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "evs": {
+        "hp": 85,
+        "atk": 85,
+        "def": 85,
+        "spa": 85,
+        "spd": 85,
+        "spe": 85
+      },
+      "ability": "sheerforce",
+      "heldItem": "",
+      "moveset": [
+        "earthpower",
+        "sludgewave",
+        "icebeam",
+        "thunderbolt"
+      ]
+    },
+    {
+      "species": "crobat",
+      "level": 40,
+      "nature": "hardy",
+      "ivs": {
+        "hp": 15,
+        "atk": 15,
+        "def": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "evs": {
+        "hp": 85,
+        "atk": 85,
+        "def": 85,
+        "spa": 85,
+        "spd": 85,
+        "spe": 85
+      },
+      "ability": "infiltrator",
+      "heldItem": "",
+      "moveset": [
+        "bravebird",
+        "uturn",
+        "crosspoison",
+        "defog"
+      ]
+    },
+    {
+      "species": "salazzle",
+      "level": 40,
+      "nature": "hardy",
+      "ivs": {
+        "hp": 15,
+        "atk": 15,
+        "def": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "evs": {
+        "hp": 85,
+        "atk": 85,
+        "def": 85,
+        "spa": 85,
+        "spd": 85,
+        "spe": 85
+      },
+      "ability": "corrosion",
+      "heldItem": "",
+      "moveset": [
+        "toxic",
+        "flamethrower",
+        "sludgewave",
+        "encore"
+      ]
+    }
+  ]
+}

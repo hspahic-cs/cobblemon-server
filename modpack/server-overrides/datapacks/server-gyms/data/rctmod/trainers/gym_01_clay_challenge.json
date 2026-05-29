@@ -1,0 +1,105 @@
+{
+  "name": "Challenge: Gym Leader Clay",
+  "identity": "Ground",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 0,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "hippopotas",
+      "level": 20,
+      "nature": "impish",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "sandstream",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "stealthrock",
+        "yawn",
+        "earthquake",
+        "slackoff"
+      ]
+    },
+    {
+      "species": "drilbur",
+      "level": 20,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "sandrush",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "earthquake",
+        "rockslide",
+        "swordsdance",
+        "rapidspin"
+      ]
+    },
+    {
+      "species": "wooper",
+      "level": 20,
+      "nature": "relaxed",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "waterabsorb",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "scald",
+        "earthquake",
+        "recover",
+        "toxic"
+      ]
+    }
+  ]
+}

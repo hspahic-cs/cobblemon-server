@@ -232,7 +232,10 @@ object MarketCommands {
         villager.isInvulnerable = true
         villager.setPersistenceRequired()
         villager.isSilent = true
-        villager.isNoAi = true
+        // AI intentionally left on so vanilla LookAtPlayer + LookAround drive natural head
+        // movement. cobblemon-bridge MarketVendorAnchor pins the villager to its spawn position
+        // each tick so it can't actually wander even with full AI active.
+        villager.isNoAi = false
         villager.villagerData = net.minecraft.world.entity.npc.VillagerData(
             net.minecraft.world.entity.npc.VillagerType.PLAINS,
             net.minecraft.world.entity.npc.VillagerProfession.LIBRARIAN,

@@ -18,7 +18,7 @@ import com.cobblemonbridge.commands.WildCommand
 import com.cobblemonbridge.eggs.EggDefeatHook
 import com.cobblemonbridge.gymtp.GymTpNpcHook
 import com.cobblemonbridge.gymtp.GymTpRegistry
-import com.cobblemonbridge.npc.NpcFaceNearestPlayer
+import com.cobblemonbridge.npc.MarketVendorAnchor
 import com.cobblemonbridge.quests.HealQuestHook
 import com.cobblemonbridge.quests.PartyLevelHook
 import com.cobblemonbridge.quests.SetHomeHook
@@ -72,7 +72,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(EggDefeatHook)
 
         NeoForge.EVENT_BUS.register(GymTpNpcHook)
-        NeoForge.EVENT_BUS.register(NpcFaceNearestPlayer)
+        NeoForge.EVENT_BUS.register(MarketVendorAnchor)
         NeoForge.EVENT_BUS.register(WorldRulesHook)
 
         val cobbleloots = CobbleloootsAdapter.isPresent()

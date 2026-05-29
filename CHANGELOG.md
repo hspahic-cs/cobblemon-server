@@ -48,16 +48,26 @@ root README.
   out of the menu.
 
 ### Added
-- **cobblemon-bridge / NpcFaceNearestPlayer**: market villagers were
-  spawned with `NoAI:1b` so they wouldn't wander off their placed
-  position — but the side effect was a frozen head-locked stare. New
-  server-side tick hook walks loaded villagers every 10 ticks, picks
-  those carrying `cobblemon_bridge.market_vendor[.<scope>]`, finds the
-  nearest player within 12 blocks, and snaps the villager's yaw to
-  face them. No-op when no player is in range, so the vendor keeps
-  its last orientation rather than spinning. Cost is bounded by
-  loaded villagers per dim; trivial at the entity counts the server
-  operates at.
+- **cobblemon-bridge / MarketVendorAnchor**: market villagers were
+  spawned with `NoAI:1b` so they wouldn't wander, but that froze
+  every animation — vendors read as broken statues. New approach
+  flips AI back ON (so vanilla `LookAtPlayer` + `LookAround`
+  behaviours drive natural head + body movement, including trade-
+  look toward nearby players) and anchors the vendor to its spawn
+  position via a per-tick position-snap. Anchor is captured on first
+  sighting and stashed in entity NBT (`persistentData`), so it
+  survives chunk unloads + restarts. Tolerance is ~0.05 blocks, so
+  the snap fires on the first sub-tick the AI tries to step — the
+  body never visibly leaves the anchor. Replaces the original
+  snap-rotation `NpcFaceNearestPlayer` from earlier in 0.7.6 dev
+  (that one snapped the full body toward the nearest player every
+  10 ticks, which read as twitchy).
+- **market spawn functions**: both spawn paths (mcfunction default
+  vendor + Kotlin `/market admin spawn <tag>` TM vendors) stop
+  setting `NoAI:1b` so newly summoned vendors come up with AI
+  enabled. Existing pre-0.7.7 vendors are auto-upgraded the first
+  time `MarketVendorAnchor` sees them (it flips `noAi` off in
+  place).
 - **cobblemon-market / paged shop menu**: large vendors (`tm_normal`
   ~169 entries; `tm_psychic` ~53; `tm_fighting` 45) were truncated to
   the first 45 items by the single-page layout. Row 0 now hosts a

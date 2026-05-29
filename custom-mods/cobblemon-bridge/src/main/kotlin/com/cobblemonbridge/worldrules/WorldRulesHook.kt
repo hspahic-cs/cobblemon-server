@@ -1,11 +1,8 @@
 package com.cobblemonbridge.worldrules
 
-import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemonbridge.CobblemonBridge
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.GameType
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.EventPriority
@@ -38,9 +35,6 @@ object WorldRulesHook {
         "minecraft:the_nether",
         "minecraft:the_end",
     )
-
-    private val RCT_TRAINER_ID: ResourceLocation =
-        ResourceLocation.fromNamespaceAndPath("rctmod", "trainer")
 
     private const val OP_LEVEL: Int = 2
 
@@ -141,19 +135,22 @@ object WorldRulesHook {
         val level = event.level.level
         val entity = event.entity
 
-        // Rule 1 — non-progression dimensions: no Pokémon or RCT trainer natural spawns.
+        // Rule 1 — non-progression dimensions are static scenery. Cancel EVERY natural mob
+        // spawn here regardless of category: Pokémon, RCT trainers, hostile vanilla monsters,
+        // peaceful animals, water/ambient mobs, all of them. Op-summoned entities (commands,
+        // /summon, spawn eggs, dispensers) were already let through above so the gym/market/
+        // hologram NPCs we explicitly place still work.
         if (isLocked(level)) {
-            val isPokeOrTrainer = entity is PokemonEntity || EntityType.getKey(entity.type) == RCT_TRAINER_ID
-            if (isPokeOrTrainer) {
-                event.isSpawnCancelled = true
-                return
-            }
+            event.isSpawnCancelled = true
+            return
         }
 
-        // Rule 2 — globally: no vanilla hostile-mob natural spawns. We play on Easy difficulty
-        // but with no hostile spawning so the gameplay loop centres on Pokémon. Peaceful mobs
-        // (CREATURE / AMBIENT / WATER_* categories) still spawn normally. Op-initiated spawns
-        // were already let through above.
+        // Rule 2 — globally, allowed dimensions: no vanilla hostile-mob natural spawns. We
+        // play on Easy difficulty but with no hostile spawning so the gameplay loop centres
+        // on Pokémon. Peaceful mobs (CREATURE / AMBIENT / WATER_* categories) still spawn
+        // normally HERE — they're only suppressed in the locked dims above. Suppress the
+        // [PokemonEntity] reference + RCT_TRAINER_ID lookup that used to live here; the locked
+        // branch above now handles them.
         if (entity.type.category == net.minecraft.world.entity.MobCategory.MONSTER) {
             event.isSpawnCancelled = true
         }

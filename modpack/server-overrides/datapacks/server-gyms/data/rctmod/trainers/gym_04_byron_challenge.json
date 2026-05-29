@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Byron",
+  "name": "Hard Mode: Gym Leader Byron",
   "identity": "Steel",
   "ai": {
     "type": "rb",

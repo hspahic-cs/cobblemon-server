@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Roxie",
+  "name": "Hard Mode: Gym Leader Roxie",
   "identity": "Poison",
   "ai": {
     "type": "rb",
@@ -70,6 +70,9 @@
         "willowisp",
         "painsplit",
         "taunt"
+      ],
+      "aspects": [
+        "galarian"
       ]
     },
     {

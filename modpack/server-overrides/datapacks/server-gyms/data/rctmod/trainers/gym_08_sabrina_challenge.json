@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Sabrina",
+  "name": "Hard Mode: Gym Leader Sabrina",
   "identity": "Psychic",
   "ai": {
     "type": "rb",

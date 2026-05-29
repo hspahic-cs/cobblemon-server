@@ -37,11 +37,23 @@ object RankedCommands {
                 .then(Commands.literal("challenge")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes { ctx ->
-                            val source = ctx.source.playerOrException
-                            val target = EntityArgument.getPlayer(ctx, "player")
-                            handleChallenge(source, target)
+                            handleChallenge(
+                                ctx.source.playerOrException,
+                                EntityArgument.getPlayer(ctx, "player"),
+                                wager = 0,
+                            )
                             1
                         }
+                        .then(Commands.argument("wager", IntegerArgumentType.integer(0))
+                            .executes { ctx ->
+                                handleChallenge(
+                                    ctx.source.playerOrException,
+                                    EntityArgument.getPlayer(ctx, "player"),
+                                    wager = IntegerArgumentType.getInteger(ctx, "wager"),
+                                )
+                                1
+                            }
+                        )
                     )
                 )
                 .then(Commands.literal("accept")
@@ -217,6 +229,37 @@ object RankedCommands {
                 )
         )
 
+        // Top-level /challenge and /accept aliases. Same handlers as /ranked challenge|accept.
+        dispatcher.register(
+            Commands.literal("challenge")
+                .then(Commands.argument("player", EntityArgument.player())
+                    .executes { ctx ->
+                        handleChallenge(
+                            ctx.source.playerOrException,
+                            EntityArgument.getPlayer(ctx, "player"),
+                            wager = 0,
+                        )
+                        1
+                    }
+                    .then(Commands.argument("wager", IntegerArgumentType.integer(0))
+                        .executes { ctx ->
+                            handleChallenge(
+                                ctx.source.playerOrException,
+                                EntityArgument.getPlayer(ctx, "player"),
+                                wager = IntegerArgumentType.getInteger(ctx, "wager"),
+                            )
+                            1
+                        }
+                    )
+                )
+        )
+        dispatcher.register(
+            Commands.literal("accept").executes { ctx -> handleAccept(ctx.source.playerOrException); 1 }
+        )
+        dispatcher.register(
+            Commands.literal("decline").executes { ctx -> handleDecline(ctx.source.playerOrException); 1 }
+        )
+
         // Top-level /queue tree — separate root so players don't need to remember /ranked queue.
         dispatcher.register(
             Commands.literal("queue")
@@ -315,16 +358,18 @@ object RankedCommands {
         // applyMatchResult already broadcasts the ELO update lines, so no need to repeat here.
     }
 
-    private fun handleChallenge(challenger: ServerPlayer, target: ServerPlayer) {
+    private fun handleChallenge(challenger: ServerPlayer, target: ServerPlayer, wager: Int) {
         val challengeManager = CobblemonRanked.challengeManager
-        val error = challengeManager.challenge(challenger, target)
+        val error = challengeManager.challenge(challenger, target, requestedWager = wager)
         if (error != null) {
             challenger.sendSystemMessage(Component.literal("[Ranked] $error"))
             return
         }
 
+        // Only non-wager challenges can auto-start via the legacy force path. Wager challenges
+        // always wait for an explicit /accept (per design — money on the line must be opted in).
         val forced = challengeManager.getPendingForced(target.uuid)
-        if (forced != null) {
+        if (forced != null && forced.wagerPerSide == 0) {
             RankedBattleManager.startTeamSelection(challenger, target)
         }
     }
@@ -340,7 +385,7 @@ object RankedCommands {
             player.sendSystemMessage(Component.literal("[Ranked] Challenger is no longer online."))
             return
         }
-        RankedBattleManager.startTeamSelection(challenger, player)
+        RankedBattleManager.startTeamSelection(challenger, player, wagerPerSide = challenge.wagerPerSide)
     }
 
     private fun handleDecline(player: ServerPlayer) {

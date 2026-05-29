@@ -56,6 +56,11 @@ data class ActiveRankedMatch(
     val originalLocations: Map<UUID, OriginalLocation> = emptyMap(),
     /** Which arena this match is occupying — used for the spectate hint + the slot mutex. */
     val slot: ArenaSlot = ArenaSlot.NONE,
+    /**
+     * Cobble dollars escrowed PER SIDE at team-select time. Total pool is `2 * wagerPerSide`;
+     * winner receives it all. Voided matches (both flee, both disconnect) refund both sides.
+     */
+    val wagerPerSide: Int = 0,
 )
 
 /** Result of [RankedBattleManager.applyMatchResult]. */
@@ -91,14 +96,26 @@ object RankedBattleManager {
      */
     private val expectedRankedMatch: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
 
-    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer) {
+    /**
+     * Begin the team-select phase of a ranked match. [wagerPerSide] is the cobble-dollar
+     * amount each player will be charged when both confirm their teams. Escrow happens at
+     * startBattle time, not here, so a cancelled team-select doesn't touch money.
+     */
+    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer, wagerPerSide: Int = 0) {
         val config = CobblemonRanked.config
         pendingMatches[player1.uuid] = player2.uuid
         pendingMatches[player2.uuid] = player1.uuid
+        if (wagerPerSide > 0) {
+            pendingWager[player1.uuid] = wagerPerSide
+            pendingWager[player2.uuid] = wagerPerSide
+        }
 
         openSelectionGui(player1, config.maxLegendaries)
         openSelectionGui(player2, config.maxLegendaries)
     }
+
+    /** Wager per side for the next-starting match, keyed by either player's UUID. */
+    private val pendingWager: ConcurrentHashMap<UUID, Int> = ConcurrentHashMap()
 
     private fun openSelectionGui(player: ServerPlayer, maxLegendaries: Int) {
         TeamSelectionGui(
@@ -161,6 +178,38 @@ object RankedBattleManager {
             return
         }
 
+        // Escrow wager: withdraw from BOTH players. Re-cap to the per-player limits in case
+        // balances changed between challenge and accept. If either withdraw fails, refund
+        // any partial deduction and void the match.
+        val intendedWager = pendingWager[player1.uuid] ?: pendingWager[player2.uuid] ?: 0
+        val actualWager = if (intendedWager > 0) {
+            val challengerCap = com.cobblemonranked.economy.EconomyBridge.getBalance(player1.uuid) / 2
+            val targetCap = com.cobblemonranked.economy.EconomyBridge.getBalance(player2.uuid) / 4
+            val effective = minOf(intendedWager, challengerCap, targetCap).coerceAtLeast(0)
+            if (effective <= 0) {
+                player1.sendSystemMessage(Component.literal(
+                    "§c[Ranked] Wager voided — one of you no longer has enough to cover \$$intendedWager."))
+                player2.sendSystemMessage(Component.literal(
+                    "§c[Ranked] Wager voided — one of you no longer has enough to cover \$$intendedWager."))
+                0
+            } else {
+                val w1Ok = com.cobblemonranked.economy.EconomyBridge.withdraw(player1.uuid, effective)
+                val w2Ok = if (w1Ok) com.cobblemonranked.economy.EconomyBridge.withdraw(player2.uuid, effective) else false
+                if (!w1Ok || !w2Ok) {
+                    if (w1Ok && !w2Ok) com.cobblemonranked.economy.EconomyBridge.deposit(player1.uuid, effective)
+                    player1.sendSystemMessage(Component.literal("§c[Ranked] Wager escrow failed — match voided."))
+                    player2.sendSystemMessage(Component.literal("§c[Ranked] Wager escrow failed — match voided."))
+                    pendingWager.remove(player1.uuid); pendingWager.remove(player2.uuid)
+                    cleanup(player1.uuid, player2.uuid)
+                    return
+                }
+                broadcast(player1.server,
+                    "[Ranked] Wager \$$effective from each player escrowed — winner takes the pool.")
+                effective
+            }
+        } else 0
+        pendingWager.remove(player1.uuid); pendingWager.remove(player2.uuid)
+
         // Save teams for showcase
         CobblemonRanked.teamStore.saveTeam(player1.uuid, team1)
         CobblemonRanked.teamStore.saveTeam(player2.uuid, team2)
@@ -212,7 +261,7 @@ object RankedBattleManager {
 
         result.ifSuccessful { battle ->
             val match = ActiveRankedMatch(
-                player1.uuid, player2.uuid, battle.battleId, originals, slot,
+                player1.uuid, player2.uuid, battle.battleId, originals, slot, actualWager,
             )
             rankedBattles[battle.battleId] = match
 
@@ -236,6 +285,13 @@ object RankedBattleManager {
             // Battle never started — teleport back immediately if we already moved them.
             originals[player1.uuid]?.let { restore(player1, it) }
             originals[player2.uuid]?.let { restore(player2, it) }
+            // …and refund the escrowed wager, since no actual battle happened.
+            if (actualWager > 0) {
+                com.cobblemonranked.economy.EconomyBridge.deposit(player1.uuid, actualWager)
+                com.cobblemonranked.economy.EconomyBridge.deposit(player2.uuid, actualWager)
+                player1.sendSystemMessage(Component.literal("§7[Ranked] Wager \$$actualWager refunded."))
+                player2.sendSystemMessage(Component.literal("§7[Ranked] Wager \$$actualWager refunded."))
+            }
         }
 
         cleanup(player1.uuid, player2.uuid)
@@ -320,6 +376,26 @@ object RankedBattleManager {
         com.cobblemonranked.queue.QueueManager.onMatchEnded(server, match.player1Uuid, match.player2Uuid)
     }
 
+    /** Pay the entire 2× wager pool to the winner; no-op for non-wager matches. */
+    private fun payWagerToWinner(match: ActiveRankedMatch, winner: ServerPlayer) {
+        if (match.wagerPerSide <= 0) return
+        val pool = match.wagerPerSide * 2
+        com.cobblemonranked.economy.EconomyBridge.deposit(winner.uuid, pool)
+        winner.sendSystemMessage(Component.literal(
+            "§6[Ranked] §fWager pool §e\$$pool §fcredited to your balance."))
+    }
+
+    /** Refund each side their escrowed wager — used on voided matches. */
+    private fun refundWager(match: ActiveRankedMatch, server: MinecraftServer) {
+        if (match.wagerPerSide <= 0) return
+        com.cobblemonranked.economy.EconomyBridge.deposit(match.player1Uuid, match.wagerPerSide)
+        com.cobblemonranked.economy.EconomyBridge.deposit(match.player2Uuid, match.wagerPerSide)
+        for (uuid in listOf(match.player1Uuid, match.player2Uuid)) {
+            server.playerList.getPlayer(uuid)?.sendSystemMessage(Component.literal(
+                "§7[Ranked] Wager \$${match.wagerPerSide} refunded."))
+        }
+    }
+
     private fun teleportBack(server: MinecraftServer, match: ActiveRankedMatch) {
         if (match.originalLocations.isEmpty()) return
         for ((uuid, loc) in match.originalLocations) {
@@ -390,6 +466,7 @@ object RankedBattleManager {
                 val loserPlayer = losers.first().entity
                 if (winnerPlayer != null && loserPlayer != null) {
                     resolveMatch(winnerPlayer, loserPlayer)
+                    payWagerToWinner(match, winnerPlayer)
                     teleportBack(winnerPlayer.server, match)
                     notifyMatchEnded(winnerPlayer.server, match)
                 }
@@ -398,6 +475,7 @@ object RankedBattleManager {
 
         CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL) { event ->
             val match = rankedBattles.remove(event.battle.battleId) ?: return@subscribe
+            // Outer scope so the when-branches below can pay or refund without re-looking-up.
             // Determine who fled — the player who is no longer in the battle
             val actors = event.battle.actors.filterIsInstance<PlayerBattleActor>()
             val server = actors.firstOrNull()?.entity?.server ?: return@subscribe
@@ -412,11 +490,12 @@ object RankedBattleManager {
                 val p2InBattle = Cobblemon.battleRegistry.getBattleByParticipatingPlayer(p2) != null
 
                 when {
-                    !p1InBattle && p2InBattle -> resolveMatch(p2, p1)
-                    !p2InBattle && p1InBattle -> resolveMatch(p1, p2)
+                    !p1InBattle && p2InBattle -> { resolveMatch(p2, p1); payWagerToWinner(match, p2) }
+                    !p2InBattle && p1InBattle -> { resolveMatch(p1, p2); payWagerToWinner(match, p1) }
                     else -> {
-                        // Both left — void the match
+                        // Both left — void the match and refund.
                         broadcast(server, "[Ranked] Both players fled. Match voided.")
+                        refundWager(match, server)
                     }
                 }
             }
@@ -604,10 +683,12 @@ object RankedBattleManager {
         if (opponent != null) {
             // Real ELO update: leaver loses, opponent gains.
             resolveMatch(opponent, leaver)
+            payWagerToWinner(match, opponent)
             opponent.sendSystemMessage(Component.literal("[Ranked] ${leaver.name.string} $reason. You win by forfeit."))
         } else {
-            // Both gone — void.
+            // Both gone — void and refund.
             broadcast(server, "[Ranked] ${leaver.name.string} $reason and opponent is offline. Match voided.")
+            refundWager(match, server)
         }
         leaver.sendSystemMessage(Component.literal("[Ranked] You forfeited the match."))
 

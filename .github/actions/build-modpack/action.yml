@@ -211,19 +211,56 @@ runs:
       shell: bash
       run: |
         set -euo pipefail
-        mkdir -p modpack/mods
-        # Remove prior versions of in-house mods only — keep .pw.toml manifests
-        # for the third-party mods packwiz will resolve.
-        rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked,feedback,feedback-client}-*.jar
+        # Per-mod routing. The destination dir controls which side of the
+        # exported .mrpack the jar ends up in:
+        #
+        #   modpack/mods/                  → bundled BOTH sides (overrides/mods)
+        #   modpack/server-overrides/mods/ → bundled SERVER only
+        #   modpack/client-overrides/mods/ → bundled CLIENT only
+        #
+        # Server-only routing is what stops a server-logic change (e.g. /queue,
+        # ELO, gym configs) from forcing every client to re-pull the .mrpack —
+        # those jars aren't in the client section at all. Defense-in-depth lives
+        # in each mod's @Mod(dist=[Dist.DEDICATED_SERVER]) annotation, so even
+        # if a jar is sideloaded the wrong-side JVM skips it.
+        SERVER_ONLY=(cobblemon-bridge cobblemon-carrots cobblemon-feedback cobblemon-gacha cobblemon-market cobblemon-ranked)
+        CLIENT_ONLY=(cobblemon-feedback-client)
+        # Everything else (currently just cobblemon-npc — it registers blocks/
+        # items/buildings the client needs to render) ships to both sides.
+
+        mkdir -p modpack/mods modpack/server-overrides/mods modpack/client-overrides/mods
+
+        # Remove prior versions of in-house mods from every staging location.
+        # Keep .pw.toml manifests for the third-party mods packwiz resolves.
+        for mod in "${SERVER_ONLY[@]}" "${CLIENT_ONLY[@]}" cobblemon-npc; do
+          rm -f "modpack/mods/${mod}-"*.jar
+          rm -f "modpack/server-overrides/mods/${mod}-"*.jar
+          rm -f "modpack/client-overrides/mods/${mod}-"*.jar
+        done
+
+        in_array() {
+          local needle=$1; shift
+          for x in "$@"; do [[ "$x" == "$needle" ]] && return 0; done
+          return 1
+        }
+
         for m in custom-mods/*/; do
+          mod=$(basename "$m")
           # Ship the runtime jar, NOT the -sources.jar.
           jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
           if [[ -z "$jar" ]]; then
             echo "::error::No runtime jar found in $m"
             exit 1
           fi
-          cp "$jar" modpack/mods/
-          echo "Staged: $(basename "$jar")"
+          if in_array "$mod" "${SERVER_ONLY[@]}"; then
+            dest=modpack/server-overrides/mods
+          elif in_array "$mod" "${CLIENT_ONLY[@]}"; then
+            dest=modpack/client-overrides/mods
+          else
+            dest=modpack/mods
+          fi
+          cp "$jar" "$dest/"
+          echo "Staged: $(basename "$jar") -> $dest/"
         done
 
     - name: Set pack version (if requested)

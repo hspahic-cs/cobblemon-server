@@ -26,6 +26,7 @@ import com.cobblemonbridge.wild.WildBattleAdjustHook
 import com.cobblemonbridge.wild.WildBattleRewardHook
 import com.cobblemonbridge.wild.WildSpawnLevelCapHook
 import com.cobblemonbridge.worldrules.WorldRulesHook
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -40,7 +41,7 @@ import org.slf4j.LoggerFactory
  * activated by a `cobblemon_bridge:<hook>/<arg>` tag on an entity, a Cobblemon event, or a
  * NeoForge event. Adding a new hook means: add the file, register it here.
  */
-@Mod(CobblemonBridge.MOD_ID)
+@Mod(value = CobblemonBridge.MOD_ID, dist = [Dist.DEDICATED_SERVER])
 class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
 
     init {

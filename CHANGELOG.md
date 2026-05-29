@@ -74,6 +74,22 @@ root README.
   don't reset our overrides.
 
 ### Changed
+- **build / .mrpack routing**: server-only custom mods (cobblemon-bridge,
+  cobblemon-carrots, cobblemon-feedback, cobblemon-gacha,
+  cobblemon-market, cobblemon-ranked) now stage into
+  `modpack/server-overrides/mods/` so packwiz exports them in the
+  server-only section of the .mrpack. Clients no longer download them
+  at all — server-side iteration (ELO tweaks, /queue, gym configs,
+  market prices, etc.) stops forcing every player to re-pull the pack.
+  Defense-in-depth: each of those mods is now annotated
+  `@Mod(dist = [Dist.DEDICATED_SERVER])` so even if a jar lands on the
+  wrong side, the JVM skips loading it. cobblemon-feedback-client moves
+  symmetrically into `modpack/client-overrides/mods/`. cobblemon-npc
+  stays in `modpack/mods/` (it registers blocks/items/buildings the
+  client needs to render). Deploy workflows
+  (deploy-dev / deploy-prod) gain a second rsync pass over
+  `server-overrides/mods/` so server installs continue to receive every
+  server-side jar.
 - **cobblemon-bridge / WorldRulesHook.onFinalizeSpawn**: structure
   consolidated into three explicit rules — (1) Pokemon/trainer veto in
   locked dims, (2) all `Mob` veto in `multiworld:*` dims, (3)

@@ -7,6 +7,7 @@ import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.data.EloStore
 import com.cobblemonranked.data.TeamStore
 import com.cobblemonranked.decay.DecayManager
+import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -17,7 +18,7 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-@Mod(CobblemonRanked.MOD_ID)
+@Mod(value = CobblemonRanked.MOD_ID, dist = [Dist.DEDICATED_SERVER])
 class CobblemonRanked(modBus: IEventBus, container: ModContainer) {
 
     init {

@@ -31,16 +31,22 @@ import net.minecraft.world.item.component.ItemLore
  * command-from-anywhere flow — those are disabled so trades only happen at the vendor.
  *
  * Layout (54-slot GENERIC_9x6):
- *   Row 0: title bar — center slot is a player-head with the current balance in lore.
- *   Rows 1-5: one slot per market item, in registration order. Slot's display ItemStack is
- *     the actual item, count = 1, with a synthetic lore block listing buy / sell / stock /
- *     keyboard hints.
+ *   Row 0: nav bar.
+ *     - Slot 0 = previous-page arrow (only when on a non-first page).
+ *     - Slot 4 = balance display (gold ingot with current balance + keyboard hints).
+ *     - Slot 8 = next-page arrow (only when there's a next page).
+ *   Rows 1-5: up to [PAGE_SIZE] item slots (45). The TM vendors push the entry count past
+ *     a single page — `tm_normal` alone has ~169 entries — so the GUI pages through them
+ *     in stable registration order.
  *
  * Click semantics on item slots:
  *   - Left-click           → buy 1
  *   - Shift-left           → buy 16 (capped by balance/stock)
  *   - Right-click          → sell 1 from inventory
  *   - Shift-right          → sell 64 (capped by what the player owns)
+ *
+ * Click semantics on nav slots:
+ *   - Slot 0 / Slot 8      → previous / next page; the chest rebuilds in place.
  *
  * After each transaction the slot's lore is refreshed in place. Title-bar balance refreshes
  * too. The whole chest is read-only with respect to item movement: shift-click and drag are
@@ -50,9 +56,11 @@ object MarketMenu {
 
     private const val ROWS = 6
     private const val SLOTS = ROWS * 9
-    private const val BALANCE_SLOT = 4              // center of row 0
+    private const val PREV_SLOT = 0                  // row 0 col 0 — previous-page arrow
+    private const val BALANCE_SLOT = 4               // center of row 0
+    private const val NEXT_SLOT = 8                  // row 0 col 8 — next-page arrow
     private const val FIRST_ITEM_SLOT = 9            // row 1 col 0
-    private const val MAX_ITEMS = SLOTS - FIRST_ITEM_SLOT
+    private const val PAGE_SIZE = SLOTS - FIRST_ITEM_SLOT  // 45 item slots per page
 
     /**
      * Open the market GUI scoped to a specific vendor.
@@ -63,7 +71,7 @@ object MarketMenu {
      */
     fun open(player: ServerPlayer, vendorTag: String = "") {
         val container = SimpleContainer(SLOTS)
-        populate(container, player, vendorTag)
+        populate(container, player, vendorTag, page = 0)
         val title = if (vendorTag.isEmpty()) "§0Market"
                     else "§0Market — ${formatTag(vendorTag)}"
         val provider = SimpleMenuProvider(
@@ -78,25 +86,48 @@ object MarketMenu {
         if (tag.startsWith("tm_")) tag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
         else tag.replace('_', ' ').replaceFirstChar { it.uppercase() }
 
-    /** Returns the entries the menu should show in stable order, scoped by vendor. */
+    /** All entries this vendor carries, in stable registration order. */
     private fun visibleItems(vendorTag: String): List<Map.Entry<String, ItemEntry>> =
         CobblemonMarket.items.entries.filter { it.value.vendorScope == vendorTag }
 
+    /** Number of pages needed for this vendor's catalog (at least 1, even when empty). */
+    private fun pageCount(vendorTag: String): Int {
+        val n = visibleItems(vendorTag).size
+        return ((n + PAGE_SIZE - 1) / PAGE_SIZE).coerceAtLeast(1)
+    }
+
     /** (Re)populate every slot from current market state. Called on open + after each trade. */
-    private fun populate(container: Container, player: ServerPlayer, vendorTag: String) {
+    private fun populate(container: Container, player: ServerPlayer, vendorTag: String, page: Int) {
         for (i in 0 until container.containerSize) container.setItem(i, ItemStack.EMPTY)
         container.setItem(BALANCE_SLOT, balanceStack(player))
-        val items = visibleItems(vendorTag)
-        for ((index, kv) in items.withIndex()) {
-            if (index >= MAX_ITEMS) break
+
+        val all = visibleItems(vendorTag)
+        val pages = pageCount(vendorTag)
+        val start = page * PAGE_SIZE
+        val slice = all.subList(start.coerceAtMost(all.size), (start + PAGE_SIZE).coerceAtMost(all.size))
+        for ((index, kv) in slice.withIndex()) {
             container.setItem(FIRST_ITEM_SLOT + index, itemStackFor(kv.key, kv.value))
         }
+
+        // Nav arrows: only fill slots where there's a page to go to. Bare empty slots when at
+        // the edge of the range — clicking an empty slot is a no-op in [Impl.clicked].
+        if (page > 0) container.setItem(PREV_SLOT, navArrowStack("§a§lPrevious Page", page, pages))
+        if (page < pages - 1) container.setItem(NEXT_SLOT, navArrowStack("§a§lNext Page", page, pages))
         container.setChanged()
     }
 
     /** Component with italics off — vanilla auto-italicizes custom item names and lore. */
     private fun line(s: String): MutableComponent =
         Component.literal(s).setStyle(Style.EMPTY.withItalic(false))
+
+    private fun navArrowStack(label: String, currentPage: Int, totalPages: Int): ItemStack {
+        val stack = ItemStack(net.minecraft.world.item.Items.ARROW)
+        stack.set(DataComponents.CUSTOM_NAME, line(label))
+        stack.set(DataComponents.LORE, ItemLore(listOf(
+            line("§7Page ${currentPage + 1} / $totalPages"),
+        )))
+        return stack
+    }
 
     private fun balanceStack(player: ServerPlayer): ItemStack {
         val bal = EconomyBridge.getBalance(player.uuid)
@@ -144,6 +175,8 @@ object MarketMenu {
         private val vendorTag: String,
     ) : ChestMenu(MenuType.GENERIC_9x6, syncId, inv, container, ROWS) {
 
+        private var page: Int = 0
+
         override fun clicked(slotId: Int, button: Int, clickType: ClickType, player: Player) {
             // Drag and number-key swaps are blocked entirely — they'd pull display items.
             if (clickType == ClickType.QUICK_CRAFT || clickType == ClickType.SWAP) return
@@ -152,9 +185,27 @@ object MarketMenu {
                 return
             }
             if (slotId == BALANCE_SLOT) return
+            // Page-nav arrows. Clicks on an arrow when there's no page in that direction
+            // are a no-op (the slot is empty, so itemIndex / out-of-range check below would
+            // also reject — we just want to handle them earlier and consistently).
+            if (slotId == PREV_SLOT || slotId == NEXT_SLOT) {
+                val pages = pageCount(vendorTag)
+                val next = when (slotId) {
+                    PREV_SLOT -> page - 1
+                    NEXT_SLOT -> page + 1
+                    else -> page
+                }
+                if (next in 0 until pages) {
+                    page = next
+                    populate(container, viewer, vendorTag, page)
+                    broadcastChanges()
+                }
+                return
+            }
             if (slotId < FIRST_ITEM_SLOT) return
             val items = visibleItems(vendorTag)
-            val itemIndex = slotId - FIRST_ITEM_SLOT
+            val pageStart = page * PAGE_SIZE
+            val itemIndex = pageStart + (slotId - FIRST_ITEM_SLOT)
             if (itemIndex !in items.indices) return
             val (itemId, entry) = items[itemIndex]
             val sp = player as? ServerPlayer ?: return
@@ -173,7 +224,7 @@ object MarketMenu {
 
             val result: TradeResult = if (action == "buy") TradeOps.buy(sp, itemId, qty) else TradeOps.sell(sp, itemId, qty)
             reportTrade(sp, action, itemId, qty, result)
-            populate(container, viewer, vendorTag)
+            populate(container, viewer, vendorTag, page)
             broadcastChanges()
         }
 
@@ -207,7 +258,7 @@ object MarketMenu {
             val qty = stack.count
             val result = TradeOps.sell(sp, itemId, qty)
             reportTrade(sp, "sell", itemId, qty, result)
-            populate(container, viewer, vendorTag)
+            populate(container, viewer, vendorTag, page)
             broadcastChanges()
             return ItemStack.EMPTY
         }

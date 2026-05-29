@@ -33,6 +33,16 @@ root README.
   either field now do the right thing instead of silently dropping
   out of the menu.
 
+### Added
+- **cobblemon-market / paged shop menu**: large vendors (`tm_normal`
+  ~169 entries; `tm_psychic` ~53; `tm_fighting` 45) were truncated to
+  the first 45 items by the single-page layout. Row 0 now hosts a
+  `Previous Page` arrow at slot 0, the balance display at slot 4, and
+  a `Next Page` arrow at slot 8. Each page shows up to 45 items in
+  stable registration order. Arrows only appear when there's a page
+  to go to; nav lore reads `Page X / Y`. The page state is per-menu —
+  closing and re-opening returns to page 1.
+
 ### Changed
 - **cobblemon-bridge / WorldRulesHook.onIncomingDamage**: tagged-
   entity invulnerability now applies in every dimension, not just

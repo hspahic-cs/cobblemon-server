@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.7] - 2026-05-29
+
+### Fixed
+- **cobblemon-bridge / MarketVendorAnchor crash-loop on 0.7.6**: the
+  0.7.6 anchor hook called `level.getEntitiesOfClass(Villager.class, AABB)`
+  with a world-spanning ±30,000,000 box every server tick. The
+  resulting `LongAVLTreeSet.subSet` over the loaded entity-section
+  index pegged the tick thread; the server watchdog killed it (a
+  "single server tick took 60000004.00 seconds" stack trace pointing
+  at `MarketVendorAnchor.anchorVendorsIn:69`), systemd restarted, the
+  next tick re-fired the scan, crash loop. Rewrote the hook to use
+  an event-based registry: `EntityJoinLevelEvent` adds tagged vendors,
+  `EntityLeaveLevelEvent` removes them, and the per-tick path iterates
+  only the small registry (~10 entries) with no level-wide scan. Same
+  user-facing behaviour (AI on for natural head movement, position
+  snapped to anchor each tick) — just doesn't hang the server.
+
 ## [0.7.6] - 2026-05-29
 
 ### Fixed

@@ -10,7 +10,7 @@
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

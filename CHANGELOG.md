@@ -15,6 +15,20 @@ root README.
 ## [0.7.6] - 2026-05-29
 
 ### Fixed
+- **cobblemon-bridge / GymDefeatHook**: gym-leader defeat awards were
+  inconsistent across players. The host (who right-clicked Clay)
+  got the `server:beat_gym_1` advancement + quest completion + reward;
+  a playtester who got engaged via RCT's line-of-sight auto-challenge
+  (no right-click) silently missed all three. Root cause: the hook
+  stashed `gym_id` only on `PlayerInteractEvent.EntityInteract`, so
+  the LOS path bypassed the stash entirely and only the generic
+  `server:beat_wild_trainer` advancement fired. New
+  `BATTLE_STARTED_PRE` subscriber fills in the gap: when an actor's
+  side has a `TrainerBattleActor` and the player has no existing
+  stash, scan entities within 8 blocks of the player for the nearest
+  one carrying a `cobblemon_bridge.gym_id.*` tag and stash that
+  match. EntityInteract still takes priority when both signals
+  fire, so the precise click-based path is unchanged.
 - **cobblemon-market / default vendor shows empty**: the unscoped
   market shopkeeper opened with an empty grid. 0.7.4 added `vendorTag`
   and `sellable` fields to `ItemEntry` but the six pre-0.7.4 entries
@@ -54,6 +68,20 @@ root README.
   closing and re-opening returns to page 1.
 
 ### Changed
+- **server-gyms / battleRules**: trainer JSONs flipped
+  `"maxItemUses": 0` → `"maxItemUses": 999` across all 34 gym +
+  challenge fights, so players can use bag items (potions, revives,
+  status cures) during NPC battles. Was hard-disabled before; high
+  cap rather than `null` so RCT still tracks usage if we want to
+  re-cap a particular fight later.
+- **cobblemon-bridge / WildBattleRewardHook**: wild-battle bounty
+  flipped off (`BOUNTY = 0`). Was `\$2` per KO or capture; the
+  cobblemon-economy auto-payouts for `battleVictoryReward` and
+  `capture_event_base_reward` were already zeroed in config, so this
+  removes the last source of wild-encounter income. Wilds are now
+  purely XP / catch-progression — the economy loop runs through
+  trainer battles + quests + market trades only. Set
+  `BOUNTY` back to a positive int to re-enable.
 - **cobblemon-bridge / WorldRulesHook.onIncomingDamage**: tagged-
   entity invulnerability now applies in every dimension, not just
   `multiworld:*`. 0.7.3 gated this to the showcase worlds; trainers

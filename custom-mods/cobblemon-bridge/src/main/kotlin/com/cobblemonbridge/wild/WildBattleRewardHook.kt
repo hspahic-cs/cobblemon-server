@@ -24,7 +24,12 @@ import net.minecraft.server.level.ServerPlayer
  */
 object WildBattleRewardHook {
 
-    private const val BOUNTY: Int = 2
+    /** Set > 0 to re-enable per-wild-battle income. [applyBounty] short-circuits at zero so
+     *  the deposit + chat ping never fire. cobblemon-economy's auto-payouts for
+     *  `battleVictoryReward` and `capture_event_base_reward` are already zeroed in config —
+     *  zeroing here keeps wild battles fully unmonetized (0.7.6 design choice: focus income
+     *  on trainer battles + quests, not grinding wilds). */
+    private const val BOUNTY: Int = 0
 
     fun registerEvents() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
@@ -33,6 +38,7 @@ object WildBattleRewardHook {
     }
 
     private fun applyBounty(event: BattleVictoryEvent) {
+        if (BOUNTY <= 0) return
         // Wild battle: losers are PokemonBattleActor only (no trainers, no players).
         val isWildBattle = event.losers.isNotEmpty() &&
             event.losers.all { it is PokemonBattleActor } &&

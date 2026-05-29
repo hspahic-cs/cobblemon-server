@@ -12,25 +12,43 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.6] - 2026-05-29
+
+### Fixed
+- **cobblemon-market / default vendor shows empty**: the unscoped
+  market shopkeeper opened with an empty grid. 0.7.4 added `vendorTag`
+  and `sellable` fields to `ItemEntry` but the six pre-0.7.4 entries
+  in `items.json` (`cobblemon:rare_candy`, `…:ultra_ball`,
+  `…:great_ball`, `…:poke_ball`, `…:revive`, `minecraft:carrot`)
+  never had those fields filled in. Gson constructs Kotlin data
+  classes via Unsafe (skipping the constructor), so Kotlin
+  default-parameter values like `vendorTag: String = ""` are NOT
+  applied to a missing JSON field — the field deserializes to `null`,
+  the menu filter `vendorTag == ""` skipped every legacy entry, and
+  the default shop rendered empty. Fixed in two layers: (1) backfill
+  explicit `vendorTag: ""` + `sellable: true` on the six legacy
+  entries in `items.json`, and (2) make both fields nullable on
+  `ItemEntry` with `vendorScope` / `isSellable` extensions that treat
+  null as the documented default. Hand-edited entries that omit
+  either field now do the right thing instead of silently dropping
+  out of the menu.
+
+### Changed
+- **cobblemon-bridge / WorldRulesHook.onIncomingDamage**: tagged-
+  entity invulnerability now applies in every dimension, not just
+  `multiworld:*`. 0.7.3 gated this to the showcase worlds; trainers
+  and market vendors that live in the overworld (or anywhere else)
+  were still killable by non-ops. Anything stamped with a
+  `cobblemon_bridge.*` tag — gym leaders, gym-TP villagers, market
+  shopkeepers, future overworld NPCs — is now zero-damage from
+  regular players in any world. Ops can still damage them for
+  cleanup. Environmental damage (lava / fall / void / suffocation)
+  still applies. Pokemon battles are unaffected: Showdown runs
+  outside the vanilla damage path.
+
 ## [0.7.5] - 2026-05-29
 
 ### Fixed
-- **cobblemon-market / default vendor shows empty**: the unscoped market
-  shopkeeper opened an empty 9×N grid. 0.7.4 added `vendorTag` and
-  `sellable` to `ItemEntry` but the six pre-0.7.4 entries
-  (`cobblemon:rare_candy`, `…:ultra_ball`, `…:great_ball`,
-  `…:poke_ball`, `…:revive`, `minecraft:carrot`) in
-  `items.json` never had those fields filled in. Gson constructs Kotlin
-  data classes via Unsafe (skipping the constructor), so the Kotlin
-  default-parameter values like `vendorTag: String = ""` were NOT
-  applied — at runtime those fields were `null`, the menu filter
-  `vendorTag == ""` skipped every legacy entry, and the default shop
-  rendered empty. Fixed by (1) backfilling explicit `vendorTag: ""` and
-  `sellable: true` for the six legacy entries in `items.json`, and (2)
-  making both fields nullable in `ItemEntry` with `vendorScope` /
-  `isSellable` helpers that treat null as the documented default
-  (`""` / `true`). Hand-edited entries that omit either field now do
-  the right thing instead of silently disappearing.
 - **build / .mrpack routing**: every 0.7.4 client got rejected at
   connect-time with `Connection Lost — cobblemonfeedback:chunk/ready/
   request channel missing on client side, but required on the server`.

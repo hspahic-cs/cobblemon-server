@@ -120,15 +120,25 @@ class TeamSelectionMenu private constructor(
         broadcastChanges()
     }
 
+    /**
+     * Render a Pokemon slot using Cobblemon's PokemonItem so the actual species model shows
+     * in-inventory instead of a coloured glass pane. PokemonItem.from(Pokemon) builds the
+     * stack with the species + aspects component set — the aspects set is required even when
+     * the Pokemon has no special form (an empty set is fine, but the field must be present).
+     *
+     * Selected/unselected state is now indicated via lore tag + a green/red dye-style tint on
+     * the model. Old behaviour (glass pane colour) is replaced.
+     */
     private fun pokemonStack(pokemon: Pokemon, isSelected: Boolean): ItemStack {
-        val item = if (isSelected) Items.LIME_STAINED_GLASS_PANE else Items.WHITE_STAINED_GLASS_PANE
-        val stack = ItemStack(item)
+        val stack = com.cobblemon.mod.common.item.PokemonItem.from(pokemon)
         val legendary = if (pokemon.isLegendary()) " §c[LEGENDARY]" else ""
+        val statePrefix = if (isSelected) "§a✓ " else ""
         stack.set(DataComponents.CUSTOM_NAME,
-            Component.literal("${pokemon.species.name} Lv.${pokemon.level}$legendary"))
+            Component.literal("$statePrefix${pokemon.species.name} Lv.${pokemon.level}$legendary"))
+        val typeLine = "§7Type: ${pokemon.primaryType.name}" +
+            (pokemon.secondaryType?.let { "/${it.name}" } ?: "")
         val lore = listOf(
-            Component.literal("§7Type: ${pokemon.primaryType.name}" +
-                (pokemon.secondaryType?.let { "/${it.name}" } ?: "")),
+            Component.literal(typeLine),
             Component.literal("§7Ability: ${pokemon.ability.name}"),
             Component.literal("§7HP: ${pokemon.currentHealth}/${pokemon.maxHealth}"),
             Component.literal(if (isSelected) "§eClick to deselect" else "§aClick to select"),

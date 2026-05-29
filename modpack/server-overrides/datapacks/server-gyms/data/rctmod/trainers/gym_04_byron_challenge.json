@@ -1,0 +1,163 @@
+{
+  "name": "Challenge: Gym Leader Byron",
+  "identity": "Steel",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 0,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "skarmory",
+      "level": 35,
+      "nature": "impish",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "sturdy",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "spikes",
+        "whirlwind",
+        "roost",
+        "bravebird"
+      ]
+    },
+    {
+      "species": "ferroseed",
+      "level": 35,
+      "nature": "relaxed",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "ironbarbs",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "stealthrock",
+        "leechseed",
+        "thunderwave",
+        "gyroball"
+      ]
+    },
+    {
+      "species": "scizor",
+      "level": 35,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 4
+      },
+      "ability": "technician",
+      "heldItem": "cobblemon:choice_band",
+      "moveset": [
+        "bulletpunch",
+        "uturn",
+        "superpower",
+        "pursuit"
+      ]
+    },
+    {
+      "species": "metang",
+      "level": 35,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 4,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      },
+      "ability": "clearbody",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "meteormash",
+        "zenheadbutt",
+        "bulletpunch",
+        "icepunch"
+      ]
+    },
+    {
+      "species": "pawniard",
+      "level": 35,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "defiant",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "suckerpunch",
+        "knockoff",
+        "ironhead",
+        "swordsdance"
+      ]
+    }
+  ]
+}

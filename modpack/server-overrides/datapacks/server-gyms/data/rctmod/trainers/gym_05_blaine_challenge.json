@@ -1,0 +1,192 @@
+{
+  "name": "Challenge: Gym Leader Blaine",
+  "identity": "Fire",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 0,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "ninetales",
+      "level": 40,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "drought",
+      "heldItem": "cobblemon:heat_rock",
+      "moveset": [
+        "fireblast",
+        "solarbeam",
+        "willowisp",
+        "nastyplot"
+      ]
+    },
+    {
+      "species": "arcanine",
+      "level": 40,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "intimidate",
+      "heldItem": "cobblemon:choice_band",
+      "moveset": [
+        "flareblitz",
+        "extremespeed",
+        "wildcharge",
+        "closecombat"
+      ]
+    },
+    {
+      "species": "charmeleon",
+      "level": 40,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "solarpower",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "fireblast",
+        "dragonpulse",
+        "solarbeam",
+        "focusblast"
+      ]
+    },
+    {
+      "species": "houndoom",
+      "level": 40,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "flashfire",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "nastyplot",
+        "darkpulse",
+        "fireblast",
+        "solarbeam"
+      ]
+    },
+    {
+      "species": "centiskorch",
+      "level": 40,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 4
+      },
+      "ability": "flashfire",
+      "heldItem": "cobblemon:heavy_duty_boots",
+      "moveset": [
+        "firelash",
+        "leechlife",
+        "coil",
+        "powerwhip"
+      ]
+    },
+    {
+      "species": "torkoal",
+      "level": 40,
+      "nature": "bold",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 4,
+        "spd": 0,
+        "spe": 0
+      },
+      "ability": "drought",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "rapidspin",
+        "lavaplume",
+        "yawn",
+        "stealthrock"
+      ]
+    }
+  ]
+}

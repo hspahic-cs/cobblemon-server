@@ -1,0 +1,105 @@
+{
+  "name": "Challenge: Gym Leader Gardenia",
+  "identity": "Grass",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 0,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "cottonee",
+      "level": 25,
+      "nature": "bold",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "prankster",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "leechseed",
+        "encore",
+        "stunspore",
+        "gigadrain"
+      ]
+    },
+    {
+      "species": "servine",
+      "level": 25,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "contrary",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "leafstorm",
+        "glare",
+        "gigadrain",
+        "hiddenpowerfire"
+      ]
+    },
+    {
+      "species": "shroomish",
+      "level": 25,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "effectspore",
+      "heldItem": "cobblemon:focus_sash",
+      "moveset": [
+        "spore",
+        "bulletseed",
+        "drainpunch",
+        "rocktomb"
+      ]
+    }
+  ]
+}

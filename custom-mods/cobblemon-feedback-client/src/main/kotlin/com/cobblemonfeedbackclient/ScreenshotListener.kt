@@ -46,9 +46,15 @@ internal object ScreenshotListener {
             CobblemonFeedbackClient.logger.debug("FeedbackReady send skipped: ${e.message}")
         }
 
+        // Be explicit about consequences: /feedback will offer to upload this
+        // image to a PUBLIC URL embedded in the GitHub issue. Players who
+        // don't want that just don't run /feedback (or pick "Submit without"
+        // when prompted).
         Minecraft.getInstance().gui.chat.addMessage(
-            Component.literal("📸 Captured for /feedback. Submit within ${ScreenshotSlot.HOLD_TTL_SEC}s.")
-                .withStyle(ChatFormatting.GRAY)
+            Component.literal(
+                "📸 Captured. If you /feedback in the next ${ScreenshotSlot.HOLD_TTL_SEC}s, " +
+                    "you'll be asked whether to upload this screenshot to a public URL on the bug report."
+            ).withStyle(ChatFormatting.GRAY)
         )
     }
 

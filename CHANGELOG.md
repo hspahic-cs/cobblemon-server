@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-05-29
+
+### Changed
+- **cobblemon-feedback**: explicit consent before uploading a screenshot.
+  When `/feedback bug ...` runs and the player has a fresh F2 capture,
+  the chat now shows two clickable buttons:
+  ```
+  You have a screenshot from Ns ago. Upload it publicly with this issue?
+   [ Attach screenshot ]   [ Submit without ]
+  (auto-cancels in 30s — defaults to text-only)
+  ```
+  No upload happens until the player clicks `[ Attach screenshot ]`. If
+  the player walks away or clicks `[ Submit without ]`, the issue is
+  filed text-only. The consent prompt is per-submission — not persisted
+  across sessions, so the player is asked every time. Without an existing
+  capture, `/feedback` behaves exactly as before (no prompt).
+- **cobblemon-feedback-client**: F2 ack message updated to spell out the
+  consequence: "If you /feedback in the next 120s, you'll be asked
+  whether to upload this screenshot to a public URL on the bug report."
+
 ## [0.7.1] - 2026-05-29
 
 ### Fixed

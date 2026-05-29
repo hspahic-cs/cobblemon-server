@@ -11,8 +11,11 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import net.minecraft.ChatFormatting
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
+import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.HoverEvent
 import org.slf4j.LoggerFactory
+import java.security.SecureRandom
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -30,6 +33,21 @@ internal object FeedbackCommand {
 
     /** UUID → epoch-seconds of last submission. */
     private val lastSubmit: MutableMap<UUID, Long> = ConcurrentHashMap()
+
+    /** Pending submissions awaiting the player's attach/skip decision. */
+    private val pending: MutableMap<String, Pending> = ConcurrentHashMap()
+    private val rng = SecureRandom()
+
+    /** How long the consent prompt stays valid before auto-defaulting to text-only. */
+    private const val PROMPT_TTL_SEC = 30L
+
+    private data class Pending(
+        val player: net.minecraft.server.level.ServerPlayer,
+        val source: CommandSourceStack,
+        val type: String,
+        val text: String,
+        val expiresAtEpochSec: Long,
+    )
 
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         val root = Commands.literal("feedback")
@@ -52,6 +70,28 @@ internal object FeedbackCommand {
                         usage(ctx.source, "suggest")
                         1
                     }
+            )
+            // Internal subcommands fired by the clickable [Attach] /
+            // [Submit without] buttons that follow a /feedback bug|suggest.
+            // Players don't run these directly. Tokens are scoped to a
+            // single submission and expire after PROMPT_TTL_SEC.
+            .then(
+                Commands.literal("confirm")
+                    .then(
+                        Commands.argument("token", StringArgumentType.word())
+                            .executes { ctx ->
+                                resolvePrompt(ctx.source, StringArgumentType.getString(ctx, "token"), withScreenshot = true)
+                            }
+                    )
+            )
+            .then(
+                Commands.literal("skip")
+                    .then(
+                        Commands.argument("token", StringArgumentType.word())
+                            .executes { ctx ->
+                                resolvePrompt(ctx.source, StringArgumentType.getString(ctx, "token"), withScreenshot = false)
+                            }
+                    )
             )
             .then(
                 // Op-only reverse lookup. Maintainer triages a public issue,
@@ -145,14 +185,43 @@ internal object FeedbackCommand {
             return 0
         }
 
-        // Build metadata synchronously on the server thread (we're touching server
-        // state — party, level, log file). Then dispatch the HTTP call to a worker
-        // thread so we don't block the tick.
+        val now = System.currentTimeMillis() / 1000
+        val captureAge = ScreenshotInbox.readyAge(player.uuid, now, 120L)
+        if (captureAge == null) {
+            // No fresh capture — file text-only immediately, original behavior.
+            runSubmit(player, source, type, text, withScreenshot = false)
+            return 1
+        }
+
+        // Fresh capture exists. Public upload is consequential — get explicit
+        // consent before sending to R2. Stash the request, show clickable
+        // [Attach] / [Submit without] buttons, and auto-default to text-only
+        // after PROMPT_TTL_SEC if the player walks away.
+        val token = newToken()
+        pending[token] = Pending(
+            player = player,
+            source = source,
+            type = type,
+            text = text,
+            expiresAtEpochSec = now + PROMPT_TTL_SEC,
+        )
+        sendConsentPrompt(source, token, captureAge)
+        scheduleTimeout(token)
+        return 1
+    }
+
+    /** Shared "do the actual work" path used by both confirm and skip. */
+    private fun runSubmit(
+        player: net.minecraft.server.level.ServerPlayer,
+        source: CommandSourceStack,
+        type: String,
+        text: String,
+        withScreenshot: Boolean,
+    ) {
+        val cfg = CobblemonFeedback.config
         val reporterId = com.cobblemonfeedback.Anonymizer.reporterId(player.uuid, player.gameProfile.name)
         val title = buildTitle(type, text, reporterId)
         val body = MetadataCollector.build(type, text, player)
-        // Append to the audit log so maintainers can recover the (anon-id → uuid +
-        // name) mapping after a server restart, when the in-memory cache is empty.
         com.cobblemonfeedback.AuditLog.append(reporterId, player.uuid, player.gameProfile.name, type)
         val labels = listOf(
             when (type) {
@@ -162,18 +231,12 @@ internal object FeedbackCommand {
             }
         )
 
-        // Optimistic feedback to the player while the HTTP call is in flight.
         source.sendSystemMessage(
             Component.literal("§7Submitting your $type to the dev team…").withStyle(ChatFormatting.GRAY)
         )
 
-        val now = System.currentTimeMillis() / 1000
-        // Did this player F2 within the past 120s? If so, fetch + upload before posting.
-        val hasFreshCapture = ScreenshotInbox.readyAge(player.uuid, now, 120L) != null
-
         Thread({
-            // 1. (Optional) request the screenshot from the client and upload to R2.
-            val imageUrl: String? = if (hasFreshCapture) {
+            val imageUrl: String? = if (withScreenshot) {
                 player.server.execute {
                     if (player.isAlive) {
                         source.sendSystemMessage(
@@ -184,20 +247,11 @@ internal object FeedbackCommand {
                 uploadScreenshot(player, reporterId)
             } else null
 
-            // 2. Append the image to the issue body. GitHub renders bare image URLs.
             val finalBody = if (imageUrl != null) "$body\n\n![screenshot]($imageUrl)" else body
-
-            // 3. POST the issue.
             val url = GitHubIssuesClient.createIssue(title, finalBody, labels)
-            // Only mention the missing-screenshot case to players who have the
-            // client mod (we've seen a feedback_ready from them at some point).
-            // Others wouldn't know what we're talking about.
-            val noScreenshotNote = !hasFreshCapture && ScreenshotInbox.hasClientMod(player.uuid)
             val response = when {
-                url != null && hasFreshCapture && imageUrl == null ->
+                url != null && withScreenshot && imageUrl == null ->
                     "§a✓ Submitted! §7$url §e(screenshot upload failed; submitted without it)"
-                url != null && noScreenshotNote ->
-                    "§a✓ Submitted! §7$url §8(no screenshot attached — press F2 within 120s before /feedback)"
                 url != null -> "§a✓ Submitted! §7$url"
                 else -> "§cSubmission failed. Server log has details — please ping a dev."
             }
@@ -211,7 +265,104 @@ internal object FeedbackCommand {
         if (cfg.cooldownSeconds > 0) {
             lastSubmit[player.uuid] = System.currentTimeMillis() / 1000
         }
+    }
+
+    private fun resolvePrompt(
+        source: CommandSourceStack,
+        token: String,
+        withScreenshot: Boolean,
+    ): Int {
+        val p = pending.remove(token)
+        if (p == null) {
+            source.sendSystemMessage(
+                Component.literal("§7That confirmation expired. Run /feedback again.")
+                    .withStyle(ChatFormatting.GRAY)
+            )
+            return 0
+        }
+        // Validate the click came from the same player who started the
+        // submission. Click-events are authenticated as the player's own
+        // command, but defense-in-depth.
+        if (source.player?.uuid != p.player.uuid) {
+            source.sendSystemMessage(
+                Component.literal("§cThat confirmation isn't yours.").withStyle(ChatFormatting.RED)
+            )
+            return 0
+        }
+        runSubmit(p.player, p.source, p.type, p.text, withScreenshot)
         return 1
+    }
+
+    /**
+     * Send the player the consent prompt with two clickable buttons. Built
+     * from `Component.literal` pieces with `withClickEvent(RUN_COMMAND, ...)`
+     * — vanilla MC chat handles the rendering and the click dispatches the
+     * command as if the player typed it.
+     */
+    private fun sendConsentPrompt(source: CommandSourceStack, token: String, captureAgeSec: Long) {
+        val attach = Component.literal(" [ Attach screenshot ] ")
+            .withStyle { s ->
+                s.withColor(ChatFormatting.GREEN).withBold(true)
+                    .withClickEvent(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/feedback confirm $token"))
+                    .withHoverEvent(
+                        HoverEvent(
+                            HoverEvent.Action.SHOW_TEXT,
+                            Component.literal("Upload your most recent F2 screenshot to a public URL and embed it in the GitHub issue.")
+                        )
+                    )
+            }
+        val skip = Component.literal(" [ Submit without ] ")
+            .withStyle { s ->
+                s.withColor(ChatFormatting.GRAY)
+                    .withClickEvent(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/feedback skip $token"))
+                    .withHoverEvent(
+                        HoverEvent(
+                            HoverEvent.Action.SHOW_TEXT,
+                            Component.literal("File the issue text-only. No screenshot uploaded.")
+                        )
+                    )
+            }
+        val header = Component.literal(
+            "You have a screenshot from ${captureAgeSec}s ago. Upload it publicly with this issue?"
+        ).withStyle(ChatFormatting.YELLOW)
+        val footer = Component.literal("(auto-cancels in ${PROMPT_TTL_SEC}s — defaults to text-only)")
+            .withStyle(ChatFormatting.DARK_GRAY)
+
+        source.sendSystemMessage(header)
+        source.sendSystemMessage(Component.literal("").append(attach).append(skip))
+        source.sendSystemMessage(footer)
+    }
+
+    /**
+     * If the player doesn't click within PROMPT_TTL_SEC, default to
+     * text-only. Runs on a daemon timer thread; the actual submit hops
+     * back onto the server thread before touching player state.
+     */
+    private fun scheduleTimeout(token: String) {
+        Thread({
+            try {
+                Thread.sleep(PROMPT_TTL_SEC * 1000)
+            } catch (_: InterruptedException) {
+                return@Thread
+            }
+            val p = pending.remove(token) ?: return@Thread
+            p.player.server.execute {
+                if (p.player.isAlive) {
+                    p.source.sendSystemMessage(
+                        Component.literal("§8(no response — submitted without screenshot)")
+                            .withStyle(ChatFormatting.DARK_GRAY)
+                    )
+                    runSubmit(p.player, p.source, p.type, p.text, withScreenshot = false)
+                }
+            }
+        }, "feedback-prompt-timeout").apply { isDaemon = true }.start()
+    }
+
+    /** 8-char hex; ample uniqueness for a 30s window. */
+    private fun newToken(): String {
+        val bytes = ByteArray(4)
+        rng.nextBytes(bytes)
+        return bytes.joinToString("") { "%02x".format(it) }
     }
 
     /**

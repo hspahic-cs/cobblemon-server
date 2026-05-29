@@ -1,0 +1,28 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "cobblemon_feedback_client"
+version = "${version}"
+displayName = "Cobblemon Feedback Client"
+description = "Client companion to cobblemon-feedback. Hooks vanilla F2 to capture a screenshot held in memory for 120s; ships it to the server when /feedback runs. Server uploads to R2 and links the image in the GitHub issue."
+authors = "harris"
+# Client-only mod. The server doesn't need this — vanilla / non-client-mod
+# players still get text-only /feedback. IGNORE_ALL_VERSION lets the client
+# connect to servers that don't have the matching mod installed.
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.cobblemon_feedback_client]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.cobblemon_feedback_client]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "[5,)"
+ordering = "NONE"
+side = "CLIENT"

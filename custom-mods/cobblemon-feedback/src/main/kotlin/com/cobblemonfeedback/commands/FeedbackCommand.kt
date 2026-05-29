@@ -3,6 +3,9 @@ package com.cobblemonfeedback.commands
 import com.cobblemonfeedback.CobblemonFeedback
 import com.cobblemonfeedback.GitHubIssuesClient
 import com.cobblemonfeedback.MetadataCollector
+import com.cobblemonfeedback.Payloads
+import com.cobblemonfeedback.R2Client
+import com.cobblemonfeedback.ScreenshotInbox
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import net.minecraft.ChatFormatting
@@ -164,14 +167,40 @@ internal object FeedbackCommand {
             Component.literal("§7Submitting your $type to the dev team…").withStyle(ChatFormatting.GRAY)
         )
 
+        val now = System.currentTimeMillis() / 1000
+        // Did this player F2 within the past 120s? If so, fetch + upload before posting.
+        val hasFreshCapture = ScreenshotInbox.readyAge(player.uuid, now, 120L) != null
+
         Thread({
-            val url = GitHubIssuesClient.createIssue(title, body, labels)
-            val response = if (url != null) {
-                "§a✓ Submitted! §7$url"
-            } else {
-                "§cSubmission failed. Server log has details — please ping a dev."
+            // 1. (Optional) request the screenshot from the client and upload to R2.
+            val imageUrl: String? = if (hasFreshCapture) {
+                player.server.execute {
+                    if (player.isAlive) {
+                        source.sendSystemMessage(
+                            Component.literal("§7📤 Uploading screenshot…").withStyle(ChatFormatting.GRAY)
+                        )
+                    }
+                }
+                uploadScreenshot(player, reporterId)
+            } else null
+
+            // 2. Append the image to the issue body. GitHub renders bare image URLs.
+            val finalBody = if (imageUrl != null) "$body\n\n![screenshot]($imageUrl)" else body
+
+            // 3. POST the issue.
+            val url = GitHubIssuesClient.createIssue(title, finalBody, labels)
+            // Only mention the missing-screenshot case to players who have the
+            // client mod (we've seen a feedback_ready from them at some point).
+            // Others wouldn't know what we're talking about.
+            val noScreenshotNote = !hasFreshCapture && ScreenshotInbox.hasClientMod(player.uuid)
+            val response = when {
+                url != null && hasFreshCapture && imageUrl == null ->
+                    "§a✓ Submitted! §7$url §e(screenshot upload failed; submitted without it)"
+                url != null && noScreenshotNote ->
+                    "§a✓ Submitted! §7$url §8(no screenshot attached — press F2 within 120s before /feedback)"
+                url != null -> "§a✓ Submitted! §7$url"
+                else -> "§cSubmission failed. Server log has details — please ping a dev."
             }
-            // Send the response back on the server thread for chat-system safety.
             player.server.execute {
                 if (player.isAlive) {
                     source.sendSystemMessage(Component.literal(response))
@@ -183,6 +212,33 @@ internal object FeedbackCommand {
             lastSubmit[player.uuid] = System.currentTimeMillis() / 1000
         }
         return 1
+    }
+
+    /**
+     * Coordinate with the client mod to fetch and upload the screenshot.
+     * Returns the public URL or null on any failure (timeout, sentinel,
+     * upload error, R2 not configured).
+     *
+     * Caller must already be on a worker thread — this blocks for up to 30s.
+     */
+    private fun uploadScreenshot(
+        player: net.minecraft.server.level.ServerPlayer,
+        reporterId: String,
+    ): String? {
+        val bytes = ScreenshotInbox.requestAndAwait(
+            send = { reqId ->
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                    player, Payloads.FeedbackRequest(reqId),
+                )
+            },
+            timeoutMs = 30_000,
+            maxBytes = 8 * 1024 * 1024,
+        )
+        // Sentinel "no capture" / "too big" — single zero-byte chunk.
+        if (bytes == null || bytes.isEmpty()) return null
+
+        val key = "${reporterId}-${System.currentTimeMillis() / 1000}.png"
+        return R2Client.putObject(key, bytes, "image/png")
     }
 
     private fun buildTitle(type: String, text: String, reporterId: String): String {

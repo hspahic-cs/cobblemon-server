@@ -1,7 +1,6 @@
 package com.cobblemonfeedback
 
 import com.cobblemonfeedback.commands.FeedbackCommand
-import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.loading.FMLPaths
@@ -19,21 +18,9 @@ import org.slf4j.LoggerFactory
  * captures rich server-side metadata (coords, dimension, party, TPS, recent
  * chat, log tail) and POSTs a new GitHub Issue.
  *
- * **Loaded on dedicated servers only.** The .mrpack ships both this jar AND
- * cobblemon-feedback-client to player clients (so PrismLauncher users get
- * the F2 hook automatically). On a client JVM, both jars sitting in mods/
- * would race to register the same `cobblemonfeedback:*` custom payloads,
- * which NeoForge rejects with "Cannot register payload ... as it is already
- * registered". `dist = Dist.DEDICATED_SERVER` makes the client JVM skip
- * this mod's @Mod entry entirely; `cobblemon-feedback-client` owns all
- * payload registrations there.
- *
- * Single-player (integrated server) consequence: `/feedback` doesn't exist.
- * That's fine — there's nowhere for the issues to go.
- *
  * See docs/working-with-mods.md and docs/design/player-feedback.md.
  */
-@Mod(value = "cobblemon_feedback", dist = [Dist.DEDICATED_SERVER])
+@Mod("cobblemon_feedback")
 class CobblemonFeedback(modBus: IEventBus) {
 
     init {

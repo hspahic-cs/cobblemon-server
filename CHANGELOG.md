@@ -12,20 +12,6 @@ root README.
 
 ## [Unreleased]
 
-## [0.7.1] - 2026-05-29
-
-### Fixed
-- **cobblemon-feedback / cobblemon-feedback-client**: client crash on
-  startup with `Cannot register payload cobblemonfeedback:ready as it is
-  already registered`. The .mrpack ships both jars to player clients, so
-  both mods loaded on the client JVM and raced to register the same
-  custom payload IDs, which NeoForge rejects. Annotated each mod's `@Mod`
-  class with the dist it actually needs (`DEDICATED_SERVER` for the
-  server mod, `CLIENT` for the client mod) so each JVM only loads one of
-  the two and the registration only happens once. Single-player
-  (integrated server) consequence: `/feedback` doesn't exist there —
-  acceptable, since there's no GitHub repo for an SP world's reports.
-
 ## [0.7.0] - 2026-05-29
 
 ### Added

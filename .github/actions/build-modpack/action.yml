@@ -107,6 +107,13 @@ runs:
         path: custom-mods/cobblemon-feedback/build/libs
         key: jar-cobblemon-feedback-${{ hashFiles('custom-mods/cobblemon-feedback/src/**', 'custom-mods/cobblemon-feedback/build.gradle*', 'custom-mods/cobblemon-feedback/gradle.properties') }}
 
+    - name: Cache cobblemon-feedback-client build
+      id: cache-feedback-client
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-feedback-client/build/libs
+        key: jar-cobblemon-feedback-client-${{ hashFiles('custom-mods/cobblemon-feedback-client/src/**', 'custom-mods/cobblemon-feedback-client/build.gradle*', 'custom-mods/cobblemon-feedback-client/gradle.properties') }}
+
     - name: Cache cobblemon-gacha build
       id: cache-gacha
       uses: actions/cache@v4
@@ -147,6 +154,7 @@ runs:
           cobblemon-bridge:${{ steps.cache-bridge.outputs.cache-hit }}
           cobblemon-carrots:${{ steps.cache-carrots.outputs.cache-hit }}
           cobblemon-feedback:${{ steps.cache-feedback.outputs.cache-hit }}
+          cobblemon-feedback-client:${{ steps.cache-feedback-client.outputs.cache-hit }}
           cobblemon-gacha:${{ steps.cache-gacha.outputs.cache-hit }}
           cobblemon-market:${{ steps.cache-market.outputs.cache-hit }}
           cobblemon-npc:${{ steps.cache-npc.outputs.cache-hit }}
@@ -206,7 +214,7 @@ runs:
         mkdir -p modpack/mods
         # Remove prior versions of in-house mods only — keep .pw.toml manifests
         # for the third-party mods packwiz will resolve.
-        rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked,feedback}-*.jar
+        rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked,feedback,feedback-client}-*.jar
         for m in custom-mods/*/; do
           # Ship the runtime jar, NOT the -sources.jar.
           jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)

@@ -21,11 +21,22 @@ import java.security.SecureRandom
  *   anonHmacSecret    per-instance secret for the HMAC that produces public
  *                     reporter IDs (see [Anonymizer]). Auto-generated on
  *                     first boot if blank. Resetting it rotates all anon-IDs.
+ *   r2Endpoint        Cloudflare R2 S3-API endpoint, e.g.
+ *                     "https://<account-id>.r2.cloudflarestorage.com". Blank
+ *                     disables screenshot upload (issues are still filed
+ *                     text-only).
+ *   r2Bucket          R2 bucket name, e.g. "cobblemon-bugs".
+ *   r2AccessKeyId     R2 API token's access key ID.
+ *   r2SecretAccessKey R2 API token's secret. Never log this.
+ *   r2PublicUrlBase   Prefix prepended to the object key to form the URL we
+ *                     paste into the issue body. For the managed dev domain:
+ *                     "https://pub-<hash>.r2.dev". For a custom domain:
+ *                     "https://screenshots.example.com". No trailing slash.
  *
- * Both the token and the HMAC secret are sensitive — keep config.json out of
- * public-readable directories and never commit it to the repo. The repo's
- * modpack/server-overrides/config/ convention won't ship config.json (it's
- * runtime, not authored — see docs/design/mod-state-vs-config.md).
+ * The GitHub token, HMAC secret, and R2 secret are sensitive — keep config.json
+ * out of public-readable directories and never commit it to the repo. The
+ * repo's modpack/server-overrides/config/ convention won't ship config.json
+ * (it's runtime, not authored — see docs/design/mod-state-vs-config.md).
  */
 data class FeedbackConfig(
     val githubRepo: String = "",
@@ -36,6 +47,11 @@ data class FeedbackConfig(
     val chatBufferSize: Int = 20,
     val logTailLines: Int = 30,
     val anonHmacSecret: String = "",
+    val r2Endpoint: String = "",
+    val r2Bucket: String = "",
+    val r2AccessKeyId: String = "",
+    val r2SecretAccessKey: String = "",
+    val r2PublicUrlBase: String = "",
 ) {
     companion object {
         private val log = LoggerFactory.getLogger("cobblemon-feedback/config")

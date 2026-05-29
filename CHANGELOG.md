@@ -12,6 +12,37 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-05-29
+
+### Added
+- **cobblemon-feedback-client** (new mod, client-side only): hooks vanilla
+  F2 to additionally hold the rendered frame in client-side memory for 120
+  seconds. When the player runs `/feedback bug ...` within that window, the
+  server fetches the screenshot via a chunked custom-payload protocol,
+  uploads to Cloudflare R2, and embeds the image URL in the GitHub issue
+  body. F2's vanilla disk-write behavior is unchanged — players still get
+  their on-disk screenshot file as usual.
+- **cobblemon-feedback**: server-side R2 client (`R2Client.kt`) doing
+  AWS SigV4 PutObject against the R2 S3-compatible API. Configured via
+  five new fields in `runtime/config.json`: `r2Endpoint`, `r2Bucket`,
+  `r2AccessKeyId`, `r2SecretAccessKey`, `r2PublicUrlBase`. Blank
+  `r2Endpoint` disables uploads (issues are still filed text-only).
+- **cobblemon-feedback**: chunk-reassembly inbox with concurrent-write
+  safety, byte-cap enforcement (8 MB total), and per-request timeout
+  (30s). Players who don't have the client mod installed get text-only
+  /feedback as before — the server only attempts to fetch a screenshot
+  if it has previously seen a `feedback_ready` packet from the player.
+
+### Notes
+- See `docs/design/player-feedback-phase2.md` for the full design.
+  Phase 2a (PII anonymization) shipped in 0.6.1; this release covers
+  phases 2b (client mod + chunked-payload protocol) and 2c (R2 upload).
+- The client mod ships in the .mrpack so PrismLauncher users get it
+  automatically. Vanilla / non-mrpack clients still get text-only
+  /feedback.
+- R2 credentials must be added to the per-instance runtime config on
+  the VM (never committed). See [README → R2 setup] for the procedure.
+
 ## [0.6.2] - 2026-05-28
 
 ### Fixed
@@ -40,12 +71,6 @@ root README.
   a progression dimension. Ops bypass all restrictions; entities tagged
   `cobblemon_bridge.*` (op-summoned trainers, gym leaders, gym-TP NPCs)
   still spawn through.
-- **server-hide-advancements** datapack — overrides the five vanilla
-  advancement roots (`minecraft:story/root`, `nether/root`,
-  `adventure/root`, `husbandry/root`, `end/root`) and `cobblemon:root` with
-  no-display versions so the F screen only shows `server:*` progression.
-  Mod-namespace tabs from new mods (minecolonies, cobbleworkers, …) will
-  still appear — add overrides as needed.
 
 ## [0.6.1] - 2026-05-28
 

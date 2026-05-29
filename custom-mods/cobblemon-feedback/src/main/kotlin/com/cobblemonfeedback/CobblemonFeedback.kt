@@ -7,6 +7,7 @@ import net.neoforged.fml.loading.FMLPaths
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.ServerChatEvent
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -38,12 +39,18 @@ class CobblemonFeedback(modBus: IEventBus) {
         // Register on the GAME bus (commands + chat events), not the mod-load bus.
         NeoForge.EVENT_BUS.addListener(::onRegisterCommands)
         NeoForge.EVENT_BUS.addListener(::onServerChat)
+        // Network payload registration is mod-load bus only.
+        modBus.addListener(::onRegisterPayloadHandlers)
 
         logger.info("Cobblemon Feedback initialized")
     }
 
     private fun onRegisterCommands(event: RegisterCommandsEvent) {
         FeedbackCommand.register(event.dispatcher)
+    }
+
+    private fun onRegisterPayloadHandlers(event: RegisterPayloadHandlersEvent) {
+        Payloads.register(event)
     }
 
     private fun onServerChat(event: ServerChatEvent) {

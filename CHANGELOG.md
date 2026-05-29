@@ -12,6 +12,52 @@ root README.
 
 ## [Unreleased]
 
+## [0.6.3] - 2026-05-29
+
+### Added
+- **cobblemon-bridge** — `/hologram` admin (op 2): `set/move/delete/list/respawn-all`
+  + `set <id> billboard <center|vertical|horizontal|fixed>`. Server-side
+  persistent floating text via vanilla `text_display` entities. Metadata
+  at `config/cobblemon-bridge/runtime/holograms.json`. No client mod needed.
+- **cobblemon-bridge** — `/wild admin show|setcenter|setradius|setcooldown`.
+  Center/radius/cooldown now persisted at `config/cobblemon-bridge/runtime/wild.json`
+  instead of hardcoded.
+- **cobblemon-ranked** — disconnect-mid-battle = forfeit. `PlayerLoggedOutEvent`
+  subscriber resolves the active match with the opponent as winner (real ELO update),
+  teleports both back to captured pre-arena positions, and ends the
+  Cobblemon-side battle. New `/ranked admin forfeit <player>` for stuck matches.
+- **SimpleTMs 2.3.3** — Modrinth `yFqR0DNc/uaKfPMYS`. TMs + TRs as physical
+  items for teaching Pokémon moves. Client+server, `side = "both"`.
+
+### Fixed
+- **cobblemon-bridge** — `WorldRulesHook.onEntityJoin` belt-and-suspenders
+  removed. It was canceling `/function server:gym/spawn_<N>` trainer summons
+  before the function's own `tag` line could stamp them as op-spawned.
+  `FinalizeSpawnEvent` already handles the natural-vs-command discrimination.
+- **cobblemon-bridge** — `WorldRulesHook.onFinalizeSpawn` now globally cancels
+  natural vanilla `MobCategory.MONSTER` spawns (hostile mobs) while leaving
+  peaceful mobs alone. Op-initiated spawns (commands, eggs, /summon, dispenser)
+  still go through. Difficulty stays Easy.
+- **starterkit** — `cobblemon:pokedex` → `cobblemon:pokedex_red`. The bare
+  id isn't a registered item in Cobblemon 1.7.3 (`Unknown registry key` in
+  logs); only color variants exist. Red is the canonical starting Pokédex.
+  Also added 24 baked potatoes for early food.
+- **quest text** — `set_home`, `farm_carrots`, `use_wild` reward chat text
+  corrected: apricorn-plant hint, 5 bone meal (was 3), Great Ball recipe is
+  2 blue + 2 red apricorns + 1 iron nugget (not "4 blue + 1 iron ingot").
+- **server-gyms datapack** — rebased from `data/server/` namespace into
+  `data/rctmod/` so RCT actually finds the trainer JSONs (entities reference
+  bare ids which default-resolve to `rctmod:`). Includes 10 challenge
+  variants + 34 loot tables that were missing. Sourced from valley.
+
+### Changed
+- **modpack/options.txt** — `tutorialStep:none` so fresh client installs
+  skip the "Move with WASD" / "Punch a tree" popups.
+- **modpack/server-overrides/config/neoessentials/config.json** — full pinned
+  config (858 lines). `allowUnsafeCommands: true` + four `enable*Safety:
+  false` flags applied. Frozen baseline; diff future upstream defaults
+  rather than letting CI silently revert in-flight edits.
+
 ## [0.6.2] - 2026-05-28
 
 ### Fixed

@@ -71,6 +71,15 @@ object RankedBattleManager {
     private val pendingTeams: ConcurrentHashMap<UUID, List<Pokemon>> = ConcurrentHashMap()
     private val pendingMatches: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
 
+    /**
+     * Players currently in [startBattle]'s `BattleBuilder.pvp1v1` call. The BATTLE_STARTED_PRE
+     * subscriber in [registerEvents] uses this to allow our own ranked battles through while
+     * vetoing any other PvP path (Cobblemon's right-click → Battle menu, future mod-added /battle
+     * commands, etc.) — that way `/ranked challenge` is the only player-vs-player flow that
+     * actually starts a battle. Keyed both directions so either actor's UUID looks up the other.
+     */
+    private val expectedRankedMatch: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
+
     fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer) {
         val config = CobblemonRanked.config
         pendingMatches[player1.uuid] = player2.uuid
@@ -165,14 +174,24 @@ object RankedBattleManager {
 
         val format = BattleFormat.GEN_9_SINGLES.copy(adjustLevel = config.levelCap)
 
-        val result = BattleBuilder.pvp1v1(
-            player1 = player1,
-            player2 = player2,
-            battleFormat = format,
-            healFirst = true,
-            cloneParties = true,
-            partyAccessor = { teamMap[it.uuid] ?: Cobblemon.storage.getParty(it) }
-        )
+        // Flag the about-to-start match so our BATTLE_STARTED_PRE veto in [registerEvents]
+        // lets it through. The flag must be set BEFORE pvp1v1 because the PRE event fires
+        // synchronously during that call, before we'd otherwise have a battleId to track.
+        expectedRankedMatch[player1.uuid] = player2.uuid
+        expectedRankedMatch[player2.uuid] = player1.uuid
+        val result = try {
+            BattleBuilder.pvp1v1(
+                player1 = player1,
+                player2 = player2,
+                battleFormat = format,
+                healFirst = true,
+                cloneParties = true,
+                partyAccessor = { teamMap[it.uuid] ?: Cobblemon.storage.getParty(it) }
+            )
+        } finally {
+            expectedRankedMatch.remove(player1.uuid)
+            expectedRankedMatch.remove(player2.uuid)
+        }
 
         result.ifSuccessful { battle ->
             val match = ActiveRankedMatch(player1.uuid, player2.uuid, battle.battleId, originals)
@@ -248,6 +267,27 @@ object RankedBattleManager {
     }
 
     fun registerEvents() {
+        // Force every PvP battle through /ranked challenge. Cobblemon's right-click → Battle
+        // menu (and any other path that ends up in BattleBuilder.pvp1v1) lands here as a
+        // BATTLE_STARTED_PRE; we cancel unless our own startBattle is on the stack — tracked
+        // via [expectedRankedMatch]. Wild / NPC / trainer battles (only one PlayerBattleActor)
+        // fall through unaffected.
+        CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.HIGHEST) { event ->
+            val playerActors = event.battle.actors.filterIsInstance<PlayerBattleActor>()
+            if (playerActors.size < 2) return@subscribe  // not PvP
+            val a = playerActors[0].entity
+            val b = playerActors[1].entity
+            if (a == null || b == null) return@subscribe
+            if (expectedRankedMatch[a.uuid] == b.uuid) return@subscribe  // it's our ranked match
+            event.cancel()
+            for (p in listOf(a, b)) {
+                p.sendSystemMessage(Component.literal(
+                    "§c[Ranked] PvP battles must be initiated via §f/ranked challenge <player>§c. " +
+                    "Cobblemon's right-click → Battle menu is disabled on this server."
+                ))
+            }
+        }
+
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
             val match = rankedBattles.remove(event.battle.battleId) ?: return@subscribe
             val winners = event.winners.filterIsInstance<PlayerBattleActor>()

@@ -10,7 +10,6 @@ import net.minecraft.world.level.GameType
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.level.BlockEvent
@@ -147,29 +146,12 @@ object WorldRulesHook {
         }
     }
 
-    /**
-     * Belt-and-suspenders: some Pokemon/trainer code paths bypass FinalizeSpawn (e.g. direct
-     * `level.addFreshEntity(...)` without going through `MobSpawnType` finalisation). Veto at
-     * EntityJoinLevel for entities matching our criteria — but ONLY when the level is locked
-     * AND the entity has no NBT marker indicating a command spawn (we use the
-     * `cobblemon_bridge.gym_id.*` / `gym_tp_npc` tag presence as a hint that an op put it there).
-     */
-    @SubscribeEvent
-    fun onEntityJoin(event: EntityJoinLevelEvent) {
-        val level = event.level
-        if (!isLocked(level)) return
-        val entity = event.entity
-        if (entity is PokemonEntity || EntityType.getKey(entity.type) == RCT_TRAINER_ID) {
-            // If the entity has any cobblemon_bridge.* tag (the ones our admin commands stamp at
-            // spawn time), it's an op-summoned entity — let it through.
-            if (entity.tags.any { it.startsWith("cobblemon_bridge.") }) return
-            // Otherwise, drop it. Use loadedAndReady=false to avoid registering, since some
-            // events would otherwise leak.
-            event.isCanceled = true
-            CobblemonBridge.logger.debug(
-                "worldrules: blocked {} from {} (no admin tag)",
-                entity.type, level.dimension().location(),
-            )
-        }
-    }
+    // Note: a previous belt-and-suspenders `onEntityJoin` hook that vetoed at
+    // EntityJoinLevelEvent was removed — it over-blocked because the
+    // `/function server:gym/spawn_<N>` mcfunctions tag the trainer AFTER `rctmod trainer
+    // summon_persistent`, so at EntityJoin time the `cobblemon_bridge.*` tag isn't on yet and
+    // the function's spawn was being canceled before its own tag command could run. The
+    // FinalizeSpawnEvent above already distinguishes COMMAND/SPAWN_EGG/MOB_SUMMONED from
+    // natural spawn types and is the correct gate. If a future natural spawn path bypasses
+    // FinalizeSpawn entirely, re-introduce a more targeted check here.
 }

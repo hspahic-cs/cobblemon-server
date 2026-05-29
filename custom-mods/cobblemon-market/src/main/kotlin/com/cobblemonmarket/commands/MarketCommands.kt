@@ -175,8 +175,104 @@ object MarketCommands {
                             1
                         }
                     )
+                    .then(Commands.literal("spawn")
+                        .executes { ctx -> spawnVendor(ctx.source, ""); 1 }
+                        .then(Commands.argument("vendorTag", StringArgumentType.word())
+                            .suggests { _, builder ->
+                                CobblemonMarket.items.values
+                                    .map { it.vendorTag }
+                                    .filter { it.isNotEmpty() }
+                                    .toSortedSet()
+                                    .forEach { builder.suggest(it) }
+                                builder.buildFuture()
+                            }
+                            .executes { ctx ->
+                                spawnVendor(ctx.source, StringArgumentType.getString(ctx, "vendorTag"))
+                                1
+                            }
+                        )
+                    )
+                    .then(Commands.literal("delete")
+                        .executes { ctx -> deleteVendors(ctx.source, ""); 1 }
+                        .then(Commands.argument("vendorTag", StringArgumentType.word())
+                            .executes { ctx ->
+                                deleteVendors(ctx.source, StringArgumentType.getString(ctx, "vendorTag"))
+                                1
+                            }
+                        )
+                    )
                 )
         )
+    }
+
+    /**
+     * Summon a market vendor villager at the source position, tagged so [MarketNpcHook] dispatches
+     * right-clicks to the right vendor scope. `""` → default tag `cobblemon_bridge.market_vendor`;
+     * any other → `cobblemon_bridge.market_vendor.<vendorTag>` (e.g. `tm_fire`).
+     *
+     * Defensive: kills any existing tagged villager within 4 blocks first so re-spawn is idempotent.
+     */
+    private fun spawnVendor(source: net.minecraft.commands.CommandSourceStack, vendorTag: String) {
+        val level: net.minecraft.server.level.ServerLevel = source.level
+        val pos = source.position
+        val tagSuffix = if (vendorTag.isEmpty()) "" else ".$vendorTag"
+        val fullTag = "cobblemon_bridge.market_vendor$tagSuffix"
+        val name = if (vendorTag.isEmpty()) "Shopkeeper"
+                   else vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TM Vendor"
+
+        val killed = killNearbyTagged(level, pos.x, pos.y, pos.z, fullTag, radius = 4.0)
+
+        val villager = net.minecraft.world.entity.EntityType.VILLAGER.create(level) ?: run {
+            source.sendSystemMessage(Component.literal("§c[Market] Failed to create villager entity"))
+            return
+        }
+        villager.moveTo(pos.x, pos.y, pos.z, source.rotation.y, 0f)
+        villager.addTag(fullTag)
+        villager.isInvulnerable = true
+        villager.setPersistenceRequired()
+        villager.isSilent = true
+        villager.isNoAi = true
+        villager.villagerData = net.minecraft.world.entity.npc.VillagerData(
+            net.minecraft.world.entity.npc.VillagerType.PLAINS,
+            net.minecraft.world.entity.npc.VillagerProfession.LIBRARIAN,
+            5,
+        )
+        villager.offers.clear()
+        villager.customName = Component.literal(name).setStyle(
+            net.minecraft.network.chat.Style.EMPTY
+                .withColor(0x55FF55).withBold(true).withItalic(false))
+        villager.isCustomNameVisible = true
+
+        if (!level.addFreshEntity(villager)) {
+            source.sendSystemMessage(Component.literal("§c[Market] Failed to add vendor to level"))
+            return
+        }
+        val killedNote = if (killed > 0) " §7(replaced $killed)" else ""
+        source.sendSystemMessage(Component.literal("§a[Market] Spawned $name$killedNote"))
+    }
+
+    private fun deleteVendors(source: net.minecraft.commands.CommandSourceStack, vendorTag: String) {
+        val level = source.level
+        val pos = source.position
+        val tagSuffix = if (vendorTag.isEmpty()) "" else ".$vendorTag"
+        val fullTag = "cobblemon_bridge.market_vendor$tagSuffix"
+        val killed = killNearbyTagged(level, pos.x, pos.y, pos.z, fullTag, radius = 32.0)
+        source.sendSystemMessage(Component.literal("§a[Market] Removed $killed vendor(s) with tag '$fullTag'"))
+    }
+
+    private fun killNearbyTagged(
+        level: net.minecraft.server.level.ServerLevel,
+        x: Double, y: Double, z: Double, tag: String, radius: Double,
+    ): Int {
+        val box = net.minecraft.world.phys.AABB(
+            x - radius, y - radius, z - radius,
+            x + radius, y + radius, z + radius,
+        )
+        val matches = level.getEntitiesOfClass(
+            net.minecraft.world.entity.npc.Villager::class.java, box,
+        ) { v -> v.tags.contains(tag) }
+        for (e in matches) e.discard()
+        return matches.size
     }
 
     private fun showPrices(source: CommandSourceStack) {

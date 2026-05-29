@@ -312,8 +312,40 @@ object HologramCommands {
     }
 
     private fun jsonTextComponent(raw: String): String {
-        // Minimal valid JSON text component. Escape backslashes and quotes; preserve § codes.
-        val escaped = raw.replace("\\", "\\\\").replace("\"", "\\\"")
+        // If the input already looks like a JSON text component (object or array), pass it
+        // through as-is so admins can hand-write proper components with hover-text, click events,
+        // multiple-line formatting, etc.
+        val trimmed = raw.trim()
+        if (trimmed.startsWith("{") || trimmed.startsWith("[")) return trimmed
+
+        // Otherwise wrap as a literal `{"text":"..."}` component. First translate `&` colour
+        // codes (the standard server-input convention — chat filters block raw `§`) to `§`
+        // before any other escaping so `&l` becomes a bold style, not a literal "&l".
+        // Use `&&` as an escape for a literal `&`.
+        val withSectionCodes = translateAmpersandCodes(raw)
+        val escaped = withSectionCodes.replace("\\", "\\\\").replace("\"", "\\\"")
         return "{\"text\":\"$escaped\"}"
+    }
+
+    /**
+     * Translates `&<code>` to `§<code>` for the standard MC formatting codes (0-9, a-f, k-o, r,
+     * x for hex). `&&` escapes a literal `&` so the string `Bob && Alice` doesn't become a
+     * truncated style code. Anything not followed by a valid code is left alone.
+     */
+    private fun translateAmpersandCodes(s: String): String {
+        val out = StringBuilder(s.length)
+        var i = 0
+        while (i < s.length) {
+            val c = s[i]
+            if (c == '&' && i + 1 < s.length) {
+                val next = s[i + 1]
+                if (next == '&') { out.append('&'); i += 2; continue }
+                if (next in "0123456789abcdefklmnorxABCDEFKLMNORX") {
+                    out.append('§').append(next.lowercaseChar()); i += 2; continue
+                }
+            }
+            out.append(c); i++
+        }
+        return out.toString()
     }
 }

@@ -267,25 +267,45 @@ object RankedBattleManager {
     }
 
     fun registerEvents() {
-        // Force every PvP battle through /ranked challenge. Cobblemon's right-click → Battle
-        // menu (and any other path that ends up in BattleBuilder.pvp1v1) lands here as a
-        // BATTLE_STARTED_PRE; we cancel unless our own startBattle is on the stack — tracked
-        // via [expectedRankedMatch]. Wild / NPC / trainer battles (only one PlayerBattleActor)
-        // fall through unaffected.
+        // Route every PvP battle through the ranked system. The Cobblemon right-click → Battle
+        // flow ends in BattleBuilder.pvp1v1 (same as our own [startBattle]) which fires
+        // BATTLE_STARTED_PRE; if that battle isn't one we started (checked via
+        // [expectedRankedMatch]) we cancel the Cobblemon path and redirect both players into
+        // our team-select flow. The two clicks they already performed in Cobblemon's UI
+        // (initiator's "Battle" + target's accept) are treated as the equivalent of
+        // /ranked challenge + /ranked accept — they explicitly consented to fight each other,
+        // we just enforce that the fight uses ranked rules + ELO + arena teleport.
+        //
+        // Single-PlayerBattleActor battles (wild, NPC trainer, gym, E4 gauntlet) fall through
+        // the size < 2 early exit untouched.
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.HIGHEST) { event ->
             val playerActors = event.battle.actors.filterIsInstance<PlayerBattleActor>()
-            if (playerActors.size < 2) return@subscribe  // not PvP
-            val a = playerActors[0].entity
-            val b = playerActors[1].entity
-            if (a == null || b == null) return@subscribe
+            if (playerActors.size < 2) return@subscribe
+            val a = playerActors[0].entity ?: return@subscribe
+            val b = playerActors[1].entity ?: return@subscribe
             if (expectedRankedMatch[a.uuid] == b.uuid) return@subscribe  // it's our ranked match
+
             event.cancel()
-            for (p in listOf(a, b)) {
-                p.sendSystemMessage(Component.literal(
-                    "§c[Ranked] PvP battles must be initiated via §f/ranked challenge <player>§c. " +
-                    "Cobblemon's right-click → Battle menu is disabled on this server."
-                ))
+
+            // Already mid-flow check — don't double-trigger team-select if these players are
+            // already in a ranked match or team-selecting elsewhere.
+            val alreadyBusy = pendingMatches.containsKey(a.uuid) ||
+                pendingMatches.containsKey(b.uuid) ||
+                rankedBattles.values.any { m ->
+                    m.player1Uuid == a.uuid || m.player2Uuid == a.uuid ||
+                        m.player1Uuid == b.uuid || m.player2Uuid == b.uuid
+                }
+            if (alreadyBusy) {
+                a.sendSystemMessage(Component.literal(
+                    "§c[Ranked] One of you is already in another ranked flow — finish it first."))
+                return@subscribe
             }
+
+            a.sendSystemMessage(Component.literal(
+                "§a[Ranked] §fRouting to ranked team selection. Pick up to 6 Pokémon, then Confirm."))
+            b.sendSystemMessage(Component.literal(
+                "§a[Ranked] §fRouting to ranked team selection. Pick up to 6 Pokémon, then Confirm."))
+            startTeamSelection(a, b)
         }
 
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->

@@ -127,22 +127,35 @@ object WorldRulesHook {
      */
     @SubscribeEvent(priority = EventPriority.HIGH)
     fun onFinalizeSpawn(event: FinalizeSpawnEvent) {
-        val level = event.level.level
-        if (!isLocked(level)) return
-        val entity = event.entity
-        val isTarget = entity is PokemonEntity || EntityType.getKey(entity.type) == RCT_TRAINER_ID
-        if (!isTarget) return
-        // MobSpawnType.NATURAL, CHUNK_GENERATION, STRUCTURE, JOCKEY, REINFORCEMENT, BREEDING,
-        // EVENT, PATROL — anything that isn't explicit command/spawn-egg/summoned. We only allow
-        // op-initiated spawns (COMMAND, SPAWN_EGG, MOB_SUMMONED).
+        // Op-initiated spawns (commands, spawn eggs, /summon, dispensers) always pass through —
+        // regardless of dimension or mob category. This is checked once at the top so both rules
+        // below honour it.
         when (event.spawnType) {
             net.minecraft.world.entity.MobSpawnType.COMMAND,
             net.minecraft.world.entity.MobSpawnType.SPAWN_EGG,
             net.minecraft.world.entity.MobSpawnType.MOB_SUMMONED,
             net.minecraft.world.entity.MobSpawnType.DISPENSER -> return
-            else -> {
+            else -> Unit
+        }
+
+        val level = event.level.level
+        val entity = event.entity
+
+        // Rule 1 — non-progression dimensions: no Pokémon or RCT trainer natural spawns.
+        if (isLocked(level)) {
+            val isPokeOrTrainer = entity is PokemonEntity || EntityType.getKey(entity.type) == RCT_TRAINER_ID
+            if (isPokeOrTrainer) {
                 event.isSpawnCancelled = true
+                return
             }
+        }
+
+        // Rule 2 — globally: no vanilla hostile-mob natural spawns. We play on Easy difficulty
+        // but with no hostile spawning so the gameplay loop centres on Pokémon. Peaceful mobs
+        // (CREATURE / AMBIENT / WATER_* categories) still spawn normally. Op-initiated spawns
+        // were already let through above.
+        if (entity.type.category == net.minecraft.world.entity.MobCategory.MONSTER) {
+            event.isSpawnCancelled = true
         }
     }
 

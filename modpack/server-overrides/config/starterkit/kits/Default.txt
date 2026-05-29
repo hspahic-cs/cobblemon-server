@@ -7,7 +7,7 @@
 1 : '{count:1,id:"minecraft:stone_axe"}',
 2 : '{count:1,id:"minecraft:stone_shovel"}',
 3 : '{count:1,id:"minecraft:stone_hoe"}',
-4 : '{count:1,id:"cobblenav:pokenav_item"}',
+4 : '{count:1,id:"cobblemon:pokedex_red"}',
 5 : '{count:24,id:"minecraft:baked_potato"}',
 6 : '',
 7 : '',

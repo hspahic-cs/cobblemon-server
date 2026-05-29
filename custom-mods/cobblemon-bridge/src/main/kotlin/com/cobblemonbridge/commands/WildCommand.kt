@@ -2,7 +2,9 @@ package com.cobblemonbridge.commands
 
 import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.quests.QuestAdvancements
+import com.cobblemonbridge.wild.WildStore
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.arguments.IntegerArgumentType
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.commands.arguments.EntityArgument
@@ -11,6 +13,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.Heightmap
+import net.neoforged.fml.loading.FMLPaths
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.random.Random
@@ -27,16 +30,42 @@ import kotlin.random.Random
  */
 object WildCommand {
 
-    /** Center X of the random teleport area. */
+    /**
+     * Defaults — only used when `config/cobblemon-bridge/runtime/wild.json` is missing or
+     * malformed. Once [init] runs, [store] is the source of truth and these vars track its
+     * current values for hot reads (no IO on the teleport hot path).
+     */
     var centerX: Int = 350
-    /** Center Z of the random teleport area. */
     var centerZ: Int = -700
-    /** Half-width of the teleport area (500×500 → radius 250). */
     var radius: Int = 250
-    /** Cooldown between uses in seconds. */
     var cooldownSeconds: Int = 60
 
+    @Volatile
+    private var store: WildStore? = null
+
     private val cooldowns = ConcurrentHashMap<UUID, Long>()
+
+    /** Called from CobblemonBridge.onServerStarting. Loads runtime/wild.json and applies it. */
+    fun init() {
+        val file = FMLPaths.CONFIGDIR.get()
+            .resolve("cobblemon-bridge")
+            .resolve("runtime")
+            .resolve("wild.json")
+        val s = WildStore.load(file)
+        store = s
+        val cfg = s.get()
+        centerX = cfg.centerX
+        centerZ = cfg.centerZ
+        radius = cfg.radius
+        cooldownSeconds = cfg.cooldownSeconds
+        CobblemonBridge.logger.info(
+            "wild: loaded center=({}, {}) radius={} cooldown={}s (file: {})",
+            cfg.centerX, cfg.centerZ, cfg.radius, cfg.cooldownSeconds, file,
+        )
+    }
+
+    private fun store(): WildStore = store
+        ?: error("WildCommand not initialized — CobblemonBridge should call WildCommand.init()")
 
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
@@ -57,7 +86,73 @@ object WildCommand {
                         1
                     }
                 )
+                .then(Commands.literal("admin")
+                    .requires { it.hasPermission(2) }
+                    .then(Commands.literal("show")
+                        .executes { ctx -> adminShow(ctx.source); 1 }
+                    )
+                    .then(Commands.literal("setcenter")
+                        // /wild admin setcenter → uses sender's X/Z (ignores Y; surface-find on teleport)
+                        .executes { ctx -> adminSetCenterFromSender(ctx.source); 1 }
+                        // /wild admin setcenter <x> <z> → explicit
+                        .then(Commands.argument("x", IntegerArgumentType.integer())
+                            .then(Commands.argument("z", IntegerArgumentType.integer())
+                                .executes { ctx ->
+                                    adminSetCenter(
+                                        ctx.source,
+                                        IntegerArgumentType.getInteger(ctx, "x"),
+                                        IntegerArgumentType.getInteger(ctx, "z"),
+                                    ); 1
+                                }
+                            )
+                        )
+                    )
+                    .then(Commands.literal("setradius")
+                        .then(Commands.argument("blocks", IntegerArgumentType.integer(16, 50000))
+                            .executes { ctx ->
+                                adminSetRadius(ctx.source, IntegerArgumentType.getInteger(ctx, "blocks")); 1
+                            }
+                        )
+                    )
+                    .then(Commands.literal("setcooldown")
+                        .then(Commands.argument("seconds", IntegerArgumentType.integer(0, 3600))
+                            .executes { ctx ->
+                                adminSetCooldown(ctx.source, IntegerArgumentType.getInteger(ctx, "seconds")); 1
+                            }
+                        )
+                    )
+                )
         )
+    }
+
+    private fun adminShow(source: CommandSourceStack) {
+        source.sendSystemMessage(Component.literal("§e[Wild] §fCurrent config:"))
+        source.sendSystemMessage(Component.literal("§7  center: §f($centerX, $centerZ)"))
+        source.sendSystemMessage(Component.literal("§7  radius: §f$radius §8blocks (${radius * 2}×${radius * 2} area)"))
+        source.sendSystemMessage(Component.literal("§7  cooldown: §f${cooldownSeconds}s"))
+    }
+
+    private fun adminSetCenterFromSender(source: CommandSourceStack) {
+        val pos = source.position
+        adminSetCenter(source, pos.x.toInt(), pos.z.toInt())
+    }
+
+    private fun adminSetCenter(source: CommandSourceStack, x: Int, z: Int) {
+        store().update { it.copy(centerX = x, centerZ = z) }
+        centerX = x; centerZ = z
+        source.sendSystemMessage(Component.literal("§a[Wild] Center → §f($x, $z)"))
+    }
+
+    private fun adminSetRadius(source: CommandSourceStack, r: Int) {
+        store().update { it.copy(radius = r) }
+        radius = r
+        source.sendSystemMessage(Component.literal("§a[Wild] Radius → §f$r §8(${r * 2}×${r * 2} area)"))
+    }
+
+    private fun adminSetCooldown(source: CommandSourceStack, secs: Int) {
+        store().update { it.copy(cooldownSeconds = secs) }
+        cooldownSeconds = secs
+        source.sendSystemMessage(Component.literal("§a[Wild] Cooldown → §f${secs}s"))
     }
 
     private fun handleWild(player: ServerPlayer, enforceCooldown: Boolean) {

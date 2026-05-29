@@ -9,6 +9,7 @@ import com.cobblemonbridge.battle.GymDefeatHook
 import com.cobblemonbridge.battle.GymPrereqHook
 import com.cobblemonbridge.commands.CommandAliases
 import com.cobblemonbridge.commands.GymTpCommands
+import com.cobblemonbridge.commands.HologramCommands
 import com.cobblemonbridge.commands.SpawnCommands
 import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
@@ -92,12 +93,15 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         WildCommand.register(event.dispatcher)
         GymTpCommands.register(event.dispatcher)
         SpawnCommands.register(event.dispatcher)
+        HologramCommands.register(event.dispatcher)
     }
 
     @Suppress("UNUSED_PARAMETER")
     private fun onServerStarting(event: ServerStartingEvent) {
         GymTpRegistry.init()
         SpawnCommands.init()
+        WildCommand.init()
+        HologramCommands.init()
     }
 
     companion object {

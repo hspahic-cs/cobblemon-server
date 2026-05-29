@@ -31,8 +31,9 @@ tag @a[tag=cq_reward_key_ultra_1] remove cq_reward_key_ultra_1
 execute as @a[tag=cq_reward_item_starter_balls] at @s run give @s cobblemon:poke_ball 10
 tag @a[tag=cq_reward_item_starter_balls] remove cq_reward_item_starter_balls
 
-# use_wild: 3 raw copper for early smelting
+# use_wild: 3 raw copper + 3 bone meal — early smelting + apricorn growth
 execute as @a[tag=cq_reward_item_raw_copper] at @s run give @s minecraft:raw_copper 3
+execute as @a[tag=cq_reward_item_raw_copper] at @s run give @s minecraft:bone_meal 3
 tag @a[tag=cq_reward_item_raw_copper] remove cq_reward_item_raw_copper
 
 # set_home: 3 red apricorn sprouts so the player has stock for crafting Poké Balls next

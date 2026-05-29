@@ -184,7 +184,6 @@
       },
       "form": "pom-pom",
       "ability": "dancer",
-      "heldItem": "cobblemon:zap_plate",
       "moveset": [
         "revelationdance",
         "airslash",

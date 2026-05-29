@@ -1,4 +1,5 @@
 version:4189
+tutorialStep:none
 fov:0.25
 gamma:0.8
 guiScale:5

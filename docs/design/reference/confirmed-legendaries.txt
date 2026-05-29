@@ -1,0 +1,116 @@
+# Confirmed Legendary & Mythical Pokemon
+# Source: pokedex.txt (confirmed in Cobblemon) + faction ticket natural spawn list
+# Names match pokedex.txt formatting (no hyphens)
+
+# Gen 1
+articuno
+zapdos
+moltres
+mewtwo
+mew
+
+# Gen 2
+raikou
+entei
+suicune
+lugia
+hooh
+celebi
+
+# Gen 3
+regirock
+regice
+registeel
+latias
+latios
+kyogre
+groudon
+rayquaza
+jirachi
+deoxys
+
+# Gen 4
+uxie
+mesprit
+azelf
+dialga
+palkia
+heatran
+regigigas
+giratina
+cresselia
+phione
+manaphy
+darkrai
+shaymin
+arceus
+
+# Gen 5
+victini
+cobalion
+terrakion
+virizion
+tornadus
+thundurus
+reshiram
+zekrom
+landorus
+kyurem
+keldeo
+meloetta
+genesect
+
+# Gen 6
+xerneas
+yveltal
+zygarde
+diancie
+hoopa
+volcanion
+
+# Gen 7 (Ultra Beasts and Paradox Pokemon excluded)
+typenull
+silvally
+tapukoko
+tapulele
+tapubulu
+tapufini
+cosmog
+cosmoem
+solgaleo
+lunala
+necrozma
+magearna
+marshadow
+zeraora
+meltan
+melmetal
+
+# Gen 8
+zacian
+zamazenta
+eternatus
+kubfu
+urshifu
+regieleki
+regidrago
+glastrier
+spectrier
+calyrex
+zarude
+
+# Gen 9 - Treasures of Ruin
+wochien
+chienpao
+tinglu
+chiyu
+
+# Gen 9 - Box Legendaries & Others
+koraidon
+miraidon
+okidogi
+munkidori
+fezandipiti
+ogerpon
+terapagos
+pecharunt

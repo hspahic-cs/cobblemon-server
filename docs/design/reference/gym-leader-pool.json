@@ -1,0 +1,1872 @@
+{
+  "version": "1.1",
+  "notes": {
+    "progression": "All teams are defined at max level (level 100). Each time a gym leader loses a challenge their Pokemon gain 2–4 levels each, weighted toward the team average so stragglers catch up. Max level is 100. Normal NPCs follow the same loss-driven progression but with a lower ceiling — max 6 Pokemon at tier 6 (level 65 threshold), no megas, no legendaries.",
+    "levelMilestones": {
+      "1-15": "3 Pokemon (startingThree), no items",
+      "16-30": "4 Pokemon, basic items (Berries, Leftovers)",
+      "31-50": "5 Pokemon, full items",
+      "51-65": "6 Pokemon, full items",
+      "66-80": "6 Pokemon, full items, mega stone active",
+      "81+": "6 Pokemon, full items, mega stone active, legendary slot unlocked"
+    },
+    "fightEstimates": "At avg 3 levels per loss: mega unlocks around fight 26–28, legendary around fight 32–35.",
+    "startingThree": "The first three slots form the starting team at level 1. As the leader levels into higher bands, subsequent slots are added in order.",
+    "poolReset": "Once a theme is selected by any player on the server it is removed from the available pool. When 3 themes remain the pool resets to all 25.",
+    "megaEvolution": "Each leader has one Pokemon holding a mega stone. Its position in the team reflects its role — some are leads, some are mid-game pivots, some are closers. The mega stone is only present at level 66+.",
+    "legendary": "Each leader has one legendary assigned that replaces a specific team slot at level 81+. The replaced Pokemon is noted per leader. Two leaders (Revenant, Plague Doctor) have no mega — their legendary is their only late-game escalation."
+  },
+  "gymLeaders": [
+    {
+      "id": "wanderer",
+      "name": "The Wanderer",
+      "description": "A trainer who has journeyed every region. One companion from each corner of the world.",
+      "startingThree": ["arcanine", "flygon", "mamoswine"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "arcanine",
+          "item": "Sitrus Berry",
+          "ability": "Intimidate",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Flare Blitz", "Extreme Speed", "Wild Charge", "Close Combat"]
+        },
+        {
+          "slot": 2,
+          "species": "flygon",
+          "item": "Choice Scarf",
+          "ability": "Levitate",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["U-turn", "Earthquake", "Dragon Claw", "Stone Edge"]
+        },
+        {
+          "slot": 3,
+          "species": "mamoswine",
+          "item": "Life Orb",
+          "ability": "Thick Fat",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Earthquake", "Icicle Crash", "Ice Shard", "Knock Off"]
+        },
+        {
+          "slot": 4,
+          "species": "primarina",
+          "item": "Choice Specs",
+          "ability": "Torrent",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Hydro Pump", "Moonblast", "Psychic", "Ice Beam"]
+        },
+        {
+          "slot": 5,
+          "species": "hawlucha",
+          "item": "Flying Gem",
+          "ability": "Unburden",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Swords Dance", "Acrobatics", "High Jump Kick", "Stone Edge"]
+        },
+        {
+          "slot": 6,
+          "species": "salamence",
+          "item": "Salamencite",
+          "ability": "Intimidate",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dragon Dance", "Return", "Earthquake", "Roost"],
+          "megaNote": "Mega Salamence: Aerilate turns Return into a 130BP Flying STAB — the sky wanderer who has crossed every region"
+        }
+      ],
+      "legendary": {
+        "species": "raikou",
+        "replacesSlot": 2,
+        "replacesSpecies": "flygon",
+        "item": "Choice Specs",
+        "ability": "Pressure",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Thunderbolt", "Shadow Ball", "Volt Switch", "Calm Mind"],
+        "note": "The roaming thunder beast — arrives when the wanderer's journey is complete"
+      }
+    },
+    {
+      "id": "ancient",
+      "name": "The Ancient",
+      "description": "A fossil researcher who has brought titans of the prehistoric world back to life.",
+      "startingThree": ["aerodactyl", "tyrantrum", "carracosta"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "aerodactyl",
+          "item": "Aerodactylite",
+          "ability": "Unnerve",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Stone Edge", "Earthquake", "Crunch", "Aerial Ace"],
+          "megaNote": "Mega Aerodactyl: Tough Claws boosts all contact moves — the king of the ancient skies"
+        },
+        {
+          "slot": 2,
+          "species": "tyrantrum",
+          "item": "Choice Band",
+          "ability": "Strong Jaw",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Head Smash", "Dragon Claw", "Crunch", "Earthquake"]
+        },
+        {
+          "slot": 3,
+          "species": "carracosta",
+          "item": "White Herb",
+          "ability": "Solid Rock",
+          "nature": "Brave",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Shell Smash", "Waterfall", "Stone Edge", "Aqua Jet"]
+        },
+        {
+          "slot": 4,
+          "species": "armaldo",
+          "item": "Lum Berry",
+          "ability": "Battle Armor",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["X-Scissor", "Rock Blast", "Aqua Tail", "Swords Dance"]
+        },
+        {
+          "slot": 5,
+          "species": "cradily",
+          "item": "Leftovers",
+          "ability": "Storm Drain",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Stealth Rock", "Recover", "Giga Drain", "Ancient Power"]
+        },
+        {
+          "slot": 6,
+          "species": "aurorus",
+          "item": "Choice Specs",
+          "ability": "Refrigerate",
+          "nature": "Modest",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hyper Voice", "Blizzard", "Thunderbolt", "Earth Power"]
+        }
+      ],
+      "legendary": {
+        "species": "regirock",
+        "replacesSlot": 6,
+        "replacesSpecies": "aurorus",
+        "item": "Leftovers",
+        "ability": "Clear Body",
+        "nature": "Impish",
+        "evs": { "hp": 252, "def": 252, "spd": 4 },
+        "moves": ["Stealth Rock", "Stone Edge", "Earthquake", "Thunder Wave"],
+        "note": "The original stone titan — ancient before even the fossils on this team"
+      }
+    },
+    {
+      "id": "berserker",
+      "name": "The Berserker",
+      "description": "No strategy, no patience. Every Pokemon carries a Choice item and swings for maximum damage from turn one.",
+      "startingThree": ["garchomp", "heracross", "darmanitan"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "garchomp",
+          "item": "Choice Scarf",
+          "ability": "Rough Skin",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Outrage", "Earthquake", "Dragon Claw", "Stone Edge"]
+        },
+        {
+          "slot": 2,
+          "species": "heracross",
+          "item": "Heracronite",
+          "ability": "Skill Link",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Pin Missile", "Rock Blast", "Close Combat", "Earthquake"],
+          "megaNote": "Mega Heracross: Skill Link makes all multi-hit moves land 5× — Pin Missile becomes 75BP Bug STAB, Rock Blast 125BP coverage"
+        },
+        {
+          "slot": 3,
+          "species": "darmanitan",
+          "item": "Choice Band",
+          "ability": "Sheer Force",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Flare Blitz", "U-turn", "Rock Slide", "Earthquake"]
+        },
+        {
+          "slot": 4,
+          "species": "hydreigon",
+          "item": "Choice Specs",
+          "ability": "Levitate",
+          "nature": "Modest",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Draco Meteor", "Dark Pulse", "Flash Cannon", "Fire Blast"]
+        },
+        {
+          "slot": 5,
+          "species": "weavile",
+          "item": "Choice Band",
+          "ability": "Pressure",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Knock Off", "Icicle Crash", "Ice Shard", "Triple Axel"]
+        },
+        {
+          "slot": 6,
+          "species": "excadrill",
+          "item": "Choice Band",
+          "ability": "Mold Breaker",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Earthquake", "Iron Head", "Rock Slide", "Shadow Claw"]
+        }
+      ],
+      "legendary": {
+        "species": "terrakion",
+        "replacesSlot": 6,
+        "replacesSpecies": "excadrill",
+        "item": "Choice Band",
+        "ability": "Justified",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["Close Combat", "Stone Edge", "X-Scissor", "Earthquake"],
+        "note": "Pure aggression, no strategy — the Berserker's ultimate weapon"
+      }
+    },
+    {
+      "id": "fortress",
+      "name": "The Fortress",
+      "description": "An impenetrable wall. Every Pokemon stalls, heals, and outlasts. You will not break through.",
+      "startingThree": ["aggron", "toxapex", "blissey"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "aggron",
+          "item": "Aggronite",
+          "ability": "Sturdy",
+          "nature": "Impish",
+          "evs": { "hp": 252, "def": 252, "atk": 4 },
+          "moves": ["Heavy Slam", "Head Smash", "Earthquake", "Stealth Rock"],
+          "megaNote": "Mega Aggron: Filter reduces super-effective damage; pure Steel type — an immovable fortress"
+        },
+        {
+          "slot": 2,
+          "species": "toxapex",
+          "item": "Black Sludge",
+          "ability": "Regenerator",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Scald", "Toxic", "Recover", "Haze"]
+        },
+        {
+          "slot": 3,
+          "species": "blissey",
+          "item": "Leftovers",
+          "ability": "Natural Cure",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Soft-Boiled", "Toxic", "Seismic Toss", "Heal Bell"]
+        },
+        {
+          "slot": 4,
+          "species": "skarmory",
+          "item": "Leftovers",
+          "ability": "Sturdy",
+          "nature": "Impish",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Roost", "Whirlwind", "Iron Head", "Stealth Rock"]
+        },
+        {
+          "slot": 5,
+          "species": "ferrothorn",
+          "item": "Leftovers",
+          "ability": "Iron Barbs",
+          "nature": "Relaxed",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Leech Seed", "Protect", "Power Whip", "Thunder Wave"]
+        },
+        {
+          "slot": 6,
+          "species": "clefable",
+          "item": "Leftovers",
+          "ability": "Magic Guard",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Calm Mind", "Moonblast", "Flamethrower", "Soft-Boiled"]
+        }
+      ],
+      "legendary": {
+        "species": "cresselia",
+        "replacesSlot": 6,
+        "replacesSpecies": "clefable",
+        "item": "Leftovers",
+        "ability": "Levitate",
+        "nature": "Bold",
+        "evs": { "hp": 252, "def": 252, "spd": 4 },
+        "moves": ["Moonlight", "Thunder Wave", "Psyshock", "Toxic"],
+        "note": "The ultimate defensive wall — Moonlight recovery makes it nearly unkillable"
+      }
+    },
+    {
+      "id": "zephyr",
+      "name": "The Zephyr",
+      "description": "Before you can act, it is already over. The fastest team alive, built around priority and first-turn pressure.",
+      "startingThree": ["electrode", "jolteon", "crobat"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "electrode",
+          "item": "Life Orb",
+          "ability": "Aftermath",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Thunderbolt", "Volt Switch", "Shadow Ball", "Explosion"]
+        },
+        {
+          "slot": 2,
+          "species": "jolteon",
+          "item": "Choice Specs",
+          "ability": "Volt Absorb",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Thunderbolt", "Shadow Ball", "Volt Switch", "Signal Beam"]
+        },
+        {
+          "slot": 3,
+          "species": "crobat",
+          "item": "Choice Band",
+          "ability": "Infiltrator",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Brave Bird", "Cross Poison", "U-turn", "Super Fang"]
+        },
+        {
+          "slot": 4,
+          "species": "weavile",
+          "item": "Life Orb",
+          "ability": "Pressure",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Knock Off", "Icicle Crash", "Ice Shard", "Triple Axel"]
+        },
+        {
+          "slot": 5,
+          "species": "aerodactyl",
+          "item": "Aerodactylite",
+          "ability": "Rock Head",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Stone Edge", "Earthquake", "Crunch", "Aerial Ace"],
+          "megaNote": "Mega Aerodactyl: Tough Claws — the closer; by the time it lands it's already moving too fast to stop"
+        },
+        {
+          "slot": 6,
+          "species": "blaziken",
+          "item": "Blazikenite",
+          "ability": "Speed Boost",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["High Jump Kick", "Flare Blitz", "Stone Edge", "Protect"],
+          "megaNote": "Mega Blaziken: Speed Boost — Protect on turn 1 banks a free boost, then it mega evolves and nothing outruns it"
+        }
+      ],
+      "legendary": {
+        "species": "zeraora",
+        "replacesSlot": 1,
+        "replacesSpecies": "electrode",
+        "item": "Life Orb",
+        "ability": "Volt Absorb",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["Plasma Fists", "Close Combat", "Knock Off", "Volt Switch"],
+        "note": "The fastest Electric legendary — replaces Electrode at the speed limit"
+      }
+    },
+    {
+      "id": "storm",
+      "name": "The Storm",
+      "description": "Rain gives way to sandstorm, sun follows behind. A team of weather setters and abusers that keeps the battlefield in perpetual chaos.",
+      "startingThree": ["politoed", "tyranitar", "ninetales"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "politoed",
+          "item": "Damp Rock",
+          "ability": "Drizzle",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Scald", "Ice Beam", "Perish Song", "Protect"]
+        },
+        {
+          "slot": 2,
+          "species": "tyranitar",
+          "item": "Tyranitarite",
+          "ability": "Sand Stream",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "spd": 4 },
+          "moves": ["Dragon Dance", "Stone Edge", "Crunch", "Ice Punch"],
+          "megaNote": "Mega Tyranitar: Sand Stream persists; higher Attack and Defense — the weather war's ultimate weapon"
+        },
+        {
+          "slot": 3,
+          "species": "ninetales",
+          "item": "Heat Rock",
+          "ability": "Drought",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Fire Blast", "Solar Beam", "Will-O-Wisp", "Nasty Plot"]
+        },
+        {
+          "slot": 4,
+          "species": "kingdra",
+          "item": "Choice Specs",
+          "ability": "Swift Swim",
+          "nature": "Modest",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hydro Pump", "Draco Meteor", "Ice Beam", "Signal Beam"]
+        },
+        {
+          "slot": 5,
+          "species": "excadrill",
+          "item": "Life Orb",
+          "ability": "Sand Rush",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Earthquake", "Iron Head", "Rock Slide", "Shadow Claw"]
+        },
+        {
+          "slot": 6,
+          "species": "castform",
+          "item": "Life Orb",
+          "ability": "Forecast",
+          "nature": "Modest",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Weather Ball", "Hydro Pump", "Fire Blast", "Blizzard"]
+        }
+      ],
+      "legendary": {
+        "species": "kyogre",
+        "replacesSlot": 6,
+        "replacesSpecies": "castform",
+        "item": "Choice Specs",
+        "ability": "Drizzle",
+        "nature": "Modest",
+        "evs": { "spa": 252, "hp": 252, "spd": 4 },
+        "moves": ["Water Spout", "Ice Beam", "Thunder", "Origin Pulse"],
+        "note": "The origin of rain — Castform was always the gimmick, this is the real weather war"
+      }
+    },
+    {
+      "id": "celestial",
+      "name": "The Celestial",
+      "description": "A stargazer whose team fell from the sky. Pokemon of the cosmos, moons, and deep space.",
+      "startingThree": ["ampharos", "clefable", "starmie"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "ampharos",
+          "item": "Ampharosite",
+          "ability": "Static",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Thunderbolt", "Dragon Pulse", "Focus Blast", "Volt Switch"],
+          "megaNote": "Mega Ampharos: Mold Breaker, Dragon/Electric — the wool dragon of deep space"
+        },
+        {
+          "slot": 2,
+          "species": "clefable",
+          "item": "Leftovers",
+          "ability": "Magic Guard",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Calm Mind", "Moonblast", "Soft-Boiled", "Flamethrower"]
+        },
+        {
+          "slot": 3,
+          "species": "starmie",
+          "item": "Life Orb",
+          "ability": "Natural Cure",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hydro Pump", "Psychic", "Ice Beam", "Thunderbolt"]
+        },
+        {
+          "slot": 4,
+          "species": "minior",
+          "item": "White Herb",
+          "ability": "Shields Down",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Rock Blast", "Acrobatics", "Earthquake", "Stone Edge"]
+        },
+        {
+          "slot": 5,
+          "species": "beheeyem",
+          "item": "Life Orb",
+          "ability": "Analytic",
+          "nature": "Quiet",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Psychic", "Shadow Ball", "Energy Ball", "Thunderbolt"]
+        },
+        {
+          "slot": 6,
+          "species": "lunatone",
+          "item": "Leftovers",
+          "ability": "Levitate",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "spa": 4 },
+          "moves": ["Calm Mind", "Moonblast", "Ice Beam", "Rest"]
+        }
+      ],
+      "legendary": {
+        "species": "lunala",
+        "replacesSlot": 6,
+        "replacesSpecies": "lunatone",
+        "item": "Leftovers",
+        "ability": "Shadow Shield",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Moongeist Beam", "Psyshock", "Focus Blast", "Calm Mind"],
+        "note": "The actual moon — Lunatone was always a placeholder"
+      }
+    },
+    {
+      "id": "noblesse",
+      "name": "The Noblesse",
+      "description": "Regal, elegant, and devastating. Beauty is not weakness — it is the most dangerous weapon of all.",
+      "startingThree": ["milotic", "gardevoir", "togekiss"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "milotic",
+          "item": "Leftovers",
+          "ability": "Marvel Scale",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Scald", "Ice Beam", "Recover", "Haze"]
+        },
+        {
+          "slot": 2,
+          "species": "gardevoir",
+          "item": "Gardevoirite",
+          "ability": "Trace",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hyper Voice", "Psyshock", "Shadow Ball", "Focus Blast"],
+          "megaNote": "Mega Gardevoir: Pixilate converts Hyper Voice to 130BP Fairy — the crown jewel of the team"
+        },
+        {
+          "slot": 3,
+          "species": "togekiss",
+          "item": "Leftovers",
+          "ability": "Serene Grace",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Air Slash", "Nasty Plot", "Flamethrower", "Roost"]
+        },
+        {
+          "slot": 4,
+          "species": "sylveon",
+          "item": "Choice Specs",
+          "ability": "Pixilate",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Hyper Voice", "Shadow Ball", "Mystical Fire", "Psyshock"]
+        },
+        {
+          "slot": 5,
+          "species": "primarina",
+          "item": "Choice Specs",
+          "ability": "Torrent",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Hydro Pump", "Moonblast", "Psychic", "Ice Beam"]
+        },
+        {
+          "slot": 6,
+          "species": "ninetales",
+          "item": "Life Orb",
+          "ability": "Flash Fire",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Fire Blast", "Nasty Plot", "Psyshock", "Energy Ball"]
+        }
+      ],
+      "legendary": {
+        "species": "xerneas",
+        "replacesSlot": 6,
+        "replacesSpecies": "ninetales",
+        "item": "Power Herb",
+        "ability": "Fairy Aura",
+        "nature": "Modest",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Geomancy", "Moonblast", "Focus Blast", "Thunder"],
+        "note": "Geomancy into Fairy Aura Moonblast — the crown jewel of elegance"
+      }
+    },
+    {
+      "id": "corsair",
+      "name": "The Corsair",
+      "description": "A sea-faring outlaw with a crew of ocean predators. Fast, aggressive, and utterly relentless.",
+      "startingThree": ["sharpedo", "tentacruel", "gyarados"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "sharpedo",
+          "item": "Sharpedonite",
+          "ability": "Speed Boost",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Crunch", "Waterfall", "Ice Fang", "Protect"],
+          "megaNote": "Mega Sharpedo: Strong Jaw; Protect on turn 1 to bank a Speed Boost, then mega and sweep"
+        },
+        {
+          "slot": 2,
+          "species": "tentacruel",
+          "item": "Black Sludge",
+          "ability": "Liquid Ooze",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Scald", "Toxic Spikes", "Rapid Spin", "Knock Off"]
+        },
+        {
+          "slot": 3,
+          "species": "gyarados",
+          "item": "Lum Berry",
+          "ability": "Moxie",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dragon Dance", "Waterfall", "Crunch", "Earthquake"]
+        },
+        {
+          "slot": 4,
+          "species": "pelipper",
+          "item": "Damp Rock",
+          "ability": "Drizzle",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "def": 4 },
+          "moves": ["Scald", "Hurricane", "U-turn", "Roost"]
+        },
+        {
+          "slot": 5,
+          "species": "jellicent",
+          "item": "Leftovers",
+          "ability": "Water Absorb",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Scald", "Will-O-Wisp", "Recover", "Shadow Ball"]
+        },
+        {
+          "slot": 6,
+          "species": "empoleon",
+          "item": "Leftovers",
+          "ability": "Torrent",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Scald", "Flash Cannon", "Ice Beam", "Stealth Rock"]
+        }
+      ],
+      "legendary": {
+        "species": "lugia",
+        "replacesSlot": 6,
+        "replacesSpecies": "empoleon",
+        "item": "Leftovers",
+        "ability": "Multiscale",
+        "nature": "Bold",
+        "evs": { "hp": 252, "def": 252, "spd": 4 },
+        "moves": ["Aeroblast", "Recover", "Thunder Wave", "Whirlwind"],
+        "note": "Guardian of the sea — the corsair's ultimate enforcer"
+      }
+    },
+    {
+      "id": "inventor",
+      "name": "The Inventor",
+      "description": "Artificial lifeforms, mechanical constructs, and digital ghosts. Nothing on this team was born — it was built.",
+      "startingThree": ["porygon-z", "metagross", "rotom-wash"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "porygon-z",
+          "item": "Choice Specs",
+          "ability": "Adaptability",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Tri Attack", "Dark Pulse", "Ice Beam", "Thunderbolt"]
+        },
+        {
+          "slot": 2,
+          "species": "metagross",
+          "item": "Metagrossite",
+          "ability": "Clear Body",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Meteor Mash", "Earthquake", "Zen Headbutt", "Ice Punch"],
+          "megaNote": "Mega Metagross: Tough Claws; the most advanced construct on the team"
+        },
+        {
+          "slot": 3,
+          "species": "rotom-wash",
+          "item": "Leftovers",
+          "ability": "Levitate",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Volt Switch", "Hydro Pump", "Will-O-Wisp", "Pain Split"]
+        },
+        {
+          "slot": 4,
+          "species": "magnezone",
+          "item": "Choice Specs",
+          "ability": "Analytic",
+          "nature": "Modest",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Thunderbolt", "Flash Cannon", "Volt Switch", "Signal Beam"]
+        },
+        {
+          "slot": 5,
+          "species": "golurk",
+          "item": "Choice Band",
+          "ability": "No Guard",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dynamic Punch", "Shadow Punch", "Earthquake", "Ice Punch"]
+        },
+        {
+          "slot": 6,
+          "species": "klinklang",
+          "item": "Assault Vest",
+          "ability": "Clear Body",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "spd": 4 },
+          "moves": ["Gear Grind", "Wild Charge", "Return", "Shift Gear"]
+        }
+      ],
+      "legendary": {
+        "species": "genesect",
+        "replacesSlot": 6,
+        "replacesSpecies": "klinklang",
+        "item": "Choice Scarf",
+        "ability": "Download",
+        "nature": "Naive",
+        "evs": { "spa": 252, "spe": 252, "atk": 4 },
+        "moves": ["U-turn", "Ice Beam", "Thunderbolt", "Flamethrower"],
+        "note": "A fossil weaponised by science — the ultimate artificial construct"
+      }
+    },
+    {
+      "id": "underdog",
+      "name": "The Underdog",
+      "description": "Every Pokemon on this team is underestimated. Eviolite bulks up the unevolved. Do not assume this will be easy.",
+      "startingThree": ["chansey", "beedrill", "scyther"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "chansey",
+          "item": "Eviolite",
+          "ability": "Natural Cure",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Seismic Toss", "Soft-Boiled", "Stealth Rock", "Heal Bell"]
+        },
+        {
+          "slot": 2,
+          "species": "beedrill",
+          "item": "Beedrillite",
+          "ability": "Swarm",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["U-turn", "Poison Jab", "Knock Off", "Drill Run"],
+          "megaNote": "Mega Beedrill: Adaptability — the ultimate underdog story; was unviable, now terrifying"
+        },
+        {
+          "slot": 3,
+          "species": "scyther",
+          "item": "Eviolite",
+          "ability": "Technician",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Aerial Ace", "Bug Bite", "Quick Attack", "Swords Dance"]
+        },
+        {
+          "slot": 4,
+          "species": "porygon2",
+          "item": "Eviolite",
+          "ability": "Trace",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Tri Attack", "Ice Beam", "Thunderbolt", "Recover"]
+        },
+        {
+          "slot": 5,
+          "species": "dusclops",
+          "item": "Eviolite",
+          "ability": "Pressure",
+          "nature": "Careful",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Will-O-Wisp", "Night Shade", "Pain Split", "Haze"]
+        },
+        {
+          "slot": 6,
+          "species": "magneton",
+          "item": "Eviolite",
+          "ability": "Analytic",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Thunderbolt", "Flash Cannon", "Volt Switch", "Signal Beam"]
+        }
+      ],
+      "legendary": {
+        "species": "keldeo",
+        "replacesSlot": 6,
+        "replacesSpecies": "magneton",
+        "item": "Choice Specs",
+        "ability": "Justified",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Secret Sword", "Hydro Pump", "Scald", "Focus Blast"],
+        "note": "The underdog of the Swords of Justice — had to earn its legendary status"
+      }
+    },
+    {
+      "id": "cursed",
+      "name": "The Cursed",
+      "description": "A team built around one promise: even if you win, something bad is going to happen to you.",
+      "startingThree": ["mismagius", "gengar", "spiritomb"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "mismagius",
+          "item": "Leftovers",
+          "ability": "Levitate",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Perish Song", "Mean Look", "Substitute", "Shadow Ball"]
+        },
+        {
+          "slot": 2,
+          "species": "gengar",
+          "item": "Gengarite",
+          "ability": "Cursed Body",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Shadow Ball", "Sludge Wave", "Focus Blast", "Destiny Bond"],
+          "megaNote": "Mega Gengar: Shadow Tag — you cannot escape. Pairs with Destiny Bond for guaranteed trades"
+        },
+        {
+          "slot": 3,
+          "species": "spiritomb",
+          "item": "Leftovers",
+          "ability": "Pressure",
+          "nature": "Careful",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Sucker Punch", "Will-O-Wisp", "Foul Play", "Rest"]
+        },
+        {
+          "slot": 4,
+          "species": "banette",
+          "item": "Lum Berry",
+          "ability": "Prankster",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Destiny Bond", "Shadow Claw", "Will-O-Wisp", "Knock Off"]
+        },
+        {
+          "slot": 5,
+          "species": "drifblim",
+          "item": "Flying Gem",
+          "ability": "Unburden",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Acrobatics", "Shadow Ball", "Destiny Bond", "Minimize"]
+        },
+        {
+          "slot": 6,
+          "species": "sableye",
+          "item": "Leftovers",
+          "ability": "Prankster",
+          "nature": "Careful",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Will-O-Wisp", "Recover", "Foul Play", "Knock Off"]
+        }
+      ],
+      "legendary": {
+        "species": "darkrai",
+        "replacesSlot": 6,
+        "replacesSpecies": "sableye",
+        "item": "Life Orb",
+        "ability": "Bad Dreams",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Dark Void", "Dark Pulse", "Nasty Plot", "Shadow Ball"],
+        "note": "The nightmare — everything it touches falls into bad dreams"
+      }
+    },
+    {
+      "id": "nightshade",
+      "name": "The Nightshade",
+      "description": "Night hunters. They do not announce themselves. By the time you see them coming, it is too late.",
+      "startingThree": ["zoroark", "umbreon", "greninja"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "zoroark",
+          "item": "Life Orb",
+          "ability": "Illusion",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Night Daze", "Flamethrower", "Focus Blast", "Nasty Plot"]
+        },
+        {
+          "slot": 2,
+          "species": "umbreon",
+          "item": "Leftovers",
+          "ability": "Synchronize",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Foul Play", "Toxic", "Wish", "Protect"]
+        },
+        {
+          "slot": 3,
+          "species": "greninja",
+          "item": "Life Orb",
+          "ability": "Protean",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hydro Pump", "Dark Pulse", "Ice Beam", "Extrasensory"]
+        },
+        {
+          "slot": 4,
+          "species": "houndoom",
+          "item": "Houndoominite",
+          "ability": "Flash Fire",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Nasty Plot", "Dark Pulse", "Flamethrower", "Sludge Bomb"],
+          "megaNote": "Mega Houndoom: Solar Power; the hellhound that emerges from the dark mid-battle"
+        },
+        {
+          "slot": 5,
+          "species": "hydreigon",
+          "item": "Choice Specs",
+          "ability": "Levitate",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Draco Meteor", "Dark Pulse", "Fire Blast", "Flash Cannon"]
+        },
+        {
+          "slot": 6,
+          "species": "honchkrow",
+          "item": "Life Orb",
+          "ability": "Moxie",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Brave Bird", "Sucker Punch", "Knock Off", "Roost"]
+        }
+      ],
+      "legendary": {
+        "species": "marshadow",
+        "replacesSlot": 6,
+        "replacesSpecies": "honchkrow",
+        "item": "Life Orb",
+        "ability": "Technician",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["Spectral Thief", "Close Combat", "Shadow Sneak", "Bulk Up"],
+        "note": "The shadow that was there the whole time"
+      }
+    },
+    {
+      "id": "veteran",
+      "name": "The Veteran",
+      "description": "A trainer who has been playing since the very beginning. The original legends — optimised for the modern game.",
+      "startingThree": ["starmie", "alakazam", "snorlax"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "starmie",
+          "item": "Life Orb",
+          "ability": "Natural Cure",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hydro Pump", "Psychic", "Ice Beam", "Thunderbolt"]
+        },
+        {
+          "slot": 2,
+          "species": "alakazam",
+          "item": "Alakazite",
+          "ability": "Magic Guard",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Psychic", "Shadow Ball", "Focus Blast", "Calm Mind"],
+          "megaNote": "Mega Alakazam: Trace copies the opponent's ability; Sp.Atk 175 — the Gen 1 ace at its peak"
+        },
+        {
+          "slot": 3,
+          "species": "snorlax",
+          "item": "Leftovers",
+          "ability": "Thick Fat",
+          "nature": "Careful",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Body Slam", "Earthquake", "Crunch", "Curse"]
+        },
+        {
+          "slot": 4,
+          "species": "gengar",
+          "item": "Life Orb",
+          "ability": "Cursed Body",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Shadow Ball", "Sludge Bomb", "Focus Blast", "Thunderbolt"]
+        },
+        {
+          "slot": 5,
+          "species": "tauros",
+          "item": "Choice Band",
+          "ability": "Sheer Force",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Double-Edge", "Earthquake", "Rock Slide", "Iron Head"]
+        },
+        {
+          "slot": 6,
+          "species": "cloyster",
+          "item": "White Herb",
+          "ability": "Skill Link",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Shell Smash", "Icicle Spear", "Rock Blast", "Ice Shard"]
+        }
+      ],
+      "legendary": {
+        "species": "mewtwo",
+        "replacesSlot": 6,
+        "replacesSpecies": "cloyster",
+        "item": "Life Orb",
+        "ability": "Pressure",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Psystrike", "Ice Beam", "Aura Sphere", "Calm Mind"],
+        "note": "The original Gen 1 endgame — the veteran's true ace"
+      }
+    },
+    {
+      "id": "empress",
+      "name": "The Empress",
+      "description": "Every Pokemon arrives with one goal: find a moment to set up, then sweep the entire team. Snowball or die trying.",
+      "startingThree": ["volcarona", "malamar", "lucario"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "volcarona",
+          "item": "Leftovers",
+          "ability": "Flame Body",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Quiver Dance", "Fire Blast", "Bug Buzz", "Giga Drain"]
+        },
+        {
+          "slot": 2,
+          "species": "malamar",
+          "item": "Leftovers",
+          "ability": "Contrary",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "spd": 4 },
+          "moves": ["Superpower", "Knock Off", "Psycho Cut", "Rest"]
+        },
+        {
+          "slot": 3,
+          "species": "lucario",
+          "item": "Lucarionite",
+          "ability": "Justified",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Nasty Plot", "Aura Sphere", "Shadow Ball", "Flash Cannon"],
+          "megaNote": "Mega Lucario: Adaptability — Aura Sphere becomes 240 effective BP after one Nasty Plot"
+        },
+        {
+          "slot": 4,
+          "species": "kommo-o",
+          "item": "White Herb",
+          "ability": "Soundproof",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Clangorous Soul", "Close Combat", "Poison Jab", "Dragon Claw"]
+        },
+        {
+          "slot": 5,
+          "species": "ribombee",
+          "item": "Focus Sash",
+          "ability": "Shield Dust",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Quiver Dance", "Bug Buzz", "Moonblast", "Energy Ball"]
+        },
+        {
+          "slot": 6,
+          "species": "dragonite",
+          "item": "Lum Berry",
+          "ability": "Multiscale",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dragon Dance", "Outrage", "Earthquake", "Extreme Speed"]
+        }
+      ],
+      "legendary": {
+        "species": "victini",
+        "replacesSlot": 6,
+        "replacesSpecies": "dragonite",
+        "item": "Life Orb",
+        "ability": "Victory Star",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["V-create", "Bolt Strike", "Zen Headbutt", "U-turn"],
+        "note": "The Victory Pokemon — closes out every sweep"
+      }
+    },
+    {
+      "id": "revenant",
+      "name": "The Revenant",
+      "description": "They do not stay down. Sturdy, Regenerator, Focus Sash — every Pokemon on this team finds a way to come back.",
+      "startingThree": ["donphan", "machamp", "slowbro"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "donphan",
+          "item": "Sitrus Berry",
+          "ability": "Sturdy",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Ice Shard", "Earthquake", "Rapid Spin", "Stealth Rock"]
+        },
+        {
+          "slot": 2,
+          "species": "gyarados",
+          "item": "Gyaradosite",
+          "ability": "Intimidate",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dragon Dance", "Waterfall", "Crunch", "Earthquake"],
+          "megaNote": "Mega Gyarados: Mold Breaker, Water/Dark — rises from defeat again and again"
+        },
+        {
+          "slot": 3,
+          "species": "slowbro",
+          "item": "Leftovers",
+          "ability": "Regenerator",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Scald", "Psyshock", "Calm Mind", "Slack Off"]
+        },
+        {
+          "slot": 4,
+          "species": "tangrowth",
+          "item": "Rocky Helmet",
+          "ability": "Regenerator",
+          "nature": "Relaxed",
+          "evs": { "hp": 252, "def": 252, "spa": 4 },
+          "moves": ["Giga Drain", "Knock Off", "Leech Seed", "Sleep Powder"]
+        },
+        {
+          "slot": 5,
+          "species": "reuniclus",
+          "item": "Life Orb",
+          "ability": "Magic Guard",
+          "nature": "Quiet",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Calm Mind", "Psychic", "Shadow Ball", "Focus Blast"]
+        },
+        {
+          "slot": 6,
+          "species": "mandibuzz",
+          "item": "Leftovers",
+          "ability": "Overcoat",
+          "nature": "Careful",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Foul Play", "Roost", "Knock Off", "Defog"]
+        }
+      ],
+      "legendary": {
+        "species": "giratina",
+        "replacesSlot": 6,
+        "replacesSpecies": "mandibuzz",
+        "item": "Leftovers",
+        "ability": "Pressure",
+        "nature": "Careful",
+        "evs": { "hp": 252, "spd": 252, "def": 4 },
+        "moves": ["Shadow Force", "Dragon Tail", "Will-O-Wisp", "Rest"],
+        "note": "Banished but always returns — the ultimate revenant"
+      }
+    },
+    {
+      "id": "pixie",
+      "name": "The Pixie",
+      "description": "Small. Cute. Absolutely devastating. Do not be fooled by the aesthetics.",
+      "startingThree": ["breloom", "azumarill", "lopunny"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "breloom",
+          "item": "Toxic Orb",
+          "ability": "Poison Heal",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Spore", "Mach Punch", "Bullet Seed", "Swords Dance"]
+        },
+        {
+          "slot": 2,
+          "species": "azumarill",
+          "item": "Choice Band",
+          "ability": "Huge Power",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Waterfall", "Play Rough", "Aqua Jet", "Knock Off"]
+        },
+        {
+          "slot": 3,
+          "species": "lopunny",
+          "item": "Lopunnite",
+          "ability": "Cute Charm",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["High Jump Kick", "Return", "Ice Punch", "Fake Out"],
+          "megaNote": "Mega Lopunny: Scrappy hits Ghost types; one of the fastest Normal/Fighting threats in the game"
+        },
+        {
+          "slot": 4,
+          "species": "mimikyu",
+          "item": "Life Orb",
+          "ability": "Disguise",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Swords Dance", "Shadow Claw", "Play Rough", "Shadow Sneak"]
+        },
+        {
+          "slot": 5,
+          "species": "togekiss",
+          "item": "Leftovers",
+          "ability": "Serene Grace",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Nasty Plot", "Air Slash", "Flamethrower", "Roost"]
+        },
+        {
+          "slot": 6,
+          "species": "whimsicott",
+          "item": "Focus Sash",
+          "ability": "Prankster",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Moonblast", "Tailwind", "Encore", "Leech Seed"]
+        }
+      ],
+      "legendary": {
+        "species": "magearna",
+        "replacesSlot": 6,
+        "replacesSpecies": "whimsicott",
+        "item": "Leftovers",
+        "ability": "Soul-Heart",
+        "nature": "Modest",
+        "evs": { "spa": 252, "hp": 252, "spd": 4 },
+        "moves": ["Fleur Cannon", "Flash Cannon", "Focus Blast", "Calm Mind"],
+        "note": "Soul-Heart boosts Sp.Atk every time something faints — small, cute, devastating"
+      }
+    },
+    {
+      "id": "sovereign",
+      "name": "The Sovereign",
+      "description": "Six pseudo-legendaries. No gimmicks. No tricks. Just the six most powerful non-legendary Pokemon in existence.",
+      "startingThree": ["garchomp", "tyranitar", "dragonite"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "garchomp",
+          "item": "Garchompite",
+          "ability": "Rough Skin",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Swords Dance", "Earthquake", "Dragon Claw", "Stone Edge"],
+          "megaNote": "Mega Garchomp: Sand Force; the pinnacle of pseudo-legendaries — raw power with no gimmick needed"
+        },
+        {
+          "slot": 2,
+          "species": "tyranitar",
+          "item": "Choice Band",
+          "ability": "Sand Stream",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "spd": 4 },
+          "moves": ["Stone Edge", "Crunch", "Earthquake", "Ice Punch"]
+        },
+        {
+          "slot": 3,
+          "species": "dragonite",
+          "item": "Lum Berry",
+          "ability": "Multiscale",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dragon Dance", "Outrage", "Earthquake", "Extreme Speed"]
+        },
+        {
+          "slot": 4,
+          "species": "metagross",
+          "item": "Lum Berry",
+          "ability": "Clear Body",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Meteor Mash", "Earthquake", "Zen Headbutt", "Ice Punch"]
+        },
+        {
+          "slot": 5,
+          "species": "hydreigon",
+          "item": "Choice Specs",
+          "ability": "Levitate",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Draco Meteor", "Dark Pulse", "Fire Blast", "Flash Cannon"]
+        },
+        {
+          "slot": 6,
+          "species": "dragapult",
+          "item": "Choice Band",
+          "ability": "Clear Body",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Dragon Darts", "Phantom Force", "U-turn", "Sucker Punch"]
+        }
+      ],
+      "legendary": {
+        "species": "zacian",
+        "replacesSlot": 6,
+        "replacesSpecies": "dragapult",
+        "item": "Rusted Sword",
+        "ability": "Intrepid Sword",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["Play Rough", "Sacred Sword", "Wild Charge", "Iron Head"],
+        "note": "The Hero of Many Battles — raw power, no gimmicks, the only worthy replacement for a pseudo-legendary roster"
+      }
+    },
+    {
+      "id": "oracle",
+      "name": "The Oracle",
+      "description": "A seer who fights two turns ahead. Future Sight and Doom Desire land while you're focused on the present.",
+      "startingThree": ["slowking", "bronzong", "clefable"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "slowking",
+          "item": "Leftovers",
+          "ability": "Regenerator",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Future Sight", "Scald", "Slack Off", "Thunder Wave"]
+        },
+        {
+          "slot": 2,
+          "species": "bronzong",
+          "item": "Leftovers",
+          "ability": "Levitate",
+          "nature": "Sassy",
+          "evs": { "hp": 252, "def": 128, "spd": 128 },
+          "moves": ["Doom Desire", "Stealth Rock", "Gyro Ball", "Toxic"]
+        },
+        {
+          "slot": 3,
+          "species": "clefable",
+          "item": "Leftovers",
+          "ability": "Magic Guard",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Wish", "Protect", "Moonblast", "Flamethrower"]
+        },
+        {
+          "slot": 4,
+          "species": "alakazam",
+          "item": "Alakazite",
+          "ability": "Magic Guard",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Future Sight", "Psychic", "Shadow Ball", "Focus Blast"],
+          "megaNote": "Mega Alakazam: Trace copies the opponent's ability — the seer who already knows what you're going to do"
+        },
+        {
+          "slot": 5,
+          "species": "espeon",
+          "item": "Life Orb",
+          "ability": "Magic Bounce",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Future Sight", "Psychic", "Shadow Ball", "Dazzling Gleam"]
+        },
+        {
+          "slot": 6,
+          "species": "gothitelle",
+          "item": "Choice Scarf",
+          "ability": "Shadow Tag",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Psychic", "Shadow Ball", "Focus Blast", "Thunderbolt"]
+        }
+      ],
+      "legendary": {
+        "species": "hoopa",
+        "replacesSlot": 6,
+        "replacesSpecies": "gothitelle",
+        "item": "Life Orb",
+        "ability": "Magician",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Psyshock", "Dark Pulse", "Focus Blast", "Shadow Ball"],
+        "note": "Sees through rings across time and space — the oracle's true form revealed"
+      }
+    },
+    {
+      "id": "mercenary",
+      "name": "The Mercenary",
+      "description": "Never commits. Always pivoting. A team built entirely around momentum — U-turn, Volt Switch, Flip Turn. You never fight what you expect.",
+      "startingThree": ["rotom-wash", "scizor", "incineroar"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "rotom-wash",
+          "item": "Leftovers",
+          "ability": "Levitate",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Volt Switch", "Hydro Pump", "Will-O-Wisp", "Pain Split"]
+        },
+        {
+          "slot": 2,
+          "species": "scizor",
+          "item": "Scizorite",
+          "ability": "Technician",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "spd": 4 },
+          "moves": ["U-turn", "Bullet Punch", "Knock Off", "Superpower"],
+          "megaNote": "Mega Scizor: Technician + Bullet Punch priority — the pivoting anchor that always finds an angle"
+        },
+        {
+          "slot": 3,
+          "species": "incineroar",
+          "item": "Assault Vest",
+          "ability": "Intimidate",
+          "nature": "Careful",
+          "evs": { "hp": 252, "spd": 252, "atk": 4 },
+          "moves": ["Parting Shot", "Knock Off", "Flare Blitz", "U-turn"]
+        },
+        {
+          "slot": 4,
+          "species": "flygon",
+          "item": "Choice Scarf",
+          "ability": "Levitate",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["U-turn", "Earthquake", "Dragon Claw", "Stone Edge"]
+        },
+        {
+          "slot": 5,
+          "species": "jolteon",
+          "item": "Choice Specs",
+          "ability": "Volt Absorb",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Volt Switch", "Shadow Ball", "Signal Beam", "Thunderbolt"]
+        },
+        {
+          "slot": 6,
+          "species": "noivern",
+          "item": "Choice Scarf",
+          "ability": "Infiltrator",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["U-turn", "Hurricane", "Flamethrower", "Draco Meteor"]
+        }
+      ],
+      "legendary": {
+        "species": "landorus",
+        "replacesSlot": 6,
+        "replacesSpecies": "noivern",
+        "item": "Choice Scarf",
+        "ability": "Intimidate",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["U-turn", "Earthquake", "Stone Edge", "Knock Off"],
+        "note": "The definitive competitive pivot — Intimidate on switch, U-turn out, Earthquake for anything that stays"
+      }
+    },
+    {
+      "id": "devoted",
+      "name": "The Devoted",
+      "description": "Every Pokemon on this team evolved through friendship and trust. They fight not for dominance — but for the bond.",
+      "startingThree": ["sylveon", "gardevoir", "umbreon"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "sylveon",
+          "item": "Leftovers",
+          "ability": "Pixilate",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "spd": 4 },
+          "moves": ["Hyper Voice", "Wish", "Protect", "Mystical Fire"]
+        },
+        {
+          "slot": 2,
+          "species": "gardevoir",
+          "item": "Gardevoirite",
+          "ability": "Trace",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Hyper Voice", "Psyshock", "Shadow Ball", "Focus Blast"],
+          "megaNote": "Mega Gardevoir: Pixilate converts Hyper Voice to 130BP Fairy — evolved through trust, now fights for the bond"
+        },
+        {
+          "slot": 3,
+          "species": "umbreon",
+          "item": "Leftovers",
+          "ability": "Synchronize",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Foul Play", "Wish", "Protect", "Heal Bell"]
+        },
+        {
+          "slot": 4,
+          "species": "lucario",
+          "item": "Life Orb",
+          "ability": "Justified",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Nasty Plot", "Aura Sphere", "Shadow Ball", "Flash Cannon"]
+        },
+        {
+          "slot": 5,
+          "species": "blissey",
+          "item": "Leftovers",
+          "ability": "Natural Cure",
+          "nature": "Calm",
+          "evs": { "hp": 252, "spd": 252, "def": 4 },
+          "moves": ["Wish", "Protect", "Seismic Toss", "Heal Bell"]
+        },
+        {
+          "slot": 6,
+          "species": "espeon",
+          "item": "Life Orb",
+          "ability": "Magic Bounce",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Calm Mind", "Psychic", "Shadow Ball", "Dazzling Gleam"]
+        }
+      ],
+      "legendary": {
+        "species": "mew",
+        "replacesSlot": 6,
+        "replacesSpecies": "espeon",
+        "item": "Leftovers",
+        "ability": "Synchronize",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Nasty Plot", "Psychic", "Aura Sphere", "Shadow Ball"],
+        "note": "The original companion — bonds with every trainer it meets"
+      }
+    },
+    {
+      "id": "mythmaker",
+      "name": "The Mythmaker",
+      "description": "Pokemon that exist in legend and folklore — not quite legendary, but the stuff of myth. The kitsune, the sea serpent, the omen-bringer.",
+      "startingThree": ["ninetales", "milotic", "arcanine"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "ninetales",
+          "item": "Leftovers",
+          "ability": "Flash Fire",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Will-O-Wisp", "Hex", "Fire Blast", "Nasty Plot"]
+        },
+        {
+          "slot": 2,
+          "species": "milotic",
+          "item": "Leftovers",
+          "ability": "Marvel Scale",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Scald", "Ice Beam", "Recover", "Dragon Pulse"]
+        },
+        {
+          "slot": 3,
+          "species": "arcanine",
+          "item": "Choice Band",
+          "ability": "Intimidate",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Flare Blitz", "Extreme Speed", "Wild Charge", "Close Combat"]
+        },
+        {
+          "slot": 4,
+          "species": "absol",
+          "item": "Absolite",
+          "ability": "Super Luck",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Night Slash", "Sucker Punch", "Play Rough", "Swords Dance"],
+          "megaNote": "Mega Absol: Magic Bounce — the omen-bearer that reflects curses back at those who cast them"
+        },
+        {
+          "slot": 5,
+          "species": "rapidash",
+          "item": "Life Orb",
+          "ability": "Flash Fire",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Flare Blitz", "Wild Charge", "Drill Run", "High Horsepower"]
+        },
+        {
+          "slot": 6,
+          "species": "dragonair",
+          "item": "Eviolite",
+          "ability": "Shed Skin",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Dragon Dance", "Outrage", "Aqua Tail", "Iron Tail"]
+        }
+      ],
+      "legendary": {
+        "species": "hooh",
+        "replacesSlot": 6,
+        "replacesSpecies": "dragonair",
+        "item": "Leftovers",
+        "ability": "Regenerator",
+        "nature": "Adamant",
+        "evs": { "atk": 252, "hp": 252, "spd": 4 },
+        "moves": ["Sacred Fire", "Brave Bird", "Earthquake", "Recover"],
+        "note": "The rainbow phoenix of legend — the mythmaker's ultimate omen"
+      }
+    },
+    {
+      "id": "ghost-town",
+      "name": "The Ghost Town",
+      "description": "Keepers of abandoned places — ancient golems, haunted clay, and the spirits of buildings long forgotten.",
+      "startingThree": ["decidueye", "golurk", "cofagrigus"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "decidueye",
+          "item": "Life Orb",
+          "ability": "Overgrow",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Spirit Shackle", "Leaf Blade", "Shadow Sneak", "Swords Dance"]
+        },
+        {
+          "slot": 2,
+          "species": "golurk",
+          "item": "Choice Band",
+          "ability": "No Guard",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Dynamic Punch", "Shadow Punch", "Earthquake", "Ice Punch"]
+        },
+        {
+          "slot": 3,
+          "species": "cofagrigus",
+          "item": "Leftovers",
+          "ability": "Mummy",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Will-O-Wisp", "Hex", "Nasty Plot", "Recover"]
+        },
+        {
+          "slot": 4,
+          "species": "banette",
+          "item": "Banettite",
+          "ability": "Prankster",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Shadow Claw", "Will-O-Wisp", "Destiny Bond", "Knock Off"],
+          "megaNote": "Mega Banette: Prankster gives priority to Will-O-Wisp and Destiny Bond — the haunted doll that drags you down with it"
+        },
+        {
+          "slot": 5,
+          "species": "runerigus",
+          "item": "Leftovers",
+          "ability": "Wandering Spirit",
+          "nature": "Impish",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Will-O-Wisp", "Counter", "Pain Split", "Earthquake"]
+        },
+        {
+          "slot": 6,
+          "species": "palossand",
+          "item": "Leftovers",
+          "ability": "Water Compaction",
+          "nature": "Modest",
+          "evs": { "spa": 252, "hp": 252, "def": 4 },
+          "moves": ["Shadow Ball", "Earth Power", "Giga Drain", "Shore Up"]
+        }
+      ],
+      "legendary": {
+        "species": "spectrier",
+        "replacesSlot": 6,
+        "replacesSpecies": "palossand",
+        "item": "Choice Specs",
+        "ability": "Grim Neigh",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Shadow Ball", "Hex", "Will-O-Wisp", "Nasty Plot"],
+        "note": "The spectral horse haunting the abandoned town — Grim Neigh boosts Sp.Atk on each KO"
+      }
+    },
+    {
+      "id": "plague-doctor",
+      "name": "The Plague Doctor",
+      "description": "Burns, poisons, paralysis. Every Pokemon inflicts a different ailment, then exploits it. Attrition warfare.",
+      "startingThree": ["toxicroak", "gliscor", "drapion"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "toxicroak",
+          "item": "Black Sludge",
+          "ability": "Dry Skin",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Swords Dance", "Gunk Shot", "Drain Punch", "Sucker Punch"]
+        },
+        {
+          "slot": 2,
+          "species": "gliscor",
+          "item": "Toxic Orb",
+          "ability": "Poison Heal",
+          "nature": "Impish",
+          "evs": { "hp": 252, "def": 252, "spe": 4 },
+          "moves": ["Earthquake", "Facade", "Toxic", "Roost"]
+        },
+        {
+          "slot": 3,
+          "species": "weezing",
+          "item": "Black Sludge",
+          "ability": "Levitate",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Will-O-Wisp", "Toxic Spikes", "Strange Steam", "Flamethrower"]
+        },
+        {
+          "slot": 4,
+          "species": "gengar",
+          "item": "Leftovers",
+          "ability": "Cursed Body",
+          "nature": "Timid",
+          "evs": { "spa": 252, "spe": 252, "hp": 4 },
+          "moves": ["Will-O-Wisp", "Hex", "Shadow Ball", "Nasty Plot"]
+        },
+        {
+          "slot": 5,
+          "species": "drapion",
+          "item": "Black Sludge",
+          "ability": "Sniper",
+          "nature": "Jolly",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Toxic Spikes", "Crunch", "Knock Off", "Cross Poison"]
+        },
+        {
+          "slot": 6,
+          "species": "venusaur",
+          "item": "Venusaurite",
+          "ability": "Overgrow",
+          "nature": "Bold",
+          "evs": { "hp": 252, "def": 252, "spd": 4 },
+          "moves": ["Sleep Powder", "Sludge Bomb", "Giga Drain", "Leech Seed"],
+          "megaNote": "Mega Venusaur: Thick Fat; Sleep Powder into Leech Seed — the plague doctor's slow, inevitable drain"
+        }
+      ],
+      "legendary": {
+        "species": "pecharunt",
+        "replacesSlot": 4,
+        "replacesSpecies": "gengar",
+        "item": "Leftovers",
+        "ability": "Poison Puppeteer",
+        "nature": "Timid",
+        "evs": { "spa": 252, "spe": 252, "hp": 4 },
+        "moves": ["Malignant Chain", "Shadow Ball", "Nasty Plot", "Recover"],
+        "note": "Controls others through toxins — Poison Puppeteer confuses anything it poisons"
+      }
+    },
+    {
+      "id": "warlord",
+      "name": "The Warlord",
+      "description": "A conquering general and their elite guard. Disciplined, aggressive, built for sustained military campaigns.",
+      "startingThree": ["gallade", "aegislash", "bisharp"],
+      "maxTeam": [
+        {
+          "slot": 1,
+          "species": "gallade",
+          "item": "Galladite",
+          "ability": "Justified",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Close Combat", "Zen Headbutt", "Knock Off", "Swords Dance"],
+          "megaNote": "Mega Gallade: Inner Focus; higher Speed and Attack — the general who leads every charge from the front"
+        },
+        {
+          "slot": 2,
+          "species": "aegislash",
+          "item": "Weakness Policy",
+          "ability": "Stance Change",
+          "nature": "Quiet",
+          "evs": { "spa": 252, "hp": 252, "atk": 4 },
+          "moves": ["King's Shield", "Shadow Ball", "Iron Head", "Shadow Sneak"]
+        },
+        {
+          "slot": 3,
+          "species": "bisharp",
+          "item": "Black Glasses",
+          "ability": "Defiant",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Knock Off", "Iron Head", "Sucker Punch", "Swords Dance"]
+        },
+        {
+          "slot": 4,
+          "species": "conkeldurr",
+          "item": "Flame Orb",
+          "ability": "Guts",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Drain Punch", "Mach Punch", "Knock Off", "Ice Punch"]
+        },
+        {
+          "slot": 5,
+          "species": "escavalier",
+          "item": "Choice Band",
+          "ability": "Overcoat",
+          "nature": "Brave",
+          "evs": { "atk": 252, "hp": 252, "def": 4 },
+          "moves": ["Megahorn", "Iron Head", "Knock Off", "Drill Run"]
+        },
+        {
+          "slot": 6,
+          "species": "staraptor",
+          "item": "Choice Band",
+          "ability": "Reckless",
+          "nature": "Adamant",
+          "evs": { "atk": 252, "spe": 252, "hp": 4 },
+          "moves": ["Brave Bird", "Double-Edge", "Close Combat", "Quick Attack"]
+        }
+      ],
+      "legendary": {
+        "species": "cobalion",
+        "replacesSlot": 6,
+        "replacesSpecies": "staraptor",
+        "item": "Choice Band",
+        "ability": "Justified",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "hp": 4 },
+        "moves": ["Sacred Sword", "Iron Head", "Close Combat", "Stone Edge"],
+        "note": "General of the Swords of Justice — the warlord's legendary commander"
+      }
+    }
+  ]
+}

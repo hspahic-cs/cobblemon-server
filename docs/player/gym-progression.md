@@ -23,5 +23,7 @@ advancement (`server:beat_gym_<N>`) which gates other content.
 ## Read more
 
 - **[Gym system design](../design/gym-system.md)** — full design doc
-- **[Gym leader teams](../design/reference/gym-leader-teams.md)** — every roster
 - **[Economy](economy.md)** — what gym wins pay out
+
+Full gym leader rosters live in the `server-gyms` datapack under
+`modpack/server-overrides/datapacks/server-gyms/data/server/trainers/`.

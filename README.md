@@ -31,7 +31,7 @@ cobblemon-server/
 │   ├── mods/*.pw.toml         third-party mod manifests (Modrinth-fetched)
 │   ├── overrides/             client-side files in the .mrpack
 │   └── server-overrides/      datapacks rsynced to /opt/cobblemon-*/world/datapacks/
-├── docs/                    design + how-to docs (start at docs/index.md)
+├── docs/                    player + dev + design docs (start at docs/README.md)
 ├── ops/                     VM-side scripts (snapshot, reset)
 ├── reference/               local clones of upstream mod source (gitignored)
 ├── scripts/                 local helper scripts
@@ -41,14 +41,20 @@ cobblemon-server/
 
 ## Documentation
 
-Start at **[docs/index.md](docs/index.md)** for the full doc tree.
+Start at **[docs/README.md](docs/README.md)** for the full doc tree. The docs split
+into three audiences:
+
+- **[docs/player/](docs/player/README.md)** — playing on the server (install, connect, economy, gyms, PvP)
+- **[docs/dev/](docs/dev/README.md)** — operating + contributing (build, ship, snapshots, conventions)
+- **[docs/design/](docs/design/README.md)** — design rationale and decision logs
 
 Quick links:
-- **[Working with mods (E2E guide)](docs/working-with-mods.md)** — edit a mod, ship to dev, promote to prod
-- **[Snapshots and dev resets](docs/snapshots.md)**
-- **[Server VM setup](docs/server-setup.md)**
+- **[Working with mods (E2E guide)](docs/dev/working-with-mods.md)** — edit a mod, ship to dev, promote to prod
+- **[Snapshots and dev resets](docs/dev/snapshots.md)**
+- **[Server VM setup](docs/dev/server-setup.md)**
 - **[Gym system design](docs/design/gym-system.md)**
 - **[PvP Elo design](docs/design/pvp-elo.md)**
+- **[Economy design](docs/design/economy-design.md)**
 
 ## Deploying
 
@@ -60,4 +66,4 @@ TL;DR for shipping a change:
 4. Tag `vX.Y.Z` → GitHub Release with `.mrpack` is drafted.
 5. Manually run "Deploy prod" workflow against the tag.
 
-Full guide: [docs/working-with-mods.md](docs/working-with-mods.md).
+Full guide: [docs/dev/working-with-mods.md](docs/dev/working-with-mods.md).

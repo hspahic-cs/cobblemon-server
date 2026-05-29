@@ -56,7 +56,7 @@ to Cloudflare R2, with the URL embedded in the issue body.
 ### Configuration
 
 Per-instance (token is sensitive, so this is **runtime** config — see
-[mod-state-vs-config](mod-state-vs-config.md)):
+[mod-state-vs-config](../dev/conventions/mod-state-vs-config.md)):
 
 ```
 /opt/cobblemon-{dev,prod}/config/cobblemon-feedback/runtime/config.json

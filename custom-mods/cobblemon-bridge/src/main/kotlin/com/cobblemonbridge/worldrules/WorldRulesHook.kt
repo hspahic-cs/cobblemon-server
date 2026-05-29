@@ -189,21 +189,21 @@ object WorldRulesHook {
     // ─── Tagged-entity invulnerability ───────────────────────────────────────
 
     /**
-     * Make admin-tagged entities (gym leaders, gym-TP villagers, anything
-     * stamped with a `cobblemon_bridge.*` tag) invulnerable to non-op players
-     * in [NO_MOB_NAMESPACES] dims. Ops can still damage them for cleanup —
-     * same out we have everywhere else in this hook.
+     * Make admin-tagged entities (gym leaders, gym-TP villagers, market
+     * vendors, anything stamped with a `cobblemon_bridge.*` tag) invulnerable
+     * to non-op players — in any dimension. 0.7.3 introduced this gated to
+     * [NO_MOB_NAMESPACES] (`multiworld:*`), but tagged entities live in the
+     * overworld too (market vendors, future overworld gym leaders) and were
+     * still killable there. Gate dropped in 0.7.6.
      *
-     * Pokemon battles aren't affected: they're driven by Showdown, not the
-     * vanilla damage path.
+     * Ops bypass — same out as elsewhere in this hook. Environmental damage
+     * (lava/fall/suffocation/void) still applies. Pokemon battles aren't
+     * affected: those are driven by Showdown, not the vanilla damage path.
      */
     @SubscribeEvent
     fun onIncomingDamage(event: LivingIncomingDamageEvent) {
         val target = event.entity
-        if (!isNoMobDim(target.level())) return
         if (target.tags.none { it.startsWith("cobblemon_bridge.") }) return
-        // Only block damage that originates from a non-op player. Lava/fall/
-        // suffocation/etc. still apply (rare in arenas, but cleaner contract).
         val attacker = event.source.entity as? ServerPlayer ?: return
         if (isOp(attacker)) return
         event.isCanceled = true

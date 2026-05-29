@@ -3,12 +3,16 @@ package com.cobblemonbridge.battle
 import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
+import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor
 import com.cobblemonbridge.CobblemonBridge
+import com.cobblemonbridge.economy.EconomyBridge
 import com.cobblemonbridge.quests.QuestAdvancements
 import com.cobblemonbridge.tags.BridgeTags
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import java.util.UUID
@@ -18,24 +22,78 @@ import java.util.concurrent.ConcurrentHashMap
  * Bridge a `cobblemon_bridge.gym_id.<N>` tag on an NPC to `server:beat_gym_<N>` advancement
  * award on the player who beats them in battle.
  *
- * Same stash-on-interact / apply-later pattern as [AdjustLevelHook], with a longer TTL because
- * a gym battle can run several minutes. The stash is populated on `EntityInteract` and consumed
- * on `BATTLE_VICTORY` for the winning player. Lost or fled battles never reach `BATTLE_VICTORY`
- * for the player as winner, so the stash entry naturally expires.
+ * Two ways the stash gets populated, both consumed by [applyToVictory]:
+ *
+ *  1. **[onEntityInteract]** — player right-clicked the trainer. Precise; this is the primary
+ *     path for the host who placed the NPC and is fighting them deliberately.
+ *  2. **[stashFromBattleStart]** at `BATTLE_STARTED_PRE` — fallback for RCT's line-of-sight
+ *     auto-engagement (the trainer challenges the player by walking into view). No right-click
+ *     happens in that case, so the interact stash is empty. We scan entities within
+ *     [PROXIMITY_RADIUS] of each player actor at battle start, pick the nearest one carrying
+ *     a `cobblemon_bridge.gym_id.*` tag, and stash that. Bug uncovered when a second
+ *     playtester engaged Clay via LOS and never got the achievement.
+ *
+ * Entries auto-expire after [STASH_TTL_MS] in case the battle drags out or never resolves.
+ * Lost/fled battles never reach BATTLE_VICTORY for the player as winner, so a stale stash
+ * naturally times out.
  */
 object GymDefeatHook {
 
     private const val STASH_TTL_MS: Long = 5 * 60 * 1000L  // 5 minutes — gym fights can drag
 
+    /** Radius around the player to scan for a tagged gym NPC when the EntityInteract stash is
+     *  empty. RCT line-of-sight engagement walks the trainer adjacent to the player, so a
+     *  small radius is enough; the larger it is, the higher the chance of picking the wrong
+     *  trainer if two are in the same area. */
+    private const val PROXIMITY_RADIUS: Double = 8.0
+
     private data class Pending(val gymId: Int, val isChallenge: Boolean, val capturedAtMs: Long)
 
-    /** playerUuid → pending stash from EntityInteract. */
+    /** playerUuid → pending stash from EntityInteract or BATTLE_STARTED_PRE proximity. */
     private val pendingByPlayer: MutableMap<UUID, Pending> = ConcurrentHashMap()
 
     fun registerEvents() {
+        CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL) { event ->
+            stashFromBattleStart(event.battle)
+        }
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
             applyToVictory(event)
         }
+    }
+
+    /**
+     * Fallback for RCT line-of-sight engagement. Runs when the battle is being constructed —
+     * for each player actor on a side with a TrainerBattleActor opposite, if the EntityInteract
+     * stash is empty, scan nearby entities for the nearest one carrying a
+     * `cobblemon_bridge.gym_id.*` tag and stash it. Doesn't overwrite an existing stash (the
+     * EntityInteract path is more specific).
+     */
+    internal fun stashFromBattleStart(battle: PokemonBattle) {
+        val now = System.currentTimeMillis()
+        val allActors = battle.sides.flatMap { it.actors.toList() }
+        val hasTrainer = allActors.any { it is TrainerBattleActor }
+        if (!hasTrainer) return  // wild battle, nothing to detect
+        for (actor in allActors) {
+            val playerActor = actor as? PlayerBattleActor ?: continue
+            val player = playerActor.entity as? ServerPlayer ?: continue
+            if (pendingByPlayer.containsKey(player.uuid)) continue  // interact already stashed
+            val nearby = findNearbyGymTrainer(player) ?: continue
+            pendingByPlayer[player.uuid] = Pending(nearby.first, nearby.second, now)
+            CobblemonBridge.logger.debug(
+                "cobblemon-bridge: stashed gym_id={}{} for {} via proximity fallback",
+                nearby.first, if (nearby.second) " (challenge)" else "", player.gameProfile.name,
+            )
+        }
+    }
+
+    private fun findNearbyGymTrainer(player: ServerPlayer): Pair<Int, Boolean>? {
+        val box = player.boundingBox.inflate(PROXIMITY_RADIUS)
+        val candidates = player.level().getEntitiesOfClass(Entity::class.java, box) { e ->
+            BridgeTags.findGymId(e.tags) != null
+        }
+        val best = candidates.minByOrNull { it.distanceToSqr(player) } ?: return null
+        val gymId = BridgeTags.findGymId(best.tags) ?: return null
+        return gymId to BridgeTags.isGymChallenge(best.tags)
     }
 
     @SubscribeEvent
@@ -71,6 +129,7 @@ object GymDefeatHook {
                     CobblemonBridge.logger.info(
                         "cobblemon-bridge: awarded {} to {}", advancementId, player.gameProfile.name,
                     )
+                    payGymBounty(player, pending.gymId, pending.isChallenge)
                 }
                 continue
             }
@@ -86,6 +145,39 @@ object GymDefeatHook {
                 }
             }
         }
+    }
+
+    /**
+     * Income payout for a first-time gym defeat. Tiered per server design:
+     *   - Gyms 1-10 (mainline ladder):   $50 + $25×(N-1)  → 50, 75, 100, 125, … 275
+     *   - Gyms 11-19 (rotating roster):  flat $200 each
+     *   - Gyms 20-23 (Elite Four):       flat $300 per trainer
+     *   - Gym  24    (Champion):         $500
+     *
+     * Challenge (Hard Mode) variants match the base reward — silent on the user spec, so
+     * defaulting to "rematch pays again" rather than zero. Bump to a separate table here if
+     * Hard Mode should pay differently.
+     *
+     * Called only when [QuestAdvancements.award] returns true, so already gated to first-beat.
+     */
+    internal fun gymBounty(gymId: Int, isChallenge: Boolean): Int {
+        val base = when (gymId) {
+            in 1..10  -> 50 + 25 * (gymId - 1)
+            in 11..19 -> 200
+            in 20..23 -> 300
+            24        -> 500
+            else      -> 0
+        }
+        return base  // isChallenge unused for now — see kdoc.
+    }
+
+    private fun payGymBounty(player: ServerPlayer, gymId: Int, isChallenge: Boolean) {
+        val amount = gymBounty(gymId, isChallenge)
+        if (amount <= 0) return
+        EconomyBridge.deposit(player.uuid, amount)
+        player.sendSystemMessage(Component.literal(
+            "§6§l+ §e§l\$$amount §6§lfor defeating gym ${gymId}${if (isChallenge) " (Hard Mode)" else ""}"
+        ))
     }
 
     /** Test seam. */

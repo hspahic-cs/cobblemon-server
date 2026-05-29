@@ -1,13 +1,14 @@
 {
   "name": "Hard Mode: Gym Leader Byron",
   "identity": "Steel",
+  "textureResource": "rctmod:textures/trainers/single/gym_leader_byron_0399.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

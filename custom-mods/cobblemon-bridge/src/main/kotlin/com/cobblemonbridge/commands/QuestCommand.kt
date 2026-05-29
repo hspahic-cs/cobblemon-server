@@ -35,7 +35,7 @@ object QuestCommand {
         "server:beat_wild_trainer",
         "server:reach_party_level_20",
         "server:beat_gym_1",
-        "server:reach_income_250",
+        "server:reach_income_100",
         "server:first_pvp_win",
     )
 
@@ -52,7 +52,7 @@ object QuestCommand {
     private val CHAMPION: List<String> = listOf("server:beat_gym_24")
 
     private val INCOME_TRACK = listOf(
-        "server:reach_income_250",
+        "server:reach_income_100",
         "server:reach_income_1000",
         "server:reach_income_10000",
         "server:reach_income_100000",
@@ -85,7 +85,7 @@ object QuestCommand {
         put("server:farm_carrots",         "§f3 Blue Apricorn Sprouts")
         put("server:beat_wild_trainer",    "§fSophisticated Backpack")
         put("server:reach_party_level_20", "§aCommon Egg")
-        put("server:reach_income_250",     "§fPasture Block")
+        put("server:reach_income_100",     "§fPasture Block")
         put("server:first_pvp_win",        "§aCommon Egg")
         put("server:reach_income_1000",    "§fMinecolonies Supply Camp")
         put("server:reach_income_10000",   "§f1 Master Ball")

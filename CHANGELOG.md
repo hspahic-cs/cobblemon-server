@@ -12,6 +12,175 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.6] - 2026-05-29
+
+### Fixed
+- **cobblemon-bridge / GymDefeatHook**: gym-leader defeat awards were
+  inconsistent across players. The host (who right-clicked Clay)
+  got the `server:beat_gym_1` advancement + quest completion + reward;
+  a playtester who got engaged via RCT's line-of-sight auto-challenge
+  (no right-click) silently missed all three. Root cause: the hook
+  stashed `gym_id` only on `PlayerInteractEvent.EntityInteract`, so
+  the LOS path bypassed the stash entirely and only the generic
+  `server:beat_wild_trainer` advancement fired. New
+  `BATTLE_STARTED_PRE` subscriber fills in the gap: when an actor's
+  side has a `TrainerBattleActor` and the player has no existing
+  stash, scan entities within 8 blocks of the player for the nearest
+  one carrying a `cobblemon_bridge.gym_id.*` tag and stash that
+  match. EntityInteract still takes priority when both signals
+  fire, so the precise click-based path is unchanged.
+- **cobblemon-market / default vendor shows empty**: the unscoped
+  market shopkeeper opened with an empty grid. 0.7.4 added `vendorTag`
+  and `sellable` fields to `ItemEntry` but the six pre-0.7.4 entries
+  in `items.json` (`cobblemon:rare_candy`, `…:ultra_ball`,
+  `…:great_ball`, `…:poke_ball`, `…:revive`, `minecraft:carrot`)
+  never had those fields filled in. Gson constructs Kotlin data
+  classes via Unsafe (skipping the constructor), so Kotlin
+  default-parameter values like `vendorTag: String = ""` are NOT
+  applied to a missing JSON field — the field deserializes to `null`,
+  the menu filter `vendorTag == ""` skipped every legacy entry, and
+  the default shop rendered empty. Fixed in two layers: (1) backfill
+  explicit `vendorTag: ""` + `sellable: true` on the six legacy
+  entries in `items.json`, and (2) make both fields nullable on
+  `ItemEntry` with `vendorScope` / `isSellable` extensions that treat
+  null as the documented default. Hand-edited entries that omit
+  either field now do the right thing instead of silently dropping
+  out of the menu.
+
+### Added
+- **cobblemon-bridge / MarketVendorAnchor**: market villagers were
+  spawned with `NoAI:1b` so they wouldn't wander, but that froze
+  every animation — vendors read as broken statues. New approach
+  flips AI back ON (so vanilla `LookAtPlayer` + `LookAround`
+  behaviours drive natural head + body movement, including trade-
+  look toward nearby players) and anchors the vendor to its spawn
+  position via a per-tick position-snap. Anchor is captured on first
+  sighting and stashed in entity NBT (`persistentData`), so it
+  survives chunk unloads + restarts. Tolerance is ~0.05 blocks, so
+  the snap fires on the first sub-tick the AI tries to step — the
+  body never visibly leaves the anchor. Replaces the original
+  snap-rotation `NpcFaceNearestPlayer` from earlier in 0.7.6 dev
+  (that one snapped the full body toward the nearest player every
+  10 ticks, which read as twitchy).
+- **market spawn functions**: both spawn paths (mcfunction default
+  vendor + Kotlin `/market admin spawn <tag>` TM vendors) stop
+  setting `NoAI:1b` so newly summoned vendors come up with AI
+  enabled. Existing pre-0.7.7 vendors are auto-upgraded the first
+  time `MarketVendorAnchor` sees them (it flips `noAi` off in
+  place).
+- **cobblemon-market / paged shop menu**: large vendors (`tm_normal`
+  ~169 entries; `tm_psychic` ~53; `tm_fighting` 45) were truncated to
+  the first 45 items by the single-page layout. Row 0 now hosts a
+  `Previous Page` arrow at slot 0, the balance display at slot 4, and
+  a `Next Page` arrow at slot 8. Each page shows up to 45 items in
+  stable registration order. Arrows only appear when there's a page
+  to go to; nav lore reads `Page X / Y`. The page state is per-menu —
+  closing and re-opening returns to page 1.
+
+### Changed
+- **SimpleTMs / TM acquisition locked to market vendors**: 0.7.4
+  disabled trainer-defeat drops but other paths (chest loot in
+  structures + blank-TM crafting) were still open. Closed three more:
+  - `simpletms/main.json`: `blankTMsUsable` + `blankTRsUsable` flipped
+    `true → false`. Even if players craft a blank TM/TR via the mod's
+    recipes, the item can't be used to receive a move — so the
+    "blank → typed via Pokémon snapshot" path is dead.
+  - `simpletms/main.json`: `dropRateTMFractionInBattle` +
+    `dropRateTMFractionOutsideOfBattle` zeroed for cleanliness
+    (already gated by `dropInBattle`/`dropOutsideOfBattle = false`).
+  - **server-no-tm-loot** (new datapack): 45 empty-pool overrides for
+    every SimpleTMs structure-injection loot table (vanilla chests,
+    cobblemon ruins/shipwrecks/villages, pokeloot blocks, BCA
+    structures). Match each `data/simpletms/loot_table/injection/<…>.json`
+    with our own `{ "type": "minecraft:chest", "pools": [] }` so the
+    mod's appended loot is a no-op. Generation lives in
+    `ops/seed_simpletms_loot_blockers.py`; rerun to refresh against a
+    new SimpleTMs version that adds injection paths.
+  Net: the type-vendor market shop (`/market admin spawn tm_<type>`)
+  is the only player path; admin `/give` still works.
+- **server-gyms / Gym 6 swapped Roxie → Volkner (Poison → Electric)**:
+  gym 6 is now Volkner with an electric-typed roster. Volkner has a
+  bundled RCT skin (`gym_leader_volkner_03db`) so the swap fills in a
+  proper trainer model at the same time. Team (level 40): Galvantula
+  / Magnezone / Lanturn / Jolteon / Electivire / Luxray, with a
+  Hard Mode variant at level 45 + max IVs. All gym 6 references
+  (advancements, HUD, chat, spawn/delete/list mcfunctions, README,
+  trainer mob registration) renamed `gym_06_roxie*` →
+  `gym_06_volkner*`.
+- **server-gyms / RCT trainer skins**: 12 named gym leaders + Volkner
+  (gym 6) now declare `textureResource` pointing at a bundled RCT
+  texture, so the entity renders with a real skin instead of the
+  default trainer model. Coverage:
+  - Exact gym-leader skins (8): Gardenia (2), Byron (4), Crasher Wake
+    (7), Volkner (6 — new), Oak (19), Lorelei (20), Cynthia (21),
+    Agatha (22), Lance (23).
+  - Close `leader_*` matches (4): Blaine (5), Sabrina (8), Morty (10),
+    Lt. Surge (13).
+  - The remaining 11 gym leaders (Clay, Korrina, Roxie-was-here,
+    Drayden, Viola, Cheren, Grant, Skyla, Brycen, Valerie, Marnie,
+    Champion) have no bundled match — they keep the default skin
+    until/unless a resource pack ships their textures. Wiring lives
+    in `ops/wire_trainer_skins.py` for repeatable runs.
+- **cobblemon-bridge / GymDefeatHook**: first-time gym defeats now
+  deposit money on top of the advancement reward. Table:
+  - Gyms 1-10 (mainline ladder): `$50 + $25×(N-1)` → 50, 75, 100,
+    125, 150, 175, 200, 225, 250, 275
+  - Gyms 11-19 (rotating roster): flat $200 per defeat
+  - Gyms 20-23 (Elite Four): flat $300 per trainer
+  - Gym 24 (Champion): $500
+  Gated by the advancement, so each tier pays exactly once per
+  player. Challenge ("Hard Mode") variants currently match the base
+  reward — bump `gymBounty` if you want them to differ.
+- **server-quests / reach_income_250 → reach_income_100**: pocket-
+  change milestone threshold lowered $250 → $100 so first-server-day
+  players hit it during the carrots/wild loop instead of grinding to
+  the second hour. Renamed files, every datapack + Kotlin reference
+  (`first_pvp_win.json`, `reach_elo_1100.json`, `reach_income_1000.json`,
+  `_finalize.mcfunction`, `tick_player.mcfunction`,
+  `QuestCommand.kt`, `QuestRewards.INCOME_THRESHOLDS`) updated to
+  point to the new advancement id. Reward bundle (Pasture Block) is
+  unchanged.
+- **server-quests / inline upcoming-reward hint**: every quest-complete
+  `tellraw` now appends `§8(Reward: <X>§8)` to its `Next:` line, so
+  the player sees the upcoming reward without running `/quests`. e.g.
+  `Next: Set a Home (/sethome) §8(Reward: §f3 Red Apricorn Sprouts§8)`.
+  Multi-target hints (Gym 1's "Reach $100 or Gym 2") list both
+  rewards; duplicate labels deduplicate. Source of truth for the
+  mapping lives in `ops/inline_quest_rewards.py` (mirrors the
+  `QuestCommand.REWARDS` map + chain shape).
+- **server-quests / HUD + reward chat**: the income-quest HUD
+  actionbar now reads `Reach $100 — sell items at /warp market
+  (tip: /market prices)`. Every quest-grant `tellraw` upgraded the
+  `Reward:` line from `§7Reward: §f...` (gray on white) to
+  `§6§l✦ Reward: §e§l...` (bold gold label, bold yellow item) so
+  what was just-granted reads as the dominant line in the chat
+  block. Applied across all 54 reward mcfunctions in a single sweep.
+- **server-gyms / battleRules**: trainer JSONs flipped
+  `"maxItemUses": 0` → `"maxItemUses": 999` across all 34 gym +
+  challenge fights, so players can use bag items (potions, revives,
+  status cures) during NPC battles. Was hard-disabled before; high
+  cap rather than `null` so RCT still tracks usage if we want to
+  re-cap a particular fight later.
+- **cobblemon-bridge / WildBattleRewardHook**: wild-battle bounty
+  flipped off (`BOUNTY = 0`). Was `\$2` per KO or capture; the
+  cobblemon-economy auto-payouts for `battleVictoryReward` and
+  `capture_event_base_reward` were already zeroed in config, so this
+  removes the last source of wild-encounter income. Wilds are now
+  purely XP / catch-progression — the economy loop runs through
+  trainer battles + quests + market trades only. Set
+  `BOUNTY` back to a positive int to re-enable.
+- **cobblemon-bridge / WorldRulesHook.onIncomingDamage**: tagged-
+  entity invulnerability now applies in every dimension, not just
+  `multiworld:*`. 0.7.3 gated this to the showcase worlds; trainers
+  and market vendors that live in the overworld (or anywhere else)
+  were still killable by non-ops. Anything stamped with a
+  `cobblemon_bridge.*` tag — gym leaders, gym-TP villagers, market
+  shopkeepers, future overworld NPCs — is now zero-damage from
+  regular players in any world. Ops can still damage them for
+  cleanup. Environmental damage (lava / fall / void / suffocation)
+  still applies. Pokemon battles are unaffected: Showdown runs
+  outside the vanilla damage path.
+
 ## [0.7.5] - 2026-05-29
 
 ### Fixed

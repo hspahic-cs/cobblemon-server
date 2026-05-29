@@ -3,6 +3,7 @@ package com.cobblemonmarket.commands
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemConfig
 import com.cobblemonmarket.config.MarketConfig
+import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
 import com.cobblemonmarket.data.Candle
 import com.cobblemonmarket.data.PriceHistory
@@ -180,7 +181,7 @@ object MarketCommands {
                         .then(Commands.argument("vendorTag", StringArgumentType.word())
                             .suggests { _, builder ->
                                 CobblemonMarket.items.values
-                                    .map { it.vendorTag }
+                                    .map { it.vendorScope }
                                     .filter { it.isNotEmpty() }
                                     .toSortedSet()
                                     .forEach { builder.suggest(it) }
@@ -231,7 +232,10 @@ object MarketCommands {
         villager.isInvulnerable = true
         villager.setPersistenceRequired()
         villager.isSilent = true
-        villager.isNoAi = true
+        // AI intentionally left on so vanilla LookAtPlayer + LookAround drive natural head
+        // movement. cobblemon-bridge MarketVendorAnchor pins the villager to its spawn position
+        // each tick so it can't actually wander even with full AI active.
+        villager.isNoAi = false
         villager.villagerData = net.minecraft.world.entity.npc.VillagerData(
             net.minecraft.world.entity.npc.VillagerType.PLAINS,
             net.minecraft.world.entity.npc.VillagerProfession.LIBRARIAN,

@@ -1,0 +1,79 @@
+{
+  "name": "Hard Mode: Gym Leader Volkner",
+  "identity": "Electric",
+  "textureResource": "rctmod:textures/trainers/single/gym_leader_volkner_03db.png",
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 999,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "galvantula",
+      "level": 45,
+      "nature": "timid",
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 85, "atk": 85, "def": 85, "spa": 85, "spd": 85, "spe": 85 },
+      "ability": "compoundeyes",
+      "heldItem": "cobblemon:focus_sash",
+      "moveset": ["thunder", "bugbuzz", "stickyweb", "thunderwave"]
+    },
+    {
+      "species": "magnezone",
+      "level": 45,
+      "nature": "modest",
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 85, "atk": 85, "def": 85, "spa": 85, "spd": 85, "spe": 85 },
+      "ability": "magnetpull",
+      "heldItem": "cobblemon:assault_vest",
+      "moveset": ["thunderbolt", "flashcannon", "thunderwave", "voltswitch"]
+    },
+    {
+      "species": "lanturn",
+      "level": 45,
+      "nature": "calm",
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 85, "atk": 85, "def": 85, "spa": 85, "spd": 85, "spe": 85 },
+      "ability": "voltabsorb",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": ["scald", "thunderbolt", "icebeam", "voltswitch"]
+    },
+    {
+      "species": "jolteon",
+      "level": 45,
+      "nature": "timid",
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 85, "atk": 85, "def": 85, "spa": 85, "spd": 85, "spe": 85 },
+      "ability": "voltabsorb",
+      "heldItem": "cobblemon:choice_specs",
+      "moveset": ["thunderbolt", "shadowball", "voltswitch", "weatherball"]
+    },
+    {
+      "species": "electivire",
+      "level": 45,
+      "nature": "adamant",
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 85, "atk": 85, "def": 85, "spa": 85, "spd": 85, "spe": 85 },
+      "ability": "motordrive",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": ["wildcharge", "earthquake", "icepunch", "firepunch"]
+    },
+    {
+      "species": "luxray",
+      "level": 45,
+      "nature": "adamant",
+      "ivs": { "hp": 31, "atk": 31, "def": 31, "spa": 31, "spd": 31, "spe": 31 },
+      "evs": { "hp": 85, "atk": 85, "def": 85, "spa": 85, "spd": 85, "spe": 85 },
+      "ability": "intimidate",
+      "heldItem": "cobblemon:choice_band",
+      "moveset": ["wildcharge", "crunch", "voltswitch", "icefang"]
+    }
+  ]
+}

@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_5",
   "display": {
     "title": {
-      "text": "Gym 6: Roxie"
+      "text": "Gym 6: Volkner"
     },
     "description": {
-      "text": "Defeat the Poison-type gym leader."
+      "text": "Defeat the Electric-type gym leader."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"

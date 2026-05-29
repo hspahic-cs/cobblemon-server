@@ -28,7 +28,7 @@ prevents the 18 gym leaders from filling the wilderness — they only exist wher
 | 3 | Korrina | Fighting | wiki Fighting team |
 | 4 | Byron | Steel | wiki Steel team |
 | 5 | Blaine | Fire | wiki Fire team |
-| 6 | Roxie | Poison | wiki Poison team |
+| 6 | Volkner | Electric | swapped from Roxie (Poison) — see 0.7.6 release notes |
 | 7 | Crasher Wake | Water | wiki Water team |
 | 8 | Sabrina | Psychic | wiki Psychic Battle #1 (singles) |
 | 9 | Drayden | Dragon | wiki Dragon team |

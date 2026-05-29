@@ -1,13 +1,14 @@
 {
   "name": "Hard Mode: Gym Leader Blaine",
   "identity": "Fire",
+  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

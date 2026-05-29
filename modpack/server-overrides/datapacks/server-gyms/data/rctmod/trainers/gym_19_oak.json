@@ -1,6 +1,7 @@
 {
   "name": "Professor Oak",
   "identity": "Kanto Master",
+  "textureResource": "rctmod:textures/trainers/single/prof_prof_oak_01ff.png",
   "ai": {
     "type": "rb",
     "data": {
@@ -10,7 +11,7 @@
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

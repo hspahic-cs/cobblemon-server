@@ -1,13 +1,14 @@
 {
   "name": "Elite Four Lorelei",
   "identity": "Weather Wars",
+  "textureResource": "rctmod:textures/trainers/single/elite_four_lorelei_004d.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

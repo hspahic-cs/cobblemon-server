@@ -31,6 +31,7 @@ class CobblemonRanked(modBus: IEventBus, container: ModContainer) {
         teamStore = TeamStore(configDir)
 
         RankedBattleManager.registerEvents()
+        NeoForge.EVENT_BUS.register(RankedBattleManager)  // PlayerLoggedOutEvent → forfeit
 
         NeoForge.EVENT_BUS.addListener(::onRegisterCommands)
         NeoForge.EVENT_BUS.addListener(::onServerTickPost)

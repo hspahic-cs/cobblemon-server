@@ -1,0 +1,31 @@
+{
+  "id": "cobbleworkers:tumblestone_harvester",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "aegislash",
+      "sandslash",
+      "scizor",
+      "steelix"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "cobblemon:tumblestone_cluster"
+      }
+    },
+    {
+      "type": "cobbleworkers:loot_generation",
+      "context": "BLOCK_BREAK"
+    },
+    {
+      "type": "cobbleworkers:mutate_block",
+      "replacement": {
+        "block": "cobblemon:small_budding_tumblestone"
+      }
+    }
+  ]
+}

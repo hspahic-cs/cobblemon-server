@@ -1,0 +1,40 @@
+{
+  "id": "cobbleworkers:crops_harvester",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "leafeon",
+      "bellossom",
+      "sunflora",
+      "lilligant",
+      "vileplume",
+      "victreebel",
+      "exeggutor",
+      "roserade",
+      "simisage",
+      "whimsicott"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "#cobbleworkers:crops",
+        "properties": {
+          "age": "max"
+        }
+      }
+    },
+    {
+      "type": "cobbleworkers:loot_generation",
+      "context": "BLOCK_BREAK"
+    },
+    {
+      "type": "cobbleworkers:mutate_property",
+      "mutations": {
+        "age": 0
+      }
+    }
+  ]
+}

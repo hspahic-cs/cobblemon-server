@@ -1,0 +1,11 @@
+{
+  "id": "cobbleworkers:fishing_looter",
+  "cooldown": 90,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "__disabled__"
+    ]
+  },
+  "components": []
+}

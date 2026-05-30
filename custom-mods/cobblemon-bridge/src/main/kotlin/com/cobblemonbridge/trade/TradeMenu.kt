@@ -30,58 +30,70 @@ import java.util.UUID
  *
  * Slot layout (cols left→right 0..8, rows top→bottom 0..5):
  * ```
- *   0:  [P1 head ] .       .       .     [status] .       .       .     [P2 head ]
- *   1:  [+mon P1] [+$  P1] .       .       .       .       .     [+$  P2] [+mon P2]
- *   2:  [mon P1 ] [mon P1] [itm P1] [itm P1] .     [itm P2] [itm P2] [mon P2] [mon P2]
- *   3:  [mon P1 ] [mon P1] [itm P1] [itm P1] .     [itm P2] [itm P2] [mon P2] [mon P2]
- *   4:  [mon P1 ] [mon P1] [itm P1] [itm P1] .     [itm P2] [itm P2] [mon P2] [mon P2]
- *   5:  [P1 conf] [P1 $  ] .       .     [help  ] .       .     [P2 $  ] [P2 conf]
+ *   0:  [P1 head]  [P1p0]   [P1p1]   [P1p2]   [status] [P2p2]   [P2p1]   [P2p0]   [P2 head]
+ *   1:  [P1 conf]  [P1p3]   [P1p4]   [P1p5]   [help]   [P2p5]   [P2p4]   [P2p3]   [P2 conf]
+ *   2:  [stg P1]   [stg P1] [itm P1] [itm P1] .        [itm P2] [itm P2] [stg P2] [stg P2]
+ *   3:  [stg P1]   [stg P1] [itm P1] [itm P1] .        [itm P2] [itm P2] [stg P2] [stg P2]
+ *   4:  [stg P1]   [stg P1] [itm P1] [itm P1] .        [itm P2] [itm P2] [stg P2] [stg P2]
+ *   5:  [P1 +$]    [P1 $]   .        .        .        .        .        [P2 $]   [P2 +$]
  * ```
- * Pokémon slots are display-only (PokemonItem); clicking one un-stages that mon. Item slots
- * are full drag-and-drop, BUT ownership is enforced — only the side's own player can put
- * items into their slots. Divider column 4 is gray panes (click no-op).
+ *
+ * **0.7.14 layout change** — replaced the opaque "+ Stage Pokémon" button with a direct
+ * per-player party view in rows 0-1. Each player's 6 party slots flank their head:
+ * P1's party 0-2 are slots 1-3, party 3-5 are slots 10-12; P2 is mirrored (slots 7→5 +
+ * 14→16) so each player's party slot 0 is closest to their head. Click your party tile to
+ * stage that Pokémon; click again (or click the staged tile in rows 2-4) to unstage. Tiles
+ * already in the trade render with strikethrough lore + an "Already in trade" tag so
+ * players never wonder why a click did nothing.
+ *
+ * Confirm tiles moved from row 5 (slots 45/53) to row 1 (slots 9/17) — same column as
+ * each head, easier to mentally bind "my side". +$ buttons moved to row 5 (slots 45/53)
+ * to fill the bottom row alongside the money displays.
+ *
+ * Pokémon staged-area slots (rows 2-4) are display-only (PokemonItem); clicking one
+ * unstages. Item slots are full drag-and-drop, BUT ownership is enforced — only the
+ * side's own player can put items into their slots. Divider column 4 is gray panes.
  *
  * Money is set via `/trade money <amount>` OR by clicking the +$ button (left = +100,
- * shift-left = +1000, right = -100, shift-right = clear).
- *
- * Pokémon are staged via the +mon button — left-click stages the lowest-index party slot
- * that isn't already staged. Right-click stages by walking the party in reverse order. No
- * sub-menu (sub-menus close the trade window and would cancel the session via
- * [TradeManager.handleMenuClose]).
+ * shift-left = +1000, right = -100, shift-right = clear). Each player's +$ tile shows
+ * their CURRENT balance in lore so a clamp-to-balance silently zeroing the offer
+ * (the 0.7.13 silent-failure bug on $0 accounts) is now visible to the player.
  */
 object TradeMenu {
 
     private const val ROWS = 6
     private const val SLOTS = ROWS * 9
 
-    // Header / status
+    // Header / status (row 0 ends)
     private const val P1_HEAD_SLOT = 0
     private const val STATUS_SLOT = 4
     private const val P2_HEAD_SLOT = 8
 
-    // Buttons row
-    private const val P1_ADD_MON = 9
-    private const val P1_ADD_MONEY = 10
-    private const val P2_ADD_MONEY = 16
-    private const val P2_ADD_MON = 17
+    // Per-player party tiles — rows 0-1, flanking each head. Index 0 = closest to head.
+    private val P1_PARTY_SLOTS = listOf(1, 2, 3, 10, 11, 12)
+    private val P2_PARTY_SLOTS = listOf(7, 6, 5, 14, 15, 16)
 
-    // Pokémon display slots (6 per side)
+    // Confirm + help (row 1 ends)
+    private const val P1_CONFIRM = 9
+    private const val HELP_SLOT = 13
+    private const val P2_CONFIRM = 17
+
+    // Pokémon staged-area display slots (6 per side) — rows 2-4
     private val P1_POKEMON_SLOTS = listOf(18, 19, 27, 28, 36, 37)
     private val P2_POKEMON_SLOTS = listOf(25, 26, 34, 35, 43, 44)
 
-    // Item drag-and-drop slots (6 per side)
+    // Item drag-and-drop slots (6 per side) — rows 2-4
     private val P1_ITEM_SLOTS = listOf(20, 21, 29, 30, 38, 39)
     private val P2_ITEM_SLOTS = listOf(23, 24, 32, 33, 41, 42)
 
     // Divider column (gray panes)
     private val DIVIDER_SLOTS = listOf(22, 31, 40)
 
-    // Bottom row
-    private const val P1_CONFIRM = 45
+    // Bottom row (money)
+    private const val P1_ADD_MONEY = 45
     private const val P1_MONEY_DISPLAY = 46
-    private const val HELP_SLOT = 49
     private const val P2_MONEY_DISPLAY = 52
-    private const val P2_CONFIRM = 53
+    private const val P2_ADD_MONEY = 53
 
     /** Live viewer registry — used by [refresh] / [closeFor] / [viewerOf] to push updates +
      *  close menus without needing a server lookup. Cleared on menu close. */
@@ -131,21 +143,24 @@ object TradeMenu {
         }
     }
 
-    /** Re-renders every display tile (heads, status, money, confirm, pokemon icons) from the
-     *  current [session] state, then pushes the container to both clients. */
+    /** Re-renders every display tile (heads, status, money, confirm, pokemon icons, party
+     *  tiles) from the current [session] state, then pushes the container to both clients. */
     fun refresh(session: TradeSession) {
         // Header tiles
         session.container.setItem(P1_HEAD_SLOT, headerStack(session, session.p1Uuid, session.p1Name, session.offer1))
         session.container.setItem(P2_HEAD_SLOT, headerStack(session, session.p2Uuid, session.p2Name, session.offer2))
         session.container.setItem(STATUS_SLOT, statusStack(session))
 
-        // Action buttons (static labels — interaction handled in clicked())
-        session.container.setItem(P1_ADD_MON, addMonStack())
-        session.container.setItem(P1_ADD_MONEY, addMoneyStack())
-        session.container.setItem(P2_ADD_MON, addMonStack())
-        session.container.setItem(P2_ADD_MONEY, addMoneyStack())
+        // Per-player party tiles in rows 0-1 (replaces the 0.7.13 +mon button).
+        renderParty(session, session.p1Uuid, P1_PARTY_SLOTS)
+        renderParty(session, session.p2Uuid, P2_PARTY_SLOTS)
 
-        // Pokémon display slots — fill with PokemonItem renders + name + level lore
+        // Money buttons (now in row 5, with per-player balance baked into the lore so the
+        // 0.7.13 silent-clamp behavior is visible to the player).
+        session.container.setItem(P1_ADD_MONEY, addMoneyStack(session.p1Uuid, session.offer1.money))
+        session.container.setItem(P2_ADD_MONEY, addMoneyStack(session.p2Uuid, session.offer2.money))
+
+        // Staged-area Pokémon slots (rows 2-4) — fill with PokemonItem renders + name + level
         renderPokemonSlots(session, session.offer1, P1_POKEMON_SLOTS)
         renderPokemonSlots(session, session.offer2, P2_POKEMON_SLOTS)
 
@@ -153,7 +168,7 @@ object TradeMenu {
         session.container.setItem(P1_MONEY_DISPLAY, moneyDisplayStack(session.offer1.money))
         session.container.setItem(P2_MONEY_DISPLAY, moneyDisplayStack(session.offer2.money))
 
-        // Confirm tiles
+        // Confirm tiles (now in row 1, adjacent to each head)
         session.container.setItem(P1_CONFIRM, confirmStack(session.offer1.confirmed))
         session.container.setItem(P2_CONFIRM, confirmStack(session.offer2.confirmed))
 
@@ -211,27 +226,28 @@ object TradeMenu {
         return stack
     }
 
-    private fun addMonStack(): ItemStack {
-        val stack = ItemStack(Items.LIME_CONCRETE)
-        stack.set(DataComponents.CUSTOM_NAME, line("§a§l+ Stage Pokémon"))
-        stack.set(DataComponents.LORE, ItemLore(listOf(
-            line("§7Left-click §f→ stage next un-staged party slot"),
-            line("§7Right-click §f→ stage from highest party slot first"),
-            line("§7Click a staged Pokémon below to remove it."),
-        )))
-        return stack
-    }
-
-    private fun addMoneyStack(): ItemStack {
+    /** Per-player money button — the lore shows the viewer's current balance so the
+     *  setMoney clamp behavior is visible. Pre-0.7.14 this was a shared static stack and the
+     *  clamp would silently zero a $0 player's offer with no in-menu hint as to why. */
+    private fun addMoneyStack(playerUuid: UUID, currentOffer: Int): ItemStack {
         val stack = ItemStack(Items.GOLD_NUGGET)
         stack.set(DataComponents.CUSTOM_NAME, line("§6§l+ Add Money"))
-        stack.set(DataComponents.LORE, ItemLore(listOf(
+        val balance = EconomyBridge.getBalance(playerUuid)
+        val lore = mutableListOf<Component>(
+            line("§7Your balance: §6\$$balance"),
+            line("§7Offered: §6\$$currentOffer"),
+            line(""),
             line("§7Left-click §f→ +\$100"),
             line("§7Shift-left §f→ +\$1,000"),
             line("§7Right-click §f→ -\$100"),
             line("§7Shift-right §f→ clear"),
             line("§7Or type §f/trade money <amount>§7."),
-        )))
+        )
+        if (balance == 0) {
+            lore.add(line(""))
+            lore.add(line("§c§lYour balance is \$0 — offers will clamp to 0."))
+        }
+        stack.set(DataComponents.LORE, ItemLore(lore))
         return stack
     }
 
@@ -261,14 +277,63 @@ object TradeMenu {
         val stack = ItemStack(Items.WRITABLE_BOOK)
         stack.set(DataComponents.CUSTOM_NAME, line("§e§lHow to trade"))
         stack.set(DataComponents.LORE, ItemLore(listOf(
-            line("§7• Drag items into §fyour§7 item slots."),
-            line("§7• Use §f+ Stage Pokémon§7 to add party mons."),
-            line("§7• Use §f+ Add Money§7 or §f/trade money N§7."),
-            line("§7• Both sides click §a§lConfirm§7 to execute."),
+            line("§7• §fClick your party tiles§7 (rows 1-2) to stage Pokémon."),
+            line("§7• §fDrag items§7 into your item slots (middle of menu)."),
+            line("§7• §fClick +$ at bottom§7 or §f/trade money N§7 for cash."),
+            line("§7• Both sides click §a§lConfirm§7 (next to your head) to execute."),
             line("§7• §f/trade cancel§7 or close window to abort."),
             line("§7• Over-cap mons blocked; party-full mons go to PC."),
         )))
         return stack
+    }
+
+    /** Render the 6 party tiles for [partyOwnerUuid] into [slots]. Tiles that the owner has
+     *  already staged in the trade get a strikethrough name + "Already in trade" lore so the
+     *  player can see at a glance which mons are committed. Empty party slots are gray panes.
+     *
+     *  If the party owner is offline (shouldn't happen during an active trade — execute
+     *  refunds when a player drops — but defensive), the slots get a neutral placeholder. */
+    private fun renderParty(session: TradeSession, partyOwnerUuid: UUID, slots: List<Int>) {
+        val player = viewers[partyOwnerUuid]
+        if (player == null) {
+            val placeholder = ItemStack(Items.GRAY_STAINED_GLASS_PANE).also {
+                it.set(DataComponents.CUSTOM_NAME, line("§8(party loading…)"))
+            }
+            for (slot in slots) session.container.setItem(slot, placeholder)
+            return
+        }
+        val party = Cobblemon.storage.getParty(player)
+        val offer = session.offerOf(partyOwnerUuid) ?: return
+        val stagedUuids = offer.pokemonUuids().toSet()
+        for ((i, slot) in slots.withIndex()) {
+            val mon = party.get(i)
+            if (mon == null) {
+                val placeholder = ItemStack(Items.GRAY_STAINED_GLASS_PANE)
+                placeholder.set(DataComponents.CUSTOM_NAME, line("§8(empty party slot)"))
+                session.container.setItem(slot, placeholder)
+                continue
+            }
+            val staged = mon.uuid in stagedUuids
+            val stack = try {
+                PokemonItem.from(mon)
+            } catch (e: Throwable) {
+                ItemStack(Items.PAPER)
+            }
+            val titlePrefix = if (staged) "§7§m" else "§a"
+            stack.set(DataComponents.CUSTOM_NAME, line("$titlePrefix${mon.species.name} §7L${mon.level}"))
+            val loreLines = mutableListOf<Component>(
+                line("§7HP: §f${mon.currentHealth}/${mon.maxHealth}"),
+                line(""),
+            )
+            if (staged) {
+                loreLines.add(line("§e§l✓ Already in trade"))
+                loreLines.add(line("§7Click to remove from offer."))
+            } else {
+                loreLines.add(line("§a§l→ Click to add to trade"))
+            }
+            stack.set(DataComponents.LORE, ItemLore(loreLines))
+            session.container.setItem(slot, stack)
+        }
     }
 
     private fun renderPokemonSlots(session: TradeSession, offer: TradeOffer, slots: List<Int>) {
@@ -328,22 +393,37 @@ object TradeMenu {
             if (slotId == P1_CONFIRM) { if (isP1()) TradeManager.toggleConfirm(sp); return }
             if (slotId == P2_CONFIRM) { if (!isP1()) TradeManager.toggleConfirm(sp); return }
 
-            // Add-Pokémon buttons.
-            if (slotId == P1_ADD_MON) { if (isP1()) handleAddMon(sp, button); return }
-            if (slotId == P2_ADD_MON) { if (!isP1()) handleAddMon(sp, button); return }
-
             // Add-Money buttons.
             if (slotId == P1_ADD_MONEY) { if (isP1()) handleAddMoney(sp, button, clickType); return }
             if (slotId == P2_ADD_MONEY) { if (!isP1()) handleAddMoney(sp, button, clickType); return }
 
-            // Pokémon display slots — clicking removes from offer.
+            // Party tiles (rows 0-1) — click your own to toggle staged/unstaged.
+            val ownPartySlots = if (isP1()) P1_PARTY_SLOTS else P2_PARTY_SLOTS
+            if (slotId in ownPartySlots) {
+                val partyIdx = ownPartySlots.indexOf(slotId)
+                val party = Cobblemon.storage.getParty(sp)
+                val mon = party.get(partyIdx) ?: return  // empty party slot — no-op
+                val offer = session.offerOf(sp.uuid) ?: return
+                val existing = offer.pokemon.indexOfFirst { it.uuid == mon.uuid }
+                if (existing >= 0) {
+                    TradeManager.unstagePokemon(sp, existing)
+                } else {
+                    TradeManager.stagePokemon(sp, partyIdx)
+                }
+                return
+            }
+            // Other side's party tile — can look but not touch.
+            val otherPartySlots = if (isP1()) P2_PARTY_SLOTS else P1_PARTY_SLOTS
+            if (slotId in otherPartySlots) return
+
+            // Staged-area Pokémon slots — clicking removes from offer.
             val ownPokemonSlots = if (isP1()) P1_POKEMON_SLOTS else P2_POKEMON_SLOTS
             if (slotId in ownPokemonSlots) {
                 val offerIdx = ownPokemonSlots.indexOf(slotId)
                 TradeManager.unstagePokemon(sp, offerIdx)
                 return
             }
-            // Other side's pokemon slot — no-op.
+            // Other side's staged-area pokemon slot — no-op.
             val otherPokemonSlots = if (isP1()) P2_POKEMON_SLOTS else P1_POKEMON_SLOTS
             if (slotId in otherPokemonSlots) return
 
@@ -400,22 +480,6 @@ object TradeMenu {
             // execute/cancel, in which case the session has already been removed and
             // handleMenuClose is a no-op via sessionFor returning null).
             TradeManager.handleMenuClose(sp)
-        }
-
-        private fun handleAddMon(sp: ServerPlayer, button: Int) {
-            val party = Cobblemon.storage.getParty(sp)
-            val offer = session.offerOf(sp.uuid) ?: return
-            val stagedUuids = offer.pokemonUuids().toSet()
-            val range = if (button == 0) 0 until party.size() else (party.size() - 1) downTo 0
-            for (i in range) {
-                val mon = party.get(i) ?: continue
-                if (mon.uuid in stagedUuids) continue
-                TradeManager.stagePokemon(sp, i)
-                return
-            }
-            sp.sendSystemMessage(Component.literal(
-                "§7[Trade] No more party Pokémon to stage."
-            ))
         }
 
         private fun handleAddMoney(sp: ServerPlayer, button: Int, clickType: ClickType) {

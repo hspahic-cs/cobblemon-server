@@ -1,0 +1,36 @@
+{
+  "id": "cobbleworkers:netherwart_harvester",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "mismagius",
+      "chandelure",
+      "aegislash",
+      "froslass",
+      "dusknoir",
+      "polteageist"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:nether_wart",
+        "properties": {
+          "age": 3
+        }
+      }
+    },
+    {
+      "type": "cobbleworkers:loot_generation",
+      "context": "BLOCK_BREAK"
+    },
+    {
+      "type": "cobbleworkers:mutate_property",
+      "mutations": {
+        "age": 0
+      }
+    }
+  ]
+}

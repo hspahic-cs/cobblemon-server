@@ -1,6 +1,8 @@
 package com.cobblemonbridge.trade
 
 import com.cobblemon.mod.common.Cobblemon
+import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemon.mod.common.pokemon.evolution.variants.TradeEvolution
 import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.economy.EconomyBridge
 import com.cobblemonbridge.quests.LevelCap
@@ -161,12 +163,26 @@ object TradeManager {
         return true
     }
 
-    /** Set [player]'s money offer to [amount]. Clamps to [0, balance]. Un-confirms both. */
+    /** Set [player]'s money offer to [amount]. Clamps to `[0, balance]`. Un-confirms both
+     *  on success. **Sends a chat warning** if the request was clamped below the requested
+     *  amount — pre-0.7.14 this clamped silently, which caused the "money doesn't transfer"
+     *  bug report (players on a $0 starting balance would set offer=500, see the menu
+     *  still show $0, and assume the trade system was broken). */
     fun setMoney(player: ServerPlayer, amount: Int): Boolean {
         val session = sessionFor(player) ?: return false
         val offer = session.offerOf(player.uuid) ?: return false
-        val clamped = amount.coerceAtLeast(0)
-            .coerceAtMost(EconomyBridge.getBalance(player.uuid))
+        val requested = amount.coerceAtLeast(0)
+        val balance = EconomyBridge.getBalance(player.uuid)
+        val clamped = requested.coerceAtMost(balance)
+        CobblemonBridge.logger.info(
+            "trade setMoney: player={} requested=\${} balance=\${} clamped=\${}",
+            player.gameProfile.name, requested, balance, clamped,
+        )
+        if (clamped < requested) {
+            player.sendSystemMessage(Component.literal(
+                "§c[Trade] Offer clamped to your balance: §6\$$clamped§c (requested §6\$$requested§c)."
+            ))
+        }
         if (clamped == offer.money) return true
         offer.money = clamped
         session.unconfirmBoth()
@@ -329,6 +345,17 @@ object TradeManager {
             if (!party2.add(mon)) pcP2.add(mon)
         }
 
+        // 4a.1. Trade evolutions — for each Pokémon that arrived on a side, walk its evolution
+        //       list and attempt any `TradeEvolution`. The "context" partner is the FIRST mon
+        //       the receiver sent OUT as their exchange — required by held-item variants
+        //       (Onix + Metal Coat → Steelix) and link-trade pairs (Karrablast ↔ Shelmet).
+        //       For one-sided trades (the receiver gave only money/items), no evolution fires
+        //       because there's no partner pokemon to provide context.
+        val partnerForP1Side = incomingToP2.firstOrNull()  // mon P1 sent out → P2's incoming
+        val partnerForP2Side = incomingToP1.firstOrNull()  // mon P2 sent out → P1's incoming
+        if (partnerForP1Side != null) attemptTradeEvolutions(incomingToP1, partnerForP1Side)
+        if (partnerForP2Side != null) attemptTradeEvolutions(incomingToP2, partnerForP2Side)
+
         // 4b. Items: shovel each side's item slots into the other player's inventory.
         for (slot in TradeMenu.itemSlotsFor(p1.uuid)) {
             val stack = session.container.removeItemNoUpdate(slot)
@@ -339,14 +366,38 @@ object TradeManager {
             if (!stack.isEmpty) returnItem(p1, stack)  // received by p1
         }
 
-        // 4c. Money: withdraw from each side, deposit to the other.
+        // 4c. Money: withdraw from each side; only deposit on the other if the withdraw
+        //     actually succeeded. Pre-0.7.14 the return value was ignored and a failed
+        //     withdraw still triggered the deposit, which would silently print money out of
+        //     thin air. Now any withdraw failure aborts the deposit and logs the discrepancy
+        //     for diagnosis (player keeps their money; receiver loses the offered amount).
         if (session.offer1.money > 0) {
-            EconomyBridge.withdraw(p1.uuid, session.offer1.money)
-            EconomyBridge.deposit(p2.uuid, session.offer1.money)
+            val ok = EconomyBridge.withdraw(p1.uuid, session.offer1.money)
+            if (ok) {
+                EconomyBridge.deposit(p2.uuid, session.offer1.money)
+            } else {
+                CobblemonBridge.logger.warn(
+                    "trade money transfer skipped (withdraw failed): {} -> {} \${}",
+                    p1.gameProfile.name, p2.gameProfile.name, session.offer1.money,
+                )
+                p1.sendSystemMessage(Component.literal(
+                    "§c[Trade] Your money transfer failed (no charge). Contact an admin."
+                ))
+            }
         }
         if (session.offer2.money > 0) {
-            EconomyBridge.withdraw(p2.uuid, session.offer2.money)
-            EconomyBridge.deposit(p1.uuid, session.offer2.money)
+            val ok = EconomyBridge.withdraw(p2.uuid, session.offer2.money)
+            if (ok) {
+                EconomyBridge.deposit(p1.uuid, session.offer2.money)
+            } else {
+                CobblemonBridge.logger.warn(
+                    "trade money transfer skipped (withdraw failed): {} -> {} \${}",
+                    p2.gameProfile.name, p1.gameProfile.name, session.offer2.money,
+                )
+                p2.sendSystemMessage(Component.literal(
+                    "§c[Trade] Your money transfer failed (no charge). Contact an admin."
+                ))
+            }
         }
 
         // 5. Tear down session + close menus + chat summary.
@@ -362,6 +413,43 @@ object TradeManager {
             session.offer1.pokemon.size, session.offer2.pokemon.size,
             session.offer1.money, session.offer2.money,
         )
+    }
+
+    /**
+     * Walk each newly-arrived [receivedMons] and attempt any `TradeEvolution` in their
+     * evolution chain, using [partner] as the trade-context Pokémon. Inherits whatever
+     * Cobblemon's species JSON defines — covers Kadabra/Machoke/Graveler/Haunter (no held
+     * item needed), Boldore/Gurdurr/Phantump/Pumpkaboo, Karrablast↔Shelmet (link-trade
+     * with species partner check), and all held-item variants (Onix+Metal Coat→Steelix,
+     * Scyther+Metal Coat→Scizor, Seadra+Dragon Scale→Kingdra, etc.).
+     *
+     * `TradeEvolution.attemptEvolution(this, context)` itself calls `test(...)` first and
+     * only evolves if all requirements pass — so this is safe to fire blindly on every
+     * received Pokémon without pre-filtering.
+     *
+     * Defensive try/catch around each attempt — a thrown evolution shouldn't abort the
+     * trade or block the other side's evolution.
+     */
+    private fun attemptTradeEvolutions(receivedMons: List<Pokemon>, partner: Pokemon) {
+        for (mon in receivedMons) {
+            for (evo in mon.evolutions) {
+                if (evo !is TradeEvolution) continue
+                try {
+                    val evolved = evo.attemptEvolution(mon, partner)
+                    if (evolved) {
+                        CobblemonBridge.logger.info(
+                            "trade-evo: {} (uuid={}) triggered TradeEvolution id={} with partner {}",
+                            mon.species.name, mon.uuid, evo.id, partner.species.name,
+                        )
+                    }
+                } catch (e: Throwable) {
+                    CobblemonBridge.logger.warn(
+                        "trade-evo: attemptEvolution failed for {} (id={}): {}",
+                        mon.species.name, evo.id, e.message,
+                    )
+                }
+            }
+        }
     }
 
     private fun unconfirmedNotice(session: TradeSession, who: ServerPlayer, reason: String) {

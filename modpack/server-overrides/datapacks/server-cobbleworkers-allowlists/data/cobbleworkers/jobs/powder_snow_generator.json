@@ -1,0 +1,33 @@
+{
+  "id": "cobbleworkers:powder_snow_generator",
+  "cooldown": 90,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "glaceon",
+      "cetitan",
+      "froslass",
+      "cloyster",
+      "ninetales",
+      "sandslash",
+      "darmanitan"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:cauldron"
+      }
+    },
+    {
+      "type": "cobbleworkers:mutate_block",
+      "replacement": {
+        "block": "minecraft:powder_snow_cauldron",
+        "properties": {
+          "level": 3
+        }
+      }
+    }
+  ]
+}

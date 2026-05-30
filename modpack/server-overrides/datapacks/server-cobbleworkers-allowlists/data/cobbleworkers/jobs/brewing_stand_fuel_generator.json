@@ -1,0 +1,23 @@
+{
+  "id": "cobbleworkers:brewing_stand_fuel_generator",
+  "cooldown": 80,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "kingdra"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:brewing_stand",
+        "block_entity_condition": "brewing_stand_not_full"
+      }
+    },
+    {
+      "type": "cobbleworkers:add_fuel",
+      "burn_charges": 2
+    }
+  ]
+}

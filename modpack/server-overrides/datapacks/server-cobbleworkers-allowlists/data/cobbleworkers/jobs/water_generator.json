@@ -1,0 +1,35 @@
+{
+  "id": "cobbleworkers:water_generator",
+  "cooldown": 90,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "vaporeon",
+      "starmie",
+      "cloyster",
+      "poliwrath",
+      "ludicolo",
+      "simipour",
+      "politoed",
+      "slowking",
+      "kingdra"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:cauldron"
+      }
+    },
+    {
+      "type": "cobbleworkers:mutate_block",
+      "replacement": {
+        "block": "minecraft:water_cauldron",
+        "properties": {
+          "level": 3
+        }
+      }
+    }
+  ]
+}

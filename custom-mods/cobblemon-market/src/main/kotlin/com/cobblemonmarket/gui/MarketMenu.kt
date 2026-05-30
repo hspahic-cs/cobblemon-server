@@ -2,6 +2,9 @@ package com.cobblemonmarket.gui
 
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemEntry
+import com.cobblemonmarket.config.effectiveBuyClamp
+import com.cobblemonmarket.config.effectiveMinBuyPrice
+import com.cobblemonmarket.config.effectiveSellClamp
 import com.cobblemonmarket.config.isSellable
 import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
@@ -146,8 +149,14 @@ object MarketMenu {
         val rl = ResourceLocation.tryParse(itemId) ?: return ItemStack.EMPTY
         val item = BuiltInRegistries.ITEM.getOptional(rl).orElse(null) ?: return ItemStack.EMPTY
         val state = CobblemonMarket.marketStore.getOrCreate(itemId)
-        val buy = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity)
-        val sell = PricingEngine.sellPrice(entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity)
+        val buy = PricingEngine.buyPrice(
+            entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+        )
+        val sell = PricingEngine.sellPrice(
+            entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveSellClamp,
+        )
         val stockNow = state.stock.toInt()
         val stack = ItemStack(item)
         val lore = mutableListOf<MutableComponent>()

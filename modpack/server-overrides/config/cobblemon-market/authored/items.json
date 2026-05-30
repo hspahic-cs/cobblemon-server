@@ -26,6 +26,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:antidote": {
+    "baseBuyPrice": 60,
+    "baseSellPrice": 12,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:assault_vest": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -34,6 +43,15 @@
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
     "sellable": false
+  },
+  "cobblemon:awakening": {
+    "baseBuyPrice": 60,
+    "baseSellPrice": 12,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
   },
   "cobblemon:big_root": {
     "baseBuyPrice": 5000,
@@ -97,6 +115,15 @@
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
     "sellable": false
+  },
+  "cobblemon:burn_heal": {
+    "baseBuyPrice": 60,
+    "baseSellPrice": 12,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
   },
   "cobblemon:cell_battery": {
     "baseBuyPrice": 5000,
@@ -233,6 +260,24 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:elixir": {
+    "baseBuyPrice": 225,
+    "baseSellPrice": 45,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:ether": {
+    "baseBuyPrice": 90,
+    "baseSellPrice": 18,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:everstone": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -314,11 +359,29 @@
     "vendorTag": "held_items",
     "sellable": false
   },
-  "cobblemon:great_ball": {
-    "baseBuyPrice": 300,
-    "baseSellPrice": 100,
-    "baseStock": 100,
+  "cobblemon:full_heal": {
+    "baseBuyPrice": 190,
+    "baseSellPrice": 38,
+    "baseStock": 200,
     "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:full_restore": {
+    "baseBuyPrice": 300,
+    "baseSellPrice": 60,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:great_ball": {
+    "baseBuyPrice": 75,
+    "baseSellPrice": 15,
+    "baseStock": 1000,
+    "elasticity": 0.5,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
     "sellable": true
@@ -358,6 +421,24 @@
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
     "sellable": false
+  },
+  "cobblemon:hyper_potion": {
+    "baseBuyPrice": 180,
+    "baseSellPrice": 36,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:ice_heal": {
+    "baseBuyPrice": 60,
+    "baseSellPrice": 12,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
   },
   "cobblemon:icy_rock": {
     "baseBuyPrice": 5000,
@@ -467,6 +548,42 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:max_elixir": {
+    "baseBuyPrice": 315,
+    "baseSellPrice": 63,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:max_ether": {
+    "baseBuyPrice": 190,
+    "baseSellPrice": 38,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:max_potion": {
+    "baseBuyPrice": 225,
+    "baseSellPrice": 45,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:max_revive": {
+    "baseBuyPrice": 225,
+    "baseSellPrice": 45,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:mental_herb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -548,6 +665,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:paralyze_heal": {
+    "baseBuyPrice": 60,
+    "baseSellPrice": 12,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:poison_barb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -558,10 +684,19 @@
     "sellable": false
   },
   "cobblemon:poke_ball": {
-    "baseBuyPrice": 90,
-    "baseSellPrice": 30,
-    "baseStock": 100,
+    "baseBuyPrice": 40,
+    "baseSellPrice": 8,
+    "baseStock": 1000,
     "elasticity": 0.3,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:potion": {
+    "baseBuyPrice": 90,
+    "baseSellPrice": 18,
+    "baseStock": 200,
+    "elasticity": 1.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
     "sellable": true
@@ -666,10 +801,10 @@
     "sellable": false
   },
   "cobblemon:rare_candy": {
-    "baseBuyPrice": 6000,
-    "baseSellPrice": 2000,
-    "baseStock": 100,
-    "elasticity": 2.0,
+    "baseBuyPrice": 4050,
+    "baseSellPrice": 810,
+    "baseStock": 200,
+    "elasticity": 1.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
     "sellable": true
@@ -702,9 +837,9 @@
     "sellable": false
   },
   "cobblemon:revive": {
-    "baseBuyPrice": 1500,
-    "baseSellPrice": 500,
-    "baseStock": 100,
+    "baseBuyPrice": 90,
+    "baseSellPrice": 18,
+    "baseStock": 200,
     "elasticity": 1.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
@@ -854,6 +989,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:super_potion": {
+    "baseBuyPrice": 135,
+    "baseSellPrice": 27,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:terrain_extender": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -891,9 +1035,9 @@
     "sellable": false
   },
   "cobblemon:ultra_ball": {
-    "baseBuyPrice": 900,
-    "baseSellPrice": 300,
-    "baseStock": 100,
+    "baseBuyPrice": 125,
+    "baseSellPrice": 25,
+    "baseStock": 1000,
     "elasticity": 0.5,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
@@ -954,13 +1098,13 @@
     "sellable": false
   },
   "minecraft:carrot": {
-    "baseBuyPrice": 6,
-    "baseSellPrice": 3,
+    "baseBuyPrice": 8,
+    "baseSellPrice": 0,
     "baseStock": 1000,
     "elasticity": 0.7,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
-    "sellable": true
+    "sellable": false
   },
   "simpletms:tm_absorb": {
     "baseBuyPrice": 5000,

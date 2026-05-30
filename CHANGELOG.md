@@ -78,6 +78,20 @@ ItemSpec) and one display-name bug fix in the market.
   advancement tab — cobblemon + minecraft + rctmod tabs are now all hidden
   by the same datapack.
 
+### Added (economy)
+- **Per-defeat NPC trainer bounty** for non-gym RCT trainers. Formula:
+  `bounty = 2 × maxTrainerLevel × numPokemon / 6` (integer division), where
+  `maxTrainerLevel` is the max level among the loser's team and `numPokemon`
+  is the team size. Wired into `GymDefeatHook` Branch 2 (the non-gym trainer
+  defeat path); gym trainers continue to use the existing `$150 × gymId` flat
+  reward and are unaffected. Examples for a full 6-mon team: L20 → $40, L40
+  → $80, L60 → $120. Smaller teams scale linearly with `numPokemon`. Fires on
+  **every** defeat (RCT trainers reset after defeat, so this is a renewable
+  income source separate from the one-time `server:beat_wild_trainer`
+  advancement award). New `GymDefeatHookTest` covers the formula edge cases
+  (full/partial teams, integer-flooring, zero-input guards, and a sanity
+  check that NPC bounty stays an order of magnitude under gym bounty).
+
 ## [0.7.11] - 2026-05-30
 
 Full market overhaul. Price-multiplier clamp, global min sell price, per-item

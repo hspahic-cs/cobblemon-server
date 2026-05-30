@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle
+import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor
 import com.cobblemonbridge.CobblemonBridge
@@ -165,6 +166,8 @@ object GymDefeatHook {
 
             // Branch 2 (last resort): any other RCT/Cobblemon trainer NPC defeat fires the
             // wild-trainer quest. The advancement system makes this a one-time grant per player.
+            // Also pay the per-defeat NPC bounty (separate from the one-time advancement) so
+            // grinding non-gym trainers contributes to income, scaled to the trainer's team.
             if (losersIncludeTrainer) {
                 val awarded = QuestAdvancements.award(player, "server:beat_wild_trainer", criterion = "done")
                 if (awarded) {
@@ -172,6 +175,7 @@ object GymDefeatHook {
                         "cobblemon-bridge: awarded server:beat_wild_trainer to {}", player.gameProfile.name,
                     )
                 }
+                payNpcBounty(player, event.losers)
             }
         }
     }
@@ -197,6 +201,47 @@ object GymDefeatHook {
         EconomyBridge.deposit(player.uuid, amount)
         player.sendSystemMessage(Component.literal(
             "§6§l+ §e§l\$$amount §6§lfor defeating gym ${gymId}${if (isChallenge) " (Hard Mode)" else ""}"
+        ))
+    }
+
+    /**
+     * Income payout for defeating a non-gym trainer NPC (random RCT trainers, etc.). Formula:
+     *
+     *   `bounty = 2 × trainerLevel × numPokemon / 6`
+     *
+     * where `trainerLevel` is the max level of any Pokémon on the loser's team and `numPokemon`
+     * is the team size. Examples (full 6-mon team):
+     *   - L20 trainer  → $40
+     *   - L40 trainer  → $80
+     *   - L60 trainer → $120
+     * Smaller teams scale linearly (3 mons at L60 = $60).
+     *
+     * Fires on **every** defeat, not just the first — RCT trainers reset after defeat so this
+     * is a renewable income source. The one-time `server:beat_wild_trainer` advancement is the
+     * "first defeat ever" gate that's already there; this bounty is per-defeat on top.
+     *
+     * Returns 0 when there's no `TrainerBattleActor` on the losing side (shouldn't happen given
+     * caller's `losersIncludeTrainer` check, but defensive) or when the trainer has no Pokémon.
+     */
+    internal fun npcBounty(losers: Iterable<BattleActor>): Int {
+        val trainer = losers.filterIsInstance<TrainerBattleActor>().firstOrNull() ?: return 0
+        val pokemon = trainer.pokemonList
+        if (pokemon.isEmpty()) return 0
+        val maxLevel = pokemon.maxOf { it.effectedPokemon.level }
+        return computeNpcBounty(maxLevel, pokemon.size)
+    }
+
+    /** Pure-math seam — same formula as [npcBounty] without Cobblemon battle types so the
+     *  arithmetic is unit-testable without mocking actors. Integer division floors. */
+    internal fun computeNpcBounty(maxLevel: Int, numPokemon: Int): Int =
+        if (maxLevel <= 0 || numPokemon <= 0) 0 else (2 * maxLevel * numPokemon) / 6
+
+    private fun payNpcBounty(player: ServerPlayer, losers: Iterable<BattleActor>) {
+        val amount = npcBounty(losers)
+        if (amount <= 0) return
+        EconomyBridge.deposit(player.uuid, amount)
+        player.sendSystemMessage(Component.literal(
+            "§6+ §e\$$amount §7for defeating trainer"
         ))
     }
 

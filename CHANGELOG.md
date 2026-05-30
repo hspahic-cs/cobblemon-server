@@ -12,6 +12,10 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.14] - 2026-05-30
+
+LM hotfix.
+
 ### Fixed
 - **Legendary Monuments crashed under Connector** — was pinned to LM 7.8,
   which is a Fabric-only jar. Sinytra Connector can usually load Fabric

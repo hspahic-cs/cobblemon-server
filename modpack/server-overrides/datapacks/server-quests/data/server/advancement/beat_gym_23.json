@@ -15,8 +15,15 @@
     "announce_to_chat": true
   },
   "criteria": {
-    "done": {
-      "trigger": "minecraft:impossible"
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_23_lance"
+        ],
+        "trainer_type": null
+      }
     }
   },
   "rewards": {

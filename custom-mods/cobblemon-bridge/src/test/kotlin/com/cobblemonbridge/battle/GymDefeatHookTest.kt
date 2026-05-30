@@ -2,6 +2,7 @@ package com.cobblemonbridge.battle
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class GymDefeatHookTest {
 
@@ -44,13 +45,16 @@ class GymDefeatHookTest {
     }
 
     @Test
-    fun `formula is independent of gym bounty - sanity check the two payouts don't overlap`() {
-        // Gym bounty for gym 12 is $1,800 (150 * 12). NPC bounty for the same hypothetical
-        // L60/6-mon team is $120 at the mid-roll. Confirms NPC bounty is intentionally an
-        // order of magnitude under a mid-tier gym payout, even at the lucky high-roll ($180),
-        // not a substitute for it.
-        assertEquals(150 * 12, GymDefeatHook.gymBounty(gymId = 12, isChallenge = false))
+    fun `npc bounty stays an order of magnitude under hardcoded gym bounty`() {
+        // 0.7.25 — `GymDefeatHook.gymBounty` was removed; gym bounty payment moved into
+        // each beat_gym_*.mcfunction as `/eco give @s 150 * gymId`. The math is identical
+        // to the prior Kotlin path. This sanity check hardcodes the gym 12 expected payout
+        // ($1,800) and asserts the L60/6-mon NPC mid-roll ($120) stays an order of magnitude
+        // smaller — so NPC bounty doesn't compete with gym bounty as an income source.
+        val gym12Bounty = 150 * 12  // mirrors the eco give in beat_gym_12.mcfunction
+        assertEquals(1800, gym12Bounty)
         assertEquals(120, GymDefeatHook.computeNpcBounty(maxLevel = 60, numPokemon = 6))
+        assertTrue(GymDefeatHook.computeNpcBounty(maxLevel = 60, numPokemon = 6, multiplier = 3) < gym12Bounty)
     }
 
     @Test

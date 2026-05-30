@@ -13,6 +13,12 @@ tag @a[tag=cq_reward_egg_common] remove cq_reward_egg_common
 execute as @a[tag=cq_reward_egg_uncommon] at @s run gacha giveegg @s uncommon
 tag @a[tag=cq_reward_egg_uncommon] remove cq_reward_egg_uncommon
 
+# 0.7.25 — specific-species egg for the Exeggcute onboarding chain. Uses Cobreeding's
+# /givepokemonegg directly (vs. /gacha giveegg which picks from the common-pool table).
+# Matches the gacha eggs' min_perfect_ivs=2 so the hatched Pokémon feels valuable.
+execute as @a[tag=cq_reward_egg_exeggcute] at @s run givepokemonegg @s exeggcute min_perfect_ivs=2
+tag @a[tag=cq_reward_egg_exeggcute] remove cq_reward_egg_exeggcute
+
 # ─── Key rewards (count always 1 for current quest layout) ──────────────
 execute as @a[tag=cq_reward_key_common_1] at @s run gacha grant @s common 1
 tag @a[tag=cq_reward_key_common_1] remove cq_reward_key_common_1
@@ -56,7 +62,18 @@ tag @a[tag=cq_reward_item_revive] remove cq_reward_item_revive
 execute as @a[tag=cq_reward_item_backpack] at @s run give @s sophisticatedbackpacks:backpack 1
 tag @a[tag=cq_reward_item_backpack] remove cq_reward_item_backpack
 
-# reach_income_250 — Pocket Change: Pasture Block (gates Cobbleworkers automation)
+# reach_income_250 — Pocket Change: small grinding kit. The Pasture Block reward was
+# moved out of this quest in 0.7.25 to evolve_exeggutor (so the Cobbleworkers introduction
+# lives in the new Exeggcute onboarding chain). The income quest now gives a small
+# Great-Ball + EXP-Candy kit instead — same "first $250 milestone" flavor without
+# double-introducing the pasture block.
+execute as @a[tag=cq_reward_item_income_kit] at @s run give @s cobblemon:great_ball 5
+execute as @a[tag=cq_reward_item_income_kit] at @s run give @s cobblemon:exp_candy_s 3
+tag @a[tag=cq_reward_item_income_kit] remove cq_reward_item_income_kit
+
+# evolve_exeggutor (0.7.25) — Pasture Block (gates Cobbleworkers automation). Player has
+# just evolved their starter Exeggcute → Exeggutor; the next quest ranch_carrot_farm
+# fires when they place the pasture they get here.
 execute as @a[tag=cq_reward_item_pasture_block] at @s run give @s cobblemon:pasture 1
 tag @a[tag=cq_reward_item_pasture_block] remove cq_reward_item_pasture_block
 
@@ -88,6 +105,12 @@ execute as @a[tag=cq_reward_item_pokedex_100] at @s run give @s cobblemon:master
 execute as @a[tag=cq_reward_item_pokedex_100] at @s run gacha grant @s ultra 1
 tag @a[tag=cq_reward_item_pokedex_100] remove cq_reward_item_pokedex_100
 
+# defeat_elite_four (mainline): 1 master ball + ultra gacha key. Cash bonus ($5000)
+# paid directly via /eco give in defeat_elite_four.mcfunction.
+execute as @a[tag=cq_reward_item_elite_four] at @s run give @s cobblemon:master_ball 1
+execute as @a[tag=cq_reward_item_elite_four] at @s run gacha grant @s ultra 1
+tag @a[tag=cq_reward_item_elite_four] remove cq_reward_item_elite_four
+
 # ELO milestones: progressive battle kit
 execute as @a[tag=cq_reward_item_ranked_starter] at @s run give @s cobblemon:great_ball 1
 execute as @a[tag=cq_reward_item_ranked_starter] at @s run give @s cobblemon:super_potion 1
@@ -96,3 +119,15 @@ tag @a[tag=cq_reward_item_ranked_starter] remove cq_reward_item_ranked_starter
 execute as @a[tag=cq_reward_item_ranked_mid] at @s run give @s cobblemon:ultra_ball 1
 execute as @a[tag=cq_reward_item_ranked_mid] at @s run give @s cobblemon:hyper_potion 1
 tag @a[tag=cq_reward_item_ranked_mid] remove cq_reward_item_ranked_mid
+
+# ─── 0.7.25 Exeggcute / Cobbleworkers onboarding chain ─────────────────
+# receive_leaf_stone — gated by beat_gym_1 AND reach_income_250 (both criteria fire from
+# their respective reward functions). Reward is the leaf stone player needs to evolve
+# their Exeggcute from the beat_wild_trainer egg into Exeggutor.
+execute as @a[tag=cq_reward_item_leaf_stone] at @s run give @s cobblemon:leaf_stone 1
+tag @a[tag=cq_reward_item_leaf_stone] remove cq_reward_item_leaf_stone
+
+# ranch_carrot_farm — bonemeal helps the player accelerate carrot growth so the new
+# Exeggutor has something to harvest immediately.
+execute as @a[tag=cq_reward_item_bonemeal_16] at @s run give @s minecraft:bone_meal 16
+tag @a[tag=cq_reward_item_bonemeal_16] remove cq_reward_item_bonemeal_16

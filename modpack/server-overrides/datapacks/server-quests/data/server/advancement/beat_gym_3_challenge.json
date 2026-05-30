@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_3",
   "display": {
     "title": {
-      "text": "Gym 3: Korrina — Challenge"
+      "text": "Gym 3: Korrina \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 3."
@@ -15,8 +15,15 @@
     "announce_to_chat": true
   },
   "criteria": {
-    "done": {
-      "trigger": "minecraft:impossible"
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_03_korrina_challenge"
+        ],
+        "trainer_type": null
+      }
     }
   },
   "rewards": {

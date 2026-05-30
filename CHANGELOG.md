@@ -12,6 +12,13 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.20] - 2026-05-30
+
+### Removed
+- **Cobblemon Move Inspector.** Extended Battle UI (kept) already
+  surfaces the relevant info via its move tooltips, and Move
+  Inspector's separate overlay added clutter without adding value.
+
 ## [0.7.19] - 2026-05-30
 
 Hotfix for the 0.7.18 battle-UI mods landing — the dev server crashed

@@ -75,11 +75,6 @@ hash = "3efa711e77a99008f28b7831ab8696263bccaab984cd1e62e44b7220e69a6a3c"
 metafile = true
 
 [[files]]
-file = "mods/cobblemon-move-inspector.pw.toml"
-hash = "3c5f7b22780bf891bc34d22454a199ba90fbf42e56713dc92bda4183c7d82f2d"
-metafile = true
-
-[[files]]
 file = "mods/cobblemon-npc-0.1.0.jar"
 hash = "bc08a787efe7ed75c0d3427eff72494a8c9f76a4349cec7ef424e8ffeec07126"
 

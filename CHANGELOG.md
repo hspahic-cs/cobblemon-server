@@ -12,6 +12,22 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.18] - 2026-05-30
+
+### Added
+- Three Cobblemon battle UI mods to bring the in-battle experience
+  closer to the mainline games. They cover non-overlapping slices of
+  the battle screen:
+  - **Cobblemon Move Inspector** (NeoForge, native) — in-battle move
+    details: PP, type, power, accuracy, and effectiveness vs the
+    active opponent.
+  - **Cobblemon: Extended Battle UI** (Fabric via Connector) —
+    Showdown-style HUD with held items, ability, status, and stat
+    changes for the active Pokemon.
+  - **Cobblemon Battle Conditions** (Fabric via Connector) — movable
+    field-state window tracking weather, terrain, hazards, and
+    screens.
+
 ## [0.7.17] - 2026-05-30
 
 Server-side LM (and any Fabric mod) finally works on dev/prod.

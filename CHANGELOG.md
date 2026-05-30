@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.28] - 2026-05-30
+
+### Fixed
+- **Server crashed on startup with `cobblemon_bridge` mod-load
+  error**: 0.7.26 simplified `GymDefeatHook` (the gym path moved to
+  RCT's `rctmod:defeat_count` trigger) and removed the only
+  `@SubscribeEvent` method on the object — but `CobblemonBridge.init`
+  still called `NeoForge.EVENT_BUS.register(GymDefeatHook)`. NeoForge
+  throws `IllegalArgumentException: class … has no @SubscribeEvent
+  methods, but register was called anyway.` on `register()` when the
+  target has none, which aborted mod loading entirely (mods/ list
+  loaded but the bridge mod failed to construct, taking the server
+  down). Removed the now-unnecessary `EVENT_BUS.register` call —
+  `GymDefeatHook.registerEvents()` (subscribing to Cobblemon's
+  `BATTLE_VICTORY` via `CobblemonEvents.subscribe`) is still in place
+  and is the only subscription the hook needs.
+
 ## [0.7.27] - 2026-05-30
 
 ### Fixed

@@ -3,40 +3,40 @@ package com.cobblemonbridge.npc
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.SubscribeEvent
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
-import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent
-import net.neoforged.neoforge.event.tick.ServerTickEvent
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
+import net.neoforged.neoforge.event.tick.EntityTickEvent
 
 /**
  * Keeps tagged mobs rooted to their spawn position WITHOUT freezing the AI that drives natural
  * head/body movement (`LookAtPlayer`, `LookAround`, idle animation, etc.).
  *
- * Why event-based and not a per-tick world scan? The previous 0.7.6 implementation walked
- * `level.getEntitiesOfClass(..., AABB)` with a 60M×60M world-spanning AABB every tick.
- * NeoForge/lithium's `LongAVLTreeSet.subSet` over the loaded entity-section index made each
- * tick take seconds; the server watchdog killed the process and systemd crash-looped it.
- * Switched to a lazy registry populated by [EntityJoinLevelEvent] / [EntityLeaveLevelEvent] —
- * the tick iterates only the mobs actually loaded, with no level-wide scan.
+ * Why per-entity tick (not a registry populated by EntityJoinLevelEvent)? The entity-join
+ * approach has a race: when our gym mcfunctions run `rctmod trainer summon_persistent`, the
+ * resulting `EntityJoinLevelEvent` fires synchronously, BEFORE the next-line `tag … add
+ * cobblemon_bridge.anchor` command runs. The trainer is observed without the tag, the registry
+ * skips it, and no later event re-checks. Same-tick tag-after-spawn flows are common (RCT's
+ * summon command doesn't accept inline tags), so the registry approach silently no-ops.
+ *
+ * Why not a world-spanning per-tick AABB scan either? The 0.7.6 implementation walked
+ * `level.getEntitiesOfClass(..., AABB)` with a 60M×60M AABB every tick and crashed the server
+ * (NeoForge/lithium's `LongAVLTreeSet.subSet` over the loaded entity-section index made each
+ * tick take seconds; the server watchdog killed the process and systemd crash-looped it).
+ *
+ * `EntityTickEvent.Post` is the right hammer: NeoForge dispatches it inside each entity's
+ * existing tick path — no new scan work, no synchronization overhead. We add a fast-path
+ * predicate (`Mob` cast + tag check) that returns in nanoseconds for everything that isn't
+ * anchored. Per-tick cost scales with loaded-mob count, dominated by the entities Minecraft is
+ * already ticking.
  *
  * Behaviour:
- *   1. On entity-join, if the mob carries a `cobblemon_bridge.anchor[.<scope>]` tag, add it to
- *      [anchored]. Fires on chunk load too (resurrection from save), so restart-persisted mobs
- *      come back into the registry automatically. Also matches the legacy
- *      `cobblemon_bridge.market_vendor[.<scope>]` tag for backwards compatibility with vendors
- *      spawned before the rename.
- *   2. On entity-leave (chunk unload, removal, dimension transfer), drop it.
- *   3. Each tick, for each registered mob:
- *      - Prune if removed/dead.
- *      - Flip `noAi` off (defensive — keeps natural look-at animations alive).
- *      - If the mob drifted past [DRIFT_TOLERANCE_SQ] from its captured anchor on the
- *        horizontal plane, snap it back with zero momentum. Rotation is preserved so the AI's
- *        head/body animation isn't visibly interrupted.
+ *   - Each anchored mob's tick: capture anchor coords on first observation (NBT, persists
+ *     across chunk unload + restart), reset `noAi` if set, snap back if the AI tried to step
+ *     past [DRIFT_TOLERANCE_SQ] this tick. Rotation is preserved so vanilla LookAt continues
+ *     seamlessly.
  *
- * Anchor coords are stashed in entity NBT ([persistentData]), so they survive chunk unloads
- * and restarts. Captured once on the first time the entity is observed (either on join or on
- * tick if join was missed for any reason — defensive).
+ * Tags recognized:
+ *   - `cobblemon_bridge.anchor[.<scope>]` — primary opt-in.
+ *   - `cobblemon_bridge.market_vendor[.<scope>]` — legacy, keeps existing market vendors
+ *     anchored without a datapack rerun.
  */
 object EntityAnchor {
 
@@ -57,10 +57,6 @@ object EntityAnchor {
     private const val ANCHOR_Y = "cb_anchor_y"
     private const val ANCHOR_Z = "cb_anchor_z"
 
-    /** UUID → live Mob reference. Populated by [onEntityJoin], pruned by [onEntityLeave]
-     *  and defensively by the tick when an entry's entity becomes invalid. */
-    private val anchored: MutableMap<UUID, Mob> = ConcurrentHashMap()
-
     private fun isAnchored(m: Mob): Boolean =
         m.tags.any {
             it == ANCHOR_TAG_PREFIX || it.startsWith("$ANCHOR_TAG_PREFIX.") ||
@@ -68,37 +64,20 @@ object EntityAnchor {
         }
 
     @SubscribeEvent
-    fun onEntityJoin(event: EntityJoinLevelEvent) {
-        val m = event.entity as? Mob ?: return
-        if (isAnchored(m)) anchored[m.uuid] = m
-    }
+    fun onEntityTickPost(event: EntityTickEvent.Post) {
+        val mob = event.entity as? Mob ?: return
+        if (!isAnchored(mob)) return
+        if (!mob.isAlive) return
+        if (mob.isNoAi) mob.isNoAi = false
 
-    @SubscribeEvent
-    fun onEntityLeave(event: EntityLeaveLevelEvent) {
-        val m = event.entity as? Mob ?: return
-        anchored.remove(m.uuid)
-    }
+        val anchor = anchorOf(mob)
+        val dx = mob.x - anchor.x
+        val dz = mob.z - anchor.z
+        if (dx * dx + dz * dz <= DRIFT_TOLERANCE_SQ) return
 
-    @SubscribeEvent
-    fun onServerTickPost(event: ServerTickEvent.Post) {
-        val iter = anchored.entries.iterator()
-        while (iter.hasNext()) {
-            val (_, mob) = iter.next()
-            if (mob.isRemoved || !mob.isAlive) {
-                iter.remove()
-                continue
-            }
-            if (mob.isNoAi) mob.isNoAi = false
-
-            val anchor = anchorOf(mob)
-            val dx = mob.x - anchor.x
-            val dz = mob.z - anchor.z
-            if (dx * dx + dz * dz <= DRIFT_TOLERANCE_SQ) continue
-
-            // Snap back to anchor with rotation preserved so vanilla LookAt continues seamlessly.
-            mob.moveTo(anchor.x, anchor.y, anchor.z, mob.yRot, mob.xRot)
-            mob.deltaMovement = Vec3.ZERO
-        }
+        // Snap back to anchor with rotation preserved so vanilla LookAt continues seamlessly.
+        mob.moveTo(anchor.x, anchor.y, anchor.z, mob.yRot, mob.xRot)
+        mob.deltaMovement = Vec3.ZERO
     }
 
     private fun anchorOf(mob: Mob): Vec3 {

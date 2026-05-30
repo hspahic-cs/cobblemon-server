@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.22] - 2026-05-30
+
+### Fixed
+- **Gym leaders still wandered after 0.7.21.** The 0.7.21 anchor used
+  `EntityJoinLevelEvent` to register tagged mobs, but RCT's
+  `summon_persistent` fires the join event synchronously *before* the
+  next-line `tag … add cobblemon_bridge.anchor` command runs in the
+  spawn mcfunction. The trainer was observed without the tag, the
+  registry skipped it, and no later event re-checked. Switched
+  `EntityAnchor` to `EntityTickEvent.Post` with a fast-path tag
+  predicate — every loaded mob is checked once per tick, and tagged
+  ones get snap-back regardless of when the tag was added. Per-tick
+  cost is dominated by the entities Minecraft was already ticking; the
+  added work is a `Mob` cast and tag scan that returns in nanoseconds
+  for non-anchored mobs.
+  - Market vendor anchoring is unaffected (the legacy
+    `cobblemon_bridge.market_vendor` tag was always present at summon
+    time, so 0.7.21 worked for vendors — but the new mechanism makes
+    the spawn-flow assumption irrelevant going forward).
+
 ## [0.7.21] - 2026-05-30
 
 ### Changed

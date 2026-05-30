@@ -12,37 +12,29 @@ root README.
 
 ## [Unreleased]
 
-## [0.7.15] - 2026-05-30
+## [0.7.16] - 2026-05-30
 
-LM hotfix part 2 — add Trinkets to satisfy LM's hard dep.
+Reverted LM to 7.8 + removed Trinkets.
 
-LM 7.1-NEOFORGE-CONNECTOR's fabric.mod.json declares `depends trinkets @ [*]`,
-which NeoForge's pre-load gate enforces. Without it, every Connector-loaded
-mod gets dropped into "broken state" and downstream mods crash on registry
-freeze (cobblenav was the visible casualty in 0.7.14). Modrinth's deps page
-listed Accessories, not Trinkets, which is why this took a launch to surface.
-Added `trinkets-3.10.0.jar` (Fabric, loaded via Connector). Trinkets and
-Accessories run side-by-side — different mod IDs, different slot registries,
-no API overlap.
+LM 7.1-NEOFORGE-CONNECTOR was the wrong direction — its fabric.mod.json
+declares `depends trinkets`, which crashed the *client* (cobblenav model
+load). LM 7.8 declares `accessories` instead, which is already in the pack.
+Reverting to 7.8.
 
-## [0.7.14] - 2026-05-30
+Trinkets removed since 7.8 doesn't need it.
 
-LM hotfix.
+Note: server-side LM is still broken — Connector itself isn't loading on
+the dev server (its META-INF/services aren't picked up because the connector
+jar isn't on the boot classpath via `fml.pluginLayerLibraries`). Working
+through that separately. Client-side LM is what this fix targets.
 
-### Fixed
-- **Legendary Monuments crashed under Connector** — was pinned to LM 7.8,
-  which is a Fabric-only jar. Sinytra Connector can usually load Fabric
-  mods, but LM's mixins are sensitive enough that the author publishes a
-  dedicated NeoForge build (`7.1-NEOFORGE-CONNECTOR`). Switched to that
-  build. Sinytra `2.0.0-beta.14+1.21.1` and TerraBlender `4.1.0.8` were
-  already current — discord suggestions to bump those were based on stale
-  info.
+## [0.7.15] - 2026-05-30 [reverted]
 
-### Changed
-- `modpack/index.toml` brought back in sync with `modpack/mods/` after
-  prior commits added/removed manifests without running `packwiz refresh`.
-  CI runs `refresh` at build time, so this was cosmetic — but the
-  committed index now matches what packwiz would generate.
+Added Trinkets — wrong fix, reverted in 0.7.16.
+
+## [0.7.14] - 2026-05-30 [reverted]
+
+Switched LM to 7.1-NEOFORGE-CONNECTOR — wrong fix, reverted in 0.7.16.
 
 ## [0.7.13] - 2026-05-30
 

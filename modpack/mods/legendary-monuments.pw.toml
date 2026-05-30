@@ -1,13 +1,13 @@
 name = "Cobblemon: Legendary Monuments"
-filename = "LegendaryMonuments-7.1-NEOFORGE-CONNECTOR.jar"
+filename = "LegendaryMonuments-7.8.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/m6RyHSbV/versions/iHN3HqQS/LegendaryMonuments-7.1-NEOFORGE-CONNECTOR.jar"
+url = "https://cdn.modrinth.com/data/m6RyHSbV/versions/kSVEEVIv/LegendaryMonuments-7.8.jar"
 hash-format = "sha512"
-hash = "993a08d2cc8ff856d3266a496c95a86fc0e4a7e2547bf043dcb8866a52033e436ecab3918acb8501727b060b3ca333665c76ae51269af07d10d1c4ebee801cd6"
+hash = "44387e0b40e679e3449c5c675bb91a2ec5c165a1c449f95e08e05a2ea4aa909210f1546170d32e9fe33b2b4a5bb4ab449665a60847f86fff1398fce081e2bbd1"
 
 [update]
 [update.modrinth]
 mod-id = "m6RyHSbV"
-version = "iHN3HqQS"
+version = "kSVEEVIv"

@@ -12,6 +12,44 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.11] - 2026-05-30
+
+### Added
+- **server-quests / "Centurion" side quest (`server:reach_pokedex_100`)**:
+  catch 100 distinct Pokémon species. Branches off `server:catch_pokemon`
+  ("Gotta Catch One") so it appears in the player's advancement tree, but
+  it's a side quest — not in the HUD ticker, not blocking, never gates
+  anything else. New `cobblemon-bridge / PokedexProgressHook` subscribes
+  to `CobblemonEvents.POKEDEX_DATA_CHANGED_POST`, recounts caught
+  species via reflection into `Cobblemon.playerDataManager.getPokedexData`
+  on each fire, and awards at 100. Completion `tellraw` is prefixed with
+  `[Side Quest Complete]` in purple/light-purple so it visually
+  distinguishes from main-line completions. Reward: 1 Master Ball +
+  Ultra Key.
+- **cobblemon-bridge / /profile additions**:
+  - **Pokédex tile** (slot 24, row 2) shows the player's caught-species
+    count. Reads via `PokedexProgressHook.caughtCount(player)`. Offline
+    targets show 0 until next login (Cobblemon's pokedex API needs a
+    live `ServerPlayer`).
+  - **Ranked-ELO tile** now shows a Pokémon-themed rank alongside the
+    raw number: `1450 (Veteran)`. Bands: <1100 Rookie / 1100-1199
+    Trainer / 1200-1299 Ace Trainer / 1300-1399 Veteran / 1400-1499
+    Elite / 1500+ Champion.
+
+### Changed
+- **NeoEssentials / `startingBalance` 100 → 0**: new players now start
+  at \$0 instead of \$100. Live `runtime/economy.json` on dev patched;
+  also pinned as `modpack/server-overrides/config/neoessentials/economy.json`
+  so deploys persist the value (rsync from server-overrides/config on
+  every deploy). Pinning the whole file means a NeoEssentials version
+  update that adds new fields would need a re-pin from the live copy.
+
+### Notes
+- `QuestCommand` gains a `SIDE_QUESTS` list (so `/quests list` shows it
+  under "Side Quests") and a REWARDS entry, but it stays out of
+  `LINEAR_CHAIN`, `INITIAL_TRACK`, and `tick_player.mcfunction` — the
+  three places that drive the HUD + main-quest UI.
+
 ## [0.7.9] - 2026-05-29
 
 Combined hotfix + small-features bundle (squash of three in-flight

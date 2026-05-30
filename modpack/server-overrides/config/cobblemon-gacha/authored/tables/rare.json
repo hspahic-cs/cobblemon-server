@@ -5,7 +5,7 @@
     {
       "lootTier": "Floor",
       "label": "1 Rare Candy",
-      "weightPct": 10.0,
+      "weightPct": 8.0,
       "items": [
         {
           "type": "vanilla",
@@ -18,7 +18,7 @@
     {
       "lootTier": "Floor",
       "label": "32 Quick balls",
-      "weightPct": 6.0,
+      "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
@@ -31,7 +31,7 @@
     {
       "lootTier": "Floor",
       "label": "32 Ultra balls",
-      "weightPct": 6.0,
+      "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
@@ -43,34 +43,21 @@
     },
     {
       "lootTier": "Floor",
-      "label": "5 IV Candy (random)",
+      "label": "2 Exp Candy M",
       "weightPct": 8.0,
       "items": [
         {
           "type": "vanilla",
-          "id": "cobblemon:rare_candy",
-          "count": 5
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Floor",
-      "label": "5 Exp Candy M",
-      "weightPct": 10.0,
-      "items": [
-        {
-          "type": "vanilla",
           "id": "cobblemon:exp_candy_m",
-          "count": 5
+          "count": 2
         }
       ],
-      "notes": ""
+      "notes": "Nerfed from 5 (0.7.12)"
     },
     {
       "lootTier": "Floor",
       "label": "3 PP Up",
-      "weightPct": 4.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -83,7 +70,7 @@
     {
       "lootTier": "Floor",
       "label": "Leftovers",
-      "weightPct": 8.0,
+      "weightPct": 6.0,
       "items": [
         {
           "type": "vanilla",
@@ -95,16 +82,16 @@
     },
     {
       "lootTier": "Mid",
-      "label": "3 EXP Candy L",
-      "weightPct": 6.0,
+      "label": "1 EXP Candy L",
+      "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:exp_candy_l",
-          "count": 3
+          "count": 1
         }
       ],
-      "notes": ""
+      "notes": "Nerfed from 3 (0.7.12)"
     },
     {
       "lootTier": "Mid",
@@ -121,34 +108,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Bee egg",
-      "weightPct": 6.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "minecraft:egg",
-          "count": 1
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Mint seed (random)",
-      "weightPct": 6.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "minecraft:wheat_seeds",
-          "count": 1
-        }
-      ],
-      "notes": "Farming mints"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Uncommon pokemon egg placeholder",
-      "weightPct": 0.0,
+      "label": "Uncommon Pokémon Egg",
+      "weightPct": 18.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -157,7 +118,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": ""
+      "notes": "Egg-tier rewards bumped to 30% target (0.7.12)"
     },
     {
       "lootTier": "Mid",
@@ -170,7 +131,7 @@
           "count": 1
         }
       ],
-      "notes": ""
+      "notes": "XP-boost held item — not a Pokémon egg"
     },
     {
       "lootTier": "Mid",
@@ -187,16 +148,20 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Focus held item",
+      "label": "Choice Held Item",
       "weightPct": 4.0,
       "items": [
         {
-          "type": "vanilla",
-          "id": "cobblemon:focus_sash",
+          "type": "random_item",
+          "ids": [
+            "cobblemon:muscle_band",
+            "cobblemon:choice_band",
+            "cobblemon:focus_band"
+          ],
           "count": 1
         }
       ],
-      "notes": ""
+      "notes": "Random choice band, muscle band, or focus band (0.7.12)"
     },
     {
       "lootTier": "Mid",
@@ -226,8 +191,8 @@
     },
     {
       "lootTier": "High",
-      "label": "Rare pokemon egg placeholder",
-      "weightPct": 0.0,
+      "label": "Rare Pokémon Egg",
+      "weightPct": 11.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -236,20 +201,20 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": ""
+      "notes": "Egg-tier rewards bumped to 30% target (0.7.12)"
     },
     {
       "lootTier": "High",
-      "label": "2 EXP candy XL",
+      "label": "1 EXP candy XL",
       "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:exp_candy_xl",
-          "count": 2
+          "count": 1
         }
       ],
-      "notes": ""
+      "notes": "Nerfed from 2 (0.7.12)"
     },
     {
       "lootTier": "High",
@@ -257,25 +222,13 @@
       "weightPct": 2.0,
       "items": [
         {
-          "type": "vanilla",
-          "id": "minecraft:enchanted_book",
+          "type": "enchanted_book",
+          "enchantment": "minecraft:silk_touch",
+          "level": 1,
           "count": 1
         }
       ],
-      "notes": "Economy grind tool"
-    },
-    {
-      "lootTier": "High",
-      "label": "2 Bottle Cap",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:bottle_cap",
-          "count": 2
-        }
-      ],
-      "notes": ""
+      "notes": "Economy grind tool — now grants an actually-enchanted book (0.7.12)"
     },
     {
       "lootTier": "Jackpot",
@@ -289,12 +242,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "The chase item"
+      "notes": "The chase item — shiny weight preserved per design (0.7.12)"
     },
     {
       "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 0.5,
+      "weightPct": 1.0,
       "items": [
         {
           "type": "vanilla",
@@ -307,7 +260,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Ultra Key",
-      "weightPct": 0.5,
+      "weightPct": 1.0,
       "items": [
         {
           "type": "gacha_key",
@@ -320,7 +273,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Rare keys",
-      "weightPct": 0.5,
+      "weightPct": 2.0,
       "items": [
         {
           "type": "gacha_key",

@@ -1,0 +1,21 @@
+{
+  "_comment": "Server-side override: keep RCT's defeat_count criterion intact (so trainer defeats still register and downstream child advancements still unlock — they're what cobblemon-bridge's gym-bounty hook listens to), but strip the `display` block so the RCT tab is hidden from the advancements menu. Server Progression becomes the sole visible tab.",
+  "criteria": {
+    "defeat_any": {
+      "conditions": {
+        "count": 1,
+        "entity": {
+          "type": null
+        },
+        "trainer_ids": [],
+        "trainer_type": null
+      },
+      "trigger": "rctmod:defeat_count"
+    }
+  },
+  "requirements": [
+    [
+      "defeat_any"
+    ]
+  ]
+}

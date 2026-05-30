@@ -84,10 +84,12 @@ object MarketMenu {
         player.openMenu(provider)
     }
 
-    /** "tm_fire" → "Fire TMs"; falls back to the raw tag if it doesn't match the known shape. */
+    /** Delegates to MarketCommands.vendorDisplayName so spawn-vendor names and GUI titles
+     *  stay in sync (single source of truth for the slug→display-name mapping). The GUI
+     *  strips a trailing " Vendor" so the title reads "Fire TMs" / "Held Items" rather than
+     *  "Fire TMs Vendor" / "Held Items Vendor" — the GUI frame already implies it's a vendor. */
     private fun formatTag(tag: String): String =
-        if (tag.startsWith("tm_")) tag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
-        else tag.replace('_', ' ').replaceFirstChar { it.uppercase() }
+        com.cobblemonmarket.commands.MarketCommands.vendorDisplayName(tag).removeSuffix(" Vendor")
 
     /** All entries this vendor carries, in stable registration order. */
     private fun visibleItems(vendorTag: String): List<Map.Entry<String, ItemEntry>> =

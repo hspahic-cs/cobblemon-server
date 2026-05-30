@@ -12,6 +12,72 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.12] - 2026-05-30
+
+Gacha reward fixes + market table cleanup + advancement menu cleanup. Mostly
+config/bug-fix work — only one schema-level change (new `enchanted_book`
+ItemSpec) and one display-name bug fix in the market.
+
+### Fixed (gacha — items giving the wrong thing)
+- **Silk Touch Book** now grants an actually-enchanted book (was giving a
+  plain `minecraft:enchanted_book` with no stored enchantment). Added
+  `ItemSpec.EnchantedBook(enchantment, level, count)` sealed subtype and
+  wired it through serializer + `RewardGranter.materialize` using
+  `EnchantmentHelper.setEnchantments`. Loot-table schema gains a new
+  `enchanted_book` JSON `type`.
+
+### Changed (gacha — removed broken / unwanted entries)
+- **Bee Egg** entry removed from `rare.json` — was giving a vanilla
+  `minecraft:egg` (chicken throwing egg). No replacement.
+- **IV Candy** entry removed from `rare.json` — was giving `cobblemon:rare_candy`
+  with no IV effect. No replacement.
+- **Bottle Cap / Gold Bottle Cap** entries removed from `rare.json` and
+  `ultra.json` — item doesn't exist in the live Cobblemon build, so the
+  vanilla-id lookup was failing silently.
+- **Focus held item** renamed to **Choice Held Item** and converted from a
+  fixed `cobblemon:focus_sash` drop to a `random_item` pick across
+  `cobblemon:muscle_band`, `cobblemon:choice_band`, `cobblemon:focus_band`
+  with equal probability.
+
+### Changed (gacha — tuning)
+- **EXP Candy counts halved across all 3 crate tiers** (round down, min 1).
+  E.g., 5 Exp Candy S → 2; 5 Exp Candy M → 2; 3 Exp Candy L → 1; 2 Exp Candy
+  XL → 1. Weights untouched.
+- **Pokémon eggs bumped to ~30% total weight per crate** (was 0% in common,
+  ~0.5% in rare, ~23% in ultra). All crates now total exactly 30% egg.
+  - Common crate: 30% common-pool egg (no shiny).
+  - Rare crate: 18% uncommon + 11.5% rare + 0.5% shiny rare (shiny preserved).
+  - Ultra crate: 14% uncommon + 8% ultra_rare + 3% ultra_rare HA + 5% shiny
+    (shiny weights unchanged per design).
+- All 3 loot tables re-normalised to `totalWeightPct = 100`.
+
+### Changed (market)
+- **`/market prices` now shows only Pokéballs + Carrots + Candies**
+  (whitelist: `*_ball`, `minecraft:carrot`, `rare_candy`, `exp_candy_*`).
+  Potions, status heals, PP restore, EV vitamins, revives, and all TM /
+  held-item vendor scopes are hidden from the prices overview.
+- **Carrot baseSellPrice raised 0 → 2 + `sellable=true`** so excess carrots
+  from the carrot farm have a sink and the carrot economy isn't one-way.
+- **Fixed Held Items vendor display name** — used to render as
+  "Held_items TM Vendor" because the spawn-vendor command's name generator
+  assumed every non-default vendor was a TM vendor and naïvely
+  upper-cased the slug. Now renders as "Held Items Vendor". Unified the
+  vendor-display-name logic between `MarketCommands.spawnVendor` and
+  `MarketMenu.titleForVendor` so spawn and GUI titles can't drift again
+  (single helper: `MarketCommands.vendorDisplayName`).
+
+### Changed (advancements)
+- **RCT (radical-trainers) advancement tab hidden** from the in-game
+  advancements menu. Added a server-side override at
+  `data/rctmod/advancement/trainers/defeat_any.json` (in the existing
+  `server-hide-advancements` datapack) that keeps the original
+  `rctmod:defeat_count` criterion intact (so trainer defeats still register
+  and downstream child advancements still unlock for any code listening),
+  but strips the `display` block so the tab disappears from the menu.
+- Server Progression (already configured) becomes the sole visible
+  advancement tab — cobblemon + minecraft + rctmod tabs are now all hidden
+  by the same datapack.
+
 ## [0.7.11] - 2026-05-30
 
 Full market overhaul. Price-multiplier clamp, global min sell price, per-item

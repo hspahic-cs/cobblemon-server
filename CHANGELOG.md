@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+### Fixed
+- **Legendary Monuments crashed under Connector** — was pinned to LM 7.8,
+  which is a Fabric-only jar. Sinytra Connector can usually load Fabric
+  mods, but LM's mixins are sensitive enough that the author publishes a
+  dedicated NeoForge build (`7.1-NEOFORGE-CONNECTOR`). Switched to that
+  build. Sinytra `2.0.0-beta.14+1.21.1` and TerraBlender `4.1.0.8` were
+  already current — discord suggestions to bump those were based on stale
+  info.
+
+### Changed
+- `modpack/index.toml` brought back in sync with `modpack/mods/` after
+  prior commits added/removed manifests without running `packwiz refresh`.
+  CI runs `refresh` at build time, so this was cosmetic — but the
+  committed index now matches what packwiz would generate.
+
 ## [0.7.13] - 2026-05-30
 
 Two playtest-surfaced bug fixes from 0.7.12 + a small market addition.

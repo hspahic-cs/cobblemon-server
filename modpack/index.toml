@@ -50,11 +50,6 @@ hash = "bd1f2508c571574e76ae32614a353eb900063c0e2bf54bb29ac98e7d6ab36eb6"
 metafile = true
 
 [[files]]
-file = "mods/cobblemon-battle-conditions.pw.toml"
-hash = "afb1ae7bafef46da5db60b16ba44932de52d29dbe2e0e71618c8ddfa48f8033e"
-metafile = true
-
-[[files]]
 file = "mods/cobblemon-counter.pw.toml"
 hash = "5298e216aa91dc3463ddd92d31b3b9fd43ee47d2b1ffce486ae4c725bfeec9ce"
 metafile = true
@@ -161,6 +156,11 @@ metafile = true
 [[files]]
 file = "mods/entityculling.pw.toml"
 hash = "1610d7be42535a16971fe825983ee45af77dcbba37b37e75d5fa7f4d96cb3801"
+metafile = true
+
+[[files]]
+file = "mods/fabric-language-kotlin.pw.toml"
+hash = "337d97b990f76c91584b12600651ae7bd47a0824e45070b3d9330b0922149fc0"
 metafile = true
 
 [[files]]

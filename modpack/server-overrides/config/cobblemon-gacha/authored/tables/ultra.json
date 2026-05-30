@@ -5,7 +5,7 @@
     {
       "lootTier": "Floor",
       "label": "1 Ability Patch",
-      "weightPct": 13.0,
+      "weightPct": 16.0,
       "items": [
         {
           "type": "vanilla",
@@ -32,7 +32,7 @@
     {
       "lootTier": "Floor",
       "label": "10 Rare Candy",
-      "weightPct": 10.0,
+      "weightPct": 13.0,
       "items": [
         {
           "type": "vanilla",
@@ -114,39 +114,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Legendary Monument Fragment",
-      "weightPct": 5.0,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "legendarymonuments:dialga_pedestal",
-            "legendarymonuments:palkia_pedestal",
-            "legendarymonuments:giratina_pedestal",
-            "legendarymonuments:mew_pedestal",
-            "legendarymonuments:lugia_pedestal",
-            "legendarymonuments:ho_oh_pedestal",
-            "legendarymonuments:heatran_pedestal",
-            "legendarymonuments:hoopa_pedestal",
-            "legendarymonuments:entei_pedestal",
-            "legendarymonuments:raikou_pedestal",
-            "legendarymonuments:suicune_pedestal",
-            "legendarymonuments:latias_pedestal",
-            "legendarymonuments:kyurem_pedestal",
-            "legendarymonuments:reshiram_pedestal",
-            "legendarymonuments:zekrom_pedestal",
-            "legendarymonuments:zacian_pedestal",
-            "legendarymonuments:zamazenta_pedestal"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Big quest acceleration"
-    },
-    {
-      "lootTier": "Mid",
       "label": "TBD Ultra Reward #4",
-      "weightPct": 4.0,
+      "weightPct": 5.5,
       "items": [
         {
           "type": "placeholder",
@@ -170,37 +139,6 @@
         }
       ],
       "notes": "Shiny w/ IV head start — weight preserved (0.7.12)"
-    },
-    {
-      "lootTier": "High",
-      "label": "1 Legendary Monument Completion Voucher",
-      "weightPct": 3.0,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "legendarymonuments:dialga_pedestal",
-            "legendarymonuments:palkia_pedestal",
-            "legendarymonuments:giratina_pedestal",
-            "legendarymonuments:mew_pedestal",
-            "legendarymonuments:lugia_pedestal",
-            "legendarymonuments:ho_oh_pedestal",
-            "legendarymonuments:heatran_pedestal",
-            "legendarymonuments:hoopa_pedestal",
-            "legendarymonuments:entei_pedestal",
-            "legendarymonuments:raikou_pedestal",
-            "legendarymonuments:suicune_pedestal",
-            "legendarymonuments:latias_pedestal",
-            "legendarymonuments:kyurem_pedestal",
-            "legendarymonuments:reshiram_pedestal",
-            "legendarymonuments:zekrom_pedestal",
-            "legendarymonuments:zacian_pedestal",
-            "legendarymonuments:zamazenta_pedestal"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Skips an entire monument step"
     },
     {
       "lootTier": "High",
@@ -273,34 +211,16 @@
     },
     {
       "lootTier": "Jackpot",
-      "label": "Full Monument Questline Skip (completes 1 entire monument)",
-      "weightPct": 0.5,
+      "label": "1 Master Ball",
+      "weightPct": 1.0,
       "items": [
         {
-          "type": "random_item",
-          "ids": [
-            "legendarymonuments:dialga_pedestal",
-            "legendarymonuments:palkia_pedestal",
-            "legendarymonuments:giratina_pedestal",
-            "legendarymonuments:mew_pedestal",
-            "legendarymonuments:lugia_pedestal",
-            "legendarymonuments:ho_oh_pedestal",
-            "legendarymonuments:heatran_pedestal",
-            "legendarymonuments:hoopa_pedestal",
-            "legendarymonuments:entei_pedestal",
-            "legendarymonuments:raikou_pedestal",
-            "legendarymonuments:suicune_pedestal",
-            "legendarymonuments:latias_pedestal",
-            "legendarymonuments:kyurem_pedestal",
-            "legendarymonuments:reshiram_pedestal",
-            "legendarymonuments:zekrom_pedestal",
-            "legendarymonuments:zacian_pedestal",
-            "legendarymonuments:zamazenta_pedestal"
-          ],
+          "type": "vanilla",
+          "id": "cobblemon:master_ball",
           "count": 1
         }
       ],
-      "notes": "Biggest single pull possible"
+      "notes": "Replaces the removed monument-questline pedestal (0.7.12)"
     }
   ]
 }

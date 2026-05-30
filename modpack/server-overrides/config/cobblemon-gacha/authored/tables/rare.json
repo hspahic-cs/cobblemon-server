@@ -164,22 +164,9 @@
       "notes": "Random choice band, muscle band, or focus band (0.7.12)"
     },
     {
-      "lootTier": "Mid",
-      "label": "16 Nether warts",
-      "weightPct": 4.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "minecraft:nether_wart",
-          "count": 16
-        }
-      ],
-      "notes": "Farming items"
-    },
-    {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 2.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -192,7 +179,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 11.5,
+      "weightPct": 13.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -219,7 +206,7 @@
     {
       "lootTier": "High",
       "label": "Silk Touch Book",
-      "weightPct": 2.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "enchanted_book",

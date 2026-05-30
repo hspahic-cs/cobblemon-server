@@ -148,7 +148,7 @@
     {
       "lootTier": "High",
       "label": "Common Pokémon Egg",
-      "weightPct": 30.0,
+      "weightPct": 25.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -157,7 +157,21 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Egg-tier rewards bumped to 30% target (0.7.12)"
+      "notes": "Egg-tier rewards bumped to ~30% target (0.7.12)"
+    },
+    {
+      "lootTier": "High",
+      "label": "Uncommon Pokémon Egg",
+      "weightPct": 5.5,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "uncommon",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Sprinkle of uncommon-pool eggs for variety (0.7.12)"
     },
     {
       "lootTier": "High",
@@ -184,19 +198,6 @@
         }
       ],
       "notes": "PvP utility"
-    },
-    {
-      "lootTier": "High",
-      "label": "1 EXP Candy L",
-      "weightPct": 0.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_l",
-          "count": 1
-        }
-      ],
-      "notes": "Nerfed from 2 (0.7.12)"
     },
     {
       "lootTier": "High",

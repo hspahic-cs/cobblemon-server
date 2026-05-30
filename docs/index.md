@@ -1,29 +1,30 @@
-# Documentation
+# Cobblemon Server
 
-## How to do things
+A private Pokémon-themed Minecraft server. Catch, train, battle, build.
 
-- **[working-with-mods.md](working-with-mods.md)** — edit a mod, ship it to dev, promote to prod
-- **[snapshots.md](snapshots.md)** — snapshot prod, reset dev to a snapshot
-- **[server-setup.md](server-setup.md)** — VM layout, systemd units, ports
-- **[install-client.md](install-client.md)** — installing the modpack in PrismLauncher
-- **[neoforge-dev-setup.md](neoforge-dev-setup.md)** — local dev environment for editing mods
-- **[upstream-sources.md](upstream-sources.md)** — reference clones in `reference/`
-- **[schematic-build-guide.md](schematic-build-guide.md)** — WorldEdit schematic workflow
+## Joining
 
-## Design
+You'll need a few things before you can connect:
 
-What the systems are and why they're designed that way.
+1. **[Install the modpack](install.md)** — one-time setup with Prism Launcher.
+2. **[Connect to the server](connect.md)** — get the IP from Harris and join.
 
-- **[design/gym-system.md](design/gym-system.md)** — gym tower, leader progression, AI difficulty, rewards
-- **[design/pvp-elo.md](design/pvp-elo.md)** — ranked ladder, betting, Elo math
-- **[design/player-feedback.md](design/player-feedback.md)** — `/feedback bug` and `/feedback suggest` → GitHub Issues
-- **[design/mod-state-vs-config.md](design/mod-state-vs-config.md)** — authored vs runtime config convention
+## What's running
 
-## Reference data
+| Component  | Version  |
+|------------|----------|
+| Minecraft  | 1.21.1   |
+| Mod Loader | NeoForge 21.1.227 |
+| Java       | 21       |
+| Cobblemon  | 1.7.3    |
 
-- **[gym-leader-pool.json](gym-leader-pool.json)** — themed gym leader templates
-- **[confirmed-legendaries.txt](confirmed-legendaries.txt)** — legendary spawn list
+The pack ships Cobblemon and ~35 supporting mods (Minecolonies, Terralith,
+performance mods, QoL like Xaero's Minimap, JEI). Full list is in the
+repo's [README](https://github.com/hspahic-cs/cobblemon-server#readme).
 
-## Tickets
+## Help
 
-In-progress design discussions live under [tickets/](tickets/).
+If something's broken or unclear in-game, run `/feedback bug <description>`
+and it'll open a GitHub issue automatically.
+
+For anything else, ping Harris on Discord.

@@ -1,7 +1,5 @@
 # Awarded by cobblemon-bridge GymDefeatHook for gym_id=2 challenge variant.
 playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1.0 0.9
 tellraw @s [{"text":"\n§5§l[Challenge Defeated] ","bold":true},{"text":"Gym 2: Gardenia — Challenge","color":"light_purple","bold":true},{"text":"\n§6§l✦ Reward: §e§lRare Key","bold":false},{"text":"\n"}]
-# 0.7.25 — gym bounty paid here via /eco give
-eco give @s 300
 tag @s add cq_reward_key_rare_1
 schedule function server:quests/rewards/_finalize 20t append

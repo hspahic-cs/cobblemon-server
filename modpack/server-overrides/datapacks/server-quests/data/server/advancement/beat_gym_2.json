@@ -1,6 +1,6 @@
 {
-  "_comment": "0.7.25 \u2014 parent re-routed from first_pvp_win \u2192 ranch_carrot_farm to visually gate Gym 2 behind the Exeggcute / Cobbleworkers onboarding chain. RCT itself doesn't enforce gym order, so this is purely UI / tree-rendering; players who beat gym 2 before completing the carrot-farm quest still get credit (the advancement awards on its own criterion regardless of parent state).",
-  "parent": "server:ranch_carrot_farm",
+  "_comment": "0.7.29 \u2014 parent restored to first_pvp_win (which is now itself parented to ranch_carrot_farm). Final mainline chain after gym 1: reach_income_250 \u2192 evolve_exeggutor \u2192 ranch_carrot_farm \u2192 first_pvp_win \u2192 beat_gym_2. RCT doesn't gate gym entry on advancements; tree placement only.",
+  "parent": "server:first_pvp_win",
   "display": {
     "title": {
       "text": "Gym 2: Gardenia"

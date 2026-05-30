@@ -1,5 +1,5 @@
 {
-  "_comment": "0.7.26 — re-parented from beat_gym_23 (Lance) to defeat_elite_four so the Champion fight visually requires beating ALL four Elite Four members, not just Lance. RCT doesn't actually gate Champion entry on advancements — this is purely UI/tree placement to make the canonical mainline progression visible.",
+  "_comment": "0.7.26 \u2014 re-parented from beat_gym_23 (Lance) to defeat_elite_four so the Champion fight visually requires beating ALL four Elite Four members, not just Lance. RCT doesn't actually gate Champion entry on advancements \u2014 this is purely UI/tree placement to make the canonical mainline progression visible.",
   "parent": "server:defeat_elite_four",
   "display": {
     "title": {

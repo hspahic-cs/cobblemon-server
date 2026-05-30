@@ -3,6 +3,10 @@ package com.cobblemonmarket.commands
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemConfig
 import com.cobblemonmarket.config.MarketConfig
+import com.cobblemonmarket.config.effectiveBuyClamp
+import com.cobblemonmarket.config.effectiveMinBuyPrice
+import com.cobblemonmarket.config.effectiveSellClamp
+import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
 import com.cobblemonmarket.data.Candle
 import com.cobblemonmarket.data.PriceHistory
@@ -175,8 +179,106 @@ object MarketCommands {
                             1
                         }
                     )
+                    .then(Commands.literal("spawn")
+                        .executes { ctx -> spawnVendor(ctx.source, ""); 1 }
+                        .then(Commands.argument("vendorTag", StringArgumentType.word())
+                            .suggests { _, builder ->
+                                CobblemonMarket.items.values
+                                    .map { it.vendorScope }
+                                    .filter { it.isNotEmpty() }
+                                    .toSortedSet()
+                                    .forEach { builder.suggest(it) }
+                                builder.buildFuture()
+                            }
+                            .executes { ctx ->
+                                spawnVendor(ctx.source, StringArgumentType.getString(ctx, "vendorTag"))
+                                1
+                            }
+                        )
+                    )
+                    .then(Commands.literal("delete")
+                        .executes { ctx -> deleteVendors(ctx.source, ""); 1 }
+                        .then(Commands.argument("vendorTag", StringArgumentType.word())
+                            .executes { ctx ->
+                                deleteVendors(ctx.source, StringArgumentType.getString(ctx, "vendorTag"))
+                                1
+                            }
+                        )
+                    )
                 )
         )
+    }
+
+    /**
+     * Summon a market vendor villager at the source position, tagged so [MarketNpcHook] dispatches
+     * right-clicks to the right vendor scope. `""` → default tag `cobblemon_bridge.market_vendor`;
+     * any other → `cobblemon_bridge.market_vendor.<vendorTag>` (e.g. `tm_fire`).
+     *
+     * Defensive: kills any existing tagged villager within 4 blocks first so re-spawn is idempotent.
+     */
+    private fun spawnVendor(source: net.minecraft.commands.CommandSourceStack, vendorTag: String) {
+        val level: net.minecraft.server.level.ServerLevel = source.level
+        val pos = source.position
+        val tagSuffix = if (vendorTag.isEmpty()) "" else ".$vendorTag"
+        val fullTag = "cobblemon_bridge.market_vendor$tagSuffix"
+        val name = vendorDisplayName(vendorTag)
+
+        val killed = killNearbyTagged(level, pos.x, pos.y, pos.z, fullTag, radius = 4.0)
+
+        val villager = net.minecraft.world.entity.EntityType.VILLAGER.create(level) ?: run {
+            source.sendSystemMessage(Component.literal("§c[Market] Failed to create villager entity"))
+            return
+        }
+        villager.moveTo(pos.x, pos.y, pos.z, source.rotation.y, 0f)
+        villager.addTag(fullTag)
+        villager.isInvulnerable = true
+        villager.setPersistenceRequired()
+        villager.isSilent = true
+        // AI intentionally left on so vanilla LookAtPlayer + LookAround drive natural head
+        // movement. cobblemon-bridge MarketVendorAnchor pins the villager to its spawn position
+        // each tick so it can't actually wander even with full AI active.
+        villager.isNoAi = false
+        villager.villagerData = net.minecraft.world.entity.npc.VillagerData(
+            net.minecraft.world.entity.npc.VillagerType.PLAINS,
+            net.minecraft.world.entity.npc.VillagerProfession.LIBRARIAN,
+            5,
+        )
+        villager.offers.clear()
+        villager.customName = Component.literal(name).setStyle(
+            net.minecraft.network.chat.Style.EMPTY
+                .withColor(0x55FF55).withBold(true).withItalic(false))
+        villager.isCustomNameVisible = true
+
+        if (!level.addFreshEntity(villager)) {
+            source.sendSystemMessage(Component.literal("§c[Market] Failed to add vendor to level"))
+            return
+        }
+        val killedNote = if (killed > 0) " §7(replaced $killed)" else ""
+        source.sendSystemMessage(Component.literal("§a[Market] Spawned $name$killedNote"))
+    }
+
+    private fun deleteVendors(source: net.minecraft.commands.CommandSourceStack, vendorTag: String) {
+        val level = source.level
+        val pos = source.position
+        val tagSuffix = if (vendorTag.isEmpty()) "" else ".$vendorTag"
+        val fullTag = "cobblemon_bridge.market_vendor$tagSuffix"
+        val killed = killNearbyTagged(level, pos.x, pos.y, pos.z, fullTag, radius = 32.0)
+        source.sendSystemMessage(Component.literal("§a[Market] Removed $killed vendor(s) with tag '$fullTag'"))
+    }
+
+    private fun killNearbyTagged(
+        level: net.minecraft.server.level.ServerLevel,
+        x: Double, y: Double, z: Double, tag: String, radius: Double,
+    ): Int {
+        val box = net.minecraft.world.phys.AABB(
+            x - radius, y - radius, z - radius,
+            x + radius, y + radius, z + radius,
+        )
+        val matches = level.getEntitiesOfClass(
+            net.minecraft.world.entity.npc.Villager::class.java, box,
+        ) { v -> v.tags.contains(tag) }
+        for (e in matches) e.discard()
+        return matches.size
     }
 
     private fun showPrices(source: CommandSourceStack) {
@@ -185,16 +287,25 @@ object MarketCommands {
 
         // Compute everything first so column widths can adapt to the actual content.
         data class Row(val name: String, val buy: Int, val sell: Int, val stock: Int, val baseStock: Int)
-        val rows = items.map { (itemId, entry) ->
-            val state = store.getOrCreate(itemId)
-            Row(
-                name = formatItemName(itemId),
-                buy = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity),
-                sell = PricingEngine.sellPrice(entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity),
-                stock = state.stock.toInt(),
-                baseStock = entry.baseStock,
-            )
-        }
+        val rows = items
+            .filterValues { entry -> entry.vendorScope == "" }
+            .filterKeys { isPricesWhitelisted(it) }
+            .map { (itemId, entry) ->
+                val state = store.getOrCreate(itemId)
+                Row(
+                    name = formatItemName(itemId),
+                    buy = PricingEngine.buyPrice(
+                        entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+                        entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+                    ),
+                    sell = PricingEngine.sellPrice(
+                        entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
+                        entry.effectiveSellClamp,
+                    ),
+                    stock = state.stock.toInt(),
+                    baseStock = entry.baseStock,
+                )
+            }
         val nameWidth = (rows.maxOfOrNull { it.name.length } ?: 0).coerceAtLeast(4)
         val buyWidth = (rows.maxOfOrNull { dollarString(it.buy).length } ?: 0).coerceAtLeast(3)
         val sellWidth = (rows.maxOfOrNull { dollarString(it.sell).length } ?: 0).coerceAtLeast(4)
@@ -272,6 +383,43 @@ object MarketCommands {
 
     private fun formatItemName(itemId: String): String =
         itemId.substringAfterLast(':').split('_').joinToString(" ") { it.replaceFirstChar(Char::uppercase) }
+
+    /**
+     * Human-readable vendor name from the raw `vendorTag` slug. Shared by the spawn-vendor
+     * command (`/market admin spawn <tag>`) and the GUI header (`MarketMenu.titleForVendor`)
+     * so both surfaces agree on the name. Special-cases:
+     *   - empty string → "Shopkeeper" (the default-vendor display name).
+     *   - "tm_<type>"  → "<Type> TMs" (e.g. `tm_fire` → "Fire TMs").
+     *   - "held_items" → "Held Items Vendor" (pre-0.7.12 this rendered as
+     *     "Held_items TM Vendor" because the generic branch assumed every non-default vendor
+     *     was a TM vendor and naïvely uppercased the slug).
+     *   - anything else → titlecased slug + " Vendor" (no TM suffix).
+     */
+    fun vendorDisplayName(vendorTag: String): String = when {
+        vendorTag.isEmpty() -> "Shopkeeper"
+        vendorTag.startsWith("tm_") ->
+            vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
+        else ->
+            vendorTag.split('_').joinToString(" ") { it.replaceFirstChar(Char::uppercase) } + " Vendor"
+    }
+
+    /**
+     * `/market prices` is intentionally a high-signal overview, not a dump of every default-vendor
+     * item — players asked to see just the small set of items whose price is interesting and moves.
+     * Whitelist: Pokéballs, Carrots, and Candies (rare + exp candies). Excludes potions, status
+     * heals, PP restore, EV vitamins, revives, etc. — those are buy-side-only flat-feeling rows
+     * that crowd the table.
+     */
+    private fun isPricesWhitelisted(itemId: String): Boolean {
+        val short = itemId.substringAfterLast(':')
+        return when {
+            short.endsWith("_ball") -> true                          // poke/great/ultra/master/quick/etc.
+            itemId == "minecraft:carrot" -> true
+            short == "rare_candy" -> true
+            short.startsWith("exp_candy_") -> true                   // exp_candy_xs/s/m/l/xl
+            else -> false
+        }
+    }
 
     /**
      * Renders a multi-line candlestick chart of the price history for one item.

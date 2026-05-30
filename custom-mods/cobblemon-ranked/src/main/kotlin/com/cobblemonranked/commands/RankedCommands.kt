@@ -37,11 +37,23 @@ object RankedCommands {
                 .then(Commands.literal("challenge")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes { ctx ->
-                            val source = ctx.source.playerOrException
-                            val target = EntityArgument.getPlayer(ctx, "player")
-                            handleChallenge(source, target)
+                            handleChallenge(
+                                ctx.source.playerOrException,
+                                EntityArgument.getPlayer(ctx, "player"),
+                                wager = 0,
+                            )
                             1
                         }
+                        .then(Commands.argument("wager", IntegerArgumentType.integer(0))
+                            .executes { ctx ->
+                                handleChallenge(
+                                    ctx.source.playerOrException,
+                                    EntityArgument.getPlayer(ctx, "player"),
+                                    wager = IntegerArgumentType.getInteger(ctx, "wager"),
+                                )
+                                1
+                            }
+                        )
                     )
                 )
                 .then(Commands.literal("accept")
@@ -117,6 +129,22 @@ object RankedCommands {
                             1
                         }
                     )
+                    .then(Commands.literal("forfeit")
+                        .then(Commands.argument("player", EntityArgument.player())
+                            .executes { ctx ->
+                                val target = EntityArgument.getPlayer(ctx, "player")
+                                val forfeited = RankedBattleManager.forfeitMatch(target, reason = "was forfeited by admin")
+                                if (forfeited) {
+                                    ctx.source.sendSystemMessage(Component.literal(
+                                        "§a[Ranked] Forfeited ${target.name.string}'s active match (opponent gets the win)."))
+                                } else {
+                                    ctx.source.sendSystemMessage(Component.literal(
+                                        "§c[Ranked] ${target.name.string} isn't in an active match."))
+                                }
+                                1
+                            }
+                        )
+                    )
                     .then(Commands.literal("simulate")
                         .then(Commands.argument("name1", StringArgumentType.string())
                             .then(Commands.argument("name2", StringArgumentType.string())
@@ -134,40 +162,152 @@ object RankedCommands {
                             )
                         )
                     )
+                    // Arena 1 — slot 1 = player1 landing, slot 2 = player2 landing.
                     .then(Commands.literal("setarena")
                         .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
-                            .executes { ctx ->
-                                adminSetArenaFromSender(
-                                    ctx.source,
-                                    IntegerArgumentType.getInteger(ctx, "slot"),
-                                )
-                            }
+                            .executes { ctx -> adminSetArenaFromSender(ctx.source, arenaNum = 1,
+                                IntegerArgumentType.getInteger(ctx, "slot")) }
                             .then(Commands.argument("pos", Vec3Argument.vec3(true))
-                                .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = false, includeDim = false) }
+                                .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 1, includeRotation = false, includeDim = false) }
                                 .then(Commands.argument("rot", RotationArgument.rotation())
-                                    .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = true, includeDim = false) }
+                                    .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 1, includeRotation = true, includeDim = false) }
                                     .then(Commands.argument("dimension", DimensionArgument.dimension())
-                                        .executes { ctx -> adminSetArenaExplicit(ctx, includeRotation = true, includeDim = true) }
+                                        .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 1, includeRotation = true, includeDim = true) }
                                     )
+                                )
+                            )
+                        )
+                    )
+                    // Arena 2 — slot 1 = player1 landing, slot 2 = player2 landing.
+                    .then(Commands.literal("setarena2")
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
+                            .executes { ctx -> adminSetArenaFromSender(ctx.source, arenaNum = 2,
+                                IntegerArgumentType.getInteger(ctx, "slot")) }
+                            .then(Commands.argument("pos", Vec3Argument.vec3(true))
+                                .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 2, includeRotation = false, includeDim = false) }
+                                .then(Commands.argument("rot", RotationArgument.rotation())
+                                    .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 2, includeRotation = true, includeDim = false) }
+                                    .then(Commands.argument("dimension", DimensionArgument.dimension())
+                                        .executes { ctx -> adminSetArenaExplicit(ctx, arenaNum = 2, includeRotation = true, includeDim = true) }
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    // Overflow spawn — shared landing point when both arenas are in use. One
+                    // position; both players land there.
+                    .then(Commands.literal("setoverflow")
+                        .executes { ctx -> adminSetOverflowFromSender(ctx.source); 1 }
+                        .then(Commands.argument("pos", Vec3Argument.vec3(true))
+                            .executes { ctx -> adminSetOverflowExplicit(ctx, includeRotation = false, includeDim = false) }
+                            .then(Commands.argument("rot", RotationArgument.rotation())
+                                .executes { ctx -> adminSetOverflowExplicit(ctx, includeRotation = true, includeDim = false) }
+                                .then(Commands.argument("dimension", DimensionArgument.dimension())
+                                    .executes { ctx -> adminSetOverflowExplicit(ctx, includeRotation = true, includeDim = true) }
                                 )
                             )
                         )
                     )
                     .then(Commands.literal("clearpos")
                         .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
-                            .executes { ctx ->
-                                adminClearArena(
-                                    ctx.source,
-                                    IntegerArgumentType.getInteger(ctx, "slot"),
-                                )
-                            }
+                            .executes { ctx -> adminClearArena(ctx.source, arenaNum = 1,
+                                IntegerArgumentType.getInteger(ctx, "slot")); 1 }
                         )
+                    )
+                    .then(Commands.literal("clearpos2")
+                        .then(Commands.argument("slot", IntegerArgumentType.integer(1, 2))
+                            .executes { ctx -> adminClearArena(ctx.source, arenaNum = 2,
+                                IntegerArgumentType.getInteger(ctx, "slot")); 1 }
+                        )
+                    )
+                    .then(Commands.literal("clearoverflow")
+                        .executes { ctx -> adminClearOverflow(ctx.source); 1 }
                     )
                     .then(Commands.literal("showarena")
                         .executes { ctx -> adminShowArena(ctx.source); 1 }
                     )
                 )
         )
+
+        // Top-level /challenge and /accept aliases. Same handlers as /ranked challenge|accept.
+        dispatcher.register(
+            Commands.literal("challenge")
+                .then(Commands.argument("player", EntityArgument.player())
+                    .executes { ctx ->
+                        handleChallenge(
+                            ctx.source.playerOrException,
+                            EntityArgument.getPlayer(ctx, "player"),
+                            wager = 0,
+                        )
+                        1
+                    }
+                    .then(Commands.argument("wager", IntegerArgumentType.integer(0))
+                        .executes { ctx ->
+                            handleChallenge(
+                                ctx.source.playerOrException,
+                                EntityArgument.getPlayer(ctx, "player"),
+                                wager = IntegerArgumentType.getInteger(ctx, "wager"),
+                            )
+                            1
+                        }
+                    )
+                )
+        )
+        dispatcher.register(
+            Commands.literal("accept").executes { ctx -> handleAccept(ctx.source.playerOrException); 1 }
+        )
+        dispatcher.register(
+            Commands.literal("decline").executes { ctx -> handleDecline(ctx.source.playerOrException); 1 }
+        )
+
+        // Top-level /queue tree — separate root so players don't need to remember /ranked queue.
+        dispatcher.register(
+            Commands.literal("queue")
+                .executes { ctx -> joinQueue(ctx.source, auto = false); 1 }
+                .then(Commands.literal("auto")
+                    .executes { ctx -> joinQueue(ctx.source, auto = true); 1 }
+                )
+                .then(Commands.literal("cancel")
+                    .executes { ctx -> leaveQueue(ctx.source); 1 }
+                )
+                .then(Commands.literal("list")
+                    .executes { ctx -> com.cobblemonranked.queue.QueueManager.showQueue(ctx.source.playerOrException); 1 }
+                )
+        )
+    }
+
+    private fun joinQueue(source: CommandSourceStack, auto: Boolean) {
+        val player = source.player ?: run {
+            source.sendSystemMessage(Component.literal("§c[Queue] /queue must be run by a player."))
+            return
+        }
+        when (val r = com.cobblemonranked.queue.QueueManager.join(player, auto)) {
+            is com.cobblemonranked.queue.QueueManager.JoinResult.Matched ->
+                player.sendSystemMessage(Component.literal("§a[Queue] Matched with §f${r.partnerName}§a — opening team select."))
+            com.cobblemonranked.queue.QueueManager.JoinResult.WaitingForPartner ->
+                player.sendSystemMessage(Component.literal(
+                    "§e[Queue] You're in the queue. " +
+                    (if (auto) "Auto-rejoin enabled. " else "") +
+                    "Anyone else who /queues that you haven't already played will be paired with you."
+                ))
+            is com.cobblemonranked.queue.QueueManager.JoinResult.AlreadyQueued ->
+                player.sendSystemMessage(Component.literal(
+                    if (r.autoFlipped) "§e[Queue] Auto-rejoin enabled — you're still queued."
+                    else "§e[Queue] You're already in the queue. /queue cancel to leave."
+                ))
+        }
+    }
+
+    private fun leaveQueue(source: CommandSourceStack) {
+        val player = source.player ?: run {
+            source.sendSystemMessage(Component.literal("§c[Queue] /queue cancel must be run by a player."))
+            return
+        }
+        val wasQueued = com.cobblemonranked.queue.QueueManager.leave(player.uuid)
+        player.sendSystemMessage(Component.literal(
+            if (wasQueued) "§a[Queue] You left the queue."
+            else "§7[Queue] You weren't in the queue."
+        ))
     }
 
     private fun showHelp(source: CommandSourceStack, includeAdmin: Boolean) {
@@ -178,6 +318,10 @@ object RankedCommands {
             "§7  /ranked decline §f— decline a pending challenge",
             "§7  /ranked stats [player] §f— view ELO, wins, losses",
             "§7  /ranked leaderboard §f— top players by ELO",
+            "§7  /queue §f— join open matchmaking",
+            "§7  /queue auto §f— rejoin queue automatically after each match",
+            "§7  /queue cancel §f— leave the queue",
+            "§7  /queue list §f— who's currently queued",
         )
         if (includeAdmin) {
             lines += listOf(
@@ -185,6 +329,7 @@ object RankedCommands {
                 "§7  /ranked admin setelo <player> <value> §f— override a player's ELO",
                 "§7  /ranked admin decay §f— manually trigger daily decay",
                 "§7  /ranked admin force <player1> <player2> §f— force a match (bypasses daily limit)",
+                "§7  /ranked admin forfeit <player> §f— end <player>'s active match as a forfeit (opponent wins, both TP back)",
                 "§7  /ranked admin reload §f— reload config.json from disk",
                 "§7  /ranked admin simulate <name1> <name2> §f— simulate a match (winner picked by ELO odds; offline-friendly)",
                 "§7  /ranked admin setarena 1|2 [<x y z> [yaw pitch] [dim]] §f— set arena teleport point",
@@ -213,16 +358,18 @@ object RankedCommands {
         // applyMatchResult already broadcasts the ELO update lines, so no need to repeat here.
     }
 
-    private fun handleChallenge(challenger: ServerPlayer, target: ServerPlayer) {
+    private fun handleChallenge(challenger: ServerPlayer, target: ServerPlayer, wager: Int) {
         val challengeManager = CobblemonRanked.challengeManager
-        val error = challengeManager.challenge(challenger, target)
+        val error = challengeManager.challenge(challenger, target, requestedWager = wager)
         if (error != null) {
             challenger.sendSystemMessage(Component.literal("[Ranked] $error"))
             return
         }
 
+        // Only non-wager challenges can auto-start via the legacy force path. Wager challenges
+        // always wait for an explicit /accept (per design — money on the line must be opted in).
         val forced = challengeManager.getPendingForced(target.uuid)
-        if (forced != null) {
+        if (forced != null && forced.wagerPerSide == 0) {
             RankedBattleManager.startTeamSelection(challenger, target)
         }
     }
@@ -238,7 +385,7 @@ object RankedCommands {
             player.sendSystemMessage(Component.literal("[Ranked] Challenger is no longer online."))
             return
         }
-        RankedBattleManager.startTeamSelection(challenger, player)
+        RankedBattleManager.startTeamSelection(challenger, player, wagerPerSide = challenge.wagerPerSide)
     }
 
     private fun handleDecline(player: ServerPlayer) {
@@ -251,9 +398,7 @@ object RankedCommands {
 
     private fun showStats(viewer: ServerPlayer, target: ServerPlayer) {
         val data = CobblemonRanked.eloStore.getOrCreate(target.uuid, target.name.string)
-        viewer.sendSystemMessage(Component.literal(
-            "[Ranked] ${target.name.string}: ELO ${data.elo} | ${data.wins}W / ${data.losses}L | Last battle: ${data.lastBattleDate ?: "never"}"
-        ))
+        sendStatsCard(viewer::sendSystemMessage, target.name.string, data.elo, data.wins, data.losses, data.lastBattleDate, offline = false)
     }
 
     /**
@@ -266,9 +411,7 @@ object RankedCommands {
         val online = source.server.playerList.players.firstOrNull { it.name.string.equals(name, ignoreCase = true) }
         if (online != null) {
             val data = CobblemonRanked.eloStore.getOrCreate(online.uuid, online.name.string)
-            source.sendSystemMessage(Component.literal(
-                "[Ranked] ${online.name.string}: ELO ${data.elo} | ${data.wins}W / ${data.losses}L | Last battle: ${data.lastBattleDate ?: "never"}"
-            ))
+            sendStatsCard(source::sendSystemMessage, online.name.string, data.elo, data.wins, data.losses, data.lastBattleDate, offline = false)
             return
         }
         val existing = CobblemonRanked.eloStore.getAll().entries.firstOrNull {
@@ -276,40 +419,64 @@ object RankedCommands {
         }
         if (existing != null) {
             val data = existing.value
-            source.sendSystemMessage(Component.literal(
-                "[Ranked] ${data.name}: ELO ${data.elo} | ${data.wins}W / ${data.losses}L | Last battle: ${data.lastBattleDate ?: "never"} (offline)"
-            ))
+            sendStatsCard(source::sendSystemMessage, data.name, data.elo, data.wins, data.losses, data.lastBattleDate, offline = true)
             return
         }
-        source.sendSystemMessage(Component.literal("§c[Ranked] No record for '$name' (player has not battled and is not online)"))
+        source.sendSystemMessage(Component.literal("§c[Ranked] No record for '$name' — they haven't battled yet."))
+    }
+
+    private fun sendStatsCard(
+        send: (Component) -> Unit,
+        name: String, elo: Int, wins: Int, losses: Int,
+        lastBattle: String?, offline: Boolean,
+    ) {
+        val total = wins + losses
+        val wr = if (total == 0) "—" else "${(100.0 * wins / total).toInt()}%"
+        val tag = if (offline) " §8(offline record)" else ""
+        send(Component.literal("§e§l[Ranked] §r§6═══ §f$name$tag §6═══"))
+        send(Component.literal("§7  ELO:        §f$elo"))
+        send(Component.literal("§7  Record:     §a${wins}W§7 / §c${losses}L§7  ($wr win rate)"))
+        send(Component.literal("§7  Last match: §f${lastBattle ?: "§8never"}"))
     }
 
     private fun showLeaderboard(source: CommandSourceStack) {
         val config = CobblemonRanked.config
         val leaderboard = CobblemonRanked.eloStore.getLeaderboard()
-        source.sendSystemMessage(Component.literal("[Ranked] === ELO Leaderboard ==="))
+        source.sendSystemMessage(Component.literal("§e§l[Ranked] §r§6═══════════ §fELO Leaderboard §6═══════════"))
         if (leaderboard.isEmpty()) {
-            source.sendSystemMessage(Component.literal("  No players ranked yet."))
+            source.sendSystemMessage(Component.literal("§7  (no players ranked yet — be the first!)"))
             return
         }
+
+        // Column widths sized to the data we're about to render so things line up cleanly in
+        // chat's monospaced rendering.
         val topN = leaderboard.take(config.leaderboardSize)
-        topN.forEachIndexed { i, (_, data) ->
-            source.sendSystemMessage(Component.literal(
-                "  ${i + 1}. ${data.name}: ${data.elo} (${data.wins}W/${data.losses}L)"
-            ))
+        val nameWidth = topN.maxOf { (_, d) -> d.name.length }.coerceAtLeast(8)
+        for ((i, e) in topN.withIndex()) {
+            val (_, data) = e
+            source.sendSystemMessage(Component.literal(formatLeaderboardRow(i + 1, data.name, data.elo, data.wins, data.losses, nameWidth)))
         }
 
-        // Show caller's rank if not in top N
+        // Show caller's rank if not in top N — separator + their row.
         val player = source.player ?: return
         val playerUuid = player.uuid.toString()
         val playerIndex = leaderboard.indexOfFirst { it.first == playerUuid }
         if (playerIndex >= config.leaderboardSize) {
-            val (_, playerData) = leaderboard[playerIndex]
-            source.sendSystemMessage(Component.literal("  ---"))
-            source.sendSystemMessage(Component.literal(
-                "  ${playerIndex + 1}. ${playerData.name}: ${playerData.elo} (${playerData.wins}W/${playerData.losses}L)"
-            ))
+            val (_, pdata) = leaderboard[playerIndex]
+            source.sendSystemMessage(Component.literal("§8  ─────  (your rank)  ─────"))
+            source.sendSystemMessage(Component.literal(formatLeaderboardRow(playerIndex + 1, pdata.name, pdata.elo, pdata.wins, pdata.losses, nameWidth)))
         }
+    }
+
+    private fun formatLeaderboardRow(rank: Int, name: String, elo: Int, wins: Int, losses: Int, nameWidth: Int): String {
+        val medal = when (rank) {
+            1 -> "§6①"   // gold
+            2 -> "§7②"   // silver
+            3 -> "§c③"   // bronze (close enough in chat)
+            else -> "§7${rank.toString().padStart(2)}"
+        }
+        val paddedName = name.padEnd(nameWidth)
+        return "$medal§7 §f$paddedName §7│ §fELO §e$elo §7│ §a${wins}W§7/§c${losses}L"
     }
 
     private fun adminSetElo(source: CommandSourceStack, target: ServerPlayer, value: Int) {
@@ -334,22 +501,50 @@ object RankedCommands {
      * Capture sender's current position + facing + dimension into `arenaPos<slot>` and persist.
      * `slot` is validated as 1..2 by the Brigadier IntegerArgumentType range.
      */
-    private fun adminSetArenaFromSender(source: CommandSourceStack, slot: Int): Int {
+    private fun adminSetArenaFromSender(source: CommandSourceStack, arenaNum: Int, slot: Int): Int {
         val pos = source.position
         val rot = source.rotation
         val dim = source.level.dimension().location().toString()
         val arena = ArenaPos(pos.x, pos.y, pos.z, dim, rot.y, rot.x)
-        applyArena(source, slot, arena, captured = true)
+        applyArena(source, arenaNum, slot, arena, captured = true)
         return 1
     }
 
     private fun adminSetArenaExplicit(
         ctx: CommandContext<CommandSourceStack>,
+        arenaNum: Int,
         includeRotation: Boolean,
         includeDim: Boolean,
     ): Int {
         val source = ctx.source
         val slot = IntegerArgumentType.getInteger(ctx, "slot")
+        val arena = readArenaPos(ctx, includeRotation, includeDim)
+        applyArena(source, arenaNum, slot, arena, captured = false)
+        return 1
+    }
+
+    private fun adminSetOverflowFromSender(source: CommandSourceStack) {
+        val pos = source.position
+        val rot = source.rotation
+        val dim = source.level.dimension().location().toString()
+        applyOverflow(source, ArenaPos(pos.x, pos.y, pos.z, dim, rot.y, rot.x), captured = true)
+    }
+
+    private fun adminSetOverflowExplicit(
+        ctx: CommandContext<CommandSourceStack>,
+        includeRotation: Boolean,
+        includeDim: Boolean,
+    ): Int {
+        applyOverflow(ctx.source, readArenaPos(ctx, includeRotation, includeDim), captured = false)
+        return 1
+    }
+
+    private fun readArenaPos(
+        ctx: CommandContext<CommandSourceStack>,
+        includeRotation: Boolean,
+        includeDim: Boolean,
+    ): ArenaPos {
+        val source = ctx.source
         val coord = Vec3Argument.getVec3(ctx, "pos")
         val (yaw, pitch) = if (includeRotation) {
             val r = RotationArgument.getRotation(ctx, "rot").getRotation(source)
@@ -358,52 +553,78 @@ object RankedCommands {
         val dim = if (includeDim) {
             DimensionArgument.getDimension(ctx, "dimension").dimension().location().toString()
         } else source.level.dimension().location().toString()
-        val arena = ArenaPos(coord.x, coord.y, coord.z, dim, yaw, pitch)
-        applyArena(source, slot, arena, captured = false)
-        return 1
+        return ArenaPos(coord.x, coord.y, coord.z, dim, yaw, pitch)
     }
 
-    private fun applyArena(source: CommandSourceStack, slot: Int, arena: ArenaPos, captured: Boolean) {
-        val updated = when (slot) {
-            1 -> CobblemonRanked.config.copy(arenaPos1 = arena)
-            2 -> CobblemonRanked.config.copy(arenaPos2 = arena)
+    private fun applyArena(source: CommandSourceStack, arenaNum: Int, slot: Int, arena: ArenaPos, captured: Boolean) {
+        val updated = when (arenaNum to slot) {
+            1 to 1 -> CobblemonRanked.config.copy(arenaPos1 = arena)
+            1 to 2 -> CobblemonRanked.config.copy(arenaPos2 = arena)
+            2 to 1 -> CobblemonRanked.config.copy(arena2Pos1 = arena)
+            2 to 2 -> CobblemonRanked.config.copy(arena2Pos2 = arena)
             else -> return  // Brigadier guards this, but be defensive.
         }
         CobblemonRanked.config = updated
         RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
         val verb = if (captured) "Captured" else "Set"
         source.sendSystemMessage(Component.literal(
-            "§a[Ranked] $verb arena $slot → ${formatArena(arena)}"
+            "§a[Ranked] $verb arena $arenaNum slot $slot → ${formatArena(arena)}"
         ))
-        if (updated.isArenaConfigured()) {
-            source.sendSystemMessage(Component.literal("§7[Ranked] Both arenas configured — battles will teleport."))
-        } else {
-            val missing = if (updated.arenaPos1 == null) 1 else 2
-            source.sendSystemMessage(Component.literal(
-                "§7[Ranked] Arena $missing still unset — battles run wherever players are."
-            ))
-        }
+        reportArenaState(source, updated)
     }
 
-    private fun adminClearArena(source: CommandSourceStack, slot: Int): Int {
-        val updated = when (slot) {
-            1 -> CobblemonRanked.config.copy(arenaPos1 = null)
-            2 -> CobblemonRanked.config.copy(arenaPos2 = null)
-            else -> return 0
+    private fun applyOverflow(source: CommandSourceStack, arena: ArenaPos, captured: Boolean) {
+        val updated = CobblemonRanked.config.copy(spawnPos = arena)
+        CobblemonRanked.config = updated
+        RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
+        val verb = if (captured) "Captured" else "Set"
+        source.sendSystemMessage(Component.literal(
+            "§a[Ranked] $verb overflow spawn → ${formatArena(arena)}"
+        ))
+        reportArenaState(source, updated)
+    }
+
+    private fun adminClearArena(source: CommandSourceStack, arenaNum: Int, slot: Int) {
+        val updated = when (arenaNum to slot) {
+            1 to 1 -> CobblemonRanked.config.copy(arenaPos1 = null)
+            1 to 2 -> CobblemonRanked.config.copy(arenaPos2 = null)
+            2 to 1 -> CobblemonRanked.config.copy(arena2Pos1 = null)
+            2 to 2 -> CobblemonRanked.config.copy(arena2Pos2 = null)
+            else -> return
         }
         CobblemonRanked.config = updated
         RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
-        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared arena $slot"))
-        return 1
+        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared arena $arenaNum slot $slot"))
+    }
+
+    private fun adminClearOverflow(source: CommandSourceStack) {
+        val updated = CobblemonRanked.config.copy(spawnPos = null)
+        CobblemonRanked.config = updated
+        RankedConfig.save(FMLPaths.CONFIGDIR.get(), updated)
+        source.sendSystemMessage(Component.literal("§a[Ranked] Cleared overflow spawn"))
+    }
+
+    private fun reportArenaState(source: CommandSourceStack, cfg: RankedConfig) {
+        val a1 = if (cfg.isArenaConfigured()) "§a✓" else "§7—"
+        val a2 = if (cfg.isArena2Configured()) "§a✓" else "§7—"
+        val sp = if (cfg.isSpawnConfigured()) "§a✓" else "§7—"
+        source.sendSystemMessage(Component.literal(
+            "§7[Ranked] Allocation order — arena1 $a1§7 · arena2 $a2§7 · overflow $sp"
+        ))
     }
 
     private fun adminShowArena(source: CommandSourceStack) {
         val cfg = CobblemonRanked.config
-        source.sendSystemMessage(Component.literal("§e[Ranked] §fArena positions:"))
-        source.sendSystemMessage(Component.literal("§7  1: §f${cfg.arenaPos1?.let { formatArena(it) } ?: "§8(unset)"}"))
-        source.sendSystemMessage(Component.literal("§7  2: §f${cfg.arenaPos2?.let { formatArena(it) } ?: "§8(unset)"}"))
-        val state = if (cfg.isArenaConfigured()) "§aenabled" else "§7disabled (both must be set)"
-        source.sendSystemMessage(Component.literal("§7  Teleport: $state"))
+        source.sendSystemMessage(Component.literal("§e[Ranked] §fTeleport configuration:"))
+        source.sendSystemMessage(Component.literal("§e  Arena 1 §7(/warp arena1)"))
+        source.sendSystemMessage(Component.literal("§7    slot 1: §f${cfg.arenaPos1?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§7    slot 2: §f${cfg.arenaPos2?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§e  Arena 2 §7(/warp arena2)"))
+        source.sendSystemMessage(Component.literal("§7    slot 1: §f${cfg.arena2Pos1?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§7    slot 2: §f${cfg.arena2Pos2?.let { formatArena(it) } ?: "§8(unset)"}"))
+        source.sendSystemMessage(Component.literal("§e  Overflow §7(shared)"))
+        source.sendSystemMessage(Component.literal("§7    spawn:  §f${cfg.spawnPos?.let { formatArena(it) } ?: "§8(unset)"}"))
+        reportArenaState(source, cfg)
     }
 
     private fun formatArena(a: ArenaPos): String =

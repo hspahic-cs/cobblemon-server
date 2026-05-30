@@ -1,13 +1,14 @@
 {
   "name": "Gym Leader Crasher Wake",
   "identity": "Water",
+  "textureResource": "rctmod:textures/trainers/single/gym_leader_wake_03d7.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

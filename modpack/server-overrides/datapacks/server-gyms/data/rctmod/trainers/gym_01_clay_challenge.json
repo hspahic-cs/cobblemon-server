@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Clay",
+  "name": "Hard Mode: Gym Leader Clay",
   "identity": "Ground",
   "ai": {
     "type": "rb",
@@ -7,7 +7,7 @@
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Korrina",
+  "name": "Hard Mode: Gym Leader Korrina",
   "identity": "Fighting",
   "ai": {
     "type": "rb",
@@ -7,7 +7,7 @@
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false
@@ -102,7 +102,7 @@
       ]
     },
     {
-      "species": "pancham",
+      "species": "timburr",
       "level": 30,
       "nature": "adamant",
       "ivs": {
@@ -125,9 +125,9 @@
       "heldItem": "cobblemon:eviolite",
       "moveset": [
         "drainpunch",
-        "crunch",
-        "partingshot",
-        "cometpunch"
+        "machpunch",
+        "rockslide",
+        "bulkup"
       ]
     }
   ]

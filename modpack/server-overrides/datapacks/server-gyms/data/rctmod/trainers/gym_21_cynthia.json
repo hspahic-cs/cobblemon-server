@@ -1,13 +1,14 @@
 {
   "name": "Elite Four Cynthia",
   "identity": "Hyper Offense",
+  "textureResource": "rctmod:textures/trainers/single/champion_cynthia_03a5.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false
@@ -131,7 +132,7 @@
       ]
     },
     {
-      "species": "bisharp",
+      "species": "tyranitar",
       "level": 65,
       "nature": "adamant",
       "ivs": {
@@ -150,13 +151,13 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "defiant",
+      "ability": "sandstream",
       "heldItem": "cobblemon:focus_sash",
       "moveset": [
-        "swordsdance",
-        "knockoff",
-        "ironhead",
-        "suckerpunch"
+        "stoneedge",
+        "crunch",
+        "earthquake",
+        "dragondance"
       ]
     },
     {

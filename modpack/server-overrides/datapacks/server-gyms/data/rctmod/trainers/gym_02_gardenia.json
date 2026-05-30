@@ -1,13 +1,14 @@
 {
   "name": "Gym Leader Gardenia",
   "identity": "Grass",
+  "textureResource": "rctmod:textures/trainers/single/gym_leader_gardenia_03d6.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false
@@ -69,7 +70,7 @@
         "leafstorm",
         "glare",
         "gigadrain",
-        "hiddenpowerfire"
+        "hiddenpower"
       ]
     },
     {

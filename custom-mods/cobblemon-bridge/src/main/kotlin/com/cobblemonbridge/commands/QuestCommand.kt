@@ -70,6 +70,13 @@ object QuestCommand {
         "server:join_colony",
     )
 
+    /** Side quests — shown under "Side" in `/quests list`, NEVER in the HUD ticker, never
+     *  block downstream quests. Branch points off main-line quests (parent declared in the
+     *  advancement JSON) but their completion is purely optional. */
+    private val SIDE_QUESTS = listOf(
+        "server:reach_pokedex_100",
+    )
+
     /**
      * Per-quest reward label, surfaced in `/quests` + `/quests list`. Source of truth lives in
      * each `quests/rewards/<id>.mcfunction` (via its `cq_reward_<…>` tag) — this map mirrors
@@ -96,6 +103,7 @@ object QuestCommand {
         put("server:reach_elo_1500",       "§f1 Master Ball")
         put("server:reach_elo_2000",       "§6Ultra Key")
         put("server:join_colony",          "§fPoké Healer")
+        put("server:reach_pokedex_100",    "§f1 Master Ball + §6Ultra Key")
         // Gyms: most Rare Key; 10/19/23/24 are Ultra Key.
         for (i in 1..24) {
             val tier = if (i == 10 || i == 19 || i == 23 || i == 24) "§6Ultra Key" else "§5Rare Key"
@@ -175,6 +183,7 @@ object QuestCommand {
         emitSection(source, player, server, "Income", INCOME_TRACK, showCurrentMarker = false)
         emitSection(source, player, server, "Ranked Ladder", ELO_TRACK, showCurrentMarker = false)
         emitSection(source, player, server, "Other", STANDALONE, showCurrentMarker = false)
+        emitSection(source, player, server, "Side Quests", SIDE_QUESTS, showCurrentMarker = false)
 
         return 1
     }

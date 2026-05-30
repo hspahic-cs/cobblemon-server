@@ -7,7 +7,7 @@
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false
@@ -102,7 +102,7 @@
       ]
     },
     {
-      "species": "pancham",
+      "species": "timburr",
       "level": 25,
       "nature": "hardy",
       "ivs": {
@@ -125,9 +125,9 @@
       "heldItem": "",
       "moveset": [
         "drainpunch",
-        "crunch",
-        "partingshot",
-        "cometpunch"
+        "machpunch",
+        "rockslide",
+        "bulkup"
       ]
     }
   ]

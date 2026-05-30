@@ -1,5 +1,5 @@
 {
-  "name": "Challenge: Gym Leader Drayden",
+  "name": "Hard Mode: Gym Leader Drayden",
   "identity": "Dragon",
   "ai": {
     "type": "rb",
@@ -7,7 +7,7 @@
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

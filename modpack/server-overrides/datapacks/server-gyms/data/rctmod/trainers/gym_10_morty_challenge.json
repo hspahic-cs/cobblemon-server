@@ -1,13 +1,14 @@
 {
-  "name": "Challenge: Gym Leader Morty",
+  "name": "Hard Mode: Gym Leader Morty",
   "identity": "Ghost",
+  "textureResource": "rctmod:textures/trainers/single/leader_morty_001c.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false

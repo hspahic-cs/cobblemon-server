@@ -1,13 +1,14 @@
 {
   "name": "Gym Leader Byron",
   "identity": "Steel",
+  "textureResource": "rctmod:textures/trainers/single/gym_leader_byron_0399.png",
   "ai": {
     "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
-    "maxItemUses": 0,
+    "maxItemUses": 999,
     "adjustPlayerLevels": true,
     "adjustNPCLevels": false,
     "healPlayers": false
@@ -131,7 +132,7 @@
       ]
     },
     {
-      "species": "pawniard",
+      "species": "lairon",
       "level": 30,
       "nature": "hardy",
       "ivs": {
@@ -150,13 +151,13 @@
         "spd": 85,
         "spe": 85
       },
-      "ability": "defiant",
+      "ability": "rockhead",
       "heldItem": "",
       "moveset": [
-        "suckerpunch",
-        "knockoff",
         "ironhead",
-        "swordsdance"
+        "rockslide",
+        "earthquake",
+        "stealthrock"
       ]
     }
   ]

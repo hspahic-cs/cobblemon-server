@@ -211,19 +211,66 @@ runs:
       shell: bash
       run: |
         set -euo pipefail
-        mkdir -p modpack/mods
-        # Remove prior versions of in-house mods only — keep .pw.toml manifests
-        # for the third-party mods packwiz will resolve.
-        rm -f modpack/mods/cobblemon-{npc,bridge,carrots,gacha,market,ranked,feedback,feedback-client}-*.jar
+        # Per-mod routing. The destination dir controls who gets the jar:
+        #
+        #   modpack/mods/                  → bundled in mrpack overrides/mods/
+        #                                    (both sides; client + server both
+        #                                    extract these). Defense-in-depth:
+        #                                    @Mod(dist = [...]) on each mod
+        #                                    decides which side actually loads
+        #                                    it (e.g. cobblemon-feedback-client
+        #                                    has dist=[Dist.CLIENT] so the
+        #                                    server JVM skips it).
+        #   modpack/server-overrides/mods/ → NOT in the client mrpack path
+        #                                    Minecraft scans (mrpack puts them
+        #                                    at overrides/server-overrides/mods/
+        #                                    which clients extract to
+        #                                    <mc>/server-overrides/mods/ — not
+        #                                    <mc>/mods/). Server install picks
+        #                                    them up via a second rsync in the
+        #                                    deploy workflows. Net effect:
+        #                                    server runs them, client downloads
+        #                                    bytes but doesn't load.
+        #
+        # NB: do NOT put a client-required mod in server-overrides/mods/ — it
+        # won't end up in <mc>/mods/ on the client. cobblemon-feedback-client
+        # in particular registers required custom payload channels, so if it's
+        # not in the client's mods folder, the server's connect-time channel
+        # check rejects every client (PR #51 → 0.7.4 had this bug; fixed in
+        # 0.7.5 by moving feedback-client back to modpack/mods/).
+        SERVER_ONLY=(cobblemon-bridge cobblemon-carrots cobblemon-feedback cobblemon-gacha cobblemon-market cobblemon-ranked)
+        # Anything not in SERVER_ONLY ships via modpack/mods/ (both sides).
+
+        mkdir -p modpack/mods modpack/server-overrides/mods
+
+        # Remove prior versions of in-house mods from every staging location.
+        # Keep .pw.toml manifests for the third-party mods packwiz resolves.
+        for mod in "${SERVER_ONLY[@]}" cobblemon-feedback-client cobblemon-npc; do
+          rm -f "modpack/mods/${mod}-"*.jar
+          rm -f "modpack/server-overrides/mods/${mod}-"*.jar
+        done
+
+        in_array() {
+          local needle=$1; shift
+          for x in "$@"; do [[ "$x" == "$needle" ]] && return 0; done
+          return 1
+        }
+
         for m in custom-mods/*/; do
+          mod=$(basename "$m")
           # Ship the runtime jar, NOT the -sources.jar.
           jar=$(ls "${m}build/libs/"*.jar 2>/dev/null | grep -v -- '-sources\.jar$' | head -1)
           if [[ -z "$jar" ]]; then
             echo "::error::No runtime jar found in $m"
             exit 1
           fi
-          cp "$jar" modpack/mods/
-          echo "Staged: $(basename "$jar")"
+          if in_array "$mod" "${SERVER_ONLY[@]}"; then
+            dest=modpack/server-overrides/mods
+          else
+            dest=modpack/mods
+          fi
+          cp "$jar" "$dest/"
+          echo "Staged: $(basename "$jar") -> $dest/"
         done
 
     - name: Set pack version (if requested)

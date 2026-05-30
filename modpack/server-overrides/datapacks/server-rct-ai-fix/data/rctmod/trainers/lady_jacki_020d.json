@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lady Jacki",
+  "team": [
+    {
+      "ability": "leafguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 48,
+      "moveset": [
+        "uturn",
+        "worryseed",
+        "gigadrain",
+        "bounce"
+      ],
+      "nature": "naive",
+      "species": "hoppip"
+    },
+    {
+      "ability": "leafguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 50,
+      "moveset": [
+        "ragepowder",
+        "cottonspore",
+        "uturn",
+        "worryseed"
+      ],
+      "nature": "brave",
+      "species": "skiploom"
+    }
+  ]
+}

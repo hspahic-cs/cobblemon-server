@@ -1,0 +1,157 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Amira",
+  "team": [
+    {
+      "ability": "watercompaction",
+      "evs": {
+        "def": 252,
+        "hp": 248,
+        "spa": 8
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "scorchingsands",
+        "shadowball",
+        "shoreup",
+        "stealthrock"
+      ],
+      "nature": "bold",
+      "species": "palossand"
+    },
+    {
+      "ability": "adaptability",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "dragondance",
+        "crabhammer",
+        "knockoff",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "crawdaunt"
+    },
+    {
+      "ability": "hydration",
+      "aspects": [
+        "sevii"
+      ],
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:poisonium_z",
+        "poison_gem"
+      ],
+      "ivs": {
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "thunderbolt",
+        "sludgewave",
+        "icebeam",
+        "scald"
+      ],
+      "nature": "timid",
+      "species": "mantine"
+    },
+    {
+      "ability": "noguard",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "flying_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "hydropump",
+        "hurricane",
+        "blizzard",
+        "aquajet"
+      ],
+      "nature": "naive",
+      "species": "swanna"
+    },
+    {
+      "ability": "waterbubble",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rindo_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "dragondance",
+        "waterfall",
+        "earthquake",
+        "zenheadbutt"
+      ],
+      "nature": "jolly",
+      "species": "whiscash"
+    }
+  ]
+}

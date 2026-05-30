@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Lorenzo",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "bind",
+        "rockthrow",
+        "smackdown",
+        "curse"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

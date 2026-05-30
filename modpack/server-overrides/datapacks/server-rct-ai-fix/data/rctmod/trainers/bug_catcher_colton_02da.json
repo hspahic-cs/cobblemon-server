@@ -1,0 +1,73 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Colton",
+  "team": [
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 27,
+      "moveset": [
+        "silverwind",
+        "supersonic",
+        "safeguard",
+        "aircutter"
+      ],
+      "nature": "lonely",
+      "species": "butterfree"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 27,
+      "moveset": [
+        "harden",
+        "bugbite"
+      ],
+      "nature": "docile",
+      "species": "kakuna"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 27,
+      "moveset": [
+        "silverwind",
+        "supersonic",
+        "safeguard",
+        "aircutter"
+      ],
+      "nature": "quirky",
+      "species": "butterfree"
+    }
+  ]
+}

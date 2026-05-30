@@ -1,0 +1,154 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Bryce",
+  "team": [
+    {
+      "ability": "defiant",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "suckerpunch",
+        "psychocut",
+        "ironhead",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "bisharp"
+    },
+    {
+      "ability": "technician",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mystic_water"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "fakeout",
+        "surgingstrikes",
+        "icywind",
+        "rocksmash"
+      ],
+      "nature": "naive",
+      "species": "floatzel"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {
+        "def": 56,
+        "hp": 36,
+        "spa": 252,
+        "spe": 164
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "bugbuzz",
+        "sleeppowder",
+        "hurricane",
+        "uturn"
+      ],
+      "nature": "jolly",
+      "species": "butterfree"
+    },
+    {
+      "ability": "magnetpull",
+      "evs": {
+        "hp": 48,
+        "spa": 252,
+        "spe": 208
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "magnet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "thunderbolt",
+        "steelbeam",
+        "voltswitch",
+        "bodypress"
+      ],
+      "nature": "jolly",
+      "species": "magnezone"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "mindblown",
+        "psychic",
+        "heatwave",
+        "foulplay"
+      ],
+      "nature": "timid",
+      "species": "delphox"
+    }
+  ]
+}

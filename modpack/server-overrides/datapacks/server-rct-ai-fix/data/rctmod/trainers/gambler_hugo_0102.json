@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gambler Hugo",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 25,
+      "moveset": [
+        "bubble",
+        "doubleslap",
+        "raindance",
+        "bodyslam"
+      ],
+      "nature": "brave",
+      "species": "poliwhirl"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 26,
+      "moveset": [
+        "focusenergy",
+        "headbutt",
+        "bulkup",
+        "endure"
+      ],
+      "nature": "calm",
+      "species": "falinks"
+    }
+  ]
+}

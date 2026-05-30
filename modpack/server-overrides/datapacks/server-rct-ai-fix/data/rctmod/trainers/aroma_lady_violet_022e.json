@@ -1,0 +1,156 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Violet",
+  "team": [
+    {
+      "ability": "gluttony",
+      "evs": {
+        "atk": 252,
+        "spa": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "eject_pack"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "dracometeor",
+        "gravapple",
+        "suckerpunch"
+      ],
+      "nature": "naive",
+      "species": "flapple"
+    },
+    {
+      "ability": "rockhead",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rock_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "headsmash",
+        "flareblitz",
+        "accelerock",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "arcanine"
+    },
+    {
+      "ability": "moldbreaker",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "earthquake",
+        "stoneedge",
+        "ironhead",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "excadrill"
+    },
+    {
+      "ability": "shadowtag",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "flamethrower",
+        "shadowball",
+        "energyball",
+        "scorchingsands"
+      ],
+      "nature": "timid",
+      "species": "chandelure"
+    },
+    {
+      "ability": "liquidvoice",
+      "evs": {
+        "def": 252,
+        "hp": 248,
+        "spa": 8
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "calmmind",
+        "substitute",
+        "drainingkiss",
+        "hypervoice"
+      ],
+      "nature": "bold",
+      "species": "primarina"
+    }
+  ]
+}

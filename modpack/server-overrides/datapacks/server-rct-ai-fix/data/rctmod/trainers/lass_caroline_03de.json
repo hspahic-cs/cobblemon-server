@@ -1,0 +1,38 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Caroline",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "sunnyday",
+        "morningsun",
+        "growth",
+        "leafage"
+      ],
+      "nature": "impish",
+      "species": "cherubi"
+    },
+    {
+      "ability": "leafguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "stunspore",
+        "megadrain",
+        "leechseed"
+      ],
+      "nature": "timid",
+      "species": "roselia"
+    }
+  ]
+}

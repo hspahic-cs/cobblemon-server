@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Dwayne",
+  "team": [
+    {
+      "ability": "plus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 28,
+      "moveset": [
+        "electroball",
+        "copycat",
+        "charm",
+        "charge"
+      ],
+      "nature": "hasty",
+      "species": "plusle"
+    },
+    {
+      "ability": "minus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 28,
+      "moveset": [
+        "electroball",
+        "copycat",
+        "faketears",
+        "charge"
+      ],
+      "nature": "quirky",
+      "species": "minun"
+    }
+  ]
+}

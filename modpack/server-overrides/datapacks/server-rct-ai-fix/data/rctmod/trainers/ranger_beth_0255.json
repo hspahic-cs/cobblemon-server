@@ -1,0 +1,126 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ranger Beth",
+  "team": [
+    {
+      "ability": "technician",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "bulletpunch",
+        "uturn",
+        "rocksmash",
+        "dualwingbeat"
+      ],
+      "nature": "adamant",
+      "species": "scizor"
+    },
+    {
+      "ability": "moldbreaker",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "lum_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "swordsdance",
+        "scaleshot",
+        "poisonjab",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "haxorus"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "custap_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "headlongrush",
+        "stoneedge",
+        "suckerpunch",
+        "explosion"
+      ],
+      "nature": "adamant",
+      "species": "golem"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:manectite",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "voltswitch",
+        "hiddenpower",
+        "flamethrower",
+        "thunderbolt"
+      ],
+      "nature": "timid",
+      "species": "manectric"
+    }
+  ]
+}

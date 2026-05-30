@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (40)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "venoshock",
+        "toxic",
+        "memento",
+        "nightslash"
+      ],
+      "nature": "hardy",
+      "species": "stunky"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "aerialace",
+        "charm",
+        "taunt",
+        "retaliate"
+      ],
+      "nature": "docile",
+      "species": "glameow"
+    }
+  ]
+}

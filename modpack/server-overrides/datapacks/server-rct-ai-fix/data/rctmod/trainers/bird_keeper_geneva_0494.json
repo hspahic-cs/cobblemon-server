@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Geneva",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "poisonfang",
+        "meanlook",
+        "venoshock",
+        "aircutter"
+      ],
+      "nature": "impish",
+      "species": "golbat"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "futuresight",
+        "confuseray",
+        "nightshade",
+        "wish"
+      ],
+      "nature": "calm",
+      "species": "xatu"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Guitarist Preston",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "bite",
+        "voltswitch",
+        "thunderwave",
+        "irontail"
+      ],
+      "nature": "jolly",
+      "species": "luxio"
+    },
+    {
+      "ability": "simple",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "yawn",
+        "thunderbolt",
+        "bulldoze",
+        "waterfall"
+      ],
+      "nature": "jolly",
+      "species": "bibarel"
+    }
+  ]
+}

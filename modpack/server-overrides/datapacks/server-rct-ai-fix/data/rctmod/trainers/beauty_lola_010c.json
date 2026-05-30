@@ -1,0 +1,96 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Lola",
+  "team": [
+    {
+      "ability": "flowergift",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "petalblizzard",
+        "safeguard",
+        "xscissor",
+        "return"
+      ],
+      "nature": "jolly",
+      "species": "cherrim"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {
+        "atk": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "petalblizzard",
+        "safeguard",
+        "earthpower",
+        "weatherball"
+      ],
+      "nature": "naive",
+      "species": "venusaur"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {
+        "hp": 252,
+        "spa": 4,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 30
+      },
+      "level": 88,
+      "moveset": [
+        "petalblizzard",
+        "moonblast",
+        "safeguard",
+        "hiddenpower"
+      ],
+      "nature": "calm",
+      "species": "florges"
+    }
+  ]
+}

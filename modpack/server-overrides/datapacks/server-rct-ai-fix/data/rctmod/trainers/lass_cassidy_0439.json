@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Cassidy",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "pound",
+        "defensecurl",
+        "babydolleyes",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "buneary"
+    }
+  ]
+}

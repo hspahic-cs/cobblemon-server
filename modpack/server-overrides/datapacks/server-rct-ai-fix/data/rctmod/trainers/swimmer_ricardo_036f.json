@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Ricardo",
+  "team": [
+    {
+      "ability": "clearbody",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "acid",
+        "waterpulse",
+        "acidarmor",
+        "poisonjab"
+      ],
+      "nature": "sassy",
+      "species": "tentacruel"
+    }
+  ]
+}

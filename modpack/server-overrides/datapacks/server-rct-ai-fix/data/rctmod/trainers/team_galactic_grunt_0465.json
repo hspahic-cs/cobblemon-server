@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (23)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "smokescreen",
+        "venoshock",
+        "toxic",
+        "nightslash"
+      ],
+      "nature": "docile",
+      "species": "stunky"
+    }
+  ]
+}

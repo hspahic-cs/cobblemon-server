@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Reporter Kinsey",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "hypervoice",
+        "taunt",
+        "growl",
+        "sing"
+      ],
+      "nature": "bold",
+      "species": "chatot"
+    }
+  ]
+}

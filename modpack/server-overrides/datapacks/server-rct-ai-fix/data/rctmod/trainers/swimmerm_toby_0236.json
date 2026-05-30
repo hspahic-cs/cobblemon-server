@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Toby",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "mudshot",
+        "bellydrum",
+        "wakeupslap",
+        "hydropump"
+      ],
+      "nature": "bashful",
+      "species": "poliwhirl"
+    },
+    {
+      "ability": "clearbody",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "screech",
+        "hex",
+        "sludgewave",
+        "hydropump"
+      ],
+      "nature": "rash",
+      "species": "tentacool"
+    },
+    {
+      "ability": "clearbody",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "scald",
+        "screech",
+        "hex",
+        "sludgewave"
+      ],
+      "nature": "timid",
+      "species": "tentacruel"
+    }
+  ]
+}

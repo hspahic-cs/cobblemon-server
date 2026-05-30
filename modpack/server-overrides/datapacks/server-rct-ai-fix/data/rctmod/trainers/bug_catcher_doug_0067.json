@@ -1,0 +1,71 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Doug",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 7,
+      "moveset": [
+        "harden",
+        "bugbite"
+      ],
+      "nature": "lax",
+      "species": "kakuna"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 7,
+      "moveset": [
+        "poisonsting",
+        "stringshot",
+        "constrict",
+        "absorb"
+      ],
+      "nature": "brave",
+      "species": "spinarak"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 7,
+      "moveset": [
+        "tackle",
+        "supersonic"
+      ],
+      "nature": "calm",
+      "species": "ledyba"
+    }
+  ]
+}

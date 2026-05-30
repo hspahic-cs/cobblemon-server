@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Ethan",
+  "team": [
+    {
+      "ability": "scrappy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 19,
+      "moveset": [
+        "astonish",
+        "howl",
+        "screech",
+        "supersonic"
+      ],
+      "nature": "naive",
+      "species": "loudred"
+    }
+  ]
+}

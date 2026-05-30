@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Mallory",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 50,
+      "moveset": [
+        "takedown",
+        "dive",
+        "aquatail",
+        "icebeam"
+      ],
+      "nature": "calm",
+      "species": "seel"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "aquajet",
+        "dive",
+        "aquatail",
+        "aurorabeam"
+      ],
+      "nature": "calm",
+      "species": "dewgong"
+    }
+  ]
+}

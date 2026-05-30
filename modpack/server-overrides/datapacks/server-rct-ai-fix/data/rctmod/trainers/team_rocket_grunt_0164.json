@@ -1,0 +1,108 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (10)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "dragonrage",
+        "firefang",
+        "thunderfang",
+        "bulldoze"
+      ],
+      "nature": "careful",
+      "species": "growlithe"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "bodyslam",
+        "rockslide",
+        "dualchop",
+        "bulldoze"
+      ],
+      "nature": "impish",
+      "species": "gabite"
+    },
+    {
+      "ability": "ironbarbs",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "uturn",
+        "zippyzap",
+        "ironhead",
+        "nuzzle"
+      ],
+      "nature": "careful",
+      "species": "togedemaru"
+    },
+    {
+      "ability": "comatose",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "silk_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "protect",
+        "lastresort"
+      ],
+      "nature": "adamant",
+      "species": "komala"
+    }
+  ]
+}

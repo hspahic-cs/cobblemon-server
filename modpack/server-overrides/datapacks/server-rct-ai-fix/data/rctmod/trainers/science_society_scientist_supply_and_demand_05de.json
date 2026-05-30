@@ -1,0 +1,87 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Science Society Scientist",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "normal_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "explosion"
+      ],
+      "nature": "adamant",
+      "species": "electrode"
+    },
+    {
+      "ability": "aftermath",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "normal_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "explosion"
+      ],
+      "nature": "adamant",
+      "species": "electrode"
+    },
+    {
+      "ability": "aftermath",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "normal_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "explosion"
+      ],
+      "nature": "adamant",
+      "species": "electrode"
+    }
+  ]
+}

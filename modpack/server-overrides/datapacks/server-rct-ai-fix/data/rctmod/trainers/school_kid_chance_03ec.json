@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "School Kid Chance",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 30,
+      "moveset": [
+        "confuseray",
+        "suckerpunch",
+        "shadowball",
+        "darkpulse"
+      ],
+      "nature": "modest",
+      "species": "haunter"
+    }
+  ]
+}

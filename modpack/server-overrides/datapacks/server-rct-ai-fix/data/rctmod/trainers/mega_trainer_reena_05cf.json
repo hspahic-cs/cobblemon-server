@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Reena",
+  "team": [
+    {
+      "ability": "queenlymajesty",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "powerwhip",
+        "highjumpkick",
+        "rapidspin",
+        "teeterdance"
+      ],
+      "nature": "jolly",
+      "species": "tsareena"
+    },
+    {
+      "ability": "multiscale",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "yache_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "dragonclaw",
+        "firepunch",
+        "thunderpunch",
+        "dragondance"
+      ],
+      "nature": "jolly",
+      "species": "dragonite"
+    },
+    {
+      "ability": "moxie",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "shuca_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "flareblitz",
+        "poisonjab",
+        "playrough",
+        "drillrun"
+      ],
+      "nature": "jolly",
+      "species": "rapidash"
+    },
+    {
+      "ability": "multiscale",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "blunder_policy"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "hydropump",
+        "icebeam",
+        "mirrorcoat",
+        "recover"
+      ],
+      "nature": "modest",
+      "species": "milotic"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:sablenite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "foulplay",
+        "willowisp",
+        "recover",
+        "protect"
+      ],
+      "nature": "calm",
+      "species": "sableye"
+    }
+  ]
+}

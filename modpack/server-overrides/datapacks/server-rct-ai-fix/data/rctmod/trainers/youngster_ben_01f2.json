@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Ben",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "pursuit",
+        "zenheadbutt",
+        "crunch",
+        "return"
+      ],
+      "nature": "mild",
+      "species": "raticate"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "stockpile",
+        "swallow",
+        "spitup",
+        "poisonfang"
+      ],
+      "nature": "docile",
+      "species": "ekans"
+    }
+  ]
+}

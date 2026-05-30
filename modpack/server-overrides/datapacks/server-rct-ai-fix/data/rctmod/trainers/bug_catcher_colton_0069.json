@@ -1,0 +1,71 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Colton",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 11,
+      "moveset": [
+        "strugglebug",
+        "psybeam",
+        "reflect",
+        "lightscreen"
+      ],
+      "nature": "naughty",
+      "species": "dottler"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 10,
+      "moveset": [
+        "detect",
+        "harden"
+      ],
+      "nature": "timid",
+      "species": "spewpa"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 11,
+      "moveset": [
+        "powdersnow",
+        "strugglebug"
+      ],
+      "nature": "quiet",
+      "species": "snom"
+    }
+  ]
+}

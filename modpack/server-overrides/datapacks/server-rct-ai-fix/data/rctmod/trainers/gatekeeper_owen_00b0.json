@@ -1,0 +1,196 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gatekeeper Owen",
+  "team": [
+    {
+      "ability": "serenegrace",
+      "aspects": [
+        "pirouette"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "uturn",
+        "bodyslam",
+        "closecombat",
+        "rockslide"
+      ],
+      "nature": "jolly",
+      "species": "meloetta"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:mewnium_z",
+        "psychic_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "psychic",
+        "flamethrower",
+        "aurasphere",
+        "icebeam"
+      ],
+      "nature": "timid",
+      "species": "mew"
+    },
+    {
+      "ability": "hypercutter",
+      "evs": {
+        "atk": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "crabhammer",
+        "ironhead",
+        "aquajet",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "kingler"
+    },
+    {
+      "ability": "levitate",
+      "aspects": [
+        "origin"
+      ],
+      "evs": {
+        "atk": 12,
+        "hp": 244,
+        "spa": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:griseous_orb",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "hex",
+        "dracometeor",
+        "shadowsneak",
+        "thunderwave"
+      ],
+      "nature": "quiet",
+      "species": "giratina"
+    },
+    {
+      "ability": "overcoat",
+      "aspects": [
+        "therian"
+      ],
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "moonblast",
+        "uturn",
+        "focusblast",
+        "psychic"
+      ],
+      "nature": "modest",
+      "species": "enamorus"
+    },
+    {
+      "ability": "illuminate",
+      "aspects": [
+        "sevii"
+      ],
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "blizzard",
+        "thunder",
+        "voltswitch",
+        "freezedry"
+      ],
+      "nature": "timid",
+      "species": "zebstrika"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Holden",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 33,
+      "moveset": [
+        "bind",
+        "smackdown",
+        "curse",
+        "sandtomb"
+      ],
+      "nature": "relaxed",
+      "species": "steelix"
+    }
+  ]
+}

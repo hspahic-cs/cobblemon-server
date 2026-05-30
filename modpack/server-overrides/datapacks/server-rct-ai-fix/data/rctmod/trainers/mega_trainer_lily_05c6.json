@@ -1,0 +1,100 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Lily",
+  "team": [
+    {
+      "ability": "snowwarning",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "ice_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 57,
+      "moveset": [
+        "blizzard",
+        "gigadrain",
+        "earthquake",
+        "iceshard"
+      ],
+      "nature": "modest",
+      "species": "abomasnow"
+    },
+    {
+      "ability": "snowcloak",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "blizzard",
+        "dazzlinggleam",
+        "iceshard",
+        "auroraveil"
+      ],
+      "nature": "timid",
+      "species": "ninetales"
+    },
+    {
+      "ability": "refrigerate",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:glalitite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "blizzard",
+        "waterpulse",
+        "shadowball",
+        "signalbeam"
+      ],
+      "nature": "timid",
+      "species": "glalie"
+    }
+  ]
+}

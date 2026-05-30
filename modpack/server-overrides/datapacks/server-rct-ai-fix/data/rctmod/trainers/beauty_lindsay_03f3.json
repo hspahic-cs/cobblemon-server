@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Lindsay",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "toxic",
+        "leechseed",
+        "megadrain"
+      ],
+      "nature": "timid",
+      "species": "roselia"
+    }
+  ]
+}

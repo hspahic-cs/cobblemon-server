@@ -1,0 +1,98 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (25)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "haze",
+        "swordsdance",
+        "crunch",
+        "belch"
+      ],
+      "nature": "gentle",
+      "species": "seviper"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "takedown",
+        "scaryface",
+        "crunch",
+        "hyperfang"
+      ],
+      "nature": "brave",
+      "species": "gumshoos"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "bugbite",
+        "venoshock",
+        "agility",
+        "steamroller"
+      ],
+      "nature": "sassy",
+      "species": "scolipede"
+    },
+    {
+      "ability": "cursedbody",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "miracleeye",
+        "reflect",
+        "psychic",
+        "roleplay"
+      ],
+      "nature": "brave",
+      "species": "meowstic"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (2)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "pressure",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 75,
+      "moveset": [
+        "nightslash",
+        "snatch",
+        "punishment",
+        "darkpulse"
+      ],
+      "nature": "rash",
+      "species": "weavile"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 75,
+      "moveset": [
+        "counter",
+        "taunt",
+        "doubleedge",
+        "suckerpunch"
+      ],
+      "nature": "bashful",
+      "species": "obstagoon"
+    }
+  ]
+}

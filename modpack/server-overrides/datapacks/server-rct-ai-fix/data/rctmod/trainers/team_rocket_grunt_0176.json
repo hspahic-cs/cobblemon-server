@@ -1,0 +1,120 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (28)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "leechlife",
+        "dualwingbeat",
+        "haze",
+        "venoshock"
+      ],
+      "nature": "brave",
+      "species": "golbat"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "assist",
+        "captivate",
+        "bodyslam",
+        "doubleedge"
+      ],
+      "nature": "naughty",
+      "species": "purugly"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "futuresight",
+        "stoneedge",
+        "photongeyser",
+        "explosion"
+      ],
+      "nature": "hasty",
+      "species": "lunatone"
+    },
+    {
+      "ability": "powerspot",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "stomp",
+        "stealthrock",
+        "rockslide",
+        "bodyslam"
+      ],
+      "nature": "docile",
+      "species": "stonjourner"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "crunch",
+        "aquatail",
+        "screech",
+        "psychicfangs"
+      ],
+      "nature": "rash",
+      "species": "bruxish"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Channeler Emilia",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 37,
+      "moveset": [
+        "ominouswind",
+        "confuseray",
+        "wish",
+        "psychic"
+      ],
+      "nature": "modest",
+      "species": "xatu"
+    }
+  ]
+}

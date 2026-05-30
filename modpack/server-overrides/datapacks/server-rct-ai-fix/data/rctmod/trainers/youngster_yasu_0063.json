@@ -1,0 +1,78 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Yasu",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 25,
+      "moveset": [
+        "pursuit",
+        "assurance",
+        "crunch",
+        "suckerpunch"
+      ],
+      "nature": "brave",
+      "species": "rattata"
+    },
+    {
+      "ability": "cheekpouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 25,
+      "moveset": [
+        "swallow",
+        "spitup",
+        "bodyslam",
+        "crunch"
+      ],
+      "nature": "bashful",
+      "species": "greedent"
+    },
+    {
+      "ability": "gluttony",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 24,
+      "moveset": [
+        "hyperfang",
+        "pursuit",
+        "zenheadbutt",
+        "crunch"
+      ],
+      "nature": "serious",
+      "species": "raticate"
+    }
+  ]
+}

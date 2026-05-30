@@ -1,0 +1,60 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Jared",
+  "team": [
+    {
+      "ability": "stormdrain",
+      "aspects": [
+        "east_sea"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "mudslap",
+        "harden",
+        "recover",
+        "waterpulse"
+      ],
+      "nature": "calm",
+      "species": "shellos"
+    },
+    {
+      "ability": "stormdrain",
+      "aspects": [
+        "east_sea"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "harden",
+        "recover",
+        "waterpulse",
+        "ancientpower"
+      ],
+      "nature": "calm",
+      "species": "shellos"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 20,
+      "moveset": [
+        "harden",
+        "recover",
+        "waterpulse",
+        "ancientpower"
+      ],
+      "nature": "calm",
+      "species": "shellos"
+    }
+  ]
+}

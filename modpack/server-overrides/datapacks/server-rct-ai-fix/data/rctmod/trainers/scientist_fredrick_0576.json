@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Fredrick",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "kinesis",
+        "reflect",
+        "psyshock",
+        "psychic"
+      ],
+      "nature": "sassy",
+      "species": "kadabra"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "reflect",
+        "recover",
+        "psyshock",
+        "psychic"
+      ],
+      "nature": "sassy",
+      "species": "kadabra"
+    }
+  ]
+}

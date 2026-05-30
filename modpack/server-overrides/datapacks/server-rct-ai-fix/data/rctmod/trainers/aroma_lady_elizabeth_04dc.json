@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Elizabeth",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "stunspore",
+        "leechseed",
+        "magicalleaf",
+        "gigadrain"
+      ],
+      "nature": "calm",
+      "species": "roselia"
+    }
+  ]
+}

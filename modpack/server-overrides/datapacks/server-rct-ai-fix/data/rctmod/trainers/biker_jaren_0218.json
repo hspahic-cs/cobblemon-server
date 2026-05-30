@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Jaren",
+  "team": [
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "mudbomb",
+        "fling",
+        "sludgebomb",
+        "poisonfang"
+      ],
+      "nature": "sassy",
+      "species": "muk"
+    },
+    {
+      "ability": "weakarmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "swallow",
+        "bodyslam",
+        "sludgebomb",
+        "clearsmog"
+      ],
+      "nature": "naive",
+      "species": "garbodor"
+    }
+  ]
+}

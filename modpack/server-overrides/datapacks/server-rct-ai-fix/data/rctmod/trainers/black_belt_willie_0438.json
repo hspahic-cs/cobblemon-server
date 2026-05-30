@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Willie",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "sandtomb",
+        "dig",
+        "irontail",
+        "stoneedge"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 56,
+      "moveset": [
+        "knockoff",
+        "dualchop",
+        "bulkup",
+        "dynamicpunch"
+      ],
+      "nature": "relaxed",
+      "species": "machamp"
+    }
+  ]
+}

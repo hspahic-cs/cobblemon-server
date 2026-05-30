@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Cordell",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 48,
+      "moveset": [
+        "nightslash",
+        "acrobatics",
+        "feint",
+        "falseswipe"
+      ],
+      "nature": "serious",
+      "species": "farfetchd"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 48,
+      "moveset": [
+        "nightslash",
+        "acrobatics",
+        "feint",
+        "falseswipe"
+      ],
+      "nature": "sassy",
+      "species": "farfetchd"
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (48)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 35,
+      "moveset": [
+        "return",
+        "superfang",
+        "doubleedge",
+        "endeavor"
+      ],
+      "nature": "bashful",
+      "species": "rattata"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 35,
+      "moveset": [
+        "zenheadbutt",
+        "crunch",
+        "return",
+        "superfang"
+      ],
+      "nature": "lax",
+      "species": "raticate"
+    },
+    {
+      "ability": "sandveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 35,
+      "moveset": [
+        "sandtomb",
+        "slash",
+        "dig",
+        "gyroball"
+      ],
+      "nature": "quiet",
+      "species": "sandshrew"
+    },
+    {
+      "ability": "sandveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 35,
+      "moveset": [
+        "furyswipes",
+        "sandtomb",
+        "slash",
+        "dig"
+      ],
+      "nature": "lax",
+      "species": "sandslash"
+    }
+  ]
+}

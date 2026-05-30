@@ -1,0 +1,154 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Perry",
+  "team": [
+    {
+      "ability": "solidrock",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rindo_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "stealthrock",
+        "stoneedge",
+        "earthquake",
+        "firepunch"
+      ],
+      "nature": "careful",
+      "species": "rhyperior"
+    },
+    {
+      "ability": "solarpower",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "solarbeam",
+        "fierydance",
+        "earthpower",
+        "sludgebomb"
+      ],
+      "nature": "calm",
+      "species": "sunflora"
+    },
+    {
+      "ability": "trace",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "lum_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "calmmind",
+        "psychic",
+        "moonblast",
+        "mysticalfire"
+      ],
+      "nature": "timid",
+      "species": "gardevoir"
+    },
+    {
+      "ability": "flashfire",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "charcoal_stick"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "firelash",
+        "solarblade",
+        "jumpkick",
+        "highhorsepower"
+      ],
+      "nature": "jolly",
+      "species": "rapidash"
+    },
+    {
+      "ability": "cursedbody",
+      "evs": {
+        "atk": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "spell_tag"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "shadowball",
+        "dragondarts",
+        "fireblast",
+        "uturn"
+      ],
+      "nature": "naive",
+      "species": "dragapult"
+    }
+  ]
+}

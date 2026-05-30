@@ -1,0 +1,47 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Jose",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "nature": "naughty",
+      "species": "eelektross"
+    },
+    {
+      "ability": "trace",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "aeroblast",
+        "triattack",
+        "thunderbolt",
+        "icebeam"
+      ],
+      "nature": "mild",
+      "species": "porygon2"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Natalie",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 3,
+      "moveset": [
+        "tackle",
+        "growl"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 3,
+      "moveset": [
+        "tackle",
+        "growl"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    }
+  ]
+}

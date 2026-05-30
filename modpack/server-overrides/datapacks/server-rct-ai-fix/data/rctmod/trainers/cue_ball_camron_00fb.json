@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cue Ball Camron",
+  "team": [
+    {
+      "ability": "damp",
+      "evs": {
+        "atk": 4,
+        "def": 252,
+        "hp": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "stealthrock",
+        "flipturn",
+        "earthquake",
+        "yawn"
+      ],
+      "nature": "sassy",
+      "species": "swampert"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "dualwingbeat",
+        "stoneedge",
+        "earthquake",
+        "uturn"
+      ],
+      "nature": "jolly",
+      "species": "aerodactyl"
+    },
+    {
+      "ability": "swarm",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "uturn",
+        "bulletpunch",
+        "rocksmash",
+        "knockoff"
+      ],
+      "nature": "adamant",
+      "species": "scizor"
+    },
+    {
+      "ability": "sandveil",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "swordsdance",
+        "earthquake",
+        "stoneedge",
+        "scaleshot"
+      ],
+      "nature": "jolly",
+      "species": "garchomp"
+    },
+    {
+      "ability": "sandrush",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "needlearm",
+        "suckerpunch",
+        "knockoff",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "cacturne"
+    }
+  ]
+}

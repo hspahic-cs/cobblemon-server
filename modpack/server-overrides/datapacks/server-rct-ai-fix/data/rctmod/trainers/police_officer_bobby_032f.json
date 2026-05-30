@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Police Officer Bobby",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "growl",
+        "reflect",
+        "psychoshift",
+        "airslash"
+      ],
+      "nature": "sassy",
+      "species": "hoothoot"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "leer",
+        "focusenergy",
+        "lowsweep",
+        "knockoff"
+      ],
+      "nature": "relaxed",
+      "species": "machop"
+    }
+  ]
+}

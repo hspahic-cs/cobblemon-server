@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Mary",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 32,
+      "moveset": [
+        "tailwhip",
+        "bubblebeam",
+        "playrough",
+        "raindance"
+      ],
+      "nature": "bashful",
+      "species": "marill"
+    },
+    {
+      "ability": "drizzle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 30,
+      "moveset": [
+        "airslash",
+        "growl",
+        "wingattack",
+        "waterpulse"
+      ],
+      "nature": "bold",
+      "species": "pelipper"
+    }
+  ]
+}

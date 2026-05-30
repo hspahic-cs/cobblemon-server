@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Artist Kevin",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "encore",
+        "psybeam",
+        "mimic",
+        "lightscreen"
+      ],
+      "nature": "bold",
+      "species": "mrmime"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 39,
+      "moveset": [
+        "flail",
+        "woodhammer",
+        "tearfullook",
+        "lowkick"
+      ],
+      "nature": "jolly",
+      "species": "sudowoodo"
+    }
+  ]
+}

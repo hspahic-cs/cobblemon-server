@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Felicia",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "stomp",
+        "knockoff",
+        "powerwhip",
+        "screech"
+      ],
+      "nature": "hardy",
+      "species": "lickitung"
+    },
+    {
+      "ability": "vitalspirit",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "reversal",
+        "counter",
+        "uproar",
+        "encore"
+      ],
+      "nature": "relaxed",
+      "species": "vigoroth"
+    }
+  ]
+}

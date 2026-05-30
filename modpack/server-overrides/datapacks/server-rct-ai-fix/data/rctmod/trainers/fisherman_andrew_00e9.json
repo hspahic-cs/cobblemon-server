@@ -1,0 +1,96 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Andrew",
+  "team": [
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "light_clay"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "auroraveil",
+        "blizzard",
+        "shadowball",
+        "freezedry"
+      ],
+      "nature": "timid",
+      "species": "froslass"
+    },
+    {
+      "ability": "toughclaws",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "white_herb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "shellsmash",
+        "liquidation",
+        "closecombat",
+        "stoneedge"
+      ],
+      "nature": "jolly",
+      "species": "barbaracle"
+    },
+    {
+      "ability": "slushrush",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "magnet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "boltbeak",
+        "blizzard",
+        "lowkick",
+        "stoneedge"
+      ],
+      "nature": "naive",
+      "species": "arctozolt"
+    }
+  ]
+}

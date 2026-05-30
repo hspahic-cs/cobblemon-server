@@ -1,0 +1,84 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cowgirl Shelley",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "growl",
+        "defensecurl",
+        "rollout",
+        "headbutt"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "growl",
+        "defensecurl",
+        "rollout",
+        "headbutt"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "growl",
+        "defensecurl",
+        "rollout",
+        "headbutt"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "growl",
+        "defensecurl",
+        "rollout",
+        "headbutt"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "growl",
+        "defensecurl",
+        "rollout",
+        "headbutt"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    }
+  ]
+}

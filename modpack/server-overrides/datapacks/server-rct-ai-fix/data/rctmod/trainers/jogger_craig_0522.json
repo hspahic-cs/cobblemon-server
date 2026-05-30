@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Jogger Craig",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 56,
+      "moveset": [
+        "leer",
+        "charge",
+        "spark",
+        "crunch"
+      ],
+      "nature": "jolly",
+      "species": "luxio"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "closecombat",
+        "doubleteam",
+        "takedown",
+        "bravebird"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    },
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "smartstrike",
+        "megahorn",
+        "tailwhip",
+        "flamewheel"
+      ],
+      "nature": "jolly",
+      "species": "rapidash"
+    }
+  ]
+}

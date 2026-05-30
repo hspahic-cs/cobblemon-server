@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (45)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 11,
+      "moveset": [
+        "fakeout",
+        "scratch",
+        "growl"
+      ],
+      "nature": "bashful",
+      "species": "glameow"
+    }
+  ]
+}

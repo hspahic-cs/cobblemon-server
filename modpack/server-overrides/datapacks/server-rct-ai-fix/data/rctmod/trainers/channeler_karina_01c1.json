@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Channeler Karina",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 37,
+      "moveset": [
+        "waterpulse",
+        "ominouswind",
+        "brine",
+        "raindance"
+      ],
+      "nature": "quirky",
+      "species": "jellicent"
+    }
+  ]
+}

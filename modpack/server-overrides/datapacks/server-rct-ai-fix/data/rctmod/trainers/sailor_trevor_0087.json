@@ -1,0 +1,56 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Trevor",
+  "team": [
+    {
+      "ability": "gulpmissile",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "surf",
+        "uturn",
+        "airslash",
+        "safeguard"
+      ],
+      "nature": "timid",
+      "species": "cramorant"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "surf",
+        "scorchingsands",
+        "sludge",
+        "reflect"
+      ],
+      "nature": "timid",
+      "species": "nidoqueen"
+    }
+  ]
+}

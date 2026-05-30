@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Ted",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 67,
+      "moveset": [
+        "explosion",
+        "gyroball",
+        "mirrorcoat",
+        "courtchange"
+      ],
+      "nature": "gentle",
+      "species": "electrode"
+    },
+    {
+      "ability": "download",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 69,
+      "moveset": [
+        "triattack",
+        "magiccoat",
+        "zapcannon",
+        "hyperbeam"
+      ],
+      "nature": "mild",
+      "species": "porygon2"
+    }
+  ]
+}

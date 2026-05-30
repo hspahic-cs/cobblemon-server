@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Alexandra",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "peck",
+        "echoedvoice",
+        "confusion",
+        "airslash"
+      ],
+      "nature": "calm",
+      "species": "hoothoot"
+    }
+  ]
+}

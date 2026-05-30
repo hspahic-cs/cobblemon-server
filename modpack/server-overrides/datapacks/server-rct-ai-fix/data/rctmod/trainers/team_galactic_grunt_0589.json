@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (48)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "gust",
+        "poisonpowder",
+        "venoshock",
+        "leechlife"
+      ],
+      "nature": "serious",
+      "species": "dustox"
+    },
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "poisonsting",
+        "mudslap",
+        "astonish",
+        "venoshock"
+      ],
+      "nature": "bashful",
+      "species": "croagunk"
+    }
+  ]
+}

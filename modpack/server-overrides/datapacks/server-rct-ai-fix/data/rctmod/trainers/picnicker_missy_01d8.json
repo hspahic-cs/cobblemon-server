@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Missy",
+  "team": [
+    {
+      "ability": "hydration",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 64,
+      "moveset": [
+        "flail",
+        "echoedvoice",
+        "hydropump",
+        "hypervoice"
+      ],
+      "nature": "calm",
+      "species": "palpitoad"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 64,
+      "moveset": [
+        "raindance",
+        "bodyslam",
+        "muddywater",
+        "recover"
+      ],
+      "nature": "naughty",
+      "species": "gastrodon"
+    }
+  ]
+}

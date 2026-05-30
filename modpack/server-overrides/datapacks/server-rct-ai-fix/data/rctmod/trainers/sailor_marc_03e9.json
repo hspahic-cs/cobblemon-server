@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Marc",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "supersonic",
+        "bubblebeam",
+        "airslash",
+        "aquaring"
+      ],
+      "nature": "calm",
+      "species": "mantyke"
+    }
+  ]
+}

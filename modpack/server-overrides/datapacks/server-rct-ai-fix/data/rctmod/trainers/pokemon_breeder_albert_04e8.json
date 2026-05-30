@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Breeder Albert",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "flail",
+        "tearfullook",
+        "suckerpunch",
+        "lowkick"
+      ],
+      "nature": "impish",
+      "species": "sudowoodo"
+    },
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "leechseed",
+        "magicalleaf",
+        "gigadrain",
+        "synthesis"
+      ],
+      "nature": "bold",
+      "species": "roselia"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "nuzzle",
+        "charm",
+        "spark",
+        "discharge"
+      ],
+      "nature": "bold",
+      "species": "pikachu"
+    }
+  ]
+}

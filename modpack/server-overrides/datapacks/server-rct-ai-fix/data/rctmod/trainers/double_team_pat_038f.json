@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Double Team Pat",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 47,
+      "moveset": [
+        "zenheadbutt",
+        "firepunch",
+        "forcepalm",
+        "recover"
+      ],
+      "nature": "bashful",
+      "species": "medicham"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Tristan",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "growl",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "starly"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Gabrielle",
+  "team": [
+    {
+      "ability": "cloudnine",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "aquajet",
+        "zenheadbutt",
+        "screech",
+        "aquatail"
+      ],
+      "nature": "calm",
+      "species": "golduck"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Madame Reina",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "gigadrain",
+        "toxic",
+        "ingrain",
+        "petaldance"
+      ],
+      "nature": "timid",
+      "species": "roselia"
+    }
+  ]
+}

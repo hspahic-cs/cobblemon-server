@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Maniac Bryan",
+  "team": [
+    {
+      "ability": "moldbreaker",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "headbutt",
+        "leer",
+        "scaryface",
+        "assurance"
+      ],
+      "nature": "relaxed",
+      "species": "cranidos"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "sandstorm",
+        "harden",
+        "smackdown",
+        "bulldoze"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "confusion",
+        "confuseray",
+        "payback",
+        "gyroball"
+      ],
+      "nature": "hardy",
+      "species": "bronzor"
+    }
+  ]
+}

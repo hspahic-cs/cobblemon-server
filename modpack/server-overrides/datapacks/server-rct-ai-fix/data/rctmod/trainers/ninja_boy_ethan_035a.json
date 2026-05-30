@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ninja Boy Ethan",
+  "team": [
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "honeclaws",
+        "knockoff",
+        "pinmissile",
+        "toxic"
+      ],
+      "nature": "naive",
+      "species": "skorupi"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "screech",
+        "poisonfang",
+        "aircutter",
+        "bite"
+      ],
+      "nature": "hasty",
+      "species": "golbat"
+    }
+  ]
+}

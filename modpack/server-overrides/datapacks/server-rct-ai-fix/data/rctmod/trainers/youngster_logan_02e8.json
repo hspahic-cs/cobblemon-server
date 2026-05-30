@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Logan",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "leer",
+        "thundershock"
+      ],
+      "nature": "jolly",
+      "species": "shinx"
+    }
+  ]
+}

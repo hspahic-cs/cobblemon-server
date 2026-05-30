@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (16)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 33,
+      "moveset": [
+        "aerialace",
+        "furyswipes",
+        "charm",
+        "taunt"
+      ],
+      "nature": "bashful",
+      "species": "glameow"
+    },
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 33,
+      "moveset": [
+        "taunt",
+        "revenge",
+        "suckerpunch",
+        "poisonjab"
+      ],
+      "nature": "quirky",
+      "species": "croagunk"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Police Officer Thomas",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "peck",
+        "reflect",
+        "psychoshift",
+        "uproar"
+      ],
+      "nature": "sassy",
+      "species": "noctowl"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "lowsweep",
+        "knockoff",
+        "dualchop",
+        "bulkup"
+      ],
+      "nature": "relaxed",
+      "species": "machoke"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Lauren",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "babydolleyes",
+        "quickattack",
+        "spark",
+        "nuzzle"
+      ],
+      "nature": "quirky",
+      "species": "pachirisu"
+    }
+  ]
+}

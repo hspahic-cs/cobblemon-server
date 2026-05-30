@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Marc",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "roost",
+        "airslash",
+        "aquaring",
+        "hydropump"
+      ],
+      "nature": "calm",
+      "species": "mantine"
+    },
+    {
+      "ability": "drizzle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 59,
+      "moveset": [
+        "waterpulse",
+        "stockpile",
+        "roost",
+        "hurricane"
+      ],
+      "nature": "bold",
+      "species": "pelipper"
+    }
+  ]
+}

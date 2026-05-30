@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Breeder Jennifer",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "pound",
+        "encore",
+        "psybeam",
+        "reflect"
+      ],
+      "nature": "timid",
+      "species": "mrmime"
+    },
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "poisonsting",
+        "leechseed",
+        "magicalleaf",
+        "gigadrain"
+      ],
+      "nature": "hasty",
+      "species": "roselia"
+    },
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "charm",
+        "pound",
+        "moonlight",
+        "meteormash"
+      ],
+      "nature": "hasty",
+      "species": "clefairy"
+    }
+  ]
+}

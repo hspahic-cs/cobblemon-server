@@ -1,0 +1,103 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Goon",
+  "team": [
+    {
+      "ability": "technician",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "rockblast",
+        "iciclespear",
+        "headlongrush",
+        "iceshard"
+      ],
+      "nature": "adamant",
+      "species": "avalugg"
+    },
+    {
+      "ability": "sheerforce",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "hurricane",
+        "psychic",
+        "heatwave",
+        "esperwing"
+      ],
+      "nature": "modest",
+      "species": "braviary"
+    },
+    {
+      "ability": "speedboost",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:sharpedonite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "protect",
+        "liquidation",
+        "crunch",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "sharpedo"
+    }
+  ]
+}

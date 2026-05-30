@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Gerardo",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "smackdown",
+        "irontail",
+        "sandstorm",
+        "bulldoze"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "rocktomb",
+        "rest",
+        "sleeptalk",
+        "irontail"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

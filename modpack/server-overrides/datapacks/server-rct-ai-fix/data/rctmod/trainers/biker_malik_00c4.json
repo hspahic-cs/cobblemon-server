@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Malik",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "smokescreen",
+        "sludgebomb",
+        "flamethrower",
+        "gigadrain"
+      ],
+      "nature": "quiet",
+      "species": "seviper"
+    },
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "screech",
+        "gigadrain",
+        "sludgebomb",
+        "disable"
+      ],
+      "nature": "brave",
+      "species": "roserade"
+    }
+  ]
+}

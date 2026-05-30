@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Diana",
+  "team": [
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 22,
+      "moveset": [
+        "aquajet",
+        "rockthrow",
+        "protect",
+        "headbutt"
+      ],
+      "nature": "modest",
+      "species": "drednaw"
+    }
+  ]
+}

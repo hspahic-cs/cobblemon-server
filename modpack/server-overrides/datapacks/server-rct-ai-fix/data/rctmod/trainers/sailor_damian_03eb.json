@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Damian",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "growl",
+        "waterpulse",
+        "roost",
+        "pluck"
+      ],
+      "nature": "jolly",
+      "species": "wingull"
+    },
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "quickattack",
+        "waterpulse",
+        "steelwing",
+        "aerialace"
+      ],
+      "nature": "adamant",
+      "species": "wingull"
+    }
+  ]
+}

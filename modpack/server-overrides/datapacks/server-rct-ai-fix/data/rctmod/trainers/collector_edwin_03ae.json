@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Edwin",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "block",
+        "stoneedge",
+        "hammerarm",
+        "woodhammer"
+      ],
+      "nature": "relaxed",
+      "species": "sudowoodo"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "stoneedge",
+        "hammerarm",
+        "woodhammer",
+        "flail"
+      ],
+      "nature": "relaxed",
+      "species": "sudowoodo"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "slam",
+        "stoneedge",
+        "hammerarm",
+        "woodhammer"
+      ],
+      "nature": "relaxed",
+      "species": "sudowoodo"
+    }
+  ]
+}

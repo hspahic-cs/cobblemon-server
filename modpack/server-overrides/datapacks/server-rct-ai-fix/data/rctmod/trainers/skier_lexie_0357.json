@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Lexie",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "bubblebeam",
+        "charm",
+        "bounce",
+        "playrough"
+      ],
+      "nature": "quirky",
+      "species": "marill"
+    },
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "charm",
+        "moonlight",
+        "gravity",
+        "meteormash"
+      ],
+      "nature": "timid",
+      "species": "clefairy"
+    }
+  ]
+}

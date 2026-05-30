@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Oscar",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "supersonic",
+        "bubblebeam",
+        "airslash",
+        "aquaring"
+      ],
+      "nature": "sassy",
+      "species": "mantyke"
+    },
+    {
+      "ability": "hustle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "lockon",
+        "bulletseed",
+        "icebeam",
+        "hydropump"
+      ],
+      "nature": "hardy",
+      "species": "remoraid"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "bulletseed",
+        "bubblebeam",
+        "aquaring",
+        "bounce"
+      ],
+      "nature": "sassy",
+      "species": "mantine"
+    }
+  ]
+}

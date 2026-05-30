@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sharp_beak"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 54,
+      "moveset": [
+        "bravebird",
+        "quickattack",
+        "closecombat",
+        "uturn"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "voltswitch",
+        "machpunch",
+        "closecombat",
+        "icepunch"
+      ],
+      "nature": "jolly",
+      "species": "electivire"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "charcoal_stick"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "flareblitz",
+        "rockslide",
+        "uturn",
+        "earthquake"
+      ],
+      "nature": "jolly",
+      "species": "darmanitan"
+    },
+    {
+      "ability": "aerilate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sharp_beak"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "sleeppowder",
+        "doubleedge",
+        "seedbomb",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "jumpluff"
+    },
+    {
+      "ability": "torrent",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:blastoisinite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "shellsmash",
+        "waterpulse",
+        "aurasphere",
+        "icebeam"
+      ],
+      "nature": "modest",
+      "species": "blastoise"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Mitch",
+  "team": [
+    {
+      "ability": "reckless",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 56,
+      "moveset": [
+        "triplearrows",
+        "bravebird",
+        "skyuppercut",
+        "flareblitz"
+      ],
+      "nature": "sassy",
+      "species": "blaziken"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 56,
+      "moveset": [
+        "crushclaw",
+        "skydrop",
+        "whirlwind",
+        "doubleedge"
+      ],
+      "nature": "modest",
+      "species": "braviary"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 55,
+      "moveset": [
+        "cottonguard",
+        "dragonclaw",
+        "perishsong",
+        "moonblast"
+      ],
+      "nature": "careful",
+      "species": "altaria"
+    },
+    {
+      "ability": "overgrow",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 55,
+      "moveset": [
+        "leafblade",
+        "featherdance",
+        "bravebird",
+        "nastyplot"
+      ],
+      "nature": "mild",
+      "species": "dartrix"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Kendal",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "mudslap",
+        "revenge",
+        "suckerpunch",
+        "poisonjab"
+      ],
+      "nature": "hardy",
+      "species": "croagunk"
+    }
+  ]
+}

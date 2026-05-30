@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Chelsea",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "aquajet",
+        "crunch",
+        "superfang",
+        "superpower"
+      ],
+      "nature": "jolly",
+      "species": "bibarel"
+    }
+  ]
+}

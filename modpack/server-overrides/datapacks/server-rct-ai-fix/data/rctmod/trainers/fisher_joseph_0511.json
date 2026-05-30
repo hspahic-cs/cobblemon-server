@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Joseph",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "tailwhip",
+        "supersonic",
+        "waterpulse",
+        "hornattack"
+      ],
+      "nature": "jolly",
+      "species": "seaking"
+    }
+  ]
+}

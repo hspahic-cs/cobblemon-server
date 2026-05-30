@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Kay",
+  "team": [
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 38,
+      "moveset": [
+        "nightslash",
+        "leafblade",
+        "swagger",
+        "extrasensory"
+      ],
+      "nature": "jolly",
+      "species": "nuzleaf"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 38,
+      "moveset": [
+        "trickortreat",
+        "magicalleaf",
+        "shadowball",
+        "hex"
+      ],
+      "nature": "sassy",
+      "species": "pumpkaboo"
+    }
+  ]
+}

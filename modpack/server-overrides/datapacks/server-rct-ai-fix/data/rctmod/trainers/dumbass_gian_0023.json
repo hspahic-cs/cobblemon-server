@@ -1,0 +1,201 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Silly Gian",
+  "team": [
+    {
+      "ability": "soulheart",
+      "aspects": [
+        "original"
+      ],
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 4
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "helpinghand",
+        "moonblast",
+        "flashcannon",
+        "protect"
+      ],
+      "nature": "calm",
+      "species": "magearna"
+    },
+    {
+      "ability": "damp",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:swampertite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "highhorsepower",
+        "icepunch",
+        "waterfall",
+        "flipturn"
+      ],
+      "nature": "jolly",
+      "species": "swampert"
+    },
+    {
+      "ability": "prismarmor",
+      "aspects": [
+        "dusk_mane"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:solganium_z",
+        "steel_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "sunsteelstrike",
+        "dragondance",
+        "stoneedge",
+        "psychicfangs"
+      ],
+      "nature": "adamant",
+      "species": "necrozma"
+    },
+    {
+      "ability": "battlebond",
+      "aspects": [
+        "ash"
+      ],
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "watershuriken",
+        "darkpulse",
+        "icebeam",
+        "hydropump"
+      ],
+      "nature": "timid",
+      "species": "greninja"
+    },
+    {
+      "ability": "pressure",
+      "aspects": [
+        "origin"
+      ],
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:lustrous_orb",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "hydropump",
+        "spacialrend",
+        "thunder",
+        "aurasphere"
+      ],
+      "nature": "timid",
+      "species": "palkia"
+    },
+    {
+      "ability": "serenegrace",
+      "aspects": [
+        "sky"
+      ],
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_specs"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "seedflare",
+        "hurricane",
+        "earthpower",
+        "hiddenpower"
+      ],
+      "nature": "timid",
+      "species": "shaymin"
+    }
+  ]
+}

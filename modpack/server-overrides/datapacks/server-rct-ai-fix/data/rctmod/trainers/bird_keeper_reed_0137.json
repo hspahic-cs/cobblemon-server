@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Reed",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 39,
+      "moveset": [
+        "return",
+        "roost",
+        "agility",
+        "airslash"
+      ],
+      "nature": "sassy",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 39,
+      "moveset": [
+        "return",
+        "roost",
+        "agility",
+        "airslash"
+      ],
+      "nature": "naughty",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 39,
+      "moveset": [
+        "return",
+        "roost",
+        "agility",
+        "fly"
+      ],
+      "nature": "lax",
+      "species": "pidgey"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 39,
+      "moveset": [
+        "return",
+        "roost",
+        "agility",
+        "airslash"
+      ],
+      "nature": "relaxed",
+      "species": "pidgeotto"
+    }
+  ]
+}

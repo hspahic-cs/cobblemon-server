@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "School Kid Esteban",
+  "team": [
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "tailwhip",
+        "mudshot",
+        "slam",
+        "yawn"
+      ],
+      "nature": "naive",
+      "species": "wooper"
+    }
+  ]
+}

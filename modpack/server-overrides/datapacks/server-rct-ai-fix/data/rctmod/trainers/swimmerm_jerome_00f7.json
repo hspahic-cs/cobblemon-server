@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Jerome",
+  "team": [
+    {
+      "ability": "gluttony",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "scald",
+        "leer",
+        "lick",
+        "furyswipes"
+      ],
+      "nature": "naughty",
+      "species": "simipour"
+    },
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "icebeam",
+        "irondefense",
+        "raindance",
+        "hydropump"
+      ],
+      "nature": "bold",
+      "species": "blastoise"
+    }
+  ]
+}

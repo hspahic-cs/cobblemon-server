@@ -1,0 +1,119 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sinnoh Leader Candice",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 32,
+      "moveset": [
+        "feintattack",
+        "iceshard",
+        "aerialace",
+        "pursuit"
+      ],
+      "nature": "adamant",
+      "species": "sneasel"
+    },
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "icy_rock"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 37,
+      "moveset": [
+        "icefang",
+        "bulldoze",
+        "rocktomb",
+        "hail"
+      ],
+      "nature": "jolly",
+      "species": "piloswine"
+    },
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 34,
+      "moveset": [
+        "freezedry",
+        "shadowball",
+        "waterpulse",
+        "mirrorcoat"
+      ],
+      "nature": "timid",
+      "species": "glaceon"
+    },
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 33,
+      "moveset": [
+        "icywind",
+        "ominouswind",
+        "waterpulse",
+        "doubleteam"
+      ],
+      "nature": "modest",
+      "species": "froslass"
+    }
+  ]
+}

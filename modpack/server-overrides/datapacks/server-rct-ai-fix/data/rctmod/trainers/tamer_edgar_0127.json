@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tamer Edgar",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 62,
+      "moveset": [
+        "coil",
+        "jawlock",
+        "belch",
+        "haze"
+      ],
+      "nature": "hardy",
+      "species": "arbok"
+    },
+    {
+      "ability": "rivalry",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 62,
+      "moveset": [
+        "chipaway",
+        "thrash",
+        "earthpower",
+        "megahorn"
+      ],
+      "nature": "relaxed",
+      "species": "nidoking"
+    },
+    {
+      "ability": "klutz",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 63,
+      "moveset": [
+        "thrash",
+        "painsplit",
+        "doubleedge",
+        "superpower"
+      ],
+      "nature": "serious",
+      "species": "bewear"
+    }
+  ]
+}

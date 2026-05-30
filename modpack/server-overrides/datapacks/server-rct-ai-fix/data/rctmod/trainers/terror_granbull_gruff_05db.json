@@ -1,0 +1,119 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Terror Granbull Gruff",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 37,
+      "moveset": [
+        "leechlife",
+        "suckerpunch",
+        "smartstrike",
+        "stickyweb"
+      ],
+      "nature": "jolly",
+      "species": "ariados"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "fairy_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 38,
+      "moveset": [
+        "spiritbreak",
+        "crunch",
+        "icefang",
+        "thunderfang"
+      ],
+      "nature": "jolly",
+      "species": "granbull"
+    },
+    {
+      "ability": "analytic",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 36,
+      "moveset": [
+        "powergem",
+        "flashcannon",
+        "discharge",
+        "thunderwave"
+      ],
+      "nature": "modest",
+      "species": "probopass"
+    },
+    {
+      "ability": "adaptability",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 37,
+      "moveset": [
+        "aquajet",
+        "knockoff",
+        "metalclaw",
+        "dragondance"
+      ],
+      "nature": "jolly",
+      "species": "crawdaunt"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Maria",
+  "team": [
+    {
+      "ability": "sniper",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "scope_lens"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "snipeshot",
+        "icebeam",
+        "uturn",
+        "hiddenpower"
+      ],
+      "nature": "timid",
+      "species": "inteleon"
+    },
+    {
+      "ability": "adaptability",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "choice_specs"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "dracometeor",
+        "sludgewave",
+        "flipturn",
+        "scald"
+      ],
+      "nature": "modest",
+      "species": "dragalge"
+    },
+    {
+      "ability": "illuminate",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "hydropump",
+        "thunder",
+        "blizzard",
+        "psyshock"
+      ],
+      "nature": "timid",
+      "species": "starmie"
+    },
+    {
+      "ability": "adaptability",
+      "aspects": [
+        "f"
+      ],
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "hydropump",
+        "shadowball",
+        "icebeam",
+        "flipturn"
+      ],
+      "nature": "timid",
+      "species": "basculegion"
+    }
+  ]
+}

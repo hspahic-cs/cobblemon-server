@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Chad",
+  "team": [
+    {
+      "ability": "prankster",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 19,
+      "moveset": [
+        "confuseray",
+        "quickattack",
+        "strugglebug",
+        "moonlight"
+      ],
+      "nature": "adamant",
+      "species": "volbeat"
+    },
+    {
+      "ability": "effectspore",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 21,
+      "moveset": [
+        "leechseed",
+        "megadrain",
+        "headbutt",
+        "poisonpowder"
+      ],
+      "nature": "quiet",
+      "species": "shroomish"
+    }
+  ]
+}

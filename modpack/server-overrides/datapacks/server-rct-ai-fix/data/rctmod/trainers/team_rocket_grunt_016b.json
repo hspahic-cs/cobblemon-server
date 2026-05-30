@@ -1,0 +1,119 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (17)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "bite",
+        "bite",
+        "dualwingbeat",
+        "confuseray"
+      ],
+      "nature": "brave",
+      "species": "golbat"
+    },
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "smog",
+        "sludge",
+        "sludgebomb",
+        "screech"
+      ],
+      "nature": "mild",
+      "species": "muk"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "sludge",
+        "pinmissile",
+        "gigadrain",
+        "feintattack"
+      ],
+      "nature": "gentle",
+      "species": "cacturne"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "bite",
+        "suckerpunch",
+        "ironhead"
+      ],
+      "nature": "hardy",
+      "species": "bisharp"
+    },
+    {
+      "ability": "overcoat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "hyperfang",
+        "pluck",
+        "foulplay",
+        "roost"
+      ],
+      "nature": "brave",
+      "species": "vullaby"
+    }
+  ]
+}

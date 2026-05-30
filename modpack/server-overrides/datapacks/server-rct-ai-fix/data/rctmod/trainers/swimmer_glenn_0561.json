@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Glenn",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "dive",
+        "aquatail",
+        "icebeam",
+        "safeguard"
+      ],
+      "nature": "calm",
+      "species": "dewgong"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "hydropump",
+        "psychic",
+        "swift",
+        "recover"
+      ],
+      "nature": "timid",
+      "species": "starmie"
+    }
+  ]
+}

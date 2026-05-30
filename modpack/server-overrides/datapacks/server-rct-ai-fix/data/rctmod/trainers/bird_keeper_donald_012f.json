@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Donald",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 58,
+      "moveset": [
+        "acrobatics",
+        "feint",
+        "falseswipe",
+        "bravebird"
+      ],
+      "nature": "mild",
+      "species": "farfetchd"
+    }
+  ]
+}

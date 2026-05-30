@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Aubree",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "bubblebeam",
+        "charm",
+        "slam",
+        "bounce"
+      ],
+      "nature": "bashful",
+      "species": "azurill"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "bounce",
+        "aquatail",
+        "playrough",
+        "aquaring"
+      ],
+      "nature": "bashful",
+      "species": "azumarill"
+    }
+  ]
+}

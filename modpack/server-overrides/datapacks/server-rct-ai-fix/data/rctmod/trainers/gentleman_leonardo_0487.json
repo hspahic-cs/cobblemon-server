@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gentleman Leonardo",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "growl",
+        "quickattack",
+        "wingattack",
+        "endeavor"
+      ],
+      "nature": "hardy",
+      "species": "starly"
+    },
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "reflect",
+        "psychoshift",
+        "airslash",
+        "extrasensory"
+      ],
+      "nature": "sassy",
+      "species": "hoothoot"
+    }
+  ]
+}

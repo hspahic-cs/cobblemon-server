@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Nash",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "knockoff",
+        "gastroacid",
+        "razorleaf",
+        "poisonjab"
+      ],
+      "nature": "docile",
+      "species": "weepinbell"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "knockoff",
+        "gastroacid",
+        "razorleaf",
+        "poisonjab"
+      ],
+      "nature": "sassy",
+      "species": "weepinbell"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "poisonjab",
+        "leafstorm",
+        "leafblade",
+        "sludgebomb"
+      ],
+      "nature": "timid",
+      "species": "victreebel"
+    }
+  ]
+}

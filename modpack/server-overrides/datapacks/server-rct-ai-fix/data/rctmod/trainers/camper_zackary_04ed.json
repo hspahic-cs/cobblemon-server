@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Zackary",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "sandstorm",
+        "harden",
+        "rockthrow",
+        "smackdown"
+      ],
+      "nature": "impish",
+      "species": "geodude"
+    }
+  ]
+}

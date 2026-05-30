@@ -1,0 +1,38 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Teighler",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 7,
+      "moveset": [
+        "absorb",
+        "growth",
+        "stunspore",
+        "worryseed"
+      ],
+      "nature": "timid",
+      "species": "budew"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 7,
+      "moveset": [
+        "morningsun",
+        "tackle",
+        "leafage"
+      ],
+      "nature": "timid",
+      "species": "cherubi"
+    }
+  ]
+}

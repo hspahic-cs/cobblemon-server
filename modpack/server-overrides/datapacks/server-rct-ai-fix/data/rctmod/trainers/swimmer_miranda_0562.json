@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Miranda",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "attract",
+        "raindance",
+        "whirlpool",
+        "bounce"
+      ],
+      "nature": "timid",
+      "species": "lumineon"
+    }
+  ]
+}

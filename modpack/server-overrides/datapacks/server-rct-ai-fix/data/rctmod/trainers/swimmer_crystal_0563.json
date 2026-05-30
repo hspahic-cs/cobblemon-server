@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Crystal",
+  "team": [
+    {
+      "ability": "drizzle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "tailwind",
+        "growl",
+        "waterpulse",
+        "hurricane"
+      ],
+      "nature": "timid",
+      "species": "pelipper"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "peck",
+        "waterfall",
+        "megahorn",
+        "horndrill"
+      ],
+      "nature": "adamant",
+      "species": "seaking"
+    }
+  ]
+}

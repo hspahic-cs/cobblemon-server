@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher James",
+  "team": [
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 13,
+      "moveset": [
+        "swift",
+        "lightscreen",
+        "reflect",
+        "safeguard"
+      ],
+      "nature": "serious",
+      "species": "ledyba"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 13,
+      "moveset": [
+        "bubble",
+        "signalbeam",
+        "quickattack",
+        "sweetscent"
+      ],
+      "nature": "naughty",
+      "species": "surskit"
+    }
+  ]
+}

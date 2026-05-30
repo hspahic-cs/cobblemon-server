@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Maniac Hunter",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 26,
+      "moveset": [
+        "tackle",
+        "taunt",
+        "takedown",
+        "irondefense"
+      ],
+      "nature": "relaxed",
+      "species": "shieldon"
+    }
+  ]
+}

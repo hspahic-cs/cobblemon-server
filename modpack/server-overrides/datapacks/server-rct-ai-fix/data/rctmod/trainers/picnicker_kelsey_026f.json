@@ -1,0 +1,52 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Kelsey",
+  "team": [
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "poisonjab",
+        "toxicspikes",
+        "flatter"
+      ],
+      "nature": "jolly",
+      "species": "nidorino"
+    },
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "sludgebomb",
+        "toxicspikes",
+        "flatter",
+        "crunch"
+      ],
+      "nature": "hardy",
+      "species": "nidorina"
+    }
+  ]
+}

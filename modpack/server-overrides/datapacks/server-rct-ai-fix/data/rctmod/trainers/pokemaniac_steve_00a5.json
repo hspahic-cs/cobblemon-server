@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9maniac Steve",
+  "team": [
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "psybeam",
+        "firespin",
+        "luckychant",
+        "lightscreen"
+      ],
+      "nature": "mild",
+      "species": "braixen"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "rage",
+        "falseswipe",
+        "thrash",
+        "fling"
+      ],
+      "nature": "relaxed",
+      "species": "cubone"
+    }
+  ]
+}

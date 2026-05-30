@@ -1,0 +1,126 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Claire",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:alakazite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "expandingforce",
+        "shadowball",
+        "nastyplot",
+        "focusblast"
+      ],
+      "nature": "timid",
+      "species": "alakazam"
+    },
+    {
+      "ability": "psychicsurge",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "tanga_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "expandingforce",
+        "followme",
+        "fakeout",
+        "hypervoice"
+      ],
+      "nature": "timid",
+      "species": "indeedee"
+    },
+    {
+      "ability": "arenatrap",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "earthquake",
+        "stompingtantrum",
+        "reversal",
+        "stoneedge"
+      ],
+      "nature": "jolly",
+      "species": "dugtrio"
+    },
+    {
+      "ability": "justified",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "crunch",
+        "closecombat",
+        "meteormash",
+        "icepunch"
+      ],
+      "nature": "jolly",
+      "species": "lucario"
+    }
+  ]
+}

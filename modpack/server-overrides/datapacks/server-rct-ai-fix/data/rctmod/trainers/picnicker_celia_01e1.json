@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Celia",
+  "team": [
+    {
+      "ability": "wonderskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 58,
+      "moveset": [
+        "sing",
+        "attract",
+        "round",
+        "hypervoice"
+      ],
+      "nature": "rash",
+      "species": "delcatty"
+    }
+  ]
+}

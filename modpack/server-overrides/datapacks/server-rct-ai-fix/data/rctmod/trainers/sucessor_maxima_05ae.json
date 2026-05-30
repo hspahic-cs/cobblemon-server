@@ -1,0 +1,152 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sucessor Maxima",
+  "team": [
+    {
+      "ability": "hugepower",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 39,
+      "moveset": [
+        "aquatail",
+        "playrough",
+        "aquajet",
+        "bellydrum"
+      ],
+      "nature": "adamant",
+      "species": "azumarill"
+    },
+    {
+      "ability": "overgrow",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "big_root"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "leafblade",
+        "aquatail",
+        "leechseed",
+        "protect"
+      ],
+      "nature": "adamant",
+      "species": "serperior"
+    },
+    {
+      "ability": "defiant",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 39,
+      "moveset": [
+        "aquajet",
+        "bulldoze",
+        "rockslide",
+        "swordsdance"
+      ],
+      "nature": "adamant",
+      "species": "empoleon"
+    },
+    {
+      "ability": "snowcloak",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "icebeam",
+        "dazzlinggleam",
+        "psyshock",
+        "nastyplot"
+      ],
+      "nature": "bold",
+      "species": "ninetales"
+    },
+    {
+      "ability": "pixilate",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:altarianite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 41,
+      "moveset": [
+        "dragonpulse",
+        "hypervoice",
+        "flamethrower",
+        "tailwind"
+      ],
+      "nature": "bold",
+      "species": "altaria"
+    }
+  ]
+}

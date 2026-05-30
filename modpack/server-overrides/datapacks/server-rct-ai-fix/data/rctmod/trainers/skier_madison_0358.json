@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Madison",
+  "team": [
+    {
+      "ability": "snowwarning",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "iceshard",
+        "razorleaf",
+        "icywind",
+        "ingrain"
+      ],
+      "nature": "sassy",
+      "species": "snover"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (36)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "stunspore",
+        "leechlife",
+        "gigadrain",
+        "quiverdance"
+      ],
+      "nature": "docile",
+      "species": "beautifly"
+    }
+  ]
+}

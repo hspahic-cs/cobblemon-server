@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (7)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 9,
+      "moveset": [
+        "absorb",
+        "supersonic",
+        "astonish"
+      ],
+      "nature": "hardy",
+      "species": "zubat"
+    }
+  ]
+}

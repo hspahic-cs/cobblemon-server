@@ -1,0 +1,96 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Sheila",
+  "team": [
+    {
+      "ability": "sapsipper",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "dragonhammer",
+        "firepunch",
+        "drainpunch",
+        "powerwhip"
+      ],
+      "nature": "adamant",
+      "species": "goodra"
+    },
+    {
+      "ability": "sapsipper",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "normal_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "headcharge",
+        "highhorsepower",
+        "zenheadbutt",
+        "closecombat"
+      ],
+      "nature": "adamant",
+      "species": "bouffalant"
+    },
+    {
+      "ability": "sapsipper",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "magnet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "boltstrike",
+        "flareblitz",
+        "lowkick",
+        "return"
+      ],
+      "nature": "jolly",
+      "species": "zebstrika"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Tony",
+  "team": [
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 49,
+      "moveset": [
+        "focusenergy",
+        "brine",
+        "agility",
+        "dragonpulse"
+      ],
+      "nature": "bold",
+      "species": "seadra"
+    },
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 49,
+      "moveset": [
+        "focusenergy",
+        "brine",
+        "agility",
+        "dragonpulse"
+      ],
+      "nature": "calm",
+      "species": "seadra"
+    }
+  ]
+}

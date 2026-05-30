@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Jared",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "custap_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "stealthrock",
+        "spikes",
+        "stoneedge",
+        "earthquake"
+      ],
+      "nature": "adamant",
+      "species": "crustle"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "solarblade",
+        "swordsdance",
+        "xscissor",
+        "sacredsword"
+      ],
+      "nature": "adamant",
+      "species": "leavanny"
+    },
+    {
+      "ability": "solidrock",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:cameruptite",
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "fireblast",
+        "earthpower",
+        "solarbeam",
+        "ancientpower"
+      ],
+      "nature": "modest",
+      "species": "camerupt"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "hp": 252,
+        "spa": 4,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "thunderbolt",
+        "fireblast",
+        "gigadrain",
+        "voltswitch"
+      ],
+      "nature": "calm",
+      "species": "eelektross"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "soft_sand"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "headlongrush",
+        "iciclecrash",
+        "iceshard",
+        "rocktomb"
+      ],
+      "nature": "jolly",
+      "species": "mamoswine"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Yale",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "tanga_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "gigadrain",
+        "psychic",
+        "leechseed",
+        "trickroom"
+      ],
+      "nature": "modest",
+      "species": "exeggutor"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "passho_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 41,
+      "moveset": [
+        "rockslide",
+        "earthquake",
+        "superpower",
+        "explosion"
+      ],
+      "nature": "adamant",
+      "species": "gigalith"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "rindo_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "mudbomb",
+        "waterpulse",
+        "icebeam",
+        "sludgebomb"
+      ],
+      "nature": "modest",
+      "species": "gastrodon"
+    },
+    {
+      "ability": "sturdy",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "shuca_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "rockslide",
+        "thunderpunch",
+        "suckerpunch",
+        "stealthrock"
+      ],
+      "nature": "adamant",
+      "species": "golem"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:cameruptite",
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 41,
+      "moveset": [
+        "flamethrower",
+        "scorchingsands",
+        "rest",
+        "sleeptalk"
+      ],
+      "nature": "modest",
+      "species": "camerupt"
+    }
+  ]
+}

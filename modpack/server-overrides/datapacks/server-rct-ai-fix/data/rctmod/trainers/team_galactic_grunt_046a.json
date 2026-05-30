@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (28)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "heatproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 39,
+      "moveset": [
+        "confuseray",
+        "extrasensory",
+        "heavyslam",
+        "irondefense"
+      ],
+      "nature": "serious",
+      "species": "bronzor"
+    }
+  ]
+}

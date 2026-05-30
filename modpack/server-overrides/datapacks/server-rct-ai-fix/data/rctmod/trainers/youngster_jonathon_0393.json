@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Jonathon",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 10,
+      "moveset": [
+        "tackle",
+        "defensecurl",
+        "rollout"
+      ],
+      "nature": "impish",
+      "species": "geodude"
+    }
+  ]
+}

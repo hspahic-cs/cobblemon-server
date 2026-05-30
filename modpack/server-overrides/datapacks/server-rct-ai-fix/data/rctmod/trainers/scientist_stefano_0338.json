@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Stefano",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "kinesis",
+        "psybeam",
+        "reflect",
+        "psychocut"
+      ],
+      "nature": "sassy",
+      "species": "kadabra"
+    }
+  ]
+}

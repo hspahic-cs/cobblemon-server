@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Corbin",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "shadowforce",
+        "suckerpunch",
+        "shadowsneak",
+        "curse"
+      ],
+      "nature": "adamant",
+      "species": "banette"
+    },
+    {
+      "ability": "pressure",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "curse",
+        "willowisp",
+        "payback",
+        "shadowsneak"
+      ],
+      "nature": "impish",
+      "species": "dusclops"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Jared",
+  "team": [
+    {
+      "ability": "stormdrain",
+      "aspects": [
+        "east_sea"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 52,
+      "moveset": [
+        "mudslap",
+        "recover",
+        "waterpulse",
+        "raindance"
+      ],
+      "nature": "calm",
+      "species": "gastrodon"
+    },
+    {
+      "ability": "stormdrain",
+      "aspects": [
+        "east_sea"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "recover",
+        "ancientpower",
+        "muddywater",
+        "earthpower"
+      ],
+      "nature": "calm",
+      "species": "gastrodon"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 51,
+      "moveset": [
+        "recover",
+        "bodyslam",
+        "muddywater",
+        "earthpower"
+      ],
+      "nature": "calm",
+      "species": "gastrodon"
+    }
+  ]
+}

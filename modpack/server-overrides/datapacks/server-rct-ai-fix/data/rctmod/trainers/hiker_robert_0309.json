@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Robert",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "sandstorm",
+        "rockpolish",
+        "harden",
+        "rockthrow"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "sandstorm",
+        "rockpolish",
+        "harden",
+        "rockthrow"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    }
+  ]
+}

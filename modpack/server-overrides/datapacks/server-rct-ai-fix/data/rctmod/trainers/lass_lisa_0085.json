@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Lisa",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 39,
+      "moveset": [
+        "jumpkick",
+        "aromatherapy",
+        "energyball",
+        "charm"
+      ],
+      "nature": "relaxed",
+      "species": "deerling"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 38,
+      "moveset": [
+        "stunspore",
+        "naturalgift",
+        "gigadrain",
+        "ancientpower"
+      ],
+      "nature": "bashful",
+      "species": "tangela"
+    }
+  ]
+}

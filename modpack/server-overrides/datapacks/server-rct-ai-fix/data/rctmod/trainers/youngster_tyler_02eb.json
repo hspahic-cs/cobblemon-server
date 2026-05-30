@@ -1,0 +1,35 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Tyler",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "splash"
+      ],
+      "nature": "naive",
+      "species": "magikarp"
+    },
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "growl",
+        "quickattack"
+      ],
+      "nature": "docile",
+      "species": "starly"
+    }
+  ]
+}

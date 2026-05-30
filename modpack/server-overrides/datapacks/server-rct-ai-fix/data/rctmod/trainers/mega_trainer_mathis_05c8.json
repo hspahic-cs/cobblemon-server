@@ -1,0 +1,68 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Mathis",
+  "team": [
+    {
+      "ability": "limber",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 52,
+      "moveset": [
+        "flyingpress",
+        "skydrop",
+        "rockslide",
+        "quickguard"
+      ],
+      "nature": "jolly",
+      "species": "hawlucha"
+    },
+    {
+      "ability": "scrappy",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:lopunnite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "dizzypunch",
+        "jumpkick",
+        "brutalswing",
+        "fakeout"
+      ],
+      "nature": "adamant",
+      "species": "lopunny"
+    }
+  ]
+}

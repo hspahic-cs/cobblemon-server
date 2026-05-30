@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Double Team Jen",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 27,
+      "moveset": [
+        "thunderpunch",
+        "nuzzle",
+        "thunderbolt",
+        "lightscreen"
+      ],
+      "nature": "sassy",
+      "species": "raichu"
+    }
+  ]
+}

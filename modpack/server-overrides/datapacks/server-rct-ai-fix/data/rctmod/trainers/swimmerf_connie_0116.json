@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Connie",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "doublehit",
+        "whirlpool",
+        "aquatail",
+        "hydropump"
+      ],
+      "nature": "bold",
+      "species": "floatzel"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 62,
+      "moveset": [
+        "doublehit",
+        "whirlpool",
+        "aquatail",
+        "hydropump"
+      ],
+      "nature": "bashful",
+      "species": "floatzel"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "doublehit",
+        "whirlpool",
+        "aquatail",
+        "hydropump"
+      ],
+      "nature": "modest",
+      "species": "floatzel"
+    }
+  ]
+}

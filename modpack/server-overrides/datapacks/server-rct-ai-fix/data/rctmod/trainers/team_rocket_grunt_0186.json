@@ -1,0 +1,120 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (44)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "heavymetal",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "irondefense",
+        "dig",
+        "strength",
+        "ironhead"
+      ],
+      "nature": "docile",
+      "species": "copperajah"
+    },
+    {
+      "ability": "klutz",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "calmmind",
+        "airslash",
+        "futuresight",
+        "psychic"
+      ],
+      "nature": "impish",
+      "species": "swoobat"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "assist",
+        "captivate",
+        "bodyslam",
+        "doubleedge"
+      ],
+      "nature": "lonely",
+      "species": "purugly"
+    },
+    {
+      "ability": "rivalry",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "sludge",
+        "chipaway",
+        "bodyslam",
+        "earthpower"
+      ],
+      "nature": "timid",
+      "species": "nidoqueen"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "spitup",
+        "poisonfang",
+        "coil",
+        "jawlock"
+      ],
+      "nature": "bold",
+      "species": "arbok"
+    }
+  ]
+}

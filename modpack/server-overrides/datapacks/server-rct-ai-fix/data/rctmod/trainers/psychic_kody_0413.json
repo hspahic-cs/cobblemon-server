@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Kody",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "lowkick",
+        "confusion",
+        "detect",
+        "feint"
+      ],
+      "nature": "hardy",
+      "species": "meditite"
+    }
+  ]
+}

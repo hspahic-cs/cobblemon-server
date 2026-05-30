@@ -1,0 +1,52 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Jaxon",
+  "team": [
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "sludge",
+        "sludgebomb",
+        "icebeam"
+      ],
+      "nature": "naughty",
+      "species": "swalot"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "screech",
+        "waterfall",
+        "poisonjab",
+        "explosion"
+      ],
+      "nature": "bold",
+      "species": "qwilfish"
+    }
+  ]
+}

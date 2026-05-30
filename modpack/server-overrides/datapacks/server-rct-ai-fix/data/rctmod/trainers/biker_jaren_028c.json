@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Jaren",
+  "team": [
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 28,
+      "moveset": [
+        "disable",
+        "sludge",
+        "mudbomb",
+        "fling"
+      ],
+      "nature": "sassy",
+      "species": "muk"
+    },
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 30,
+      "moveset": [
+        "sludge",
+        "mudbomb",
+        "fling",
+        "sludgebomb"
+      ],
+      "nature": "rash",
+      "species": "muk"
+    }
+  ]
+}

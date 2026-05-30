@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Jackson",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "smackdown",
+        "sandtomb",
+        "irontail",
+        "sandstorm"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "screech",
+        "irontail",
+        "rocktomb",
+        "bulldoze"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "screech",
+        "irontail",
+        "rocktomb",
+        "bulldoze"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

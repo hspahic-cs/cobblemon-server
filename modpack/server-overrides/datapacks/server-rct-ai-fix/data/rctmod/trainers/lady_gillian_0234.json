@@ -1,0 +1,78 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lady Gillian",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 47,
+      "moveset": [
+        "discharge",
+        "signalbeam",
+        "lightscreen",
+        "thunder"
+      ],
+      "nature": "impish",
+      "species": "mareep"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 48,
+      "moveset": [
+        "discharge",
+        "signalbeam",
+        "lightscreen",
+        "thunder"
+      ],
+      "nature": "naive",
+      "species": "mareep"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "minecraft:gold_nugget"
+      ],
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 49,
+      "moveset": [
+        "confuseray",
+        "powergem",
+        "discharge",
+        "signalbeam"
+      ],
+      "nature": "brave",
+      "species": "flaaffy"
+    }
+  ]
+}

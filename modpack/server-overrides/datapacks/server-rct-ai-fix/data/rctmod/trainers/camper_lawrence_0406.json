@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Lawrence",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "thundershock",
+        "charge",
+        "spark",
+        "voltswitch"
+      ],
+      "nature": "docile",
+      "species": "luxio"
+    },
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "focusenergy",
+        "venoshock",
+        "toxic",
+        "suckerpunch"
+      ],
+      "nature": "naive",
+      "species": "stunky"
+    }
+  ]
+}

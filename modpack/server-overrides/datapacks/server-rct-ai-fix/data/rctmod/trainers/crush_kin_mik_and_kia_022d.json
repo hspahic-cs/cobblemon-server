@@ -1,0 +1,127 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Crush Kin Mik & Kia",
+  "team": [
+    {
+      "ability": "blaze",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "fakeout",
+        "pyroball",
+        "closecombat",
+        "thunderpunch"
+      ],
+      "nature": "jolly",
+      "species": "infernape"
+    },
+    {
+      "ability": "technician",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "armthrust",
+        "liquidation",
+        "machpunch",
+        "aquajet"
+      ],
+      "nature": "adamant",
+      "species": "grapploct"
+    },
+    {
+      "ability": "clearbody",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:metagrossite",
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "meteormash",
+        "zenheadbutt",
+        "icepunch",
+        "earthquake"
+      ],
+      "nature": "jolly",
+      "species": "metagross"
+    },
+    {
+      "ability": "toughclaws",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "stoneedge",
+        "closecombat",
+        "accelerock",
+        "psychicfangs"
+      ],
+      "nature": "jolly",
+      "species": "lycanroc"
+    }
+  ]
+}

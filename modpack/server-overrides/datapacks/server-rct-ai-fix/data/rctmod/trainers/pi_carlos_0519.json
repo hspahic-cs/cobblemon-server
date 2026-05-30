@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "PI Carlos",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "peck",
+        "tailwhip",
+        "supersonic",
+        "waterpulse"
+      ],
+      "nature": "timid",
+      "species": "goldeen"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "peck",
+        "waterpulse",
+        "aquaring",
+        "waterfall"
+      ],
+      "nature": "jolly",
+      "species": "seaking"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "peck",
+        "agility",
+        "flail",
+        "waterfall"
+      ],
+      "nature": "jolly",
+      "species": "seaking"
+    }
+  ]
+}

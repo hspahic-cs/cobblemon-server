@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Landon",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 56,
+      "moveset": [
+        "reflect",
+        "dazzlinggleam",
+        "psychic",
+        "teeterdance"
+      ],
+      "nature": "sassy",
+      "species": "mrmime"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Lukas",
+  "team": [
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 47,
+      "moveset": [
+        "explosion",
+        "destinybond",
+        "belch",
+        "memento"
+      ],
+      "nature": "rash",
+      "species": "koffing"
+    },
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 47,
+      "moveset": [
+        "explosion",
+        "destinybond",
+        "belch",
+        "memento"
+      ],
+      "nature": "jolly",
+      "species": "koffing"
+    },
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 47,
+      "moveset": [
+        "poisonfang",
+        "screech",
+        "gunkshot",
+        "acidarmor"
+      ],
+      "nature": "sassy",
+      "species": "muk"
+    },
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 47,
+      "moveset": [
+        "gyroball",
+        "sludgebomb",
+        "explosion",
+        "destinybond"
+      ],
+      "nature": "lonely",
+      "species": "weezing"
+    }
+  ]
+}

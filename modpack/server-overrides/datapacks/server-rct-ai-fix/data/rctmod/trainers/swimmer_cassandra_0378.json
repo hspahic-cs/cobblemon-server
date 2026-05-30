@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Cassandra",
+  "team": [
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "attract",
+        "raindance",
+        "gust",
+        "waterpulse"
+      ],
+      "nature": "bashful",
+      "species": "finneon"
+    },
+    {
+      "ability": "drizzle",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "wingattack",
+        "waterpulse",
+        "stockpile",
+        "swallow"
+      ],
+      "nature": "bold",
+      "species": "pelipper"
+    }
+  ]
+}

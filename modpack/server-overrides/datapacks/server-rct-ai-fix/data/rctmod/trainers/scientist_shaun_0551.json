@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Shaun",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "kinesis",
+        "teleport",
+        "reflect",
+        "psychic"
+      ],
+      "nature": "timid",
+      "species": "alakazam"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "disable",
+        "recover",
+        "futuresight",
+        "calmmind"
+      ],
+      "nature": "timid",
+      "species": "alakazam"
+    }
+  ]
+}

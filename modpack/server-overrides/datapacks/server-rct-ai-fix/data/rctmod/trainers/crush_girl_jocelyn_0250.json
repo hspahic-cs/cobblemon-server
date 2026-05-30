@@ -1,0 +1,124 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Crush Girl Jocelyn",
+  "team": [
+    {
+      "ability": "serenegrace",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "chople_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "bodyslam",
+        "glare",
+        "headbutt",
+        "zenheadbutt"
+      ],
+      "nature": "adamant",
+      "species": "dunsparce"
+    },
+    {
+      "ability": "defeatist",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mystic_water"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "rockslide",
+        "bravebird",
+        "uturn",
+        "roost"
+      ],
+      "nature": "jolly",
+      "species": "archeops"
+    },
+    {
+      "ability": "serenegrace",
+      "evs": {
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "thunderwave",
+        "airslash",
+        "extrasensory",
+        "flamethrower"
+      ],
+      "nature": "jolly",
+      "species": "togekiss"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "spa": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "white_herb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "shellsmash",
+        "waterfall",
+        "psychicfangs",
+        "icebeam"
+      ],
+      "nature": "naughty",
+      "species": "huntail"
+    }
+  ]
+}

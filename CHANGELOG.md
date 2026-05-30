@@ -12,7 +12,38 @@ root README.
 
 ## [Unreleased]
 
-## [0.7.28] - 2026-05-30
+## [0.7.29] - 2026-05-30
+
+### Fixed
+- **NPC trainer defeats produce no `BATTLE_VICTORY` event, blocking
+  the bounty payout.** Diagnosed during a live dev playtest: the
+  0.7.27 silent-zero fix is correctly deployed and `GymDefeatHook`
+  subscribes to `BATTLE_VICTORY` at boot (verified via `javap`), but
+  Cobblemon never delivers the event for non-gym RCT trainer fights
+  (e.g. Cue Ball Corey, Lass Briana). Gym fights work fine because
+  their JSONs ship with `"ai": {"type": "rb"}` and route through the
+  rbrctai mod. Vanilla rctmod's ~1,222 non-gym trainers omit the
+  `ai` field entirely, fall back to Cobblemon's default trainer AI,
+  and on this stack (Cobblemon 1.7.3 + Sinytra Connector + NeoForge
+  21.1.227) that path doesn't fire `CobblemonEvents.BATTLE_VICTORY`
+  to subscribers.
+
+  Fix: new `server-rct-ai-fix` datapack overrides every vanilla
+  trainer JSON missing an `ai` field with
+  `"ai": {"type": "rb", "data": {}}` so they all route through
+  `rbrctai`. `data: {}` resolves to RunBunAIConfig defaults
+  (`canTera=false, teraTarget=""`) — same shape our gym JSONs use.
+  Generator: `ops/gen_rct_ai_fix_datapack.py <rctmod-jar>`. 337
+  trainers that already had AI configured were left untouched.
+
+  Confirmed via Titan1190X's Corey battle on dev: the screen showed
+  Turn 2 with both sides battling normally, but logs had ZERO
+  `STARTED SHOWDOWN`, ZERO `npc-defeat:`, and Titan's transaction
+  history showed only admin grants. After this datapack ships, those
+  battles will route through rbrctai (visible as
+  `RunBunAI: new battle detected` log lines) and `BATTLE_VICTORY`
+  will fire as expected, triggering `payNpcBounty` and depositing
+  the per-defeat NPC bounty.
 
 ### Fixed
 - **Server crashed on startup with `cobblemon_bridge` mod-load

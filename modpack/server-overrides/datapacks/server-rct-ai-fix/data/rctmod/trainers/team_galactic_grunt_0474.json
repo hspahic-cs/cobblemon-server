@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (38)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "hypnosis",
+        "safeguard",
+        "extrasensory",
+        "heavyslam"
+      ],
+      "nature": "hardy",
+      "species": "bronzor"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "aerialace",
+        "charm",
+        "taunt",
+        "slash"
+      ],
+      "nature": "docile",
+      "species": "glameow"
+    }
+  ]
+}

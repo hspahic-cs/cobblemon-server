@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "School Kid Tiera",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 44,
+      "moveset": [
+        "charm",
+        "spark",
+        "nuzzle",
+        "dig"
+      ],
+      "nature": "jolly",
+      "species": "pachirisu"
+    }
+  ]
+}

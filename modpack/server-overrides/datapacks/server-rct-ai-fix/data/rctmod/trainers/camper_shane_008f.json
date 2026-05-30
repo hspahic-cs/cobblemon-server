@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Shane",
+  "team": [
+    {
+      "ability": "sapsipper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "tailwhip",
+        "leechseed",
+        "razorleaf",
+        "worryseed"
+      ],
+      "nature": "lax",
+      "species": "skiddo"
+    },
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 20,
+      "moveset": [
+        "nuzzle",
+        "bite",
+        "roar",
+        "spark"
+      ],
+      "nature": "naive",
+      "species": "yamper"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Twins Eli & Anne",
+  "team": [
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "followme",
+        "thunderwave",
+        "wish",
+        "storedpower"
+      ],
+      "nature": "gentle",
+      "species": "clefairy"
+    },
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "stockpile",
+        "swallow",
+        "spitup",
+        "wakeupslap"
+      ],
+      "nature": "gentle",
+      "species": "jigglypuff"
+    }
+  ]
+}

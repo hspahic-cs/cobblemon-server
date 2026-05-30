@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Erick",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "peck",
+        "waterpulse",
+        "raindance",
+        "poisonjab"
+      ],
+      "nature": "jolly",
+      "species": "goldeen"
+    },
+    {
+      "ability": "hydration",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "mudslap",
+        "waterpulse",
+        "rocktomb",
+        "bulldoze"
+      ],
+      "nature": "adamant",
+      "species": "barboach"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "whirlpool",
+        "scaryface",
+        "substitute",
+        "scald"
+      ],
+      "nature": "timid",
+      "species": "gyarados"
+    }
+  ]
+}

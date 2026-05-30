@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Maniac Larry",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "curse",
+        "crunch",
+        "doubleedge",
+        "stoneedge"
+      ],
+      "nature": "relaxed",
+      "species": "steelix"
+    }
+  ]
+}

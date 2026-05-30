@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Miriam",
+  "team": [
+    {
+      "ability": "ripen",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 14,
+      "moveset": [
+        "astonish",
+        "withdraw",
+        "megadrain",
+        "dragonbreath"
+      ],
+      "nature": "bold",
+      "species": "applin"
+    },
+    {
+      "ability": "healer",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 15,
+      "moveset": [
+        "helpinghand",
+        "babydolleyes",
+        "refresh",
+        "disarmingvoice"
+      ],
+      "nature": "rash",
+      "species": "audino"
+    }
+  ]
+}

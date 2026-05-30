@@ -1,0 +1,179 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Ruin Agent Vega",
+  "name": "Light of Ruin Vega",
+  "team": [
+    {
+      "ability": "unburden",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 45,
+      "moveset": [
+        "darkpulse",
+        "grassknot",
+        "burningjealousy",
+        "fakeout"
+      ],
+      "nature": "modest",
+      "species": "liepard"
+    },
+    {
+      "ability": "superluck",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "scope_lens"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 47,
+      "moveset": [
+        "darkpulse",
+        "aircutter",
+        "heatwave",
+        "protect"
+      ],
+      "nature": "timid",
+      "species": "honchkrow"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:absolite",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 47,
+      "moveset": [
+        "nightslash",
+        "psychocut",
+        "xscissor",
+        "irontail"
+      ],
+      "nature": "jolly",
+      "species": "absol"
+    },
+    {
+      "ability": "pressure",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 46,
+      "moveset": [
+        "knockoff",
+        "icepunch",
+        "brickbreak",
+        "fakeout"
+      ],
+      "nature": "adamant",
+      "species": "weavile"
+    },
+    {
+      "ability": "pressure",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 47,
+      "moveset": [
+        "hex",
+        "painsplit",
+        "willowisp",
+        "protect"
+      ],
+      "nature": "bold",
+      "species": "spiritomb"
+    },
+    {
+      "ability": "defiant",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 47,
+      "moveset": [
+        "ironhead",
+        "suckerpunch",
+        "lowsweep",
+        "protect"
+      ],
+      "nature": "adamant",
+      "species": "bisharp"
+    }
+  ]
+}

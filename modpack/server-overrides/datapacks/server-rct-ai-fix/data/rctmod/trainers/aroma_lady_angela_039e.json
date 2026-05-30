@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Angela",
+  "team": [
+    {
+      "ability": "overgrow",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "tackle",
+        "irontail",
+        "bulletseed"
+      ],
+      "nature": "adamant",
+      "species": "turtwig"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (47)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "gust",
+        "aircutter",
+        "megadrain",
+        "leechlife"
+      ],
+      "nature": "hardy",
+      "species": "beautifly"
+    },
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "poisongas",
+        "furyswipes",
+        "focusenergy",
+        "bite"
+      ],
+      "nature": "docile",
+      "species": "stunky"
+    }
+  ]
+}

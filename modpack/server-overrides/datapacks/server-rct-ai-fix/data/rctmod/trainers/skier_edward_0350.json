@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Edward",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "leer",
+        "taunt",
+        "icywind",
+        "furyswipes"
+      ],
+      "nature": "jolly",
+      "species": "sneasel"
+    }
+  ]
+}

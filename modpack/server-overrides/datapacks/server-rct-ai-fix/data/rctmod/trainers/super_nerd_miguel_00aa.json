@@ -1,0 +1,112 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Miguel",
+  "team": [
+    {
+      "ability": "grassysurge",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "fakeout",
+        "razorleaf",
+        "knockoff",
+        "uturn"
+      ],
+      "nature": "bashful",
+      "species": "thwackey"
+    },
+    {
+      "ability": "reckless",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {},
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 30,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "magicalleaf",
+        "selfdestruct",
+        "voltswitch",
+        "hiddenpower"
+      ],
+      "nature": "naive",
+      "species": "voltorb"
+    },
+    {
+      "ability": "simple",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "grassy_seed"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "headbutt",
+        "aquajet",
+        "curse",
+        "rocksmash"
+      ],
+      "nature": "careful",
+      "species": "bibarel"
+    },
+    {
+      "ability": "prankster",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "willowisp",
+        "recover",
+        "protect",
+        "foulplay"
+      ],
+      "nature": "careful",
+      "species": "sableye"
+    }
+  ]
+}

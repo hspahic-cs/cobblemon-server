@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9 Kid Danielle",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "sweetkiss",
+        "charm",
+        "spark",
+        "slam"
+      ],
+      "nature": "hasty",
+      "species": "pikachu"
+    }
+  ]
+}

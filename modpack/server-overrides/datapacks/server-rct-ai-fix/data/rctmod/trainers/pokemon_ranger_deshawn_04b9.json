@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Deshawn",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "psychup",
+        "doubleedge",
+        "flail",
+        "thrash"
+      ],
+      "nature": "bashful",
+      "species": "spinda"
+    },
+    {
+      "ability": "colorchange",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "screech",
+        "substitute",
+        "suckerpunch",
+        "shadowclaw"
+      ],
+      "nature": "serious",
+      "species": "kecleon"
+    }
+  ]
+}

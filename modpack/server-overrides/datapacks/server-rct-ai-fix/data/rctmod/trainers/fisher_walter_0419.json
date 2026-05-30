@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Walter",
+  "team": [
+    {
+      "ability": "oblivious",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 26,
+      "moveset": [
+        "mudslap",
+        "waterpulse",
+        "aquatail",
+        "bulldoze"
+      ],
+      "nature": "jolly",
+      "species": "barboach"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Keigo",
+  "team": [
+    {
+      "ability": "ironfist",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 22,
+      "moveset": [
+        "reflect",
+        "safeguard",
+        "machpunch",
+        "bugbite"
+      ],
+      "nature": "relaxed",
+      "species": "ledian"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 22,
+      "moveset": [
+        "aircutter",
+        "detect",
+        "bugbite",
+        "airslash"
+      ],
+      "nature": "serious",
+      "species": "mothim"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 23,
+      "moveset": [
+        "endure",
+        "furycutter",
+        "bugbite",
+        "headbutt"
+      ],
+      "nature": "gentle",
+      "species": "karrablast"
+    }
+  ]
+}

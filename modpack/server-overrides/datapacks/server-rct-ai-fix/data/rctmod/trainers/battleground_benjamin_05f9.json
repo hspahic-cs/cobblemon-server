@@ -1,0 +1,186 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Leader Benjamin",
+  "name": "Battleground Benjamin",
+  "team": [
+    {
+      "ability": "speedboost",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 81,
+      "moveset": [
+        "pinmissile",
+        "poisonjab",
+        "spikes",
+        "protect"
+      ],
+      "nature": "adamant",
+      "species": "scolipede"
+    },
+    {
+      "ability": "superluck",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "crosspoison",
+        "nightslash",
+        "pinmissile",
+        "earthquake"
+      ],
+      "nature": "jolly",
+      "species": "drapion"
+    },
+    {
+      "ability": "flamebody",
+      "evs": {
+        "atk": 128,
+        "spa": 128,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:firium_z",
+        "fire_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "overheat",
+        "bugbuzz",
+        "flareblitz",
+        "wildcharge"
+      ],
+      "nature": "hasty",
+      "species": "volcarona"
+    },
+    {
+      "ability": "punkrock",
+      "evs": {
+        "atk": 128,
+        "spa": 128,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "earthquake",
+        "clangingscales",
+        "heatwave",
+        "crunch"
+      ],
+      "nature": "naive",
+      "species": "flygon"
+    },
+    {
+      "ability": "technician",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:scizorite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "bugbite",
+        "bulletpunch",
+        "dualwingbeat",
+        "swordsdance"
+      ],
+      "nature": "adamant",
+      "species": "scizor"
+    },
+    {
+      "ability": "solidrock",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 82,
+      "moveset": [
+        "rockblast",
+        "earthquake",
+        "thunderfang",
+        "counter"
+      ],
+      "nature": "adamant",
+      "species": "rhyperior"
+    }
+  ]
+}

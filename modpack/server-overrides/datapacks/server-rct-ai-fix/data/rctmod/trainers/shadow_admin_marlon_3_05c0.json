@@ -1,0 +1,179 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Shadow Admin Marlon",
+  "name": "Ex-Shadow Admin Marlon",
+  "team": [
+    {
+      "ability": "prankster",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "nightshade",
+        "willowisp",
+        "quash",
+        "protect"
+      ],
+      "nature": "bold",
+      "species": "sableye"
+    },
+    {
+      "ability": "clearbody",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "black_sludge"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "scald",
+        "gigadrain",
+        "haze",
+        "protect"
+      ],
+      "nature": "bold",
+      "species": "tentacruel"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "passho_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "highhorsepower",
+        "crunch",
+        "rockslide",
+        "protect"
+      ],
+      "nature": "jolly",
+      "species": "krookodile"
+    },
+    {
+      "ability": "adaptability",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:beedrillite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "xscissor",
+        "poisonjab",
+        "brickbreak",
+        "protect"
+      ],
+      "nature": "jolly",
+      "species": "beedrill"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "poltergeist",
+        "poweruppunch",
+        "icepunch",
+        "thunderpunch"
+      ],
+      "nature": "adamant",
+      "species": "dusknoir"
+    },
+    {
+      "ability": "unaware",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "airslash",
+        "energyball",
+        "thunderwave",
+        "helpinghand"
+      ],
+      "nature": "timid",
+      "species": "swoobat"
+    }
+  ]
+}

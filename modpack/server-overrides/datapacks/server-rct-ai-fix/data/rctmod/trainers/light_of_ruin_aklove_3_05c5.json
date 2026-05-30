@@ -1,0 +1,185 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Leader Aklove",
+  "team": [
+    {
+      "ability": "serenegrace",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:adrenaline_orb",
+        "salac_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 30,
+        "hp": 31,
+        "spa": 30,
+        "spd": 30,
+        "spe": 30
+      },
+      "level": 81,
+      "moveset": [
+        "expandingforce",
+        "shadowball",
+        "hiddenpower",
+        "energyball"
+      ],
+      "nature": "timid",
+      "species": "meloetta"
+    },
+    {
+      "ability": "psychicsurge",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "red_card"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "storedpower",
+        "dazzlinggleam",
+        "thunderbolt",
+        "psychicterrain"
+      ],
+      "nature": "timid",
+      "species": "tapulele"
+    },
+    {
+      "ability": "soulheart",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "scald",
+        "icebeam",
+        "energyball",
+        "tailglow"
+      ],
+      "nature": "timid",
+      "species": "manaphy"
+    },
+    {
+      "ability": "electricsurge",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "electric_seed"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "closecombat",
+        "wildcharge",
+        "acrobatics",
+        "grassknot"
+      ],
+      "nature": "jolly",
+      "species": "tapukoko"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "doubleironbash",
+        "highhorsepower",
+        "icepunch",
+        "thunderpunch"
+      ],
+      "nature": "adamant",
+      "species": "melmetal"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "atk": 128,
+        "spa": 128,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:diancite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "diamondstorm",
+        "moonblast",
+        "earthpower",
+        "mysticalfire"
+      ],
+      "nature": "naive",
+      "species": "diancie"
+    }
+  ]
+}

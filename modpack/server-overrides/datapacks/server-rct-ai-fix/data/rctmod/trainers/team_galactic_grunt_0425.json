@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (9)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "gust",
+        "stunspore",
+        "aircutter",
+        "leechlife"
+      ],
+      "nature": "hardy",
+      "species": "beautifly"
+    },
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 27,
+      "moveset": [
+        "mudslap",
+        "taunt",
+        "revenge",
+        "suckerpunch"
+      ],
+      "nature": "docile",
+      "species": "croagunk"
+    }
+  ]
+}

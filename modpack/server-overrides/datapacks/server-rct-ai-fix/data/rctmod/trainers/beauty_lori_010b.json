@@ -1,0 +1,34 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Lori",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 36,
+      "moveset": [
+        "hypnosis",
+        "confusion",
+        "psyshock",
+        "eggbomb"
+      ],
+      "nature": "calm",
+      "species": "exeggutor"
+    }
+  ]
+}

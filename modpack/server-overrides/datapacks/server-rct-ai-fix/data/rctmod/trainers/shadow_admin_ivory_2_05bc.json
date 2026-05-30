@@ -1,0 +1,88 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Shadow Admin Ivory",
+  "name": "Shadow Admin Ivory",
+  "team": [
+    {
+      "ability": "blaze",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 38,
+      "moveset": [
+        "firepunch",
+        "darkestlariat",
+        "thunderpunch",
+        "drainpunch"
+      ],
+      "nature": "impish",
+      "species": "incineroar"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 36,
+      "moveset": [
+        "ominouswind",
+        "mysticalfire",
+        "powergem",
+        "destinybond"
+      ],
+      "nature": "impish",
+      "species": "mismagius"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 37,
+      "moveset": [
+        "psyshock",
+        "shadowball",
+        "dazzlinggleam",
+        "chargebeam"
+      ],
+      "nature": "modest",
+      "species": "alakazam"
+    }
+  ]
+}

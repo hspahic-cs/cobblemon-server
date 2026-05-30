@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Oliver",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "rockslide",
+        "earthpower",
+        "voltswitch",
+        "sandstorm"
+      ],
+      "nature": "sassy",
+      "species": "nosepass"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "rockthrow",
+        "gastroacid",
+        "powertrick",
+        "shellsmash"
+      ],
+      "nature": "docile",
+      "species": "shuckle"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "selfdestruct",
+        "extrasensory",
+        "guardsplit",
+        "powersplit"
+      ],
+      "nature": "adamant",
+      "species": "baltoy"
+    }
+  ]
+}

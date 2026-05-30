@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Terry",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 12,
+      "moveset": [
+        "lick",
+        "confuseray",
+        "meanlook",
+        "payback"
+      ],
+      "nature": "sassy",
+      "species": "gastly"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 13,
+      "moveset": [
+        "lick",
+        "confuseray",
+        "meanlook",
+        "payback"
+      ],
+      "nature": "sassy",
+      "species": "gastly"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "lick",
+        "confuseray",
+        "payback",
+        "spite"
+      ],
+      "nature": "sassy",
+      "species": "gastly"
+    }
+  ]
+}

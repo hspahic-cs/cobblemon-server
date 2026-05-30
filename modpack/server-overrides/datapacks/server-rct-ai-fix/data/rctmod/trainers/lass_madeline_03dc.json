@@ -1,0 +1,37 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Madeline",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "growl",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "starly"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "growl",
+        "defensecurl"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Marcos",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 14,
+      "moveset": [
+        "mudsport",
+        "rockpolish",
+        "rollout",
+        "magnitude"
+      ],
+      "nature": "gentle",
+      "species": "geodude"
+    },
+    {
+      "ability": "sandrush",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 16,
+      "moveset": [
+        "rapidspin",
+        "mudslap",
+        "furyswipes",
+        "metalclaw"
+      ],
+      "nature": "jolly",
+      "species": "drilbur"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 15,
+      "moveset": [
+        "harden",
+        "block",
+        "bulldoze",
+        "thunderwave"
+      ],
+      "nature": "bold",
+      "species": "nosepass"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Shadow Admin Marlon",
+  "name": "Shadow Admin Marlon",
+  "team": [
+    {
+      "ability": "pressure",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "discharge",
+        "hurricane",
+        "ancientpower",
+        "lightscreen"
+      ],
+      "nature": "modest",
+      "species": "zapdos"
+    },
+    {
+      "ability": "pressure",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "nightshade",
+        "icepunch",
+        "confuseray",
+        "willowisp"
+      ],
+      "nature": "impish",
+      "species": "dusclops"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:sharpedonite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 40,
+      "moveset": [
+        "aquajet",
+        "crunch",
+        "poisonfang",
+        "icefang"
+      ],
+      "nature": "jolly",
+      "species": "sharpedo"
+    },
+    {
+      "ability": "simple",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 39,
+      "moveset": [
+        "psychic",
+        "airslash",
+        "shadowball",
+        "calmmind"
+      ],
+      "nature": "modest",
+      "species": "swoobat"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "black_glasses"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 41,
+      "moveset": [
+        "stompingtantrum",
+        "crunch",
+        "stoneedge",
+        "poweruppunch"
+      ],
+      "nature": "adamant",
+      "species": "krookodile"
+    }
+  ]
+}

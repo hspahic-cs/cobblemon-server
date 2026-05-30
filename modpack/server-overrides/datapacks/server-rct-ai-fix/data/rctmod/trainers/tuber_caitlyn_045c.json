@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Caitlyn",
+  "team": [
+    {
+      "ability": "sapsipper",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "tailwhip",
+        "charm",
+        "bubblebeam",
+        "lightscreen"
+      ],
+      "nature": "timid",
+      "species": "azurill"
+    },
+    {
+      "ability": "hugepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "aquatail",
+        "playrough",
+        "aquaring",
+        "brickbreak"
+      ],
+      "nature": "adamant",
+      "species": "marill"
+    }
+  ]
+}

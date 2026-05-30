@@ -1,0 +1,34 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Calvin",
+  "team": [
+    {
+      "ability": "pickup",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 15,
+      "moveset": [
+        "lick",
+        "snarl",
+        "headbutt",
+        "babydolleyes"
+      ],
+      "nature": "gentle",
+      "species": "zigzagoon"
+    }
+  ]
+}

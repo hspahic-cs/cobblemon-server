@@ -1,0 +1,21 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Elijah",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "energyball"
+      ],
+      "nature": "sassy",
+      "species": "abra"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Sophia",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 50,
+      "moveset": [
+        "hydropump",
+        "aquaring",
+        "supersonic",
+        "airslash"
+      ],
+      "nature": "calm",
+      "species": "mantyke"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 52,
+      "moveset": [
+        "hydropump",
+        "bounce",
+        "aquaring",
+        "airslash"
+      ],
+      "nature": "calm",
+      "species": "mantine"
+    }
+  ]
+}

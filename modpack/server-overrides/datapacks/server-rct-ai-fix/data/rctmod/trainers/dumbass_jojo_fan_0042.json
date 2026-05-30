@@ -1,0 +1,186 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Silly Jojo Fan",
+  "team": [
+    {
+      "ability": "stancechange",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "shadowball",
+        "kingsshield",
+        "shadowsneak",
+        "flashcannon"
+      ],
+      "nature": "modest",
+      "species": "aegislash"
+    },
+    {
+      "ability": "ironbarbs",
+      "evs": {
+        "def": 128,
+        "hp": 252,
+        "spd": 128,
+        "spe": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "leechseed",
+        "powerwhip",
+        "thunderwave",
+        "bodypress"
+      ],
+      "nature": "impish",
+      "species": "ferrothorn"
+    },
+    {
+      "ability": "gluttony",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "def": 30,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "flamethrower",
+        "hiddenpower",
+        "focusblast",
+        "scorchingsands"
+      ],
+      "nature": "modest",
+      "species": "simisear"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "nastyplot",
+        "gigadrain",
+        "psychic",
+        "earthpower"
+      ],
+      "nature": "timid",
+      "species": "celebi"
+    },
+    {
+      "ability": "guts",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "poweruppunch",
+        "bulletpunch",
+        "icepunch",
+        "drainpunch"
+      ],
+      "nature": "adamant",
+      "species": "machamp"
+    },
+    {
+      "ability": "magician",
+      "aspects": [
+        "unbound"
+      ],
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_band"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "hyperspacefury",
+        "drainpunch",
+        "firepunch",
+        "gunkshot"
+      ],
+      "nature": "jolly",
+      "species": "hoopa"
+    }
+  ]
+}

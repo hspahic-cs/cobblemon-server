@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Jacob",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "tackle",
+        "growl",
+        "tailwhip",
+        "ember"
+      ],
+      "nature": "hasty",
+      "species": "ponyta"
+    }
+  ]
+}

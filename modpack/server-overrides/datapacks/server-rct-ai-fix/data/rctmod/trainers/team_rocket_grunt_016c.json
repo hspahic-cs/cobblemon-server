@@ -1,0 +1,76 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (18)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "technician",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "agility",
+        "dualwingbeat",
+        "roost",
+        "drillpeck"
+      ],
+      "nature": "bashful",
+      "species": "fearow"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "partingshot",
+        "takedown",
+        "scaryface",
+        "counter"
+      ],
+      "nature": "quiet",
+      "species": "obstagoon"
+    },
+    {
+      "ability": "mummy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 42,
+      "moveset": [
+        "hex",
+        "meanlook",
+        "slam",
+        "curse"
+      ],
+      "nature": "lonely",
+      "species": "runerigus"
+    }
+  ]
+}

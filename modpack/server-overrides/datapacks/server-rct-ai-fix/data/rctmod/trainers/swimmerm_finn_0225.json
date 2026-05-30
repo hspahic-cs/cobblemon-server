@@ -1,0 +1,125 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Finn",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "custap_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "poisonjab",
+        "throatchop",
+        "toxicspikes",
+        "destinybond"
+      ],
+      "nature": "jolly",
+      "species": "overqwil"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mystic_water"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "waterfall",
+        "flipturn",
+        "closecombat",
+        "psychicfangs"
+      ],
+      "nature": "jolly",
+      "species": "barraskewda"
+    },
+    {
+      "ability": "skilllink",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "shellsmash",
+        "waterfall",
+        "iciclespear",
+        "rockblast"
+      ],
+      "nature": "jolly",
+      "species": "cloyster"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "liquidation",
+        "jawlock",
+        "icefang",
+        "rockpolish"
+      ],
+      "nature": "adamant",
+      "species": "drednaw"
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "bag": [
+    {
+      "item": "cobblemon:hyper_potion",
+      "quantity": 2
+    }
+  ],
+  "battleFormat": "GEN_9_DOUBLES",
+  "battleRules": {
+    "maxItemUses": 2
+  },
+  "identity": "Shadow Admin Ivory",
+  "name": "Shadow Admin Ivory & Grunt",
+  "team": [
+    {
+      "ability": "blaze",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 38,
+      "moveset": [
+        "firepunch",
+        "darkestlariat",
+        "thunderpunch",
+        "drainpunch"
+      ],
+      "nature": "impish",
+      "species": "incineroar"
+    },
+    {
+      "ability": "prankster",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "terrain_extender"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 37,
+      "moveset": [
+        "psyshock",
+        "helpinghand",
+        "reflect",
+        "psychicterrain"
+      ],
+      "nature": "bold",
+      "species": "meowstic"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 36,
+      "moveset": [
+        "ominouswind",
+        "mysticalfire",
+        "powergem",
+        "destinybond"
+      ],
+      "nature": "impish",
+      "species": "mismagius"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 38,
+      "moveset": [
+        "zenheadbutt",
+        "instruct",
+        "lightscreen",
+        "psychicterrain"
+      ],
+      "nature": "calm",
+      "species": "oranguru"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 37,
+      "moveset": [
+        "psyshock",
+        "shadowball",
+        "dazzlinggleam",
+        "chargebeam"
+      ],
+      "nature": "modest",
+      "species": "alakazam"
+    }
+  ]
+}

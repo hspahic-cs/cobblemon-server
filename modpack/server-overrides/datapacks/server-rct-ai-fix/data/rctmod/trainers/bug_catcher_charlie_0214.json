@@ -1,0 +1,70 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Charlie",
+  "team": [
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 6,
+      "moveset": [
+        "scratch",
+        "harden",
+        "absorb"
+      ],
+      "nature": "timid",
+      "species": "nincada"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 9,
+      "moveset": [
+        "detect",
+        "harden"
+      ],
+      "nature": "hardy",
+      "species": "spewpa"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 8,
+      "moveset": [
+        "harden",
+        "bugbite"
+      ],
+      "nature": "quiet",
+      "species": "metapod"
+    }
+  ]
+}

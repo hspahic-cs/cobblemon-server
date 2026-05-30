@@ -1,0 +1,184 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Leader Aklove",
+  "team": [
+    {
+      "ability": "prankster",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "light_clay"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 51,
+      "moveset": [
+        "playrough",
+        "reflect",
+        "lightscreen",
+        "thunderwave"
+      ],
+      "nature": "bold",
+      "species": "klefki"
+    },
+    {
+      "ability": "technician",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "big_root"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 30
+      },
+      "level": 51,
+      "moveset": [
+        "gigadrain",
+        "hiddenpower",
+        "leechseed",
+        "protect"
+      ],
+      "nature": "bold",
+      "species": "roserade"
+    },
+    {
+      "ability": "torrent",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "kebia_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "surf",
+        "moonblast",
+        "icebeam",
+        "aquajet"
+      ],
+      "nature": "modest",
+      "species": "primarina"
+    },
+    {
+      "ability": "serenegrace",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "babiri_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 52,
+      "moveset": [
+        "airslash",
+        "dazzlinggleam",
+        "aurasphere",
+        "flamethrower"
+      ],
+      "nature": "modest",
+      "species": "togekiss"
+    },
+    {
+      "ability": "magician",
+      "aspects": [
+        "unbound"
+      ],
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "zenheadbutt",
+        "hyperspacefury",
+        "dualchop",
+        "drainpunch"
+      ],
+      "nature": "jolly",
+      "species": "hoopa"
+    },
+    {
+      "ability": "pixilate",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:gardevoirite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "psyshock",
+        "dazzlinggleam",
+        "mysticalfire",
+        "shadowsneak"
+      ],
+      "nature": "timid",
+      "species": "gardevoir"
+    }
+  ]
+}

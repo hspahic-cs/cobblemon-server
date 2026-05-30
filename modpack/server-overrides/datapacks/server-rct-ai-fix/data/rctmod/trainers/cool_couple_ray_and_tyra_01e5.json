@@ -1,0 +1,68 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Cool Couple Ray & Tyra",
+  "team": [
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 85,
+      "moveset": [
+        "icebeam",
+        "earthpower",
+        "sludgebomb",
+        "flamethrower"
+      ],
+      "nature": "modest",
+      "species": "nidoqueen"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 85,
+      "moveset": [
+        "icebeam",
+        "earthpower",
+        "sludgebomb",
+        "flamethrower"
+      ],
+      "nature": "timid",
+      "species": "nidoking"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Robert",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "sleeppowder",
+        "solarbeam",
+        "psyshock",
+        "weatherball"
+      ],
+      "nature": "timid",
+      "species": "exeggutor"
+    },
+    {
+      "ability": "defeatist",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sharp_beak"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "bravebird",
+        "headsmash",
+        "earthquake",
+        "uturn"
+      ],
+      "nature": "jolly",
+      "species": "archeops"
+    },
+    {
+      "ability": "reckless",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "charcoal_stick"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "flareblitz",
+        "closecombat",
+        "wildcharge",
+        "solarbeam"
+      ],
+      "nature": "naive",
+      "species": "emboar"
+    },
+    {
+      "ability": "voltabsorb",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "voltswitch",
+        "thunderbolt",
+        "weatherball",
+        "hiddenpower"
+      ],
+      "nature": "timid",
+      "species": "jolteon"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "glare",
+        "dragonhammer",
+        "gunkshot",
+        "firepunch"
+      ],
+      "nature": "careful",
+      "species": "druddigon"
+    }
+  ]
+}

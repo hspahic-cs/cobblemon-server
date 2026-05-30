@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Jogger Wyatt",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "tackle",
+        "tailwhip",
+        "flamecharge",
+        "agility"
+      ],
+      "nature": "sassy",
+      "species": "ponyta"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (3)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 11,
+      "moveset": [
+        "harden"
+      ],
+      "nature": "hardy",
+      "species": "cascoon"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Cameron",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 54,
+      "moveset": [
+        "zenheadbutt",
+        "slackoff",
+        "amnesia",
+        "psychic"
+      ],
+      "nature": "hasty",
+      "species": "slowbro"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 53,
+      "moveset": [
+        "nastyplot",
+        "swagger",
+        "psychic",
+        "trumpcard"
+      ],
+      "nature": "adamant",
+      "species": "slowking"
+    },
+    {
+      "ability": "cloudnine",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 53,
+      "moveset": [
+        "psychup",
+        "nastyplot",
+        "hydropump",
+        "wonderroom"
+      ],
+      "nature": "quiet",
+      "species": "golduck"
+    }
+  ]
+}

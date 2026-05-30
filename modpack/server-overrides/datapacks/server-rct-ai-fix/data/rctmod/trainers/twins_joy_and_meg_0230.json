@@ -1,0 +1,185 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Twins Joy & Meg",
+  "team": [
+    {
+      "ability": "competitive",
+      "evs": {
+        "hp": 176,
+        "spa": 80,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "weakness_policy"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "hydropump",
+        "icebeam",
+        "flashcannon",
+        "grassknot"
+      ],
+      "nature": "timid",
+      "species": "empoleon"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "closecombat",
+        "playrough",
+        "flareblitz",
+        "thunderpunch"
+      ],
+      "nature": "jolly",
+      "species": "granbull"
+    },
+    {
+      "ability": "illuminate",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:electrium_z",
+        "electric_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "thunder",
+        "bugbuzz",
+        "waterpulse",
+        "tailglow"
+      ],
+      "nature": "timid",
+      "species": "volbeat"
+    },
+    {
+      "ability": "tintedlens",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "playrough",
+        "lunge",
+        "brickbreak",
+        "thunderpunch"
+      ],
+      "nature": "jolly",
+      "species": "illumise"
+    },
+    {
+      "ability": "galvanize",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "magnet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "extremespeed",
+        "knockoff",
+        "facade",
+        "voltswitch"
+      ],
+      "nature": "timid",
+      "species": "minun"
+    },
+    {
+      "ability": "transistor",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "thunderbolt",
+        "surf",
+        "hiddenpower",
+        "voltswitch"
+      ],
+      "nature": "timid",
+      "species": "plusle"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Ann",
+  "team": [
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "waterpledge",
+        "flashcannon",
+        "icebeam",
+        "hiddenpower"
+      ],
+      "nature": "bashful",
+      "species": "dewott"
+    },
+    {
+      "ability": "gluttony",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "charcoal_stick"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 30,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "firepledge",
+        "lowkick",
+        "grassknot",
+        "hiddenpower"
+      ],
+      "nature": "naive",
+      "species": "simisear"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Amira",
+  "team": [
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "bubblebeam",
+        "mudshot",
+        "bellydrum",
+        "wakeupslap"
+      ],
+      "nature": "bold",
+      "species": "poliwhirl"
+    },
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "bubblebeam",
+        "mudshot",
+        "bellydrum",
+        "wakeupslap"
+      ],
+      "nature": "timid",
+      "species": "poliwhirl"
+    },
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "bubblebeam",
+        "mudshot",
+        "bellydrum",
+        "wakeupslap"
+      ],
+      "nature": "docile",
+      "species": "poliwhirl"
+    }
+  ]
+}

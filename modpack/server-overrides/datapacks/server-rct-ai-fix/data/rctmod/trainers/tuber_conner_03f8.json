@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Conner",
+  "team": [
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "focusenergy",
+        "bulletseed",
+        "hydropump",
+        "soak"
+      ],
+      "nature": "docile",
+      "species": "remoraid"
+    }
+  ]
+}

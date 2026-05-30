@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Alex",
+  "team": [
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "smokescreen",
+        "wickedblow",
+        "poisonjab",
+        "earthquake"
+      ],
+      "nature": "lax",
+      "species": "drapion"
+    },
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "screech",
+        "sludgebomb",
+        "vacuumwave",
+        "nastyplot"
+      ],
+      "nature": "docile",
+      "species": "toxicroak"
+    },
+    {
+      "ability": "pressure",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "smokescreen",
+        "tripleaxel",
+        "iceshard",
+        "nightslash"
+      ],
+      "nature": "lax",
+      "species": "weavile"
+    }
+  ]
+}

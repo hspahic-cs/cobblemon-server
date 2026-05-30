@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Keith",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 39,
+      "moveset": [
+        "swordsdance",
+        "agility",
+        "nightslash",
+        "acrobatics"
+      ],
+      "nature": "calm",
+      "species": "farfetchd"
+    },
+    {
+      "ability": "technician",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 39,
+      "moveset": [
+        "assurance",
+        "agility",
+        "dualwingbeat",
+        "roost"
+      ],
+      "nature": "lonely",
+      "species": "fearow"
+    }
+  ]
+}

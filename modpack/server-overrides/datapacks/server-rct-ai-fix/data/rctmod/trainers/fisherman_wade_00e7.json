@@ -1,0 +1,139 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Wade",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 70,
+      "moveset": [
+        "splash",
+        "tackle",
+        "flail"
+      ],
+      "nature": "gentle",
+      "species": "magikarp"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 70,
+      "moveset": [
+        "splash",
+        "tackle",
+        "flail"
+      ],
+      "nature": "bold",
+      "species": "feebas"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "dragondance",
+        "hurricane",
+        "raindance",
+        "hyperbeam"
+      ],
+      "nature": "naughty",
+      "species": "gyarados"
+    },
+    {
+      "ability": "marvelscale",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "safeguard",
+        "coil",
+        "hydropump",
+        "raindance"
+      ],
+      "nature": "lax",
+      "species": "milotic"
+    },
+    {
+      "ability": "healer",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 62,
+      "moveset": [
+        "whirlpool",
+        "helpinghand",
+        "healingwish",
+        "wideguard"
+      ],
+      "nature": "jolly",
+      "species": "alomomola"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 65,
+      "moveset": [
+        "lovelykiss",
+        "soak",
+        "hydropump",
+        "safeguard"
+      ],
+      "nature": "modest",
+      "species": "luvdisc"
+    }
+  ]
+}

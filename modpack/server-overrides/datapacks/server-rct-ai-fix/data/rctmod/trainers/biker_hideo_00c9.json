@@ -1,0 +1,158 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Hideo",
+  "team": [
+    {
+      "ability": "sandveil",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "stealthrock",
+        "thunderwave",
+        "earthpower",
+        "voltswitch"
+      ],
+      "nature": "calm",
+      "species": "stunfisk"
+    },
+    {
+      "ability": "sandrush",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mystic_water"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "fishiousrend",
+        "dragonclaw",
+        "psychicfangs",
+        "crunch"
+      ],
+      "nature": "jolly",
+      "species": "dracovish"
+    },
+    {
+      "ability": "swarm",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:beedrillite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "uturn",
+        "drillrun",
+        "poisonjab",
+        "pursuit"
+      ],
+      "nature": "jolly",
+      "species": "beedrill"
+    },
+    {
+      "ability": "levitate",
+      "aspects": [
+        "heat-appliance"
+      ],
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "charti_berry"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "thunderbolt",
+        "flamethrower",
+        "nastyplot",
+        "hiddenpower"
+      ],
+      "nature": "timid",
+      "species": "rotom"
+    },
+    {
+      "ability": "protean",
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "uturn",
+        "hydropump",
+        "gunkshot",
+        "icebeam"
+      ],
+      "nature": "naive",
+      "species": "greninja"
+    }
+  ]
+}

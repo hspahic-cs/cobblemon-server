@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Guitarist Lonnie",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 44,
+      "moveset": [
+        "thunderpunch",
+        "thunderwave",
+        "thunderbolt",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "raichu"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cyclist Kayla",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "quickattack",
+        "tailwhip",
+        "nuzzle",
+        "electroball"
+      ],
+      "nature": "jolly",
+      "species": "pikachu"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Katherine",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "skyattack",
+        "reflect",
+        "psychoshift",
+        "extrasensory"
+      ],
+      "nature": "calm",
+      "species": "noctowl"
+    }
+  ]
+}

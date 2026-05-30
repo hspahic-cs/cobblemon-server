@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Timothy",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "light_clay"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 58,
+      "moveset": [
+        "psychic",
+        "hypnosis",
+        "reflect",
+        "lightscreen"
+      ],
+      "nature": "bold",
+      "species": "musharna"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "kasib_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "shadowball",
+        "sludgebomb",
+        "gigadrain",
+        "dazzlinggleam"
+      ],
+      "nature": "modest",
+      "species": "gengar"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "coba_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 57,
+      "moveset": [
+        "appleacid",
+        "moonblast",
+        "quiverdance",
+        "sleeppowder"
+      ],
+      "nature": "modest",
+      "species": "bellossom"
+    },
+    {
+      "ability": "torrent",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "rindo_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "flipturn",
+        "earthquake",
+        "counter",
+        "mirrorcoat"
+      ],
+      "nature": "impish",
+      "species": "swampert"
+    },
+    {
+      "ability": "trace",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:alakazite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 60,
+      "moveset": [
+        "psychic",
+        "shadowball",
+        "dazzlinggleam",
+        "calmmind"
+      ],
+      "nature": "modest",
+      "species": "alakazam"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Theodore",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "screech",
+        "stealthrock",
+        "sandstorm",
+        "stoneedge"
+      ],
+      "nature": "impish",
+      "species": "steelix"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 59,
+      "moveset": [
+        "crunch",
+        "dig",
+        "stoneedge",
+        "doubleedge"
+      ],
+      "nature": "jolly",
+      "species": "steelix"
+    }
+  ]
+}

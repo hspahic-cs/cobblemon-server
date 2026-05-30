@@ -1,0 +1,184 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Professor Oak",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:pidgeotite",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 98,
+      "moveset": [
+        "hurricane",
+        "heatwave",
+        "focusblast",
+        "uturn"
+      ],
+      "nature": "timid",
+      "species": "pidgeot"
+    },
+    {
+      "ability": "torrent",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 99,
+      "moveset": [
+        "shellsmash",
+        "waterpulse",
+        "darkpulse",
+        "aurasphere"
+      ],
+      "nature": "timid",
+      "species": "blastoise"
+    },
+    {
+      "ability": "toxicboost",
+      "evs": {
+        "atk": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:eevium_z",
+        "normal_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 98,
+      "moveset": [
+        "sacredfire",
+        "lastresort",
+        "wildcharge",
+        "superpower"
+      ],
+      "nature": "jolly",
+      "species": "flareon"
+    },
+    {
+      "ability": "pressure",
+      "evs": {
+        "atk": 252,
+        "spa": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "flying_gem"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 97,
+      "moveset": [
+        "boltbeak",
+        "bravebird",
+        "uturn",
+        "hiddenpower"
+      ],
+      "nature": "hasty",
+      "species": "zapdos"
+    },
+    {
+      "ability": "noguard",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 99,
+      "moveset": [
+        "dynamicpunch",
+        "machpunch",
+        "stoneedge",
+        "knockoff"
+      ],
+      "nature": "adamant",
+      "species": "machamp"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 99,
+      "moveset": [
+        "sludgewave",
+        "earthpower",
+        "flamethrower",
+        "icebeam"
+      ],
+      "nature": "timid",
+      "species": "nidoking"
+    }
+  ]
+}

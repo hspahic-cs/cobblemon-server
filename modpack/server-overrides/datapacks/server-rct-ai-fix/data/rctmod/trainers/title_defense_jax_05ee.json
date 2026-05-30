@@ -1,0 +1,185 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Champion Jax",
+  "name": "Title Defense Jax",
+  "team": [
+    {
+      "ability": "beastboost",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 79,
+      "moveset": [
+        "dragonpulse",
+        "sludgebomb",
+        "heatwave",
+        "tailwind"
+      ],
+      "nature": "timid",
+      "species": "naganadel"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 78,
+      "moveset": [
+        "closecombat",
+        "suckerpunch",
+        "fakeout",
+        "helpinghand"
+      ],
+      "nature": "impish",
+      "species": "hitmontop"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 78,
+      "moveset": [
+        "thunderbolt",
+        "flashcannon",
+        "hiddenpower",
+        "bodypress"
+      ],
+      "nature": "modest",
+      "species": "magnezone"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "aguav_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 78,
+      "moveset": [
+        "earthpower",
+        "icebeam",
+        "recover",
+        "protect"
+      ],
+      "nature": "calm",
+      "species": "gastrodon"
+    },
+    {
+      "ability": "aerilate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:salamencite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 80,
+      "moveset": [
+        "doubleedge",
+        "brickbreak",
+        "rockslide",
+        "flamethrower"
+      ],
+      "nature": "jolly",
+      "species": "salamence"
+    },
+    {
+      "ability": "berserk",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "charti_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 79,
+      "moveset": [
+        "heatwave",
+        "aeroblast",
+        "scorchingsands",
+        "tailwind"
+      ],
+      "nature": "timid",
+      "species": "moltres"
+    }
+  ]
+}

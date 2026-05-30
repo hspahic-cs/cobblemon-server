@@ -1,0 +1,30 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster LanceRe",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 5,
+      "moveset": [
+        "wrap",
+        "leer",
+        "poisonsting"
+      ],
+      "nature": "gentle",
+      "species": "ekans"
+    }
+  ]
+}

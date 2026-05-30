@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Sarah",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 7,
+      "moveset": [
+        "tackle",
+        "growl",
+        "defensecurl"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    }
+  ]
+}

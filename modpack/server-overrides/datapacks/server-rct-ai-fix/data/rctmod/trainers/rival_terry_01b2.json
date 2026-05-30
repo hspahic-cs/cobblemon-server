@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sharp_beak"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 54,
+      "moveset": [
+        "bravebird",
+        "uturn",
+        "quickattack",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    },
+    {
+      "ability": "aerilate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sharp_beak"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "sleeppowder",
+        "swordsdance",
+        "doubleedge",
+        "seedbomb"
+      ],
+      "nature": "jolly",
+      "species": "jumpluff"
+    },
+    {
+      "ability": "hugepower",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mystic_water"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "playrough",
+        "liquidation",
+        "aquajet",
+        "icepunch"
+      ],
+      "nature": "adamant",
+      "species": "azumarill"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "plasmafists",
+        "closecombat",
+        "icepunch",
+        "machpunch"
+      ],
+      "nature": "jolly",
+      "species": "electivire"
+    },
+    {
+      "ability": "blaze",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:charizardite_y",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "flamethrower",
+        "solarbeam",
+        "airslash",
+        "dragonpulse"
+      ],
+      "nature": "timid",
+      "species": "charizard"
+    }
+  ]
+}

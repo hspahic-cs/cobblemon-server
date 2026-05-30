@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Conner",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 28,
+      "moveset": [
+        "chipaway",
+        "counter",
+        "furyattack",
+        "brickbreak"
+      ],
+      "nature": "timid",
+      "species": "heracross"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 28,
+      "moveset": [
+        "rockslide",
+        "supersonic",
+        "screech",
+        "earthpower"
+      ],
+      "nature": "careful",
+      "species": "vibrava"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 29,
+      "moveset": [
+        "psybeam",
+        "stunspore",
+        "signalbeam",
+        "sleeppowder"
+      ],
+      "nature": "mild",
+      "species": "venonat"
+    }
+  ]
+}

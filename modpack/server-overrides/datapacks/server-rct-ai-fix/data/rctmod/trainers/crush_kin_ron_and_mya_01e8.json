@@ -1,0 +1,60 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Crush Kin Ron & Mya",
+  "team": [
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 58,
+      "moveset": [
+        "reversal",
+        "superpower",
+        "topsyturvy",
+        "brutalswing"
+      ],
+      "nature": "lax",
+      "species": "grapploct"
+    },
+    {
+      "ability": "sharpness",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 58,
+      "moveset": [
+        "brickbreak",
+        "swordsdance",
+        "slam",
+        "leafblade"
+      ],
+      "nature": "naive",
+      "species": "sirfetchd"
+    }
+  ]
+}

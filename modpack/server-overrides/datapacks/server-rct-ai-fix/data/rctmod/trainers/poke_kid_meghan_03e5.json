@@ -1,0 +1,69 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9 Kid Meghan",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "nuzzle",
+        "charm",
+        "spark",
+        "lightscreen"
+      ],
+      "nature": "jolly",
+      "species": "pikachu"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "charm",
+        "doubleteam",
+        "spark",
+        "lightscreen"
+      ],
+      "nature": "jolly",
+      "species": "pikachu"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "charm",
+        "electroball",
+        "agility",
+        "lightscreen"
+      ],
+      "nature": "timid",
+      "species": "pikachu"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "charm",
+        "nastyplot",
+        "thunderbolt",
+        "lightscreen"
+      ],
+      "nature": "timid",
+      "species": "pikachu"
+    }
+  ]
+}

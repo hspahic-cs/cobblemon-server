@@ -1,0 +1,52 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Lucas",
+  "team": [
+    {
+      "ability": "sharpness",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "magnitude",
+        "gyroball",
+        "shadowball"
+      ],
+      "nature": "hasty",
+      "species": "honedge"
+    },
+    {
+      "ability": "quickfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "magnitude",
+        "furyswipes",
+        "faketears",
+        "feintattack"
+      ],
+      "nature": "quirky",
+      "species": "teddiursa"
+    }
+  ]
+}

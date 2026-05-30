@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Dallas",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "growl",
+        "bugbite",
+        "strugglebug",
+        "furycutter"
+      ],
+      "nature": "jolly",
+      "species": "kricketune"
+    }
+  ]
+}

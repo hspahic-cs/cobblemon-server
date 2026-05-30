@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9maniac Winston",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "mirrorshot",
+        "metalsound",
+        "electroball",
+        "flashcannon"
+      ],
+      "nature": "jolly",
+      "species": "magneton"
+    }
+  ]
+}

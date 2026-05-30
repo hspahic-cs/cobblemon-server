@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Johan",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 53,
+      "moveset": [
+        "snore",
+        "psyshock",
+        "payback",
+        "psychic"
+      ],
+      "nature": "hasty",
+      "species": "grumpig"
+    },
+    {
+      "ability": "cursedbody",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 53,
+      "moveset": [
+        "imprison",
+        "suckerpunch",
+        "mistyterrain",
+        "quickguard"
+      ],
+      "nature": "modest",
+      "species": "meowstic"
+    },
+    {
+      "ability": "steadfast",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 54,
+      "moveset": [
+        "feint",
+        "falseswipe",
+        "protect",
+        "closecombat"
+      ],
+      "nature": "careful",
+      "species": "gallade"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 53,
+      "moveset": [
+        "morningsun",
+        "psychic",
+        "lastresort",
+        "powerswap"
+      ],
+      "nature": "rash",
+      "species": "espeon"
+    }
+  ]
+}

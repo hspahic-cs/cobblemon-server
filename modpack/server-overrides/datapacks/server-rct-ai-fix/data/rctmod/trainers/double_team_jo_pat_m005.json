@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Double Team Jo & Pat",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 47,
+      "moveset": [
+        "icefang",
+        "waterfall",
+        "crunch",
+        "dragondance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    },
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 47,
+      "moveset": [
+        "zenheadbutt",
+        "firepunch",
+        "forcepalm",
+        "recover"
+      ],
+      "nature": "bashful",
+      "species": "medicham"
+    }
+  ]
+}

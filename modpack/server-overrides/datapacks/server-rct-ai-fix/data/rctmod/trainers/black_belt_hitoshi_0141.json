@@ -1,0 +1,84 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Hitoshi",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "retaliate",
+        "endure",
+        "quickguard",
+        "reversal"
+      ],
+      "nature": "lax",
+      "species": "sawk"
+    },
+    {
+      "ability": "technician",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "assurance",
+        "wideguard",
+        "superpower",
+        "reversal"
+      ],
+      "nature": "adamant",
+      "species": "throh"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "reversal",
+        "firstimpression",
+        "noretreat",
+        "irondefense"
+      ],
+      "nature": "hardy",
+      "species": "falinks"
+    }
+  ]
+}

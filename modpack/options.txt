@@ -2,7 +2,7 @@ version:4189
 tutorialStep:none
 fov:0.25
 gamma:0.8
-guiScale:5
+guiScale:3
 graphicsMode:0
 renderClouds:"fast"
 key_key.socialInteractions:key.keyboard.backslash

@@ -340,7 +340,7 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "6598d0facc021292e24ced6e0f20effe9cf76afe74d65c94046043c8eeddf857"
+hash = "9689a75cd628a68d13ae31cd00c290e17c4523fb877e27bc82f7bbb70d076b3a"
 
 [[files]]
 file = "server-overrides/config/README.md"

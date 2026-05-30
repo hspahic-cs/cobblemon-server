@@ -162,7 +162,7 @@ Takes ~3-4 min. The workflow does:
 2. Resolve modpack dependencies via packwiz
 3. rsync the mods to `/opt/cobblemon-dev/staging/mods.v0.4.2/`
 4. rsync datapacks (overlay onto `/opt/cobblemon-dev/world/datapacks/`)
-5. Atomic-swap the `mods` symlink → `mods.v0.4.2`
+5. Atomic-swap `mods/` to a hardlink copy of `mods.v0.4.2/`
 6. `systemctl restart cobblemon-dev`
 7. Verify the service comes back active
 
@@ -295,13 +295,18 @@ See [snapshots.md](snapshots.md) for the full snapshot infrastructure.
 ### Roll back a bad deploy
 
 The `mods.vX.Y.Z` directories are kept on the VM (5 most recent) so you can
-flip the symlink:
+swap the live `mods/` directory to a previous version:
 
 ```sh
 ssh sysadmin@192.168.1.20
 cd /opt/cobblemon-dev    # or /opt/cobblemon-prod
 ls mods.v*               # see available versions
-ln -sfn mods.v0.4.0 mods # roll back to 0.4.0
+# mods/ MUST stay a real directory, not a symlink — Sinytra Connector breaks
+# under symlinks. Use cp -al for a hardlink copy (no extra disk, real dir).
+rm -rf mods.swap-new && cp -al mods.v0.4.0 mods.swap-new
+mv mods mods.swap-old
+mv mods.swap-new mods
+rm -rf mods.swap-old
 sudo systemctl restart cobblemon-dev
 echo 0.4.0 > .deployed_version  # so future re-deploys aren't skipped as no-op
 ```
@@ -354,7 +359,7 @@ ssh sysadmin@192.168.1.20 'tail -50 /opt/cobblemon-dev/logs/latest.log'
 
 Common causes: missing third-party dep (add to packwiz), modid collision
 (rename one), Kotlin signature mismatch (rebuild against current
-`gradle.properties` versions). To recover, roll back via the symlink swap
+`gradle.properties` versions). To recover, roll back via the directory swap
 above and fix forward.
 
 ### Deploy claims success but the change isn't visible in-game

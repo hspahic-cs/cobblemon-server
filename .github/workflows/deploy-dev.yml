@@ -131,6 +131,13 @@ jobs:
 
       - name: Atomic swap and restart
         if: steps.idempotency.outputs.skip != 'true'
+        # mods/ MUST be a real directory, not a symlink to mods.vX/. Sinytra
+        # Connector's IModFileCandidateLocator services don't get picked up
+        # via NeoForge's ServiceLoader when mods/ is a symlink — Connector
+        # silently no-ops, every Fabric mod (LegendaryMonuments, etc) is
+        # skipped at discovery, and only the NeoForge-native subset loads.
+        # The fix: keep mods.vX/ archives at install root for rollback, but
+        # mods/ itself is a hardlink copy (cp -al = no extra disk, real dir).
         run: |
           VERSION_DIR="mods.v${{ steps.ver.outputs.version }}"
           ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} "set -euo pipefail
@@ -139,7 +146,25 @@ jobs:
               rm -rf ${VERSION_DIR}
               mv staging/${VERSION_DIR} ./
             fi
-            ln -sfn ${VERSION_DIR} mods
+            # Best-effort sweep of any leaked swap-* dirs from prior runs.
+            # rm may exit non-zero if files inside are owned by another
+            # user (e.g. sysadmin from a manual repair) — that's fine.
+            rm -rf mods.swap-new mods.swap-old.* || true
+            cp -al ${VERSION_DIR} mods.swap-new
+            # Connector caches transformed Fabric jars under mods/.connector/
+            # at first boot. The service runs as sysadmin (not deployer), so
+            # mods/ needs to be group-writable by sysadmin. Set group + perms
+            # before the swap so the JVM can create .connector/.
+            chgrp sysadmin mods.swap-new
+            chmod 0775 mods.swap-new
+            SWAP_OLD=mods.swap-old.\$\$
+            if [ -L mods ]; then
+              rm mods
+            elif [ -e mods ]; then
+              mv mods \$SWAP_OLD
+            fi
+            mv mods.swap-new mods
+            rm -rf \$SWAP_OLD || true
             sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
             ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
             echo '${{ steps.ver.outputs.version }}' > .deployed_version

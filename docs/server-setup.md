@@ -10,8 +10,10 @@ a `screen` session so you can attach a console.
 ```
 /opt/cobblemon-prod/        Production server (port 25565, RCON 25575)
 /opt/cobblemon-dev/         Dev server         (port 25566, RCON 25576)
-  mods -> mods.vX.Y.Z/      Symlink to a versioned mod dir
-  mods.vX.Y.Z/              Each release lives here; flipping the symlink is the deploy
+  mods/                     Live mod dir — must be a real directory, NOT a symlink
+                            (Sinytra Connector's services break under symlinks)
+  mods.vX.Y.Z/              Per-release archives at install root; deploy hardlink-
+                            copies one of these into mods/ (cp -al → no extra disk)
   staging/                  rsync target for CI; deployer-owned
   world/                    World data (dev starts fresh; prod is the existing world)
   config/, libraries/, ...  Standard NeoForge layout
@@ -56,19 +58,28 @@ mcrcon -H 127.0.0.1 -P "$PROD_RCON_PORT" -p "$PROD_RCON_PASSWORD" 'list'
   passwords without them leaving the VM in plaintext)
 
 `deployer` has an ACL grant of `rwx` on `/opt/cobblemon-{prod,dev}` so it
-can rsync into `staging/`, create new `mods.vX.Y.Z/` directories, and flip
-the `mods` symlink without sudo. World data is owned by `sysadmin` and not
-touched by deploys.
+can rsync into `staging/`, create new `mods.vX.Y.Z/` directories, and swap
+the `mods/` directory without sudo. World data is owned by `sysadmin` and
+not touched by deploys.
 
 ## Deploy model (how CI uses this layout)
 
 1. Runner builds the modpack, computes the new `mods/` tree.
 2. `rsync` it into `/opt/cobblemon-{env}/staging/mods.vX.Y.Z/`.
-3. `mv staging/mods.vX.Y.Z .. && ln -sfn mods.vX.Y.Z mods` — atomic swap.
-4. `sudo systemctl restart cobblemon-{env}`.
-5. Old `mods.vX.Y.Z` directories prune to the most recent N (e.g. 5).
+3. `mv staging/mods.vX.Y.Z ..` to seat the new version archive at install
+   root.
+4. `cp -al mods.vX.Y.Z mods.swap-new` — hardlink copy, costs no jar bytes
+   but produces a *real directory* (NOT a symlink — Sinytra Connector's
+   `IModFileCandidateLocator` services don't get picked up via NeoForge's
+   `ServiceLoader` when `mods/` is a symlink).
+5. `mv mods mods.swap-old && mv mods.swap-new mods` — atomic swap, then
+   `rm -rf mods.swap-old`.
+6. `sudo systemctl restart cobblemon-{env}`.
+7. Old `mods.vX.Y.Z` archives prune to the most recent N (e.g. 5).
 
-Rollback is `ln -sfn mods.vPREVIOUS mods && sudo systemctl restart`.
+Rollback: `cp -al mods.vPREVIOUS mods.swap-new`, then the same atomic
+swap-and-restart. The `mods.vX.Y.Z` archives are kept around precisely so
+this is cheap.
 
 ## Caveats / TODO
 

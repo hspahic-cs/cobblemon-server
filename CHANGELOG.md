@@ -12,7 +12,21 @@ root README.
 
 ## [Unreleased]
 
-## [0.7.29] - 2026-05-30
+## [0.7.30] - 2026-05-30
+
+### Diagnostic
+- **Unconditional `INFO` log at the entry of
+  `GymDefeatHook.applyToVictory`** so we can prove whether
+  Cobblemon's `BATTLE_VICTORY` event is firing at all on this
+  stack. The 0.7.29 datapack got vanilla trainer fights routing
+  through `rbrctai` (visible in `RunBunAI: new battle detected`
+  log lines), but a Titan1190X playtest still produced no
+  `npc-defeat:` line and no deposit after a one-shot KO win
+  against a non-gym trainer. New `battle-victory-event:` line
+  fires for every event arrival regardless of trainer/wild/gym
+  classification — its absence after a confirmed win means
+  Cobblemon isn't delivering the event and the next layer is a
+  mixin on the battle-end path. Remove once root-caused.
 
 ### Fixed
 - **NPC trainer defeats produce no `BATTLE_VICTORY` event, blocking

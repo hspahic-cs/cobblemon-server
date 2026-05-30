@@ -12,6 +12,35 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.17] - 2026-05-30
+
+Server-side LM (and any Fabric mod) finally works on dev/prod.
+
+### Fixed
+- **`mods/` symlink broke Sinytra Connector silently** — the deploy
+  workflows did `ln -sfn mods.vX.Y.Z mods` for cheap atomic-swap. Turns
+  out NeoForge's `ServiceLoader` for `IModFileCandidateLocator` doesn't
+  pick up services from jars in a symlinked directory, so Connector's 4
+  service registrations (TransformationService, CoreMod, DependencyLocator,
+  ModFileCandidateLocator) silently no-op'd. Result: every Fabric mod —
+  LegendaryMonuments, Trinkets, etc — got "Skipping jar. File ... is a
+  Fabric mod and cannot be loaded" and only the NeoForge-native subset
+  loaded. This had been broken on cobblemon-{dev,prod} for ~6 weeks; the
+  symptom was that LM appeared in the modpack but `/locate
+  legendarymonuments:southern_island` returned "no structures found".
+
+  Root cause confirmed by isolated repro: a fresh NeoForge install with
+  the same mod set in a real `mods/` directory loaded LM correctly;
+  swapping to a symlink broke it; restoring the real directory fixed it.
+
+  Fix: `mods/` is now a hardlink copy (`cp -al`) of the staged version
+  archive. Same atomicity, same disk usage (hardlinks share inodes), but
+  it's a real directory that NeoForge's service loader will scan. The
+  `mods.vX.Y.Z/` archives stay at install root for rollback.
+
+  Touches `deploy-dev.yml`, `deploy-prod.yml`, plus doc updates in
+  `docs/server-setup.md` and `docs/working-with-mods.md`.
+
 ## [0.7.16] - 2026-05-30
 
 Reverted LM to 7.8 + removed Trinkets.
@@ -22,11 +51,6 @@ load). LM 7.8 declares `accessories` instead, which is already in the pack.
 Reverting to 7.8.
 
 Trinkets removed since 7.8 doesn't need it.
-
-Note: server-side LM is still broken — Connector itself isn't loading on
-the dev server (its META-INF/services aren't picked up because the connector
-jar isn't on the boot classpath via `fml.pluginLayerLibraries`). Working
-through that separately. Client-side LM is what this fix targets.
 
 ## [0.7.15] - 2026-05-30 [reverted]
 

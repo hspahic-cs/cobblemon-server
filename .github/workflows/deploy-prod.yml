@@ -115,6 +115,13 @@ jobs:
           fi
 
       - name: Atomic swap and restart
+        # mods/ MUST be a real directory, not a symlink to mods.vX/. Sinytra
+        # Connector's IModFileCandidateLocator services don't get picked up
+        # via NeoForge's ServiceLoader when mods/ is a symlink — Connector
+        # silently no-ops, every Fabric mod (LegendaryMonuments, etc) is
+        # skipped at discovery, and only the NeoForge-native subset loads.
+        # The fix: keep mods.vX/ archives at install root for rollback, but
+        # mods/ itself is a hardlink copy (cp -al = no extra disk, real dir).
         run: |
           VERSION_DIR="mods.v${{ steps.ref.outputs.version }}"
           ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} "set -euo pipefail
@@ -123,7 +130,15 @@ jobs:
               rm -rf ${VERSION_DIR}
               mv staging/${VERSION_DIR} ./
             fi
-            ln -sfn ${VERSION_DIR} mods
+            rm -rf mods.swap-new mods.swap-old
+            cp -al ${VERSION_DIR} mods.swap-new
+            if [ -L mods ]; then
+              rm mods
+            elif [ -e mods ]; then
+              mv mods mods.swap-old
+            fi
+            mv mods.swap-new mods
+            rm -rf mods.swap-old
             sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
             ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
             echo '${{ steps.ref.outputs.version }}' > .deployed_version

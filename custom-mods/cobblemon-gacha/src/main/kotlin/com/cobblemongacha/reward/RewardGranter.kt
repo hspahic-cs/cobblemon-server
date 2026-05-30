@@ -104,6 +104,30 @@ object RewardGranter {
         // CobbreedingEgg has no in-band stack representation — `grant()` handles it directly,
         // and `representative()` falls back to a display-only egg via `eggDisplayStack`.
         is ItemSpec.CobbreedingEgg -> eggDisplayStack(spec)
+        is ItemSpec.EnchantedBook -> buildEnchantedBook(spec)
+    }
+
+    /**
+     * Build an `enchanted_book` ItemStack with a single stored enchantment at the configured
+     * level. Uses NeoForge's `EnchantmentHelper.setEnchantments(stack, ItemEnchantments)` so the
+     * book is anvil-applicable. Falls back to a plain (unenchanted) book if the enchantment id
+     * doesn't resolve in the registry — logged so the broken loot entry is visible.
+     */
+    private fun buildEnchantedBook(spec: ItemSpec.EnchantedBook): ItemStack {
+        val stack = ItemStack(Items.ENCHANTED_BOOK, spec.count)
+        val server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer()
+        val registry = server?.registryAccess()?.registryOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+        val enchHolder = registry?.getHolder(ResourceLocation.parse(spec.enchantment))?.orElse(null)
+        if (enchHolder == null) {
+            CobblemonGacha.logger.warn("Unknown enchantment id in loot table: {}", spec.enchantment)
+            return stack
+        }
+        val mutable = net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY.let {
+            net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(it)
+        }
+        mutable.set(enchHolder, spec.level)
+        net.minecraft.world.item.enchantment.EnchantmentHelper.setEnchantments(stack, mutable.toImmutable())
+        return stack
     }
 
     private data class EggOutcome(val display: ItemStack, val announceLabel: String)

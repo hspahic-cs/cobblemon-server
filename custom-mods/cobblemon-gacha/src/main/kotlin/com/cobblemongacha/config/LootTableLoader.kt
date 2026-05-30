@@ -273,6 +273,12 @@ object LootTableLoader {
                     obj.add("ids", arr)
                     obj.addProperty("count", src.count)
                 }
+                is ItemSpec.EnchantedBook -> {
+                    obj.addProperty("type", "enchanted_book")
+                    obj.addProperty("enchantment", src.enchantment)
+                    obj.addProperty("level", src.level)
+                    obj.addProperty("count", src.count)
+                }
             }
             return obj
         }
@@ -302,6 +308,11 @@ object LootTableLoader {
                 )
                 "random_item" -> ItemSpec.RandomItem(
                     ids = obj["ids"].asJsonArray.map { it.asString },
+                    count = obj["count"]?.asInt ?: 1,
+                )
+                "enchanted_book" -> ItemSpec.EnchantedBook(
+                    enchantment = obj["enchantment"].asString,
+                    level = obj["level"]?.asInt ?: 1,
                     count = obj["count"]?.asInt ?: 1,
                 )
                 else -> error("unknown ItemSpec type: ${obj["type"]}")

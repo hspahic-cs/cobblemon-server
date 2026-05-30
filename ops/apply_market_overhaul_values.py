@@ -36,8 +36,10 @@ DEFAULT_VENDOR_ITEMS: dict[str, dict] = {
     "cobblemon:great_ball": {"baseBuyPrice": 75,  "baseSellPrice": 15, "baseStock": 1000, "elasticity": 0.5},
     "cobblemon:ultra_ball": {"baseBuyPrice": 125, "baseSellPrice": 25, "baseStock": 1000, "elasticity": 0.5},
 
-    # ─── Vegetables (buy-only — carrot vendor pays no sell payout) ─────
-    "minecraft:carrot": {"baseBuyPrice": 8, "baseSellPrice": 0, "baseStock": 1000, "elasticity": 0.7, "sellable": False},
+    # ─── Vegetables ────────────────────────────────────────────────────
+    # 0.7.12: baseSellPrice raised 0 → 2 (+ sellable=true) so excess carrots from
+    # the farm have a sink and the carrot economy isn't one-way.
+    "minecraft:carrot": {"baseBuyPrice": 8, "baseSellPrice": 2, "baseStock": 1000, "elasticity": 0.7},
 
     # ─── HP potions ────────────────────────────────────────────────────
     # Hyper Potion slotted at 180/36 between Super (135/27) and Max (225/45) so each tier is

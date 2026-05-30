@@ -45,6 +45,17 @@ sealed class ItemSpec {
      * from the LegendaryMonuments mod with equal probability across all entries.
      */
     data class RandomItem(val ids: List<String>, val count: Int = 1) : ItemSpec()
+
+    /**
+     * Enchanted book carrying a single stored enchantment at the given level. Materialises to
+     * `minecraft:enchanted_book` with `DataComponents.STORED_ENCHANTMENTS` set so the book can
+     * be applied at an anvil. [enchantment] is a fully-qualified id (e.g. `minecraft:silk_touch`).
+     */
+    data class EnchantedBook(
+        val enchantment: String,
+        val level: Int,
+        val count: Int = 1,
+    ) : ItemSpec()
 }
 
 /**

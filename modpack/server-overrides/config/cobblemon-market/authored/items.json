@@ -1099,12 +1099,12 @@
   },
   "minecraft:carrot": {
     "baseBuyPrice": 8,
-    "baseSellPrice": 0,
+    "baseSellPrice": 2,
     "baseStock": 1000,
     "elasticity": 0.7,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
-    "sellable": false
+    "sellable": true
   },
   "simpletms:tm_absorb": {
     "baseBuyPrice": 5000,

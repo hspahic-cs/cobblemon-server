@@ -221,8 +221,7 @@ object MarketCommands {
         val pos = source.position
         val tagSuffix = if (vendorTag.isEmpty()) "" else ".$vendorTag"
         val fullTag = "cobblemon_bridge.market_vendor$tagSuffix"
-        val name = if (vendorTag.isEmpty()) "Shopkeeper"
-                   else vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TM Vendor"
+        val name = vendorDisplayName(vendorTag)
 
         val killed = killNearbyTagged(level, pos.x, pos.y, pos.z, fullTag, radius = 4.0)
 
@@ -288,22 +287,25 @@ object MarketCommands {
 
         // Compute everything first so column widths can adapt to the actual content.
         data class Row(val name: String, val buy: Int, val sell: Int, val stock: Int, val baseStock: Int)
-        val rows = items.map { (itemId, entry) ->
-            val state = store.getOrCreate(itemId)
-            Row(
-                name = formatItemName(itemId),
-                buy = PricingEngine.buyPrice(
-                    entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
-                    entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
-                ),
-                sell = PricingEngine.sellPrice(
-                    entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
-                    entry.effectiveSellClamp,
-                ),
-                stock = state.stock.toInt(),
-                baseStock = entry.baseStock,
-            )
-        }
+        val rows = items
+            .filterValues { entry -> entry.vendorScope == "" }
+            .filterKeys { isPricesWhitelisted(it) }
+            .map { (itemId, entry) ->
+                val state = store.getOrCreate(itemId)
+                Row(
+                    name = formatItemName(itemId),
+                    buy = PricingEngine.buyPrice(
+                        entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+                        entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+                    ),
+                    sell = PricingEngine.sellPrice(
+                        entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
+                        entry.effectiveSellClamp,
+                    ),
+                    stock = state.stock.toInt(),
+                    baseStock = entry.baseStock,
+                )
+            }
         val nameWidth = (rows.maxOfOrNull { it.name.length } ?: 0).coerceAtLeast(4)
         val buyWidth = (rows.maxOfOrNull { dollarString(it.buy).length } ?: 0).coerceAtLeast(3)
         val sellWidth = (rows.maxOfOrNull { dollarString(it.sell).length } ?: 0).coerceAtLeast(4)
@@ -381,6 +383,43 @@ object MarketCommands {
 
     private fun formatItemName(itemId: String): String =
         itemId.substringAfterLast(':').split('_').joinToString(" ") { it.replaceFirstChar(Char::uppercase) }
+
+    /**
+     * Human-readable vendor name from the raw `vendorTag` slug. Shared by the spawn-vendor
+     * command (`/market admin spawn <tag>`) and the GUI header (`MarketMenu.titleForVendor`)
+     * so both surfaces agree on the name. Special-cases:
+     *   - empty string → "Shopkeeper" (the default-vendor display name).
+     *   - "tm_<type>"  → "<Type> TMs" (e.g. `tm_fire` → "Fire TMs").
+     *   - "held_items" → "Held Items Vendor" (pre-0.7.12 this rendered as
+     *     "Held_items TM Vendor" because the generic branch assumed every non-default vendor
+     *     was a TM vendor and naïvely uppercased the slug).
+     *   - anything else → titlecased slug + " Vendor" (no TM suffix).
+     */
+    fun vendorDisplayName(vendorTag: String): String = when {
+        vendorTag.isEmpty() -> "Shopkeeper"
+        vendorTag.startsWith("tm_") ->
+            vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
+        else ->
+            vendorTag.split('_').joinToString(" ") { it.replaceFirstChar(Char::uppercase) } + " Vendor"
+    }
+
+    /**
+     * `/market prices` is intentionally a high-signal overview, not a dump of every default-vendor
+     * item — players asked to see just the small set of items whose price is interesting and moves.
+     * Whitelist: Pokéballs, Carrots, and Candies (rare + exp candies). Excludes potions, status
+     * heals, PP restore, EV vitamins, revives, etc. — those are buy-side-only flat-feeling rows
+     * that crowd the table.
+     */
+    private fun isPricesWhitelisted(itemId: String): Boolean {
+        val short = itemId.substringAfterLast(':')
+        return when {
+            short.endsWith("_ball") -> true                          // poke/great/ultra/master/quick/etc.
+            itemId == "minecraft:carrot" -> true
+            short == "rare_candy" -> true
+            short.startsWith("exp_candy_") -> true                   // exp_candy_xs/s/m/l/xl
+            else -> false
+        }
+    }
 
     /**
      * Renders a multi-line candlestick chart of the price history for one item.

@@ -1,11 +1,11 @@
 {
   "tier": "ULTRA",
-  "totalWeightPct": 98.0,
+  "totalWeightPct": 100.0,
   "entries": [
     {
       "lootTier": "Floor",
       "label": "1 Ability Patch",
-      "weightPct": 12.0,
+      "weightPct": 16.0,
       "items": [
         {
           "type": "vanilla",
@@ -17,8 +17,8 @@
     },
     {
       "lootTier": "Floor",
-      "label": "Mid-tier Egg (2 perfect IVs)",
-      "weightPct": 10.0,
+      "label": "Uncommon Pokémon Egg (2 perfect IVs)",
+      "weightPct": 14.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -27,12 +27,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": ""
+      "notes": "Non-shiny egg weight bumped (0.7.12)"
     },
     {
       "lootTier": "Floor",
       "label": "10 Rare Candy",
-      "weightPct": 10.0,
+      "weightPct": 13.0,
       "items": [
         {
           "type": "vanilla",
@@ -55,19 +55,6 @@
         }
       ],
       "notes": "Farming combo"
-    },
-    {
-      "lootTier": "Floor",
-      "label": "1 Gold Bottle Cap",
-      "weightPct": 8.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:gold_bottle_cap",
-          "count": 1
-        }
-      ],
-      "notes": ""
     },
     {
       "lootTier": "Floor",
@@ -113,8 +100,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "High-tier Egg (Larvitar/Beldum/Bagon, 3 perfect IVs)",
-      "weightPct": 6.0,
+      "label": "Ultra-Rare Pokémon Egg (3 perfect IVs)",
+      "weightPct": 8.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -123,43 +110,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Near-competitive"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Legendary Monument Fragment",
-      "weightPct": 5.0,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "legendarymonuments:dialga_pedestal",
-            "legendarymonuments:palkia_pedestal",
-            "legendarymonuments:giratina_pedestal",
-            "legendarymonuments:mew_pedestal",
-            "legendarymonuments:lugia_pedestal",
-            "legendarymonuments:ho_oh_pedestal",
-            "legendarymonuments:heatran_pedestal",
-            "legendarymonuments:hoopa_pedestal",
-            "legendarymonuments:entei_pedestal",
-            "legendarymonuments:raikou_pedestal",
-            "legendarymonuments:suicune_pedestal",
-            "legendarymonuments:latias_pedestal",
-            "legendarymonuments:kyurem_pedestal",
-            "legendarymonuments:reshiram_pedestal",
-            "legendarymonuments:zekrom_pedestal",
-            "legendarymonuments:zacian_pedestal",
-            "legendarymonuments:zamazenta_pedestal"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Big quest acceleration"
+      "notes": "Non-shiny egg weight bumped (0.7.12)"
     },
     {
       "lootTier": "Mid",
       "label": "TBD Ultra Reward #4",
-      "weightPct": 4.0,
+      "weightPct": 5.5,
       "items": [
         {
           "type": "placeholder",
@@ -182,43 +138,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Shiny w/ IV head start"
+      "notes": "Shiny w/ IV head start — weight preserved (0.7.12)"
     },
     {
       "lootTier": "High",
-      "label": "1 Legendary Monument Completion Voucher",
+      "label": "Ultra-Rare Pokémon Egg (3 perfect IVs + Hidden Ability)",
       "weightPct": 3.0,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "legendarymonuments:dialga_pedestal",
-            "legendarymonuments:palkia_pedestal",
-            "legendarymonuments:giratina_pedestal",
-            "legendarymonuments:mew_pedestal",
-            "legendarymonuments:lugia_pedestal",
-            "legendarymonuments:ho_oh_pedestal",
-            "legendarymonuments:heatran_pedestal",
-            "legendarymonuments:hoopa_pedestal",
-            "legendarymonuments:entei_pedestal",
-            "legendarymonuments:raikou_pedestal",
-            "legendarymonuments:suicune_pedestal",
-            "legendarymonuments:latias_pedestal",
-            "legendarymonuments:kyurem_pedestal",
-            "legendarymonuments:reshiram_pedestal",
-            "legendarymonuments:zekrom_pedestal",
-            "legendarymonuments:zacian_pedestal",
-            "legendarymonuments:zamazenta_pedestal"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Skips an entire monument step"
-    },
-    {
-      "lootTier": "High",
-      "label": "High-tier Egg (3 perfect IVs + Hidden Ability)",
-      "weightPct": 2.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -227,7 +152,7 @@
           "requireHiddenAbility": true
         }
       ],
-      "notes": "HA + strong IVs"
+      "notes": "HA + strong IVs — bumped (0.7.12)"
     },
     {
       "lootTier": "High",
@@ -246,7 +171,7 @@
     {
       "lootTier": "High",
       "label": "TBD Ultra Reward #6",
-      "weightPct": 0.0,
+      "weightPct": 2.0,
       "items": [
         {
           "type": "placeholder",
@@ -255,7 +180,7 @@
           "count": 1
         }
       ],
-      "notes": ""
+      "notes": "Filler for the slot freed by removing Gold Bottle Cap (0.7.12)"
     },
     {
       "lootTier": "Jackpot",
@@ -269,7 +194,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Best shiny egg in the game"
+      "notes": "Best shiny egg in the game — weight preserved (0.7.12)"
     },
     {
       "lootTier": "Jackpot",
@@ -286,34 +211,16 @@
     },
     {
       "lootTier": "Jackpot",
-      "label": "Full Monument Questline Skip (completes 1 entire monument)",
-      "weightPct": 0.5,
+      "label": "1 Master Ball",
+      "weightPct": 1.0,
       "items": [
         {
-          "type": "random_item",
-          "ids": [
-            "legendarymonuments:dialga_pedestal",
-            "legendarymonuments:palkia_pedestal",
-            "legendarymonuments:giratina_pedestal",
-            "legendarymonuments:mew_pedestal",
-            "legendarymonuments:lugia_pedestal",
-            "legendarymonuments:ho_oh_pedestal",
-            "legendarymonuments:heatran_pedestal",
-            "legendarymonuments:hoopa_pedestal",
-            "legendarymonuments:entei_pedestal",
-            "legendarymonuments:raikou_pedestal",
-            "legendarymonuments:suicune_pedestal",
-            "legendarymonuments:latias_pedestal",
-            "legendarymonuments:kyurem_pedestal",
-            "legendarymonuments:reshiram_pedestal",
-            "legendarymonuments:zekrom_pedestal",
-            "legendarymonuments:zacian_pedestal",
-            "legendarymonuments:zamazenta_pedestal"
-          ],
+          "type": "vanilla",
+          "id": "cobblemon:master_ball",
           "count": 1
         }
       ],
-      "notes": "Biggest single pull possible"
+      "notes": "Replaces the removed monument-questline pedestal (0.7.12)"
     }
   ]
 }

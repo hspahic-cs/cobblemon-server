@@ -1,0 +1,28 @@
+{
+  "id": "cobbleworkers:amethyst_harvester",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "rhyperior"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:amethyst_cluster"
+      }
+    },
+    {
+      "type": "cobbleworkers:loot_generation",
+      "context": "BLOCK_BREAK"
+    },
+    {
+      "type": "cobbleworkers:mutate_block",
+      "replacement": {
+        "block": "minecraft:air"
+      }
+    }
+  ]
+}

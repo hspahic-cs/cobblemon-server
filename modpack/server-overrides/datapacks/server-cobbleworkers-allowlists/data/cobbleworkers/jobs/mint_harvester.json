@@ -1,0 +1,38 @@
+{
+  "id": "cobbleworkers:mint_harvester",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "clefable",
+      "wigglytuff",
+      "togekiss",
+      "florges",
+      "whimsicott",
+      "slurpuff",
+      "aromatisse",
+      "ninetales"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "#cobblemon:mints",
+        "properties": {
+          "age": 7
+        }
+      }
+    },
+    {
+      "type": "cobbleworkers:loot_generation",
+      "context": "BLOCK_BREAK"
+    },
+    {
+      "type": "cobbleworkers:mutate_property",
+      "mutations": {
+        "age": 0
+      }
+    }
+  ]
+}

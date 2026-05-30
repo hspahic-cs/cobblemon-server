@@ -1,0 +1,41 @@
+{
+  "id": "cobbleworkers:fletcher",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "vileplume",
+      "victreebel",
+      "roserade",
+      "nidoking",
+      "nidoqueen"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:entity_navigation",
+      "target": {
+        "types": [
+          "minecraft:item"
+        ],
+        "items": [
+          "minecraft:arrow"
+        ]
+      }
+    },
+    {
+      "type": "cobbleworkers:pickup_item"
+    },
+    {
+      "type": "cobbleworkers:mutate_item",
+      "source": "minecraft:arrow",
+      "replacement": "minecraft:tipped_arrow",
+      "stack_size": 1,
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:poison"
+        }
+      }
+    }
+  ]
+}

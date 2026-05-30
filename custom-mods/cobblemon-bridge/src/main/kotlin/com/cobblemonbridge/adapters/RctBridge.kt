@@ -11,21 +11,30 @@ import java.util.concurrent.atomic.AtomicBoolean
  * directly to the trainer JSON id of the trainer that's fighting (e.g. `"gym_06_volkner"`).
  * Compile-time independent of rctmod / rctapi.
  *
- * Reflection chain (all in `com.gitlab.srcmc.rctmod.api`):
+ * Reflection chain (all in `com.gitlab.srcmc.rctmod`):
  * ```
  *   RCTMod.getInstance(): RCTMod                                 // static
  *     .getTrainerManager(): TrainerManager
  *     .getBattle(UUID): Optional<TrainerBattle>
- *   TrainerBattle.getTrainerId(): String                          // e.g. "gym_06_volkner"
+ *   TrainerBattle.getTrainerSideMobs(): List<TrainerMob>          // 1 mob in 1v1 gym fights
+ *   TrainerMob.getTrainerId(): String                             // e.g. "gym_06_volkner"
  * ```
  *
- * Why this exists: Cobblemon's `TrainerBattleActor` exposes no link back to the world entity that
- * started the battle. Our gym spawn-functions stamp `cobblemon_bridge.gym_id.<N>` on the entity,
- * but at `BATTLE_VICTORY` we only have the actor object. Until 0.7.9 we worked around this with a
- * proximity scan around the player, which missed in edge cases (player teleported into arena before
- * `BATTLE_STARTED_PRE` could scan; trainer despawned post-battle; etc.) — hence the recurring
- * "had to beat the gym twice to get credit" bug. RCT keeps a battle→trainer map by battle UUID,
- * which is what we should have been using all along.
+ * **0.7.14 fix:** between 0.7.9 (when this bridge was first written) and now, RCT moved the
+ * `getTrainerId()` accessor off `TrainerBattle` and onto `TrainerMob`. The old reflection
+ * chain blew up with `NoSuchMethodException: TrainerBattle.getTrainerId()` on every gym
+ * defeat — Branch 0 in `GymDefeatHook` was silently disabled, and every defeat was forced
+ * through Branch 1/2 (stash + proximity). Players who right-clicked the trainer first got
+ * credit (EntityInteract stash); players who walked into LOS engagement without right-clicking
+ * (more common for non-ops who aren't testing edge cases) hit the proximity path which can
+ * miss when the trainer is > 8 blocks away at `BATTLE_STARTED_PRE`. End-effect: gym wins
+ * looked unreliable, especially for non-op players.
+ *
+ * Why this exists in the first place: Cobblemon's `TrainerBattleActor` exposes no link back
+ * to the world entity that started the battle. Our gym spawn-functions stamp
+ * `cobblemon_bridge.gym_id.<N>` on the entity, but at `BATTLE_VICTORY` we only have the actor
+ * object. RCT's manager keeps a battle→mob map by battle UUID, which is the authoritative
+ * source.
  *
  * Returns null if RCT isn't loaded, the battle id isn't in its registry, or any reflection step
  * fails. Caller falls back to the legacy proximity path on null.
@@ -39,7 +48,8 @@ object RctBridge {
     @Volatile private var getInstanceM: Method? = null
     @Volatile private var getManagerM: Method? = null
     @Volatile private var getBattleM: Method? = null
-    @Volatile private var getTrainerIdM: Method? = null
+    @Volatile private var getTrainerSideMobsM: Method? = null
+    @Volatile private var mobGetTrainerIdM: Method? = null
     private val warnedOnce = AtomicBoolean(false)
 
     /**
@@ -47,6 +57,10 @@ object RctBridge {
      * the battle isn't a trainer battle / RCT isn't loaded / reflection fails. The string is
      * the bare JSON stem (matches `data/rctmod/trainers/<id>.json`), e.g. `"gym_06_volkner"`
      * or `"gym_03_korrina_challenge"`.
+     *
+     * Pulls the first mob from `TrainerBattle.getTrainerSideMobs()`. For 1v1 gym fights that's
+     * the only entry; for multi-vs-multi battles we'd want the mob whose id matches the gym
+     * convention, but no gym fights are multi-mob today so first-is-fine.
      */
     fun trainerIdForBattle(battleUuid: UUID): String? {
         if (!ensureResolved()) return null
@@ -55,7 +69,9 @@ object RctBridge {
             val mgr = getManagerM!!.invoke(rct) ?: return null
             val opt = getBattleM!!.invoke(mgr, battleUuid) as? Optional<*> ?: return null
             val battle = opt.orElse(null) ?: return null
-            getTrainerIdM!!.invoke(battle) as? String
+            val mobs = getTrainerSideMobsM!!.invoke(battle) as? List<*> ?: return null
+            val mob = mobs.firstOrNull { it != null } ?: return null
+            mobGetTrainerIdM!!.invoke(mob) as? String
         } catch (e: Throwable) {
             log.debug("trainerIdForBattle({}) reflection failed: {}", battleUuid, e.message)
             null
@@ -84,19 +100,22 @@ object RctBridge {
             val cls = Class.forName(RCTMOD_CLASS)
             val instanceM = cls.getMethod("getInstance")
             val mgrM = cls.getMethod("getTrainerManager")
-            // Manager + Battle return types: we need their class objects so we can resolve methods.
+            // We need real instances to introspect the dynamic return types — generics give us
+            // nothing here, so pin everything statically off known class names.
             val mgr = instanceM.invoke(null)?.let { mgrM.invoke(it) }
                 ?: error("RCTMod.getInstance().getTrainerManager() returned null at probe time")
             val battleM = mgr.javaClass.getMethod("getBattle", UUID::class.java)
-            // TrainerBattle.getTrainerId(): String — resolve via the return type of getBattle's Optional.
-            // We can't introspect generics, so we look it up on the class with a known name lookup.
             val tbCls = Class.forName("com.gitlab.srcmc.rctmod.api.data.TrainerBattle")
-            val tidM = tbCls.getMethod("getTrainerId")
+            val tsmM = tbCls.getMethod("getTrainerSideMobs")
+            val mobCls = Class.forName("com.gitlab.srcmc.rctmod.world.entities.TrainerMob")
+            val tidM = mobCls.getMethod("getTrainerId")
             getInstanceM = instanceM
             getManagerM = mgrM
             getBattleM = battleM
-            getTrainerIdM = tidM
+            getTrainerSideMobsM = tsmM
+            mobGetTrainerIdM = tidM
             resolved = true
+            log.info("RctBridge resolved — gym-defeat RCT direct lookup active")
             true
         } catch (e: ClassNotFoundException) {
             warnOnce("rctmod not loaded — gym-defeat RCT lookup disabled (proximity fallback only)")

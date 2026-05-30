@@ -1,0 +1,11 @@
+{
+  "id": "cobbleworkers:archaeologist",
+  "cooldown": 240,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "__disabled__"
+    ]
+  },
+  "components": []
+}

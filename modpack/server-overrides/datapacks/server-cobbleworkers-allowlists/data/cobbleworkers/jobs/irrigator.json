@@ -1,0 +1,41 @@
+{
+  "id": "cobbleworkers:irrigator",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "vaporeon",
+      "starmie",
+      "cloyster",
+      "poliwrath",
+      "ludicolo",
+      "simipour",
+      "politoed",
+      "slowking",
+      "kingdra"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:farmland",
+        "properties": {
+          "moisture": {
+            "between": [
+              0,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "cobbleworkers:mutate_property",
+      "mutations": {
+        "moisture": 7
+      },
+      "radius": 1
+    }
+  ]
+}

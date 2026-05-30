@@ -1,0 +1,32 @@
+{
+  "id": "cobbleworkers:apricorn_harvester",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "vikavolt",
+      "scizor"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "#cobblemon:apricorns",
+        "properties": {
+          "age": 3
+        }
+      }
+    },
+    {
+      "type": "cobbleworkers:loot_generation",
+      "context": "BLOCK_BREAK"
+    },
+    {
+      "type": "cobbleworkers:mutate_property",
+      "mutations": {
+        "age": 0
+      }
+    }
+  ]
+}

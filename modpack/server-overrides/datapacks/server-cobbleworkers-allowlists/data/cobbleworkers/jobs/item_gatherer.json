@@ -1,0 +1,27 @@
+{
+  "id": "cobbleworkers:item_gatherer",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "starmie",
+      "exeggutor",
+      "gallade",
+      "musharna",
+      "slowking"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:entity_navigation",
+      "target": {
+        "types": [
+          "minecraft:item"
+        ]
+      }
+    },
+    {
+      "type": "cobbleworkers:pickup_item"
+    }
+  ]
+}

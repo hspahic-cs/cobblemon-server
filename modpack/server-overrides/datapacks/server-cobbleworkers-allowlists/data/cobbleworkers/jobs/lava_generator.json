@@ -1,0 +1,28 @@
+{
+  "id": "cobbleworkers:lava_generator",
+  "cooldown": 90,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "flareon",
+      "arcanine",
+      "ninetales",
+      "simisear",
+      "magmortar"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:cauldron"
+      }
+    },
+    {
+      "type": "cobbleworkers:mutate_block",
+      "replacement": {
+        "block": "minecraft:lava_cauldron"
+      }
+    }
+  ]
+}

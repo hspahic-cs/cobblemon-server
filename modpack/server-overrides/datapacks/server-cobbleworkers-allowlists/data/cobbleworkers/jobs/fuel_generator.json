@@ -1,0 +1,27 @@
+{
+  "id": "cobbleworkers:fuel_generator",
+  "cooldown": 80,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "flareon",
+      "arcanine",
+      "ninetales",
+      "simisear",
+      "magmortar"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "#cobbleworkers:furnaces",
+        "block_entity_condition": "furnace_with_items"
+      }
+    },
+    {
+      "type": "cobbleworkers:add_fuel",
+      "burn_time": 80
+    }
+  ]
+}

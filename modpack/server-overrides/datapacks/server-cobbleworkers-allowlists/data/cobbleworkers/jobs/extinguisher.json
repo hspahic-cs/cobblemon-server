@@ -1,0 +1,33 @@
+{
+  "id": "cobbleworkers:extinguisher",
+  "cooldown": 0,
+  "cooldown_scope": "PER_ENTITY",
+  "requirements": {
+    "species": [
+      "vaporeon",
+      "starmie",
+      "cloyster",
+      "poliwrath",
+      "ludicolo",
+      "simipour",
+      "politoed",
+      "slowking",
+      "kingdra"
+    ]
+  },
+  "components": [
+    {
+      "type": "cobbleworkers:navigation",
+      "target": {
+        "block": "minecraft:fire"
+      }
+    },
+    {
+      "type": "cobbleworkers:mutate_block",
+      "replacement": {
+        "block": "minecraft:air"
+      },
+      "radius": 1
+    }
+  ]
+}

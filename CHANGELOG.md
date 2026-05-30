@@ -12,6 +12,94 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.24] - 2026-05-30
+
+Batch of playtest-surfaced fixes + balance tweaks.
+
+### Fixed
+- **Gym wins didn't always grant credit, especially for non-ops.** Root
+  cause: `RctBridge`'s reflection chain still called the old
+  `TrainerBattle.getTrainerId()` accessor, which RCT moved to
+  `TrainerMob.getTrainerId()` in a recent rctmod-neoforge update. Every
+  gym defeat was throwing `NoSuchMethodException` and falling through to
+  the stash/proximity fallback. The stash worked for ops who right-clicked
+  the trainer first (EntityInteract path), but failed for non-ops who
+  walked into LOS engagement — the proximity scan misses when the trainer
+  is > 8 blocks away at `BATTLE_STARTED_PRE`. New chain:
+  `TrainerBattle.getTrainerSideMobs()` → `firstOrNull()` →
+  `TrainerMob.getTrainerId()`. Branch 0 now resolves reliably for all
+  players.
+- **`/trade` money silently failed.** Diagnosed via prod log
+  (`trade complete: SixthSense <-> peachyorbit ($ 0/0)` — both sides
+  zero). `TradeManager.setMoney` was clamping silently when balance was 0
+  (which is the default since 0.7.10's `startingBalance=0`). Now sends a
+  chat warning when the offer is clamped below the requested amount + INFO
+  log on each setMoney call. The `+$` menu tile now shows your current
+  balance and a red "Your balance is $0 — offers will clamp to 0." line
+  when applicable. `execute`'s money transfer also now checks
+  `EconomyBridge.withdraw`'s return value and skips the deposit if the
+  withdraw failed (prevents the silent money-duplication bug in the
+  opposite direction).
+
+### Changed
+- **Trade menu redesigned** — replaced the opaque "+ Stage Pokémon" button
+  with each player's 6 party Pokémon visible in rows 0-1 flanking their
+  head. Click your party tile to stage; click again (or click the staged
+  tile in the trade area) to unstage. Staged tiles get a strikethrough
+  name + "Already in trade" lore so no click is ambiguous. Confirm tiles
+  moved from row 5 (bottom corners) to row 1 (next to each head) for
+  easier "my side" identification. The `+$` buttons moved to row 5
+  alongside the money displays.
+- **Trade evolutions now fire** for traded Pokémon. After the atomic
+  Pokémon transfer in `TradeManager.execute`, each received mon's
+  evolution chain is walked and any `TradeEvolution` entries get
+  `attemptEvolution(thisMon, partnerMon)` called — partner being the
+  first mon the receiver sent out as their exchange. Inherits Cobblemon's
+  species JSON: covers Kadabra/Machoke/Graveler/Haunter,
+  Boldore/Gurdurr/Phantump/Pumpkaboo, Karrablast↔Shelmet link-trade,
+  and held-item variants (Onix+Metal Coat→Steelix, Scyther+Metal
+  Coat→Scizor, Seadra+Dragon Scale→Kingdra, etc.). One-sided trades
+  (the receiver gave only money/items, no partner mon) skip evolution
+  since there's no context Pokémon.
+- **Trainer-battle EXP doubled.** New `TrainerExpBoostHook` subscribes to
+  Cobblemon's `ExperienceGainedEvent.Pre`, detects trainer-battle sources
+  via `BattleExperienceSource.facedPokemon[].actor is TrainerBattleActor`,
+  and multiplies `event.experience` by 2.0. Stacks multiplicatively with
+  the existing global `experienceMultiplier = 2.0`, so trainer-battle EXP
+  is `base × 2.0 × 2.0 = 4× vanilla`. Wild Pokémon battles unaffected.
+  Lucky Egg's 1.5× stacks on top if held (→ 6× vanilla in that case).
+- **Cobbleworkers heavily nerfed**:
+  - **20 jobs locked to species allowlists** instead of accepting any
+    Pokémon of a matching type. E.g., `crops_harvester` now only accepts
+    Leafeon/Bellossom/Sunflora/Lilligant/Vileplume/Victreebel/Exeggutor/
+    Roserade/Simisage/Whimsicott (was "any grass-type"). New
+    `server-cobbleworkers-allowlists` datapack overrides each upstream job
+    JSON with a `species` requirement while preserving any
+    `conditions` (e.g. IN_WATER for the now-restricted irrigator /
+    extinguisher / water_generator entries). Regional-form Pokémon in the
+    source spec collapsed to their base species name since Cobbleworkers'
+    Requirements ANDs species+aspects (e.g., `alolan_ninetales` →
+    `ninetales` — both regular and Alolan qualify; flag for follow-up if
+    you want stricter form-checking).
+    - Tumblestone harvester restriction applies to all 3 tumblestone
+      variants (`tumblestone_harvester`, `black_tumblestone_harvester`,
+      `sky_tumblestone_harvester`).
+    - 4 treasure-generator jobs disabled entirely (impossible species +
+      empty components): `archaeologist`, `dive_looter`, `fishing_looter`,
+      `pickup_looter`. These pull from random loot tables with no real
+      block to harvest. `honey_collection` is intentionally kept (it's
+      loot-table-driven but tied to real beehives in the world).
+    - Untouched (still type-based "any matching type" requirement):
+      `bush_harvester`, `hearty_grains_harvester`, `dive_looter` (NOTE:
+      already disabled above), `healer`, `honey_collection`,
+      `honey_generation`, `pickup_looter` (disabled), `rain_dancer`.
+    - Generator script at `ops/apply_cobbleworkers_allowlists.py` for
+      idempotent regeneration when the species list changes.
+  - **Job scan radius reduced from 8 → 2** (5×5 horizontal footprint
+    from the ranch block, was 17×17). Vertical `areaScanHeight` left at
+    5. Pinned in `modpack/server-overrides/config/cobbleworkers/cobbleworkers.json`
+    so it deploys with each release instead of drifting in runtime.
+
 ## [0.7.23] - 2026-05-30
 
 ### Added

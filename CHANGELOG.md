@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.10] - 2026-05-29
+
+### Changed
+- **server-no-exp-candy-chests** (new datapack): EXP candies no longer
+  spawn in worldgen chest loot. First piece of the broader economy
+  rework — wild XP shortcuts go away so the level loop stays driven
+  by trainer/wild battles and quest rewards instead of chest
+  jackpots. Two-strategy override:
+  - **Cobblemon `sets/any_exp_candy.json`** is overridden with an
+    empty pool. Every Cobblemon chest table that references this
+    sub-loot-table (ruins gilded chests, shipwreck cove spawners,
+    village pokecenters, etc.) now rolls nothing for the EXP candy
+    slot. Other items in those chests are untouched.
+  - **3 mega_showdown tables** (`observatory_chest`,
+    `observatory_barrel_2`, `archaeology/ruins`) inline
+    `cobblemon:exp_candy_*` entries directly — those entries are
+    surgically removed pool-by-pool, preserving the rest of each
+    table's loot.
+  Out of scope: rctmod trainer-defeat medicine pools (those are
+  loot drops from beating a trainer, not chest spawns).
+  `LegendaryMonuments` chests aren't included because the mod isn't
+  loading right now (broken Connector beta.14); easy to add via the
+  same `ops/strip_exp_candy_from_chest_loot.py` if LM gets fixed.
+
 ## [0.7.8] - 2026-05-29
 
 ### Fixed

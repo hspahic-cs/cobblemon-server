@@ -1,21 +1,318 @@
 {
-  "cobblemon:rare_candy": {
-    "baseBuyPrice": 6000,
-    "baseSellPrice": 2000,
-    "baseStock": 100,
-    "elasticity": 2.0,
+  "cobblemon:ability_shield": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
-    "vendorTag": "",
-    "sellable": true
+    "vendorTag": "held_items",
+    "sellable": false
   },
-  "cobblemon:ultra_ball": {
-    "baseBuyPrice": 900,
-    "baseSellPrice": 300,
-    "baseStock": 100,
-    "elasticity": 0.5,
+  "cobblemon:absorb_bulb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
-    "vendorTag": "",
-    "sellable": true
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:air_balloon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:assault_vest": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:big_root": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:binding_band": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:black_belt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:black_glasses": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:black_sludge": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:blunder_policy": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:bright_powder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:cell_battery": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:charcoal_stick": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:choice_band": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:choice_scarf": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:choice_specs": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:cleanse_tag": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:clear_amulet": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:covert_cloak": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:damp_rock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:deep_sea_scale": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:deep_sea_tooth": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:destiny_knot": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:dragon_fang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:eject_button": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:eject_pack": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:everstone": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:eviolite": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:exp_share": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:expert_belt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:fairy_feather": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:flame_orb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:float_stone": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:focus_band": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:focus_sash": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
   },
   "cobblemon:great_ball": {
     "baseBuyPrice": 300,
@@ -26,6 +323,240 @@
     "vendorTag": "",
     "sellable": true
   },
+  "cobblemon:grip_claw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:hard_stone": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:heat_rock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:heavy_duty_boots": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:icy_rock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:iron_ball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:kings_rock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:lagging_tail": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:leftovers": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:life_orb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:light_ball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:light_clay": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:loaded_dice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:lucky_egg": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:luminous_moss": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:magnet": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:mental_herb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:metal_coat": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:metal_powder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:metronome": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:miracle_seed": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:mirror_herb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:muscle_band": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:mystic_water": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:never_melt_ice": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:poison_barb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
   "cobblemon:poke_ball": {
     "baseBuyPrice": 90,
     "baseSellPrice": 30,
@@ -35,6 +566,141 @@
     "vendorTag": "",
     "sellable": true
   },
+  "cobblemon:power_anklet": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:power_band": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:power_belt": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:power_bracer": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:power_herb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:power_lens": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:power_weight": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:protective_pads": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:punching_glove": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:quick_claw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:quick_powder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:rare_candy": {
+    "baseBuyPrice": 6000,
+    "baseSellPrice": 2000,
+    "baseStock": 100,
+    "elasticity": 2.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:razor_claw": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:razor_fang": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:red_card": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
   "cobblemon:revive": {
     "baseBuyPrice": 1500,
     "baseSellPrice": 500,
@@ -43,6 +709,249 @@
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
     "sellable": true
+  },
+  "cobblemon:ring_target": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:rocky_helmet": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:room_service": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:safety_goggles": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:scope_lens": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:sharp_beak": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:shed_shell": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:shell_bell": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:silk_scarf": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:silver_powder": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:smoke_ball": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:smooth_rock": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:soft_sand": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:soothe_bell": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:spell_tag": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:sticky_barb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:terrain_extender": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:throat_spray": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:toxic_orb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:twisted_spoon": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:ultra_ball": {
+    "baseBuyPrice": 900,
+    "baseSellPrice": 300,
+    "baseStock": 100,
+    "elasticity": 0.5,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:utility_umbrella": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:weakness_policy": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:white_herb": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:wide_lens": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:wise_glasses": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
+  },
+  "cobblemon:zoom_lens": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "held_items",
+    "sellable": false
   },
   "minecraft:carrot": {
     "baseBuyPrice": 6,

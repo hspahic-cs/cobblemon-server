@@ -12,6 +12,120 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.10] - 2026-05-30
+
+Combined feature + content bundle (squash of two in-flight PRs:
+`/trade` command and the Pokédex side quest / /profile additions /
+starting balance / gym species swaps / held-item vendor).
+
+### Added
+- **cobblemon-bridge / `/trade` command + shared GUI**: player-to-player
+  trades for Pokémon + items + cobbledollars in a single transaction.
+  - `/trade <player>` sends a request (60s expiry, single pending request
+    per target). `/trade accept`, `/trade decline`, `/trade cancel`,
+    `/trade money <amount>` round out the command surface.
+  - Shared 6×9 chest GUI: both players open a `ChestMenu` backed by the
+    same `SimpleContainer`, so updates push to both clients live via
+    vanilla container-sync. Left half = P1 offer, right half = P2, gray
+    divider column down the middle.
+  - Pokémon: staged from current party via the `+ Stage Pokémon` button
+    (left-click = next un-staged party slot ascending; right-click =
+    descending). Display tile is the Pokémon's `PokemonItem`. Click a
+    staged tile to un-stage.
+  - Items: dragged from inventory into the player's own item slots
+    (4–6 per side). Ownership enforced — players can't drop items into
+    the other side's slots or remove the other side's items.
+  - Money: `+ Add Money` button (left = +\$100, shift-left = +\$1,000,
+    right = -\$100, shift-right = clear) or `/trade money <amount>`.
+    Money isn't escrowed — sender validates at execute time.
+  - Confirm: each side clicks their Confirm tile. Any offer change
+    un-confirms BOTH sides (matches canon Pokémon trading). When both
+    are confirmed, execute fires.
+  - Execute (atomic): validates level caps both ways (blocks trade if
+    any incoming Pokémon exceeds receiver's cap), validates money still
+    in sender's wallet, validates pokemon still in sender's party (by
+    UUID), then transfers — pokemon to receiver's party with overflow
+    to PC, items into receiver's inventory with overflow dropped at
+    their feet, money via `EconomyBridge` (NeoEssentials).
+  - Cancel paths (`/trade cancel`, closing the chest window, logout,
+    one side disconnecting) all funnel through a single refund: items
+    return to the original owner's inventory (drops at their feet if
+    full), money offers reset, session torn down.
+
+  Files: new `com.cobblemonbridge.trade` package
+  (`TradeOffer`, `TradeSession`, `TradeManager`, `TradeMenu`,
+  `TradeLifecycle`) + `commands/TradeCommand`. ~800 LOC total.
+  Level-cap blocking matches the existing `TradeCapHook` policy
+  (which gates Cobblemon's built-in trade event); our custom trade
+  applies the same rule inline since it doesn't go through the
+  Cobblemon trade API.
+- **server-quests / "Centurion" side quest (`server:reach_pokedex_100`)**:
+  catch 100 distinct Pokémon species. Branches off `server:catch_pokemon`
+  ("Gotta Catch One") so it appears in the player's advancement tree, but
+  it's a side quest — not in the HUD ticker, not blocking, never gates
+  anything else. New `cobblemon-bridge / PokedexProgressHook` subscribes
+  to `CobblemonEvents.POKEDEX_DATA_CHANGED_POST`, recounts caught
+  species via reflection into `Cobblemon.playerDataManager.getPokedexData`
+  on each fire, and awards at 100. Completion `tellraw` is prefixed with
+  `[Side Quest Complete]` in purple/light-purple so it visually
+  distinguishes from main-line completions. Reward: 1 Master Ball +
+  Ultra Key.
+- **cobblemon-bridge / /profile additions**:
+  - **Pokédex tile** (slot 24, row 2) shows the player's caught-species
+    count. Reads via `PokedexProgressHook.caughtCount(player)`. Offline
+    targets show 0 until next login (Cobblemon's pokedex API needs a
+    live `ServerPlayer`).
+  - **Ranked-ELO tile** now shows a Pokémon-themed rank alongside the
+    raw number: `1450 (Veteran)`. Bands: <1100 Rookie / 1100-1199
+    Trainer / 1200-1299 Ace Trainer / 1300-1399 Veteran / 1400-1499
+    Elite / 1500+ Champion.
+
+### Changed
+- **NeoEssentials / `startingBalance` 100 → 0**: new players now start
+  at \$0 instead of \$100. Live `runtime/economy.json` on dev patched;
+  also pinned as `modpack/server-overrides/config/neoessentials/economy.json`
+  so deploys persist the value (rsync from server-overrides/config on
+  every deploy). Pinning the whole file means a NeoEssentials version
+  update that adds new fields would need a re-pin from the live copy.
+- **server-gyms / 5 assetless species swapped to typed equivalents**:
+  pancham, pawniard, vikavolt, lokix, bisharp lack rendering assets
+  in Cobblemon 1.7.3 (Substitute fallback in battle). Replaced inline
+  with same-type, same-level alternates that DO have models. Movesets
+  + abilities re-picked per the new species' learnable pool.
+  - Gym 3 Korrina (Fighting): `pancham` → `timburr` (Iron Fist;
+    Drain Punch / Mach Punch / Rock Slide / Bulk Up). Applies to
+    `gym_03_korrina` + `_challenge`.
+  - Gym 4 Byron (Steel): `pawniard` → `lairon` (Rock Head;
+    Iron Head / Rock Slide / Earthquake / Stealth Rock). Applies
+    to `gym_04_byron` + `_challenge`.
+  - Gym 11 Viola (Bug): `vikavolt` → `galvantula` (Compound Eyes;
+    Thunder / Bug Buzz / Sticky Web / Thunder Wave).
+  - Gym 18 Marnie (Dark): `lokix` → `absol` (Super Luck;
+    Night Slash / Psycho Cut / Sucker Punch / Swords Dance).
+  - Gym 21 Cynthia (E4): `bisharp` → `tyranitar` (Sand Stream;
+    Stone Edge / Crunch / Earthquake / Dragon Dance).
+  - **Not swapped**: lycanroc, oricorio, eternatus — also assetless
+    but more complex (forms/legendary); user opted to leave for now.
+  Generation in `ops/swap_gym_species.py`; rerun against a future
+  Cobblemon update if any of these regain assets.
+- **server-market / new "held_items" vendor** (101 entries): every
+  item in Cobblemon's `is_held_item` tag (Choice Band/Specs/Scarf,
+  Leftovers, Life Orb, Focus Sash, Eviolite, Assault Vest, Rocky
+  Helmet, Air Balloon, status orbs, type-boosting items, weather
+  rocks, plates, etc.) sold at flat $5,000 each, buy-only. Same
+  vendor framework as the TM shops (0.7.4). Spawn with
+  `/market admin spawn held_items`. Excludes: tag-refs (
+  `#cobblemon:held/terrain_seeds`, `#cobblemon:type_gems`),
+  `cobblemon:medicinal_leek` (it's a crop, in `cobbleworkers:crops`
+  tag), and vanilla `minecraft:bone`/`minecraft:snowball` (plentiful
+  via gameplay). Generation in `ops/gen_held_item_vendor.py`.
+
+### Notes
+- `QuestCommand` gains a `SIDE_QUESTS` list (so `/quests list` shows it
+  under "Side Quests") and a REWARDS entry, but it stays out of
+  `LINEAR_CHAIN`, `INITIAL_TRACK`, and `tick_player.mcfunction` — the
+  three places that drive the HUD + main-quest UI.
+
 ## [0.7.9] - 2026-05-29
 
 Combined hotfix + small-features bundle (squash of three in-flight

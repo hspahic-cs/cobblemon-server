@@ -64,9 +64,10 @@ object ProfileMenu {
         container.setItem(14, eloStack(p))
         container.setItem(16, incomeStack(p))
 
-        // Row 2 — favourite Pokemon (slot 20) + colony (22).
+        // Row 2 — favourite Pokemon (slot 20) + colony (22) + pokédex count (24).
         container.setItem(20, favouriteStack(p))
         container.setItem(22, colonyStack(p))
+        container.setItem(24, pokedexStack(p))
 
         // Row 3 — last ranked team across slots 27..32 (6 slots).
         for (i in 0 until 6) {
@@ -126,10 +127,33 @@ object ProfileMenu {
             listOf(line("§8No ranked record yet"))
         else
             listOf(
-                line("§f${p.elo}"),
+                line("§f${p.elo} §7(${eloRankLabel(p.elo)}§7)"),
                 line("§a${p.wins ?: 0}W §7/ §c${p.losses ?: 0}L"),
             )
         stack.set(DataComponents.LORE, ItemLore(lore))
+        return stack
+    }
+
+    /** Bucket ELO into a Pokémon-themed tier label. Tiers are 100-elo bands above the
+     *  battle-loss floor (1000) up to Champion at 1500+. Mirrors a typical ladder shape. */
+    private fun eloRankLabel(elo: Int): String = when {
+        elo >= 1500 -> "§6Champion"
+        elo >= 1400 -> "§dElite"
+        elo >= 1300 -> "§5Veteran"
+        elo >= 1200 -> "§bAce Trainer"
+        elo >= 1100 -> "§aTrainer"
+        else        -> "§7Rookie"
+    }
+
+    private fun pokedexStack(p: ProfileSnapshot): ItemStack {
+        val stack = ItemStack(Items.BOOK)
+        stack.set(DataComponents.CUSTOM_NAME, line("§bPokédex"))
+        stack.set(DataComponents.LORE, ItemLore(listOf(
+            line("§f${p.pokedexCount} §7caught"),
+            line(""),
+            line("§7Distinct species marked as caught."),
+            line("§7§oOffline players show 0 until next login."),
+        )))
         return stack
     }
 

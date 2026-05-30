@@ -32,6 +32,11 @@ data class ProfileSnapshot(
     val colony: String?,   // null when no minecolony is registered to this player
     val favorite: FavoriteEntry?,
     val lastTeam: List<String>,  // species names of their last ranked PvP team, or empty
+    /** Count of distinct species marked `CAUGHT` in the player's Pokédex. 0 if Cobblemon's
+     *  pokedex API isn't reachable or the player has no record. Offline-safe lookup is not
+     *  supported yet (Cobblemon's playerDataManager wants a ServerPlayer); offline targets
+     *  surface 0 until they next log in. */
+    val pokedexCount: Int,
 )
 
 object ProfileBuilder {
@@ -49,6 +54,7 @@ object ProfileBuilder {
         val colony = readColonyName(server, targetUuid)
         val favorite = FavoriteTracker.get().favorite(targetUuid)
         val team = readLastTeam(targetUuid)
+        val pokedexCount = if (online != null) com.cobblemonbridge.quests.PokedexProgressHook.caughtCount(online) else 0
         return ProfileSnapshot(
             displayName = displayName,
             playerUuid = targetUuid,
@@ -60,6 +66,7 @@ object ProfileBuilder {
             colony = colony,
             favorite = favorite,
             lastTeam = team,
+            pokedexCount = pokedexCount,
         )
     }
 

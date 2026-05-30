@@ -1,0 +1,25 @@
+{
+  "parent": "server:catch_pokemon",
+  "display": {
+    "title": {
+      "text": "Centurion"
+    },
+    "description": {
+      "text": "Catch 100 different Pokémon species."
+    },
+    "icon": {
+      "id": "cobblemon:ultra_ball"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/reach_pokedex_100"
+  }
+}

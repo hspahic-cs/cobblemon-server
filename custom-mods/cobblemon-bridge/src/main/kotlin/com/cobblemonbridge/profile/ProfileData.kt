@@ -19,6 +19,9 @@ private val log = LoggerFactory.getLogger("cobblemon_bridge/profile/data")
  */
 data class ProfileSnapshot(
     val displayName: String,
+    /** Persisted UUID of the player being looked up — needed by the GUI to build a
+     *  `player_head` ItemStack with the player's real skin via `DataComponents.PROFILE`. */
+    val playerUuid: UUID,
     val gymBadgeCount: Int,
     val gymBadgeTotal: Int,
     val levelCap: Int,
@@ -48,6 +51,7 @@ object ProfileBuilder {
         val team = readLastTeam(targetUuid)
         return ProfileSnapshot(
             displayName = displayName,
+            playerUuid = targetUuid,
             gymBadgeCount = have,
             gymBadgeTotal = total,
             levelCap = cap,

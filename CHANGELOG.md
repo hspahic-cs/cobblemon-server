@@ -14,6 +14,10 @@ root README.
 
 ## [0.7.9] - 2026-05-29
 
+Combined hotfix + small-features bundle (squash of three in-flight
+PRs: ELO floor revert, EXP-candy chest blocker, /profile header +
+favorite-tracker fix).
+
 ### Fixed
 - **cobblemon-ranked / "I lost a ranked battle and my ELO went UP"**:
   0.7.8 raised `minimumElo` 1000 → 1200 thinking that's what "decay
@@ -31,6 +35,30 @@ root README.
 
   Live runtime config on dev patched (`minimumElo: 1200 → 1000`)
   so the floor is correct on the next restart.
+- **cobblemon-bridge / "favorite pokemon" tally was inconsistent for
+  carrot heals**: 0.7.5 wired `FavoriteTracker` to Cobblemon's
+  `POKEMON_HEALED` event. That event reliably fires for the canonical
+  `Pokemon.heal()` path (Poké Healer block) but not always when HP
+  is set via a direct `currentHealth = X` field write, which is what
+  `CarrotHealHandler` does. Result: feeding 10 carrots to a Pokémon
+  often credited 0 or only some of them to the favorite tally, so the
+  /profile "favorite" jumped around between mons the player hadn't
+  actively bonded with.
+
+  Moved the credit call into the actual heal flow: cobblemon-carrots
+  gains a small `FavoriteBridge.kt` that reflection-calls into
+  cobblemon-bridge's `FavoriteTracker.record(...)` on each successful
+  feed (both plain right-click heal and shift-right-click revive).
+  `FavoriteTracker` no longer subscribes to `POKEMON_HEALED` — the
+  carrot-side path is now the single deterministic source of credit,
+  which also makes the stat more semantically correct ("favorite =
+  Pokémon you've actively fed by hand", not "Pokémon that happened
+  to be in the box during a mass heal").
+
+  Reflection is the same soft-coupling pattern we use for
+  `EconomyBridge` — cobblemon-carrots stays compile-time independent
+  of cobblemon-bridge; if bridge isn't loaded the credit call is a
+  silent no-op.
 
 ### Changed
 - **server-no-exp-candy-chests** (new datapack): EXP candies no longer
@@ -53,6 +81,15 @@ root README.
   `LegendaryMonuments` chests aren't included because the mod isn't
   loading right now (broken Connector beta.14); easy to add via the
   same `ops/strip_exp_candy_from_chest_loot.py` if LM gets fixed.
+- **cobblemon-bridge / /profile header uses the player's real skin**:
+  the header slot in the profile chest GUI was a generic
+  `Items.PLAYER_HEAD` with no profile attached, so it rendered as the
+  default Steve/Alex face for everyone. Now sets
+  `DataComponents.PROFILE` to a `ResolvableProfile(name, uuid,
+  PropertyMap())` built from the target player's UUID; the client
+  fetches the texture via session servers (cache hit on second
+  open). Required adding `playerUuid: UUID` to `ProfileSnapshot` so
+  the menu has the right id for both online and offline lookups.
 
 ## [0.7.8] - 2026-05-29
 

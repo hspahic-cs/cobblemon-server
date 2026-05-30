@@ -78,6 +78,17 @@ object ProfileMenu {
 
     private fun headerStack(p: ProfileSnapshot): ItemStack {
         val stack = ItemStack(Items.PLAYER_HEAD)
+        // Attach the target player's GameProfile so the head renders with their actual skin.
+        // ResolvableProfile takes (Optional<name>, Optional<UUID>, PropertyMap) — passing the
+        // UUID is enough; the client resolves the texture URL from session servers (or its
+        // local cache) on receipt. Name is included too as a hint for clients without UUID-
+        // based skin lookups configured.
+        val profile = net.minecraft.world.item.component.ResolvableProfile(
+            java.util.Optional.of(p.displayName),
+            java.util.Optional.of(p.playerUuid),
+            com.mojang.authlib.properties.PropertyMap(),
+        )
+        stack.set(DataComponents.PROFILE, profile)
         stack.set(DataComponents.CUSTOM_NAME, line("§e§l${p.displayName}"))
         stack.set(DataComponents.LORE, ItemLore(listOf(
             line(""),

@@ -2,6 +2,7 @@ package com.cobblemoncarrots.interact
 
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemoncarrots.CobblemonCarrots
+import com.cobblemoncarrots.profile.FavoriteBridge
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
@@ -50,7 +51,12 @@ object CarrotHealHandler {
                 event.isCanceled = true
                 return
             }
-            pokemon.currentHealth = minOf(cfg.hpPerCarrot, pokemon.maxHealth)
+            val healed = minOf(cfg.hpPerCarrot, pokemon.maxHealth)
+            pokemon.currentHealth = healed
+            // Credit the carrot-feed toward the player's "favorite Pokemon" tally in
+            // cobblemon-bridge. Reflection-driven (see FavoriteBridge) so this stays a no-op
+            // if bridge isn't loaded.
+            FavoriteBridge.record(player.uuid, pokemon.uuid, pokemon.species.name.lowercase(), healed)
             if (!player.abilities.instabuild) consumeCarrots(player, cost)
             player.serverLevel().playSound(
                 null, target.x, target.y, target.z,
@@ -84,6 +90,8 @@ object CarrotHealHandler {
         val newHp = minOf(pokemon.currentHealth + cfg.hpPerCarrot, pokemon.maxHealth)
         val gained = newHp - pokemon.currentHealth
         pokemon.currentHealth = newHp
+        // Carrot-feed "favorite Pokemon" credit — see revive branch.
+        FavoriteBridge.record(player.uuid, pokemon.uuid, pokemon.species.name.lowercase(), gained)
         if (!player.abilities.instabuild) stack.shrink(1)
         player.serverLevel().playSound(
             null, target.x, target.y, target.z,

@@ -12,6 +12,44 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.23] - 2026-05-30
+
+### Added
+- **AllTheMons R3.5** — meta-pack that fills 92 of the ~101 species
+  Cobblemon 1.7.3 ships as data-only (no model). Covers Raikou /
+  Entei / Suicune, Pawniard / Bisharp, the Treasures of Ruin (3 of
+  4 — Ting-Lu still pending), most Paradox Pokémon, and a long
+  tail of gen-3/5/9 stragglers. Maintainers explicitly resolve
+  overlap conflicts between the bundled sub-packs (MissingMons,
+  HiddenMons, BoniMons, Kale's, Pigeon's, OdysseyMons, +17 others)
+  so we don't have to manage them ourselves.
+  - **9 species still missing** after AllTheMons: Tympole / Palpitoad
+    / Seismitoad, Virizion, Celesteela, Iron Hands, Iron Jugulis,
+    Iron Boulder, Ting-Lu.
+  - **85 already-implemented species** get their models replaced by
+    AllTheMons. That's the trade-off and the reason we chose a
+    curated meta-pack over hand-mixing addons.
+
+### Changed
+- **`modpack/resourcepacks/`** — new directory; packwiz bundles its
+  contents into the `.mrpack` overrides path so PrismLauncher
+  extracts them to `<minecraft>/resourcepacks/` on import.
+- **`modpack/options.txt`** — added `resourcePacks:["file/AllTheMons
+  [R3.5].zip"]` so PrismLauncher auto-enables the pack on first
+  import.
+
+### Notes
+- Distribution: AllTheMons is a single zip that's both a datapack
+  (`data/`) and a resource pack (`assets/`). The zip ships in two
+  places:
+  - `modpack/resourcepacks/` → client side via packwiz/.mrpack.
+  - `modpack/server-overrides/datapacks/` → server side via the
+    existing datapacks rsync in deploy-{dev,prod}.yml.
+- Existing imports won't auto-enable the resource pack —
+  PrismLauncher only writes `options.txt` on first import.
+  Players either re-import or enable AllTheMons manually from
+  Options → Resource Packs.
+
 ## [0.7.22] - 2026-05-30
 
 ### Fixed

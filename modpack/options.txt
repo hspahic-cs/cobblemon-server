@@ -5,6 +5,7 @@ gamma:0.8
 guiScale:3
 graphicsMode:0
 renderClouds:"fast"
+resourcePacks:["file/AllTheMons [R3.5].zip"]
 key_key.socialInteractions:key.keyboard.backslash
 key_key.cobblemon.summary:key.keyboard.p
 key_key.cobblenav.open_pokenav:key.keyboard.o

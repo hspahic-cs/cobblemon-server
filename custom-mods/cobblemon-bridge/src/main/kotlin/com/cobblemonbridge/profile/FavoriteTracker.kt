@@ -1,7 +1,5 @@
 package com.cobblemonbridge.profile
 
-import com.cobblemon.mod.common.api.events.CobblemonEvents
-import com.cobblemon.mod.common.api.Priority
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonSyntaxException
@@ -102,7 +100,13 @@ class FavoriteTracker private constructor(
                 .resolve("favorites.json")
             val data = load(file)
             instance = FavoriteTracker(file, data)
-            registerCobblemonHooks()
+            // No CobblemonEvents subscription on purpose. We used to hook POKEMON_HEALED but
+            // it fired inconsistently (carrot-heal direct field-write vs healer-block
+            // canonical-heal path), so the favorite stat drifted between players. 0.7.11
+            // moved the credit call into cobblemon-carrots' actual heal flow
+            // (CarrotHealHandler → FavoriteBridge reflection → FavoriteTracker.record), which
+            // is also more semantically correct: "favorite" should reflect deliberate
+            // carrot-feeding (player intent), not bulk machine heals.
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -130,28 +134,7 @@ class FavoriteTracker private constructor(
             }
         }
 
-        /**
-         * Subscribes to Cobblemon's pokemon-healed event so any HP restored by a player to one
-         * of their Pokemon (via carrot-feed, healer block, etc.) is credited here. We can't
-         * distinguish the *source* of healing from the event itself, but for "favorite Pokemon"
-         * intent the carrot/healer combo IS the player relationship signal — both are voluntary
-         * actions by the player.
-         */
-        private fun registerCobblemonHooks() {
-            try {
-                // POKEMON_HEALED fires whenever a Pokemon's HP is set higher than before via the
-                // canonical .heal() / setCurrentHealth path. We capture (owner, pokemon, delta)
-                // and credit the owner.
-                CobblemonEvents.POKEMON_HEALED.subscribe(Priority.NORMAL) { event ->
-                    val pokemon = event.pokemon
-                    val owner = pokemon.getOwnerPlayer() ?: return@subscribe
-                    val delta = event.amount
-                    if (delta <= 0) return@subscribe
-                    get().record(owner.uuid, pokemon.uuid, pokemon.species.name.lowercase(), delta)
-                }
-            } catch (e: Throwable) {
-                log.warn("Couldn't hook POKEMON_HEALED for favorite-tracker", e)
-            }
-        }
+        // POKEMON_HEALED subscription removed in 0.7.11 — see init() kdoc. Carrot-side
+        // credit flows in via cobblemon-carrots' FavoriteBridge calling [record] directly.
     }
 }

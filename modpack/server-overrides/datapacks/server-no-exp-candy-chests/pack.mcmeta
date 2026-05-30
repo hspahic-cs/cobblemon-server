@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Strips Cobblemon EXP candies from worldgen chest loot. Overrides cobblemon:sets/any_exp_candy with an empty pool (covers all chests that reference the set) and surgically removes inline exp_candy entries from mega_showdown chests."
+  }
+}

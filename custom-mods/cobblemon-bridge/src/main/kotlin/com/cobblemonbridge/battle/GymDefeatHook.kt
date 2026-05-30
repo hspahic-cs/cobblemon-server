@@ -112,11 +112,39 @@ object GymDefeatHook {
     private fun applyToVictory(event: BattleVictoryEvent) {
         val now = System.currentTimeMillis()
         val losersIncludeTrainer = event.losers.any { it is TrainerBattleActor }
+
+        // Primary: ask RCT directly which trainer was fighting in this battle. Deterministic —
+        // doesn't depend on stash population or proximity. Returns null if RCT isn't loaded /
+        // the battle wasn't a trainer battle / lookup fails, in which case we fall through to
+        // the legacy stash + proximity paths below as defensive fallbacks.
+        val rctMatch = com.cobblemonbridge.adapters.RctBridge
+            .trainerIdForBattle(event.battle.battleId)
+            ?.let(com.cobblemonbridge.adapters.RctBridge::parseGymTrainerId)
+
         for (winner in event.winners) {
             val playerActor = winner as? PlayerBattleActor ?: continue
             val player = playerActor.entity as? ServerPlayer ?: continue
 
-            // Branch 1: gym defeat via stashed gym_id tag (more specific, takes precedence).
+            // Branch 0 (preferred): RCT lookup told us the exact gym.
+            if (rctMatch != null) {
+                val (gymId, isChallenge) = rctMatch
+                pendingByPlayer.remove(player.uuid)  // consume any stale stash
+                val advancementId = if (isChallenge) "server:beat_gym_${gymId}_challenge"
+                                    else "server:beat_gym_$gymId"
+                val awarded = QuestAdvancements.award(player, advancementId, criterion = "done")
+                if (awarded) {
+                    CobblemonBridge.logger.info(
+                        "cobblemon-bridge: awarded {} to {} (rct-direct)",
+                        advancementId, player.gameProfile.name,
+                    )
+                    payGymBounty(player, gymId, isChallenge)
+                }
+                continue
+            }
+
+            // Branch 1 (fallback): gym defeat via stashed gym_id tag from EntityInteract or
+            // the BATTLE_STARTED_PRE proximity scan. Kept as defense-in-depth in case RCT
+            // changes its API or isn't loaded.
             val pending = pendingByPlayer.remove(player.uuid)
             if (pending != null && now - pending.capturedAtMs <= STASH_TTL_MS) {
                 val advancementId = if (pending.isChallenge) {
@@ -127,15 +155,16 @@ object GymDefeatHook {
                 val awarded = QuestAdvancements.award(player, advancementId, criterion = "done")
                 if (awarded) {
                     CobblemonBridge.logger.info(
-                        "cobblemon-bridge: awarded {} to {}", advancementId, player.gameProfile.name,
+                        "cobblemon-bridge: awarded {} to {} (stash fallback)",
+                        advancementId, player.gameProfile.name,
                     )
                     payGymBounty(player, pending.gymId, pending.isChallenge)
                 }
                 continue
             }
 
-            // Branch 2: any other RCT/Cobblemon trainer NPC defeat fires the wild-trainer quest.
-            // The advancement system makes this a one-time grant per player.
+            // Branch 2 (last resort): any other RCT/Cobblemon trainer NPC defeat fires the
+            // wild-trainer quest. The advancement system makes this a one-time grant per player.
             if (losersIncludeTrainer) {
                 val awarded = QuestAdvancements.award(player, "server:beat_wild_trainer", criterion = "done")
                 if (awarded) {

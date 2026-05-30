@@ -27,11 +27,14 @@ data class ArenaPos(
 
 data class RankedConfig(
     val startingElo: Int = 1200,
-    /** Floor for both decay-driven and battle-driven ELO loss. 0.7.8 raised this from 1000
-     *  to 1200 so a player who hits the floor stays at the starting ELO — matches the new
-     *  "decay target = 1200" design where inactivity never permanently demotes you below
-     *  the starting point. */
-    val minimumElo: Int = 1200,
+    /** Floor below which ELO can't drop, period — applies to both decay and normal battle
+     *  losses. Held at the historical 1000. 0.7.8 briefly raised this to 1200 conflating it
+     *  with the "decay target = 1200" goal; the side effect was that anyone with current ELO
+     *  below 1200 got clamped UP to 1200 on their next battle, so a loss read as a gain.
+     *  Decay's target/opponent is [startingElo] (= 1200) via `EloCalculator.decayElo`, which
+     *  is what actually implements "decay drags inactive players toward 1200" — independent
+     *  of the battle-loss floor. */
+    val minimumElo: Int = 1000,
     val kFactor: Int = 32,
     val levelCap: Int = 50,
     val maxLegendaries: Int = 1,

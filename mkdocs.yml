@@ -1,0 +1,71 @@
+site_name: Cobblemon Server
+site_description: How to join and play on the Cobblemon Server.
+site_url: https://hspahic-cs.github.io/cobblemon-server/
+repo_url: https://github.com/hspahic-cs/cobblemon-server
+repo_name: cobblemon-server
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - content.action.edit
+    - search.suggest
+    - search.highlight
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.keys
+
+# Internal/dev docs stay in the repo but are excluded from the published
+# site — keeps the public wiki focused on players.
+exclude_docs: |
+  design/
+  superpowers/
+  server-setup.md
+  snapshots.md
+  upstream-sources.md
+  working-with-mods.md
+
+nav:
+  - Home: index.md
+  - Joining the server:
+      - Install the modpack: install.md
+      - Connect: connect.md
+  # - Commands: commands.md   # TODO: add once we draft these

@@ -55,7 +55,11 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(AdjustLevelHook)
         NeoForge.EVENT_BUS.register(GivePartyExpHook)
         GymDefeatHook.registerEvents()
-        NeoForge.EVENT_BUS.register(GymDefeatHook)
+        // 0.7.26: NeoForge.EVENT_BUS.register(GymDefeatHook) removed — the simplified
+        // hook (gyms migrated to rctmod:defeat_count trigger) no longer has any
+        // @SubscribeEvent methods. NeoForge throws on register() when the target has
+        // none, so registering would crash mod loading. The hook still subscribes to
+        // Cobblemon's BATTLE_VICTORY via the registerEvents() call above.
         NeoForge.EVENT_BUS.register(GymPrereqHook)
         GymBattleAdjustHook.registerEvents()
         NeoForge.EVENT_BUS.register(GymBattleAdjustHook)

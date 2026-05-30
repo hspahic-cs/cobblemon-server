@@ -12,6 +12,50 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.10] - 2026-05-30
+
+### Added
+- **cobblemon-bridge / `/trade` command + shared GUI**: player-to-player
+  trades for Pokémon + items + cobbledollars in a single transaction.
+  - `/trade <player>` sends a request (60s expiry, single pending request
+    per target). `/trade accept`, `/trade decline`, `/trade cancel`,
+    `/trade money <amount>` round out the command surface.
+  - Shared 6×9 chest GUI: both players open a `ChestMenu` backed by the
+    same `SimpleContainer`, so updates push to both clients live via
+    vanilla container-sync. Left half = P1 offer, right half = P2, gray
+    divider column down the middle.
+  - Pokémon: staged from current party via the `+ Stage Pokémon` button
+    (left-click = next un-staged party slot ascending; right-click =
+    descending). Display tile is the Pokémon's `PokemonItem`. Click a
+    staged tile to un-stage.
+  - Items: dragged from inventory into the player's own item slots
+    (4–6 per side). Ownership enforced — players can't drop items into
+    the other side's slots or remove the other side's items.
+  - Money: `+ Add Money` button (left = +\$100, shift-left = +\$1,000,
+    right = -\$100, shift-right = clear) or `/trade money <amount>`.
+    Money isn't escrowed — sender validates at execute time.
+  - Confirm: each side clicks their Confirm tile. Any offer change
+    un-confirms BOTH sides (matches canon Pokémon trading). When both
+    are confirmed, execute fires.
+  - Execute (atomic): validates level caps both ways (blocks trade if
+    any incoming Pokémon exceeds receiver's cap), validates money still
+    in sender's wallet, validates pokemon still in sender's party (by
+    UUID), then transfers — pokemon to receiver's party with overflow
+    to PC, items into receiver's inventory with overflow dropped at
+    their feet, money via `EconomyBridge` (NeoEssentials).
+  - Cancel paths (`/trade cancel`, closing the chest window, logout,
+    one side disconnecting) all funnel through a single refund: items
+    return to the original owner's inventory (drops at their feet if
+    full), money offers reset, session torn down.
+
+  Files: new `com.cobblemonbridge.trade` package
+  (`TradeOffer`, `TradeSession`, `TradeManager`, `TradeMenu`,
+  `TradeLifecycle`) + `commands/TradeCommand`. ~800 LOC total.
+  Level-cap blocking matches the existing `TradeCapHook` policy
+  (which gates Cobblemon's built-in trade event); our custom trade
+  applies the same rule inline since it doesn't go through the
+  Cobblemon trade API.
+
 ## [0.7.9] - 2026-05-29
 
 Combined hotfix + small-features bundle (squash of three in-flight

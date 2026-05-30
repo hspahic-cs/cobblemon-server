@@ -14,11 +14,13 @@ import com.cobblemonbridge.commands.ProfileCommand
 import com.cobblemonbridge.commands.SpawnCommands
 import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
+import com.cobblemonbridge.commands.TradeCommand
 import com.cobblemonbridge.commands.WildCommand
 import com.cobblemonbridge.eggs.EggDefeatHook
 import com.cobblemonbridge.gymtp.GymTpNpcHook
 import com.cobblemonbridge.gymtp.GymTpRegistry
 import com.cobblemonbridge.npc.MarketVendorAnchor
+import com.cobblemonbridge.trade.TradeLifecycle
 import com.cobblemonbridge.quests.HealQuestHook
 import com.cobblemonbridge.quests.PartyLevelHook
 import com.cobblemonbridge.quests.SetHomeHook
@@ -73,6 +75,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
 
         NeoForge.EVENT_BUS.register(GymTpNpcHook)
         NeoForge.EVENT_BUS.register(MarketVendorAnchor)
+        NeoForge.EVENT_BUS.register(TradeLifecycle)
         NeoForge.EVENT_BUS.register(WorldRulesHook)
 
         val cobbleloots = CobbleloootsAdapter.isPresent()
@@ -99,6 +102,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         SpawnCommands.register(event.dispatcher)
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
+        TradeCommand.register(event.dispatcher)
     }
 
     @Suppress("UNUSED_PARAMETER")

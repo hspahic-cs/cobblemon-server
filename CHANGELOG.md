@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.9] - 2026-05-29
+
+### Fixed
+- **cobblemon-ranked / "I lost a ranked battle and my ELO went UP"**:
+  0.7.8 raised `minimumElo` 1000 → 1200 thinking that's what "decay
+  target = 1200" meant. But `minimumElo` is the floor for *all* ELO
+  drops — including normal battle losses. So any player whose ELO
+  was below 1200 (e.g. 1100 from earlier losses) would, on their
+  next loss, see the calculated new ELO clamped UP to 1200 by
+  `maxOf(newLoser, minimumElo)`. The loss read as a gain.
+
+  Reverted `minimumElo` to 1000 (the historical battle-loss floor).
+  Decay's target/opponent is still `startingElo = 1200` via
+  `EloCalculator.decayElo`, which is what actually implements
+  "decay drags inactive players toward 1200" — independent of the
+  battle-loss floor. `decayEnabled = false` from 0.7.8 is unchanged.
+
+  Live runtime config on dev patched (`minimumElo: 1200 → 1000`)
+  so the floor is correct on the next restart.
+
 ## [0.7.8] - 2026-05-29
 
 ### Fixed

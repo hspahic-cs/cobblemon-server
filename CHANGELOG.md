@@ -16,9 +16,24 @@ root README.
 
 Combined hotfix + small-features bundle (squash of three in-flight
 PRs: ELO floor revert, EXP-candy chest blocker, /profile header +
-favorite-tracker fix).
+favorite-tracker fix). Plus a fourth fix landed on top: the
+recurring "had to beat the gym twice to get credit" bug, finally
+killed by talking to RCT directly instead of guessing from proximity.
 
 ### Fixed
+- **cobblemon-bridge / "had to beat gym N twice to progress"**
+  finally fixed deterministically. The 0.7.6 proximity-scan fallback
+  missed in edge cases (player teleported into arena before
+  `BATTLE_STARTED_PRE` could scan; trainer despawned post-battle; the
+  `EntityInteract` stash was empty because the player engaged via LOS
+  with no right-click). New primary path: a reflection bridge into
+  RCT's own `RCTMod.getInstance().getTrainerManager().getBattle(uuid)`,
+  which returns the `TrainerBattle` for that battle id directly.
+  `TrainerBattle.getTrainerId()` then hands us the trainer JSON stem
+  (`"gym_06_volkner"`, `"gym_03_korrina_challenge"`); a regex parses
+  out `gymId` + `_challenge` flag. Zero dependence on entity proximity
+  or event timing. The stash + proximity machinery is kept as
+  defensive fallback in case RCT changes its API or isn't loaded.
 - **cobblemon-ranked / "I lost a ranked battle and my ELO went UP"**:
   0.7.8 raised `minimumElo` 1000 → 1200 thinking that's what "decay
   target = 1200" meant. But `minimumElo` is the floor for *all* ELO

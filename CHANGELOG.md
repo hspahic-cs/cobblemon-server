@@ -12,6 +12,37 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.13] - 2026-05-30
+
+Two playtest-surfaced bug fixes from 0.7.12 + a small market addition.
+
+### Fixed
+- **Gacha "Nature Mint" entries gave nothing** — common.json's `1 Nature
+  Mint (random)` and rare.json's `3 Nature mints` both referenced
+  `cobblemon:nature_mint`, which isn't a real Cobblemon item id (the actual
+  items are per-nature: `cobblemon:adamant_mint`, `cobblemon:bold_mint`,
+  etc.). `RewardGranter.materialize` resolved them to `Items.AIR` and
+  logged a warning, so the gacha pull was silent no-op. Switched both
+  entries to `random_item` across all 21 typed mints (the 4 neutral
+  natures — bashful/docile/hardy/quirky — don't have mints, intentionally
+  excluded). For the rare entry's `count: 3`, the random_item rolls once
+  per entry and grants 3 of the picked nature; this is the existing
+  RandomItem behavior, not a regression. **This was also the "missing
+  item after Rare Candy in the common preview"** — same cause.
+
+### Added
+- **5 EXP Candy entries on the default-vendor market**
+  (xs/s/m/l/xl), so they appear in `/market prices` and are purchasable.
+  Prices follow the 5× sell→buy spread from the original design table:
+  `xs 5/25`, `s 30/150`, `m 90/450`, `l 270/1350`, `xl 810/4050`. All at
+  `baseStock=200` and elasticity 1.0 — they pick up the server-wide
+  `buyStockImpact=3` default, so a single buy drains 3 stock and the
+  price clamp at `[1/3, 3]` keeps arbitrage impossible. The original
+  table gated these on a future daily-cap mod; that gate is now released
+  on user direction. If grinding turns out to be exploitable in playtest,
+  the per-item override knobs (lower `buyPriceClamp`, higher
+  `buyStockImpact`) can tighten without a code change.
+
 ## [0.7.12] - 2026-05-30
 
 Gacha reward fixes + market table cleanup + advancement menu cleanup. Mostly

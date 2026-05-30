@@ -296,6 +296,51 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:exp_candy_l": {
+    "baseBuyPrice": 1350,
+    "baseSellPrice": 270,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:exp_candy_m": {
+    "baseBuyPrice": 450,
+    "baseSellPrice": 90,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:exp_candy_s": {
+    "baseBuyPrice": 150,
+    "baseSellPrice": 30,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:exp_candy_xl": {
+    "baseBuyPrice": 4050,
+    "baseSellPrice": 810,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:exp_candy_xs": {
+    "baseBuyPrice": 25,
+    "baseSellPrice": 5,
+    "baseStock": 200,
+    "elasticity": 1.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:exp_share": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,

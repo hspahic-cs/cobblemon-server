@@ -76,6 +76,18 @@ DEFAULT_VENDOR_ITEMS: dict[str, dict] = {
     # No explicit buyStockImpact — picks up the server-wide default of 3.0
     # (see ItemConfig.kt's effectiveBuyStockImpact extension property).
     "cobblemon:rare_candy": {"baseBuyPrice": 4050, "baseSellPrice": 810, "baseStock": 200, "elasticity": 1.0},
+
+    # ─── EXP Candies (added 0.7.13) ────────────────────────────────────
+    # Per-tier prices from the source design table (5x sell→buy spread).
+    # The table originally gated these on a future daily-cap mod, but they were
+    # added to /market without waiting — buyStockImpact=3 default + restock
+    # provides natural friction in the meantime (max ~66 buys before the
+    # 200-baseStock floor empties).
+    "cobblemon:exp_candy_xs": {"baseBuyPrice": 25,   "baseSellPrice": 5,   "baseStock": 200, "elasticity": 1.0},
+    "cobblemon:exp_candy_s":  {"baseBuyPrice": 150,  "baseSellPrice": 30,  "baseStock": 200, "elasticity": 1.0},
+    "cobblemon:exp_candy_m":  {"baseBuyPrice": 450,  "baseSellPrice": 90,  "baseStock": 200, "elasticity": 1.0},
+    "cobblemon:exp_candy_l":  {"baseBuyPrice": 1350, "baseSellPrice": 270, "baseStock": 200, "elasticity": 1.0},
+    "cobblemon:exp_candy_xl": {"baseBuyPrice": 4050, "baseSellPrice": 810, "baseStock": 200, "elasticity": 1.0},
 }
 
 # Schema defaults — match ItemEntry.kt. The optional overhaul fields

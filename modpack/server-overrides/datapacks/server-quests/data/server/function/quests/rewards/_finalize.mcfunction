@@ -105,6 +105,12 @@ execute as @a[tag=cq_reward_item_pokedex_100] at @s run give @s cobblemon:master
 execute as @a[tag=cq_reward_item_pokedex_100] at @s run gacha grant @s ultra 1
 tag @a[tag=cq_reward_item_pokedex_100] remove cq_reward_item_pokedex_100
 
+# defeat_elite_four (mainline): 1 master ball + ultra gacha key. Cash bonus ($5000)
+# paid directly via /eco give in defeat_elite_four.mcfunction.
+execute as @a[tag=cq_reward_item_elite_four] at @s run give @s cobblemon:master_ball 1
+execute as @a[tag=cq_reward_item_elite_four] at @s run gacha grant @s ultra 1
+tag @a[tag=cq_reward_item_elite_four] remove cq_reward_item_elite_four
+
 # ELO milestones: progressive battle kit
 execute as @a[tag=cq_reward_item_ranked_starter] at @s run give @s cobblemon:great_ball 1
 execute as @a[tag=cq_reward_item_ranked_starter] at @s run give @s cobblemon:super_potion 1

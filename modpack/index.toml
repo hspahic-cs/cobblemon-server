@@ -340,7 +340,11 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "9689a75cd628a68d13ae31cd00c290e17c4523fb877e27bc82f7bbb70d076b3a"
+hash = "2f23dffa324aefa21be3782439e6e5e2c66648ba07f7a00685cb967291d2fcff"
+
+[[files]]
+file = "resourcepacks/AllTheMons [R3.5].zip"
+hash = "0c6086b17c5f4a4ed5809ad21215ce60b5d2b023f57fde214c2209d4be6de1f3"
 
 [[files]]
 file = "server-overrides/config/README.md"
@@ -397,6 +401,10 @@ hash = "a3e411e5a9039cf7dda073a2915e5e40677bbfa3247b90ccd67803c008697861"
 [[files]]
 file = "server-overrides/config/starterkit/kits/Default.txt"
 hash = "d8395dae433bc099ba84f0244e27d70c91487c3428b39a0475bc5f07ffcbe092"
+
+[[files]]
+file = "server-overrides/datapacks/AllTheMons [R3.5].zip"
+hash = "0c6086b17c5f4a4ed5809ad21215ce60b5d2b023f57fde214c2209d4be6de1f3"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/README.md"
@@ -1400,139 +1408,139 @@ hash = "3e0cc4f5ff507901b46e5a2d17036b8f5db342861dbfbf56fa0761a241c18e5c"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_1.mcfunction"
-hash = "4735dbc042ac26d4f16286ba5a124f85df334b81faaeb69412d1e7ba4c54cf38"
+hash = "eca85b62471df0c541fa81b9bdc4c3c86e3329f044201160e858c619c4e093a0"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_10.mcfunction"
-hash = "8cefec50b37b415f29ec8fbec426a99fee24cc059199f3a359470ba4a331f435"
+hash = "ea28e4e4f7de594148d4eca2c206bbb50c5ef1a427a3d772045ed51136fae251"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_10_challenge.mcfunction"
-hash = "9c0fb28e31f16a758e6a8227aa060687970b239f424a78ab178f27ce1a66d289"
+hash = "6542fa9749fdf0d1ece3067652e83d1289ff725a971c098757efef8e571456aa"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_11.mcfunction"
-hash = "20c9a955c6ff0915602d49299257fed6fd62f269a65693168a17ea57304cd283"
+hash = "37eed4906d27f0187880bec07b9186e42908b1b8fa60d6f0cfe5b731afef5725"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_12.mcfunction"
-hash = "29b7c64907a99da5acf627acca31243940816e8477c173a41c0ae4bcf2daef60"
+hash = "bf85fccb664473d043d0b6c0d944e2ef170db2b58f9f6db99dd6c575970c03ca"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_13.mcfunction"
-hash = "bf02af5768b4d0b64603c81a82a24dff9c266ce0d92b781114e98e68c23f5453"
+hash = "c39ff4f81eff119b7dfd4d6c908282fd71ebdd6aaafb39c0b240233f28186608"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_14.mcfunction"
-hash = "85e05ba26d43b6ac49b4a3b34736d51253d6053cc8643f49b03ef4d7ef5985d8"
+hash = "8a15b17d904d4d7283031f359ae678a47d6ae3734d34c4ca94e9718fef03afff"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_15.mcfunction"
-hash = "8c94e57d03b2fe97e04f078c26a56cfb057f31c7acc02a4a40487b850dbdf32c"
+hash = "1ce0c0755e08fa93699b5dfa635d4d8737624c32754867658a4e299e3e40b6fa"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_16.mcfunction"
-hash = "ddffc765ecb6df38741ab55a6e173273bcbf48d6e1929a04ceac2cdde452d0c3"
+hash = "2519cff5e68d45410877fe81e8b12489edf104085a4c6d3d2481ef74b250d75e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_17.mcfunction"
-hash = "820efc16c796b2c9ebf26426530a502ddc3add8ec3029898a3f2ed39467fa3f0"
+hash = "580190d16a9e28d50549e41485a818ca7b33ca13dff5370f55b21d884b82c7a3"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_18.mcfunction"
-hash = "e69675be197fe6fef8547d01e65f7aaf06a40f2460daa94eabdd7dc6e4028f78"
+hash = "384abe0496909df1b033c3ba447f7c680b2657d9df3de2e10039183681e07a38"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_19.mcfunction"
-hash = "6fa2732b89840dbd64e4b01f10b95fb0a939be2a76c8cd6e7cc4535e3e9c7b5a"
+hash = "98b19b83f2e14df43dc367d05809c8b9c8d5ed9590aa4b20d6c84fad1a8ba112"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_1_challenge.mcfunction"
-hash = "a7d87eb075b691f1625a427b956dbd05a2f4318673f1f6eca060c10d452a1f7e"
+hash = "e7be352c49c76c9077b62978274469de0650052c9dcb0b6d192dbbbc360bbe78"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_2.mcfunction"
-hash = "e90fdf70b70fed2363a08526b2fd54f6c93433f174d3a9ee919cc8216484881b"
+hash = "61a7dce6934f38d04d1d775271536450cef2786a0f5f5397858155ed0a146635"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_20.mcfunction"
-hash = "48ee2123743fc2d8e7c312545ad69bb18ecdd5259362200697a52f10e1ecd42a"
+hash = "1511cf98db6776133d055d6f043f23bc2073a6706105785c5177ac86ddeea171"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_21.mcfunction"
-hash = "0902cf583a59074c415e06d43dd8aef3120057275e0e62050f124c3fc85f2cb3"
+hash = "c8130d92fb57bdc0585295f1b50a44dfe815592bf1e431cd50911eae340bd96b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_22.mcfunction"
-hash = "09de03469cd2833e9faf4f6c09f26f8b71c46a1caaafaebb694f814b4258ef7b"
+hash = "0929e51dae54dfacb3be41368b61bc274b566b5e2ccb40f80ad79d408703507d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_23.mcfunction"
-hash = "9e9dac8152809b496144adda893bc5065fb8a1ad5f9649cab13dc0faaae37599"
+hash = "c9ee6c2763df93da2de85745e9d6ea0fd23e838d8fcbb55e98936b5f6cf4656e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_24.mcfunction"
-hash = "111ea8568dee716e3f6bf7e6a1dce338ec2a254232ccd3b52c470a19d806eef2"
+hash = "4978c89d48db03e33891a64f95aabd66f0ce25a9584a2e44aa1c87d1c677f102"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_2_challenge.mcfunction"
-hash = "729959c176f36c811b11d44f9bd6f44b3e2e637118de8fa769e3418c43b5b492"
+hash = "aa08761fc39644ee52ab66c041e085283f6031f29e26772bd2916dc7b4dd875a"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_3.mcfunction"
-hash = "23895634c0ffd6dd991943da93a89290f125c977ecdf4c54968a058a779e282c"
+hash = "e5e9b60dc5f8344ce07700d8252fedd469b70cda9114c5e36f6d873540239736"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_3_challenge.mcfunction"
-hash = "9bcaccce33fb0099769593d5e11379c71d22f173cdbeac33d7475b3a09a5c0a2"
+hash = "47eb35cb8b42d44923660b2fdeb1b399091bd11fd0d4795387e20cb883b4b896"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_4.mcfunction"
-hash = "a8efe522c148c8295d4b0b4c3260abd857207f020e9a9f90c098f6110bbffd4f"
+hash = "bf6fcf33f4df8b0d045b663be25d744a393a5a3d2353df63bf03d45cf9b12c5b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_4_challenge.mcfunction"
-hash = "1ca4a0bdb04217651c7ad1642d6982c6ca94cc387c318ac91834871f65889c74"
+hash = "574395c40b2e7306c8eca1ea7daceec8b75aeae7bd2319431d661b7e9bf62c43"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_5.mcfunction"
-hash = "1e5549bf4291b79bc204131445b0114b15adca09e73b417f8fba8641905d7139"
+hash = "bb2117dbd05893c8da292121ad4c6e49ec14aec7f2a60157bccf6d23cb2b9a57"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_5_challenge.mcfunction"
-hash = "b7c842540637e35e009b173e5d4d49a7e4d2da7f66d23895a9b27275fb18b6b1"
+hash = "1829a5dfa054b2ada9d8fae2cb215870789f153c702038a18d68b3be667724b6"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_6.mcfunction"
-hash = "34a6a9d529731e2b7794993f2fe35371248a0698e0b08119d79f0ba2d2d8691a"
+hash = "f5565fc858195306d69040073761c67f324713fabfc59cf7772c8a4792cb5988"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_6_challenge.mcfunction"
-hash = "47a9a237b2cba199258ee4ecf5c945b5cb47809304aec778424aca5da6d2696b"
+hash = "09806c936f35c8886f1f723f1a58631aa772205eca8762d0179c1588f6547678"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_7.mcfunction"
-hash = "d16f31b9bd32c335207147d8da43aaf9da0c133eb6e3208d8109e3f3b1fe9165"
+hash = "dad4f814142ca551d37f6d32f8616b7aaa4fcec5e1b7ccc78e4d1ad54008f733"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_7_challenge.mcfunction"
-hash = "79e1cd85a9470a296aaac973778597b51797a92debee6f7767535c612dece3a1"
+hash = "9a1068b5c732d3192183790a9a2aa4d8f7adafdc85f6dd1ca196ceaf711cfcc9"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_8.mcfunction"
-hash = "975ec7339e70f5a4f9dcc1bc71a4e6a2edc66be3e86c58d663087cb1f6e17e14"
+hash = "467e4e0271cc7874a361cdbb1452011b7cdd00ca50033d16726d5f0e692142ac"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_8_challenge.mcfunction"
-hash = "682063b8e237cb765b14a5751bc3c1462aa49e8a034ea2a91b803b19cae65c65"
+hash = "8f31d01c841cc257ca691a1ea7afbd95dc65cb3f38b9a8d7f9d1d71b5441fb35"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_9.mcfunction"
-hash = "4a5622d5eb9ec8980e28ac845fb5a4dc9b5f2c5b6715c87fd2ae42a8ba3cb817"
+hash = "e32cb707499a8ae376fcc61bde06b8bb0889844b99899ea2cdf41ef79a2abe3d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_9_challenge.mcfunction"
-hash = "76e3b7019570f1e29dc4a338e0a5ed1cdebab1cb896baeaf1dcdf8127e06fb02"
+hash = "634b9675ddfbc9ce30417ef24701c596f8d9d5421ffc76dea9404a757e007721"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_all.mcfunction"
@@ -1544,7 +1552,7 @@ hash = "c73be90c8b8639c7821bdfa46bd68bf032fe0316c7cffb4eeb563bc6450b0450"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/market/spawn_npc.mcfunction"
-hash = "d388bdb290a0bd2243dbc905f8dbf30499a023b2087b8b3775dd00eaeb64b890"
+hash = "7f95251a207705f5c8d2fa5760b22ef5307ae2e5408a09f1d9d91971271cd41a"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/hud/handle_toggle.mcfunction"

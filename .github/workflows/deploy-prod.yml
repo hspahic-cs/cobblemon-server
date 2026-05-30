@@ -130,15 +130,19 @@ jobs:
               rm -rf ${VERSION_DIR}
               mv staging/${VERSION_DIR} ./
             fi
-            rm -rf mods.swap-new mods.swap-old
+            # Best-effort sweep of any leaked swap-* dirs from prior runs.
+            # rm may exit non-zero if files inside are owned by another
+            # user (e.g. sysadmin from a manual repair) — that's fine.
+            rm -rf mods.swap-new mods.swap-old.* || true
             cp -al ${VERSION_DIR} mods.swap-new
+            SWAP_OLD=mods.swap-old.\$\$
             if [ -L mods ]; then
               rm mods
             elif [ -e mods ]; then
-              mv mods mods.swap-old
+              mv mods \$SWAP_OLD
             fi
             mv mods.swap-new mods
-            rm -rf mods.swap-old
+            rm -rf \$SWAP_OLD || true
             sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
             ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
             echo '${{ steps.ref.outputs.version }}' > .deployed_version

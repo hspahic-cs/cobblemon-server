@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Olivia",
+  "team": [
+    {
+      "ability": "overgrow",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 58,
+      "moveset": [
+        "sludgebomb",
+        "synthesis",
+        "petalblizzard",
+        "solarbeam"
+      ],
+      "nature": "sassy",
+      "species": "venusaur"
+    },
+    {
+      "ability": "overgrow",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "synthesis",
+        "crunch",
+        "gigadrain",
+        "leafstorm"
+      ],
+      "nature": "mild",
+      "species": "torterra"
+    }
+  ]
+}

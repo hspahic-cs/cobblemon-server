@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Sebastian",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 7,
+      "moveset": [
+        "lowkick",
+        "leer",
+        "focusenergy"
+      ],
+      "nature": "naive",
+      "species": "machop"
+    }
+  ]
+}

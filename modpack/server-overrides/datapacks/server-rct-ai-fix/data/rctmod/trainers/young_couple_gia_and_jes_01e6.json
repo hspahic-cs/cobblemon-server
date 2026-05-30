@@ -1,0 +1,57 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Young Couple Gia & Jes",
+  "team": [
+    {
+      "ability": "plus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 38,
+      "moveset": [
+        "screech",
+        "swagger",
+        "toxic",
+        "discharge"
+      ],
+      "nature": "lonely",
+      "species": "toxtricity"
+    },
+    {
+      "ability": "minus",
+      "aspects": [
+        "low_key"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 38,
+      "moveset": [
+        "screech",
+        "swagger",
+        "toxic",
+        "discharge"
+      ],
+      "nature": "naive",
+      "species": "toxtricity"
+    }
+  ]
+}

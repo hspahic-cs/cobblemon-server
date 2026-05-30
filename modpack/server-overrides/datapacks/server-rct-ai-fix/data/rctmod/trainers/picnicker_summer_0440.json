@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Summer",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "growl",
+        "quickattack",
+        "endeavor",
+        "aerialace"
+      ],
+      "nature": "jolly",
+      "species": "staravia"
+    },
+    {
+      "ability": "flowergift",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "morningsun",
+        "growth",
+        "magicalleaf",
+        "leechseed"
+      ],
+      "nature": "timid",
+      "species": "cherrim"
+    }
+  ]
+}

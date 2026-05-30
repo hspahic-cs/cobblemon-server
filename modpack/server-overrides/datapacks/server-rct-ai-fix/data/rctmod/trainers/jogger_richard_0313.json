@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Jogger Richard",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "leer",
+        "charge",
+        "bite",
+        "spark"
+      ],
+      "nature": "hardy",
+      "species": "luxio"
+    }
+  ]
+}

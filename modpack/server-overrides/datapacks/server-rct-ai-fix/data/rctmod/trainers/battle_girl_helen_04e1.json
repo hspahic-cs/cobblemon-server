@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Battle Girl Helen",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "lowkick",
+        "forcepalm",
+        "psybeam",
+        "highjumpkick"
+      ],
+      "nature": "jolly",
+      "species": "meditite"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 33,
+      "moveset": [
+        "lowsweep",
+        "knockoff",
+        "strength",
+        "dualchop"
+      ],
+      "nature": "jolly",
+      "species": "machop"
+    }
+  ]
+}

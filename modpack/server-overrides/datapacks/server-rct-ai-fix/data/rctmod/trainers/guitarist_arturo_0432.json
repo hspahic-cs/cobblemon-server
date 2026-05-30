@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Guitarist Arturo",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "absorb",
+        "supersonic",
+        "meanlook",
+        "poisonfang"
+      ],
+      "nature": "sassy",
+      "species": "zubat"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "absorb",
+        "supersonic",
+        "meanlook",
+        "poisonfang"
+      ],
+      "nature": "sassy",
+      "species": "zubat"
+    }
+  ]
+}

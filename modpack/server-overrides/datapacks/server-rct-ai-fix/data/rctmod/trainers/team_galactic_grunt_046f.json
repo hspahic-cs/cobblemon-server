@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (33)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "heatproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "confuseray",
+        "payback",
+        "extrasensory",
+        "irondefense"
+      ],
+      "nature": "serious",
+      "species": "bronzor"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "screech",
+        "astonish",
+        "poisonfang",
+        "bite"
+      ],
+      "nature": "bashful",
+      "species": "golbat"
+    }
+  ]
+}

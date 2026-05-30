@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Mason",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 9,
+      "moveset": [
+        "lowkick",
+        "leer",
+        "focusenergy",
+        "revenge"
+      ],
+      "nature": "naive",
+      "species": "machop"
+    }
+  ]
+}

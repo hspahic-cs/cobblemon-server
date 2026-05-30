@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Young Couple Sue & Ty",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "lowkick",
+        "detect",
+        "forcepalm",
+        "psybeam"
+      ],
+      "nature": "bashful",
+      "species": "meditite"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "leer",
+        "focusenergy",
+        "lowsweep",
+        "knockoff"
+      ],
+      "nature": "impish",
+      "species": "machop"
+    }
+  ]
+}

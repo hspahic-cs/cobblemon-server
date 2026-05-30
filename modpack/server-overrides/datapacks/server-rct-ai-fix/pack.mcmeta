@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "Force every vanilla RCT trainer to use the rb AI so Cobblemon's BATTLE_VICTORY event fires correctly for non-gym trainer battles. See ops/gen_rct_ai_fix_datapack.py.",
+    "pack_format": 48
+  }
+}

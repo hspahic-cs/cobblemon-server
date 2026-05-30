@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Jogger Scott",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "quickattack",
+        "wingattack",
+        "endeavor",
+        "whirlwind"
+      ],
+      "nature": "sassy",
+      "species": "staravia"
+    }
+  ]
+}

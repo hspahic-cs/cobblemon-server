@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Kaitlyn",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "poisonsting",
+        "leechseed",
+        "gigadrain",
+        "synthesis"
+      ],
+      "nature": "timid",
+      "species": "roselia"
+    },
+    {
+      "ability": "snowwarning",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "iceshard",
+        "razorleaf",
+        "icywind",
+        "ingrain"
+      ],
+      "nature": "quirky",
+      "species": "snover"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (41)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "tackle",
+        "stringshot",
+        "poisonsting",
+        "harden"
+      ],
+      "nature": "quirky",
+      "species": "cascoon"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "poisonpowder",
+        "venoshock",
+        "leechlife",
+        "lightscreen"
+      ],
+      "nature": "hardy",
+      "species": "dustox"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "gust",
+        "aircutter",
+        "leechlife",
+        "attract"
+      ],
+      "nature": "docile",
+      "species": "beautifly"
+    }
+  ]
+}

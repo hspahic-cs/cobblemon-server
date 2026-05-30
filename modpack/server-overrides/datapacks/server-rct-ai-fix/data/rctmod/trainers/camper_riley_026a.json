@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Riley",
+  "team": [
+    {
+      "ability": "moldbreaker",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "stormthrow",
+        "swordsdance",
+        "thrash",
+        "superpower"
+      ],
+      "nature": "naughty",
+      "species": "pinsir"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 50,
+      "moveset": [
+        "takedown",
+        "megahorn",
+        "closecombat",
+        "reversal"
+      ],
+      "nature": "hardy",
+      "species": "heracross"
+    }
+  ]
+}

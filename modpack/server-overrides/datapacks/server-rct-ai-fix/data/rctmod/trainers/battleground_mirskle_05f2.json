@@ -1,0 +1,185 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Leader Mirskle",
+  "name": "Leader Mirskle",
+  "team": [
+    {
+      "ability": "technician",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 30
+      },
+      "level": 83,
+      "moveset": [
+        "magicalleaf",
+        "sludgebomb",
+        "hiddenpower",
+        "protect"
+      ],
+      "nature": "timid",
+      "species": "roserade"
+    },
+    {
+      "ability": "flowerveil",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "bright_powder"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 81,
+      "moveset": [
+        "dazzlinggleam",
+        "helpinghand",
+        "protect",
+        "flash"
+      ],
+      "nature": "bold",
+      "species": "florges"
+    },
+    {
+      "ability": "effectspore",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "utility_umbrella"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "appleacid",
+        "sludgebomb",
+        "strengthsap",
+        "sweetscent"
+      ],
+      "nature": "modest",
+      "species": "vileplume"
+    },
+    {
+      "ability": "triage",
+      "evs": {
+        "hp": 252,
+        "spa": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "big_root"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "drainingkiss",
+        "calmmind",
+        "sweetscent",
+        "floralhealing"
+      ],
+      "nature": "timid",
+      "species": "comfey"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:venusaurite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "gigadrain",
+        "sludgebomb",
+        "earthpower",
+        "sweetscent"
+      ],
+      "nature": "modest",
+      "species": "venusaur"
+    },
+    {
+      "ability": "technician",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 82,
+      "moveset": [
+        "bulletseed",
+        "machpunch",
+        "rocktomb",
+        "spore"
+      ],
+      "nature": "adamant",
+      "species": "breloom"
+    }
+  ]
+}

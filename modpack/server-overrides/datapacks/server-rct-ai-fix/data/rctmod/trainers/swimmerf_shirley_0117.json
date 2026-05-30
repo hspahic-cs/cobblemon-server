@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Shirley",
+  "team": [
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "hypnosis",
+        "doubleslap",
+        "dynamicpunch",
+        "circlethrow"
+      ],
+      "nature": "hardy",
+      "species": "poliwrath"
+    },
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "perishsong",
+        "swagger",
+        "bounce",
+        "hypervoice"
+      ],
+      "nature": "calm",
+      "species": "politoed"
+    },
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "bellydrum",
+        "wakeupslap",
+        "hydropump",
+        "mudbomb"
+      ],
+      "nature": "lax",
+      "species": "poliwhirl"
+    }
+  ]
+}

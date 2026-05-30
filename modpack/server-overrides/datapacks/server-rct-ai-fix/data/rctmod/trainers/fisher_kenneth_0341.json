@@ -1,0 +1,52 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Kenneth",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "splash",
+        "tackle"
+      ],
+      "nature": "relaxed",
+      "species": "magikarp"
+    },
+    {
+      "ability": "hustle",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "waterpulse",
+        "focusenergy",
+        "psybeam",
+        "aurorabeam"
+      ],
+      "nature": "hardy",
+      "species": "remoraid"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "leer",
+        "twister",
+        "icefang",
+        "waterfall"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    }
+  ]
+}

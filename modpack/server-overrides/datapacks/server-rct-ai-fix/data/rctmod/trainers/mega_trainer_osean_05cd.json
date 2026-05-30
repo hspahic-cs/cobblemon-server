@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Osean",
+  "team": [
+    {
+      "ability": "drizzle",
+      "evs": {
+        "def": 252,
+        "hp": 6,
+        "spa": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "damp_rock"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 52,
+      "moveset": [
+        "surf",
+        "airslash",
+        "knockoff",
+        "uturn"
+      ],
+      "nature": "modest",
+      "species": "pelipper"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "haban_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 54,
+      "moveset": [
+        "surf",
+        "dragonpulse",
+        "flashcannon",
+        "icebeam"
+      ],
+      "nature": "timid",
+      "species": "kingdra"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "water_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "hydropump",
+        "energyball",
+        "naturepower",
+        "teeterdance"
+      ],
+      "nature": "modest",
+      "species": "ludicolo"
+    },
+    {
+      "ability": "torrent",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 53,
+      "moveset": [
+        "liquidation",
+        "megahorn",
+        "revenge",
+        "retaliate"
+      ],
+      "nature": "adamant",
+      "species": "samurott"
+    },
+    {
+      "ability": "moldbreaker",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:gyaradosite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 54,
+      "moveset": [
+        "aquatail",
+        "crunch",
+        "icefang",
+        "dragondance"
+      ],
+      "nature": "adamant",
+      "species": "gyarados"
+    }
+  ]
+}

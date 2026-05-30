@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Brianna",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "growl",
+        "reflect",
+        "airslash",
+        "extrasensory"
+      ],
+      "nature": "timid",
+      "species": "noctowl"
+    },
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "skyattack",
+        "peck",
+        "uproar",
+        "roost"
+      ],
+      "nature": "jolly",
+      "species": "noctowl"
+    }
+  ]
+}

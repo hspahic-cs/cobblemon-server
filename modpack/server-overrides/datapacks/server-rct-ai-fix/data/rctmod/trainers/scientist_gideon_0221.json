@@ -1,0 +1,119 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Gideon",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "swift",
+        "screech",
+        "spark",
+        "sonicboom"
+      ],
+      "nature": "naive",
+      "species": "voltorb"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "spark",
+        "sonicboom",
+        "screech",
+        "charge"
+      ],
+      "nature": "adamant",
+      "species": "electrode"
+    },
+    {
+      "ability": "magnetpull",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "screech",
+        "swift",
+        "spark",
+        "thunderwave"
+      ],
+      "nature": "lonely",
+      "species": "magnemite"
+    },
+    {
+      "ability": "magnetpull",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "triattack",
+        "spark",
+        "thunderwave",
+        "sonicboom"
+      ],
+      "nature": "gentle",
+      "species": "magneton"
+    },
+    {
+      "ability": "trace",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "triattack",
+        "shadowball",
+        "recover",
+        "psybeam"
+      ],
+      "nature": "naughty",
+      "species": "porygon"
+    }
+  ]
+}

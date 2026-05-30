@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Bjorn",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "supersonic",
+        "bubblebeam",
+        "headbutt",
+        "airslash"
+      ],
+      "nature": "timid",
+      "species": "mantyke"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "quickattack",
+        "metalclaw",
+        "icywind",
+        "honeclaws"
+      ],
+      "nature": "jolly",
+      "species": "sneasel"
+    }
+  ]
+}

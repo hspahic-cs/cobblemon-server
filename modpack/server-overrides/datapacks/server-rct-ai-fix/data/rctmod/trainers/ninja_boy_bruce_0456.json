@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ninja Boy Bruce",
+  "team": [
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 27,
+      "moveset": [
+        "furyswipes",
+        "bite",
+        "venoshock",
+        "toxic"
+      ],
+      "nature": "naive",
+      "species": "stunky"
+    }
+  ]
+}

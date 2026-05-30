@@ -1,0 +1,124 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Garrett",
+  "team": [
+    {
+      "ability": "stormdrain",
+      "aspects": [
+        "sevii"
+      ],
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "air_balloon"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "thunder",
+        "sludgewave",
+        "waterpulse",
+        "hiddenpower"
+      ],
+      "nature": "timid",
+      "species": "mantine"
+    },
+    {
+      "ability": "competitive",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "surf"
+      ],
+      "nature": "timid",
+      "species": "milotic"
+    },
+    {
+      "ability": "protean",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_specs"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "surf",
+        "icebeam",
+        "darkpulse",
+        "extrasensory"
+      ],
+      "nature": "timid",
+      "species": "greninja"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "boomburst",
+        "blizzard",
+        "dracometeor",
+        "thunderbolt"
+      ],
+      "nature": "modest",
+      "species": "lapras"
+    }
+  ]
+}

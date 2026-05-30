@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Tristan",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "quickattack",
+        "doubleteam",
+        "endeavor",
+        "aerialace"
+      ],
+      "nature": "jolly",
+      "species": "staravia"
+    }
+  ]
+}

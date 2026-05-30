@@ -1,0 +1,55 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (31)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "taunt",
+        "revenge",
+        "suckerpunch",
+        "poisonjab"
+      ],
+      "nature": "bashful",
+      "species": "croagunk"
+    },
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "venoshock",
+        "screech",
+        "toxic",
+        "nightslash"
+      ],
+      "nature": "hardy",
+      "species": "stunky"
+    },
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "revenge",
+        "venoshock",
+        "suckerpunch",
+        "toxic"
+      ],
+      "nature": "quirky",
+      "species": "croagunk"
+    }
+  ]
+}

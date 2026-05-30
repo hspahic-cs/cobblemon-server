@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Reporter Valerie",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "astonish",
+        "gust",
+        "wingattack",
+        "nightshade"
+      ],
+      "nature": "bashful",
+      "species": "murkrow"
+    }
+  ]
+}

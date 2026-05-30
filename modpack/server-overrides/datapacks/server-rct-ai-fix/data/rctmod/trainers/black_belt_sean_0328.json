@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Sean",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "poisonsting",
+        "mudslap",
+        "revenge",
+        "suckerpunch"
+      ],
+      "nature": "hardy",
+      "species": "croagunk"
+    },
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 27,
+      "moveset": [
+        "detect",
+        "forcepalm",
+        "psybeam",
+        "calmmind"
+      ],
+      "nature": "hardy",
+      "species": "meditite"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "leer",
+        "focusenergy",
+        "revenge",
+        "knockoff"
+      ],
+      "nature": "relaxed",
+      "species": "machoke"
+    }
+  ]
+}

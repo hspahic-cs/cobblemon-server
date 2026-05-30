@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gambler Dirk",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 25,
+      "moveset": [
+        "screech",
+        "chargebeam",
+        "swift",
+        "electroball"
+      ],
+      "nature": "gentle",
+      "species": "voltorb"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 26,
+      "moveset": [
+        "spark",
+        "odorsleuth",
+        "thunderfang",
+        "bite"
+      ],
+      "nature": "hardy",
+      "species": "electrike"
+    }
+  ]
+}

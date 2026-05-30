@@ -1,0 +1,38 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Alec",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "splash",
+        "tackle",
+        "flail"
+      ],
+      "nature": "modest",
+      "species": "magikarp"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "icefang",
+        "waterfall",
+        "crunch",
+        "dragondance"
+      ],
+      "nature": "adamant",
+      "species": "gyarados"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (16)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "gluttony",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "minimize",
+        "harden",
+        "disable",
+        "sludge"
+      ],
+      "nature": "naive",
+      "species": "muk"
+    },
+    {
+      "ability": "neutralizinggas",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 42,
+      "moveset": [
+        "sludge",
+        "smog",
+        "tackle",
+        "poisongas"
+      ],
+      "nature": "bold",
+      "species": "weezing"
+    }
+  ]
+}

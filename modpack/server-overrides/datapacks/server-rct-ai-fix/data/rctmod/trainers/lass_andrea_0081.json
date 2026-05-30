@@ -1,0 +1,78 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Andrea",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 36,
+      "moveset": [
+        "taunt",
+        "shockwave",
+        "payday",
+        "slash"
+      ],
+      "nature": "docile",
+      "species": "meowth"
+    },
+    {
+      "ability": "pickup",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 36,
+      "moveset": [
+        "feintattack",
+        "taunt",
+        "payday",
+        "slash"
+      ],
+      "nature": "calm",
+      "species": "meowth"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 37,
+      "moveset": [
+        "sweetscent",
+        "bugbuzz",
+        "dazzlinggleam",
+        "aromatherapy"
+      ],
+      "nature": "naive",
+      "species": "cutiefly"
+    }
+  ]
+}

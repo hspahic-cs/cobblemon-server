@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Cole",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "whirlpool",
+        "brine",
+        "waterfall",
+        "raindance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "focusenergy",
+        "psybeam",
+        "aurorabeam",
+        "bubblebeam"
+      ],
+      "nature": "hardy",
+      "species": "remoraid"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "icefang",
+        "waterfall",
+        "crunch",
+        "dragondance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Jacky",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 26,
+      "moveset": [
+        "tailwhip",
+        "bite",
+        "aquajet",
+        "irontail"
+      ],
+      "nature": "jolly",
+      "species": "buizel"
+    }
+  ]
+}

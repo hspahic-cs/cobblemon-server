@@ -1,0 +1,154 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker William",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "custap_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "thunder",
+        "voltswitch",
+        "explosion",
+        "bodypress"
+      ],
+      "nature": "naive",
+      "species": "magnezone"
+    },
+    {
+      "ability": "defiant",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "swordsdance",
+        "knockoff",
+        "suckerpunch",
+        "ironhead"
+      ],
+      "nature": "jolly",
+      "species": "bisharp"
+    },
+    {
+      "ability": "waterbubble",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rindo_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "dragondance",
+        "waterfall",
+        "earthquake",
+        "bounce"
+      ],
+      "nature": "jolly",
+      "species": "whiscash"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "yache_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "hurricane",
+        "dragonpulse",
+        "hydropump",
+        "earthquake"
+      ],
+      "nature": "naive",
+      "species": "salamence"
+    },
+    {
+      "ability": "analytic",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "flipturn",
+        "hydropump",
+        "thunder",
+        "psychic"
+      ],
+      "nature": "timid",
+      "species": "starmie"
+    }
+  ]
+}

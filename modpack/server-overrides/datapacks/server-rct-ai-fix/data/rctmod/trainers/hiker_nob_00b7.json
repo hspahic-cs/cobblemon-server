@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Nob",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 18,
+      "moveset": [
+        "flail",
+        "iceshard",
+        "rollout",
+        "magnitude"
+      ],
+      "nature": "hardy",
+      "species": "phanpy"
+    },
+    {
+      "ability": "moxie",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 18,
+      "moveset": [
+        "rockthrow",
+        "torment",
+        "sandtomb",
+        "bulldoze"
+      ],
+      "nature": "adamant",
+      "species": "sandile"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 19,
+      "moveset": [
+        "rocktomb",
+        "lowsweep",
+        "seismictoss",
+        "revenge"
+      ],
+      "nature": "brave",
+      "species": "machop"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 19,
+      "moveset": [
+        "fakeout",
+        "forcepalm",
+        "whirlwind",
+        "knockoff"
+      ],
+      "nature": "docile",
+      "species": "makuhita"
+    }
+  ]
+}

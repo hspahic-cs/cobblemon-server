@@ -1,0 +1,165 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Silly Creator",
+  "team": [
+    {
+      "ability": "sandstream",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "smooth_rock"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "moveset": [
+        "explosion"
+      ],
+      "nature": "jolly",
+      "species": "gigalith"
+    },
+    {
+      "ability": "wonderguard",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "moveset": [
+        "phantomforce"
+      ],
+      "nature": "jolly",
+      "species": "shedinja"
+    },
+    {
+      "ability": "wonderguard",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "moveset": [
+        "phantomforce"
+      ],
+      "nature": "jolly",
+      "species": "shedinja"
+    },
+    {
+      "ability": "wonderguard",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "moveset": [
+        "phantomforce"
+      ],
+      "nature": "jolly",
+      "species": "shedinja"
+    },
+    {
+      "ability": "wonderguard",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "moveset": [
+        "phantomforce"
+      ],
+      "nature": "jolly",
+      "species": "shedinja"
+    },
+    {
+      "ability": "wonderguard",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "moveset": [
+        "phantomforce"
+      ],
+      "nature": "jolly",
+      "species": "shedinja"
+    }
+  ]
+}

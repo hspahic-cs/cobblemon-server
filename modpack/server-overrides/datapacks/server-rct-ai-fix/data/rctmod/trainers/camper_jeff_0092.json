@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Jeff",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 24,
+      "moveset": [
+        "furyattack",
+        "pursuit",
+        "pluck",
+        "doublehit"
+      ],
+      "nature": "quiet",
+      "species": "doduo"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 24,
+      "moveset": [
+        "spark",
+        "odorsleuth",
+        "thunderfang",
+        "bite"
+      ],
+      "nature": "docile",
+      "species": "electrike"
+    }
+  ]
+}

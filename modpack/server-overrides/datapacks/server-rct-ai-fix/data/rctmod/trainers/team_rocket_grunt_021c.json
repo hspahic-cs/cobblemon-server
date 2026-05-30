@@ -1,0 +1,76 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (50)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "poisonfang",
+        "screech",
+        "gunkshot",
+        "acidarmor"
+      ],
+      "nature": "naive",
+      "species": "muk"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "dualwingbeat",
+        "haze",
+        "venoshock",
+        "airslash"
+      ],
+      "nature": "mild",
+      "species": "golbat"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "return",
+        "superfang",
+        "doubleedge",
+        "endeavor"
+      ],
+      "nature": "careful",
+      "species": "raticate"
+    }
+  ]
+}

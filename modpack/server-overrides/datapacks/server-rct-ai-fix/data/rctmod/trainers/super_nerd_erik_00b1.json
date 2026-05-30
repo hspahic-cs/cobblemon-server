@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Erik",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 72,
+      "moveset": [
+        "flamethrower",
+        "quickattack",
+        "confuseray",
+        "safeguard"
+      ],
+      "nature": "mild",
+      "species": "ninetales"
+    },
+    {
+      "ability": "reckless",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 73,
+      "moveset": [
+        "fireblast",
+        "bounce",
+        "flareblitz",
+        "jumpkick"
+      ],
+      "nature": "relaxed",
+      "species": "rapidash"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 72,
+      "moveset": [
+        "firefang",
+        "flareblitz",
+        "helpinghand",
+        "retaliate"
+      ],
+      "nature": "mild",
+      "species": "arcanine"
+    }
+  ]
+}

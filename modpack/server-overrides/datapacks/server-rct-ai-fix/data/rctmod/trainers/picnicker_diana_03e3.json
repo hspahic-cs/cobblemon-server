@@ -1,0 +1,38 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Diana",
+  "team": [
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "absorb",
+        "growth",
+        "stunspore",
+        "worryseed"
+      ],
+      "nature": "timid",
+      "species": "budew"
+    },
+    {
+      "ability": "cloudnine",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "scratch",
+        "tailwhip",
+        "watergun"
+      ],
+      "nature": "timid",
+      "species": "psyduck"
+    }
+  ]
+}

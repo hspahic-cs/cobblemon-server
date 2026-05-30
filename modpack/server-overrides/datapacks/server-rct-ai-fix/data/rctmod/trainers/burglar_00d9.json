@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Burglar (3)",
+  "name": "Burglar",
+  "team": [
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "scaryface",
+        "thunderpunch",
+        "flameburst",
+        "slash"
+      ],
+      "nature": "timid",
+      "species": "charmander"
+    },
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "firefang",
+        "scaryface",
+        "thunderpunch",
+        "flameburst"
+      ],
+      "nature": "jolly",
+      "species": "charmeleon"
+    }
+  ]
+}

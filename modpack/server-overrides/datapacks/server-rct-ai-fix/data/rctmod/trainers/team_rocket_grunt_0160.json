@@ -1,0 +1,79 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (6)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "quickfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 15,
+      "moveset": [
+        "tackle",
+        "howl",
+        "bite",
+        "odorsleuth"
+      ],
+      "nature": "jolly",
+      "species": "poochyena"
+    },
+    {
+      "ability": "hustle",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 15,
+      "moveset": [
+        "quickattack",
+        "focusenergy",
+        "hyperfang",
+        "pursuit"
+      ],
+      "nature": "docile",
+      "species": "rattata"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 16,
+      "moveset": [
+        "supersonic",
+        "astonish",
+        "bite",
+        "wingattack"
+      ],
+      "nature": "bold",
+      "species": "zubat"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (29)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "spikes",
+        "suckerpunch",
+        "pinmissile",
+        "needlearm"
+      ],
+      "nature": "naive",
+      "species": "cacturne"
+    },
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "psychup",
+        "synchronoise",
+        "psychic",
+        "swagger"
+      ],
+      "nature": "calm",
+      "species": "hypno"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "slash",
+        "assurance",
+        "metalsound",
+        "embargo"
+      ],
+      "nature": "docile",
+      "species": "bisharp"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Wayne",
+  "team": [
+    {
+      "ability": "clearbody",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 17,
+      "moveset": [
+        "tackle",
+        "flash",
+        "ironhead"
+      ],
+      "nature": "jolly",
+      "species": "beldum"
+    }
+  ]
+}

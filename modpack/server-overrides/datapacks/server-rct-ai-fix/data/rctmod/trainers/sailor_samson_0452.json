@@ -1,0 +1,57 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Samson",
+  "team": [
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "mudslap",
+        "recover",
+        "waterpulse",
+        "raindance"
+      ],
+      "nature": "timid",
+      "species": "shellos"
+    },
+    {
+      "ability": "hydration",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "waterpulse",
+        "raindance",
+        "uturn",
+        "roost"
+      ],
+      "nature": "adamant",
+      "species": "wingull"
+    },
+    {
+      "ability": "stormdrain",
+      "aspects": [
+        "east_sea"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "mudslap",
+        "harden",
+        "recover",
+        "waterpulse"
+      ],
+      "nature": "relaxed",
+      "species": "shellos"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (39)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "toughclaws",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "furyswipes",
+        "screech",
+        "slash",
+        "metalsound"
+      ],
+      "nature": "gentle",
+      "species": "perrserker"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "dualwingbeat",
+        "haze",
+        "venoshock",
+        "airslash"
+      ],
+      "nature": "careful",
+      "species": "golbat"
+    },
+    {
+      "ability": "unburden",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 49,
+      "moveset": [
+        "nightslash",
+        "darkpulse",
+        "mysticalfire",
+        "foulplay"
+      ],
+      "nature": "adamant",
+      "species": "thievul"
+    },
+    {
+      "ability": "hustle",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "suckerpunch",
+        "superfang",
+        "doubleedge",
+        "endeavor"
+      ],
+      "nature": "adamant",
+      "species": "raticate"
+    }
+  ]
+}

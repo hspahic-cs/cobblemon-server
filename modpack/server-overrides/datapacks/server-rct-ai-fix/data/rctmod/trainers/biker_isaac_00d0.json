@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Isaac",
+  "team": [
+    {
+      "ability": "weakarmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "screech",
+        "toxicspikes",
+        "sludgebomb",
+        "spikes"
+      ],
+      "nature": "brave",
+      "species": "garbodor"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "screech",
+        "bravebird",
+        "sludgebomb",
+        "heatwave"
+      ],
+      "nature": "lax",
+      "species": "crobat"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "smokescreen",
+        "earthquake",
+        "rockblast",
+        "megahorn"
+      ],
+      "nature": "relaxed",
+      "species": "rhydon"
+    }
+  ]
+}

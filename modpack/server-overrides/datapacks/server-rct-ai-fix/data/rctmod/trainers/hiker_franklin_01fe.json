@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Franklin",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 25,
+      "moveset": [
+        "seismictoss",
+        "revenge",
+        "knockoff",
+        "vitalthrow"
+      ],
+      "nature": "quiet",
+      "species": "machoke"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 25,
+      "moveset": [
+        "rockthrow",
+        "smackdown",
+        "bulldoze",
+        "selfdestruct"
+      ],
+      "nature": "calm",
+      "species": "graveler"
+    }
+  ]
+}

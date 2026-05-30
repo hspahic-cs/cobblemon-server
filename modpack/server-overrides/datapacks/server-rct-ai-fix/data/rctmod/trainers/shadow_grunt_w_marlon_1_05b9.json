@@ -1,0 +1,61 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Shadow Grunt",
+  "team": [
+    {
+      "ability": "prankster",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 25,
+      "moveset": [
+        "nightshade",
+        "fakeout",
+        "willowisp",
+        "torment"
+      ],
+      "nature": "impish",
+      "species": "sableye"
+    },
+    {
+      "ability": "pickpocket",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 27,
+      "moveset": [
+        "leaftornado",
+        "suckerpunch",
+        "extrasensory",
+        "fakeout"
+      ],
+      "nature": "modest",
+      "species": "shiftry"
+    }
+  ]
+}

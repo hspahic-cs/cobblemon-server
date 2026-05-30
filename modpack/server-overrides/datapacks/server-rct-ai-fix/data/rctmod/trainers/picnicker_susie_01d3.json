@@ -1,0 +1,157 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Susie",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "fakeout",
+        "solarblade",
+        "knockoff",
+        "partingshot"
+      ],
+      "nature": "adamant",
+      "species": "shiftry"
+    },
+    {
+      "ability": "sapsipper",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "fireblast",
+        "dracometeor",
+        "sludgebomb",
+        "thunderbolt"
+      ],
+      "nature": "modest",
+      "species": "goodra"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "twisted_spoon"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "calmmind",
+        "psychic",
+        "weatherball",
+        "shadowball"
+      ],
+      "nature": "timid",
+      "species": "espeon"
+    },
+    {
+      "ability": "rockhead",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "air_balloon"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "headsmash",
+        "solarbeam",
+        "flareblitz",
+        "accelerock"
+      ],
+      "nature": "adamant",
+      "species": "arcanine"
+    },
+    {
+      "ability": "sweetveil",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spa": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "moonblast",
+        "mysticalfire",
+        "mistyexplosion",
+        "recover"
+      ],
+      "nature": "bold",
+      "species": "alcremie"
+    }
+  ]
+}

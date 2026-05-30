@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Cale",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 16,
+      "moveset": [
+        "leer",
+        "endure",
+        "furycutter",
+        "bugbite"
+      ],
+      "nature": "bold",
+      "species": "karrablast"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 17,
+      "moveset": [
+        "thunderwave",
+        "screech",
+        "strugglebug",
+        "electroweb"
+      ],
+      "nature": "lonely",
+      "species": "joltik"
+    },
+    {
+      "ability": "technician",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 15,
+      "moveset": [
+        "growl",
+        "bide",
+        "rocktomb",
+        "megadrain"
+      ],
+      "nature": "lax",
+      "species": "kricketune"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 17,
+      "moveset": [
+        "lightscreen",
+        "reflect",
+        "safeguard",
+        "machpunch"
+      ],
+      "nature": "adamant",
+      "species": "ledyba"
+    }
+  ]
+}

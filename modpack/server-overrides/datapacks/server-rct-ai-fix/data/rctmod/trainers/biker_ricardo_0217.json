@@ -1,0 +1,78 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Ricardo",
+  "team": [
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "sludge",
+        "explosion",
+        "tackle",
+        "poisongas"
+      ],
+      "nature": "modest",
+      "species": "weezing"
+    },
+    {
+      "ability": "neutralizinggas",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "sludge",
+        "smog",
+        "explosion",
+        "strangesteam"
+      ],
+      "nature": "adamant",
+      "species": "weezing"
+    },
+    {
+      "ability": "corrosion",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "minimize",
+        "sludge",
+        "disable",
+        "flameburst"
+      ],
+      "nature": "relaxed",
+      "species": "salazzle"
+    }
+  ]
+}

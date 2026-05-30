@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (26)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "screech",
+        "poisonfang",
+        "aircutter",
+        "bite"
+      ],
+      "nature": "serious",
+      "species": "golbat"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "screech",
+        "poisonfang",
+        "aircutter",
+        "bite"
+      ],
+      "nature": "bashful",
+      "species": "golbat"
+    }
+  ]
+}

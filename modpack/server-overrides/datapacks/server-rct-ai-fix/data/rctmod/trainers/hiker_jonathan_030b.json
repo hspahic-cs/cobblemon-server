@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Jonathan",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "harden",
+        "bind",
+        "smackdown",
+        "curse"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

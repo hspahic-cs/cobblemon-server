@@ -1,0 +1,99 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Amara",
+  "team": [
+    {
+      "ability": "competitive",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "hydropump",
+        "icebeam",
+        "hiddenpower",
+        "haze"
+      ],
+      "nature": "modest",
+      "species": "milotic"
+    },
+    {
+      "ability": "serenegrace",
+      "aspects": [
+        "sevii"
+      ],
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "scorchingsands",
+        "moonblast",
+        "scald",
+        "recover"
+      ],
+      "nature": "modest",
+      "species": "milotic"
+    },
+    {
+      "ability": "icescales",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "scald",
+        "icebeam",
+        "rest",
+        "sleeptalk"
+      ],
+      "nature": "calm",
+      "species": "dewgong"
+    }
+  ]
+}

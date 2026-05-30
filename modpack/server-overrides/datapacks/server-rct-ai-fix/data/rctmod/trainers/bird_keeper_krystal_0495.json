@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Krystal",
+  "team": [
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "drillpeck",
+        "lunge",
+        "quickattack",
+        "swordsdance"
+      ],
+      "nature": "impish",
+      "species": "dodrio"
+    },
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "drillrun",
+        "drillpeck",
+        "roost",
+        "assurance"
+      ],
+      "nature": "hardy",
+      "species": "fearow"
+    },
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "nightslash",
+        "swagger",
+        "foulplay",
+        "wingattack"
+      ],
+      "nature": "docile",
+      "species": "honchkrow"
+    }
+  ]
+}

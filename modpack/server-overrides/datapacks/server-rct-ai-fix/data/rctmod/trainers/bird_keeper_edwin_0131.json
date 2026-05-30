@@ -1,0 +1,100 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Edwin",
+  "team": [
+    {
+      "ability": "tangledfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "agility",
+        "airslash",
+        "mirrormove",
+        "tailwind"
+      ],
+      "nature": "quiet",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "steadfast",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 59,
+      "moveset": [
+        "brickbreak",
+        "swordsdance",
+        "slam",
+        "leafblade"
+      ],
+      "nature": "quirky",
+      "species": "farfetchd"
+    },
+    {
+      "ability": "klutz",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 58,
+      "moveset": [
+        "futuresight",
+        "psychic",
+        "endeavor",
+        "heatwave"
+      ],
+      "nature": "quiet",
+      "species": "swoobat"
+    },
+    {
+      "ability": "tangledfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 57,
+      "moveset": [
+        "agility",
+        "airslash",
+        "mirrormove",
+        "tailwind"
+      ],
+      "nature": "naive",
+      "species": "pidgeot"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Maurice",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 30,
+      "moveset": [
+        "defensecurl",
+        "rollout",
+        "smackdown",
+        "stealthrock"
+      ],
+      "nature": "relaxed",
+      "species": "graveler"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 32,
+      "moveset": [
+        "leer",
+        "lowsweep",
+        "knockoff",
+        "strength"
+      ],
+      "nature": "relaxed",
+      "species": "machoke"
+    }
+  ]
+}

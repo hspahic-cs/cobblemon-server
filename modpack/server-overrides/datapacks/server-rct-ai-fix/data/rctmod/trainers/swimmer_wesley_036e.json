@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Wesley",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "bite",
+        "swift",
+        "aquajet",
+        "waterfall"
+      ],
+      "nature": "jolly",
+      "species": "buizel"
+    },
+    {
+      "ability": "liquidooze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 41,
+      "moveset": [
+        "supersonic",
+        "bubblebeam",
+        "acidarmor",
+        "poisonjab"
+      ],
+      "nature": "timid",
+      "species": "tentacruel"
+    }
+  ]
+}

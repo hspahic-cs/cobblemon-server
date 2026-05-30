@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rich Boy Jason",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "leer",
+        "charge",
+        "bite",
+        "spark"
+      ],
+      "nature": "docile",
+      "species": "luxio"
+    }
+  ]
+}

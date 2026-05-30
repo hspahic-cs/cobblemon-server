@@ -1,0 +1,100 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Caitlin",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "vcreate",
+        "dragonascent",
+        "trick",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "smeargle"
+    },
+    {
+      "ability": "contrary",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "assist"
+      ],
+      "nature": "jolly",
+      "species": "spinda"
+    },
+    {
+      "ability": "innerfocus",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "assist"
+      ],
+      "nature": "bashful",
+      "species": "sneasel"
+    },
+    {
+      "ability": "prankster",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "assist"
+      ],
+      "nature": "bashful",
+      "species": "liepard"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "name": "Twin Teri",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "nuzzle",
+        "growl",
+        "quickattack",
+        "spark"
+      ],
+      "nature": "timid",
+      "species": "pikachu"
+    }
+  ]
+}

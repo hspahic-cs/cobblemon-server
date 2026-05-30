@@ -1,0 +1,55 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (24)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 32,
+      "moveset": [
+        "tackle",
+        "stringshot",
+        "poisonsting",
+        "bugbite"
+      ],
+      "nature": "serious",
+      "species": "wurmple"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 34,
+      "moveset": [
+        "stringshot",
+        "poisonsting",
+        "bugbite",
+        "harden"
+      ],
+      "nature": "bashful",
+      "species": "cascoon"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 36,
+      "moveset": [
+        "psybeam",
+        "leechlife",
+        "toxic",
+        "bugbuzz"
+      ],
+      "nature": "quirky",
+      "species": "dustox"
+    }
+  ]
+}

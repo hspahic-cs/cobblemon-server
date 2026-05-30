@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Battle Girl Helen",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "firepunch",
+        "thunderpunch",
+        "icepunch",
+        "lowkick"
+      ],
+      "nature": "jolly",
+      "species": "medicham"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "lowsweep",
+        "knockoff",
+        "strength",
+        "dualchop"
+      ],
+      "nature": "jolly",
+      "species": "machoke"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Kaitlin",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 4,
+      "moveset": [
+        "tackle",
+        "growl"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 4,
+      "moveset": [
+        "absorb",
+        "growth",
+        "stunspore",
+        "worryseed"
+      ],
+      "nature": "timid",
+      "species": "budew"
+    },
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 4,
+      "moveset": [
+        "tackle",
+        "growl"
+      ],
+      "nature": "jolly",
+      "species": "starly"
+    }
+  ]
+}

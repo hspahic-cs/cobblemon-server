@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Milo",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 47,
+      "moveset": [
+        "agility",
+        "fly",
+        "tailwind",
+        "mirrormove"
+      ],
+      "nature": "jolly",
+      "species": "pidgey"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 49,
+      "moveset": [
+        "agility",
+        "airslash",
+        "mirrormove",
+        "tailwind"
+      ],
+      "nature": "sassy",
+      "species": "pidgeotto"
+    }
+  ]
+}

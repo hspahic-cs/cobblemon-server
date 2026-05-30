@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Miguel",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "leer",
+        "twister",
+        "brine",
+        "raindance"
+      ],
+      "nature": "timid",
+      "species": "gyarados"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "flail",
+        "icefang",
+        "waterfall",
+        "crunch"
+      ],
+      "nature": "adamant",
+      "species": "gyarados"
+    }
+  ]
+}

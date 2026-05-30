@@ -1,0 +1,189 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Boss Zeph",
+  "name": "Title Defense Zeph",
+  "team": [
+    {
+      "ability": "rkssystem",
+      "aspects": [
+        "steel-memory"
+      ],
+      "evs": {
+        "hp": 252,
+        "spa": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:steel_memory"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 80,
+      "moveset": [
+        "multiattack",
+        "flamethrower",
+        "partingshot",
+        "toxic"
+      ],
+      "nature": "timid",
+      "species": "silvally"
+    },
+    {
+      "ability": "moxie",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 79,
+      "moveset": [
+        "volttackle",
+        "flareblitz",
+        "thunderouskick",
+        "overheat"
+      ],
+      "nature": "jolly",
+      "species": "zebstrika"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 79,
+      "moveset": [
+        "foulplay",
+        "toxic",
+        "wish",
+        "protect"
+      ],
+      "nature": "bold",
+      "species": "umbreon"
+    },
+    {
+      "ability": "scrappy",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_specs"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 80,
+      "moveset": [
+        "boomburst",
+        "icebeam",
+        "flamethrower",
+        "surf"
+      ],
+      "nature": "modest",
+      "species": "exploud"
+    },
+    {
+      "ability": "longreach",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:decidium_z",
+        "ghost_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 80,
+      "moveset": [
+        "leafblade",
+        "spiritshackle",
+        "psychocut",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "decidueye"
+    },
+    {
+      "ability": "solarpower",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:houndoominite",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 81,
+      "moveset": [
+        "fireblast",
+        "fierywrath",
+        "sludgebomb",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "species": "houndoom"
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sinnoh Leader Candice",
+  "team": [
+    {
+      "ability": "snowwarning",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:abomasite",
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 71,
+      "moveset": [
+        "blizzard",
+        "gigadrain",
+        "earthquake",
+        "auroraveil"
+      ],
+      "nature": "modest",
+      "species": "abomasnow"
+    },
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "light_clay"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 73,
+      "moveset": [
+        "blizzard",
+        "shadowball",
+        "hail",
+        "auroraveil"
+      ],
+      "nature": "timid",
+      "species": "froslass"
+    },
+    {
+      "ability": "pressure",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "scope_lens"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 72,
+      "moveset": [
+        "tripleaxel",
+        "nightslash",
+        "brickbreak",
+        "iceshard"
+      ],
+      "nature": "adamant",
+      "species": "weavile"
+    },
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 75,
+      "moveset": [
+        "blizzard",
+        "shadowball",
+        "signalbeam",
+        "waterpulse"
+      ],
+      "nature": "modest",
+      "species": "glaceon"
+    },
+    {
+      "ability": "snowcloak",
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "salac_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 71,
+      "moveset": [
+        "iciclecrash",
+        "earthquake",
+        "superpower",
+        "stoneedge"
+      ],
+      "nature": "adamant",
+      "species": "mamoswine"
+    },
+    {
+      "ability": "icescales",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "wide_lens"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 74,
+      "moveset": [
+        "blizzard",
+        "psychic",
+        "focusblast",
+        "lovelykiss"
+      ],
+      "nature": "timid",
+      "species": "jynx"
+    }
+  ]
+}

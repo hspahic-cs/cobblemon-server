@@ -1,0 +1,84 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Mike",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "seismictoss",
+        "wakeupslap",
+        "endure",
+        "closecombat"
+      ],
+      "nature": "lonely",
+      "species": "hariyama"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "bubblebeam",
+        "hypnosis",
+        "doubleslap",
+        "dynamicpunch"
+      ],
+      "nature": "timid",
+      "species": "poliwrath"
+    },
+    {
+      "ability": "vitalspirit",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "thrash",
+        "screech",
+        "stompingtantrum",
+        "outrage"
+      ],
+      "nature": "sassy",
+      "species": "primeape"
+    }
+  ]
+}

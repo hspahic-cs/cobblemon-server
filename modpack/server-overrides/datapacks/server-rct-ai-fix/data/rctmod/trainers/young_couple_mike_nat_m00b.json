@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Young Couple Mike & Nat",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "peck",
+        "astonish",
+        "gust",
+        "wingattack"
+      ],
+      "nature": "bashful",
+      "species": "murkrow"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "growl",
+        "confusion",
+        "astonish",
+        "confuseray"
+      ],
+      "nature": "calm",
+      "species": "misdreavus"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (54)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 49,
+      "moveset": [
+        "memento",
+        "haze",
+        "smokescreen",
+        "sludge"
+      ],
+      "nature": "modest",
+      "species": "koffing"
+    },
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 49,
+      "moveset": [
+        "haze",
+        "smokescreen",
+        "sludge",
+        "selfdestruct"
+      ],
+      "nature": "docile",
+      "species": "weezing"
+    }
+  ]
+}

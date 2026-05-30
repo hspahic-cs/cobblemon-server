@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Laura",
+  "team": [
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "psychoshift",
+        "futuresight",
+        "powerswap",
+        "guardswap"
+      ],
+      "nature": "modest",
+      "species": "natu"
+    },
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "psychoshift",
+        "futuresight",
+        "powerswap",
+        "guardswap"
+      ],
+      "nature": "bold",
+      "species": "natu"
+    },
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 49,
+      "moveset": [
+        "psychic",
+        "miracleeye",
+        "psychoshift",
+        "futuresight"
+      ],
+      "nature": "gentle",
+      "species": "xatu"
+    }
+  ]
+}

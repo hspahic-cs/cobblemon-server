@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Marcy",
+  "team": [
+    {
+      "ability": "dryskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 48,
+      "moveset": [
+        "swordsdance",
+        "leafblade",
+        "crabhammer",
+        "aromatherapy"
+      ],
+      "nature": "careful",
+      "species": "paras"
+    },
+    {
+      "ability": "dryskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 48,
+      "moveset": [
+        "swordsdance",
+        "leafblade",
+        "crabhammer",
+        "aromatherapy"
+      ],
+      "nature": "gentle",
+      "species": "paras"
+    },
+    {
+      "ability": "dryskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "leechlife",
+        "swordsdance",
+        "sappyseed",
+        "crabhammer"
+      ],
+      "nature": "rash",
+      "species": "parasect"
+    }
+  ]
+}

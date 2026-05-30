@@ -1,0 +1,60 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Crush Kin Mik & Kia",
+  "team": [
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 56,
+      "moveset": [
+        "submission",
+        "bulkup",
+        "crosschop",
+        "scaryface"
+      ],
+      "nature": "bold",
+      "species": "machamp"
+    },
+    {
+      "ability": "angerpoint",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 56,
+      "moveset": [
+        "screech",
+        "stompingtantrum",
+        "outrage",
+        "crosschop"
+      ],
+      "nature": "serious",
+      "species": "primeape"
+    }
+  ]
+}

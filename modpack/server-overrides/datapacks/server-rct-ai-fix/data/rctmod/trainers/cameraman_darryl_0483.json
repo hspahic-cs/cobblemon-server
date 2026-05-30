@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cameraman Darryl",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "leer",
+        "charge",
+        "bite",
+        "spark"
+      ],
+      "nature": "hardy",
+      "species": "luxio"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "nuzzle",
+        "tailwhip",
+        "growl",
+        "spark"
+      ],
+      "nature": "sassy",
+      "species": "pikachu"
+    }
+  ]
+}

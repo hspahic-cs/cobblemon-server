@@ -1,0 +1,30 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 25,
+        "def": 25,
+        "hp": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "falseswipe",
+        "tailwhip"
+      ],
+      "nature": "mild",
+      "species": "squirtle"
+    }
+  ]
+}

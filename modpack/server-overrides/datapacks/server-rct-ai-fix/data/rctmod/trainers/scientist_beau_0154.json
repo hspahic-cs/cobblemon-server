@@ -1,0 +1,96 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Beau",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "thunderbolt",
+        "voltswitch",
+        "icepunch",
+        "firepunch"
+      ],
+      "nature": "hasty",
+      "species": "electabuzz"
+    },
+    {
+      "ability": "colorchange",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "drainpunch",
+        "suckerpunch",
+        "rockslide"
+      ],
+      "nature": "bold",
+      "species": "kecleon"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "dazzlinggleam",
+        "psychic",
+        "signalbeam",
+        "destinybond"
+      ],
+      "nature": "docile",
+      "species": "gardevoir"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "flamethrower",
+        "wildcharge",
+        "extremespeed",
+        "playrough"
+      ],
+      "nature": "jolly",
+      "species": "arcanine"
+    }
+  ]
+}

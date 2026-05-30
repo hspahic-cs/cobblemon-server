@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (18)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "stunspore",
+        "aircutter",
+        "leechlife",
+        "attract"
+      ],
+      "nature": "docile",
+      "species": "beautifly"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 33,
+      "moveset": [
+        "aerialace",
+        "charm",
+        "taunt",
+        "retaliate"
+      ],
+      "nature": "serious",
+      "species": "glameow"
+    }
+  ]
+}

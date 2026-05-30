@@ -1,0 +1,76 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (31)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "venomdrench",
+        "suckerpunch",
+        "belch",
+        "explosion"
+      ],
+      "nature": "calm",
+      "species": "skuntank"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "leechlife",
+        "dualwingbeat",
+        "haze",
+        "venoshock"
+      ],
+      "nature": "lax",
+      "species": "crobat"
+    },
+    {
+      "ability": "sandrush",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "retaliate",
+        "crunch",
+        "roar",
+        "reversal"
+      ],
+      "nature": "relaxed",
+      "species": "stoutland"
+    }
+  ]
+}

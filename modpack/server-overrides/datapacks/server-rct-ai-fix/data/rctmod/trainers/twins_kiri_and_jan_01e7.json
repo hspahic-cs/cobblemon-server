@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Twins Kiri & Jan",
+  "team": [
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 56,
+      "moveset": [
+        "headbutt",
+        "counter",
+        "bounce",
+        "doubleedge"
+      ],
+      "nature": "jolly",
+      "species": "cinderace"
+    },
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 56,
+      "moveset": [
+        "uturn",
+        "liquidation",
+        "soak",
+        "raindance"
+      ],
+      "nature": "mild",
+      "species": "inteleon"
+    }
+  ]
+}

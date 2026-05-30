@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Andrea",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "closecombat",
+        "doubleteam",
+        "endeavor",
+        "bravebird"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    }
+  ]
+}

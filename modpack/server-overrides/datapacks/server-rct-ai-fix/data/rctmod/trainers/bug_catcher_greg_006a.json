@@ -1,0 +1,92 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Greg",
+  "team": [
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 11,
+      "moveset": [
+        "scratch",
+        "harden",
+        "absorb"
+      ],
+      "nature": "bashful",
+      "species": "nincada"
+    },
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 11,
+      "moveset": [
+        "ember",
+        "wrap",
+        "bite"
+      ],
+      "nature": "sassy",
+      "species": "sizzlipede"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 10,
+      "moveset": [
+        "gust"
+      ],
+      "nature": "naughty",
+      "species": "dustox"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 11,
+      "moveset": [
+        "megadrain",
+        "spiderweb",
+        "thunderwave",
+        "screech"
+      ],
+      "nature": "serious",
+      "species": "joltik"
+    }
+  ]
+}

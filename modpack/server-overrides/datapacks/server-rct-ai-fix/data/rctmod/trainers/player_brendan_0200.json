@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Trainer Brendan",
+  "name": "Player Brendan",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 5,
+      "moveset": [
+        "wrap",
+        "leer",
+        "poisonsting"
+      ],
+      "nature": "brave",
+      "species": "ekans"
+    }
+  ]
+}

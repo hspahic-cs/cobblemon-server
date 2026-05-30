@@ -1,0 +1,59 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9maniac Ashton",
+  "team": [
+    {
+      "ability": "screencleaner",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 32,
+      "moveset": [
+        "icywind",
+        "doublekick",
+        "psybeam",
+        "hypnosis"
+      ],
+      "nature": "naive",
+      "species": "mrmime"
+    },
+    {
+      "ability": "steadfast",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 32,
+      "moveset": [
+        "rocksmash",
+        "brutalswing",
+        "detect",
+        "knockoff"
+      ],
+      "nature": "hardy",
+      "species": "farfetchd"
+    }
+  ]
+}

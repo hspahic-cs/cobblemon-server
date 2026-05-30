@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Braydon",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 69,
+      "moveset": [
+        "lockon",
+        "magnetrise",
+        "gyroball",
+        "zapcannon"
+      ],
+      "nature": "adamant",
+      "species": "magneton"
+    },
+    {
+      "ability": "magnetpull",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 69,
+      "moveset": [
+        "earthpower",
+        "stoneedge",
+        "lockon",
+        "zapcannon"
+      ],
+      "nature": "bashful",
+      "species": "probopass"
+    },
+    {
+      "ability": "voltabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 70,
+      "moveset": [
+        "thunderwave",
+        "discharge",
+        "lastresort",
+        "thunder"
+      ],
+      "nature": "hardy",
+      "species": "jolteon"
+    }
+  ]
+}

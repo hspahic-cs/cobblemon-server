@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Sally",
+  "team": [
+    {
+      "ability": "gluttony",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 12,
+      "moveset": [
+        "playnice",
+        "leer",
+        "lick",
+        "incinerate"
+      ],
+      "nature": "timid",
+      "species": "pansear"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 13,
+      "moveset": [
+        "tackle",
+        "vinewhip",
+        "fairywind",
+        "luckychant"
+      ],
+      "nature": "rash",
+      "species": "flabebe"
+    }
+  ]
+}

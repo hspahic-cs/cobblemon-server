@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "School Kid Mackenzie",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "gust",
+        "stockpile",
+        "swallow",
+        "spitup"
+      ],
+      "nature": "calm",
+      "species": "drifloon"
+    },
+    {
+      "ability": "flareboost",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "minimize",
+        "focusenergy",
+        "payback",
+        "shadowball"
+      ],
+      "nature": "timid",
+      "species": "drifloon"
+    }
+  ]
+}

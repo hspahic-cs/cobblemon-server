@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Chris",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 29,
+      "moveset": [
+        "reversal",
+        "firefang",
+        "takedown",
+        "flameburst"
+      ],
+      "nature": "modest",
+      "species": "growlithe"
+    },
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 29,
+      "moveset": [
+        "firefang",
+        "scaryface",
+        "thunderpunch",
+        "flameburst"
+      ],
+      "nature": "naive",
+      "species": "charmeleon"
+    }
+  ]
+}

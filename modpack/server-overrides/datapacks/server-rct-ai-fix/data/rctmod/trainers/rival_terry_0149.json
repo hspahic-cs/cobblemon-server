@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 25,
+        "def": 25,
+        "hp": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "level": 9,
+      "moveset": [
+        "tackle",
+        "growl",
+        "quickattack",
+        "wingattack"
+      ],
+      "nature": "mild",
+      "species": "starly"
+    },
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 25,
+        "def": 25,
+        "hp": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "level": 9,
+      "moveset": [
+        "tackle",
+        "falseswipe",
+        "tailwhip",
+        "bubble"
+      ],
+      "nature": "relaxed",
+      "species": "squirtle"
+    }
+  ]
+}

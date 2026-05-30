@@ -1,0 +1,57 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (8)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "hustle",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 16,
+      "moveset": [
+        "quickattack",
+        "focusenergy",
+        "hyperfang",
+        "pursuit"
+      ],
+      "nature": "bashful",
+      "species": "rattata"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 17,
+      "moveset": [
+        "glare",
+        "brutalswing",
+        "rocktomb",
+        "bulldoze"
+      ],
+      "nature": "sassy",
+      "species": "silicobra"
+    }
+  ]
+}

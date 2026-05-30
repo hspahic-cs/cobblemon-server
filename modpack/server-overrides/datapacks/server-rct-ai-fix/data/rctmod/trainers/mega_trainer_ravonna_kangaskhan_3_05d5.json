@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Ravonna",
+  "team": [
+    {
+      "ability": "parentalbond",
+      "evs": {
+        "atk": 252,
+        "def": 78,
+        "hp": 6,
+        "spe": 180
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:kangaskhanite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 75,
+      "moveset": [
+        "doubleedge",
+        "retaliate",
+        "drainpunch",
+        "sleeptalk"
+      ],
+      "nature": "jolly",
+      "species": "kangaskhan"
+    }
+  ]
+}

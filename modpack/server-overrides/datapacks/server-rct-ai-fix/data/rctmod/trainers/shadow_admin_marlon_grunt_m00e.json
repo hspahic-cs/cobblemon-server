@@ -1,0 +1,153 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "battleFormat": "GEN_9_DOUBLES",
+  "battleRules": {
+    "maxItemUses": 2
+  },
+  "identity": "Shadow Admin Marlon",
+  "name": "Shadow Admin Marlon & Grunt",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 26,
+      "moveset": [
+        "shadowsneak",
+        "nightshade",
+        "payback",
+        "destinybond"
+      ],
+      "nature": "impish",
+      "species": "duskull"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 27,
+      "moveset": [
+        "needlearm",
+        "feintattack",
+        "thunderpunch",
+        "fellstinger"
+      ],
+      "nature": "jolly",
+      "species": "cacnea"
+    },
+    {
+      "ability": "unaware",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 28,
+      "moveset": [
+        "confusion",
+        "aircutter",
+        "chargebeam",
+        "roost"
+      ],
+      "nature": "modest",
+      "species": "swoobat"
+    },
+    {
+      "ability": "prankster",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 25,
+      "moveset": [
+        "nightshade",
+        "fakeout",
+        "willowisp",
+        "torment"
+      ],
+      "nature": "impish",
+      "species": "sableye"
+    },
+    {
+      "ability": "pickpocket",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 27,
+      "moveset": [
+        "leaftornado",
+        "suckerpunch",
+        "extrasensory",
+        "fakeout"
+      ],
+      "nature": "modest",
+      "species": "shiftry"
+    }
+  ]
+}

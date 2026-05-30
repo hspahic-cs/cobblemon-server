@@ -1,0 +1,48 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Phillip",
+  "team": [
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 9,
+      "moveset": [
+        "tackle",
+        "stringshot",
+        "poisonsting"
+      ],
+      "nature": "naive",
+      "species": "wurmple"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 11,
+      "moveset": [
+        "harden"
+      ],
+      "nature": "naive",
+      "species": "cascoon"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 13,
+      "moveset": [
+        "gust",
+        "confusion"
+      ],
+      "nature": "hasty",
+      "species": "dustox"
+    }
+  ]
+}

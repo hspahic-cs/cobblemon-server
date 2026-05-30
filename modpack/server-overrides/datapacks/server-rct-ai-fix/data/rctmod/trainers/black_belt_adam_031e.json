@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Adam",
+  "team": [
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "leer",
+        "focusenergy",
+        "lowsweep",
+        "knockoff"
+      ],
+      "nature": "relaxed",
+      "species": "machoke"
+    }
+  ]
+}

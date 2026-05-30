@@ -1,0 +1,56 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Flint",
+  "team": [
+    {
+      "ability": "steadfast",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "peck",
+        "leer",
+        "furycutter",
+        "rocksmash"
+      ],
+      "nature": "bashful",
+      "species": "farfetchd"
+    },
+    {
+      "ability": "cheekpouch",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 20,
+      "moveset": [
+        "swallow",
+        "spitup",
+        "tailslap",
+        "bodyslam"
+      ],
+      "nature": "lonely",
+      "species": "skwovet"
+    }
+  ]
+}

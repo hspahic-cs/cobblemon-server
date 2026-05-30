@@ -1,0 +1,36 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Donald",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 12,
+      "moveset": [
+        "protect",
+        "tackle"
+      ],
+      "nature": "docile",
+      "species": "burmy"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 12,
+      "moveset": [
+        "furycutter",
+        "growl",
+        "pound"
+      ],
+      "nature": "docile",
+      "species": "kricketune"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Engineer Bernie",
+  "team": [
+    {
+      "ability": "magnetpull",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 25,
+      "moveset": [
+        "sonicboom",
+        "spark",
+        "mirrorshot",
+        "metalsound"
+      ],
+      "nature": "hardy",
+      "species": "magnemite"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 24,
+      "moveset": [
+        "swift",
+        "shockwave",
+        "thunderwave",
+        "electroball"
+      ],
+      "nature": "lax",
+      "species": "electabuzz"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 24,
+      "moveset": [
+        "tackle",
+        "thunderwave",
+        "spark",
+        "chargebeam"
+      ],
+      "nature": "mild",
+      "species": "tynamo"
+    }
+  ]
+}

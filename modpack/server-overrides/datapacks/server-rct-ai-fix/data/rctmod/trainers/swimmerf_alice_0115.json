@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Alice",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "dragondance",
+        "hurricane",
+        "raindance",
+        "hyperbeam"
+      ],
+      "nature": "rash",
+      "species": "gyarados"
+    },
+    {
+      "ability": "schooling",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 60,
+      "moveset": [
+        "aquatail",
+        "doubleedge",
+        "endeavor",
+        "hydropump"
+      ],
+      "nature": "timid",
+      "species": "wishiwashi"
+    }
+  ]
+}

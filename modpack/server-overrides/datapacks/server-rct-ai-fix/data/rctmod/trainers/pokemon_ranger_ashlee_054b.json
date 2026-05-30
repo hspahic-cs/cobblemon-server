@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Ashlee",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "slash",
+        "rest",
+        "bellydrum",
+        "doubleedge"
+      ],
+      "nature": "jolly",
+      "species": "linoone"
+    },
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "steelwing",
+        "bravebird",
+        "slash",
+        "irondefense"
+      ],
+      "nature": "impish",
+      "species": "skarmory"
+    }
+  ]
+}

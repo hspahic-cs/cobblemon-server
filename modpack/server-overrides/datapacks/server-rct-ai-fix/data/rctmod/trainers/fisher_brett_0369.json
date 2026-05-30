@@ -1,0 +1,52 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Brett",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 39,
+      "moveset": [
+        "splash",
+        "tackle",
+        "flail"
+      ],
+      "nature": "relaxed",
+      "species": "magikarp"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "raindance",
+        "aquaring",
+        "whirlpool",
+        "uturn"
+      ],
+      "nature": "sassy",
+      "species": "finneon"
+    },
+    {
+      "ability": "oblivious",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 39,
+      "moveset": [
+        "splash",
+        "tackle",
+        "flail"
+      ],
+      "nature": "sassy",
+      "species": "feebas"
+    }
+  ]
+}

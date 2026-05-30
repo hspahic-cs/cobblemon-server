@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Kurt",
+  "team": [
+    {
+      "ability": "hypercutter",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "taunt",
+        "nightslash",
+        "crabhammer",
+        "swordsdance"
+      ],
+      "nature": "relaxed",
+      "species": "crawdaunt"
+    }
+  ]
+}

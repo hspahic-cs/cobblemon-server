@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Wade",
+  "team": [
+    {
+      "ability": "roughskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 51,
+      "moveset": [
+        "crunch",
+        "aquajet",
+        "agility",
+        "takedown"
+      ],
+      "nature": "hardy",
+      "species": "carvanha"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 51,
+      "moveset": [
+        "crunch",
+        "aquajet",
+        "agility",
+        "takedown"
+      ],
+      "nature": "hardy",
+      "species": "carvanha"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "crunch",
+        "aquajet",
+        "agility",
+        "icefang"
+      ],
+      "nature": "hardy",
+      "species": "sharpedo"
+    }
+  ]
+}

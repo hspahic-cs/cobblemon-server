@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Valencia",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 44,
+      "moveset": [
+        "wrap",
+        "astonish",
+        "confusion",
+        "yawn"
+      ],
+      "nature": "bashful",
+      "species": "chingling"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 48,
+      "moveset": [
+        "wrap",
+        "yawn",
+        "extrasensory",
+        "healpulse"
+      ],
+      "nature": "calm",
+      "species": "chimecho"
+    }
+  ]
+}

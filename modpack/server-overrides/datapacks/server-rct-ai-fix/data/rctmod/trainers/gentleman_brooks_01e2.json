@@ -1,0 +1,84 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gentleman Brooks",
+  "team": [
+    {
+      "ability": "tintedlens",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "miracle_seed"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 30
+      },
+      "level": 90,
+      "moveset": [
+        "shadowsneak",
+        "grasspledge",
+        "airslash",
+        "hiddenpower"
+      ],
+      "nature": "modest",
+      "species": "dartrix"
+    },
+    {
+      "ability": "gluttony",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "miracle_seed"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 30
+      },
+      "level": 92,
+      "moveset": [
+        "grasspledge",
+        "focusblast",
+        "hiddenpower",
+        "powergem"
+      ],
+      "nature": "timid",
+      "species": "simisage"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "drainingkiss",
+        "shockwave",
+        "round",
+        "incinerate"
+      ],
+      "nature": "modest",
+      "species": "wigglytuff"
+    }
+  ]
+}

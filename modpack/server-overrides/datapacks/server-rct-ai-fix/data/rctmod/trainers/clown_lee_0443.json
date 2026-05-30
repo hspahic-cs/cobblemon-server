@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Clown Lee",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "powerswap",
+        "pound",
+        "encore",
+        "confusion"
+      ],
+      "nature": "sassy",
+      "species": "mrmime"
+    }
+  ]
+}

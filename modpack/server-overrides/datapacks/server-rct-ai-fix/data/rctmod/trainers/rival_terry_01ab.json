@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "trace",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 28,
+      "moveset": [
+        "magicalleaf",
+        "healpulse",
+        "drainingkiss",
+        "calmmind"
+      ],
+      "nature": "docile",
+      "species": "kirlia"
+    },
+    {
+      "ability": "toughclaws",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 26,
+      "moveset": [
+        "rockthrow",
+        "odorsleuth",
+        "rocktomb",
+        "roar"
+      ],
+      "nature": "quiet",
+      "species": "lycanroc"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 26,
+      "moveset": [
+        "quickattack",
+        "wingattack",
+        "endeavor",
+        "whirlwind"
+      ],
+      "nature": "rash",
+      "species": "staravia"
+    },
+    {
+      "ability": "overgrow",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 28,
+      "moveset": [
+        "sludge",
+        "megadrain",
+        "takedown",
+        "growth"
+      ],
+      "nature": "hasty",
+      "species": "ivysaur"
+    }
+  ]
+}

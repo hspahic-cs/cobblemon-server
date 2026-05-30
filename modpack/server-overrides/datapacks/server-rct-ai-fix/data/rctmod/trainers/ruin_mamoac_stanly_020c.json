@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Mamoac Stanly",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "stealthrock",
+        "rockblast",
+        "earthquake",
+        "explosion"
+      ],
+      "nature": "serious",
+      "species": "graveler"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "sandtomb",
+        "irontail",
+        "dig",
+        "stoneedge"
+      ],
+      "nature": "jolly",
+      "species": "onix"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "stealthrock",
+        "rockblast",
+        "earthquake",
+        "explosion"
+      ],
+      "nature": "quiet",
+      "species": "graveler"
+    }
+  ]
+}

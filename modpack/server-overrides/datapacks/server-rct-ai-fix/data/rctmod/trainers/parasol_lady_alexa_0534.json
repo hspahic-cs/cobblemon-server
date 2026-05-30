@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Parasol Lady Alexa",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "peck",
+        "supersonic",
+        "hornattack",
+        "waterfall"
+      ],
+      "nature": "jolly",
+      "species": "seaking"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "tailwhip",
+        "bite",
+        "swift",
+        "waterfall"
+      ],
+      "nature": "jolly",
+      "species": "buizel"
+    }
+  ]
+}

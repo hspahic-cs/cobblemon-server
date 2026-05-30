@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Rose",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 49,
+      "moveset": [
+        "solarbeam",
+        "doubleedge",
+        "sunnyday",
+        "seedbomb"
+      ],
+      "nature": "quirky",
+      "species": "sunkern"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 49,
+      "moveset": [
+        "solarbeam",
+        "doubleedge",
+        "sunnyday",
+        "leafstorm"
+      ],
+      "nature": "naughty",
+      "species": "sunflora"
+    }
+  ]
+}

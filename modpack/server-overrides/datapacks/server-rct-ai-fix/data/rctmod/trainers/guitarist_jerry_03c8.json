@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Guitarist Jerry",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 44,
+      "moveset": [
+        "leer",
+        "bite",
+        "spark",
+        "irontail"
+      ],
+      "nature": "jolly",
+      "species": "luxio"
+    }
+  ]
+}

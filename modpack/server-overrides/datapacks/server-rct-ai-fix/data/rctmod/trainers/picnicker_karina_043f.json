@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Karina",
+  "team": [
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "pound",
+        "growl",
+        "watergun",
+        "charm"
+      ],
+      "nature": "hasty",
+      "species": "piplup"
+    }
+  ]
+}

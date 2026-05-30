@@ -1,0 +1,67 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cue Ball Koji",
+  "team": [
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "liquidation",
+        "meteormash",
+        "closecombat",
+        "aquajet"
+      ],
+      "nature": "jolly",
+      "species": "kingler"
+    },
+    {
+      "ability": "sandrush",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "magnet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "boltbeak",
+        "dragonclaw",
+        "earthquake",
+        "fireblast"
+      ],
+      "nature": "jolly",
+      "species": "dracozolt"
+    }
+  ]
+}

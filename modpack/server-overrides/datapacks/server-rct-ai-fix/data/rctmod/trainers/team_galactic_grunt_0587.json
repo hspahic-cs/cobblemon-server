@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (46)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "hypnosis",
+        "aerialace",
+        "furyswipes",
+        "charm"
+      ],
+      "nature": "quirky",
+      "species": "glameow"
+    }
+  ]
+}

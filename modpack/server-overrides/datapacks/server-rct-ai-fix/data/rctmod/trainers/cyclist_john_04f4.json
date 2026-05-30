@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cyclist John",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 37,
+      "moveset": [
+        "growl",
+        "doubleteam",
+        "aerialace",
+        "takedown"
+      ],
+      "nature": "jolly",
+      "species": "staravia"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 39,
+      "moveset": [
+        "quickattack",
+        "doubleteam",
+        "aerialace",
+        "takedown"
+      ],
+      "nature": "jolly",
+      "species": "staravia"
+    }
+  ]
+}

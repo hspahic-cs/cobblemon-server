@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "PI Kendrick",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "peck",
+        "tailwhip",
+        "waterpulse",
+        "hornattack"
+      ],
+      "nature": "relaxed",
+      "species": "goldeen"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "peck",
+        "tailwhip",
+        "waterpulse",
+        "hornattack"
+      ],
+      "nature": "relaxed",
+      "species": "goldeen"
+    }
+  ]
+}

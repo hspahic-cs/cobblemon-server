@@ -1,0 +1,76 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (21)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "haze",
+        "swordsdance",
+        "crunch",
+        "belch"
+      ],
+      "nature": "gentle",
+      "species": "seviper"
+    },
+    {
+      "ability": "sandveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "slash",
+        "dig",
+        "gyroball",
+        "swordsdance"
+      ],
+      "nature": "naughty",
+      "species": "sandslash"
+    },
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 42,
+      "moveset": [
+        "nightslash",
+        "poisonjab",
+        "venomdrench",
+        "suckerpunch"
+      ],
+      "nature": "modest",
+      "species": "skuntank"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Dave",
+  "team": [
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 25,
+      "moveset": [
+        "doublekick",
+        "poisonsting",
+        "furyattack",
+        "hornattack"
+      ],
+      "nature": "sassy",
+      "species": "nidorino"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 25,
+      "moveset": [
+        "shadowpunch",
+        "irondefense",
+        "stompingtantrum",
+        "megapunch"
+      ],
+      "nature": "gentle",
+      "species": "golett"
+    }
+  ]
+}

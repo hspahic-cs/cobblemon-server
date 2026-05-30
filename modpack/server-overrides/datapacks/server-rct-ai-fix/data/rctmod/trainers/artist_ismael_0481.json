@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Artist Ismael",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "wideguard",
+        "powerswap",
+        "encore",
+        "confusion"
+      ],
+      "nature": "sassy",
+      "species": "mrmime"
+    }
+  ]
+}

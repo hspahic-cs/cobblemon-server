@@ -1,0 +1,108 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "trace",
+      "evs": {
+        "hp": 4,
+        "spe": 40
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 18,
+      "moveset": [
+        "confusion",
+        "disarmingvoice",
+        "magicalleaf"
+      ],
+      "nature": "bashful",
+      "species": "kirlia"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "hp": 4,
+        "spe": 40
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 19,
+      "moveset": [
+        "wingattack",
+        "quickattack"
+      ],
+      "nature": "bashful",
+      "species": "staravia"
+    },
+    {
+      "ability": "frisk",
+      "evs": {
+        "hp": 4,
+        "spe": 40
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 20,
+      "moveset": [
+        "rocktomb",
+        "bite",
+        "howl"
+      ],
+      "nature": "bashful",
+      "species": "rockruff"
+    },
+    {
+      "ability": "blaze",
+      "evs": {
+        "atk": 100,
+        "hp": 4,
+        "spa": 16,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 21,
+      "moveset": [
+        "scratch",
+        "ember"
+      ],
+      "nature": "adamant",
+      "species": "charmeleon"
+    }
+  ]
+}

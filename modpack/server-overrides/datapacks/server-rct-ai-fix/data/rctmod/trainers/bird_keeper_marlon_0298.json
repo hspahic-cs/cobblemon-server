@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Marlon",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 30,
+      "moveset": [
+        "pluck",
+        "mirrormove",
+        "assurance",
+        "agility"
+      ],
+      "nature": "modest",
+      "species": "fearow"
+    },
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 30,
+      "moveset": [
+        "pluck",
+        "doublehit",
+        "agility",
+        "uproar"
+      ],
+      "nature": "serious",
+      "species": "doduo"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 30,
+      "moveset": [
+        "pluck",
+        "mirrormove",
+        "assurance",
+        "agility"
+      ],
+      "nature": "rash",
+      "species": "fearow"
+    }
+  ]
+}

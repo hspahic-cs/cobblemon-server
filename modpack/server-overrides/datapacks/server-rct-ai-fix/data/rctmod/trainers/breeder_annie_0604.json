@@ -1,0 +1,184 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Breeder Annie",
+  "team": [
+    {
+      "ability": "drought",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "heat_rock"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 71,
+      "moveset": [
+        "fireblast",
+        "extrasensory",
+        "solarbeam",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "species": "ninetales"
+    },
+    {
+      "ability": "flowergift",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "grass_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 72,
+      "moveset": [
+        "solarbeam",
+        "dazzlinggleam",
+        "weatherball",
+        "growth"
+      ],
+      "nature": "timid",
+      "species": "cherrim"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "zoom_lens"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 74,
+      "moveset": [
+        "moonblast",
+        "fireblast",
+        "wish",
+        "thunderwave"
+      ],
+      "nature": "modest",
+      "species": "clefable"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:gardevoirite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 75,
+      "moveset": [
+        "moonblast",
+        "psychic",
+        "mysticalfire",
+        "willowisp"
+      ],
+      "nature": "bold",
+      "species": "gardevoir"
+    },
+    {
+      "ability": "flowerveil",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "babiri_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 73,
+      "moveset": [
+        "moonblast",
+        "solarbeam",
+        "toxic",
+        "wish"
+      ],
+      "nature": "modest",
+      "species": "florges"
+    },
+    {
+      "ability": "limber",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 72,
+      "moveset": [
+        "darkpulse",
+        "burningjealousy",
+        "thunderwave",
+        "nastyplot"
+      ],
+      "nature": "modest",
+      "species": "liepard"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (26)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 26,
+      "moveset": [
+        "headbutt",
+        "poisongas",
+        "meditate",
+        "psybeam"
+      ],
+      "nature": "impish",
+      "species": "drowzee"
+    },
+    {
+      "ability": "neutralizinggas",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 26,
+      "moveset": [
+        "clearsmog",
+        "sludge",
+        "selfdestruct",
+        "haze"
+      ],
+      "nature": "careful",
+      "species": "koffing"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Juan",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "twister",
+        "icefang",
+        "scaryface",
+        "waterfall"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    }
+  ]
+}

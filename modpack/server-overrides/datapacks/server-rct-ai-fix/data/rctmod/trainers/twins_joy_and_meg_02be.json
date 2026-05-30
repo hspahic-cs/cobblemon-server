@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Twins Joy & Meg",
+  "team": [
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "bodyslam",
+        "softboiled",
+        "moonblast",
+        "gravity"
+      ],
+      "nature": "sassy",
+      "species": "clefairy"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 49,
+      "moveset": [
+        "bodyslam",
+        "softboiled",
+        "moonblast",
+        "gravity"
+      ],
+      "nature": "docile",
+      "species": "clefairy"
+    }
+  ]
+}

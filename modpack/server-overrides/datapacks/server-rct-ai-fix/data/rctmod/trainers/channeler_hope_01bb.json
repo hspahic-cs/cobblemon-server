@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Channeler Hope",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 36,
+      "moveset": [
+        "hex",
+        "curse",
+        "shadowball",
+        "embargo"
+      ],
+      "nature": "hasty",
+      "species": "banette"
+    }
+  ]
+}

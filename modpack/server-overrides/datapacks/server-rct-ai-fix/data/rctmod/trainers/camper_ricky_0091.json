@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Ricky",
+  "team": [
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 24,
+      "moveset": [
+        "bodyslam",
+        "rocktomb",
+        "bide",
+        "icepunch"
+      ],
+      "nature": "bold",
+      "species": "marshtomp"
+    }
+  ]
+}

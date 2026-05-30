@@ -1,0 +1,55 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (42)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "astonish",
+        "meanlook",
+        "poisonfang",
+        "aircutter"
+      ],
+      "nature": "serious",
+      "species": "zubat"
+    },
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "poisongas",
+        "smokescreen",
+        "bite",
+        "venoshock"
+      ],
+      "nature": "bashful",
+      "species": "stunky"
+    },
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "poisonsting",
+        "mudslap",
+        "flatter",
+        "venoshock"
+      ],
+      "nature": "quirky",
+      "species": "croagunk"
+    }
+  ]
+}

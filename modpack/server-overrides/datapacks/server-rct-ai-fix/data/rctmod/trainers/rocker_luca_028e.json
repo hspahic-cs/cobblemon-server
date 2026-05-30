@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rocker Luca",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "swift",
+        "electroball",
+        "selfdestruct",
+        "lightscreen"
+      ],
+      "nature": "impish",
+      "species": "electrode"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "swift",
+        "electroball",
+        "selfdestruct",
+        "lightscreen"
+      ],
+      "nature": "lonely",
+      "species": "electrode"
+    }
+  ]
+}

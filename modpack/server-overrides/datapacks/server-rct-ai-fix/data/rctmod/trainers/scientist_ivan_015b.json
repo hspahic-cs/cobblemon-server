@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Ivan",
+  "team": [
+    {
+      "ability": "forecast",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 71,
+      "moveset": [
+        "hydropump",
+        "fireblast",
+        "blizzard",
+        "hurricane"
+      ],
+      "nature": "jolly",
+      "species": "castform"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 70,
+      "moveset": [
+        "extrasensory",
+        "payback",
+        "healblock",
+        "heavyslam"
+      ],
+      "nature": "relaxed",
+      "species": "bronzong"
+    }
+  ]
+}

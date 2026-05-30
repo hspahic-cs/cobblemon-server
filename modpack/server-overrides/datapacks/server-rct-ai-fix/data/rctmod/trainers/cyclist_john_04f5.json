@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cyclist John",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "growl",
+        "takedown",
+        "bravebird",
+        "finalgambit"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "quickattack",
+        "closecombat",
+        "takedown",
+        "bravebird"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    }
+  ]
+}

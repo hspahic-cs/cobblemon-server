@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Isabelle",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "agility",
+        "airslash",
+        "mirrormove",
+        "tailwind"
+      ],
+      "nature": "gentle",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 47,
+      "moveset": [
+        "agility",
+        "airslash",
+        "mirrormove",
+        "tailwind"
+      ],
+      "nature": "naive",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 50,
+      "moveset": [
+        "agility",
+        "airslash",
+        "mirrormove",
+        "tailwind"
+      ],
+      "nature": "serious",
+      "species": "pidgeot"
+    }
+  ]
+}

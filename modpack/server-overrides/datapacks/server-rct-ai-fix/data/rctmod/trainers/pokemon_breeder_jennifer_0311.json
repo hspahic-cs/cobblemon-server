@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Breeder Jennifer",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "pound",
+        "copycat",
+        "encore",
+        "confusion"
+      ],
+      "nature": "timid",
+      "species": "mimejr"
+    },
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "absorb",
+        "growth",
+        "stunspore",
+        "worryseed"
+      ],
+      "nature": "hasty",
+      "species": "budew"
+    },
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "pound",
+        "sing",
+        "sweetkiss",
+        "disarmingvoice"
+      ],
+      "nature": "hasty",
+      "species": "cleffa"
+    }
+  ]
+}

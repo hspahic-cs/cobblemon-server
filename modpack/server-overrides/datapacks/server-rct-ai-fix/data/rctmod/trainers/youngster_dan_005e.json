@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Dan",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 21,
+      "moveset": [
+        "thunderwave",
+        "psybeam",
+        "disable",
+        "icywind"
+      ],
+      "nature": "jolly",
+      "species": "slowpoke"
+    }
+  ]
+}

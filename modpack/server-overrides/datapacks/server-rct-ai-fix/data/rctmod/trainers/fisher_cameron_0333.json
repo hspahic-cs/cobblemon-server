@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisher Cameron",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "tailwhip",
+        "supersonic",
+        "waterpulse",
+        "hornattack"
+      ],
+      "nature": "relaxed",
+      "species": "goldeen"
+    },
+    {
+      "ability": "oblivious",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "mudslap",
+        "rest",
+        "snore",
+        "waterpulse"
+      ],
+      "nature": "relaxed",
+      "species": "barboach"
+    }
+  ]
+}

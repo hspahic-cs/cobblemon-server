@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "name": "Nat",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "growl",
+        "confusion",
+        "astonish",
+        "confuseray"
+      ],
+      "nature": "calm",
+      "species": "misdreavus"
+    }
+  ]
+}

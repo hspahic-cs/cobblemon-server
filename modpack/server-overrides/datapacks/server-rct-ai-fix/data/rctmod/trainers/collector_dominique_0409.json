@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Dominique",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "tackle",
+        "sandstorm",
+        "harden",
+        "smackdown"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "defensecurl",
+        "sandstorm",
+        "rollout",
+        "rockthrow"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "defensecurl",
+        "sandstorm",
+        "rollout",
+        "smackdown"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Hannah",
+  "team": [
+    {
+      "ability": "honeygather",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "sweetscent",
+        "gust",
+        "strugglebug",
+        "bugbite"
+      ],
+      "nature": "bashful",
+      "species": "combee"
+    },
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "poisonsting",
+        "megadrain",
+        "leechseed",
+        "magicalleaf"
+      ],
+      "nature": "calm",
+      "species": "roselia"
+    }
+  ]
+}

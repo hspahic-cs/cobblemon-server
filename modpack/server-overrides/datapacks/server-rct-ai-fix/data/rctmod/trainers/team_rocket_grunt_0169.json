@@ -1,0 +1,98 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (15)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "moxie",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "crunch",
+        "dig",
+        "scaryface",
+        "foulplay"
+      ],
+      "nature": "jolly",
+      "species": "krokorok"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 42,
+      "moveset": [
+        "scaryface",
+        "crunch",
+        "taunt",
+        "embargo"
+      ],
+      "nature": "lonely",
+      "species": "mightyena"
+    },
+    {
+      "ability": "strongjaw",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 38,
+      "moveset": [
+        "icefang",
+        "superfang",
+        "takedown",
+        "scaryface"
+      ],
+      "nature": "careful",
+      "species": "gumshoos"
+    },
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 42,
+      "moveset": [
+        "nightslash",
+        "poisonjab",
+        "venomdrench",
+        "suckerpunch"
+      ],
+      "nature": "brave",
+      "species": "stunky"
+    }
+  ]
+}

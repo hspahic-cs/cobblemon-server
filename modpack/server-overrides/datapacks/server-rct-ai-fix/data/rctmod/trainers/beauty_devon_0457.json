@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Devon",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "quiverdance",
+        "suckerpunch",
+        "bugbite",
+        "confusion"
+      ],
+      "nature": "calm",
+      "species": "wormadam"
+    }
+  ]
+}

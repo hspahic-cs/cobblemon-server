@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Parker",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "growl",
+        "tailwhip",
+        "quickattack",
+        "watergun"
+      ],
+      "nature": "naive",
+      "species": "buizel"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "leer",
+        "thundershock",
+        "charge",
+        "bite"
+      ],
+      "nature": "docile",
+      "species": "shinx"
+    }
+  ]
+}

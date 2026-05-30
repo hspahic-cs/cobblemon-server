@@ -1,0 +1,52 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Kent",
+  "team": [
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 13,
+      "moveset": [
+        "poisonsting",
+        "stringshot",
+        "bugbite"
+      ],
+      "nature": "sassy",
+      "species": "weedle"
+    },
+    {
+      "ability": "technician",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 12,
+      "moveset": [
+        "tackle",
+        "growl",
+        "bide",
+        "rocktomb"
+      ],
+      "nature": "calm",
+      "species": "kricketune"
+    }
+  ]
+}

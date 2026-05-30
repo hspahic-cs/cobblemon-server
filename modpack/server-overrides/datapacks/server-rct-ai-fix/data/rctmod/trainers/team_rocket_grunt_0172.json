@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (24)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 42,
+      "moveset": [
+        "rockblast",
+        "drillrun",
+        "takedown",
+        "stoneedge"
+      ],
+      "nature": "naive",
+      "species": "rhydon"
+    },
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "wakeupslap",
+        "psychup",
+        "synchronoise",
+        "psychic"
+      ],
+      "nature": "calm",
+      "species": "hypno"
+    }
+  ]
+}

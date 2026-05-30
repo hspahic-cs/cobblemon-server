@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Interviewers Oli & Roxy",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "bubblebeam",
+        "charm",
+        "slam",
+        "bounce"
+      ],
+      "nature": "hardy",
+      "species": "marill"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "watergun",
+        "raindance",
+        "mudshot",
+        "mist"
+      ],
+      "nature": "impish",
+      "species": "wooper"
+    }
+  ]
+}

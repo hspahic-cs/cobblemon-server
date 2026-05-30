@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Skier Bradley",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "harden",
+        "stealthrock",
+        "rockblast",
+        "earthquake"
+      ],
+      "nature": "naive",
+      "species": "geodude"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "harden",
+        "bulldoze",
+        "stealthrock",
+        "rockblast"
+      ],
+      "nature": "naive",
+      "species": "graveler"
+    },
+    {
+      "ability": "snowwarning",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "iceshard",
+        "razorleaf",
+        "icywind",
+        "ingrain"
+      ],
+      "nature": "hasty",
+      "species": "snover"
+    }
+  ]
+}

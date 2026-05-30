@@ -1,0 +1,122 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Science Society Scientist",
+  "team": [
+    {
+      "ability": "levitate",
+      "aspects": [
+        "mow-appliance"
+      ],
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 57,
+      "moveset": [
+        "thunderbolt",
+        "leafstorm",
+        "shadowball",
+        "thunderwave"
+      ],
+      "nature": "modest",
+      "species": "rotom"
+    },
+    {
+      "ability": "flareboost",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "flame_orb"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "discharge",
+        "flamethrower",
+        "hiddenpower",
+        "protect"
+      ],
+      "nature": "timid",
+      "species": "manectric"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "weakness_policy"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 30,
+        "hp": 30,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 58,
+      "moveset": [
+        "thunderbolt",
+        "flashcannon",
+        "hiddenpower",
+        "magnetrise"
+      ],
+      "nature": "modest",
+      "species": "magnezone"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "bugbuzz",
+        "thunderbolt",
+        "airslash",
+        "energyball"
+      ],
+      "nature": "modest",
+      "species": "vikavolt"
+    }
+  ]
+}

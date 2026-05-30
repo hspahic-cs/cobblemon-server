@@ -1,0 +1,178 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Leader Aklove",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "air_balloon"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "zingzap",
+        "ironhead",
+        "nuzzle",
+        "fakeout"
+      ],
+      "nature": "jolly",
+      "species": "togedemaru"
+    },
+    {
+      "ability": "pixilate",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:gardevoirite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "psychic",
+        "moonblast",
+        "mysticalfire",
+        "dazzlinggleam"
+      ],
+      "nature": "timid",
+      "species": "gardevoir"
+    },
+    {
+      "ability": "triage",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "babiri_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "drainingkiss",
+        "gigadrain",
+        "floralhealing",
+        "helpinghand"
+      ],
+      "nature": "bold",
+      "species": "comfey"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "wide_lens"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "leafstorm",
+        "dazzlinggleam",
+        "shadowball",
+        "sleeppowder"
+      ],
+      "nature": "timid",
+      "species": "roserade"
+    },
+    {
+      "ability": "multiscale",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "dragonclaw",
+        "dualwingbeat",
+        "firepunch",
+        "extremespeed"
+      ],
+      "nature": "jolly",
+      "species": "dragonite"
+    },
+    {
+      "ability": "liquidvoice",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "hypervoice",
+        "moonblast",
+        "energyball",
+        "protect"
+      ],
+      "nature": "modest",
+      "species": "primarina"
+    }
+  ]
+}

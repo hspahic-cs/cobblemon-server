@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Timmy",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 19,
+      "moveset": [
+        "focusenergy",
+        "hyperfang",
+        "pursuit",
+        "zenheadbutt"
+      ],
+      "nature": "mild",
+      "species": "raticate"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 19,
+      "moveset": [
+        "bite",
+        "glare",
+        "poisontail",
+        "screech"
+      ],
+      "nature": "naughty",
+      "species": "ekans"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 19,
+      "moveset": [
+        "bite",
+        "wingattack",
+        "confuseray",
+        "aircutter"
+      ],
+      "nature": "adamant",
+      "species": "zubat"
+    }
+  ]
+}

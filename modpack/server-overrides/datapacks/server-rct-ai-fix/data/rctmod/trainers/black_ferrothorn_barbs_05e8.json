@@ -1,0 +1,123 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Ferrothorn Barbs",
+  "team": [
+    {
+      "ability": "superluck",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 57,
+      "moveset": [
+        "darkpulse",
+        "aircutter",
+        "heatwave",
+        "tailwind"
+      ],
+      "nature": "timid",
+      "species": "honchkrow"
+    },
+    {
+      "ability": "skilllink",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:heracronite",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "pinmissile",
+        "brickbreak",
+        "rockblast",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "heracross"
+    },
+    {
+      "ability": "poisontouch",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 58,
+      "moveset": [
+        "gunkshot",
+        "crunch",
+        "icepunch",
+        "minimize"
+      ],
+      "nature": "adamant",
+      "species": "muk"
+    },
+    {
+      "ability": "ironbarbs",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 59,
+      "moveset": [
+        "powerwhip",
+        "gyroball",
+        "leechseed",
+        "thunderwave"
+      ],
+      "nature": "careful",
+      "species": "ferrothorn"
+    }
+  ]
+}

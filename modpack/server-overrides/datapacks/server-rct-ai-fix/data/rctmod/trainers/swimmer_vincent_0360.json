@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Vincent",
+  "team": [
+    {
+      "ability": "drizzle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "airslash",
+        "waterpulse",
+        "stockpile",
+        "swallow"
+      ],
+      "nature": "relaxed",
+      "species": "pelipper"
+    },
+    {
+      "ability": "oblivious",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "tickle",
+        "rest",
+        "snore",
+        "waterpulse"
+      ],
+      "nature": "relaxed",
+      "species": "whiscash"
+    }
+  ]
+}

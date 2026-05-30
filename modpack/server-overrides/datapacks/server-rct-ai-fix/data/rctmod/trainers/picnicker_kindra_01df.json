@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Kindra",
+  "team": [
+    {
+      "ability": "cottondown",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 57,
+      "moveset": [
+        "hypervoice",
+        "aromatherapy",
+        "leafstorm",
+        "cottonguard"
+      ],
+      "nature": "gentle",
+      "species": "eldegoss"
+    },
+    {
+      "ability": "ripen",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 58,
+      "moveset": [
+        "irondefense",
+        "fly",
+        "dragonrush",
+        "outrage"
+      ],
+      "nature": "calm",
+      "species": "flapple"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 56,
+      "moveset": [
+        "leechlife",
+        "zenheadbutt",
+        "poisonfang",
+        "psychic"
+      ],
+      "nature": "naive",
+      "species": "venomoth"
+    }
+  ]
+}

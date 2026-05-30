@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Jerry",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "electroball",
+        "flashcannon",
+        "screech",
+        "discharge"
+      ],
+      "nature": "naive",
+      "species": "magneton"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 47,
+      "moveset": [
+        "magnetrise",
+        "discharge",
+        "explosion",
+        "gyroball"
+      ],
+      "nature": "jolly",
+      "species": "electrode"
+    },
+    {
+      "ability": "download",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "signalbeam",
+        "recycle",
+        "discharge",
+        "lockon"
+      ],
+      "nature": "sassy",
+      "species": "porygon"
+    }
+  ]
+}

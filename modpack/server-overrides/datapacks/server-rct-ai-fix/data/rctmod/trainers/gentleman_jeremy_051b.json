@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gentleman Jeremy",
+  "team": [
+    {
+      "ability": "tangledfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "hypervoice",
+        "chatter",
+        "confide",
+        "furyattack"
+      ],
+      "nature": "timid",
+      "species": "chatot"
+    }
+  ]
+}

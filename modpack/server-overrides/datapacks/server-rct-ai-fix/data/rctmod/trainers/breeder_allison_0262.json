@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Breeder Allison",
+  "team": [
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "luckychant",
+        "bodyslam",
+        "softboiled",
+        "moonblast"
+      ],
+      "nature": "hasty",
+      "species": "clefairy"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "luckychant",
+        "bodyslam",
+        "softboiled",
+        "moonblast"
+      ],
+      "nature": "calm",
+      "species": "clefairy"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "sing",
+        "doubleslap",
+        "metronome",
+        "teleport"
+      ],
+      "nature": "sassy",
+      "species": "clefable"
+    }
+  ]
+}

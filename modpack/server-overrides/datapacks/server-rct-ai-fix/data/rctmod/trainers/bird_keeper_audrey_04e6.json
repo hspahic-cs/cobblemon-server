@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Audrey",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 59,
+      "moveset": [
+        "slash",
+        "falseswipe",
+        "knockoff",
+        "aerialace"
+      ],
+      "nature": "jolly",
+      "species": "farfetchd"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 59,
+      "moveset": [
+        "quickattack",
+        "endeavor",
+        "bravebird",
+        "agility"
+      ],
+      "nature": "jolly",
+      "species": "swellow"
+    }
+  ]
+}

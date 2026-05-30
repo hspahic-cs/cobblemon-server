@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Ronald",
+  "team": [
+    {
+      "ability": "lightningrod",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "waterfall",
+        "soak",
+        "megahorn",
+        "fishiousrend"
+      ],
+      "nature": "gentle",
+      "species": "seaking"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "crunch",
+        "agility",
+        "skullbash",
+        "taunt"
+      ],
+      "nature": "quiet",
+      "species": "sharpedo"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "spikecannon",
+        "iceshard",
+        "spikes",
+        "iciclecrash"
+      ],
+      "nature": "impish",
+      "species": "cloyster"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "irondefense",
+        "icebeam",
+        "shellsmash",
+        "hydropump"
+      ],
+      "nature": "brave",
+      "species": "shellder"
+    }
+  ]
+}

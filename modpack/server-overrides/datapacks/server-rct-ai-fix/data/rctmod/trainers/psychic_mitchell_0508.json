@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Mitchell",
+  "team": [
+    {
+      "ability": "cursedbody",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "confuseray",
+        "meanlook",
+        "curse",
+        "destinybond"
+      ],
+      "nature": "timid",
+      "species": "gengar"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "psychocut",
+        "recover",
+        "futuresight",
+        "calmmind"
+      ],
+      "nature": "timid",
+      "species": "alakazam"
+    }
+  ]
+}

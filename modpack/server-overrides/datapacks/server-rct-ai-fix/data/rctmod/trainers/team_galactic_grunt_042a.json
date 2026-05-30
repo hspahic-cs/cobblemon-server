@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (13)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "absorb",
+        "supersonic",
+        "astonish",
+        "meanlook"
+      ],
+      "nature": "bashful",
+      "species": "zubat"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "fakeout",
+        "scratch",
+        "growl",
+        "hypnosis"
+      ],
+      "nature": "quirky",
+      "species": "glameow"
+    }
+  ]
+}

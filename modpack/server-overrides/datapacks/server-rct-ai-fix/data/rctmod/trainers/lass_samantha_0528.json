@@ -1,0 +1,23 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Samantha",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "poisonsting",
+        "magicalleaf",
+        "gigadrain"
+      ],
+      "nature": "timid",
+      "species": "roselia"
+    }
+  ]
+}

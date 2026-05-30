@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Deandre",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 56,
+      "moveset": [
+        "stomp",
+        "agility",
+        "zenheadbutt",
+        "crunch"
+      ],
+      "nature": "hardy",
+      "species": "girafarig"
+    }
+  ]
+}

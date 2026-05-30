@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Nicola",
+  "team": [
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "mirrorcoat",
+        "doublekick",
+        "charm",
+        "headbutt"
+      ],
+      "nature": "careful",
+      "species": "lopunny"
+    }
+  ]
+}

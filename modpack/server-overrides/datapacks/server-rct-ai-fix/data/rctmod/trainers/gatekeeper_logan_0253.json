@@ -1,0 +1,129 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gatekeeper Logan",
+  "team": [
+    {
+      "ability": "tintedlens",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "choice_specs"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "bugbuzz",
+        "airslash",
+        "uturn",
+        "gigadrain"
+      ],
+      "nature": "timid",
+      "species": "yanmega"
+    },
+    {
+      "ability": "rockhead",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "hard_stone"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "headsmash",
+        "flareblitz",
+        "accelerock",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "arcanine"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:altarianite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "dragondance",
+        "return",
+        "earthquake",
+        "roost"
+      ],
+      "nature": "jolly",
+      "species": "altaria"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "liquidation",
+        "aquajet",
+        "crunch",
+        "icepunch"
+      ],
+      "nature": "jolly",
+      "species": "feraligatr"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Breeder Alize",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "discharge",
+        "extremespeed",
+        "thunderbolt",
+        "agility"
+      ],
+      "nature": "lax",
+      "species": "pikachu"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "luckychant",
+        "bodyslam",
+        "softboiled",
+        "moonblast"
+      ],
+      "nature": "hardy",
+      "species": "clefairy"
+    },
+    {
+      "ability": "hugepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "raindance",
+        "doubleedge",
+        "superpower",
+        "hydropump"
+      ],
+      "nature": "naughty",
+      "species": "marill"
+    }
+  ]
+}

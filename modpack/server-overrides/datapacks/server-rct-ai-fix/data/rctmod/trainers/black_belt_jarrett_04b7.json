@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Jarrett",
+  "team": [
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 59,
+      "moveset": [
+        "dynamicpunch",
+        "bulkup",
+        "knockoff",
+        "focusenergy"
+      ],
+      "nature": "careful",
+      "species": "machamp"
+    }
+  ]
+}

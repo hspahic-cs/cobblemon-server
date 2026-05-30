@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rich Boy Trey",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "leer",
+        "bite",
+        "spark",
+        "thunderwave"
+      ],
+      "nature": "jolly",
+      "species": "luxio"
+    }
+  ]
+}

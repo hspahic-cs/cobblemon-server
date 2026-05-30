@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Troy",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 43,
+      "moveset": [
+        "scaryface",
+        "raindance",
+        "aquatail",
+        "hydropump"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    }
+  ]
+}

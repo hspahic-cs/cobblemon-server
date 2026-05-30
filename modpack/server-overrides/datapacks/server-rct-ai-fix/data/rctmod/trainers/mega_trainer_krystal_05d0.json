@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Krystal",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "light_clay"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 72,
+      "moveset": [
+        "psychic",
+        "reflect",
+        "lightscreen",
+        "trickroom"
+      ],
+      "nature": "bold",
+      "species": "oranguru"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 72,
+      "moveset": [
+        "hex",
+        "willowisp",
+        "strengthsap",
+        "trickroom"
+      ],
+      "nature": "calm",
+      "species": "jellicent"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "choice_band"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 74,
+      "moveset": [
+        "doubleedge",
+        "darkestlariat",
+        "earthquake",
+        "firepunch"
+      ],
+      "nature": "adamant",
+      "species": "snorlax"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 73,
+      "moveset": [
+        "outrage",
+        "suckerpunch",
+        "firepunch",
+        "irontail"
+      ],
+      "nature": "adamant",
+      "species": "druddigon"
+    },
+    {
+      "ability": "magicbounce",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:absolite",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 75,
+      "moveset": [
+        "knockoff",
+        "playrough",
+        "suckerpunch",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "absol"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Jenna",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "absorb",
+        "stunspore",
+        "rest",
+        "sleeptalk"
+      ],
+      "nature": "bold",
+      "species": "budew"
+    },
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 13,
+      "moveset": [
+        "absorb",
+        "stunspore",
+        "rest",
+        "sleeptalk"
+      ],
+      "nature": "bold",
+      "species": "budew"
+    },
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "absorb",
+        "stunspore",
+        "rest",
+        "sleeptalk"
+      ],
+      "nature": "bold",
+      "species": "budew"
+    }
+  ]
+}

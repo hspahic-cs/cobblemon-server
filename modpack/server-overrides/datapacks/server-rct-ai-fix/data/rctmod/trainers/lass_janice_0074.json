@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Janice",
+  "team": [
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 10,
+      "moveset": [
+        "fakeout",
+        "attract",
+        "scratch",
+        "growl"
+      ],
+      "nature": "quirky",
+      "species": "glameow"
+    },
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 11,
+      "moveset": [
+        "growl",
+        "scratch",
+        "tailwhip",
+        "doublekick"
+      ],
+      "nature": "quiet",
+      "species": "nidoranf"
+    }
+  ]
+}

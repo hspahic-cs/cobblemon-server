@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Twins Teri & Tia",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "nuzzle",
+        "growl",
+        "quickattack",
+        "lightscreen"
+      ],
+      "nature": "timid",
+      "species": "pikachu"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "disarmingvoice",
+        "defensecurl",
+        "lifedew",
+        "followme"
+      ],
+      "nature": "timid",
+      "species": "clefairy"
+    }
+  ]
+}

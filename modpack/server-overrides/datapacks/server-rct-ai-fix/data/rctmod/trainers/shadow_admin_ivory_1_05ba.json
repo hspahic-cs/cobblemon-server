@@ -1,0 +1,94 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Shadow Admin Ivory",
+  "name": "Shadow Admin Ivory",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 33,
+      "moveset": [
+        "hex",
+        "willowisp",
+        "meanlook",
+        "confuseray"
+      ],
+      "nature": "bold",
+      "species": "misdreavus"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {
+        "hp": 252,
+        "spa": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 32,
+      "moveset": [
+        "psybeam",
+        "knockoff",
+        "thunderwave",
+        "reflect"
+      ],
+      "nature": "timid",
+      "species": "kadabra"
+    },
+    {
+      "ability": "furcoat",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "wide_lens"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 34,
+      "moveset": [
+        "punishment",
+        "aerialace",
+        "hypnosis",
+        "swagger"
+      ],
+      "nature": "adamant",
+      "species": "persian"
+    }
+  ]
+}

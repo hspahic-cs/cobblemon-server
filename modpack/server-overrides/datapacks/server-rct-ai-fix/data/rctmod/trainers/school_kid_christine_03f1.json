@@ -1,0 +1,21 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "School Kid Christine",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 6,
+      "moveset": [
+        "chargebeam"
+      ],
+      "nature": "timid",
+      "species": "abra"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tamer Phil",
+  "team": [
+    {
+      "ability": "heavymetal",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 62,
+      "moveset": [
+        "strength",
+        "ironhead",
+        "playrough",
+        "highhorsepower"
+      ],
+      "nature": "naive",
+      "species": "copperajah"
+    },
+    {
+      "ability": "merciless",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 63,
+      "moveset": [
+        "belch",
+        "coil",
+        "wringout",
+        "gunkshot"
+      ],
+      "nature": "adamant",
+      "species": "seviper"
+    }
+  ]
+}

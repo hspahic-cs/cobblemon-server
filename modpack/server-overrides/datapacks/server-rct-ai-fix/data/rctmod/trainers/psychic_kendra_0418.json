@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Kendra",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "wrap",
+        "growl",
+        "confusion",
+        "yawn"
+      ],
+      "nature": "bashful",
+      "species": "chingling"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "lightscreen",
+        "healpulse",
+        "healbell",
+        "psychic"
+      ],
+      "nature": "calm",
+      "species": "chimecho"
+    }
+  ]
+}

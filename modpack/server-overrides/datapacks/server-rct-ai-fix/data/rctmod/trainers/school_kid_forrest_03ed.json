@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "School Kid Forrest",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 44,
+      "moveset": [
+        "reflect",
+        "dazzlinggleam",
+        "thunderbolt",
+        "energyball"
+      ],
+      "nature": "timid",
+      "species": "mrmime"
+    }
+  ]
+}

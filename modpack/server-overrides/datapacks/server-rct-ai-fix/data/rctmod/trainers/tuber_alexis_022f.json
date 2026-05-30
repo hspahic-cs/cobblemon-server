@@ -1,0 +1,156 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tuber Alexis",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "salac_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "shellsmash",
+        "aquajet",
+        "waterfall",
+        "stoneedge"
+      ],
+      "nature": "timid",
+      "species": "carracosta"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "liquidation",
+        "swordsdance",
+        "closecombat",
+        "aquajet"
+      ],
+      "nature": "jolly",
+      "species": "kingler"
+    },
+    {
+      "ability": "regenerator",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:slowbronite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "irondefense",
+        "calmmind",
+        "bodypress",
+        "shadowball"
+      ],
+      "nature": "bold",
+      "species": "slowbro"
+    },
+    {
+      "ability": "illuminate",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "hydropump",
+        "blizzard",
+        "thunder",
+        "voltswitch"
+      ],
+      "nature": "modest",
+      "species": "lanturn"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:waterium_z",
+        "water_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "fireblast",
+        "surf",
+        "darkpulse",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "species": "hydreigon"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Kyler",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "worryseed",
+        "leechseed",
+        "leafstorm",
+        "psyshock"
+      ],
+      "nature": "modest",
+      "species": "exeggutor"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "scaryface",
+        "rest",
+        "snore",
+        "thrash"
+      ],
+      "nature": "adamant",
+      "species": "ursaring"
+    }
+  ]
+}

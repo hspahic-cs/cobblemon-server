@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Claude",
+  "team": [
+    {
+      "ability": "reckless",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "finalgambit",
+        "liquidation",
+        "headsmash",
+        "waterfall"
+      ],
+      "nature": "hardy",
+      "species": "basculin"
+    },
+    {
+      "ability": "steelworker",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 65,
+      "moveset": [
+        "heavyslam",
+        "phantomforce",
+        "powerwhip",
+        "spiritshackle"
+      ],
+      "nature": "sassy",
+      "species": "dhelmise"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Drew",
+  "team": [
+    {
+      "ability": "furcoat",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "furyswipes",
+        "screech",
+        "feintattack",
+        "taunt"
+      ],
+      "nature": "serious",
+      "species": "persian"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 27,
+      "moveset": [
+        "bubblebeam",
+        "mudshot",
+        "aquaring",
+        "uproar"
+      ],
+      "nature": "hardy",
+      "species": "palpitoad"
+    },
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "acidspray",
+        "bite",
+        "slash",
+        "toxic"
+      ],
+      "nature": "brave",
+      "species": "stunky"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "psybeam",
+        "hypnosis",
+        "dizzypunch",
+        "suckerpunch"
+      ],
+      "nature": "naughty",
+      "species": "spinda"
+    }
+  ]
+}

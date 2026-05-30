@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9 Kid Ariel",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "nuzzle",
+        "charm",
+        "thundershock",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "pikachu"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "nastyplot",
+        "thundershock",
+        "doubleteam",
+        "electroball"
+      ],
+      "nature": "timid",
+      "species": "pikachu"
+    }
+  ]
+}

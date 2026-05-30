@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Sis And Bro Lil & Ian",
+  "team": [
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 50,
+      "moveset": [
+        "focusenergy",
+        "brine",
+        "agility",
+        "dragonpulse"
+      ],
+      "nature": "lax",
+      "species": "seadra"
+    },
+    {
+      "ability": "illuminate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 50,
+      "moveset": [
+        "rapidspin",
+        "recover",
+        "psybeam",
+        "confuseray"
+      ],
+      "nature": "quirky",
+      "species": "starmie"
+    }
+  ]
+}

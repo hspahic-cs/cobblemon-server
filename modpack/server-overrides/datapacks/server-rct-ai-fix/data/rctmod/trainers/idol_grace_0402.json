@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Idol Grace",
+  "team": [
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "nuzzle",
+        "charm",
+        "thundershock",
+        "quickattack"
+      ],
+      "nature": "careful",
+      "species": "pikachu"
+    },
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "sing",
+        "disarmingvoice",
+        "encore",
+        "charm"
+      ],
+      "nature": "calm",
+      "species": "clefairy"
+    }
+  ]
+}

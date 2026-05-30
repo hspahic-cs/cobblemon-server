@@ -1,0 +1,131 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Shea",
+  "team": [
+    {
+      "ability": "reckless",
+      "aspects": [
+        "hisuian"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "woodhammer",
+        "closecombat",
+        "bravebird",
+        "stoneedge"
+      ],
+      "nature": "jolly",
+      "species": "decidueye"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spa": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "thunderwave",
+        "voltswitch",
+        "flashcannon",
+        "powergem"
+      ],
+      "nature": "bold",
+      "species": "probopass"
+    },
+    {
+      "ability": "guts",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "flame_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "facade",
+        "drainpunch",
+        "knockoff",
+        "machpunch"
+      ],
+      "nature": "adamant",
+      "species": "conkeldurr"
+    },
+    {
+      "ability": "rockhead",
+      "aspects": [
+        "sevii"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_band"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "flareblitz",
+        "earthquake",
+        "uturn",
+        "bravebird"
+      ],
+      "nature": "jolly",
+      "species": "dodrio"
+    }
+  ]
+}

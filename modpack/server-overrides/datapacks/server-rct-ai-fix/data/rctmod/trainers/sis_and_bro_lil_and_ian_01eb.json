@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Sis And Bro Lil & Ian",
+  "team": [
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "swordsdance",
+        "crunch",
+        "crabhammer",
+        "slash"
+      ],
+      "nature": "quiet",
+      "species": "crawdaunt"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 65,
+      "moveset": [
+        "crunch",
+        "agility",
+        "skullbash",
+        "taunt"
+      ],
+      "nature": "timid",
+      "species": "sharpedo"
+    }
+  ]
+}

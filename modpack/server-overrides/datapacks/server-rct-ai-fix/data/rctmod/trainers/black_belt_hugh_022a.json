@@ -1,0 +1,95 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Hugh",
+  "team": [
+    {
+      "ability": "moxie",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "megahorn",
+        "closecombat",
+        "earthquake",
+        "stoneedge"
+      ],
+      "nature": "jolly",
+      "species": "heracross"
+    },
+    {
+      "ability": "hugepower",
+      "evs": {
+        "atk": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:medichamite",
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "closecombat",
+        "zenheadbutt",
+        "fakeout",
+        "icepunch"
+      ],
+      "nature": "jolly",
+      "species": "medicham"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {
+        "atk": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "dragondance",
+        "headsmash",
+        "dragonclaw",
+        "closecombat"
+      ],
+      "nature": "jolly",
+      "species": "tyrantrum"
+    }
+  ]
+}

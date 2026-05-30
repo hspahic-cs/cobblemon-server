@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Jeffrey",
+  "team": [
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "metalclaw",
+        "charm",
+        "peck",
+        "bubblebeam"
+      ],
+      "nature": "sassy",
+      "species": "prinplup"
+    },
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "metalclaw",
+        "tackle",
+        "peck",
+        "bubblebeam"
+      ],
+      "nature": "sassy",
+      "species": "prinplup"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Tisha",
+  "team": [
+    {
+      "ability": "drizzle",
+      "evs": {
+        "def": 252,
+        "hp": 248,
+        "spa": 8
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "damp_rock"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 30,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "scald",
+        "hurricane",
+        "icebeam",
+        "uturn"
+      ],
+      "nature": "bold",
+      "species": "pelipper"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:psychium_z",
+        "psychic_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "hydropump",
+        "nastyplot",
+        "synchronoise",
+        "icebeam"
+      ],
+      "nature": "timid",
+      "species": "golduck"
+    },
+    {
+      "ability": "hydration",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "acidarmor",
+        "icebeam",
+        "rest",
+        "scald"
+      ],
+      "nature": "modest",
+      "species": "vaporeon"
+    },
+    {
+      "ability": "voltabsorb",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "ice_gem"
+      ],
+      "ivs": {
+        "atk": 30,
+        "def": 30,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "thunder",
+        "weatherball",
+        "hiddenpower",
+        "shadowball"
+      ],
+      "nature": "timid",
+      "species": "jolteon"
+    },
+    {
+      "ability": "infiltrator",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "hurricane",
+        "boomburst",
+        "focusblast",
+        "dragonpulse"
+      ],
+      "nature": "timid",
+      "species": "noivern"
+    }
+  ]
+}

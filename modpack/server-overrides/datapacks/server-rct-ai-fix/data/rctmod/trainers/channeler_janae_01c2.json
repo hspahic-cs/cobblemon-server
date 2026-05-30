@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Channeler Janae",
+  "team": [
+    {
+      "ability": "klutz",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 38,
+      "moveset": [
+        "megapunch",
+        "magnitude",
+        "dynamicpunch",
+        "shadowsneak"
+      ],
+      "nature": "modest",
+      "species": "golett"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Zac",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 70,
+      "moveset": [
+        "firefang",
+        "flareblitz",
+        "helpinghand",
+        "retaliate"
+      ],
+      "nature": "careful",
+      "species": "arcanine"
+    },
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 72,
+      "moveset": [
+        "flamethrower",
+        "fierywrath",
+        "nastyplot",
+        "inferno"
+      ],
+      "nature": "jolly",
+      "species": "houndoom"
+    }
+  ]
+}

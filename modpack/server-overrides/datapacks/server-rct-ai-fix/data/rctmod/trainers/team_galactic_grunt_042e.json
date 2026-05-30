@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (17)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 32,
+      "moveset": [
+        "tackle",
+        "poisonsting",
+        "harden"
+      ],
+      "nature": "bashful",
+      "species": "silcoon"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 32,
+      "moveset": [
+        "screech",
+        "poisonfang",
+        "quickguard",
+        "aircutter"
+      ],
+      "nature": "quirky",
+      "species": "golbat"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 32,
+      "moveset": [
+        "growl",
+        "aerialace",
+        "furyswipes",
+        "retaliate"
+      ],
+      "nature": "hardy",
+      "species": "glameow"
+    }
+  ]
+}

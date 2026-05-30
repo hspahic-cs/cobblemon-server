@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Quentin",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 27,
+      "moveset": [
+        "tackle",
+        "sandstorm",
+        "harden",
+        "smackdown"
+      ],
+      "nature": "relaxed",
+      "species": "geodude"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "sandstorm",
+        "harden",
+        "smackdown",
+        "stealthrock"
+      ],
+      "nature": "relaxed",
+      "species": "graveler"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "bind",
+        "curse",
+        "rockslide",
+        "sandtomb"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

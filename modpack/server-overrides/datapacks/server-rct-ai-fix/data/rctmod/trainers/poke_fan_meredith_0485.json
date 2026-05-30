@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9 Fan Meredith",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "tailwhip",
+        "helpinghand",
+        "aquatail",
+        "playrough"
+      ],
+      "nature": "bashful",
+      "species": "marill"
+    },
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "tailwhip",
+        "sandattack",
+        "tickle",
+        "furyswipes"
+      ],
+      "nature": "bashful",
+      "species": "aipom"
+    }
+  ]
+}

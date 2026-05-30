@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Burglar Lewis",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 70,
+      "moveset": [
+        "firefang",
+        "flareblitz",
+        "helpinghand",
+        "retaliate"
+      ],
+      "nature": "sassy",
+      "species": "arcanine"
+    },
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 69,
+      "moveset": [
+        "fireblast",
+        "bounce",
+        "flareblitz",
+        "jumpkick"
+      ],
+      "nature": "timid",
+      "species": "rapidash"
+    }
+  ]
+}

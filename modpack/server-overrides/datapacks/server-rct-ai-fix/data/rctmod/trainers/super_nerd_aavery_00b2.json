@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Aavery",
+  "team": [
+    {
+      "ability": "gluttony",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 72,
+      "moveset": [
+        "spitup",
+        "swallow",
+        "flareblitz",
+        "inferno"
+      ],
+      "nature": "adamant",
+      "species": "heatmor"
+    },
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 71,
+      "moveset": [
+        "flamethrower",
+        "firespin",
+        "inferno",
+        "heatwave"
+      ],
+      "nature": "docile",
+      "species": "charizard"
+    },
+    {
+      "ability": "flamebody",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 73,
+      "moveset": [
+        "mefirst",
+        "tailwind",
+        "steelwing",
+        "bravebird"
+      ],
+      "nature": "docile",
+      "species": "talonflame"
+    },
+    {
+      "ability": "dancer",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 72,
+      "moveset": [
+        "mirrormove",
+        "agility",
+        "hurricane",
+        "quiverdance"
+      ],
+      "nature": "serious",
+      "species": "oricorio"
+    }
+  ]
+}

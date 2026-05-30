@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Elizabeth",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "absorb",
+        "growth",
+        "stunspore",
+        "worryseed"
+      ],
+      "nature": "calm",
+      "species": "budew"
+    }
+  ]
+}

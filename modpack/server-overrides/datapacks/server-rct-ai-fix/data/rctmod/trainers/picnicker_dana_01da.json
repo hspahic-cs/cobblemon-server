@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Dana",
+  "team": [
+    {
+      "ability": "illusion",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 34,
+      "moveset": [
+        "scaryface",
+        "taunt",
+        "foulplay",
+        "torment"
+      ],
+      "nature": "relaxed",
+      "species": "zorua"
+    },
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "lowsweep",
+        "bulkup",
+        "submission",
+        "taunt"
+      ],
+      "nature": "docile",
+      "species": "clobbopus"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "zenheadbutt",
+        "aquatail",
+        "soak",
+        "psychic"
+      ],
+      "nature": "adamant",
+      "species": "golduck"
+    }
+  ]
+}

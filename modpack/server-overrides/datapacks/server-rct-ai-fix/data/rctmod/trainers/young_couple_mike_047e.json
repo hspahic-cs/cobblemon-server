@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "name": "Mike",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "peck",
+        "astonish",
+        "gust",
+        "wingattack"
+      ],
+      "nature": "bashful",
+      "species": "murkrow"
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Leader Mel",
+  "name": "Battleground Mel",
+  "team": [
+    {
+      "ability": "hugepower",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "silk_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 81,
+      "moveset": [
+        "return",
+        "quickattack",
+        "earthquake",
+        "thunderpunch"
+      ],
+      "nature": "adamant",
+      "species": "diggersby"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "seismictoss",
+        "wish",
+        "softboiled",
+        "stealthrock"
+      ],
+      "nature": "bold",
+      "species": "blissey"
+    },
+    {
+      "ability": "punkrock",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "choice_scarf"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "boomburst",
+        "chatter",
+        "heatwave",
+        "uturn"
+      ],
+      "nature": "modest",
+      "species": "chatot"
+    },
+    {
+      "ability": "scrappy",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:lopunnite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "return",
+        "closecombat",
+        "thunderpunch",
+        "fakeout"
+      ],
+      "nature": "jolly",
+      "species": "lopunny"
+    },
+    {
+      "ability": "adaptability",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "mega_showdown:normalium_z",
+        "normal_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "triattack",
+        "shadowball",
+        "signalbeam",
+        "icebeam"
+      ],
+      "nature": "timid",
+      "species": "porygonz"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 82,
+      "moveset": [
+        "avalanche",
+        "recover",
+        "curse",
+        "bodypress"
+      ],
+      "nature": "careful",
+      "species": "avalugg"
+    }
+  ]
+}

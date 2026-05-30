@@ -1,0 +1,81 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Glenn",
+  "team": [
+    {
+      "ability": "stickyhold",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 35,
+      "moveset": [
+        "mudbomb",
+        "poisonfang",
+        "fling",
+        "sludgebomb"
+      ],
+      "nature": "serious",
+      "species": "grimer"
+    },
+    {
+      "ability": "gluttony",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 36,
+      "moveset": [
+        "poisonfang",
+        "fling",
+        "knockoff",
+        "crunch"
+      ],
+      "nature": "quirky",
+      "species": "grimer"
+    },
+    {
+      "ability": "gluttony",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 34,
+      "moveset": [
+        "poisonfang",
+        "fling",
+        "knockoff",
+        "crunch"
+      ],
+      "nature": "hasty",
+      "species": "muk"
+    }
+  ]
+}

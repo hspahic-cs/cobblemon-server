@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Gary",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "smackdown",
+        "irontail",
+        "payback",
+        "bulldoze"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

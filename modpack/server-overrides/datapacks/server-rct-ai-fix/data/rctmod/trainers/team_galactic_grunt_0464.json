@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (22)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "venoshock",
+        "leechlife",
+        "toxic",
+        "bugbuzz"
+      ],
+      "nature": "quirky",
+      "species": "dustox"
+    },
+    {
+      "ability": "heatproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "confuseray",
+        "payback",
+        "extrasensory",
+        "heavyslam"
+      ],
+      "nature": "hardy",
+      "species": "bronzor"
+    }
+  ]
+}

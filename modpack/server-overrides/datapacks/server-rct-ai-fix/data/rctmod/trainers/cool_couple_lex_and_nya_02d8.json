@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Cool Couple Lex & Nya",
+  "team": [
+    {
+      "ability": "scrappy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 25,
+        "def": 25,
+        "hp": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "level": 57,
+      "moveset": [
+        "bodyslam",
+        "milkdrink",
+        "growl",
+        "defensecurl"
+      ],
+      "nature": "quiet",
+      "species": "miltank"
+    },
+    {
+      "ability": "angerpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 25,
+        "def": 25,
+        "hp": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "level": 57,
+      "moveset": [
+        "takedown",
+        "scaryface",
+        "pursuit",
+        "swagger"
+      ],
+      "nature": "impish",
+      "species": "tauros"
+    }
+  ]
+}

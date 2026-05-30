@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tamer Jason",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 43,
+      "moveset": [
+        "rockblast",
+        "drillrun",
+        "takedown",
+        "stoneedge"
+      ],
+      "nature": "quiet",
+      "species": "rhyhorn"
+    }
+  ]
+}

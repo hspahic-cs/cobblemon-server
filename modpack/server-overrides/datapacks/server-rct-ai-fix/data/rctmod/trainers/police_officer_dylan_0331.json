@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Police Officer Dylan",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "growl",
+        "echoedvoice",
+        "reflect",
+        "psychoshift"
+      ],
+      "nature": "sassy",
+      "species": "hoothoot"
+    },
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "confusion",
+        "detect",
+        "feint",
+        "forcepalm"
+      ],
+      "nature": "hardy",
+      "species": "meditite"
+    }
+  ]
+}

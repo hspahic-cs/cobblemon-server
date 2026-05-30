@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Brady",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "growl",
+        "tailwhip",
+        "flamecharge",
+        "agility"
+      ],
+      "nature": "sassy",
+      "species": "ponyta"
+    },
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 20,
+      "moveset": [
+        "tackle",
+        "growl",
+        "flamecharge",
+        "agility"
+      ],
+      "nature": "sassy",
+      "species": "ponyta"
+    },
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 24,
+      "moveset": [
+        "tackle",
+        "growl",
+        "ember",
+        "flamecharge"
+      ],
+      "nature": "sassy",
+      "species": "ponyta"
+    }
+  ]
+}

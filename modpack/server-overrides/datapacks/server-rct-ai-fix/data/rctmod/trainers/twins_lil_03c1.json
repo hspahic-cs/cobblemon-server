@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "name": "Twin Lil",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "pound",
+        "copycat",
+        "encore",
+        "confusion"
+      ],
+      "nature": "timid",
+      "species": "mimejr"
+    }
+  ]
+}

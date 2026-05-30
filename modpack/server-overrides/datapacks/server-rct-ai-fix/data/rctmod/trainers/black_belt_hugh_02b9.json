@@ -1,0 +1,59 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Hugh",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 50,
+      "moveset": [
+        "dualchop",
+        "submission",
+        "bulkup",
+        "crosschop"
+      ],
+      "nature": "calm",
+      "species": "machoke"
+    },
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 50,
+      "moveset": [
+        "dualchop",
+        "submission",
+        "bulkup",
+        "crosschop"
+      ],
+      "nature": "hardy",
+      "species": "machoke"
+    }
+  ]
+}

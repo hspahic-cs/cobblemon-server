@@ -1,0 +1,117 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Taylor",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "choice_band"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "explosion"
+      ],
+      "nature": "adamant",
+      "species": "electrode"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "explosion"
+      ],
+      "nature": "relaxed",
+      "species": "weezing"
+    },
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "psychic",
+        "shadowball",
+        "moonlight",
+        "calmmind"
+      ],
+      "nature": "adamant",
+      "species": "musharna"
+    },
+    {
+      "ability": "effectspore",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "spore",
+        "gigadrain",
+        "sludgebomb"
+      ],
+      "nature": "brave",
+      "species": "amoonguss"
+    },
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "prism_scale"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "poisonjab",
+        "xscissor",
+        "swordsdance"
+      ],
+      "nature": "rash",
+      "species": "scolipede"
+    }
+  ]
+}

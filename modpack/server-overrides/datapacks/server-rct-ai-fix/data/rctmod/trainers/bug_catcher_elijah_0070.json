@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Elijah",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 24,
+      "moveset": [
+        "watersport",
+        "aircutter",
+        "scaryface",
+        "airslash"
+      ],
+      "nature": "timid",
+      "species": "masquerain"
+    }
+  ]
+}

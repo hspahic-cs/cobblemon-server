@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rancher Marco",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "sandattack",
+        "astonish",
+        "tickle",
+        "furyswipes"
+      ],
+      "nature": "jolly",
+      "species": "aipom"
+    },
+    {
+      "ability": "cloudnine",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "scratch",
+        "tailwhip",
+        "confusion",
+        "waterpulse"
+      ],
+      "nature": "hasty",
+      "species": "psyduck"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "growl",
+        "confusion",
+        "assurance",
+        "stomp"
+      ],
+      "nature": "naive",
+      "species": "girafarig"
+    }
+  ]
+}

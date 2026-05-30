@@ -1,0 +1,149 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Wayne",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 46,
+      "moveset": [
+        "icefang",
+        "bulldoze",
+        "iceshard",
+        "stealthrock"
+      ],
+      "nature": "adamant",
+      "species": "mamoswine"
+    },
+    {
+      "ability": "skilllink",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 45,
+      "moveset": [
+        "pluck",
+        "furyattack",
+        "rockblast",
+        "roost"
+      ],
+      "nature": "jolly",
+      "species": "toucannon"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 46,
+      "moveset": [
+        "waterpulse",
+        "aurorabeam",
+        "quickattack",
+        "aquaring"
+      ],
+      "nature": "bold",
+      "species": "vaporeon"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 46,
+      "moveset": [
+        "ironhead",
+        "rockslide",
+        "bulldoze",
+        "autotomize"
+      ],
+      "nature": "adamant",
+      "species": "aggron"
+    },
+    {
+      "ability": "roughskin",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:garchompite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 47,
+      "moveset": [
+        "dragonclaw",
+        "stompingtantrum",
+        "crunch",
+        "fireblast"
+      ],
+      "nature": "jolly",
+      "species": "gabite"
+    }
+  ]
+}

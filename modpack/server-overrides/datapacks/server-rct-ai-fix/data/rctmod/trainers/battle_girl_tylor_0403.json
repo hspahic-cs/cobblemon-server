@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Battle Girl Tylor",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 34,
+      "moveset": [
+        "thunderpunch",
+        "icepunch",
+        "psybeam",
+        "acupressure"
+      ],
+      "nature": "quirky",
+      "species": "medicham"
+    }
+  ]
+}

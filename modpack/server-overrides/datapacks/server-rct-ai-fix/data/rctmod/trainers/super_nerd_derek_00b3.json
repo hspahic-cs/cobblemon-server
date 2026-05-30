@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Derek",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 74,
+      "moveset": [
+        "fireblast",
+        "bounce",
+        "flareblitz",
+        "jumpkick"
+      ],
+      "nature": "jolly",
+      "species": "rapidash"
+    }
+  ]
+}

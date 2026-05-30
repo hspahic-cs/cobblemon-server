@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Burglar Switzer",
+  "team": [
+    {
+      "ability": "speedboost",
+      "evs": {
+        "atk": 4,
+        "hp": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:blazikenite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 58,
+      "moveset": [
+        "blazekick",
+        "skyuppercut",
+        "poisonjab",
+        "protect"
+      ],
+      "nature": "jolly",
+      "species": "blaziken"
+    },
+    {
+      "ability": "weakarmor",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 58,
+      "moveset": [
+        "gunkshot",
+        "drainpunch",
+        "stompingtantrum",
+        "rockblast"
+      ],
+      "nature": "adamant",
+      "species": "garbodor"
+    },
+    {
+      "ability": "corrosion",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 57,
+      "moveset": [
+        "flamethrower",
+        "venoshock",
+        "dragonrage",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "species": "salazzle"
+    }
+  ]
+}

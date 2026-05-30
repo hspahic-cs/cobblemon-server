@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Adrian",
+  "team": [
+    {
+      "ability": "waterabsorb",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 26,
+      "moveset": [
+        "tackle",
+        "supersonic",
+        "wingattack",
+        "bubblebeam"
+      ],
+      "nature": "sassy",
+      "species": "mantyke"
+    },
+    {
+      "ability": "sniper",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "focusenergy",
+        "aurorabeam",
+        "bubblebeam",
+        "bulletseed"
+      ],
+      "nature": "hardy",
+      "species": "remoraid"
+    },
+    {
+      "ability": "clearbody",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "poisonsting",
+        "acid",
+        "waterpulse",
+        "hex"
+      ],
+      "nature": "sassy",
+      "species": "tentacool"
+    }
+  ]
+}

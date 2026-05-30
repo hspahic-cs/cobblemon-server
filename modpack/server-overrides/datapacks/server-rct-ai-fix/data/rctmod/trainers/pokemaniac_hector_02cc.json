@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9maniac Hector",
+  "team": [
+    {
+      "ability": "lightningrod",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 55,
+      "moveset": [
+        "takedown",
+        "stoneedge",
+        "earthquake",
+        "megahorn"
+      ],
+      "nature": "serious",
+      "species": "rhydon"
+    },
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 55,
+      "moveset": [
+        "endure",
+        "outrage",
+        "suckerpunch",
+        "reversal"
+      ],
+      "nature": "jolly",
+      "species": "kangaskhan"
+    }
+  ]
+}

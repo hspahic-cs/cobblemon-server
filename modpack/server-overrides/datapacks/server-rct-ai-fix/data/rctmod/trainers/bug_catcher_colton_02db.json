@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Colton",
+  "team": [
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 51,
+      "moveset": [
+        "ragepowder",
+        "captivate",
+        "tailwind",
+        "airslash"
+      ],
+      "nature": "lonely",
+      "species": "butterfree"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 54,
+      "moveset": [
+        "poisonjab",
+        "agility",
+        "endeavor",
+        "fellstinger"
+      ],
+      "nature": "careful",
+      "species": "beedrill"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 51,
+      "moveset": [
+        "ragepowder",
+        "captivate",
+        "tailwind",
+        "airslash"
+      ],
+      "nature": "mild",
+      "species": "butterfree"
+    }
+  ]
+}

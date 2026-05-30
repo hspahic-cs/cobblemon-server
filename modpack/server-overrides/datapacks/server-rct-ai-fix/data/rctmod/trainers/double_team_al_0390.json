@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Double Team Al",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 47,
+      "moveset": [
+        "closecombat",
+        "quickattack",
+        "doubleteam",
+        "aerialace"
+      ],
+      "nature": "relaxed",
+      "species": "staraptor"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Crush Girl Sharon",
+  "team": [
+    {
+      "ability": "vitalspirit",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 50,
+      "moveset": [
+        "stompingtantrum",
+        "outrage",
+        "crosschop",
+        "finalgambit"
+      ],
+      "nature": "impish",
+      "species": "mankey"
+    },
+    {
+      "ability": "vitalspirit",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 50,
+      "moveset": [
+        "thrash",
+        "screech",
+        "stompingtantrum",
+        "outrage"
+      ],
+      "nature": "brave",
+      "species": "primeape"
+    }
+  ]
+}

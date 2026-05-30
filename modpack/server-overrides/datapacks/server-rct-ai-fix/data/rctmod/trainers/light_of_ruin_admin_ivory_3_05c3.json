@@ -1,0 +1,178 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Admin Ivory",
+  "team": [
+    {
+      "ability": "poisontouch",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "poisonjab",
+        "drainpunch",
+        "icepunch",
+        "suckerpunch"
+      ],
+      "nature": "jolly",
+      "species": "toxicroak"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "moongeistbeam",
+        "mysticalfire",
+        "dazzlinggleam",
+        "thunderbolt"
+      ],
+      "nature": "timid",
+      "species": "mismagius"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "flareblitz",
+        "darkestlariat",
+        "drainpunch",
+        "thunderpunch"
+      ],
+      "nature": "adamant",
+      "species": "incineroar"
+    },
+    {
+      "ability": "trace",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:alakazite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "psyshock",
+        "shadowball",
+        "energyball",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "species": "alakazam"
+    },
+    {
+      "ability": "overcoat",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "rocky_helmet"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 62,
+      "moveset": [
+        "foulplay",
+        "attract",
+        "toxic",
+        "roost"
+      ],
+      "nature": "bold",
+      "species": "mandibuzz"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 61,
+      "moveset": [
+        "voltswitch",
+        "gigadrain",
+        "flamethrower",
+        "acidspray"
+      ],
+      "nature": "modest",
+      "species": "eelektross"
+    }
+  ]
+}

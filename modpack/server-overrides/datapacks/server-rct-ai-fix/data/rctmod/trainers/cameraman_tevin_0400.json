@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cameraman Tevin",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "charm",
+        "quickattack",
+        "spark",
+        "endure"
+      ],
+      "nature": "sassy",
+      "species": "pachirisu"
+    }
+  ]
+}

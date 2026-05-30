@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ranchers Ava",
+  "team": [
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "poisongas",
+        "smokescreen",
+        "acidspray",
+        "bite"
+      ],
+      "nature": "relaxed",
+      "species": "stunky"
+    }
+  ]
+}

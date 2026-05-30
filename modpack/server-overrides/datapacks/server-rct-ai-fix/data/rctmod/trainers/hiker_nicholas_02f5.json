@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Nicholas",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "tackle",
+        "harden",
+        "bind",
+        "rockthrow"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

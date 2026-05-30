@@ -1,0 +1,72 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Anne",
+  "team": [
+    {
+      "ability": "serenegrace",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "metronome"
+      ],
+      "nature": "bashful",
+      "species": "togepi"
+    },
+    {
+      "ability": "magicguard",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "metronome"
+      ],
+      "nature": "bashful",
+      "species": "clefairy"
+    },
+    {
+      "ability": "klutz",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "spa": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "swagger",
+        "protect",
+        "wish",
+        "yawn"
+      ],
+      "nature": "bashful",
+      "species": "audino"
+    }
+  ]
+}

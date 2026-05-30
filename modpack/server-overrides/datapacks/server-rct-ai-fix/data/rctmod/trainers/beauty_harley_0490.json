@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Harley",
+  "team": [
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "tailwhip",
+        "furyswipes",
+        "waterpulse",
+        "zenheadbutt"
+      ],
+      "nature": "calm",
+      "species": "psyduck"
+    }
+  ]
+}

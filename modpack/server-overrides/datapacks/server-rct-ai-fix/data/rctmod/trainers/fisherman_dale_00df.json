@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Dale",
+  "team": [
+    {
+      "ability": "clearbody",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 27,
+      "moveset": [
+        "waterpulse",
+        "acidspray",
+        "sludge",
+        "bubblebeam"
+      ],
+      "nature": "lonely",
+      "species": "tentacool"
+    },
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 27,
+      "moveset": [
+        "bind",
+        "detect",
+        "lowsweep",
+        "bulkup"
+      ],
+      "nature": "serious",
+      "species": "clobbopus"
+    },
+    {
+      "ability": "hypercutter",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 27,
+      "moveset": [
+        "doublehit",
+        "aquajet",
+        "knockoff",
+        "nightslash"
+      ],
+      "nature": "docile",
+      "species": "corphish"
+    }
+  ]
+}

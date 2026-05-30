@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Fernando",
+  "team": [
+    {
+      "ability": "filter",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "powerswap",
+        "copycat",
+        "batonpass",
+        "encore"
+      ],
+      "nature": "sassy",
+      "species": "mrmime"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 20,
+      "moveset": [
+        "copycat",
+        "encore",
+        "confusion",
+        "roleplay"
+      ],
+      "nature": "sassy",
+      "species": "mrmime"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 20,
+      "moveset": [
+        "copycat",
+        "encore",
+        "confusion",
+        "roleplay"
+      ],
+      "nature": "sassy",
+      "species": "mrmime"
+    }
+  ]
+}

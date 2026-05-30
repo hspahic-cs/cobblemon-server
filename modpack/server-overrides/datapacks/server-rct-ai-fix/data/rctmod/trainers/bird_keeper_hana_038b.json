@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Hana",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 46,
+      "moveset": [
+        "skyattack",
+        "takedown",
+        "roost",
+        "moonblast"
+      ],
+      "nature": "calm",
+      "species": "noctowl"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 48,
+      "moveset": [
+        "closecombat",
+        "quickattack",
+        "endeavor",
+        "aerialace"
+      ],
+      "nature": "impish",
+      "species": "staraptor"
+    }
+  ]
+}

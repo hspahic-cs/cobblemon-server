@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Connor",
+  "team": [
+    {
+      "ability": "poisontouch",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "crunch",
+        "poisonjab",
+        "shadowsneak"
+      ],
+      "nature": "sassy",
+      "species": "muk"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "explosion",
+        "sludgebomb",
+        "flamethrower"
+      ],
+      "nature": "naughty",
+      "species": "weezing"
+    },
+    {
+      "ability": "clearbody",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "metal_coat"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "shiftgear",
+        "geargrind"
+      ],
+      "nature": "lonely",
+      "species": "klinklang"
+    },
+    {
+      "ability": "analytic",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "psychic",
+        "shadowball"
+      ],
+      "nature": "calm",
+      "species": "beheeyem"
+    }
+  ]
+}

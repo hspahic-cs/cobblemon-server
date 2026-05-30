@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Nathaniel",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "poisonsting",
+        "mudslap",
+        "flatter",
+        "revenge"
+      ],
+      "nature": "hardy",
+      "species": "croagunk"
+    },
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "feint",
+        "forcepalm",
+        "psybeam",
+        "calmmind"
+      ],
+      "nature": "hardy",
+      "species": "meditite"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "leer",
+        "lowsweep",
+        "knockoff",
+        "scaryface"
+      ],
+      "nature": "relaxed",
+      "species": "machop"
+    }
+  ]
+}

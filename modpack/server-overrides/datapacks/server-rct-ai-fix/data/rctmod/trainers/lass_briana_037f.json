@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Briana",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 14,
+      "moveset": [
+        "babydolleyes",
+        "quickattack",
+        "charm",
+        "spark"
+      ],
+      "nature": "quirky",
+      "species": "pachirisu"
+    }
+  ]
+}

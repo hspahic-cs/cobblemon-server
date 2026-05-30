@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Jack",
+  "team": [
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 65,
+      "moveset": [
+        "recover",
+        "psybeam",
+        "confuseray",
+        "meteorbeam"
+      ],
+      "nature": "bold",
+      "species": "starmie"
+    }
+  ]
+}

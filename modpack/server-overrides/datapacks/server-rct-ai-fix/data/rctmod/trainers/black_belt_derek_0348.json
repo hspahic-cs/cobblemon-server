@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Derek",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "mudslap",
+        "taunt",
+        "revenge",
+        "suckerpunch"
+      ],
+      "nature": "hardy",
+      "species": "croagunk"
+    }
+  ]
+}

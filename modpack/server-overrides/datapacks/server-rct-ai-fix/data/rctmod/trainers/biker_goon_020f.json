@@ -1,0 +1,67 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Goon",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "dark_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "knockoff",
+        "gunkshot",
+        "waterfall",
+        "thunderwave"
+      ],
+      "nature": "jolly",
+      "species": "overqwil"
+    },
+    {
+      "ability": "pressure",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "reaper_cloth"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "shadowpunch",
+        "dynamicpunch",
+        "shadowsneak",
+        "icepunch"
+      ],
+      "nature": "adamant",
+      "species": "dusknoir"
+    }
+  ]
+}

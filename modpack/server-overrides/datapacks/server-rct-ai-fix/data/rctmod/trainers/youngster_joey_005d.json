@@ -1,0 +1,56 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Joey",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "bite",
+        "focusenergy",
+        "hyperfang",
+        "pursuit"
+      ],
+      "nature": "lax",
+      "species": "raticate"
+    },
+    {
+      "ability": "gluttony",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "quickattack",
+        "focusenergy",
+        "hyperfang",
+        "pursuit"
+      ],
+      "nature": "adamant",
+      "species": "raticate"
+    }
+  ]
+}

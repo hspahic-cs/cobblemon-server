@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Bug Catcher (4)",
+  "name": "Bug Catcher",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 5,
+      "moveset": [
+        "wrap",
+        "leer",
+        "poisonsting"
+      ],
+      "nature": "modest",
+      "species": "ekans"
+    }
+  ]
+}

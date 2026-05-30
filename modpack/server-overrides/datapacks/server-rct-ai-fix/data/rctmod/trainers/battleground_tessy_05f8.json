@@ -1,0 +1,186 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Leader Tessy",
+  "name": "Battleground Tessy",
+  "team": [
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:waterium_z",
+        "water_gem"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 82,
+      "moveset": [
+        "hydropump",
+        "hurricane",
+        "dracometeor",
+        "surf"
+      ],
+      "nature": "modest",
+      "species": "kingdra"
+    },
+    {
+      "ability": "regenerator",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "aguav_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "knockoff",
+        "toxic",
+        "recover",
+        "haze"
+      ],
+      "nature": "impish",
+      "species": "toxapex"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mystic_water"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 81,
+      "moveset": [
+        "fishiousrend",
+        "smartstrike",
+        "drillrun",
+        "poisonjab"
+      ],
+      "nature": "adamant",
+      "species": "seaking"
+    },
+    {
+      "ability": "hydration",
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "powerwhip",
+        "irontail",
+        "earthquake",
+        "rest"
+      ],
+      "nature": "adamant",
+      "species": "goodra"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:swampertite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 84,
+      "moveset": [
+        "liquidation",
+        "earthquake",
+        "icepunch",
+        "poweruppunch"
+      ],
+      "nature": "adamant",
+      "species": "swampert"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "def": 252,
+        "hp": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 83,
+      "moveset": [
+        "surf",
+        "thunder",
+        "icebeam",
+        "calmmind"
+      ],
+      "nature": "timid",
+      "species": "latias"
+    }
+  ]
+}

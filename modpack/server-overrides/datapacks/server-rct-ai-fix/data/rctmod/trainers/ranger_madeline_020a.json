@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ranger Madeline",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 51,
+      "moveset": [
+        "petaldance",
+        "acid",
+        "sweetscent",
+        "poisonpowder"
+      ],
+      "nature": "brave",
+      "species": "gloom"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 51,
+      "moveset": [
+        "petaldance",
+        "moonlight",
+        "acid",
+        "stunspore"
+      ],
+      "nature": "relaxed",
+      "species": "vileplume"
+    }
+  ]
+}

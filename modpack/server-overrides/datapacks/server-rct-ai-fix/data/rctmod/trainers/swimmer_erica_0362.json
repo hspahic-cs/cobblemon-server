@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Erica",
+  "team": [
+    {
+      "ability": "hustle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "psybeam",
+        "aurorabeam",
+        "bubblebeam",
+        "lockon"
+      ],
+      "nature": "bashful",
+      "species": "remoraid"
+    },
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "tailwhip",
+        "furyswipes",
+        "zenheadbutt",
+        "aquatail"
+      ],
+      "nature": "calm",
+      "species": "psyduck"
+    }
+  ]
+}

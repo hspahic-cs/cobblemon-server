@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (12)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "psybeam",
+        "wakeupslap",
+        "psychup",
+        "synchronoise"
+      ],
+      "nature": "impish",
+      "species": "drowzee"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 41,
+      "moveset": [
+        "bulkup",
+        "rockslide",
+        "dynamicpunch",
+        "scaryface"
+      ],
+      "nature": "relaxed",
+      "species": "gurdurr"
+    }
+  ]
+}

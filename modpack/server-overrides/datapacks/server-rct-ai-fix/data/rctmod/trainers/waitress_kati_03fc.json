@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Waitress Kati",
+  "team": [
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 22,
+      "moveset": [
+        "sweetkiss",
+        "charm",
+        "growl",
+        "metronome"
+      ],
+      "nature": "calm",
+      "species": "clefairy"
+    }
+  ]
+}

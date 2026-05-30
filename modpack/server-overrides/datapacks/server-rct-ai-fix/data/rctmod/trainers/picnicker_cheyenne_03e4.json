@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Cheyenne",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "gust",
+        "stockpile",
+        "swallow",
+        "spitup"
+      ],
+      "nature": "calm",
+      "species": "drifloon"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "confuseray",
+        "meanlook",
+        "hex",
+        "psybeam"
+      ],
+      "nature": "modest",
+      "species": "misdreavus"
+    }
+  ]
+}

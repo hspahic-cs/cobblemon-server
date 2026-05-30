@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Ivan",
+  "team": [
+    {
+      "ability": "sandstream",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 51,
+      "moveset": [
+        "yawn",
+        "sandtomb",
+        "crunch",
+        "earthquake"
+      ],
+      "nature": "impish",
+      "species": "hippopotas"
+    },
+    {
+      "ability": "sandstream",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "crunch",
+        "doubleedge",
+        "fissure",
+        "slackoff"
+      ],
+      "nature": "jolly",
+      "species": "hippopotas"
+    },
+    {
+      "ability": "sandstream",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 52,
+      "moveset": [
+        "crunch",
+        "doubleedge",
+        "earthquake",
+        "slackoff"
+      ],
+      "nature": "jolly",
+      "species": "hippopotas"
+    }
+  ]
+}

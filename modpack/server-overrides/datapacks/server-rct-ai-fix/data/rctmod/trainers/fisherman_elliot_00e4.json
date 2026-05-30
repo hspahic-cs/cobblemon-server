@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Elliot",
+  "team": [
+    {
+      "ability": "hydration",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "rest",
+        "snore",
+        "waterpulse",
+        "earthquake"
+      ],
+      "nature": "mild",
+      "species": "whiscash"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 36,
+      "moveset": [
+        "heartstamp",
+        "flail",
+        "sweetkiss",
+        "takedown"
+      ],
+      "nature": "bashful",
+      "species": "luvdisc"
+    },
+    {
+      "ability": "lightningrod",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 37,
+      "moveset": [
+        "aquajet",
+        "aquaring",
+        "agility",
+        "waterfall"
+      ],
+      "nature": "hasty",
+      "species": "goldeen"
+    },
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "twister",
+        "bubblebeam",
+        "focusenergy",
+        "brine"
+      ],
+      "nature": "bold",
+      "species": "seadra"
+    }
+  ]
+}

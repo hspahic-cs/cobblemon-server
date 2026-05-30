@@ -1,0 +1,40 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Ranchers Beth & Bob",
+  "team": [
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "tackle",
+        "growl",
+        "tailwhip",
+        "flamecharge"
+      ],
+      "nature": "sassy",
+      "species": "ponyta"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "growl",
+        "quickattack",
+        "watergun",
+        "bite"
+      ],
+      "nature": "relaxed",
+      "species": "buizel"
+    }
+  ]
+}

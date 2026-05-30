@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Tamer Vincent",
+  "team": [
+    {
+      "ability": "technician",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 80,
+      "moveset": [
+        "assurance",
+        "captivate",
+        "nightslash",
+        "feint"
+      ],
+      "nature": "serious",
+      "species": "persian"
+    },
+    {
+      "ability": "cloudnine",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 20,
+        "def": 20,
+        "hp": 20,
+        "spa": 20,
+        "spd": 20,
+        "spe": 20
+      },
+      "level": 81,
+      "moveset": [
+        "psychup",
+        "nastyplot",
+        "hydropump",
+        "wonderroom"
+      ],
+      "nature": "bashful",
+      "species": "golduck"
+    }
+  ]
+}

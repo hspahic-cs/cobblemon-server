@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Ariana",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 33,
+      "moveset": [
+        "sleeppowder",
+        "megadrain",
+        "sludge",
+        "moonlight"
+      ],
+      "nature": "impish",
+      "species": "gloom"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 33,
+      "moveset": [
+        "round",
+        "taunt",
+        "chatter",
+        "mimic"
+      ],
+      "nature": "lonely",
+      "species": "chatot"
+    },
+    {
+      "ability": "rivalry",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 31,
+      "moveset": [
+        "bite",
+        "spark",
+        "roar",
+        "swagger"
+      ],
+      "nature": "modest",
+      "species": "luxio"
+    },
+    {
+      "ability": "naturalcure",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "gigadrain",
+        "toxicspikes",
+        "sleeppowder",
+        "ingrain"
+      ],
+      "nature": "bashful",
+      "species": "roselia"
+    }
+  ]
+}

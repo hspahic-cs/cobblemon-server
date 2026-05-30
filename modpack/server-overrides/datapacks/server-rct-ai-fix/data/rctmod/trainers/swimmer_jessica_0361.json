@@ -1,0 +1,69 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Jessica",
+  "team": [
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "peck",
+        "tailwhip",
+        "waterpulse",
+        "hornattack"
+      ],
+      "nature": "impish",
+      "species": "goldeen"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "peck",
+        "supersonic",
+        "waterpulse",
+        "hornattack"
+      ],
+      "nature": "impish",
+      "species": "goldeen"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "peck",
+        "waterpulse",
+        "hornattack",
+        "agility"
+      ],
+      "nature": "impish",
+      "species": "goldeen"
+    },
+    {
+      "ability": "waterveil",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "peck",
+        "waterpulse",
+        "hornattack",
+        "aquaring"
+      ],
+      "nature": "impish",
+      "species": "goldeen"
+    }
+  ]
+}

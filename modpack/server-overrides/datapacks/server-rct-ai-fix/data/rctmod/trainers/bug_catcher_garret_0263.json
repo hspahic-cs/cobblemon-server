@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Garret",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 49,
+      "moveset": [
+        "takedown",
+        "megahorn",
+        "closecombat",
+        "reversal"
+      ],
+      "nature": "timid",
+      "species": "heracross"
+    }
+  ]
+}

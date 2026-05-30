@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Gwen",
+  "team": [
+    {
+      "ability": "poisontouch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 57,
+      "moveset": [
+        "toxicspikes",
+        "flatter",
+        "crunch",
+        "captivate"
+      ],
+      "nature": "modest",
+      "species": "nidorina"
+    },
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 57,
+      "moveset": [
+        "charm",
+        "doubleedge",
+        "lastresort",
+        "trumpcard"
+      ],
+      "nature": "sassy",
+      "species": "eevee"
+    },
+    {
+      "ability": "torrent",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 57,
+      "moveset": [
+        "whirlpool",
+        "mist",
+        "drillpeck",
+        "hydropump"
+      ],
+      "nature": "lax",
+      "species": "prinplup"
+    },
+    {
+      "ability": "steadfast",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 57,
+      "moveset": [
+        "screech",
+        "reversal",
+        "nastyplot",
+        "finalgambit"
+      ],
+      "nature": "bold",
+      "species": "riolu"
+    }
+  ]
+}

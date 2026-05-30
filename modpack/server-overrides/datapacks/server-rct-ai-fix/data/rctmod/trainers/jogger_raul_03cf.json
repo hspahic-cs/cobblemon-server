@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Jogger Raul",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "quickattack",
+        "wingattack",
+        "doubleteam",
+        "endeavor"
+      ],
+      "nature": "relaxed",
+      "species": "staravia"
+    }
+  ]
+}

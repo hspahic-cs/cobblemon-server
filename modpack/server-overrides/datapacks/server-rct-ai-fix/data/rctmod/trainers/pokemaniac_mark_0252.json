@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9maniac Mark",
+  "team": [
+    {
+      "ability": "lightningrod",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "bulldoze",
+        "chipaway",
+        "rockblast",
+        "drillrun"
+      ],
+      "nature": "naive",
+      "species": "rhyhorn"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "stomp",
+        "disable",
+        "slam",
+        "rollout"
+      ],
+      "nature": "relaxed",
+      "species": "lickitung"
+    }
+  ]
+}

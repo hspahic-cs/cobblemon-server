@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Irene",
+  "team": [
+    {
+      "ability": "liquidooze",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 62,
+      "moveset": [
+        "hex",
+        "sludgewave",
+        "hydropump",
+        "wringout"
+      ],
+      "nature": "jolly",
+      "species": "tentacruel"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 63,
+      "moveset": [
+        "raindance",
+        "tailwind",
+        "hydropump",
+        "hurricane"
+      ],
+      "nature": "docile",
+      "species": "swanna"
+    },
+    {
+      "ability": "icescales",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 63,
+      "moveset": [
+        "takedown",
+        "dive",
+        "aquatail",
+        "safeguard"
+      ],
+      "nature": "bold",
+      "species": "dewgong"
+    }
+  ]
+}

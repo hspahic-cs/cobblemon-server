@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Harold",
+  "team": [
+    {
+      "ability": "tintedlens",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 53,
+      "moveset": [
+        "uproar",
+        "roost",
+        "moonblast",
+        "synchronoise"
+      ],
+      "nature": "lonely",
+      "species": "noctowl"
+    },
+    {
+      "ability": "tintedlens",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 55,
+      "moveset": [
+        "uproar",
+        "roost",
+        "moonblast",
+        "synchronoise"
+      ],
+      "nature": "timid",
+      "species": "noctowl"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Taylor",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "tackle",
+        "leer",
+        "bite",
+        "spark"
+      ],
+      "nature": "jolly",
+      "species": "luxio"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "quickattack",
+        "watergun",
+        "bite",
+        "swift"
+      ],
+      "nature": "jolly",
+      "species": "buizel"
+    }
+  ]
+}

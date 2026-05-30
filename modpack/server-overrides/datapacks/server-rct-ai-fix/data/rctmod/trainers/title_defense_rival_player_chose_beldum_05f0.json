@@ -1,0 +1,188 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Rival Wayne",
+  "name": "Title Defense Rival Wayne",
+  "team": [
+    {
+      "ability": "thickfat",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 78,
+      "moveset": [
+        "iciclecrash",
+        "earthquake",
+        "iceshard",
+        "stealthrock"
+      ],
+      "nature": "adamant",
+      "species": "mamoswine"
+    },
+    {
+      "ability": "motordrive",
+      "aspects": [
+        "fan-appliance"
+      ],
+      "evs": {
+        "hp": 6,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "heavy_duty_boots"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 78,
+      "moveset": [
+        "thunderbolt",
+        "airslash",
+        "darkpulse",
+        "nastyplot"
+      ],
+      "nature": "timid",
+      "species": "rotom"
+    },
+    {
+      "ability": "waterabsorb",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spd": 4
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 78,
+      "moveset": [
+        "scald",
+        "haze",
+        "wish",
+        "protect"
+      ],
+      "nature": "bold",
+      "species": "vaporeon"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "shuca_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 79,
+      "moveset": [
+        "stoneedge",
+        "ironhead",
+        "bodypress",
+        "metalburst"
+      ],
+      "nature": "adamant",
+      "species": "aggron"
+    },
+    {
+      "ability": "sandforce",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:garchompite",
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 80,
+      "moveset": [
+        "scaleshot",
+        "earthquake",
+        "fireblast",
+        "swordsdance"
+      ],
+      "nature": "jolly",
+      "species": "garchomp"
+    },
+    {
+      "ability": "steamengine",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 79,
+      "moveset": [
+        "steameruption",
+        "flamethrower",
+        "earthpower",
+        "substitute"
+      ],
+      "nature": "calm",
+      "species": "volcanion"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Eddie",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 26,
+      "moveset": [
+        "glare",
+        "poisontail",
+        "screech",
+        "suckerpunch"
+      ],
+      "nature": "brave",
+      "species": "arbok"
+    }
+  ]
+}

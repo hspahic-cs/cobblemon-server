@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Cyndy",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 40,
+      "moveset": [
+        "aerialace",
+        "charm",
+        "taunt",
+        "slash"
+      ],
+      "nature": "jolly",
+      "species": "glameow"
+    }
+  ]
+}

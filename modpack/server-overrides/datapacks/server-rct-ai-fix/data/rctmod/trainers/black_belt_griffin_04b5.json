@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Griffin",
+  "team": [
+    {
+      "ability": "sandveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "spikyshield",
+        "leechseed",
+        "suckerpunch",
+        "pinmissile"
+      ],
+      "nature": "bashful",
+      "species": "cacturne"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 57,
+      "moveset": [
+        "dynamicpunch",
+        "knockoff",
+        "strength",
+        "lowsweep"
+      ],
+      "nature": "sassy",
+      "species": "machamp"
+    }
+  ]
+}

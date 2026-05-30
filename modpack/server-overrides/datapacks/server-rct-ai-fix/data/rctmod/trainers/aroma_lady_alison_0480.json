@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Aroma Lady Alison",
+  "team": [
+    {
+      "ability": "poisonpoint",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 23,
+      "moveset": [
+        "poisonsting",
+        "megadrain",
+        "leechseed",
+        "magicalleaf"
+      ],
+      "nature": "calm",
+      "species": "roselia"
+    }
+  ]
+}

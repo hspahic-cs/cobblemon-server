@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Eddie",
+  "team": [
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 52,
+      "moveset": [
+        "leer",
+        "revenge",
+        "knockoff",
+        "dualchop"
+      ],
+      "nature": "relaxed",
+      "species": "machoke"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "knockoff",
+        "dualchop",
+        "bulkup",
+        "dynamicpunch"
+      ],
+      "nature": "relaxed",
+      "species": "machamp"
+    }
+  ]
+}

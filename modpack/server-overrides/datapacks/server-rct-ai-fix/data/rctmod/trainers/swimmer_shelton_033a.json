@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer Shelton",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 30,
+      "moveset": [
+        "leer",
+        "twister",
+        "whirlpool",
+        "raindance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "leer",
+        "twister",
+        "brine",
+        "raindance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "leer",
+        "twister",
+        "waterfall",
+        "raindance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    }
+  ]
+}

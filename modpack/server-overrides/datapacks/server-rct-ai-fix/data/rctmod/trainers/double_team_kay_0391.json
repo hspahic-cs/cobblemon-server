@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Double Team Kay",
+  "team": [
+    {
+      "ability": "oblivious",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 47,
+      "moveset": [
+        "zenheadbutt",
+        "tickle",
+        "muddywater",
+        "earthquake"
+      ],
+      "nature": "impish",
+      "species": "whiscash"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9maniac Herman",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 34,
+      "moveset": [
+        "stomp",
+        "disable",
+        "slam",
+        "rollout"
+      ],
+      "nature": "hardy",
+      "species": "lickitung"
+    },
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 35,
+      "moveset": [
+        "suckerpunch",
+        "mudshot",
+        "agility",
+        "headbutt"
+      ],
+      "nature": "relaxed",
+      "species": "raboot"
+    }
+  ]
+}

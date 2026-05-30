@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Young Couple Gia & Jes",
+  "team": [
+    {
+      "ability": "rivalry",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 30,
+      "moveset": [
+        "poisonsting",
+        "furyswipes",
+        "bite",
+        "sludgebomb"
+      ],
+      "nature": "impish",
+      "species": "nidorina"
+    },
+    {
+      "ability": "rivalry",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 30,
+      "moveset": [
+        "poisonsting",
+        "furyattack",
+        "hornattack",
+        "poisonjab"
+      ],
+      "nature": "serious",
+      "species": "nidorino"
+    }
+  ]
+}

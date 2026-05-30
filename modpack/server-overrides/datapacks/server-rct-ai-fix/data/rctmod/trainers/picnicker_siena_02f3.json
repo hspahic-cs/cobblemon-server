@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Siena",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 12,
+      "moveset": [
+        "tackle",
+        "leer",
+        "thundershock",
+        "bite"
+      ],
+      "nature": "jolly",
+      "species": "shinx"
+    },
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 12,
+      "moveset": [
+        "growl",
+        "babydolleyes",
+        "quickattack",
+        "charm"
+      ],
+      "nature": "quirky",
+      "species": "pachirisu"
+    }
+  ]
+}

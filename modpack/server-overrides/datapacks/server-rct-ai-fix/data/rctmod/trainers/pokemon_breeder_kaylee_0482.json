@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Breeder Kaylee",
+  "team": [
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "poisongas",
+        "acidspray",
+        "furyswipes",
+        "bite"
+      ],
+      "nature": "impish",
+      "species": "stunky"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "growl",
+        "watergun",
+        "bite",
+        "swift"
+      ],
+      "nature": "impish",
+      "species": "buizel"
+    }
+  ]
+}

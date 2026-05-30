@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Blythe",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "growl",
+        "headbutt",
+        "taunt",
+        "yawn"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    },
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "growl",
+        "headbutt",
+        "taunt",
+        "yawn"
+      ],
+      "nature": "jolly",
+      "species": "bidoof"
+    }
+  ]
+}

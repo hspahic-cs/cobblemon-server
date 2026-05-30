@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Shaun",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 30,
+      "moveset": [
+        "kinesis",
+        "teleport",
+        "reflect",
+        "psyshock"
+      ],
+      "nature": "timid",
+      "species": "kadabra"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "disable",
+        "psybeam",
+        "psychocut",
+        "recover"
+      ],
+      "nature": "timid",
+      "species": "kadabra"
+    }
+  ]
+}

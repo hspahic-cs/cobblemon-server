@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ninja Boy Zach",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 51,
+      "moveset": [
+        "screech",
+        "astonish",
+        "poisonfang",
+        "bite"
+      ],
+      "nature": "jolly",
+      "species": "golbat"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 52,
+      "moveset": [
+        "tailwind",
+        "crosspoison",
+        "toxic",
+        "bite"
+      ],
+      "nature": "jolly",
+      "species": "crobat"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "absorb",
+        "toxic",
+        "aircutter",
+        "venoshock"
+      ],
+      "nature": "timid",
+      "species": "crobat"
+    }
+  ]
+}

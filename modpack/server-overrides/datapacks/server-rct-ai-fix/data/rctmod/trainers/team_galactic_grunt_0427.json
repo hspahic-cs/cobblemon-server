@@ -1,0 +1,55 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Galactic Grunt (11)",
+  "name": "Team Galactic Grunt",
+  "team": [
+    {
+      "ability": "anticipation",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 34,
+      "moveset": [
+        "taunt",
+        "revenge",
+        "suckerpunch",
+        "poisonjab"
+      ],
+      "nature": "hardy",
+      "species": "croagunk"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "poisonpowder",
+        "venoshock",
+        "leechlife",
+        "lightscreen"
+      ],
+      "nature": "docile",
+      "species": "dustox"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 31,
+      "moveset": [
+        "aircutter",
+        "megadrain",
+        "leechlife",
+        "attract"
+      ],
+      "nature": "serious",
+      "species": "beautifly"
+    }
+  ]
+}

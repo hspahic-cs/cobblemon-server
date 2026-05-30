@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Scientist Ed",
+  "team": [
+    {
+      "ability": "hydration",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "bugbuzz",
+        "gigadrain",
+        "sludgebomb",
+        "uturn"
+      ],
+      "nature": "lax",
+      "species": "accelgor"
+    },
+    {
+      "ability": "dryskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "thunderbolt",
+        "hypervoice",
+        "grassknot",
+        "voltswitch"
+      ],
+      "nature": "bashful",
+      "species": "heliolisk"
+    },
+    {
+      "ability": "defeatist",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 44,
+      "moveset": [
+        "acrobatics",
+        "rockslide",
+        "supersonic",
+        "zenheadbutt"
+      ],
+      "nature": "quirky",
+      "species": "archeops"
+    }
+  ]
+}

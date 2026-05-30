@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Double Team Jo",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 47,
+      "moveset": [
+        "icefang",
+        "waterfall",
+        "crunch",
+        "dragondance"
+      ],
+      "nature": "sassy",
+      "species": "gyarados"
+    }
+  ]
+}

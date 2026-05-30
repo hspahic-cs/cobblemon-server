@@ -1,0 +1,57 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (37)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "lightningrod",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 46,
+      "moveset": [
+        "shadowbone",
+        "thrash",
+        "fling",
+        "stompingtantrum"
+      ],
+      "nature": "quirky",
+      "species": "marowak"
+    },
+    {
+      "ability": "sandveil",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 45,
+      "moveset": [
+        "nightslash",
+        "uturn",
+        "xscissor",
+        "skyuppercut"
+      ],
+      "nature": "naughty",
+      "species": "gliscor"
+    }
+  ]
+}

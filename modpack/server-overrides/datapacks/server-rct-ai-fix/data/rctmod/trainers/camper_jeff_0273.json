@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Jeff",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 21,
+      "moveset": [
+        "pursuit",
+        "pluck",
+        "furyattack",
+        "mirrormove"
+      ],
+      "nature": "naive",
+      "species": "spearow"
+    },
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 21,
+      "moveset": [
+        "focusenergy",
+        "hyperfang",
+        "pursuit",
+        "zenheadbutt"
+      ],
+      "nature": "modest",
+      "species": "raticate"
+    }
+  ]
+}

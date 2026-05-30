@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_DOUBLES",
+  "name": "Young Couple Lea & Jed",
+  "team": [
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "firespin",
+        "takedown",
+        "inferno",
+        "agility"
+      ],
+      "nature": "lonely",
+      "species": "rapidash"
+    },
+    {
+      "ability": "flashfire",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 40,
+      "moveset": [
+        "flamethrower",
+        "quickattack",
+        "confuseray",
+        "safeguard"
+      ],
+      "nature": "quirky",
+      "species": "ninetales"
+    }
+  ]
+}

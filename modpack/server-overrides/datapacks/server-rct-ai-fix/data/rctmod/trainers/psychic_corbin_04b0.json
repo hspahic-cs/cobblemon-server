@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Corbin",
+  "team": [
+    {
+      "ability": "insomnia",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 53,
+      "moveset": [
+        "knockoff",
+        "suckerpunch",
+        "shadowsneak",
+        "curse"
+      ],
+      "nature": "adamant",
+      "species": "shuppet"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 55,
+      "moveset": [
+        "curse",
+        "willowisp",
+        "payback",
+        "shadowsneak"
+      ],
+      "nature": "impish",
+      "species": "duskull"
+    }
+  ]
+}

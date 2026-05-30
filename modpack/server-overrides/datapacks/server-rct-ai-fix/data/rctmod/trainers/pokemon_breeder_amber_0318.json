@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Breeder Amber",
+  "team": [
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "copycat",
+        "sing",
+        "sweetkiss",
+        "disarmingvoice"
+      ],
+      "nature": "calm",
+      "species": "cleffa"
+    },
+    {
+      "ability": "cutecharm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "sweetkiss",
+        "disarmingvoice",
+        "encore",
+        "copycat"
+      ],
+      "nature": "calm",
+      "species": "clefairy"
+    },
+    {
+      "ability": "serenegrace",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "copycat",
+        "sweetkiss",
+        "disarmingvoice",
+        "covet"
+      ],
+      "nature": "calm",
+      "species": "happiny"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Crush Girl Tanya",
+  "team": [
+    {
+      "ability": "reckless",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 50,
+      "moveset": [
+        "foresight",
+        "wideguard",
+        "blazekick",
+        "endure"
+      ],
+      "nature": "bashful",
+      "species": "hitmonlee"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {},
+      "gender": "MALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 50,
+      "moveset": [
+        "firepunch",
+        "skyuppercut",
+        "megapunch",
+        "suckerpunch"
+      ],
+      "nature": "relaxed",
+      "species": "hitmonchan"
+    }
+  ]
+}

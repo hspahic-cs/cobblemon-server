@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Mitchell",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "confuseray",
+        "meanlook",
+        "curse",
+        "hex"
+      ],
+      "nature": "timid",
+      "species": "haunter"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 42,
+      "moveset": [
+        "reflect",
+        "psychocut",
+        "recover",
+        "psychic"
+      ],
+      "nature": "timid",
+      "species": "kadabra"
+    }
+  ]
+}

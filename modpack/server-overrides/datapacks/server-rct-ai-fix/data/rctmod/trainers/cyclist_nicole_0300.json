@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Cyclist Nicole",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "tackle",
+        "growl",
+        "quickattack",
+        "wingattack"
+      ],
+      "nature": "quirky",
+      "species": "starly"
+    },
+    {
+      "ability": "runaway",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 15,
+      "moveset": [
+        "tackle",
+        "growl",
+        "tailwhip",
+        "flamecharge"
+      ],
+      "nature": "jolly",
+      "species": "ponyta"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Pok\u00e9mon Ranger Allison",
+  "team": [
+    {
+      "ability": "pickup",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "sandattack",
+        "astonish",
+        "tickle",
+        "furyswipes"
+      ],
+      "nature": "jolly",
+      "species": "aipom"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 21,
+      "moveset": [
+        "bubblebeam",
+        "slam",
+        "bounce",
+        "playrough"
+      ],
+      "nature": "jolly",
+      "species": "marill"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Police Officer Alex",
+  "team": [
+    {
+      "ability": "keeneye",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "growl",
+        "confusion",
+        "reflect",
+        "psychoshift"
+      ],
+      "nature": "sassy",
+      "species": "hoothoot"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 18,
+      "moveset": [
+        "leer",
+        "revenge",
+        "lowsweep",
+        "knockoff"
+      ],
+      "nature": "relaxed",
+      "species": "machop"
+    }
+  ]
+}

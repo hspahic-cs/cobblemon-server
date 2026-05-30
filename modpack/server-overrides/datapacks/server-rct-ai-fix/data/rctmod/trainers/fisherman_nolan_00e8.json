@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Fisherman Nolan",
+  "team": [
+    {
+      "ability": "gulpmissile",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 64,
+      "moveset": [
+        "drillpeck",
+        "amnesia",
+        "surf",
+        "hydropump"
+      ],
+      "nature": "hardy",
+      "species": "cramorant"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "slam",
+        "brine",
+        "crabhammer",
+        "flail"
+      ],
+      "nature": "rash",
+      "species": "kingler"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2640 Abigail",
+  "team": [
+    {
+      "ability": "hugepower",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "waterfall",
+        "playrough",
+        "superpower",
+        "aquajet"
+      ],
+      "nature": "adamant",
+      "species": "azumarill"
+    },
+    {
+      "ability": "megalauncher",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "snipeshot",
+        "aurasphere",
+        "icebeam",
+        "flamethrower"
+      ],
+      "nature": "modest",
+      "species": "octillery"
+    },
+    {
+      "ability": "emergencyexit",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "hp": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "firstimpression",
+        "liquidation",
+        "knockoff",
+        "closecombat"
+      ],
+      "nature": "adamant",
+      "species": "golisopod"
+    },
+    {
+      "ability": "schooling",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spa": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "hydropump",
+        "icebeam",
+        "uturn",
+        "earthquake"
+      ],
+      "nature": "modest",
+      "species": "wishiwashi"
+    }
+  ]
+}

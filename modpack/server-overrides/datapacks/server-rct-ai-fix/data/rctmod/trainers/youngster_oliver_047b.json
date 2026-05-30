@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Oliver",
+  "team": [
+    {
+      "ability": "stench",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "poisongas",
+        "acidspray",
+        "furyswipes",
+        "focusenergy"
+      ],
+      "nature": "naive",
+      "species": "stunky"
+    },
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "furycutter",
+        "growl",
+        "pound",
+        "absorb"
+      ],
+      "nature": "docile",
+      "species": "kricketune"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 16,
+      "moveset": [
+        "mudslap",
+        "harden",
+        "recover",
+        "waterpulse"
+      ],
+      "nature": "hasty",
+      "species": "shellos"
+    }
+  ]
+}

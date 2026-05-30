@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Dario",
+  "team": [
+    {
+      "ability": "earlybird",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 52,
+      "moveset": [
+        "crunch",
+        "psybeam",
+        "odorsleuth",
+        "agility"
+      ],
+      "nature": "lax",
+      "species": "girafarig"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Desiree",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "allyswitch",
+        "psyshock",
+        "psychic",
+        "reflect"
+      ],
+      "nature": "calm",
+      "species": "kadabra"
+    },
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "recover",
+        "psyshock",
+        "futuresight",
+        "calmmind"
+      ],
+      "nature": "calm",
+      "species": "kadabra"
+    }
+  ]
+}

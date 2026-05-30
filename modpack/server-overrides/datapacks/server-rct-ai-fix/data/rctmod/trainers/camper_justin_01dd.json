@@ -1,0 +1,131 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Camper Justin",
+  "team": [
+    {
+      "ability": "zenmode",
+      "aspects": [
+        "galarian"
+      ],
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "charti_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "uturn",
+        "flareblitz",
+        "iciclecrash",
+        "earthquake"
+      ],
+      "nature": "jolly",
+      "species": "darmanitan"
+    },
+    {
+      "ability": "slushrush",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "swordsdance",
+        "earthquake",
+        "ironhead",
+        "iciclecrash"
+      ],
+      "nature": "jolly",
+      "species": "sandslash"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {
+        "atk": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "assault_vest"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 88,
+      "moveset": [
+        "drainpunch",
+        "machpunch",
+        "knockoff",
+        "thunderpunch"
+      ],
+      "nature": "careful",
+      "species": "conkeldurr"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "spell_tag"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "nastyplot",
+        "shadowball",
+        "focusblast",
+        "sludgewave"
+      ],
+      "nature": "timid",
+      "species": "gengar"
+    }
+  ]
+}

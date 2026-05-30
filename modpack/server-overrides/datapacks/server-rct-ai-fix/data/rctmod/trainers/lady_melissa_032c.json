@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lady Melissa",
+  "team": [
+    {
+      "ability": "klutz",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "pound",
+        "defensecurl",
+        "babydolleyes",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "buneary"
+    }
+  ]
+}

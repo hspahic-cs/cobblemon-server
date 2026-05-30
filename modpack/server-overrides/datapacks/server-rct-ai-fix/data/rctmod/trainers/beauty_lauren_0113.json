@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Lauren",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "stunspore",
+        "sludge",
+        "megadrain",
+        "knockoff"
+      ],
+      "nature": "lonely",
+      "species": "weepinbell"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "stunspore",
+        "sludge",
+        "megadrain",
+        "knockoff"
+      ],
+      "nature": "relaxed",
+      "species": "bellsprout"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 33,
+      "moveset": [
+        "stunspore",
+        "sludge",
+        "megadrain",
+        "knockoff"
+      ],
+      "nature": "hardy",
+      "species": "weepinbell"
+    }
+  ]
+}

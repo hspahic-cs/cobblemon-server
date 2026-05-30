@@ -1,0 +1,34 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Belt Kiyo",
+  "team": [
+    {
+      "ability": "guts",
+      "evs": {},
+      "gender": "FEMALE",
+      "heldItem": [
+        "black_belt"
+      ],
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 43,
+      "moveset": [
+        "wakeupslap",
+        "dualchop",
+        "submission",
+        "bulkup"
+      ],
+      "nature": "mild",
+      "species": "machoke"
+    }
+  ]
+}

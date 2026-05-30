@@ -1,0 +1,97 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Juggler Edward",
+  "team": [
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 46,
+      "moveset": [
+        "swift",
+        "lightscreen",
+        "spark",
+        "sonicboom"
+      ],
+      "nature": "calm",
+      "species": "voltorb"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 46,
+      "moveset": [
+        "swift",
+        "lightscreen",
+        "spark",
+        "sonicboom"
+      ],
+      "nature": "careful",
+      "species": "voltorb"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 47,
+      "moveset": [
+        "swift",
+        "spark",
+        "selfdestruct",
+        "sonicboom"
+      ],
+      "nature": "brave",
+      "species": "electrode"
+    },
+    {
+      "ability": "soundproof",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 48,
+      "moveset": [
+        "psychic",
+        "roleplay",
+        "reflect",
+        "encore"
+      ],
+      "nature": "impish",
+      "species": "mrmime"
+    }
+  ]
+}

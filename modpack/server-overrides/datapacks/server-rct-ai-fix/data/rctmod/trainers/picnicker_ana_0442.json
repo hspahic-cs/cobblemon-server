@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Ana",
+  "team": [
+    {
+      "ability": "purepower",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 17,
+      "moveset": [
+        "pound",
+        "lowkick",
+        "confusion",
+        "forcepalm"
+      ],
+      "nature": "quirky",
+      "species": "meditite"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Michael",
+  "team": [
+    {
+      "ability": "unaware",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "tackle",
+        "growl",
+        "defensecurl"
+      ],
+      "nature": "docile",
+      "species": "bidoof"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 5,
+      "moveset": [
+        "absorb",
+        "supersonic",
+        "astonish"
+      ],
+      "nature": "hasty",
+      "species": "zubat"
+    }
+  ]
+}

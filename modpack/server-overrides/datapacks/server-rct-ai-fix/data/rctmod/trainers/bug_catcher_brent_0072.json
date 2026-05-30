@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Brent",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 28,
+      "moveset": [
+        "psybeam",
+        "hypnosis",
+        "skillswap",
+        "bugbuzz"
+      ],
+      "nature": "calm",
+      "species": "orbeetle"
+    },
+    {
+      "ability": "compoundeyes",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 29,
+      "moveset": [
+        "psybeam",
+        "airslash",
+        "drainingkiss",
+        "signalbeam"
+      ],
+      "nature": "jolly",
+      "species": "vivillon"
+    }
+  ]
+}

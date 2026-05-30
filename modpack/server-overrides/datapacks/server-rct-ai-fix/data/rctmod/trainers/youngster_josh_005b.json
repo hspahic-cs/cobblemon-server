@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Josh",
+  "team": [
+    {
+      "ability": "fluffy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 13,
+      "moveset": [
+        "tackle",
+        "defensecurl",
+        "copycat",
+        "guardsplit"
+      ],
+      "nature": "bold",
+      "species": "wooloo"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 15,
+      "moveset": [
+        "leer",
+        "bite",
+        "howl",
+        "rockthrow"
+      ],
+      "nature": "relaxed",
+      "species": "rockruff"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 16,
+      "moveset": [
+        "megadrain",
+        "leechlife",
+        "dragonbreath",
+        "airslash"
+      ],
+      "nature": "brave",
+      "species": "noibat"
+    }
+  ]
+}

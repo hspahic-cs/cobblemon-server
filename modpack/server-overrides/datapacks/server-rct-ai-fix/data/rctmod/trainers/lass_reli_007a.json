@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Reli",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "leechseed",
+        "sleeppowder",
+        "megadrain",
+        "synthesis"
+      ],
+      "nature": "relaxed",
+      "species": "petilil"
+    },
+    {
+      "ability": "cottondown",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "rapidspin",
+        "sweetscent",
+        "razorleaf",
+        "round"
+      ],
+      "nature": "adamant",
+      "species": "gossifleur"
+    }
+  ]
+}

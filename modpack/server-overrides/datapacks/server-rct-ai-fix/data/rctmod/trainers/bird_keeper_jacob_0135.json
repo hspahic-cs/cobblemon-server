@@ -1,0 +1,157 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bird Keeper Jacob",
+  "team": [
+    {
+      "ability": "gulpmissile",
+      "evs": {
+        "def": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "surf",
+        "hurricane",
+        "icebeam",
+        "roost"
+      ],
+      "nature": "timid",
+      "species": "cramorant"
+    },
+    {
+      "ability": "tintedlens",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "spell_tag"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "uturn",
+        "hurricane",
+        "spiritshackle",
+        "leafblade"
+      ],
+      "nature": "naive",
+      "species": "decidueye"
+    },
+    {
+      "ability": "trace",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spa": 4
+      },
+      "gender": "GENDERLESS",
+      "heldItem": [
+        "eviolite"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "thunder",
+        "icebeam",
+        "foulplay",
+        "teleport"
+      ],
+      "nature": "bold",
+      "species": "porygon2"
+    },
+    {
+      "ability": "adaptability",
+      "aspects": [
+        "f"
+      ],
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "weakness_policy"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 89,
+      "moveset": [
+        "hydropump",
+        "icebeam",
+        "flipturn",
+        "shadowball"
+      ],
+      "nature": "modest",
+      "species": "basculegion"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spd": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 92,
+      "moveset": [
+        "thunder",
+        "earthpower",
+        "sludgewave",
+        "bubblebeam"
+      ],
+      "nature": "timid",
+      "species": "nidoqueen"
+    }
+  ]
+}

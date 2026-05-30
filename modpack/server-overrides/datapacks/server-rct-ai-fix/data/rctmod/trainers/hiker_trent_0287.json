@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Trent",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 31,
+      "moveset": [
+        "smackdown",
+        "dragonbreath",
+        "slam",
+        "screech"
+      ],
+      "nature": "calm",
+      "species": "onix"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 31,
+      "moveset": [
+        "smackdown",
+        "bulldoze",
+        "selfdestruct",
+        "stealthrock"
+      ],
+      "nature": "lax",
+      "species": "graveler"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Janice",
+  "team": [
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 20,
+      "moveset": [
+        "gust",
+        "quickattack",
+        "takedown",
+        "whirlwind"
+      ],
+      "nature": "adamant",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "frisk",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 20,
+      "moveset": [
+        "gust",
+        "quickattack",
+        "takedown",
+        "whirlwind"
+      ],
+      "nature": "naive",
+      "species": "pidgeotto"
+    }
+  ]
+}

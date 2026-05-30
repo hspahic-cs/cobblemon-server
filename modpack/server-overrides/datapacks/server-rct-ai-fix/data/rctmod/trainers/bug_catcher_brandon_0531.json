@@ -1,0 +1,36 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Brandon",
+  "team": [
+    {
+      "ability": "swarm",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "strugglebug",
+        "absorb",
+        "sing",
+        "focusenergy"
+      ],
+      "nature": "timid",
+      "species": "kricketune"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "harden"
+      ],
+      "nature": "timid",
+      "species": "silcoon"
+    }
+  ]
+}

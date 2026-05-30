@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Swimmer\u2642 Matthew",
+  "team": [
+    {
+      "ability": "damp",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "bellydrum",
+        "wakeupslap",
+        "hydropump",
+        "mudbomb"
+      ],
+      "nature": "naive",
+      "species": "poliwhirl"
+    },
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "amnesia",
+        "psychic",
+        "raindance",
+        "psychup"
+      ],
+      "nature": "quirky",
+      "species": "slowbro"
+    }
+  ]
+}

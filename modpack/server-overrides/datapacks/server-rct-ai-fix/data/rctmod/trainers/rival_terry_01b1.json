@@ -1,0 +1,155 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "intimidate",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "sharp_beak"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 54,
+      "moveset": [
+        "bravebird",
+        "closecombat",
+        "uturn",
+        "quickattack"
+      ],
+      "nature": "jolly",
+      "species": "staraptor"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "charcoal_stick"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "flareblitz",
+        "rockslide",
+        "earthquake",
+        "uturn"
+      ],
+      "nature": "jolly",
+      "species": "darmanitan"
+    },
+    {
+      "ability": "hugepower",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "liquidation",
+        "aquajet",
+        "playrough",
+        "icepunch"
+      ],
+      "nature": "adamant",
+      "species": "azumarill"
+    },
+    {
+      "ability": "ironfist",
+      "evs": {
+        "atk": 252,
+        "hp": 6,
+        "spe": 252
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "plasmafists",
+        "closecombat",
+        "machpunch",
+        "icepunch"
+      ],
+      "nature": "jolly",
+      "species": "electivire"
+    },
+    {
+      "ability": "overgrow",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "mega_showdown:venusaurite",
+        "leftovers"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 55,
+      "moveset": [
+        "sleeppowder",
+        "gigadrain",
+        "sludgebomb",
+        "earthpower"
+      ],
+      "nature": "modest",
+      "species": "venusaur"
+    }
+  ]
+}

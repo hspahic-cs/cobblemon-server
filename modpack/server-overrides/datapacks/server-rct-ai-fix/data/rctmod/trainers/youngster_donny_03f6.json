@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Youngster Donny",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 27,
+      "moveset": [
+        "lick",
+        "meanlook",
+        "payback",
+        "hex"
+      ],
+      "nature": "timid",
+      "species": "gastly"
+    },
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 29,
+      "moveset": [
+        "shadowpunch",
+        "lick",
+        "meanlook",
+        "hex"
+      ],
+      "nature": "modest",
+      "species": "haunter"
+    }
+  ]
+}

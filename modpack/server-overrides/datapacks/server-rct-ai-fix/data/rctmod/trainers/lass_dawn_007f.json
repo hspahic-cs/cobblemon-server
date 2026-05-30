@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Dawn",
+  "team": [
+    {
+      "ability": "synchronize",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 27,
+      "moveset": [
+        "magicalleaf",
+        "healpulse",
+        "drainingkiss",
+        "calmmind"
+      ],
+      "nature": "timid",
+      "species": "kirlia"
+    },
+    {
+      "ability": "hungerswitch",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 28,
+      "moveset": [
+        "powertrip",
+        "quickattack",
+        "flatter",
+        "bite"
+      ],
+      "nature": "hardy",
+      "species": "morpeko"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Worker Colin",
+  "team": [
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 7,
+      "moveset": [
+        "tackle",
+        "defensecurl",
+        "sandstorm",
+        "rockpolish"
+      ],
+      "nature": "quirky",
+      "species": "geodude"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 7,
+      "moveset": [
+        "tackle",
+        "harden",
+        "bind",
+        "rockthrow"
+      ],
+      "nature": "bold",
+      "species": "onix"
+    }
+  ]
+}

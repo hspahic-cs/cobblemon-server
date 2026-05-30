@@ -1,0 +1,25 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "name": "Ty",
+  "team": [
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 19,
+      "moveset": [
+        "leer",
+        "focusenergy",
+        "lowsweep",
+        "knockoff"
+      ],
+      "nature": "impish",
+      "species": "machop"
+    }
+  ]
+}

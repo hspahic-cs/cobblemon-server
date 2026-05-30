@@ -1,0 +1,31 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gentleman Norton",
+  "team": [
+    {
+      "ability": "limber",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 48,
+      "moveset": [
+        "shockwave",
+        "powergem",
+        "slash",
+        "nastyplot"
+      ],
+      "nature": "lax",
+      "species": "persian"
+    }
+  ]
+}

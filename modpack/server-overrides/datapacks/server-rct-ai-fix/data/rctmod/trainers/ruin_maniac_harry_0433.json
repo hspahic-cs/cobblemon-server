@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ruin Maniac Harry",
+  "team": [
+    {
+      "ability": "heatproof",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 30,
+      "moveset": [
+        "confuseray",
+        "payback",
+        "gyroball",
+        "safeguard"
+      ],
+      "nature": "relaxed",
+      "species": "bronzor"
+    }
+  ]
+}

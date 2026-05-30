@@ -1,0 +1,119 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Megan",
+  "team": [
+    {
+      "ability": "magmaarmor",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "flameburst",
+        "confuseray",
+        "firepunch",
+        "lavaplume"
+      ],
+      "nature": "hasty",
+      "species": "magby"
+    },
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "meanlook",
+        "faketears",
+        "luckychant",
+        "avalanche"
+      ],
+      "nature": "quiet",
+      "species": "smoochum"
+    },
+    {
+      "ability": "triage",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "petalblizzard",
+        "synthesis",
+        "sweetscent",
+        "grassknot"
+      ],
+      "nature": "bold",
+      "species": "comfey"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 36,
+      "moveset": [
+        "lightscreen",
+        "thunderpunch",
+        "discharge",
+        "screech"
+      ],
+      "nature": "timid",
+      "species": "elekid"
+    },
+    {
+      "ability": "trace",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 35,
+      "moveset": [
+        "drainingkiss",
+        "calmmind",
+        "psychic",
+        "imprison"
+      ],
+      "nature": "modest",
+      "species": "kirlia"
+    }
+  ]
+}

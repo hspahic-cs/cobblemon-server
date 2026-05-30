@@ -1,0 +1,70 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Colton",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 19,
+      "moveset": [
+        "harden",
+        "bugbite"
+      ],
+      "nature": "lax",
+      "species": "metapod"
+    },
+    {
+      "ability": "shielddust",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 19,
+      "moveset": [
+        "poisonsting",
+        "stringshot",
+        "bugbite"
+      ],
+      "nature": "lax",
+      "species": "weedle"
+    },
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 19,
+      "moveset": [
+        "harden",
+        "bugbite"
+      ],
+      "nature": "timid",
+      "species": "metapod"
+    }
+  ]
+}

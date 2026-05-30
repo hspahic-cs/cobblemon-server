@@ -1,0 +1,24 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Beauty Cyndy",
+  "team": [
+    {
+      "ability": "owntempo",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 60,
+      "moveset": [
+        "aerialace",
+        "bodyslam",
+        "attract",
+        "honeclaws"
+      ],
+      "nature": "jolly",
+      "species": "purugly"
+    }
+  ]
+}

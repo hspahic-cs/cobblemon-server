@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Gambler Jasper",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 24,
+      "moveset": [
+        "sleeppowder",
+        "poisonpowder",
+        "stunspore",
+        "sludge"
+      ],
+      "nature": "naive",
+      "species": "weepinbell"
+    },
+    {
+      "ability": "effectspore",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 26,
+      "moveset": [
+        "megadrain",
+        "sleeppowder",
+        "ingrain",
+        "confuseray"
+      ],
+      "nature": "sassy",
+      "species": "morelull"
+    }
+  ]
+}

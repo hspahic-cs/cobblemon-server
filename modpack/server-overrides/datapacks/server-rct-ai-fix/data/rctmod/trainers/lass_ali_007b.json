@@ -1,0 +1,75 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Lass Ali",
+  "team": [
+    {
+      "ability": "strongjaw",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 16,
+      "moveset": [
+        "thunderfang",
+        "charm",
+        "bite",
+        "covet"
+      ],
+      "nature": "adamant",
+      "species": "snubbull"
+    },
+    {
+      "ability": "quickfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 17,
+      "moveset": [
+        "lick",
+        "faketears",
+        "furyswipes",
+        "feintattack"
+      ],
+      "nature": "bashful",
+      "species": "teddiursa"
+    },
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 18,
+      "moveset": [
+        "sweetkiss",
+        "icywind",
+        "confusion",
+        "sing"
+      ],
+      "nature": "jolly",
+      "species": "smoochum"
+    }
+  ]
+}

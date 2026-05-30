@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Sailor Zachariah",
+  "team": [
+    {
+      "ability": "drizzle",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "airslash",
+        "tailwind",
+        "waterpulse",
+        "stockpile"
+      ],
+      "nature": "bold",
+      "species": "pelipper"
+    },
+    {
+      "ability": "noguard",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 38,
+      "moveset": [
+        "leer",
+        "lowsweep",
+        "knockoff",
+        "dualchop"
+      ],
+      "nature": "adamant",
+      "species": "machoke"
+    },
+    {
+      "ability": "stormdrain",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 44,
+      "moveset": [
+        "recover",
+        "ancientpower",
+        "muddywater",
+        "earthpower"
+      ],
+      "nature": "modest",
+      "species": "gastrodon"
+    }
+  ]
+}

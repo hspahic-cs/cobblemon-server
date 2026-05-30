@@ -1,0 +1,118 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Rival Terry",
+  "team": [
+    {
+      "ability": "tangledfeet",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 25,
+      "moveset": [
+        "quickattack",
+        "takedown",
+        "whirlwind",
+        "return"
+      ],
+      "nature": "adamant",
+      "species": "pidgeotto"
+    },
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 23,
+      "moveset": [
+        "megadrain",
+        "stunspore",
+        "poisonpowder",
+        "sleeppowder"
+      ],
+      "nature": "sassy",
+      "species": "exeggcute"
+    },
+    {
+      "ability": "intimidate",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 22,
+      "moveset": [
+        "bite",
+        "thrash",
+        "leer"
+      ],
+      "nature": "bashful",
+      "species": "gyarados"
+    },
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 20,
+      "moveset": [
+        "teleport",
+        "confusion",
+        "hiddenpower",
+        "disable"
+      ],
+      "nature": "careful",
+      "species": "kadabra"
+    },
+    {
+      "ability": "blaze",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 25,
+      "moveset": [
+        "ancientpower",
+        "firefang",
+        "scaryface",
+        "thunderpunch"
+      ],
+      "nature": "gentle",
+      "species": "charmeleon"
+    }
+  ]
+}

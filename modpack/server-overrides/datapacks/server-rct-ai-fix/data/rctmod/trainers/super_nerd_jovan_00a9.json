@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Super Nerd Jovan",
+  "team": [
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 13,
+      "moveset": [
+        "shockwave",
+        "thunderwave",
+        "magnetbomb",
+        "lightscreen"
+      ],
+      "nature": "modest",
+      "species": "magnemite"
+    },
+    {
+      "ability": "static",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 14,
+      "moveset": [
+        "acid",
+        "growl",
+        "tearfullook",
+        "nuzzle"
+      ],
+      "nature": "lonely",
+      "species": "toxel"
+    }
+  ]
+}

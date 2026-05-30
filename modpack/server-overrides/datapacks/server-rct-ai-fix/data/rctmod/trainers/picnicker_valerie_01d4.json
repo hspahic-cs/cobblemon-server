@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Picnicker Valerie",
+  "team": [
+    {
+      "ability": "chlorophyll",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 56,
+      "moveset": [
+        "gastroacid",
+        "razorleaf",
+        "poisonjab",
+        "slam"
+      ],
+      "nature": "naive",
+      "species": "weepinbell"
+    },
+    {
+      "ability": "quickfeet",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 5,
+        "def": 5,
+        "hp": 5,
+        "spa": 5,
+        "spd": 5,
+        "spe": 5
+      },
+      "level": 57,
+      "moveset": [
+        "scaryface",
+        "rest",
+        "thrash",
+        "closecombat"
+      ],
+      "nature": "docile",
+      "species": "ursaring"
+    }
+  ]
+}

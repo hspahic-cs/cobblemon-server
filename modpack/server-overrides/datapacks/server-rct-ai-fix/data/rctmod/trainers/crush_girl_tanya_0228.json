@@ -1,0 +1,127 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Crush Girl Tanya",
+  "team": [
+    {
+      "ability": "scrappy",
+      "evs": {
+        "atk": 252,
+        "def": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "wickedblow",
+        "closecombat",
+        "partingshot",
+        "suckerpunch"
+      ],
+      "nature": "adamant",
+      "species": "pangoro"
+    },
+    {
+      "ability": "fluffy",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "closecombat",
+        "doubleedge",
+        "darkestlariat",
+        "drainpunch"
+      ],
+      "nature": "adamant",
+      "species": "bewear"
+    },
+    {
+      "ability": "guts",
+      "aspects": [
+        "sevii"
+      ],
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "flame_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "drainpunch",
+        "shadowpunch",
+        "shadowsneak",
+        "playrough"
+      ],
+      "nature": "adamant",
+      "species": "ursaring"
+    },
+    {
+      "ability": "sheerforce",
+      "evs": {
+        "atk": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 91,
+      "moveset": [
+        "headcharge",
+        "ironhead",
+        "closecombat",
+        "throatchop"
+      ],
+      "nature": "jolly",
+      "species": "tauros"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Collector Ivan",
+  "team": [
+    {
+      "ability": "sandstream",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "yawn",
+        "sandtomb",
+        "crunch",
+        "takedown"
+      ],
+      "nature": "impish",
+      "species": "hippopotas"
+    },
+    {
+      "ability": "sandstream",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 28,
+      "moveset": [
+        "yawn",
+        "sandtomb",
+        "crunch",
+        "takedown"
+      ],
+      "nature": "jolly",
+      "species": "hippopotas"
+    },
+    {
+      "ability": "sandstream",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 34,
+      "moveset": [
+        "yawn",
+        "sandtomb",
+        "crunch",
+        "takedown"
+      ],
+      "nature": "jolly",
+      "species": "hippopotas"
+    }
+  ]
+}

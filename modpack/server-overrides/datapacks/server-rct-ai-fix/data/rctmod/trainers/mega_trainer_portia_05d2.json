@@ -1,0 +1,100 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Mega Trainer Portia",
+  "team": [
+    {
+      "ability": "drought",
+      "evs": {
+        "hp": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 76,
+      "moveset": [
+        "heatwave",
+        "solarbeam",
+        "scorchingsands",
+        "naturepower"
+      ],
+      "nature": "timid",
+      "species": "typhlosion"
+    },
+    {
+      "ability": "drought",
+      "aspects": [
+        "mega_y"
+      ],
+      "evs": {
+        "hp": 4,
+        "spa": 252,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "mega_showdown:charizardite_y",
+        "expert_belt"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 77,
+      "moveset": [
+        "heatwave",
+        "airslash",
+        "scorchingsands",
+        "solarbeam"
+      ],
+      "nature": "timid",
+      "species": "charizard"
+    },
+    {
+      "ability": "drought",
+      "evs": {
+        "def": 252,
+        "hp": 252,
+        "spa": 4
+      },
+      "gender": "FEMALE",
+      "heldItem": [
+        "sitrus_berry"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 75,
+      "moveset": [
+        "heatwave",
+        "bodypress",
+        "eruption",
+        "protect"
+      ],
+      "nature": "relaxed",
+      "species": "torkoal"
+    }
+  ]
+}

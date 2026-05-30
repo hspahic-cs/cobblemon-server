@@ -1,0 +1,119 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Black Emboar James",
+  "team": [
+    {
+      "ability": "hydration",
+      "evs": {
+        "hp": 252,
+        "spa": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 27,
+      "moveset": [
+        "strugglebug",
+        "acidspray",
+        "megadrain",
+        "toxicspikes"
+      ],
+      "nature": "modest",
+      "species": "accelgor"
+    },
+    {
+      "ability": "poisontouch",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "atk": 252,
+        "def": 252,
+        "hp": 6
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "black_sludge"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 28,
+      "moveset": [
+        "poisonfang",
+        "bite",
+        "icepunch",
+        "minimize"
+      ],
+      "nature": "adamant",
+      "species": "grimer"
+    },
+    {
+      "ability": "blaze",
+      "evs": {
+        "atk": 252,
+        "hp": 252,
+        "spe": 6
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 28,
+      "moveset": [
+        "flamecharge",
+        "lowsweep",
+        "rocktomb",
+        "assurance"
+      ],
+      "nature": "adamant",
+      "species": "pignite"
+    },
+    {
+      "ability": "levitate",
+      "evs": {
+        "def": 4,
+        "hp": 252,
+        "spd": 252
+      },
+      "gender": "MALE",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 26,
+      "moveset": [
+        "sludge",
+        "assurance",
+        "painsplit",
+        "poisongas"
+      ],
+      "nature": "calm",
+      "species": "koffing"
+    }
+  ]
+}

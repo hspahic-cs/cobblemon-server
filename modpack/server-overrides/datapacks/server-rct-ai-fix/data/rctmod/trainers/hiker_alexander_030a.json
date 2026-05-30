@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Hiker Alexander",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "meanlook",
+        "poisonfang",
+        "aircutter",
+        "bite"
+      ],
+      "nature": "sassy",
+      "species": "golbat"
+    },
+    {
+      "ability": "rockhead",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "sandstorm",
+        "harden",
+        "smackdown",
+        "bulldoze"
+      ],
+      "nature": "relaxed",
+      "species": "graveler"
+    },
+    {
+      "ability": "sturdy",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {},
+      "level": 35,
+      "moveset": [
+        "smackdown",
+        "curse",
+        "screech",
+        "sandtomb"
+      ],
+      "nature": "relaxed",
+      "species": "onix"
+    }
+  ]
+}

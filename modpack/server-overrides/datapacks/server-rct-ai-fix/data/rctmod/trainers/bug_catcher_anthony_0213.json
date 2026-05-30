@@ -1,0 +1,50 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Bug Catcher Anthony",
+  "team": [
+    {
+      "ability": "shedskin",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 7,
+      "moveset": [
+        "harden",
+        "bugbite"
+      ],
+      "nature": "hardy",
+      "species": "cascoon"
+    },
+    {
+      "ability": "swiftswim",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 1,
+        "def": 1,
+        "hp": 1,
+        "spa": 1,
+        "spd": 1,
+        "spe": 1
+      },
+      "level": 7,
+      "moveset": [
+        "bubble",
+        "signalbeam",
+        "quickattack"
+      ],
+      "nature": "bold",
+      "species": "surskit"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Juggler Shawn",
+  "team": [
+    {
+      "ability": "magmaarmor",
+      "evs": {},
+      "gender": "FEMALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "sunnyday",
+        "flamethrower",
+        "fireblast",
+        "hyperbeam"
+      ],
+      "nature": "sassy",
+      "species": "magmortar"
+    },
+    {
+      "ability": "forewarn",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 10,
+        "def": 10,
+        "hp": 10,
+        "spa": 10,
+        "spd": 10,
+        "spe": 10
+      },
+      "level": 63,
+      "moveset": [
+        "swagger",
+        "nastyplot",
+        "psyshock",
+        "futuresight"
+      ],
+      "nature": "jolly",
+      "species": "hypno"
+    }
+  ]
+}

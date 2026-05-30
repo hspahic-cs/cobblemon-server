@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Psychic Sterling",
+  "team": [
+    {
+      "ability": "levitate",
+      "evs": {},
+      "gender": "GENDERLESS",
+      "ivs": {},
+      "level": 54,
+      "moveset": [
+        "earthpower",
+        "extrasensory",
+        "rocktomb",
+        "ancientpower"
+      ],
+      "nature": "calm",
+      "species": "baltoy"
+    },
+    {
+      "ability": "thickfat",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 58,
+      "moveset": [
+        "psychic",
+        "powergem",
+        "magiccoat",
+        "payback"
+      ],
+      "nature": "bold",
+      "species": "grumpig"
+    }
+  ]
+}

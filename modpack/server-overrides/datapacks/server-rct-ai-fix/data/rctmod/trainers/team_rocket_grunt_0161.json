@@ -1,0 +1,54 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "identity": "Team Rocket Grunt (7)",
+  "name": "Team Rocket Grunt",
+  "team": [
+    {
+      "ability": "aftermath",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 14,
+      "moveset": [
+        "focusenergy",
+        "poisongas",
+        "screech",
+        "poisontail"
+      ],
+      "nature": "calm",
+      "species": "stunky"
+    },
+    {
+      "ability": "unburden",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {
+        "atk": 15,
+        "def": 15,
+        "hp": 15,
+        "spa": 15,
+        "spd": 15,
+        "spe": 15
+      },
+      "level": 14,
+      "moveset": [
+        "tailwhip",
+        "beatup",
+        "honeclaws",
+        "snarl"
+      ],
+      "nature": "lonely",
+      "species": "nickit"
+    }
+  ]
+}

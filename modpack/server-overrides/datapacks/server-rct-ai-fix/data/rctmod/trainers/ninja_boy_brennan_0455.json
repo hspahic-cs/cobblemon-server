@@ -1,0 +1,39 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Ninja Boy Brennan",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "absorb",
+        "astonish",
+        "poisonfang",
+        "aircutter"
+      ],
+      "nature": "hasty",
+      "species": "zubat"
+    },
+    {
+      "ability": "battlearmor",
+      "evs": {},
+      "gender": "MALE",
+      "ivs": {},
+      "level": 25,
+      "moveset": [
+        "honeclaws",
+        "fellstinger",
+        "toxicspikes",
+        "knockoff"
+      ],
+      "nature": "naive",
+      "species": "skorupi"
+    }
+  ]
+}

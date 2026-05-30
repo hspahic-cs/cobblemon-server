@@ -1,0 +1,99 @@
+{
+  "ai": {
+    "data": {},
+    "type": "rb"
+  },
+  "name": "Biker Lao",
+  "team": [
+    {
+      "ability": "innerfocus",
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "fakeout",
+        "closecombat",
+        "knockoff",
+        "uturn"
+      ],
+      "nature": "jolly",
+      "species": "mienshao"
+    },
+    {
+      "ability": "sandveil",
+      "evs": {
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "focus_sash"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 90,
+      "moveset": [
+        "voltswitch",
+        "boomburst",
+        "weatherball",
+        "surf"
+      ],
+      "nature": "timid",
+      "species": "heliolisk"
+    },
+    {
+      "ability": "sandforce",
+      "aspects": [
+        "alolan"
+      ],
+      "evs": {
+        "atk": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "gender": "MALE",
+      "heldItem": [
+        "life_orb"
+      ],
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 93,
+      "moveset": [
+        "earthquake",
+        "ironhead",
+        "suckerpunch",
+        "stoneedge"
+      ],
+      "nature": "naive",
+      "species": "dugtrio"
+    }
+  ]
+}

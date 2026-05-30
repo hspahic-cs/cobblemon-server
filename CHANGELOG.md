@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.15] - 2026-05-30
+
+LM hotfix part 2 — add Trinkets to satisfy LM's hard dep.
+
+LM 7.1-NEOFORGE-CONNECTOR's fabric.mod.json declares `depends trinkets @ [*]`,
+which NeoForge's pre-load gate enforces. Without it, every Connector-loaded
+mod gets dropped into "broken state" and downstream mods crash on registry
+freeze (cobblenav was the visible casualty in 0.7.14). Modrinth's deps page
+listed Accessories, not Trinkets, which is why this took a launch to surface.
+Added `trinkets-3.10.0.jar` (Fabric, loaded via Connector). Trinkets and
+Accessories run side-by-side — different mod IDs, different slot registries,
+no API overlap.
+
 ## [0.7.14] - 2026-05-30
 
 LM hotfix.

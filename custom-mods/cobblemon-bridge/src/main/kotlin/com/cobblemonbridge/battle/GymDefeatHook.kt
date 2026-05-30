@@ -207,14 +207,17 @@ object GymDefeatHook {
     /**
      * Income payout for defeating a non-gym trainer NPC (random RCT trainers, etc.). Formula:
      *
-     *   `bounty = 2 × trainerLevel × numPokemon / 6`
+     *   `bounty = multiplier × trainerLevel × numPokemon / 6`,  multiplier ∈ {1, 2, 3} uniform
      *
      * where `trainerLevel` is the max level of any Pokémon on the loser's team and `numPokemon`
-     * is the team size. Examples (full 6-mon team):
-     *   - L20 trainer  → $40
-     *   - L40 trainer  → $80
-     *   - L60 trainer → $120
-     * Smaller teams scale linearly (3 mons at L60 = $60).
+     * is the team size. The integer multiplier rolls per defeat — expected value is 2× (the same
+     * as the pre-randomised constant), but actual payouts swing between roughly half and 1.5×
+     * the previous fixed amount to make trainer grinds less monotone.
+     *
+     * Examples (full 6-mon team, expected mid-roll = multiplier=2):
+     *   - L20 trainer  → $20 / $40 / $60   (roll = 1 / 2 / 3)
+     *   - L60 trainer → $60 / $120 / $180
+     * Smaller teams scale linearly with `numPokemon`.
      *
      * Fires on **every** defeat, not just the first — RCT trainers reset after defeat so this
      * is a renewable income source. The one-time `server:beat_wild_trainer` advancement is the
@@ -228,13 +231,17 @@ object GymDefeatHook {
         val pokemon = trainer.pokemonList
         if (pokemon.isEmpty()) return 0
         val maxLevel = pokemon.maxOf { it.effectedPokemon.level }
-        return computeNpcBounty(maxLevel, pokemon.size)
+        val multiplier = (1..3).random()
+        return computeNpcBounty(maxLevel, pokemon.size, multiplier)
     }
 
-    /** Pure-math seam — same formula as [npcBounty] without Cobblemon battle types so the
-     *  arithmetic is unit-testable without mocking actors. Integer division floors. */
-    internal fun computeNpcBounty(maxLevel: Int, numPokemon: Int): Int =
-        if (maxLevel <= 0 || numPokemon <= 0) 0 else (2 * maxLevel * numPokemon) / 6
+    /** Pure-math seam — same formula as [npcBounty] without Cobblemon battle types or randomness
+     *  so the arithmetic is unit-testable. `multiplier` defaults to 2 (the mid-roll, matching
+     *  the pre-randomised constant); pass 1 or 3 to verify the random branches. Integer
+     *  division floors. */
+    internal fun computeNpcBounty(maxLevel: Int, numPokemon: Int, multiplier: Int = 2): Int =
+        if (maxLevel <= 0 || numPokemon <= 0 || multiplier <= 0) 0
+        else (multiplier * maxLevel * numPokemon) / 6
 
     private fun payNpcBounty(player: ServerPlayer, losers: Iterable<BattleActor>) {
         val amount = npcBounty(losers)

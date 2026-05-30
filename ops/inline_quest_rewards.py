@@ -21,7 +21,7 @@ REWARDS = {
     "farm_carrots": "§f3 Blue Apricorn Sprouts",
     "beat_wild_trainer": "§fSophisticated Backpack",
     "reach_party_level_20": "§aCommon Egg",
-    "reach_income_100": "§fPasture Block",
+    "reach_income_250": "§fPasture Block",
     "first_pvp_win": "§aCommon Egg",
     "reach_income_1000": "§fMinecolonies Supply Camp",
     "reach_income_10000": "§f1 Master Ball",
@@ -56,7 +56,7 @@ NEXT: dict[str, list[str]] = {
     "reach_elo_1300": ["reach_elo_1500"],
     "reach_elo_1500": ["reach_elo_2000"],
     "reach_elo_2000": [],
-    "reach_income_100": ["reach_income_1000", "first_pvp_win"],
+    "reach_income_250": ["reach_income_1000", "first_pvp_win"],
     "reach_income_1000": ["join_colony", "reach_income_10000"],
     "reach_income_10000": ["reach_income_100000"],
     "reach_income_100000": [],
@@ -64,7 +64,7 @@ NEXT: dict[str, list[str]] = {
     # Mainline gym ladder: each gym hints at the next. Gym 1 also branches into
     # reach_income_100. Gym 10 transitions into the rotating tier (we show
     # beat_gym_11 as the next, plus beat_gym_20 to signal the Elite Four route).
-    "beat_gym_1": ["reach_income_100", "beat_gym_2"],
+    "beat_gym_1": ["reach_income_250", "beat_gym_2"],
     "beat_gym_10": ["beat_gym_11", "beat_gym_20"],
     "beat_gym_19": ["beat_gym_20"],
     "beat_gym_20": ["beat_gym_21"],

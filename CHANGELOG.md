@@ -46,6 +46,30 @@ root README.
   expose a top-N helper). Sort + truncate client-side; cost is fine
   at player-count scale.
 
+### Changed
+- **cobblemon-ranked / decay disabled + floor raised to 1200**:
+  `decayEnabled` default flipped `true → false` (decay paused while
+  we tune). `minimumElo` default raised `1000 → 1200` so when decay
+  is re-enabled it floors at the starting ELO — "decay target =
+  1200" per the user spec. Live runtime configs need to be edited
+  on each server (or deleted to regenerate from the new defaults);
+  the dev `runtime/config.json` will be patched as part of this
+  deploy.
+- **cobblemon-bridge / gym income payouts → flat $150 × N**: was a
+  tiered table (50+25(N-1) mainline / 200 rotating / 300 E4 / 500
+  champion) in 0.7.6 — replaced with a single linear `$150 × gymId`
+  per user spec. Gym 1 = $150, Gym 12 = $1,800, Gym 24 = $3,600.
+  Challenge variants still match base reward. First-beat-only gate
+  via `QuestAdvancements.award()` is unchanged — RCT trainers are
+  re-fightable but the income only pays once per player per gym.
+- **server-quests / Pocket Change threshold $100 → $250 (revert)**:
+  the 0.7.6 lowering to $100 is reverted back to $250 per user
+  preference. Files renamed back to `reach_income_250.json` /
+  `reach_income_250.mcfunction`; every parent reference, HUD text,
+  `INCOME_THRESHOLDS` first entry, `QuestCommand` REWARDS map, and
+  inline-reward script mapping flipped back. Reward bundle (Pasture
+  Block) and 0.7.6's improved chat / HUD styling are unchanged.
+
 ### Removed
 - **modpack/mods/cobblemon-economy.pw.toml** — dead weight (15 MB
   Fabric jar that never loaded). Removed from packwiz pinning so

@@ -27,7 +27,7 @@ root
 
 ```
 root
- ├─ reach_income_100   (goal frame)   ─┐
+ ├─ reach_income_250   (goal frame)   ─┐
  │  └─ reach_income_1000  (task)       │ awarded by cobblemon-market
  │     └─ reach_income_10000 (goal)    │ TradeOps after sell deposit
  │        └─ reach_income_100000 (challenge)

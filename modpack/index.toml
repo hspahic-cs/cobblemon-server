@@ -75,11 +75,6 @@ hash = "3efa711e77a99008f28b7831ab8696263bccaab984cd1e62e44b7220e69a6a3c"
 metafile = true
 
 [[files]]
-file = "mods/cobblemon-move-inspector.pw.toml"
-hash = "3c5f7b22780bf891bc34d22454a199ba90fbf42e56713dc92bda4183c7d82f2d"
-metafile = true
-
-[[files]]
 file = "mods/cobblemon-npc-0.1.0.jar"
 hash = "bc08a787efe7ed75c0d3427eff72494a8c9f76a4349cec7ef424e8ffeec07126"
 
@@ -345,7 +340,7 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "6598d0facc021292e24ced6e0f20effe9cf76afe74d65c94046043c8eeddf857"
+hash = "9689a75cd628a68d13ae31cd00c290e17c4523fb877e27bc82f7bbb70d076b3a"
 
 [[files]]
 file = "server-overrides/config/README.md"

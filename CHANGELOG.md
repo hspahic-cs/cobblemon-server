@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.20] - 2026-05-30
+
+### Removed
+- **Cobblemon Move Inspector.** Extended Battle UI (kept) already
+  surfaces the relevant info via its move tooltips, and Move
+  Inspector's separate overlay added clutter without adding value.
+
+### Changed
+- **Default `guiScale` 5 → 3** in `modpack/options.txt`. Scale 5 made
+  Cobblemon's battle HUD (Fight/Switch/Forfeit, party tiles, HP bars)
+  feel oversized in 1v1 battles and clash with Extended Battle UI's
+  panels. Scale 3 matches the readable, compact look from the mod's
+  reference screenshots.
+  - **Note:** PrismLauncher only writes `options.txt` on **first**
+    import. Existing imports keep their current `guiScale` — change it
+    in-game (Options → Video Settings → GUI Scale) or re-import the
+    `.mrpack`.
+
 ## [0.7.19] - 2026-05-30
 
 Hotfix for the 0.7.18 battle-UI mods landing — the dev server crashed

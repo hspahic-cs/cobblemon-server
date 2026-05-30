@@ -12,6 +12,36 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.21] - 2026-05-30
+
+### Changed
+- **`MarketVendorAnchor` → `EntityAnchor`.** Generalized the per-tick
+  snap-back from `Villager` to `Mob` so any tagged entity — vendors,
+  RCT trainers, future NPCs — can be pinned to its spawn position
+  without freezing the AI driving natural head/body movement. Legacy
+  `cobblemon_bridge.market_vendor[.<scope>]` tag still recognized,
+  so existing market shopkeepers anchor unchanged.
+
+### Fixed
+- **Gym leaders no longer wander out of their arenas.** RCT trainers
+  have minimal pathfinding but still drift over time; the anchor
+  pattern that already kept the market shopkeeper rooted now applies
+  to gym leaders too. Tagged in all 24 mainline + 10 challenge gym
+  spawn mcfunctions as `cobblemon_bridge.anchor`.
+
+### Activation on existing dev/prod world
+After deploy, re-spawn each leader at its arena to capture the desired
+anchor position:
+```
+/function server:gym/delete_<N>
+/tp @s <arena coords>
+/function server:gym/spawn_<N>
+```
+Or quickly backfill anchors at current positions:
+```
+/tag @e[type=rctmod:trainer] add cobblemon_bridge.anchor
+```
+
 ## [0.7.20] - 2026-05-30
 
 ### Removed

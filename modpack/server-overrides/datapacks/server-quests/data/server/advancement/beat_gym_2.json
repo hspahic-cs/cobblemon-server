@@ -1,5 +1,6 @@
 {
-  "parent": "server:first_pvp_win",
+  "_comment": "0.7.25 \u2014 parent re-routed from first_pvp_win \u2192 ranch_carrot_farm to visually gate Gym 2 behind the Exeggcute / Cobbleworkers onboarding chain. RCT itself doesn't enforce gym order, so this is purely UI / tree-rendering; players who beat gym 2 before completing the carrot-farm quest still get credit (the advancement awards on its own criterion regardless of parent state).",
+  "parent": "server:ranch_carrot_farm",
   "display": {
     "title": {
       "text": "Gym 2: Gardenia"
@@ -15,8 +16,15 @@
     "announce_to_chat": true
   },
   "criteria": {
-    "done": {
-      "trigger": "minecraft:impossible"
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_02_gardenia"
+        ],
+        "trainer_type": null
+      }
     }
   },
   "rewards": {

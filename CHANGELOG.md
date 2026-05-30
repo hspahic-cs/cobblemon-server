@@ -12,6 +12,73 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.26] - 2026-05-30
+
+Two slices: a quest-chain addition for Cobbleworkers onboarding, and a
+structural fix to gym achievement reliability.
+
+### Fixed
+- **Gym achievements + gym bounty payment now driven by RCT's own
+  `rctmod:defeat_count` trigger** instead of our cobblemon-bridge
+  `BattleVictoryEvent → RctBridge reflection → stash → proximity` chain.
+  Every gym advancement (`beat_gym_1`..`beat_gym_24` + 10 challenge
+  variants) had its criterion replaced with the rctmod trigger keyed on
+  the specific trainer id(s). RCT fires this trigger itself when the
+  player defeats the matching trainer — it's the authoritative event
+  and doesn't depend on our reflection working (which has been the
+  recurring failure mode: 0.7.14 fixed `TrainerBattle.getTrainerId()`
+  moving to `TrainerMob`, but the chain was still fragile to other
+  upstream renames or to engagement edge cases).
+  - Gym bounty payment (`$150 × gymId`) moved out of
+    `GymDefeatHook.payGymBounty` (Kotlin) into each
+    `beat_gym_*.mcfunction` as `eco give @s <amount>` via
+    NeoEssentials. Whenever the advancement awards — by any path —
+    the bounty fires alongside, eliminating the "advancement awarded
+    but bounty missed" race that was possible when both Kotlin and
+    advancement paths could awards simultaneously.
+  - `GymDefeatHook` simplified dramatically: dropped Branch 0/1 (RCT
+    direct + stash gym-award paths) and all the supporting
+    `BATTLE_STARTED_PRE` proximity scanning, `EntityInteract` stash,
+    `Pending` data class, `pendingByPlayer` map. The hook is now
+    ~25 lines and handles only the per-defeat NPC bounty for non-gym
+    trainers, with `RctBridge.trainerIdForBattle` used solely to
+    suppress NPC bounty for gym battles (so they don't get bonus
+    NPC bounty on top of the flat gym payout).
+  - One migration script: `ops/migrate_gym_quests_to_rct_trigger.py`
+    rewrites all 34 advancement JSONs + mcfunctions idempotently.
+
+### Added
+- **Exeggcute → Cobbleworkers onboarding quest chain.** Three new
+  quests that chain off `beat_wild_trainer` to introduce players to
+  the (newly nerfed in 0.7.24) Cobbleworkers system via an Exeggutor
+  carrot farm. Reward tags wired through `_finalize.mcfunction`.
+  - `beat_wild_trainer` reward changed from `gacha giveegg @s common`
+    (random species from the common pool) to
+    `givepokemonegg @s exeggcute min_perfect_ivs=2` — a guaranteed
+    Exeggcute with 2 perfect IVs to kick off the chain.
+  - **`receive_leaf_stone`** — gated by BOTH `beat_gym_1` AND
+    `reach_income_250`. Vanilla MC advancements only support one
+    parent, so the AND is expressed via two `minecraft:impossible`
+    criteria with `requirements: [["gym1_done"], ["income_done"]]`;
+    each parent quest's reward function fires the matching criterion
+    via `advancement grant @s only server:receive_leaf_stone <crit>`.
+    Reward: 1 Leaf Stone + hint to evolve the Exeggcute.
+  - **`evolve_exeggutor`** — fires via new
+    `cobblemon-bridge:EvolutionHook` subscribed to Cobblemon's
+    `EvolutionCompleteEvent`. When the post-evolution species name
+    matches "Exeggutor", we award the `done` criterion via
+    `QuestAdvancements.award`. Reward: 1 Pasture Block.
+  - **`ranch_carrot_farm`** — triggers on
+    `minecraft:placed_block` with `block: cobblemon:pasture`. Reward:
+    16 Bone Meal so the player can fast-grow a starter carrot patch.
+  - `beat_gym_2`'s parent re-routed from `first_pvp_win` to
+    `ranch_carrot_farm`, so the new chain visually sits before gym 2
+    in the advancement tree. (RCT doesn't actually gate gym entry on
+    achievements — purely UI placement.)
+  - `reach_income_250`'s Pasture Block reward moved out and replaced
+    with a small grinding kit (5 Great Balls + 3 EXP Candy S), since
+    the pasture now belongs to the Cobbleworkers-introduction chain.
+
 ## [0.7.25] - 2026-05-30
 
 ### Changed

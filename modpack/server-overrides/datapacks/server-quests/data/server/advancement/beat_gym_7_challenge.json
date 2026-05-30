@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_7",
   "display": {
     "title": {
-      "text": "Gym 7: Crasher Wake — Challenge"
+      "text": "Gym 7: Crasher Wake \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 7."
@@ -15,8 +15,15 @@
     "announce_to_chat": true
   },
   "criteria": {
-    "done": {
-      "trigger": "minecraft:impossible"
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_07_crasher_wake_challenge"
+        ],
+        "trainer_type": null
+      }
     }
   },
   "rewards": {

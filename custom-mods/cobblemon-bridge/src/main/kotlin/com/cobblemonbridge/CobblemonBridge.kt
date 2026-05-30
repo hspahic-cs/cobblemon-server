@@ -68,6 +68,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         WildBattleRewardHook.registerEvents()
         WildSpawnLevelCapHook.registerEvents()
         com.cobblemonbridge.battle.TrainerExpBoostHook.registerEvents()
+        com.cobblemonbridge.quests.EvolutionHook.registerEvents()
         // WildBattleAdjustHook intentionally NOT registered: wild battles don't downlevel the
         // player's team. Gym battles DO downlevel — via GymBattleAdjustHook (above), not via
         // RCT's adjustPlayerLevels (which turned out to be dead config — its BattleRules field

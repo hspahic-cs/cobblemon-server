@@ -1,0 +1,28 @@
+{
+  "_comment": "0.7.25 — fourth and final quest in the Exeggcute onboarding chain. Triggers when the player places a `cobblemon:pasture` block (the Pasture Block they got from evolve_exeggutor). beat_gym_2 is re-parented to this quest so the carrot-farm setup visually gates gym 2 — RCT trainer fights themselves aren't actually blocked, but the advancement tree shows the Cobbleworkers introduction as a prerequisite step.",
+  "parent": "server:evolve_exeggutor",
+  "display": {
+    "title": { "text": "Farm Hands" },
+    "description": { "text": "Place your Pasture Block to set up your first automated farm." },
+    "icon": { "id": "minecraft:bone_meal" },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "cobblemon:pasture"
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/ranch_carrot_farm"
+  }
+}

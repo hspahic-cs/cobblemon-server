@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_2",
   "display": {
     "title": {
-      "text": "Gym 2: Gardenia — Challenge"
+      "text": "Gym 2: Gardenia \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 2."
@@ -15,8 +15,15 @@
     "announce_to_chat": true
   },
   "criteria": {
-    "done": {
-      "trigger": "minecraft:impossible"
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_02_gardenia_challenge"
+        ],
+        "trainer_type": null
+      }
     }
   },
   "rewards": {

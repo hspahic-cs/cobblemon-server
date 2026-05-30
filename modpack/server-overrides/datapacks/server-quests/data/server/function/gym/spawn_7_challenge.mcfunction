@@ -6,5 +6,6 @@ kill @e[type=rctmod:trainer,tag=cobblemon_bridge.gym_id.7,tag=cobblemon_bridge.g
 execute at @s run rctmod trainer summon_persistent gym_07_crasher_wake_challenge
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_07_crasher_wake_challenge"}] add cobblemon_bridge.gym_id.7
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_07_crasher_wake_challenge"}] add cobblemon_bridge.gym_challenge
+execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_07_crasher_wake_challenge"}] add cobblemon_bridge.anchor
 execute at @s run data merge entity @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_07_crasher_wake_challenge"}] {Invulnerable:1b,PersistenceRequired:1b}
 tellraw @s [{"text":"§d✓ Spawned Challenge Gym 7: Crasher Wake — Water","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_7_challenge"}]

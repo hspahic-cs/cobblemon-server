@@ -5,7 +5,7 @@
 # cobblemon-market's EntityInteract handler recognizes the right-click. Invulnerable +
 # PersistenceRequired + Silent keep it unkillable + quiet; AI is intentionally LEFT ON so
 # vanilla `LookAtPlayer` + `LookAround` drive natural head/body movement. Position is
-# anchored each tick by cobblemon-bridge MarketVendorAnchor — the villager can't actually
+# anchored each tick by cobblemon-bridge EntityAnchor — the villager can't actually
 # wander even with AI on.
 
 kill @e[type=minecraft:villager,tag=cobblemon_bridge.market_vendor]

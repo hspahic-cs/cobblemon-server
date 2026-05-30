@@ -5,5 +5,6 @@
 kill @e[type=rctmod:trainer,tag=cobblemon_bridge.gym_id.19,tag=!cobblemon_bridge.gym_challenge]
 execute at @s run rctmod trainer summon_persistent gym_19_oak
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_19_oak"}] add cobblemon_bridge.gym_id.19
+execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_19_oak"}] add cobblemon_bridge.anchor
 execute at @s run data merge entity @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_19_oak"}] {Invulnerable:1b,PersistenceRequired:1b}
 tellraw @s [{"text":"§a✓ Spawned Gym 19: Oak — Kanto Mastery","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_19"}]

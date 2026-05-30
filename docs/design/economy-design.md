@@ -17,9 +17,9 @@ ties back to it.
 
 | Pace | Activity | Notes |
 |---|---|---|
-| Fast (~80–100 coins/min) | Gym farming, especially Challenge mode | Headline progression loop |
-| Median (~40–60 coins/min) | Mixed: some gyms, some trainer NPCs, occasional market sells | What an "average session" looks like |
-| Slow (~10–20 coins/min) | Just trainer NPCs, no gym wins | Possible at any point but slow |
+| Fast (~80–150 coins/min) | Late-game NPC battles (lvl 50+ teams), high-roll random modifiers | Established players grinding strong NPCs |
+| Median (~40–60 coins/min) | Mid-game NPC grinding (~lvl 25 teams) | The canonical viable income path |
+| Slow (~10–20 coins/min) | Early-game NPC grinding (small low-level teams) | New players still getting set up |
 | Zero | Wild Pokémon battles, AFK | Wild Pokémon are caught/farmed for their own sake, not coin grind |
 
 This document assumes a single currency: **coins**. The earlier draft's
@@ -30,43 +30,83 @@ future plan; nothing in this doc routes value through it.
 
 ## Coin sources
 
-### Gym leader wins (the headline)
+The recurring coin economy runs on **NPC battles** (Minecolonies citizens
++ wild trainer NPCs) and **stock market sells**. Wild Pokémon battles
+pay nothing. Gym wins are a separate, one-time-per-gym progression
+reward (still being designed — see "TBD" below).
 
-Beating a gym leader awards a **gacha key** AND a coin payout. The key
-is the surprise reward; coins are the steady economic fuel.
+### NPC battles (the recurring earn loop)
 
-| Tier | Level cap | Coins | Notes |
+A unified formula pays out coins for defeating any NPC trainer, whether
+that's a `rctmod:trainer` (wild trainer) or a `cobblemon-npc` Minecolonies
+citizen. The payout is computed from the loser's team:
+
+```
+team_strength = avg(team_pokemon_levels) × team_size
+coins = team_strength × 1.5 × random(0.5, 2.0)
+```
+
+The `random(0.5, 2.0)` modifier introduces variance per fight — a single
+victory might pay anywhere from 0.5× to 2× the expected value. Over many
+fights the average converges to `team_strength × 1.5`.
+
+**Worked examples (expected coins, with the random range):**
+
+| NPC team profile | team_strength | Expected (×1.5) | Range (×0.5 – ×2.0) |
 |---|---|---|---|
-| 1 | 15 | 50 | Roughly 1 minute of play |
-| 2 | 25 | 100 | |
-| 3 | 35 | 200 | |
-| 4 | 45 | 350 | |
-| Challenge | 100 | 500 | The 10× tier-1 reward |
+| Early game: 2 Pokémon, lvl 8 avg | 16 | 24 | 12–48 |
+| Mid game: 4 Pokémon, lvl 25 avg | 100 | 150 | 75–300 |
+| Late game: 6 Pokémon, lvl 50 avg | 300 | 450 | 225–900 |
+| Endgame: 6 Pokémon, lvl 80 avg | 480 | 720 | 360–1,440 |
+| Maxed: 6 Pokémon, lvl 100 | 600 | 900 | 450–1,800 |
 
-Repeatable on a per-fight basis. A practiced player clears a Challenge
-gym in ~5–10 min, putting Challenge farming at ~50–100 coins/min.
+A player grinding mid-game NPCs (~3 min/fight) earns roughly **50 coins/min
+on average** — exactly the time anchor. NPC grinding is the canonical
+viable income path: a player who wants to participate in the economy
+without doing anything else can sustain it just by battling NPCs. Skill
+bonuses through the random modifier (lucky fights pay 2×, bad ones 0.5×).
 
-**Implementation note:** the coin payout is a NEW reward path. Today the
-`server-quests` datapack reward functions only grant gacha keys via tags
-(`cq_reward_key_<tier>_1`); they need an additional payout step. See
-"Implementation work" below.
+**Why "average level × team size" instead of "sum of levels":**
 
-### Trainer NPC wins (the steady income)
+Mathematically, `avg(L) × n = sum(L)`. They're identical numbers. The
+formula is written as `avg × size` because it's easier to reason about
+when sizing up an NPC at a glance ("they have 4 mons around level 25" →
+"strength ~100"). The implementation can compute either; the behavior is
+the same.
 
-Beating any non-gym `rctmod:trainer` NPC pays **coins scaled by the
-trainer's `cobblemon_bridge.adjust_level.<N>` tag** (`N` ∈ 1–100):
+**Why no minimum/maximum cap:**
 
-```
-coins = N × 2
-```
+The 0.5–2× random range bounds outliers naturally. A single-Pokémon
+level-1 trainer pays at most 3 coins (1×1×1.5×2.0); a Champion-tier
+6×lvl100 team pays at most 1,800 (600×1.5×2.0). Both extremes are
+acceptable.
 
-So a level-15 trainer pays 30 coins, a level-50 pays 100, a level-100
-pays 200. The scaling is linear so ops can hand-tune individual NPC
-difficulty without re-deriving the math each time.
+### Wild Pokémon battles
 
-If a trainer has no `adjust_level` tag, the payout defaults to **20 coins**
-(treats them as a level-10 grunt). Ops who want a richer payout should
-tag the trainer.
+**Zero coins.** Wild encounters are valued for the catch, the EXP, and
+the items dropped from `cobblemon_bridge.give_party_exp` loot balls —
+not as a coin source. Removing the bounty flattens the wild grind so it
+isn't competing with NPC fights.
+
+### Gym leader wins — TBD (one-time progression rewards)
+
+Gym leader battles are **one-time-per-gym** rewards, not a recurring
+coin source. The exact reward structure is still being designed. The
+shipped behavior today is gacha-key-only via the `server-quests`
+datapack; coins on top are a future addition.
+
+Open questions parked for a future session:
+
+- **One-time per gym** (re-fights pay 0 coins, gacha key still drops)
+  vs. unbounded repeats?
+- **Reward formula:** scaled by gym number? by leader's actual team
+  strength using the NPC formula above? a flat amount per gym?
+- **Total max coins from clearing all 24 gyms** — should this be a
+  meaningful "starter capital" event (~30,000+ coins) or trivial
+  (~5,000)?
+
+Until decided, gym wins keep their current behavior (gacha key only,
+no coin payout).
 
 ### Wild Pokémon battles
 
@@ -292,15 +332,19 @@ way around.
 These are the high-volume, low-friction items players need to keep their
 team battle-ready. Priced against actual recipe craft time at 50 coins/min
 labor anchor, with a **+50% markup** so that supplies are a real strategic
-consideration during gym farming (not free).
+consideration during NPC grinding (not free).
 
-A typical Challenge gym fight (500 coin payout) burns roughly:
-- 2-3 Super Potions
-- 1 Revive (if a mon faints)
-- 1 Ether or status heal
-≈ **~520 coins of supplies**, leaving the fight roughly break-even.
-Skilled players profit; sloppy players go net-negative and need other
-income paths to cover.
+A tough mid-game NPC battle (4 mons, lvl ~25, expected payout ~150 coins)
+might burn:
+- 1-2 Super Potions: ~135-270 coins
+- 1 Revive if a mon faints: ~90 coins
+- Total supplies: ~200-400 coins
+
+So a single hard NPC fight can be net-negative on supplies if the
+random modifier rolls low. Skilled players who sweep cleanly with no
+faints profit; sloppy ones go negative and need to mix in market sells
+or save up for more lucrative high-tier NPCs. Late-game NPCs (~450
+expected, ~225-900 range) more reliably cover supply costs.
 
 | Item | sellPrice | buyPrice (5×) | Recipe / source |
 |---|---|---|---|
@@ -598,15 +642,21 @@ currently exists — everything goes through `/market`.)
 ## What changed from v1 of this doc
 
 - **Single currency, no BP.** Faction system parked.
-- **Gym tiers retuned.** Was 15/35/70/120/250; now 50/100/200/350/500. The
-  v1 numbers anchored to a 12 coins/min rate; v2 anchors to 50 coins/min
-  to match the actual gym pace and account for trainer NPCs as a second
-  income stream.
+- **Gym tier system removed.** v1 had repeating gym battles paying tiered
+  coin rewards (15/35/70/120/250 across tiers 1-4 + Challenge). v2 makes
+  gym wins **one-time progression rewards** instead. The exact reward
+  mechanic is parked for a future session; today's behavior remains
+  gacha-key-only via the existing `server-quests` datapack.
+- **Unified NPC battle formula.** Both wild trainer NPCs and Minecolonies
+  citizens use the same payout formula: `avg_level × team_size × 1.5 ×
+  random(0.5, 2.0)`. Replaces the v1 `level × 2` proposal for wild
+  trainers AND the existing tier-based citizen payout (25/60/120/220/360/550)
+  in `cobblemon-npc`. Mid-game NPC grinding hits ~50 coins/min — exactly
+  the time anchor — making "battle NPCs to participate in the economy"
+  the canonical viable income path.
 - **Wild Pokémon pay nothing.** Was implicit in v1 (no entry); v2 makes
   the design explicit. The currently-shipped +2 bounty in
   `WildBattleRewardHook` will be removed.
-- **Wild trainer NPCs pay coins.** v1 didn't address them at all. They're
-  now the steady income lane between gym fights.
 - **Stock market prices reset.** v1 set Lucky Egg @ 500, Rare Candy @ 300,
   etc. v2 prices the 6 actually-configured market items against the
   50 coins/min anchor. Future items added with the same method.
@@ -656,18 +706,24 @@ The doc above describes the target state. Pieces that need code/config changes:
 
 1. **Remove `WildBattleRewardHook` bounty** in `cobblemon-bridge`. Either delete
    the hook entirely or zero `BOUNTY` to 0.
-2. **Add a `WildTrainerRewardHook`** that pays coins on
-   `BATTLE_VICTORY` when the loser is a `TrainerBattleActor` AND the loser
-   is NOT a gym (no `cobblemon_bridge.gym_id.*` tag). Read `adjust_level`
-   tag from the trainer entity (which `GymDefeatHook` already stashes on
-   `EntityInteract` — same pattern), pay `level × 2` coins or 20 default.
-3. **Extend gym reward `.mcfunction` files** to also grant coins. Two
-   options:
-   a. Have the function call a new `cobblemon-bridge` command like
-      `/economy admin grant @s <amount>`. Cleaner.
-   b. Use existing `neoeconomy` `/economy give` command directly. Faster
-      to ship but couples the datapack to the upstream economy mod's
-      command schema.
+2. **Replace existing trainer payout systems with a unified NPC formula.**
+   The formula `avg_level × team_size × 1.5 × random(0.5, 2.0)` applies
+   to BOTH:
+   a. Wild trainer NPCs (`rctmod:trainer`) — currently no payout. Add a
+      `WildTrainerRewardHook` in `cobblemon-bridge` that fires on
+      `BATTLE_VICTORY` against a `TrainerBattleActor` (excluding gym
+      leaders, identified by the `cobblemon_bridge.gym_id.*` tag).
+      Computes the formula from the trainer's team via the
+      `TrainerBattleActor` API.
+   b. Minecolonies citizens (`cobblemon-npc`) — currently uses the
+      tier-based payout in `BattleRewards.computePayout`. Rewrite to use
+      the same formula, computed from the citizen's `NpcTeamData`.
+   The tier-based payout config (`tier1Reward`, etc. in `RewardsConfig`)
+   becomes obsolete. The `gymLeaderMultiplier` field stays unused until
+   the gym reward design is finalized.
+3. **Gym reward implementation: parked.** Until the gym one-time-reward
+   design is finalized, gym wins ship the gacha-key-only behavior they
+   have today. No code changes here yet.
 
 ### Config changes
 
@@ -696,12 +752,14 @@ The doc above describes the target state. Pieces that need code/config changes:
 
 ## Open questions
 
-- **Should the gym coin payout differ between first-clear and repeat?**
-  Current proposal pays the same on every win. An alternative: first
-  clear pays 2× (still gives the gacha key), repeats pay base. Adds
-  state to track but rewards exploration.
-- **Trainer NPC coin formula.** `level × 2` is a reasonable starting point;
-  may need tuning once we see actual trainer fight pace in dev.
+- **Gym one-time reward mechanic.** Parked. Options being considered:
+  one-time per gym (re-fights pay 0), reward formula (gym number ×
+  flat? NPC formula × 5×? something else?), and total expected coin
+  injection from clearing all 24. Gym wins keep their current
+  gacha-key-only behavior until decided.
+- **NPC formula tuning.** The 1.5× multiplier and 0.5–2.0× random range
+  are starting points. May need tuning once playtesting reveals actual
+  fight cadence (we assumed ~3 min/fight to land at 50 coins/min).
 - **Restock cap mechanic.** `maxStockMultiplier` already exists in the
   config. We haven't picked a value or tested it; needs a real audit
   once auto-farmable items are listed.

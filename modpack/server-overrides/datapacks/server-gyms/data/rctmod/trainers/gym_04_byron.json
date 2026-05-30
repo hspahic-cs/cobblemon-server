@@ -132,7 +132,7 @@
       ]
     },
     {
-      "species": "pawniard",
+      "species": "lairon",
       "level": 30,
       "nature": "hardy",
       "ivs": {
@@ -151,13 +151,13 @@
         "spd": 85,
         "spe": 85
       },
-      "ability": "defiant",
+      "ability": "rockhead",
       "heldItem": "",
       "moveset": [
-        "suckerpunch",
-        "knockoff",
         "ironhead",
-        "swordsdance"
+        "rockslide",
+        "earthquake",
+        "stealthrock"
       ]
     }
   ]

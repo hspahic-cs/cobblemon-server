@@ -132,7 +132,7 @@
       ]
     },
     {
-      "species": "pawniard",
+      "species": "lairon",
       "level": 35,
       "nature": "adamant",
       "ivs": {
@@ -151,13 +151,13 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "defiant",
+      "ability": "rockhead",
       "heldItem": "cobblemon:eviolite",
       "moveset": [
-        "suckerpunch",
-        "knockoff",
         "ironhead",
-        "swordsdance"
+        "rockslide",
+        "earthquake",
+        "stealthrock"
       ]
     }
   ]

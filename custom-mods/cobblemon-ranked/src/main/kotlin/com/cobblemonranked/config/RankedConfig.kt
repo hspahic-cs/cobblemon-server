@@ -27,12 +27,18 @@ data class ArenaPos(
 
 data class RankedConfig(
     val startingElo: Int = 1200,
-    val minimumElo: Int = 1000,
+    /** Floor for both decay-driven and battle-driven ELO loss. 0.7.8 raised this from 1000
+     *  to 1200 so a player who hits the floor stays at the starting ELO — matches the new
+     *  "decay target = 1200" design where inactivity never permanently demotes you below
+     *  the starting point. */
+    val minimumElo: Int = 1200,
     val kFactor: Int = 32,
     val levelCap: Int = 50,
     val maxLegendaries: Int = 1,
     val forcesPerDayPerPair: Int = 1,
-    val decayEnabled: Boolean = true,
+    /** Off by default in 0.7.8. Decay is paused while we tune; flip to `true` (and ensure
+     *  [minimumElo] is the desired decay floor) to re-enable. */
+    val decayEnabled: Boolean = false,
     val leaderboardSize: Int = 10,
     /**
      * Arena 1 — primary battlefield. `arenaPos1` is where player 1 lands, `arenaPos2` is

@@ -12,6 +12,80 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.8] - 2026-05-29
+
+### Fixed
+- **EconomyBridge → NeoEssentials Economy (Cobblemon Economy was
+  silently no-op since the Connector beta.14 deploy)**: market
+  sell-to-vendor wasn't updating the player's balance because every
+  `EconomyBridge.deposit` / `withdraw` / `getBalance` call was
+  hitting Cobblemon Economy via reflection — but `cobblemon-economy-
+  0.0.17.jar` is a Fabric mod, and Sinytra Connector beta.14
+  (`connector-2.0.0-beta.14+1.21.1-full.jar`) had been getting
+  rejected by NeoForge at scan time with `File ... is not a valid
+  mod file`. With Connector dead, the Fabric mod never loaded, our
+  reflection bridge fell into the `ClassNotFoundException → manager()
+  returns null → silently no-op` branch, and every economy operation
+  did nothing. The symptom was only visible at the market because the
+  UI shows balance; quieter callsites (wild bounty, gym income payouts,
+  ranked wagers, Poké Healer charges) had been silently failing too —
+  for as long as that Connector build was on the server.
+
+  Switched all five `EconomyBridge.kt` files (cobblemon-bridge,
+  cobblemon-market, cobblemon-ranked, cobblemon-carrots, cobblemon-npc)
+  to talk to **NeoEssentials's `EconomyManager`** — the active Vault
+  economy provider that backs `/balance` and `/pay`. API shape is
+  identical: `getInstance()` instead of `getEconomyManager()`,
+  `getBalance(UUID) → BigDecimal`, `addBalance(UUID, BigDecimal)`,
+  `subtractBalance(UUID, BigDecimal)`. NeoEssentials's
+  `balances.json` becomes the single source of truth (already was,
+  since CE wasn't writing anywhere).
+- **cobblemon-market / leaderboard**: reimplemented
+  `EconomyBridge.getTopBalance(N)` against NeoEssentials's
+  `getAllBalances() → Map<UUID, BigDecimal>` (NeoEssentials doesn't
+  expose a top-N helper). Sort + truncate client-side; cost is fine
+  at player-count scale.
+
+### Changed
+- **cobblemon-ranked / decay disabled + floor raised to 1200**:
+  `decayEnabled` default flipped `true → false` (decay paused while
+  we tune). `minimumElo` default raised `1000 → 1200` so when decay
+  is re-enabled it floors at the starting ELO — "decay target =
+  1200" per the user spec. Live runtime configs need to be edited
+  on each server (or deleted to regenerate from the new defaults);
+  the dev `runtime/config.json` will be patched as part of this
+  deploy.
+- **cobblemon-bridge / gym income payouts → flat $150 × N**: was a
+  tiered table (50+25(N-1) mainline / 200 rotating / 300 E4 / 500
+  champion) in 0.7.6 — replaced with a single linear `$150 × gymId`
+  per user spec. Gym 1 = $150, Gym 12 = $1,800, Gym 24 = $3,600.
+  Challenge variants still match base reward. First-beat-only gate
+  via `QuestAdvancements.award()` is unchanged — RCT trainers are
+  re-fightable but the income only pays once per player per gym.
+- **server-quests / Pocket Change threshold $100 → $250 (revert)**:
+  the 0.7.6 lowering to $100 is reverted back to $250 per user
+  preference. Files renamed back to `reach_income_250.json` /
+  `reach_income_250.mcfunction`; every parent reference, HUD text,
+  `INCOME_THRESHOLDS` first entry, `QuestCommand` REWARDS map, and
+  inline-reward script mapping flipped back. Reward bundle (Pasture
+  Block) and 0.7.6's improved chat / HUD styling are unchanged.
+
+### Removed
+- **modpack/mods/cobblemon-economy.pw.toml** — dead weight (15 MB
+  Fabric jar that never loaded). Removed from packwiz pinning so
+  the .mrpack stops shipping it.
+
+### Notes
+- Connector still ships in the pack and is still being rejected as
+  "not a valid mod file" — out of scope for this hotfix, but
+  `LegendaryMonuments-7.8.jar` (the only other Fabric-only mod
+  on disk) is also dead until Connector loads. Worth investigating
+  separately.
+- Player balances on the server haven't moved through CE since
+  whenever Connector beta.14 was first deployed, so there's nothing
+  to migrate. All money already lives in NeoEssentials's
+  `balances.json`.
+
 ## [0.7.7] - 2026-05-29
 
 ### Fixed

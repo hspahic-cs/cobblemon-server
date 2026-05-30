@@ -5,7 +5,7 @@
       "text": "Pocket Change"
     },
     "description": {
-      "text": "Sell enough items to reach $100."
+      "text": "Sell enough items to reach $250."
     },
     "icon": {
       "id": "minecraft:emerald"
@@ -20,6 +20,6 @@
     }
   },
   "rewards": {
-    "function": "server:quests/rewards/reach_income_100"
+    "function": "server:quests/rewards/reach_income_250"
   }
 }

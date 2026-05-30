@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 object EconomyBridge {
 
     private val log = LoggerFactory.getLogger("cobblemon-carrots/economy")
-    private const val ECONOMY_CLASS = "com.cobblemon.economy.fabric.CobblemonEconomy"
+    private const val ECONOMY_CLASS = "com.zerog.neoessentials.economy.managers.EconomyManager"
 
     @Volatile private var resolvedManager: Any? = null
     @Volatile private var getBalanceMethod: Method? = null
@@ -25,16 +25,16 @@ object EconomyBridge {
         resolvedManager?.let { return it }
         return try {
             val cls = Class.forName(ECONOMY_CLASS)
-            val mgr = cls.getMethod("getEconomyManager").invoke(null)
+            val mgr = cls.getMethod("getInstance").invoke(null)
             resolvedManager = mgr
             getBalanceMethod = mgr.javaClass.getMethod("getBalance", UUID::class.java)
             subBalanceMethod = mgr.javaClass.getMethod("subtractBalance", UUID::class.java, BigDecimal::class.java)
             mgr
         } catch (e: ClassNotFoundException) {
-            warnOnce("Cobblemon Economy not loaded — healer money costs disabled")
+            warnOnce("NeoEssentials Economy not loaded — healer money costs disabled")
             null
         } catch (e: Throwable) {
-            warnOnce("Cobblemon Economy reflection failed: ${e.javaClass.simpleName}: ${e.message}")
+            warnOnce("NeoEssentials Economy reflection failed: ${e.javaClass.simpleName}: ${e.message}")
             null
         }
     }

@@ -148,28 +148,19 @@ object GymDefeatHook {
     }
 
     /**
-     * Income payout for a first-time gym defeat. Tiered per server design:
-     *   - Gyms 1-10 (mainline ladder):   $50 + $25×(N-1)  → 50, 75, 100, 125, … 275
-     *   - Gyms 11-19 (rotating roster):  flat $200 each
-     *   - Gyms 20-23 (Elite Four):       flat $300 per trainer
-     *   - Gym  24    (Champion):         $500
+     * Income payout for a first-time gym defeat. Flat linear scaling per 0.7.8 user spec:
+     * `$150 × gymId`. Gym 1 = $150, Gym 12 = $1,800, Gym 24 (Champion) = $3,600.
      *
      * Challenge (Hard Mode) variants match the base reward — silent on the user spec, so
      * defaulting to "rematch pays again" rather than zero. Bump to a separate table here if
      * Hard Mode should pay differently.
      *
      * Called only when [QuestAdvancements.award] returns true, so already gated to first-beat.
+     * RCT trainers themselves are re-fightable (they reset after defeat) but the advancement
+     * gate ensures the payout fires exactly once per player per gym.
      */
-    internal fun gymBounty(gymId: Int, isChallenge: Boolean): Int {
-        val base = when (gymId) {
-            in 1..10  -> 50 + 25 * (gymId - 1)
-            in 11..19 -> 200
-            in 20..23 -> 300
-            24        -> 500
-            else      -> 0
-        }
-        return base  // isChallenge unused for now — see kdoc.
-    }
+    internal fun gymBounty(gymId: Int, isChallenge: Boolean): Int =
+        if (gymId in 1..24) 150 * gymId else 0
 
     private fun payGymBounty(player: ServerPlayer, gymId: Int, isChallenge: Boolean) {
         val amount = gymBounty(gymId, isChallenge)

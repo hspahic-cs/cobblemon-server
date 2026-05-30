@@ -56,7 +56,7 @@ tag @a[tag=cq_reward_item_revive] remove cq_reward_item_revive
 execute as @a[tag=cq_reward_item_backpack] at @s run give @s sophisticatedbackpacks:backpack 1
 tag @a[tag=cq_reward_item_backpack] remove cq_reward_item_backpack
 
-# reach_income_100 — Pocket Change: Pasture Block (gates Cobbleworkers automation)
+# reach_income_250 — Pocket Change: Pasture Block (gates Cobbleworkers automation)
 execute as @a[tag=cq_reward_item_pasture_block] at @s run give @s cobblemon:pasture 1
 tag @a[tag=cq_reward_item_pasture_block] remove cq_reward_item_pasture_block
 

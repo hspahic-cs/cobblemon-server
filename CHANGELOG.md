@@ -36,6 +36,17 @@ root README.
   here, but the prior absence of any per-defeat log line meant we
   couldn't tell from prod logs whether a non-gym defeat had even
   reached the bounty path. Now we can.
+- **First-join Server Wiki book is now a single clickable link** to
+  the MkDocs site (`https://hspahic-cs.github.io/cobblemon-server/`)
+  instead of 10 hardcoded pages. The site is published from `docs/`
+  and stays in lockstep with releases; the old book got baked into
+  player inventories at first-join and was a hassle to update. The
+  link is rendered via a Minecraft `clickEvent: open_url` text
+  component on a single page, with a plain-text fallback line for
+  players who can't click it (e.g. servers with chat URLs disabled).
+  Existing players who already received the old wiki book are
+  unaffected — the change only applies to players who first-join
+  after deploy.
 
 ## [0.7.26] - 2026-05-30
 

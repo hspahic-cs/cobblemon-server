@@ -43,6 +43,24 @@ object GymDefeatHook {
     }
 
     private fun applyToVictory(event: BattleVictoryEvent) {
+        // 0.7.30 diagnostic: log every BATTLE_VICTORY arrival unconditionally so we can prove
+        // whether Cobblemon is delivering the event at all. After a Titan1190X test fight on
+        // dev (one-shot KO of a non-gym RCT trainer routed through rbrctai), no `npc-defeat:`
+        // log appeared and the player wasn't paid. AI-routing hypothesis ruled out — battle
+        // had a normal winner but downstream side effects didn't fire. Possibilities:
+        //   (a) Cobblemon's BATTLE_VICTORY isn't firing on this server at all
+        //   (b) the event fires but our subscriber lambda was dropped (cold-start / classloader)
+        //   (c) the event fires but a higher-priority subscriber threw and broke dispatch
+        // This single line distinguishes (a) from (b)/(c). If absent after a confirmed win,
+        // the next fix is a mixin on the battle-end path; if present, the bug is downstream
+        // in the existing logic. Remove once root-caused.
+        val winners = event.winners.joinToString(",") { (it as? PlayerBattleActor)?.entity?.gameProfile?.name ?: it::class.simpleName ?: "?" }
+        val losers = event.losers.joinToString(",") { it::class.simpleName ?: "?" }
+        CobblemonBridge.logger.info(
+            "battle-victory-event: battleId={} winners=[{}] loser-kinds=[{}]",
+            event.battle.battleId, winners, losers,
+        )
+
         val losersIncludeTrainer = event.losers.any { it is TrainerBattleActor }
         if (!losersIncludeTrainer) return  // wild battle — nothing for us to do here
 

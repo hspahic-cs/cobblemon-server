@@ -135,6 +135,12 @@ jobs:
             # user (e.g. sysadmin from a manual repair) — that's fine.
             rm -rf mods.swap-new mods.swap-old.* || true
             cp -al ${VERSION_DIR} mods.swap-new
+            # Connector caches transformed Fabric jars under mods/.connector/
+            # at first boot. The service runs as sysadmin (not deployer), so
+            # mods/ needs to be group-writable by sysadmin. Set group + perms
+            # before the swap so the JVM can create .connector/.
+            chgrp sysadmin mods.swap-new
+            chmod 0775 mods.swap-new
             SWAP_OLD=mods.swap-old.\$\$
             if [ -L mods ]; then
               rm mods

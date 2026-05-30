@@ -1,0 +1,13 @@
+name = "Cobblemon Move Inspector"
+filename = "CobblemonMoveInspector-neoforge-1.3.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/MqcGBDhG/versions/kzhF1fB9/CobblemonMoveInspector-neoforge-1.3.0.jar"
+hash-format = "sha512"
+hash = "6a264e36f1f69c1e660fd6c25f27032da66ad48ff4f31e305e76af2865375e1d2e5548bad9ed566c0ba312e445d52cab1a641983553c3398e0613ce1bdad49ea"
+
+[update]
+[update.modrinth]
+mod-id = "MqcGBDhG"
+version = "kzhF1fB9"

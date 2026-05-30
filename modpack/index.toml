@@ -50,8 +50,18 @@ hash = "bd1f2508c571574e76ae32614a353eb900063c0e2bf54bb29ac98e7d6ab36eb6"
 metafile = true
 
 [[files]]
+file = "mods/cobblemon-battle-conditions.pw.toml"
+hash = "afb1ae7bafef46da5db60b16ba44932de52d29dbe2e0e71618c8ddfa48f8033e"
+metafile = true
+
+[[files]]
 file = "mods/cobblemon-counter.pw.toml"
 hash = "5298e216aa91dc3463ddd92d31b3b9fd43ee47d2b1ffce486ae4c725bfeec9ce"
+metafile = true
+
+[[files]]
+file = "mods/cobblemon-extended-battle-ui.pw.toml"
+hash = "3110b0398d68a6d0e32c47dd0619842f06192d22a6778e173d062aa6c9535b5f"
 metafile = true
 
 [[files]]
@@ -68,6 +78,15 @@ metafile = true
 file = "mods/cobblemon-mega-showdown.pw.toml"
 hash = "3efa711e77a99008f28b7831ab8696263bccaab984cd1e62e44b7220e69a6a3c"
 metafile = true
+
+[[files]]
+file = "mods/cobblemon-move-inspector.pw.toml"
+hash = "3c5f7b22780bf891bc34d22454a199ba90fbf42e56713dc92bda4183c7d82f2d"
+metafile = true
+
+[[files]]
+file = "mods/cobblemon-npc-0.1.0.jar"
+hash = "bc08a787efe7ed75c0d3427eff72494a8c9f76a4349cec7ef424e8ffeec07126"
 
 [[files]]
 file = "mods/cobblemon-pokenav.pw.toml"

@@ -181,7 +181,12 @@ object WorldRulesHook {
         // but with no hostile spawning so the gameplay loop centres on Pokémon. Peaceful mobs
         // (CREATURE / AMBIENT / WATER_* categories) still spawn normally. Op-initiated spawns
         // were already let through above.
-        if (entity.type.category == net.minecraft.world.entity.MobCategory.MONSTER) {
+        //
+        // Exception: the Warden. It only emerges from sculk shriekers (MobSpawnType.TRIGGERED)
+        // after deliberate player action in the deep dark, so it doesn't break the "no ambient
+        // hostiles" feel — it's a hazard players opt into. NO_MOB dims still block it via Rule 2.
+        if (entity.type.category == net.minecraft.world.entity.MobCategory.MONSTER &&
+            entity.type != EntityType.WARDEN) {
             event.isSpawnCancelled = true
         }
     }

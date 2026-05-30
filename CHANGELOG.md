@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.25] - 2026-05-30
+
+### Changed
+- **Wardens spawn again.** Carved an exception for `EntityType.WARDEN`
+  out of the global hostile-natural-spawn block in `WorldRulesHook`
+  Rule 3. Wardens only emerge from sculk shriekers
+  (`MobSpawnType.TRIGGERED`) after a player deliberately disturbs the
+  deep dark, so they're a hazard players opt into rather than the
+  ambient-hostile noise Rule 3 exists to suppress. NO_MOB dims
+  (`multiworld:*`) still block every `Mob` via Rule 2, so wardens
+  remain absent from spawn and arena worlds.
+
 ## [0.7.24] - 2026-05-30
 
 Batch of playtest-surfaced fixes + balance tweaks.

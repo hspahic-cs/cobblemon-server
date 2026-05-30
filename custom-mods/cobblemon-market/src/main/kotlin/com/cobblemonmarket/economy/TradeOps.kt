@@ -1,7 +1,13 @@
 package com.cobblemonmarket.economy
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.config.effectiveBuyClamp
+import com.cobblemonmarket.config.effectiveBuyStockImpact
+import com.cobblemonmarket.config.effectiveMinBuyPrice
+import com.cobblemonmarket.config.effectiveSellClamp
+import com.cobblemonmarket.config.effectiveSellStockImpact
 import com.cobblemonmarket.pricing.PricingEngine
+import kotlin.math.ceil
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -40,14 +46,18 @@ object TradeOps {
         val entry = CobblemonMarket.items[itemId] ?: return TradeResult.UnknownItem(itemId)
         val state = CobblemonMarket.marketStore.getOrCreate(itemId)
 
-        // Stock must cover the request as whole units. Fractional restock between trades
-        // means stock=99.7 lets you buy 99 but not 100.
+        // Stock must cover the *virtual* drain (qty × buyStockImpact), not just the items
+        // physically being purchased. With impact=3, buying 1 drains 3 stock — stock=2 blocks.
+        val stockNeeded = ceil(qty * entry.effectiveBuyStockImpact).toInt()
         val available = floor(state.stock).toInt()
-        if (available < qty) return TradeResult.OutOfStock(itemId, available, qty)
+        if (available < stockNeeded) return TradeResult.OutOfStock(itemId, available, stockNeeded)
 
         val result = PricingEngine.simulateBatchBuy(
             entry.baseBuyPrice, entry.baseStock, entry.elasticity,
             state.stock, qty,
+            clamp = entry.effectiveBuyClamp,
+            stockImpact = entry.effectiveBuyStockImpact,
+            minBuyPrice = entry.effectiveMinBuyPrice,
         )
         val totalCost = result.totalPrice
 
@@ -56,9 +66,15 @@ object TradeOps {
         if (!hasInventorySpace(player, qty)) return TradeResult.NoInventorySpace
         if (!EconomyBridge.withdraw(player.uuid, totalCost)) return TradeResult.EconomyFailed
 
-        val priceBefore = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity)
+        val priceBefore = PricingEngine.buyPrice(
+            entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+        )
         state.stock = result.finalStock
-        val priceAfter = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity)
+        val priceAfter = PricingEngine.buyPrice(
+            entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+        )
 
         val item: Item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemId))
         player.inventory.add(ItemStack(item, qty))
@@ -88,12 +104,16 @@ object TradeOps {
         val entry = CobblemonMarket.items[itemId] ?: return TradeResult.UnknownItem(itemId)
         val state = CobblemonMarket.marketStore.getOrCreate(itemId)
 
+        val stockNeeded = ceil(qty * entry.effectiveBuyStockImpact).toInt()
         val available = floor(state.stock).toInt()
-        if (available < qty) return TradeResult.OutOfStock(itemId, available, qty)
+        if (available < stockNeeded) return TradeResult.OutOfStock(itemId, available, stockNeeded)
 
         val result = PricingEngine.simulateBatchBuy(
             entry.baseBuyPrice, entry.baseStock, entry.elasticity,
             state.stock, qty,
+            clamp = entry.effectiveBuyClamp,
+            stockImpact = entry.effectiveBuyStockImpact,
+            minBuyPrice = entry.effectiveMinBuyPrice,
         )
         val totalCost = result.totalPrice
 
@@ -101,9 +121,15 @@ object TradeOps {
         if (balance < totalCost) return TradeResult.InsufficientBalance(balance, totalCost)
         if (!EconomyBridge.withdraw(player.uuid, totalCost)) return TradeResult.EconomyFailed
 
-        val priceBefore = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity)
+        val priceBefore = PricingEngine.buyPrice(
+            entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+        )
         state.stock = result.finalStock
-        val priceAfter = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity)
+        val priceAfter = PricingEngine.buyPrice(
+            entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+        )
 
         val avgPrice = (totalCost + qty / 2) / qty
         CobblemonMarket.marketStore.recordPriceTick(
@@ -127,22 +153,32 @@ object TradeOps {
         if (have < qty) return TradeResult.InsufficientItems(itemId, have, qty)
 
         // Cap on how saturated the market can get — past this point the shop refuses
-        // to absorb more rather than paying near-zero per unit.
+        // to absorb more rather than paying near-zero per unit. Sells add stock at
+        // entry.effectiveSellStockImpact per unit (default 1.0).
         val maxStock = (entry.baseStock * entry.maxStockMultiplier).toInt()
-        if (state.stock + qty > maxStock) {
+        val stockAdded = qty * entry.effectiveSellStockImpact
+        if (state.stock + stockAdded > maxStock) {
             return TradeResult.MarketSaturated(itemId, state.stock.toInt(), maxStock)
         }
 
         val result = PricingEngine.simulateBatchSell(
             entry.baseSellPrice, entry.baseStock, entry.elasticity,
             state.stock, qty,
+            clamp = entry.effectiveSellClamp,
+            stockImpact = entry.effectiveSellStockImpact,
         )
         val totalProceeds = result.totalPrice
 
-        val priceBefore = PricingEngine.sellPrice(entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity)
+        val priceBefore = PricingEngine.sellPrice(
+            entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveSellClamp,
+        )
         removeItems(player, itemRef, qty)
         state.stock = result.finalStock
-        val priceAfter = PricingEngine.sellPrice(entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity)
+        val priceAfter = PricingEngine.sellPrice(
+            entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
+            entry.effectiveSellClamp,
+        )
 
         val balanceBefore = EconomyBridge.getBalance(player.uuid)
         EconomyBridge.deposit(player.uuid, totalProceeds)

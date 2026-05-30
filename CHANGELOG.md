@@ -12,6 +12,90 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.11] - 2026-05-30
+
+Full market overhaul. Price-multiplier clamp, global min sell price, per-item
+overrides for both clamp sides + stock-impact (asymmetric scarcity) + per-item
+buy-price floor, plus a 22-entry authored values pass for the default vendor
+that fills in HP potions, status heals, PP restore, and revives — categories
+previously missing from the market.
+
+### Added (new pricing-curve knobs on `ItemEntry`)
+All optional, default to the global behavior so existing entries are unchanged.
+- **`buyPriceClamp` / `sellPriceClamp`** (`Double`): per-item override for the
+  price multiplier clamp. Defaults to `PricingEngine.SCALE_CLAMP = 3.0`. Tighter
+  values (e.g., `1.5`) shrink the price band for stable commodities; looser
+  values widen it. Buy and sell are independently configurable.
+- **`buyStockImpact` / `sellStockImpact`** (`Double`): stock units moved per
+  trade unit.
+  - `buyStockImpact` defaults to **`3.0` server-wide** — every buy drains 3
+    stock units regardless of how many items the player asked for. Per-item
+    override is supported (set to `1.0` on items where bulk-buy needs to
+    clear without hitting the stock floor — none currently overridden).
+  - `sellStockImpact` defaults to `1.0` (sell-side stays symmetric with raw
+    items moved).
+  - The anti-arbitrage invariant holds at any impact ratio thanks to the
+    clamp, so the 3:1 asymmetry doesn't re-open the buy-then-sell exploit
+    (regression-tested in `arbitrage stays dead with asymmetric stock impact`).
+- **`minBuyPrice`** (`Int`): hard floor on the buy price applied after rounding.
+  Defaults to `0`. Useful when the natural clamp floor (`baseBuy / clamp`) is
+  too cheap for an item that should never be a bargain.
+
+### Changed
+- **cobblemon-market / pricing multiplier clamped to `[1/3, 3]`**: the
+  per-item `scale = ((stock+1)/(baseStock+1))^(-elasticity)` factor is now
+  clamped post-elasticity to `[1 / clamp, clamp]` with `SCALE_CLAMP = 3.0`
+  as the default. Effects:
+  - `buyPrice ≤ clamp × baseBuyPrice` regardless of how low stock is driven.
+  - `buyPrice ≥ baseBuyPrice / clamp` (unless raised by `minBuyPrice`).
+  - `sellPrice` bounded symmetrically.
+  - **Anti-arbitrage invariant** — with the spread `baseBuyPrice ≥ clamp ×
+    baseSellPrice`, the clamp guarantees `max sellPrice ≤ baseBuyPrice`. A
+    buy-then-sell round trip is structurally loss-making at any
+    `(quantity, stock, stockImpact)` path and at any `elasticity`. Pre-clamp,
+    low-baseStock items admitted a profitable arbitrage; now strictly negative
+    in unit tests, including under asymmetric stock impact.
+- **cobblemon-market / global minimum sell price of 1 cobbledollar**:
+  `MIN_SELL_PRICE = 1` floor on `sellPrice`. Prevents cheap items from
+  rounding to 0 payout at oversupply.
+- **cobblemon-market / authored default-vendor values overhaul**: 22 items
+  (vs the previous 6). Categories: Pokéballs (3), Carrot (1, buy-only), HP
+  potions (5), Revives (2), Status heals (6), PP restore (4), Rare Candy (1).
+  All `baseStock ≥ 200` (bumped from the source table's `100` floor so
+  shift-buy-16 at `buyStockImpact = 3` clears comfortably: `16 × 3 = 48 ≪ 200`);
+  super-common items (Carrot + all 3 Pokéball tiers) at `baseStock = 1000`. Carrot elasticity lowered `1.0 → 0.7`. Every
+  default-vendor item inherits the server-wide `buyStockImpact = 3.0` default
+  (no explicit override needed). Three table-level inconsistencies from the
+  source draft fixed: Hyper Potion slotted between Super and Max (`180/36`,
+  was tied with Super at `135/27`); Elixir and Max Elixir bumped above their
+  Ether counterparts (`225/45` and `315/63`) since Elixir restores all moves'
+  PP vs Ether's one.
+- **cobblemon-market / TradeOps stock-availability check**: now requires
+  `floor(stock) ≥ ceil(qty × buyStockImpact)` (was `≥ qty`). Stops items with
+  `buyStockImpact > 1` from being purchased past the stock-floor.
+- **Exp Candies (5) and Hyper Training Candies (10+) intentionally NOT
+  shipped this release** — per the source table's "ships after daily-cap
+  mod" gate.
+
+### Tests
+- Existing tests 2-5 in `PricingEngineTest` rewritten to assert clamped
+  values (previously asserted unbounded `~101×` / `~0.1×` multipliers).
+- New tests (5):
+  - `sell price is floored at min sell price even at oversupply`.
+  - `buy-then-sell round trip is always a loss` (elasticity 1).
+  - `buy-then-sell round trip is a loss at high elasticity` (elasticity 2).
+  - `tighter per-item clamp pulls the max price down` — covers the
+    `buyPriceClamp` override.
+  - `buy stock impact greater than one drains stock faster` — covers the
+    `buyStockImpact` plumbing.
+  - `arbitrage stays dead with asymmetric stock impact` — regression against
+    the original exploit you raised at the overhaul kickoff: with `impact=3`
+    and the clamp in place, the round trip is still strictly negative.
+  - `min buy price floors the buy price at oversupply` — covers `minBuyPrice`.
+- `@JvmOverloads` added to `PricingEngine.buyPrice` and `sellPrice` so the
+  carrots reflection bridge (`MarketBridge.kt`) continues to resolve the
+  4-arg `(Int, Double, Int, Double): Int` signature.
+
 ## [0.7.10] - 2026-05-30
 
 Combined feature + content bundle (squash of two in-flight PRs:

@@ -3,6 +3,9 @@ package com.cobblemonmarket.commands
 import com.cobblemonmarket.CobblemonMarket
 import com.cobblemonmarket.config.ItemConfig
 import com.cobblemonmarket.config.MarketConfig
+import com.cobblemonmarket.config.effectiveBuyClamp
+import com.cobblemonmarket.config.effectiveMinBuyPrice
+import com.cobblemonmarket.config.effectiveSellClamp
 import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
 import com.cobblemonmarket.data.Candle
@@ -289,8 +292,14 @@ object MarketCommands {
             val state = store.getOrCreate(itemId)
             Row(
                 name = formatItemName(itemId),
-                buy = PricingEngine.buyPrice(entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity),
-                sell = PricingEngine.sellPrice(entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity),
+                buy = PricingEngine.buyPrice(
+                    entry.baseBuyPrice, state.stock, entry.baseStock, entry.elasticity,
+                    entry.effectiveBuyClamp, entry.effectiveMinBuyPrice,
+                ),
+                sell = PricingEngine.sellPrice(
+                    entry.baseSellPrice, state.stock, entry.baseStock, entry.elasticity,
+                    entry.effectiveSellClamp,
+                ),
                 stock = state.stock.toInt(),
                 baseStock = entry.baseStock,
             )

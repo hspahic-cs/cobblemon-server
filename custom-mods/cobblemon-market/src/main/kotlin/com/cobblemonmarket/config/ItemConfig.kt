@@ -47,11 +47,36 @@ data class ItemEntry(
     val maxStockMultiplier: Double = 10.0,
     val vendorTag: String? = "",
     val sellable: Boolean? = true,
+    // ─── 0.7.11 market-overhaul fields (all optional, null = use the global default) ──
+    /** Per-item override for the buy-side price multiplier clamp. Defaults to PricingEngine.SCALE_CLAMP. */
+    val buyPriceClamp: Double? = null,
+    /** Per-item override for the sell-side price multiplier clamp. Defaults to PricingEngine.SCALE_CLAMP. */
+    val sellPriceClamp: Double? = null,
+    /** Stock units consumed per unit bought. Server-wide default is 3.0 — see
+     *  [effectiveBuyStockImpact]. Setting this on an item overrides the global; useful
+     *  for high-volume items where shift-buy-64 needs to clear without hitting the
+     *  stock floor (e.g., set to 1.0 for held items / TMs / carrots if scarcity isn't
+     *  the design intent for them). */
+    val buyStockImpact: Double? = null,
+    /** Stock units returned per unit sold. Defaults to 1.0 — sell-side refill stays
+     *  symmetric with raw items moved. */
+    val sellStockImpact: Double? = null,
+    /** Hard per-item floor on the buy price (applied after rounding, before the clamp ratio). Defaults to 0 = no floor beyond the global ratio. */
+    val minBuyPrice: Int? = null,
 )
 
 /** Empty string = the default unscoped vendor. */
 val ItemEntry.vendorScope: String get() = vendorTag ?: ""
 val ItemEntry.isSellable: Boolean get() = sellable ?: true
+val ItemEntry.effectiveBuyClamp: Double get() = buyPriceClamp ?: com.cobblemonmarket.pricing.PricingEngine.SCALE_CLAMP
+val ItemEntry.effectiveSellClamp: Double get() = sellPriceClamp ?: com.cobblemonmarket.pricing.PricingEngine.SCALE_CLAMP
+/** Server-wide default of 3.0 — buying drains stock 3x faster than restock refills,
+ *  giving popular items a "going scarce" feel. Per-item override is supported (e.g.,
+ *  set to 1.0 on items where bulk-buy needs to clear without stock-floor friction).
+ *  Safe under the price clamp: the anti-arbitrage invariant holds at any impact ratio. */
+val ItemEntry.effectiveBuyStockImpact: Double get() = buyStockImpact ?: 3.0
+val ItemEntry.effectiveSellStockImpact: Double get() = sellStockImpact ?: 1.0
+val ItemEntry.effectiveMinBuyPrice: Int get() = minBuyPrice ?: 0
 
 object ItemConfig {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()

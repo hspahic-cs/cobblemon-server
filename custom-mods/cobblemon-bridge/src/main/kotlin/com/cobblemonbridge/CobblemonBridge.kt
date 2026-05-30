@@ -23,6 +23,7 @@ import com.cobblemonbridge.npc.MarketVendorAnchor
 import com.cobblemonbridge.trade.TradeLifecycle
 import com.cobblemonbridge.quests.HealQuestHook
 import com.cobblemonbridge.quests.PartyLevelHook
+import com.cobblemonbridge.quests.PokedexProgressHook
 import com.cobblemonbridge.quests.SetHomeHook
 import com.cobblemonbridge.wild.TradeCapHook
 import com.cobblemonbridge.wild.WildBattleAdjustHook
@@ -63,6 +64,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(SetHomeHook)
         NeoForge.EVENT_BUS.register(HealQuestHook)
         PartyLevelHook.registerEvents()
+        PokedexProgressHook.registerEvents()
         WildBattleRewardHook.registerEvents()
         WildSpawnLevelCapHook.registerEvents()
         // WildBattleAdjustHook intentionally NOT registered: wild battles don't downlevel the

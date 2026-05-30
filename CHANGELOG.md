@@ -12,6 +12,31 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.27] - 2026-05-30
+
+### Fixed
+- **NPC trainer defeats paid $0 silently.** The 0.7.24 `npcBounty`
+  formula `(multiplier × maxLevel × numPokemon) / 6` is integer
+  division, and `payNpcBounty` returned silently on `amount <= 0`.
+  Low-level / small-team trainers (e.g. L5 / 1 mon / multiplier 1 →
+  `5/6 = 0`) produced no chat message and no deposit. Reproduced from
+  prod-dev logs against `SixthSense` after the 0.7.26 gym-isolation
+  refactor exposed it (gyms now bypass this code path entirely, so
+  the silent NPC zero became the visible bug). Fixed by switching to
+  ceiling division and flooring the result at $1 — every defeat now
+  pays at least $1, and rounded-up math no longer swallows partial
+  payouts. New `low-level low-team rolls never silently floor to
+  zero` test sweeps every `(L1..10, 1..6 mons, ×1..3)` combination
+  to lock the invariant in.
+
+### Changed
+- **`payNpcBounty` now `INFO`-logs every defeat** (`npc-defeat:
+  trainer={id} player={name} bounty=${amount}`). The 0.7.26 design
+  short-circuits gym battles before this hook so we don't see them
+  here, but the prior absence of any per-defeat log line meant we
+  couldn't tell from prod logs whether a non-gym defeat had even
+  reached the bounty path. Now we can.
+
 ## [0.7.26] - 2026-05-30
 
 Two slices: a quest-chain addition for Cobbleworkers onboarding, and a

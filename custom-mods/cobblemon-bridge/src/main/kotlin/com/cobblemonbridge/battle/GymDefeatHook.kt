@@ -1,9 +1,9 @@
 package com.cobblemonbridge.battle
 
 import com.cobblemon.mod.common.api.Priority
+import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
-import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor
 import com.cobblemonbridge.CobblemonBridge
@@ -13,14 +13,14 @@ import net.minecraft.server.level.ServerPlayer
 
 /**
  * Per-defeat NPC trainer bounty for non-gym trainer battles. Hook scope shrunk
- * dramatically in 0.7.25 — the gym advancement award + flat gym-bounty payment used to
+ * dramatically in 0.7.26 — the gym advancement award + flat gym-bounty payment used to
  * live here too, but were migrated to the authoritative `rctmod:defeat_count` advancement
  * trigger + `/eco give @s <amount>` in each `beat_gym_*.mcfunction`. RCT fires
  * defeat_count itself on every trainer defeat with the exact trainer id, so we no longer
  * need our reflection / stash / proximity dance for gym credit.
  *
  * What remains here:
- *  - **Per-defeat NPC bounty** (formula: `multiplier × maxLevel × numPokemon / 6`,
+ *  - **Per-defeat NPC bounty** (formula: `max(1, ⌈multiplier × maxLevel × numPokemon / 6⌉)`,
  *    multiplier ∈ {1, 2, 3} uniform random per defeat — see [npcBounty]). Fires on every
  *    non-gym trainer defeat. Gym defeats are intentionally excluded because they already
  *    get the big flat `$150 × gymId` bounty from the mcfunction.
@@ -49,8 +49,9 @@ object GymDefeatHook {
         // Gym-detection lives on so we DON'T double-pay: gym defeats get the big flat
         // gym bounty from the mcfunction; non-gym defeats get the per-defeat NPC bounty
         // from here.
-        val isGymBattle = com.cobblemonbridge.adapters.RctBridge
+        val trainerId = com.cobblemonbridge.adapters.RctBridge
             .trainerIdForBattle(event.battle.battleId)
+        val isGymBattle = trainerId
             ?.let(com.cobblemonbridge.adapters.RctBridge::parseGymTrainerId) != null
 
         if (isGymBattle) return  // gym path handled entirely by RCT trigger + mcfunction
@@ -58,14 +59,17 @@ object GymDefeatHook {
         for (winner in event.winners) {
             val playerActor = winner as? PlayerBattleActor ?: continue
             val player = playerActor.entity as? ServerPlayer ?: continue
-            payNpcBounty(player, event.losers)
+            payNpcBounty(player, trainerId, event.losers)
         }
     }
 
     /**
      * Income payout for defeating a non-gym trainer NPC (random RCT trainers, etc.). Formula:
      *
-     *   `bounty = multiplier × trainerLevel × numPokemon / 6`,  multiplier ∈ {1, 2, 3} uniform
+     *   `bounty = max(1, ⌈multiplier × maxLevel × numPokemon / 6⌉)`,  multiplier ∈ {1, 2, 3} uniform
+     *
+     * Ceiling division + min-of-1 floor guarantee ≥ $1 for any positive-input defeat — fixes
+     * the 0.7.24 silent-zero case where `(1 × 5 × 1) / 6 = 0` paid nothing.
      *
      * Pure-math seam at [computeNpcBounty] for unit-testing without mocking actors.
      */
@@ -80,14 +84,20 @@ object GymDefeatHook {
 
     /** Pure-math seam — same formula as [npcBounty] without Cobblemon battle types or
      *  randomness so the arithmetic is unit-testable. `multiplier` defaults to 2 (the
-     *  mid-roll, matching the pre-randomised constant); pass 1 or 3 to verify the random
-     *  branches. Integer division floors. */
-    internal fun computeNpcBounty(maxLevel: Int, numPokemon: Int, multiplier: Int = 2): Int =
-        if (maxLevel <= 0 || numPokemon <= 0 || multiplier <= 0) 0
-        else (multiplier * maxLevel * numPokemon) / 6
+     *  mid-roll); pass 1 or 3 to verify the random branches. Returns 0 only when an input
+     *  is non-positive; for any positive (level, count, multiplier) the result is ≥ 1. */
+    internal fun computeNpcBounty(maxLevel: Int, numPokemon: Int, multiplier: Int = 2): Int {
+        if (maxLevel <= 0 || numPokemon <= 0 || multiplier <= 0) return 0
+        val numerator = multiplier * maxLevel * numPokemon
+        return kotlin.math.max(1, (numerator + 5) / 6)
+    }
 
-    private fun payNpcBounty(player: ServerPlayer, losers: Iterable<BattleActor>) {
+    private fun payNpcBounty(player: ServerPlayer, trainerId: String?, losers: Iterable<BattleActor>) {
         val amount = npcBounty(losers)
+        CobblemonBridge.logger.info(
+            "npc-defeat: trainer={} player={} bounty=\${}",
+            trainerId ?: "<unknown>", player.gameProfile.name, amount,
+        )
         if (amount <= 0) return
         EconomyBridge.deposit(player.uuid, amount)
         player.sendSystemMessage(Component.literal(

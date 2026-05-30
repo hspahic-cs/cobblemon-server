@@ -19,7 +19,7 @@ import com.cobblemonbridge.commands.WildCommand
 import com.cobblemonbridge.eggs.EggDefeatHook
 import com.cobblemonbridge.gymtp.GymTpNpcHook
 import com.cobblemonbridge.gymtp.GymTpRegistry
-import com.cobblemonbridge.npc.MarketVendorAnchor
+import com.cobblemonbridge.npc.EntityAnchor
 import com.cobblemonbridge.trade.TradeLifecycle
 import com.cobblemonbridge.quests.HealQuestHook
 import com.cobblemonbridge.quests.PartyLevelHook
@@ -76,7 +76,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(EggDefeatHook)
 
         NeoForge.EVENT_BUS.register(GymTpNpcHook)
-        NeoForge.EVENT_BUS.register(MarketVendorAnchor)
+        NeoForge.EVENT_BUS.register(EntityAnchor)
         NeoForge.EVENT_BUS.register(TradeLifecycle)
         NeoForge.EVENT_BUS.register(WorldRulesHook)
 

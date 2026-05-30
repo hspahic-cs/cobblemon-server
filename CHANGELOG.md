@@ -12,6 +12,34 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.19] - 2026-05-30
+
+Hotfix for the 0.7.18 battle-UI mods landing — the dev server crashed
+on boot with `Mod loading has failed`.
+
+### Fixed
+- **Battle UI mod dep failures crashed the server.** Two unmet
+  Connector deps in 0.7.18 caused FML to abort mod loading (which
+  also took down LegendaryMonuments as collateral):
+  - **Cobblemon Battle Conditions 0.2.0-1.7.0-BETA** pinned to
+    Cobblemon `1.7.0`, but the pack ships `1.7.3`. No newer release
+    exists, so the mod is removed for now. We can revisit when an
+    update targeting 1.7.3 is published.
+  - **Cobblemon: Extended Battle UI 0.9.0** required
+    `fabric-language-kotlin >= 1.12.0`, which we hadn't shipped (we
+    had `kotlin-for-forge` for the NeoForge side, but Fabric mods
+    via Sinytra Connector need the Fabric Kotlin runtime
+    separately). Added `fabric-language-kotlin 1.13.11+kotlin.2.3.21`.
+- **Cobblemon Move Inspector** is unaffected (NeoForge-native) and
+  continues to ship.
+
+### Notes
+- Lesson: when adding Fabric-via-Connector mods, check both their
+  Cobblemon version pin *and* their Fabric runtime deps. CI's
+  `is-active` check only catches whether systemd started the service
+  — Minecraft can still die mid-mod-load before binding the listen
+  port.
+
 ## [0.7.18] - 2026-05-30
 
 ### Added

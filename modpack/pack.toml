@@ -1,12 +1,12 @@
 name = "Cobblemon Server"
 author = "Harris Spahic"
-version = "0.7.18"
+version = "0.7.19"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "5e2704c5f4ea5566986e8734d5c73b28d1593e59c131226e5ba6fac755cd4cbf"
+hash = "fd503925ede0b816a2960392b7408bb9fe02880e824db42f5f6bead9e3b30cc1"
 
 [versions]
 minecraft = "1.21.1"

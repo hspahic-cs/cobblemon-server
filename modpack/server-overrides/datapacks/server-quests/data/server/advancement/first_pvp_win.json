@@ -1,5 +1,6 @@
 {
-  "parent": "server:reach_income_250",
+  "_comment": "0.7.29 — re-parented from reach_income_250 to ranch_carrot_farm to sit inside the new Exeggcute onboarding chain (income_250 → evolve → ranch → first_pvp → gym_2). RCT doesn't gate progression on this; purely tree placement.",
+  "parent": "server:ranch_carrot_farm",
   "display": {
     "title": {
       "text": "First Blood"

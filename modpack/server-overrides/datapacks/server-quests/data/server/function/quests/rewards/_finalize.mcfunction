@@ -13,10 +13,12 @@ tag @a[tag=cq_reward_egg_common] remove cq_reward_egg_common
 execute as @a[tag=cq_reward_egg_uncommon] at @s run gacha giveegg @s uncommon
 tag @a[tag=cq_reward_egg_uncommon] remove cq_reward_egg_uncommon
 
-# 0.7.25 — specific-species egg for the Exeggcute onboarding chain. Uses Cobreeding's
-# /givepokemonegg directly (vs. /gacha giveegg which picks from the common-pool table).
-# Matches the gacha eggs' min_perfect_ivs=2 so the hatched Pokémon feels valuable.
-execute as @a[tag=cq_reward_egg_exeggcute] at @s run givepokemonegg @s exeggcute min_perfect_ivs=2
+# 0.7.29 — specific-species egg for the Exeggcute onboarding chain. Switched from
+# `givepokemonegg @s exeggcute min_perfect_ivs=2` (which silently failed at runtime in
+# 0.7.25–0.7.28 — admin reported the egg wasn't being granted) to the namespaced
+# `cobbreeding egg give @s exeggcute` form which the admin verified works. Dropped the
+# `min_perfect_ivs=2` arg too — keep it simple, the Exeggcute species is the point.
+execute as @a[tag=cq_reward_egg_exeggcute] at @s run cobbreeding egg give @s exeggcute
 tag @a[tag=cq_reward_egg_exeggcute] remove cq_reward_egg_exeggcute
 
 # ─── Key rewards (count always 1 for current quest layout) ──────────────
@@ -62,14 +64,11 @@ tag @a[tag=cq_reward_item_revive] remove cq_reward_item_revive
 execute as @a[tag=cq_reward_item_backpack] at @s run give @s sophisticatedbackpacks:backpack 1
 tag @a[tag=cq_reward_item_backpack] remove cq_reward_item_backpack
 
-# reach_income_250 — Pocket Change: small grinding kit. The Pasture Block reward was
-# moved out of this quest in 0.7.25 to evolve_exeggutor (so the Cobbleworkers introduction
-# lives in the new Exeggcute onboarding chain). The income quest now gives a small
-# Great-Ball + EXP-Candy kit instead — same "first $250 milestone" flavor without
-# double-introducing the pasture block.
-execute as @a[tag=cq_reward_item_income_kit] at @s run give @s cobblemon:great_ball 5
-execute as @a[tag=cq_reward_item_income_kit] at @s run give @s cobblemon:exp_candy_s 3
-tag @a[tag=cq_reward_item_income_kit] remove cq_reward_item_income_kit
+# reach_income_250 — Pocket Change: now hands the Leaf Stone directly (see the
+# cq_reward_item_leaf_stone handler further down in the same-file Exeggcute block).
+# Earlier reward variants (Pasture Block in pre-0.7.25, then Great-Ball + EXP-Candy kit
+# in 0.7.26–0.7.28) removed in 0.7.29 — the `cq_reward_item_income_kit` tag is no longer
+# set anywhere, handler dropped.
 
 # evolve_exeggutor (0.7.25) — Pasture Block (gates Cobbleworkers automation). Player has
 # just evolved their starter Exeggcute → Exeggutor; the next quest ranch_carrot_farm

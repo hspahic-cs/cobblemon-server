@@ -91,35 +91,35 @@ def update_advancement(gym_id: int, challenge: bool) -> None:
     print(f"  wrote {fname:42s} trainers={trainer_ids}")
 
 
-# Match a `tag @s add cq_reward_*` line so we can insert `eco give` right before it
-# (we want the bounty to fire AFTER the tellraw but BEFORE the _finalize schedule).
-TAG_LINE = re.compile(r"^tag @s add cq_reward_", re.MULTILINE)
+# 0.7.29 — the `eco give` insertion was removed entirely. The 0.7.26 migration that put
+# `/eco give @s <bounty>` into each gym mcfunction caused all 28 gym reward functions to
+# fail loading silently — NeoEssentials' /eco command isn't registered at datapack
+# function-load time, so brigadier rejected the parse and the WHOLE function file went
+# unloaded (no chat, no key, no bounty for gym wins). Bounty payment moved to the new
+# Kotlin AdvancementHook (subscribes to NeoForge AdvancementEarnEvent for
+# server:beat_gym_N + server:defeat_elite_four — fires from Kotlin where the eco bridge
+# is available). This function now ONLY strips the stale `eco give` line if a prior
+# 0.7.26-vintage mcfunction is still on disk.
 BOUNTY_MARKER = "# 0.7.25 — gym bounty paid here via /eco give"
 
 
 def update_mcfunction(gym_id: int, challenge: bool) -> None:
-    """Insert `/eco give @s <bounty>` into the existing gym mcfunction (idempotent —
-    re-runs replace any prior insert)."""
+    """Strip any 0.7.26-vintage `/eco give @s <bounty>` insert from the gym mcfunction.
+    Idempotent — safe to re-run on already-clean files."""
     fname = f"beat_gym_{gym_id}{'_challenge' if challenge else ''}.mcfunction"
     path = REWARDS_DIR / fname
     if not path.exists():
         print(f"  SKIP {fname} (not found)")
         return
     text = path.read_text()
-    bounty = bounty_for(gym_id)
-    # Strip any prior insert (idempotency).
-    text = re.sub(
+    new_text = re.sub(
         rf"(?m)^{re.escape(BOUNTY_MARKER)}\n^eco give @s \d+\n",
         "",
         text,
     )
-    insert = f"{BOUNTY_MARKER}\neco give @s {bounty}\n"
-    new_text = TAG_LINE.sub(insert + r"\g<0>", text, count=1)
-    if new_text == text:
-        # No `tag @s add` line — must be a non-standard mcfunction. Append at end.
-        new_text = text.rstrip() + "\n" + insert
-    path.write_text(new_text)
-    print(f"  wrote {fname:42s} bounty=${bounty}")
+    if new_text != text:
+        path.write_text(new_text)
+        print(f"  stripped eco give from {fname}")
 
 
 def main() -> None:

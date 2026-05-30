@@ -1,10 +1,11 @@
-# 0.7.25 — Pasture Block reward moved out of this quest; it now lives on
-# evolve_exeggutor where it fits the Cobbleworkers introduction narrative. This quest
-# now gives a small grinding kit (5 Great Balls + 3 EXP Candy S). It also fires the
-# `income_done` criterion on `receive_leaf_stone` so that quest unlocks once the player
-# has also completed beat_gym_1.
+# 0.7.29 — Pocket Change reward is now the Leaf Stone for the Exeggcute onboarding chain.
+# Replaces the previous Pasture Block (moved to evolve_exeggutor in 0.7.26) and the
+# interim 5 Great Balls + 3 EXP Candy S kit (also 0.7.26). The Leaf Stone naturally slots
+# here because by the time the player has ¢250 they've already beaten gym 1 and hatched
+# their Exeggcute from beat_wild_trainer — they're ready to evolve. The separate
+# `receive_leaf_stone` quest (with the AND-gate of gym1 + income) was deleted in 0.7.29;
+# this single quest replaces it.
 playsound minecraft:entity.player.levelup player @s ~ ~ ~ 1.0 1.2
-tellraw @s [{"text": "\n§a§l[Quest Complete] ", "bold": true},{"text": "Pocket Change", "color": "white", "bold": true},{"text": "\n§eYour first ¢250 banked. Keep grinding.", "bold": false},{"text": "\n§6§l✦ Reward: §e§l5 Great Balls + 3 EXP Candy S", "bold": false},{"text": "\n§e► Next: ", "bold": false},{"text": "Beat Gym 1 to unlock the §eLeaf Stone§7 quest §8(starts the Exeggutor farm chain)\n", "color": "white", "bold": false}]
-tag @s add cq_reward_item_income_kit
-advancement grant @s only server:receive_leaf_stone income_done
+tellraw @s [{"text": "\n§a§l[Quest Complete] ","bold": true},{"text": "Pocket Change","color": "white","bold": true},{"text": "\n§6§l✦ Reward: §e§lLeaf Stone","bold": false},{"text": "\n§7Use it on your hatched §aExeggcute§7 to evolve into §aExeggutor§7.","bold": false},{"text": "\n§e► Next: ","bold": false},{"text": "Evolve Exeggutor §8(Reward: §fPasture Block§8)\n","color": "white","bold": false}]
+tag @s add cq_reward_item_leaf_stone
 schedule function server:quests/rewards/_finalize 20t append

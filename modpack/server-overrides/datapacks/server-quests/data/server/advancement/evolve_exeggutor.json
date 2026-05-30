@@ -1,6 +1,6 @@
 {
-  "_comment": "0.7.25 — third quest in the Exeggcute onboarding chain. Trigger is `minecraft:impossible`; cobblemon-bridge's `EvolutionHook` subscribes to Cobblemon's EvolutionCompleteEvent and calls QuestAdvancements.award(player, 'server:evolve_exeggutor', 'done') when the evolved species name matches 'Exeggutor'. Same pattern as PokedexProgressHook / HealQuestHook.",
-  "parent": "server:receive_leaf_stone",
+  "_comment": "0.7.29 — re-parented to reach_income_250 (Pocket Change now hands the Leaf Stone directly). The separate receive_leaf_stone quest with its gym1+income AND-gate was deleted. Trigger is `minecraft:impossible`; cobblemon-bridge's `EvolutionHook` subscribes to Cobblemon's EvolutionCompleteEvent and calls QuestAdvancements.award(player, 'server:evolve_exeggutor', 'done') when the evolved species name matches 'Exeggutor'. Same pattern as PokedexProgressHook / HealQuestHook.",
+  "parent": "server:reach_income_250",
   "display": {
     "title": { "text": "Sunny Side Up" },
     "description": { "text": "Use the Leaf Stone to evolve your Exeggcute into Exeggutor." },

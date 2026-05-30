@@ -1,9 +1,11 @@
-# 0.7.26 — mainline payout for beating all 4 Elite Four trainers. Cash via /eco give
-# (NeoEssentials) so it lands in the same balance the gym bounties go to. Master Ball +
-# Ultra Key delivered via tag → _finalize handler 20 ticks later (same pattern as
-# reach_pokedex_100, which has the same item bundle).
+# 0.7.29 — stripped the `eco give @s 5000` line. NeoEssentials' /eco command isn't
+# registered at datapack function-load time, so brigadier rejected the whole function
+# parse in 0.7.26–0.7.28 — players who beat all 4 E4 got nothing. Bounty payment moved
+# to the Kotlin AdvancementHook (subscribes to NeoForge AdvancementEarnEvent for
+# server:defeat_elite_four), which fires from a context where the eco bridge is live.
+# Master Ball + Ultra Key still delivered via the cq_reward_item_elite_four tag handler
+# in _finalize.
 playsound minecraft:ui.toast.challenge_complete master @s ~ ~ ~ 1.0 1.2
-tellraw @s [{"text":"\n§6§l[Mainline Quest Complete] ","bold":true},{"text":"Defeat the Elite Four","color":"white","bold":true},{"text":"\n§6§l✦ Reward: §e§l$5,000 + Master Ball + Ultra Key","bold":false},{"text":"\n§e► Next: ","bold":false},{"text":"Pokémon Champion §8(Reward: see beat_gym_24)\n","color":"white","bold":false}]
-eco give @s 5000
+tellraw @s [{"text":"\n§6§l[Mainline Quest Complete] ","bold":true},{"text":"Defeat the Elite Four","color":"white","bold":true},{"text":"\n§6§l✦ Reward: §6$5,000 §7+ §e§lMaster Ball §7+ §e§lUltra Key","bold":false},{"text":"\n§e► Next: ","bold":false},{"text":"Pokémon Champion §8(Reward: see beat_gym_24)\n","color":"white","bold":false}]
 tag @s add cq_reward_item_elite_four
 schedule function server:quests/rewards/_finalize 20t append

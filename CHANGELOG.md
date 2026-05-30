@@ -12,6 +12,61 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.31] - 2026-05-30
+
+Bundle of playtest-surfaced fixes around the 0.7.26 Exeggcute / gym-trigger changes.
+
+### Fixed
+- **All 28 gym reward functions silently failed to load** since 0.7.26.
+  The migration added `eco give @s <amount>` to each `beat_gym_*.mcfunction`,
+  but NeoEssentials' `/eco` command isn't registered at datapack
+  function-load time, so brigadier rejected the whole function file —
+  every gym defeat awarded the advancement (via the RCT trigger) but
+  granted no reward at all (no chat, no key, no bounty). Same issue
+  bricked `defeat_elite_four.mcfunction`. Fixed by:
+  - Stripping every `eco give` line via the updated
+    `ops/migrate_gym_quests_to_rct_trigger.py` (now does removal-only,
+    no insertion).
+  - Adding a new `AdvancementHook` (cobblemon-bridge) that subscribes
+    to NeoForge's `AdvancementEvent.AdvancementEarnEvent` and pays the
+    bounty via `EconomyBridge.deposit` when `server:beat_gym_N`,
+    `server:beat_gym_N_challenge`, or `server:defeat_elite_four`
+    awards. Reflection-based deposit doesn't depend on command
+    registration timing, so the load-order trap is sidestepped
+    entirely.
+- **Exeggcute egg from `beat_wild_trainer` was never granted at
+  runtime.** The 0.7.25 reward used
+  `givepokemonegg @s exeggcute min_perfect_ivs=2` — the file parsed OK
+  but no egg landed. Switched the `cq_reward_egg_exeggcute` handler in
+  `_finalize.mcfunction` to the namespaced
+  `cobbreeding egg give @s exeggcute` form which the admin verified
+  works in-game. Dropped the `min_perfect_ivs=2` arg too —
+  keep it minimal.
+
+### Changed
+- **Exeggcute onboarding chain restructured** per the design call.
+  Deleted the `receive_leaf_stone` quest (which had a clunky gym1 +
+  income AND-gate via `requirements: [["gym1_done"], ["income_done"]]`
+  and required wiring the criterion grants from each parent's reward
+  function). The Leaf Stone reward moves to `reach_income_250` (Pocket
+  Change) directly — by the time the player has ¢250 they've already
+  beaten gym 1 and hatched their Exeggcute, so the AND-gate was
+  redundant. Mainline chain after gym 1 is now:
+  ```
+  beat_gym_1
+    → reach_income_250 (Pocket Change — Leaf Stone)
+      → evolve_exeggutor (Pasture Block)
+        → ranch_carrot_farm (16 Bone Meal)
+          → first_pvp_win (existing PvP starter kit)
+            → beat_gym_2
+  ```
+  Re-parented: `evolve_exeggutor` (was: `receive_leaf_stone`),
+  `first_pvp_win` (was: `reach_income_250`), `beat_gym_2` (was:
+  `ranch_carrot_farm`). Stripped the `advancement grant ... gym1_done`
+  line from `beat_gym_1.mcfunction` and the `... income_done` line
+  from `reach_income_250.mcfunction` — both criterion grants targeted
+  the deleted `receive_leaf_stone` and were dead writes.
+
 ## [0.7.30] - 2026-05-30
 
 ### Diagnostic
@@ -27,6 +82,8 @@ root README.
   classification — its absence after a confirmed win means
   Cobblemon isn't delivering the event and the next layer is a
   mixin on the battle-end path. Remove once root-caused.
+
+## [0.7.29] - 2026-05-30
 
 ### Fixed
 - **NPC trainer defeats produce no `BATTLE_VICTORY` event, blocking
@@ -58,6 +115,8 @@ root README.
   `RunBunAI: new battle detected` log lines) and `BATTLE_VICTORY`
   will fire as expected, triggering `payNpcBounty` and depositing
   the per-defeat NPC bounty.
+
+## [0.7.28] - 2026-05-30
 
 ### Fixed
 - **Server crashed on startup with `cobblemon_bridge` mod-load

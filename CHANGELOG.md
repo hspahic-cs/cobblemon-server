@@ -12,6 +12,45 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.11] - 2026-05-29
+
+### Changed
+- **cobblemon-bridge / /profile header uses the player's real skin**:
+  the header slot in the profile chest GUI was a generic
+  `Items.PLAYER_HEAD` with no profile attached, so it rendered as the
+  default Steve/Alex face for everyone. Now sets
+  `DataComponents.PROFILE` to a `ResolvableProfile(name, uuid,
+  PropertyMap())` built from the target player's UUID; the client
+  fetches the texture via session servers (cache hit on second
+  open). Required adding `playerUuid: UUID` to `ProfileSnapshot` so
+  the menu has the right id for both online and offline lookups.
+
+### Fixed
+- **cobblemon-bridge / "favorite pokemon" tally was inconsistent for
+  carrot heals**: 0.7.5 wired `FavoriteTracker` to Cobblemon's
+  `POKEMON_HEALED` event. That event reliably fires for the canonical
+  `Pokemon.heal()` path (Poké Healer block) but not always when HP
+  is set via a direct `currentHealth = X` field write, which is what
+  `CarrotHealHandler` does. Result: feeding 10 carrots to a Pokémon
+  often credited 0 or only some of them to the favorite tally, so the
+  /profile "favorite" jumped around between mons the player hadn't
+  actively bonded with.
+
+  Moved the credit call into the actual heal flow: cobblemon-carrots
+  gains a small `FavoriteBridge.kt` that reflection-calls into
+  cobblemon-bridge's `FavoriteTracker.record(...)` on each successful
+  feed (both plain right-click heal and shift-right-click revive).
+  `FavoriteTracker` no longer subscribes to `POKEMON_HEALED` — the
+  carrot-side path is now the single deterministic source of credit,
+  which also makes the stat more semantically correct ("favorite =
+  Pokémon you've actively fed by hand", not "Pokémon that happened
+  to be in the box during a mass heal").
+
+  Reflection is the same soft-coupling pattern we use for
+  `EconomyBridge` — cobblemon-carrots stays compile-time independent
+  of cobblemon-bridge; if bridge isn't loaded the credit call is a
+  silent no-op.
+
 ## [0.7.8] - 2026-05-29
 
 ### Fixed

@@ -87,6 +87,38 @@ starting balance / gym species swaps / held-item vendor).
   so deploys persist the value (rsync from server-overrides/config on
   every deploy). Pinning the whole file means a NeoEssentials version
   update that adds new fields would need a re-pin from the live copy.
+- **server-gyms / 5 assetless species swapped to typed equivalents**:
+  pancham, pawniard, vikavolt, lokix, bisharp lack rendering assets
+  in Cobblemon 1.7.3 (Substitute fallback in battle). Replaced inline
+  with same-type, same-level alternates that DO have models. Movesets
+  + abilities re-picked per the new species' learnable pool.
+  - Gym 3 Korrina (Fighting): `pancham` → `timburr` (Iron Fist;
+    Drain Punch / Mach Punch / Rock Slide / Bulk Up). Applies to
+    `gym_03_korrina` + `_challenge`.
+  - Gym 4 Byron (Steel): `pawniard` → `lairon` (Rock Head;
+    Iron Head / Rock Slide / Earthquake / Stealth Rock). Applies
+    to `gym_04_byron` + `_challenge`.
+  - Gym 11 Viola (Bug): `vikavolt` → `galvantula` (Compound Eyes;
+    Thunder / Bug Buzz / Sticky Web / Thunder Wave).
+  - Gym 18 Marnie (Dark): `lokix` → `absol` (Super Luck;
+    Night Slash / Psycho Cut / Sucker Punch / Swords Dance).
+  - Gym 21 Cynthia (E4): `bisharp` → `tyranitar` (Sand Stream;
+    Stone Edge / Crunch / Earthquake / Dragon Dance).
+  - **Not swapped**: lycanroc, oricorio, eternatus — also assetless
+    but more complex (forms/legendary); user opted to leave for now.
+  Generation in `ops/swap_gym_species.py`; rerun against a future
+  Cobblemon update if any of these regain assets.
+- **server-market / new "held_items" vendor** (101 entries): every
+  item in Cobblemon's `is_held_item` tag (Choice Band/Specs/Scarf,
+  Leftovers, Life Orb, Focus Sash, Eviolite, Assault Vest, Rocky
+  Helmet, Air Balloon, status orbs, type-boosting items, weather
+  rocks, plates, etc.) sold at flat $5,000 each, buy-only. Same
+  vendor framework as the TM shops (0.7.4). Spawn with
+  `/market admin spawn held_items`. Excludes: tag-refs (
+  `#cobblemon:held/terrain_seeds`, `#cobblemon:type_gems`),
+  `cobblemon:medicinal_leek` (it's a crop, in `cobbleworkers:crops`
+  tag), and vanilla `minecraft:bone`/`minecraft:snowball` (plentiful
+  via gameplay). Generation in `ops/gen_held_item_vendor.py`.
 
 ### Notes
 - `QuestCommand` gains a `SIDE_QUESTS` list (so `/quests list` shows it

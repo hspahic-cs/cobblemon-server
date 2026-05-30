@@ -103,7 +103,7 @@
       "gender": "MALE"
     },
     {
-      "species": "vikavolt",
+      "species": "galvantula",
       "level": 60,
       "nature": "timid",
       "ivs": {
@@ -122,13 +122,13 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "levitate",
+      "ability": "compoundeyes",
       "heldItem": "cobblemon:choice_specs",
       "moveset": [
-        "thunderbolt",
+        "thunder",
         "bugbuzz",
-        "energyball",
-        "voltswitch"
+        "stickyweb",
+        "thunderwave"
       ]
     },
     {

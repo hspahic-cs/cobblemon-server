@@ -45,7 +45,7 @@
       "gender": "MALE"
     },
     {
-      "species": "lokix",
+      "species": "absol",
       "level": 60,
       "nature": "jolly",
       "ivs": {
@@ -64,13 +64,13 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "tintedlens",
+      "ability": "superluck",
       "heldItem": "cobblemon:scope_lens",
       "moveset": [
-        "firstimpression",
-        "throatchop",
+        "nightslash",
+        "psychocut",
         "suckerpunch",
-        "uturn"
+        "swordsdance"
       ]
     },
     {

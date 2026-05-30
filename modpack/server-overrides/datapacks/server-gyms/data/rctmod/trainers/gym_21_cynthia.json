@@ -132,7 +132,7 @@
       ]
     },
     {
-      "species": "bisharp",
+      "species": "tyranitar",
       "level": 65,
       "nature": "adamant",
       "ivs": {
@@ -151,13 +151,13 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "defiant",
+      "ability": "sandstream",
       "heldItem": "cobblemon:focus_sash",
       "moveset": [
-        "swordsdance",
-        "knockoff",
-        "ironhead",
-        "suckerpunch"
+        "stoneedge",
+        "crunch",
+        "earthquake",
+        "dragondance"
       ]
     },
     {

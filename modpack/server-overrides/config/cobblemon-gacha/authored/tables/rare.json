@@ -99,12 +99,34 @@
       "weightPct": 4.0,
       "items": [
         {
-          "type": "vanilla",
-          "id": "cobblemon:nature_mint",
+          "type": "random_item",
+          "ids": [
+            "cobblemon:adamant_mint",
+            "cobblemon:bold_mint",
+            "cobblemon:brave_mint",
+            "cobblemon:calm_mint",
+            "cobblemon:careful_mint",
+            "cobblemon:gentle_mint",
+            "cobblemon:hasty_mint",
+            "cobblemon:impish_mint",
+            "cobblemon:jolly_mint",
+            "cobblemon:lax_mint",
+            "cobblemon:lonely_mint",
+            "cobblemon:mild_mint",
+            "cobblemon:modest_mint",
+            "cobblemon:naive_mint",
+            "cobblemon:naughty_mint",
+            "cobblemon:quiet_mint",
+            "cobblemon:rash_mint",
+            "cobblemon:relaxed_mint",
+            "cobblemon:sassy_mint",
+            "cobblemon:serious_mint",
+            "cobblemon:timid_mint"
+          ],
           "count": 3
         }
       ],
-      "notes": ""
+      "notes": "0.7.13: random pick across 21 typed mints (was broken cobblemon:nature_mint). All 3 are the same nature — RandomItem rolls once per entry, not per count."
     },
     {
       "lootTier": "Mid",

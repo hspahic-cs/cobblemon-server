@@ -514,11 +514,16 @@ object RankedBattleManager {
 
     /**
      * Applies an ELO match outcome: updates ELO/wins/losses, persists, marks the day
-     * for decay tracking, and broadcasts the result + leaderboard to anyone online.
+     * for decay tracking, and broadcasts a 3-line result message — header + winner ELO
+     * (green) + loser ELO (red).
+     *
+     * The pre-0.7.36 implementation also auto-broadcast the top-N leaderboard after every
+     * match. Pulled because post-match chat spam was too noisy; players now run
+     * `/ranked leaderboard` (already wired in [com.cobblemonranked.commands.RankedCommands])
+     * on demand instead.
      *
      * Shared by the real battle path ([resolveMatch]) and the simulate-from-console path
-     * ([simulateMatch]) so both paths exercise the exact same ELO/persistence/leaderboard
-     * code.
+     * ([simulateMatch]) so both paths exercise the exact same ELO/persistence code.
      */
     fun applyMatchResult(
         server: MinecraftServer,
@@ -565,17 +570,15 @@ object RankedBattleManager {
 
         val winnerDelta = newWinnerElo - oldWinnerElo
         val loserDelta = newLoserElo - oldLoserElo
+        // Three-line broadcast: header + winner ELO (green) + loser ELO (red).
+        // Players run /ranked leaderboard on demand — the auto-leaderboard broadcast was
+        // pulled in 0.7.36 because the post-match spam was too noisy.
+        // U+2192 → for the ELO transition. Sign-aware delta formatter so the loser line
+        // never shows `(-0)` at the ELO floor and the winner line never shows `(+-N)` if
+        // the calculator ever returns something weird.
         broadcast(server, "[Ranked] $winnerName defeated $loserName!")
-        broadcast(server,
-            "[Ranked] $winnerName: $oldWinnerElo -> $newWinnerElo (+$winnerDelta) | " +
-            "$loserName: $oldLoserElo -> $newLoserElo ($loserDelta)")
-
-        val leaderboard = store.getLeaderboard()
-        val topN = leaderboard.take(config.leaderboardSize)
-        broadcast(server, "[Ranked] Leaderboard:")
-        topN.forEachIndexed { i, (_, data) ->
-            broadcast(server, "  ${i + 1}. ${data.name}: ${data.elo} (${data.wins}W/${data.losses}L)")
-        }
+        broadcast(server, "§a$winnerName: $oldWinnerElo → $newWinnerElo (${signed(winnerDelta)})§r")
+        broadcast(server, "§c$loserName: $oldLoserElo → $newLoserElo (${signed(loserDelta)})§r")
 
         return MatchOutcome(
             winnerName = winnerName, loserName = loserName,
@@ -725,6 +728,15 @@ object RankedBattleManager {
         server.playerList.players.forEach {
             it.sendSystemMessage(Component.literal(message))
         }
+    }
+
+    /** Render an ELO delta with an explicit sign and U+2212 minus (so loser deltas read
+     *  as `−16`, not `-16`). Renders zero as `±0` so an ELO-floor case doesn't visually
+     *  collapse with a positive delta. */
+    private fun signed(delta: Int): String = when {
+        delta > 0 -> "+$delta"
+        delta < 0 -> "−${-delta}"
+        else -> "±0"
     }
 
     /**

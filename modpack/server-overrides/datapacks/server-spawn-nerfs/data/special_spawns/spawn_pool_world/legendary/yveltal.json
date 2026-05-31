@@ -1,0 +1,47 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "yveltal-1T",
+      "pokemon": "yveltal min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.6667,
+      "condition": {
+        "canSeeSky": true,
+        "timeRange": "night",
+        "biomes": [
+          "#cobblemon:is_forest",
+          "#cobblemon:is_sandy"
+        ]
+      }
+    },
+    {
+      "id": "yveltal-2T",
+      "pokemon": "yveltal min_perfect_ivs=3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.8333,
+      "condition": {
+        "maxY": 127,
+        "biomes": [
+          "#cobblemon:nether/is_soul_sand"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 weight scaled by 0.3333 (1/3 of upstream)"
+}

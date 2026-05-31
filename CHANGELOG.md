@@ -24,6 +24,18 @@ root README.
 - Fixed stale `► Next:` preview on `ranch_carrot_farm` — was
   pointing at "Gym 2", actual next step is `first_pvp_win`.
 
+### Changed (gameplay)
+- **Legendary spawn rates reduced to 1/3 of upstream.** New datapack
+  `server-spawn-nerfs` overrides every entry under AllTheMons'
+  `data/special_spawns/spawn_pool_world/legendary/<species>.json` with
+  `weight` multiplied by 0.333. Covers 62 species / 80 spawn entries.
+- **Paradox spawn rates reduced to 1/5 of upstream** (more aggressive
+  than legendaries). Same datapack, same mechanism, covers 17 species /
+  19 spawn entries.
+- Reproducible: `ops/gen_spawn_nerfs.py` regenerates the datapack from
+  the current AllTheMons zip. Re-run after bumping AllTheMons to pick
+  up new entries, or to change the nerf factors (top of script).
+
 ### Changed
 - **Exeggcute / Cobbleworkers chain promoted to mainline styling.**
   The four quests on the mainline arc between Gym 1 and Gym 2

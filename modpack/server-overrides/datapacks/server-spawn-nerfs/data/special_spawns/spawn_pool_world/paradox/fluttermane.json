@@ -1,0 +1,46 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "fluttermane-1T",
+      "pokemon": "fluttermane min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "40-75",
+      "weight": 0.6,
+      "condition": {
+        "timeRange": "day",
+        "biomes": [
+          "#cobblemon:is_spooky"
+        ]
+      }
+    },
+    {
+      "id": "fluttermane-2T",
+      "pokemon": "fluttermane min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "40-75",
+      "weight": 0.6,
+      "condition": {
+        "timeRange": "day",
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 weight scaled by 0.2000 (1/5 of upstream)"
+}

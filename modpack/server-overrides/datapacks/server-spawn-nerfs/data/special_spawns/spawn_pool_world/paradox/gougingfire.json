@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "gougingfire-1T",
+      "pokemon": "gougingfire min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "60-80",
+      "weight": 0.2,
+      "weightMultipliers": [
+        {
+          "multiplier": 1.5,
+          "condition": {
+            "isRaining": true
+          }
+        }
+      ],
+      "condition": {
+        "timeRange": "day",
+        "biomes": [
+          "#cobblemon:is_plains"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 weight scaled by 0.2000 (1/5 of upstream)"
+}

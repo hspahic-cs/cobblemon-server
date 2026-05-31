@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "irontreads-1T",
+      "pokemon": "irontreads min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "40-75",
+      "weight": 0.6,
+      "condition": {
+        "timeRange": "night",
+        "biomes": [
+          "#cobblemon:is_arid",
+          "#cobblemon:is_mountain"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 weight scaled by 0.2000 (1/5 of upstream)"
+}

@@ -7,17 +7,34 @@ wiki page.
 ## Layout
 
 ```
-data/server/
+data/rctmod/
 ├── trainers/
-│   └── gym_NN_<leader>.json       # Full trainer spec: team, AI, battle rules, bag
-└── mobs/
-    └── trainers/single/
-        └── gym_NN_<leader>.json   # RCT mob registration (weight=0 = no natural spawning)
+│   ├── gym_NN_<leader>.json                # Full trainer spec: team, AI, battle rules, bag
+│   └── gym_NN_<leader>_challenge.json      # Hard-mode variants (gyms 1–10)
+└── mobs/trainers/single/
+    ├── gym_NN_<leader>.json                # spawnWeightFactor: 0.0 → no wild spawn
+    ├── gym_NN_<leader>_challenge.json      # ditto for hard-mode variants
+    └── gym_leader_<name>_<hex>.json        # overrides rctmod's bundled BDSP gyms
+                                            # (byron/candice/fantina/gardenia/maylene/
+                                            # roark/volkner/wake, single + double-battle)
 ```
 
-`weight: 0` means these trainers won't appear in the world unless explicitly placed via a
-Trainer Spawner block (`/give @s rctmod:trainer_spawner`) or spawned via the RCT API. This
-prevents the 18 gym leaders from filling the wilderness — they only exist where ops put them.
+`spawnWeightFactor: 0.0` keeps the trainer fully registered (battle-able if op-summoned via
+Trainer Spawner block / `/rctmod trainer summon_persistent`) but yields 0 weight in the
+natural-spawn pool, so it will never spawn in the wild.
+
+**Schema gotcha (read before editing).** rctmod's `TrainerMobData` uses plain Gson with no
+`@SerializedName` — the actual fields are `spawnWeightFactor` (float, default `1.0f`),
+`type` (`"leader"` | `"normal"`), `battleCooldownTicks`, `maxTrainerWins`, `maxTrainerDefeats`,
+`optional`, `biomeTagWhitelist`, `biomeTagBlacklist`, `requiredDefeats`, `series`,
+`signatureItem`. Earlier versions of these files used `{"type": "single", "trainerId": "...",
+"weight": 0, ...}` — every one of those keys is silently dropped by Gson, leaving the trainer
+to spawn at the default weight of `1.0`. The fix landed in PR #95.
+
+The 16 `gym_leader_<name>_<hex>.json` files override the spawn configs that rctmod ships
+inside its own jar. They preserve every field from the bundled JSON (series, requiredDefeats,
+biome tags, signature items) and only flip `spawnWeightFactor` from `0.25` to `0.0`. The 24
+`gym_NN_<leader>.json` + 10 `_challenge` files apply the same suppression to our own roster.
 
 ## Wired gyms (18 of 24 — wiki-sourced)
 

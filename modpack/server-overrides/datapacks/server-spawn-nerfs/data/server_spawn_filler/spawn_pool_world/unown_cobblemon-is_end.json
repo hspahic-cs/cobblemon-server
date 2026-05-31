@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "unown-hotfix-cobblemon-is_end",
+      "id": "unown-filler-cobblemon-is_end",
       "pokemon": "unown character=a",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: unown added to #cobblemon:is_end ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: unown added to #cobblemon:is_end ultra-rare bucket to dilute legendary share to ~20%."
 }

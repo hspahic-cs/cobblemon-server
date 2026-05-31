@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "spiritomb-hotfix-cobblemon-is_deep_dark",
+      "id": "spiritomb-filler-cobblemon-is_deep_dark",
       "pokemon": "spiritomb",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: spiritomb added to #cobblemon:is_deep_dark ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: spiritomb added to #cobblemon:is_deep_dark ultra-rare bucket to dilute legendary share to ~20%."
 }

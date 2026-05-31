@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "squawkabilly-hotfix-cobblemon-is_sky",
+      "id": "squawkabilly-filler-cobblemon-is_sky",
       "pokemon": "squawkabilly",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: squawkabilly added to #cobblemon:is_sky ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: squawkabilly added to #cobblemon:is_sky ultra-rare bucket to dilute legendary share to ~20%."
 }

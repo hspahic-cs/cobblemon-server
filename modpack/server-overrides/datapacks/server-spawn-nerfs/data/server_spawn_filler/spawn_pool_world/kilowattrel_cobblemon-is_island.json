@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "kilowattrel-hotfix-cobblemon-is_island",
+      "id": "kilowattrel-filler-cobblemon-is_island",
       "pokemon": "kilowattrel",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: kilowattrel added to #cobblemon:is_island ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: kilowattrel added to #cobblemon:is_island ultra-rare bucket to dilute legendary share to ~20%."
 }

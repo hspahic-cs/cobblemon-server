@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "poltchageist-hotfix-cobblemon-is_island",
+      "id": "poltchageist-filler-cobblemon-is_island",
       "pokemon": "poltchageist matcha_authenticity=counterfeit",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: poltchageist added to #cobblemon:is_island ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: poltchageist added to #cobblemon:is_island ultra-rare bucket to dilute legendary share to ~20%."
 }

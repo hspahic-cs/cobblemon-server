@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "salandit-hotfix-cobblemon-nether-is_desert",
+      "id": "salandit-filler-cobblemon-nether-is_desert",
       "pokemon": "salandit",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: salandit added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: salandit added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary share to ~20%."
 }

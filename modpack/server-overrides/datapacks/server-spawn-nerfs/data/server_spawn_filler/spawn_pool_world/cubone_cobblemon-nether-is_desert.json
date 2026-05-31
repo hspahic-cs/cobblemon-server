@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "cubone-hotfix-cobblemon-nether-is_desert",
+      "id": "cubone-filler-cobblemon-nether-is_desert",
       "pokemon": "cubone",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: cubone added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: cubone added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary share to ~20%."
 }

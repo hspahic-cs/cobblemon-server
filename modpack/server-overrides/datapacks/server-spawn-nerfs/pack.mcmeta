@@ -1,6 +1,6 @@
 {
   "pack": {
     "pack_format": 48,
-    "description": "Spawn-rate hotfix: ultra-rare bucket \u00d7 1/3, paradoxes promoted to ultra-rare, biome-specific filler for legendary-only biomes."
+    "description": "Ultra-rare bucket \u00d7 1/3, paradoxes in ultra-rare bucket, filler entries in legendary-dominated biomes."
   }
 }

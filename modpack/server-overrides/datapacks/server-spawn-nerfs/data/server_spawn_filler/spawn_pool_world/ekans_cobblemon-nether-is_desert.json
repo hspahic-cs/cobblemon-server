@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "ekans-hotfix-cobblemon-nether-is_desert",
+      "id": "ekans-filler-cobblemon-nether-is_desert",
       "pokemon": "ekans snake_pattern=classic",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: ekans added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: ekans added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary share to ~20%."
 }

@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "cramorant-hotfix-cobblemon-is_island",
+      "id": "cramorant-filler-cobblemon-is_island",
       "pokemon": "cramorant",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: cramorant added to #cobblemon:is_island ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: cramorant added to #cobblemon:is_island ultra-rare bucket to dilute legendary share to ~20%."
 }

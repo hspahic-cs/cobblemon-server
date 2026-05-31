@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
-"""Spawn-rate hotfix datapack — narrow scope.
+"""Generate the server-spawn-nerfs datapack.
 
-Three changes only:
+Three things happen:
 
-  1. Slash ultra-rare bucket roll % to 1/3 of upstream (0.2 → 0.0667).
-     Reduces ALL ultra-rare encounters globally by ~3×. Single
-     buckets.json override.
+  1. Ultra-rare bucket roll % is set to 1/3 of Cobblemon's default
+     (0.2 → 0.0667). Every ultra-rare encounter fires ~3× less often.
+     Single buckets.json override.
 
-  2. Promote paradox spawn entries from `rare` bucket → `ultra-rare`
-     (weight unchanged from AllTheMons upstream). Without this, the
-     paradox per-attempt rate drops only with the bucket slash; with
-     this, they also share the (now smaller) ultra-rare bucket
-     alongside legendaries.
+  2. Paradox spawn entries get `bucket: ultra-rare` (upstream is
+     `rare`). Weights unchanged from AllTheMons. Without this,
+     paradoxes would escape the bucket slash since they live in the
+     rare bucket upstream.
 
-  3. Biome-specific filler for biomes whose ultra-rare bucket is
+  3. Filler species are added to biomes whose ultra-rare bucket is
      dominated by legendaries with no (or only pseudo-legend) non-
-     competitive species. Adds thematic species — promoted from
-     lower buckets in the same biome — at weights calibrated so the
-     existing competitive species end up roughly 20% of the bucket
-     instead of 100%.
-
-A full per-tier per-biome calibration was scoped to a separate WIP PR.
-This is a hotfix.
+     competitive entries. Picks come from species that already spawn
+     in the same biome at common/uncommon/rare buckets (thematic by
+     construction). Weights are sized so the existing competitive
+     species land at roughly 20% of the bucket instead of 100%.
 
 Inputs:
   /tmp/cobblemon-pools/*.json (extracted Cobblemon-base spawn pools)
@@ -90,8 +86,8 @@ PACK_MCMETA = {
     "pack": {
         "pack_format": 48,
         "description": (
-            "Spawn-rate hotfix: ultra-rare bucket × 1/3, paradoxes promoted to "
-            "ultra-rare, biome-specific filler for legendary-only biomes."
+            "Ultra-rare bucket × 1/3, paradoxes in ultra-rare bucket, "
+            "filler entries in legendary-dominated biomes."
         ),
     }
 }
@@ -129,11 +125,11 @@ def main() -> None:
     buckets_path = OUT_BASE / "data/cobblemon/spawn_data/buckets.json"
     buckets_path.parent.mkdir(parents=True, exist_ok=True)
     buckets_path.write_text(json.dumps(NEW_BUCKETS, indent=2) + "\n")
-    print(f"✓ Wrote buckets.json — ultra-rare slashed to {NEW_BUCKETS['buckets'][3]['weight']}")
+    print(f"✓ Wrote buckets.json — ultra-rare set to {NEW_BUCKETS['buckets'][3]['weight']}")
 
-    # ─── 2. Paradox bucket promotion ──────────────────────────────────
-    # Copy each ATM paradox file in full, change every entry's bucket to
-    # ultra-rare. Weights stay at upstream values per the hotfix scope.
+    # ─── 2. Paradox bucket override ───────────────────────────────────
+    # Copy each ATM paradox file in full, set every entry's bucket to
+    # ultra-rare. Weights stay at upstream values.
     paradox_count = 0
     with zipfile.ZipFile(ATM_ZIP) as z:
         for name in z.namelist():
@@ -144,12 +140,12 @@ def main() -> None:
             d = json.loads(z.read(name).decode("utf-8"))
             for entry in d.get("spawns", []):
                 entry["bucket"] = "ultra-rare"
-            d["_comment"] = "Hotfix: paradox bucket promoted from rare → ultra-rare (weight unchanged)"
+            d["_comment"] = "Paradox bucket: rare → ultra-rare. Weight unchanged from AllTheMons."
             out_path = OUT_BASE / name
             out_path.parent.mkdir(parents=True, exist_ok=True)
             out_path.write_text(json.dumps(d, indent=2) + "\n")
             paradox_count += 1
-    print(f"✓ Paradox bucket-promoted: {paradox_count} species files")
+    print(f"✓ Paradox bucket overridden: {paradox_count} species files")
 
     # ─── 3. Biome-specific filler ─────────────────────────────────────
     # New spawn entries live in our own namespace `server_spawn_filler`
@@ -170,7 +166,7 @@ def main() -> None:
                      .replace("/", "-")
             )
             entry = {
-                "id": f"{species}-hotfix-{file_safe_biome}",
+                "id": f"{species}-filler-{file_safe_biome}",
                 "pokemon": template.get("pokemon", species),
                 "presets": ["natural"],
                 "type": "pokemon",
@@ -185,7 +181,7 @@ def main() -> None:
                 "neededInstalledMods": [],
                 "neededUninstalledMods": [],
                 "spawns": [entry],
-                "_comment": f"Hotfix filler: {species} added to {biome} ultra-rare bucket to dilute legendary dominance",
+                "_comment": f"Filler: {species} added to {biome} ultra-rare bucket to dilute legendary share to ~20%.",
             }
             out_path = OUT_BASE / f"data/server_spawn_filler/spawn_pool_world/{species}_{file_safe_biome}.json"
             out_path.parent.mkdir(parents=True, exist_ok=True)

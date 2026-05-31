@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "growlithe-hotfix-cobblemon-is_peak",
+      "id": "growlithe-filler-cobblemon-is_peak",
       "pokemon": "growlithe",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: growlithe added to #cobblemon:is_peak ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: growlithe added to #cobblemon:is_peak ultra-rare bucket to dilute legendary share to ~20%."
 }

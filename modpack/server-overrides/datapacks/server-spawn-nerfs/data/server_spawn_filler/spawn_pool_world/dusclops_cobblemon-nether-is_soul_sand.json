@@ -4,7 +4,7 @@
   "neededUninstalledMods": [],
   "spawns": [
     {
-      "id": "dusclops-hotfix-cobblemon-nether-is_soul_sand",
+      "id": "dusclops-filler-cobblemon-nether-is_soul_sand",
       "pokemon": "dusclops",
       "presets": [
         "natural"
@@ -21,5 +21,5 @@
       }
     }
   ],
-  "_comment": "Hotfix filler: dusclops added to #cobblemon:nether/is_soul_sand ultra-rare bucket to dilute legendary dominance"
+  "_comment": "Filler: dusclops added to #cobblemon:nether/is_soul_sand ultra-rare bucket to dilute legendary share to ~20%."
 }

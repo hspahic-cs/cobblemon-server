@@ -25,50 +25,40 @@ root README.
   pointing at "Gym 2", actual next step is `first_pvp_win`.
 
 ### Changed (gameplay)
-- **Spawn-rate hotfix — three narrow changes.** New datapack
-  `server-spawn-nerfs`. A larger per-tier per-biome calibration is
-  scoped to a separate WIP PR; this hotfix lands the most-impactful
-  bits today.
+- **Ultra-rare spawn rate × 1/3.** New `server-spawn-nerfs` datapack
+  overrides `data/cobblemon/spawn_data/buckets.json` to set the
+  ultra-rare bucket weight from Cobblemon's default `0.2` to `0.0667`.
+  Every ultra-rare encounter — legendary, mythical, paradox,
+  ultra-beast, pseudo-legend, starter — fires ~3× less often. Other
+  buckets renormalize at roll time so their effective % grows
+  slightly to absorb the gap.
+- **Paradoxes moved into the ultra-rare bucket.** AllTheMons ships
+  paradoxes in the `rare` bucket; the datapack rewrites every paradox
+  entry's `bucket` field to `ultra-rare` (17 species, weights
+  unchanged from AllTheMons). Without this, paradoxes would have
+  escaped the bucket slash above.
+- **Filler entries in legendary-dominated biomes.** Seven biomes had
+  their ultra-rare bucket composed entirely (or almost entirely) of
+  legendaries with no non-competitive species to dilute. Added
+  thematic filler so the competitive share lands at roughly 20% of
+  the bucket in each:
 
-  1. **Ultra-rare bucket roll % slashed to 1/3 of upstream.**
-     Cobblemon's baked-in bucket weights are
-     `common 94.3 / uncommon 5 / rare 0.5 / ultra-rare 0.2`. We ship
-     a `data/cobblemon/spawn_data/buckets.json` override that drops
-     ultra-rare to `0.0667`. Every ultra-rare encounter — legendary,
-     mythical, paradox, ultra-beast, pseudo-legend, starter — fires
-     ~3× less often. Other buckets renormalize at roll time so their
-     effective % grows slightly to absorb the gap.
-  2. **Paradoxes promoted from `rare` bucket → `ultra-rare`.**
-     Without this, paradoxes would have escaped the bucket slash.
-     Weights unchanged from AllTheMons upstream; only the bucket
-     field is rewritten on every paradox entry (17 species files).
-  3. **Filler added to legendary-dominated biomes.** Seven biomes
-     have their ultra-rare bucket composed entirely (or almost
-     entirely) of legendaries with no non-competitive species to
-     dilute. Added thematic filler at weights calibrated to bring
-     the competitive share to ~20% of the bucket in each:
+  | Biome | Filler species |
+  |---|---|
+  | `nether/is_soul_sand` | Duskull, Dusclops, Dusknoir |
+  | `nether/is_desert` | Cubone, Bramblin, Salandit, Ekans |
+  | `is_deep_dark` | Golett, Spiritomb, Golurk, Mawile |
+  | `is_end` | Unown, Gothita, Elgyem, Sigilyph |
+  | `is_island` | Wattrel, Kilowattrel, Cramorant, Poltchageist |
+  | `is_sky` | Chatot, Squawkabilly, Murkrow, Pidgey |
+  | `is_peak` | Growlithe, Meditite, Medicham, Delibird |
 
-     | Biome | Filler species |
-     |---|---|
-     | `nether/is_soul_sand` (Yveltal-only) | Duskull, Dusclops, Dusknoir |
-     | `nether/is_desert` (Blacephalon-only) | Cubone, Bramblin, Salandit, Ekans |
-     | `is_deep_dark` | Golett, Spiritomb, Golurk, Mawile |
-     | `is_end` | Unown, Gothita, Elgyem, Sigilyph |
-     | `is_island` | Wattrel, Kilowattrel, Cramorant, Poltchageist |
-     | `is_sky` | Chatot, Squawkabilly, Murkrow, Pidgey |
-     | `is_peak` | Growlithe, Meditite, Medicham, Delibird |
-
-     All picks come from species that already spawn in the same
-     biome at common/uncommon/rare buckets — guaranteed-thematic by
-     Cobblemon's own biome→species mapping. New entries live in our
-     own `data/server_spawn_filler/spawn_pool_world/` namespace so
-     they don't collide with upstream species files.
+  All picks come from species that already spawn in the same biome
+  at common/uncommon/rare buckets — thematic by construction. New
+  entries live in `data/server_spawn_filler/spawn_pool_world/`.
 
   Generator: `ops/gen_spawn_hotfix.py`. Re-run after bumping
-  AllTheMons / Cobblemon. The larger per-tier per-species
-  calibration design (with target % per tier per biome, comp-only-
-  decreases constraint, etc.) was scoped out — to land in a follow-
-  up WIP PR.
+  AllTheMons or Cobblemon.
 
 ### Changed
 - **Exeggcute / Cobbleworkers chain promoted to mainline styling.**

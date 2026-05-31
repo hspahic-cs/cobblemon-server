@@ -5,9 +5,9 @@
     "title": { "text": "Farm Hands" },
     "description": { "text": "Place your Pasture Block to set up your first automated farm." },
     "icon": { "id": "minecraft:bone_meal" },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
-    "announce_to_chat": false
+    "announce_to_chat": true
   },
   "criteria": {
     "placed": {

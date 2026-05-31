@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.37] - 2026-05-31
+
+### Changed
+- **Ranked PvP post-match output is two lines per player + no
+  leaderboard.** Replaces the previous 4–14 line broadcast (winner +
+  combined ELO line + auto-leaderboard top-N) with three lines: a
+  header, the winner's ELO change in green, and the loser's in red.
+  - Old: `[Ranked] Titan defeated SixthSense! / [Ranked] Titan: 1240 -> 1256 (+16) | SixthSense: 1190 -> 1174 (-16) / [Ranked] Leaderboard: / 1. ... / 2. ... / ...`
+  - New:
+    ```
+    [Ranked] Titan defeated SixthSense!
+    §aTitan: 1240 → 1256 (+16)§r
+    §cSixthSense: 1190 → 1174 (−16)§r
+    ```
+  - Players can still pull the full leaderboard with
+    `/ranked leaderboard` (already wired). Removed the auto-broadcast
+    because end-of-match chat spam was eating screen space.
+  - Added `signed()` helper for ELO deltas so a `−16` reads as a real
+    minus (U+2212) and an ELO-floor `±0` is distinguishable from a
+    positive change.
+
 ## [0.7.36] - 2026-05-31
 
 ### Fixed

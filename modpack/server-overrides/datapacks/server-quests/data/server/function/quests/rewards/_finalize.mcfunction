@@ -13,12 +13,16 @@ tag @a[tag=cq_reward_egg_common] remove cq_reward_egg_common
 execute as @a[tag=cq_reward_egg_uncommon] at @s run gacha giveegg @s uncommon
 tag @a[tag=cq_reward_egg_uncommon] remove cq_reward_egg_uncommon
 
-# 0.7.29 — specific-species egg for the Exeggcute onboarding chain. Switched from
-# `givepokemonegg @s exeggcute min_perfect_ivs=2` (which silently failed at runtime in
-# 0.7.25–0.7.28 — admin reported the egg wasn't being granted) to the namespaced
-# `cobbreeding egg give @s exeggcute` form which the admin verified works. Dropped the
-# `min_perfect_ivs=2` arg too — keep it simple, the Exeggcute species is the point.
-execute as @a[tag=cq_reward_egg_exeggcute] at @s run cobbreeding egg give @s exeggcute
+# 0.7.33 — Exeggcute starter egg via the gacha "beginner" pool. Prior attempts (0.7.25–0.7.31)
+# all called Cobbreeding directly: `givepokemonegg @s exeggcute ...` then `cobbreeding egg give
+# @s exeggcute`. Both failed silently from datapack context — they're aliases for the same
+# handler whose perm gate is `CHEAT_COMMANDS_AND_COMMAND_BLOCKS`, and Brigadier's `requires`
+# clause drops the call when the source op-level isn't high enough (no chat error, no log).
+# `/gacha giveegg` is registered at op-2 (datapack-callable) and internally escalates the
+# source to op-4 before dispatching `/givepokemonegg` — same trick the gacha pull path uses.
+# The "beginner" pool is a single-species pool ({exeggcute}) injected by
+# EggPoolLoader.QUEST_CHAIN_POOLS; EggDefeatHook gives it a 10-min hatch timer.
+execute as @a[tag=cq_reward_egg_exeggcute] at @s run gacha giveegg @s beginner
 tag @a[tag=cq_reward_egg_exeggcute] remove cq_reward_egg_exeggcute
 
 # ─── Key rewards (count always 1 for current quest layout) ──────────────

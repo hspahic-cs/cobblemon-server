@@ -79,15 +79,18 @@ object WorldRulesHook {
     fun onPlayerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
         val player = event.entity as? ServerPlayer ?: return
         if (isOp(player)) return
-        if (isLocked(player.level())) applyLock(player)
+        if (isLocked(player.level())) applyLock(player) else healStuckAdventure(player)
     }
 
     @SubscribeEvent
     fun onPlayerLoggedOut(event: PlayerEvent.PlayerLoggedOutEvent) {
-        val uuid = (event.entity as? ServerPlayer)?.uuid ?: return
-        // Don't restore on logout — just drop the saved entry. Next login is handled by
-        // onPlayerLoggedIn, which checks the dim they actually rejoin in.
-        savedGameType.remove(uuid)
+        val player = event.entity as? ServerPlayer ?: return
+        // Restore the pre-lock gamemode before disconnect so it gets persisted to the
+        // player's NBT. Without this, a player who logs out in a locked dim (e.g. spawn)
+        // is saved as ADVENTURE; on next login `applyLock` captures ADVENTURE as the
+        // "prior" gamemode, and the subsequent restore back in an allowed dim leaves
+        // them stuck in ADVENTURE forever. restoreLock is a no-op if no saved entry.
+        restoreLock(player)
     }
 
     @SubscribeEvent
@@ -99,6 +102,10 @@ object WorldRulesHook {
         when {
             !fromLocked && toLocked -> applyLock(player)
             fromLocked && !toLocked -> restoreLock(player)
+            // Both allowed: heal any stale ADVENTURE state from prior versions of this
+            // hook (or any other source) so non-ops don't get stuck across overworld /
+            // nether / end portal hops.
+            !fromLocked && !toLocked -> healStuckAdventure(player)
             else -> Unit
         }
     }
@@ -113,8 +120,27 @@ object WorldRulesHook {
     }
 
     private fun restoreLock(player: ServerPlayer) {
-        val prior = savedGameType.remove(player.uuid) ?: return
-        player.setGameMode(prior)
+        // Default to SURVIVAL when no saved entry: covers the case where the player ended
+        // up in ADVENTURE via a path that didn't go through applyLock (e.g. a teleport
+        // mechanism that doesn't fire PlayerChangedDimensionEvent, or first-ever join
+        // straight into a locked dim). The previous early-return left non-op players
+        // permanently locked in ADVENTURE in those edge cases.
+        val prior = savedGameType.remove(player.uuid) ?: GameType.SURVIVAL
+        if (player.gameMode.gameModeForPlayer != prior) player.setGameMode(prior)
+    }
+
+    /**
+     * Idempotent: snap a non-op out of ADVENTURE if we catch them in an allowed dim.
+     * Used on login + same-allowed-dim transitions to heal stale state from earlier
+     * versions of this hook (or any other source that locked them into ADVENTURE
+     * without going through [applyLock]). Non-ops can't `/gamemode` themselves, so
+     * once they're stuck in ADVENTURE in the overworld there's no in-game recovery
+     * path without this.
+     */
+    private fun healStuckAdventure(player: ServerPlayer) {
+        if (player.gameMode.gameModeForPlayer == GameType.ADVENTURE) {
+            player.setGameMode(GameType.SURVIVAL)
+        }
     }
 
     // ─── Block edits ─────────────────────────────────────────────────────────

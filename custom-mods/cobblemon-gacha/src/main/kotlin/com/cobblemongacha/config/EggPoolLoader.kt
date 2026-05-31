@@ -28,10 +28,18 @@ object EggPoolLoader {
 
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()
 
+    // Quest-chain pools that aren't part of the admin-editable rarity tiers. Merged after
+    // load so they're always present even on long-lived deployments whose egg_pools.json
+    // was written before these existed. Don't ship to egg_pools.json — admins shouldn't
+    // edit these; they're tightly coupled to specific quest reward functions.
+    private val QUEST_CHAIN_POOLS: Map<String, List<EggSpecies>> = mapOf(
+        "beginner" to listOf(EggSpecies(id = "exeggcute", hasHiddenAbility = false, notes = "starter chain")),
+    )
+
     fun loadAll(configDir: Path): EggPools {
         val jsonFile = ConfigPaths.authored(configDir, "egg_pools.json")
         jsonFile.parent.createDirectories()
-        return if (jsonFile.exists()) {
+        val base = if (jsonFile.exists()) {
             loadJson(jsonFile)
         } else {
             val csv = readBundledCsv()
@@ -43,6 +51,17 @@ object EggPoolLoader {
             )
             pools
         }
+        return mergeQuestChainPools(base)
+    }
+
+    private fun mergeQuestChainPools(base: EggPools): EggPools {
+        val merged = base.byTier.toMutableMap()
+        for ((k, v) in QUEST_CHAIN_POOLS) {
+            // Admin override wins — if they've added a "beginner" entry to egg_pools.json,
+            // respect it. We only inject when the key is absent.
+            if (k !in merged) merged[k] = v
+        }
+        return EggPools(merged)
     }
 
     private fun loadJson(path: Path): EggPools {

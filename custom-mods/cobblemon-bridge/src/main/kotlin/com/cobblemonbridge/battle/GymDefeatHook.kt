@@ -5,14 +5,16 @@ import com.cobblemon.mod.common.api.battles.model.actor.AIBattleActor
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
+import com.cobblemon.mod.common.battles.actor.MultiPokemonBattleActor
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
+import com.cobblemon.mod.common.battles.actor.PokemonBattleActor
 import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.economy.EconomyBridge
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 
 /**
- * Per-defeat NPC trainer bounty for non-gym trainer battles. Hook scope shrunk
+ * Per-defeat bounty + chat message for trainer and wild battles. Hook scope shrunk
  * dramatically in 0.7.26 — the gym advancement award + flat gym-bounty payment used to
  * live here too, but were migrated to the authoritative `rctmod:defeat_count` advancement
  * trigger + `/eco give @s <amount>` in each `beat_gym_*.mcfunction`. RCT fires
@@ -24,6 +26,9 @@ import net.minecraft.server.level.ServerPlayer
  *    multiplier ∈ {1, 2, 3} uniform random per defeat — see [npcBounty]). Fires on every
  *    non-gym trainer defeat. Gym defeats are intentionally excluded because they already
  *    get the big flat `$150 × gymId` bounty from the mcfunction.
+ *  - **Per-defeat wild bounty** — same formula, different chat message ("you found on the
+ *    Pokémon" vs. "for defeating trainer"). Added in 0.7.36 once we noticed wild battles
+ *    were silently classifying as trainers (see actor-class note in [applyToVictory]).
  *  - **Gym-detection** via [com.cobblemonbridge.adapters.RctBridge.trainerIdForBattle]
  *    — used solely to suppress the NPC bounty when the loser was actually a gym leader.
  *    If RCT reflection fails (unlikely after the 0.7.24 fix), the worst case is that
@@ -54,17 +59,33 @@ object GymDefeatHook {
             event.battle.battleId, winners, losers,
         )
 
-        // Trainer-side actor is `AIBattleActor` (the abstract base), not `TrainerBattleActor`
-        // specifically. Cobblemon ships `TrainerBattleActor` (extends AIBattleActor) and rctapi
-        // ships `BattleManager$TrainerEntityBattleActor` (also extends AIBattleActor) — every
-        // RCT-mob trainer fight on this server uses the latter, which is sibling, not subclass,
-        // of TrainerBattleActor. Pre-0.7.31 we checked `is TrainerBattleActor`, which silently
-        // dropped every RCT trainer defeat (the diagnostic above caught it: a Titan1190X win
-        // against Tamer Evan logged `loser-kinds=[TrainerEntityBattleActor]` with no
-        // npc-defeat line). Wild battles use `PokemonBattleActor` (no AI), so AIBattleActor
-        // cleanly discriminates trainer-vs-wild.
-        val losersIncludeTrainer = event.losers.any { it is AIBattleActor }
-        if (!losersIncludeTrainer) return  // wild battle — nothing for us to do here
+        // Trainer-side actor is `AIBattleActor` (the abstract base). Cobblemon ships
+        // `TrainerBattleActor` (extends AIBattleActor) and rctapi ships
+        // `BattleManager$TrainerEntityBattleActor` (also extends AIBattleActor); every RCT-mob
+        // trainer fight on this server uses the latter. Pre-0.7.31 we checked
+        // `is TrainerBattleActor`, which silently dropped every RCT trainer defeat — fixed by
+        // widening to AIBattleActor in 0.7.31.
+        //
+        // Caveat that bit us in 0.7.36: wild Pokémon also extend AIBattleActor.
+        // `PokemonBattleActor : AIBattleActor(... RandomBattleAI())` and the multi-wild variant
+        // `MultiPokemonBattleActor : AIBattleActor` both have an AI decider, so a bare
+        // `is AIBattleActor` check classifies wild battles AS trainers too. The discriminator
+        // we actually want is "AIBattleActor that is NOT a (Multi)PokemonBattleActor".
+        val isWildBattle = event.losers.isNotEmpty() &&
+            event.losers.all { it is PokemonBattleActor || it is MultiPokemonBattleActor }
+        val losersIncludeTrainer = event.losers.any {
+            it is AIBattleActor && it !is PokemonBattleActor && it !is MultiPokemonBattleActor
+        }
+
+        if (isWildBattle) {
+            for (winner in event.winners) {
+                val playerActor = winner as? PlayerBattleActor ?: continue
+                val player = playerActor.entity as? ServerPlayer ?: continue
+                payWildBounty(player, event.losers)
+            }
+            return
+        }
+        if (!losersIncludeTrainer) return  // mixed PvP / spectator / unknown — nothing to do
 
         // Gym-detection lives on so we DON'T double-pay: gym defeats get the big flat
         // gym bounty from the mcfunction; non-gym defeats get the per-defeat NPC bounty
@@ -125,6 +146,19 @@ object GymDefeatHook {
         EconomyBridge.deposit(player.uuid, amount)
         player.sendSystemMessage(Component.literal(
             "§6+ §e\$$amount §7for defeating trainer"
+        ))
+    }
+
+    private fun payWildBounty(player: ServerPlayer, losers: Iterable<BattleActor>) {
+        val amount = npcBounty(losers)
+        CobblemonBridge.logger.info(
+            "wild-defeat: player={} bounty=\${}",
+            player.gameProfile.name, amount,
+        )
+        if (amount <= 0) return
+        EconomyBridge.deposit(player.uuid, amount)
+        player.sendSystemMessage(Component.literal(
+            "§6+ §e\$$amount §7you found on the Pokémon"
         ))
     }
 }

@@ -1,11 +1,11 @@
 package com.cobblemonbridge.battle
 
 import com.cobblemon.mod.common.api.Priority
+import com.cobblemon.mod.common.api.battles.model.actor.AIBattleActor
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
-import com.cobblemon.mod.common.battles.actor.TrainerBattleActor
 import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.economy.EconomyBridge
 import net.minecraft.network.chat.Component
@@ -43,17 +43,10 @@ object GymDefeatHook {
     }
 
     private fun applyToVictory(event: BattleVictoryEvent) {
-        // 0.7.30 diagnostic: log every BATTLE_VICTORY arrival unconditionally so we can prove
-        // whether Cobblemon is delivering the event at all. After a Titan1190X test fight on
-        // dev (one-shot KO of a non-gym RCT trainer routed through rbrctai), no `npc-defeat:`
-        // log appeared and the player wasn't paid. AI-routing hypothesis ruled out — battle
-        // had a normal winner but downstream side effects didn't fire. Possibilities:
-        //   (a) Cobblemon's BATTLE_VICTORY isn't firing on this server at all
-        //   (b) the event fires but our subscriber lambda was dropped (cold-start / classloader)
-        //   (c) the event fires but a higher-priority subscriber threw and broke dispatch
-        // This single line distinguishes (a) from (b)/(c). If absent after a confirmed win,
-        // the next fix is a mixin on the battle-end path; if present, the bug is downstream
-        // in the existing logic. Remove once root-caused.
+        // Diagnostic kept live (was the 0.7.30 line that caught the actor-class bug). Logs every
+        // BATTLE_VICTORY arrival with the loser-kinds list, so any future misclassification —
+        // a new mod adding another BattleActor subtype, a Cobblemon API rename, etc. — is
+        // visible the next time we look at prod logs.
         val winners = event.winners.joinToString(",") { (it as? PlayerBattleActor)?.entity?.gameProfile?.name ?: it::class.simpleName ?: "?" }
         val losers = event.losers.joinToString(",") { it::class.simpleName ?: "?" }
         CobblemonBridge.logger.info(
@@ -61,7 +54,16 @@ object GymDefeatHook {
             event.battle.battleId, winners, losers,
         )
 
-        val losersIncludeTrainer = event.losers.any { it is TrainerBattleActor }
+        // Trainer-side actor is `AIBattleActor` (the abstract base), not `TrainerBattleActor`
+        // specifically. Cobblemon ships `TrainerBattleActor` (extends AIBattleActor) and rctapi
+        // ships `BattleManager$TrainerEntityBattleActor` (also extends AIBattleActor) — every
+        // RCT-mob trainer fight on this server uses the latter, which is sibling, not subclass,
+        // of TrainerBattleActor. Pre-0.7.31 we checked `is TrainerBattleActor`, which silently
+        // dropped every RCT trainer defeat (the diagnostic above caught it: a Titan1190X win
+        // against Tamer Evan logged `loser-kinds=[TrainerEntityBattleActor]` with no
+        // npc-defeat line). Wild battles use `PokemonBattleActor` (no AI), so AIBattleActor
+        // cleanly discriminates trainer-vs-wild.
+        val losersIncludeTrainer = event.losers.any { it is AIBattleActor }
         if (!losersIncludeTrainer) return  // wild battle — nothing for us to do here
 
         // Gym-detection lives on so we DON'T double-pay: gym defeats get the big flat
@@ -92,7 +94,10 @@ object GymDefeatHook {
      * Pure-math seam at [computeNpcBounty] for unit-testing without mocking actors.
      */
     internal fun npcBounty(losers: Iterable<BattleActor>): Int {
-        val trainer = losers.filterIsInstance<TrainerBattleActor>().firstOrNull() ?: return 0
+        // AIBattleActor matches both Cobblemon's `TrainerBattleActor` and rctapi's
+        // `TrainerEntityBattleActor` — see [applyToVictory] for the reason. `pokemonList`
+        // is on the [BattleActor] base so the team extraction works on either.
+        val trainer = losers.filterIsInstance<AIBattleActor>().firstOrNull() ?: return 0
         val pokemon = trainer.pokemonList
         if (pokemon.isEmpty()) return 0
         val maxLevel = pokemon.maxOf { it.effectedPokemon.level }

@@ -12,6 +12,38 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.32] - 2026-05-30
+
+### Fixed
+- **NPC trainer defeats now actually pay the bounty.** Root cause:
+  `GymDefeatHook` filtered losers via `is TrainerBattleActor`, but
+  rctapi's `BattleManager$TrainerEntityBattleActor` is a *sibling*
+  of Cobblemon's `TrainerBattleActor` (both extend the abstract
+  `AIBattleActor` base), not a subclass. Every RCT-mob trainer
+  defeat — i.e. virtually every trainer fight on this server —
+  silently dropped through the early return. The 0.7.30 diagnostic
+  caught it: `loser-kinds=[TrainerEntityBattleActor]` after a
+  Titan1190X win against Tamer Evan, with no `npc-defeat:` line.
+
+  Fix: switched `applyToVictory` and `npcBounty` to filter on
+  `AIBattleActor` instead of `TrainerBattleActor`. Both Cobblemon's
+  and rctapi's trainer actors extend it, and `pokemonList` is on
+  the base `BattleActor` so the bounty math works on either. Wild
+  battles use `PokemonBattleActor` (no AI), so AIBattleActor
+  cleanly discriminates trainer-vs-wild.
+
+  This also explains *every* tonight-of symptom: the 0.7.27
+  silent-zero fix was correct, the 0.7.29 trainer-AI datapack was
+  correct, BATTLE_VICTORY was always firing — but the actor-class
+  filter ate the result before any of it mattered.
+
+### Kept
+- 0.7.30 `battle-victory-event:` diagnostic line stays in. Cheap
+  to log, useful any time we have to debug battle-side effects
+  again — a future mod adding a new BattleActor subtype or a
+  Cobblemon API rename would surface immediately in prod logs
+  rather than going silent for hours of guessing.
+
 ## [0.7.31] - 2026-05-30
 
 Bundle of playtest-surfaced fixes around the 0.7.26 Exeggcute / gym-trigger changes.

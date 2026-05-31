@@ -40,6 +40,7 @@ object EggDefeatHook {
         "rare" to 14400,         // 4h
         "ultra" to 28800,        // 8h
         "ultra_rare" to 28800,   // 8h
+        "beginner" to 600,       // 10m — quest-chain starter (Exeggcute)
     )
     /** Default duration for eggs without a gacha tier tag — i.e. Cobreeding daycare bred eggs. */
     private const val BRED_DEFAULT_SECONDS = 1800  // 30m

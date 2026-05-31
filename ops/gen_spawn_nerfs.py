@@ -3,12 +3,23 @@
 
 The AllTheMons [R3.5] zip ships legendary + paradox spawn pools under
 `data/special_spawns/spawn_pool_world/{legendary,paradox}/<species>.json`.
-We override those at the same path with reduced weights so legendaries
-spawn 1/3 as often and paradoxes spawn 1/5 as often as upstream.
+We override those at the same path with:
 
-Re-run this script after bumping AllTheMons to pick up any new entries
-(e.g. a new legendary added in a future release) or to change the nerf
-factors:
+  - legendary: weight × 1/3 (rarer than upstream, bucket unchanged)
+  - paradox:   weight unchanged, bucket promoted from "rare" to
+               "ultra-rare" so they join legendaries + starters in the
+               same rarity tier. Net effect: ~2.4× rarer than upstream
+               (rare bucket rolls 0.5% of attempts, ultra-rare rolls
+               0.2%) and per-attempt rate ends up ~1.6× rarer than
+               post-nerf legendaries. The asymmetric path matters:
+               legendaries have a LegendaryMonuments pedestal fallback,
+               paradoxes have no alternate acquisition method, so
+               keeping paradoxes slightly more common than legendaries
+               in raw spawn rate produces roughly-equivalent practical
+               acquisition difficulty.
+
+Re-run after bumping AllTheMons to pick up new entries, or to change
+the nerf approach (CATEGORIES below):
 
     python3 ops/gen_spawn_nerfs.py
 
@@ -28,12 +39,13 @@ REPO = Path(__file__).resolve().parent.parent
 ATM_ZIP_PATH = REPO / "modpack/server-overrides/datapacks/AllTheMons [R3.5].zip"
 OUT_BASE = REPO / "modpack/server-overrides/datapacks/server-spawn-nerfs"
 
-# Tune these to adjust nerf magnitudes. Keys are category subdirectories
-# under AllTheMons' data/special_spawns/spawn_pool_world/. Values are
-# multiplicative weight factors (smaller = rarer).
-FACTORS: dict[str, float] = {
-    "legendary": 1.0 / 3.0,   # 1/3 of upstream weight
-    "paradox":   1.0 / 5.0,   # 1/5 of upstream weight (more aggressive than legendaries)
+# Per-category overrides applied to every spawn entry in AllTheMons'
+# data/special_spawns/spawn_pool_world/<category>/. `weight_factor`
+# multiplies the entry's weight; `bucket` (when not None) replaces
+# the entry's bucket. Tune to retarget the nerf.
+CATEGORIES: dict[str, dict] = {
+    "legendary": {"weight_factor": 1.0 / 3.0, "bucket": None},
+    "paradox":   {"weight_factor": 1.0,       "bucket": "ultra-rare"},
 }
 
 PACK_MCMETA = {
@@ -52,7 +64,7 @@ def main() -> None:
     data_dir = OUT_BASE / "data/special_spawns/spawn_pool_world"
     if data_dir.exists():
         shutil.rmtree(data_dir)
-    for cat in FACTORS:
+    for cat in CATEGORIES:
         (data_dir / cat).mkdir(parents=True, exist_ok=True)
 
     (OUT_BASE / "pack.mcmeta").write_text(json.dumps(PACK_MCMETA, indent=2) + "\n")
@@ -60,19 +72,27 @@ def main() -> None:
     file_count = 0
     entry_count = 0
     with zipfile.ZipFile(ATM_ZIP_PATH) as z:
-        for cat, factor in FACTORS.items():
+        for cat, cfg in CATEGORIES.items():
+            factor = cfg["weight_factor"]
+            new_bucket = cfg["bucket"]
             prefix = f"data/special_spawns/spawn_pool_world/{cat}/"
             for name in z.namelist():
                 if not name.startswith(prefix) or not name.endswith(".json"):
                     continue
                 d = json.loads(z.read(name).decode("utf-8"))
                 for entry in d.get("spawns", []):
-                    if "weight" in entry:
+                    if factor != 1.0 and "weight" in entry:
                         entry["weight"] = round(entry["weight"] * factor, 4)
-                d["_comment"] = (
-                    f"Override of AllTheMons {cat} spawn pool — weight scaled by "
-                    f"{factor:.4f} (1/{int(round(1.0/factor))} of upstream)"
-                )
+                    if new_bucket is not None:
+                        entry["bucket"] = new_bucket
+                pieces: list[str] = [f"Override of AllTheMons {cat} spawn pool"]
+                if factor != 1.0:
+                    pieces.append(
+                        f"weight × {factor:.4f} (1/{int(round(1.0/factor))} of upstream)"
+                    )
+                if new_bucket is not None:
+                    pieces.append(f"bucket promoted to {new_bucket!r}")
+                d["_comment"] = " — ".join(pieces)
                 out_name = Path(name).name
                 (data_dir / cat / out_name).write_text(json.dumps(d, indent=2) + "\n")
                 file_count += 1

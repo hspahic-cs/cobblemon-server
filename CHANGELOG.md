@@ -29,12 +29,18 @@ root README.
   `server-spawn-nerfs` overrides every entry under AllTheMons'
   `data/special_spawns/spawn_pool_world/legendary/<species>.json` with
   `weight` multiplied by 0.333. Covers 62 species / 80 spawn entries.
-- **Paradox spawn rates reduced to 1/5 of upstream** (more aggressive
-  than legendaries). Same datapack, same mechanism, covers 17 species /
-  19 spawn entries.
+- **Paradox spawn rates moved from `rare` bucket to `ultra-rare`**
+  (weight unchanged). Net effect: paradoxes drop from a 0.5% bucket
+  roll to a 0.2% bucket roll → roughly 2.4× rarer than upstream. Per
+  spawn attempt, paradoxes end up ~1.6× rarer than post-nerf
+  legendaries — leaving paradoxes slightly more common on raw spawn
+  rate to compensate for the fact that legendaries have an alternate
+  acquisition path via LegendaryMonuments pedestals while paradoxes
+  have no such fallback. Covers 17 species / 19 spawn entries.
 - Reproducible: `ops/gen_spawn_nerfs.py` regenerates the datapack from
   the current AllTheMons zip. Re-run after bumping AllTheMons to pick
-  up new entries, or to change the nerf factors (top of script).
+  up new entries, or to change the nerf strategy (`CATEGORIES` dict at
+  the top of the script).
 
 ### Changed
 - **Exeggcute / Cobbleworkers chain promoted to mainline styling.**

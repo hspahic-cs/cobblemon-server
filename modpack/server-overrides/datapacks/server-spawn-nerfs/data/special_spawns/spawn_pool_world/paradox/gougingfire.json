@@ -12,9 +12,9 @@
       ],
       "type": "pokemon",
       "spawnablePositionType": "grounded",
-      "bucket": "rare",
+      "bucket": "ultra-rare",
       "level": "60-80",
-      "weight": 0.2,
+      "weight": 1.0,
       "weightMultipliers": [
         {
           "multiplier": 1.5,
@@ -31,5 +31,5 @@
       }
     }
   ],
-  "_comment": "Override of AllTheMons paradox spawn pool \u2014 weight scaled by 0.2000 (1/5 of upstream)"
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 bucket promoted to 'ultra-rare'"
 }

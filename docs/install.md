@@ -25,7 +25,10 @@ On first launch it'll ask for:
 ## 2. Import the modpack
 
 1. Grab the latest `Cobblemon Server-x.y.z.mrpack` from the
-   [shared Drive folder](https://drive.google.com/drive/folders/1fdQb5aa_VfR7ZUAul_NZGYkoS6GfHzBX?usp=sharing).
+   [Dev latest release on GitHub](https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest).
+   This release is a rolling pre-release that always tracks the version
+   currently running on the server, so the `.mrpack` you download here
+   matches the server you're about to connect to.
 2. Drag the `.mrpack` file onto the Prism Launcher window.
 3. Name the instance (e.g. `Cobblemon Server`) → **OK**.
 4. Prism downloads NeoForge 1.21.1 and ~35 mods. Takes 2–5 minutes.
@@ -56,7 +59,8 @@ Worlds, screenshots, and settings are preserved; only mods are swapped.
 
 !!! warning "Outdated server / outdated client on connect"
     Your `.mrpack` version doesn't match what the server is running.
-    Grab the latest pack from the Drive folder and reinstall.
+    Grab the latest pack from the [Dev latest release](https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest)
+    and reinstall (Prism → right-click instance → **Edit → Version → Reinstall from zip**).
 
 !!! warning "Mods not loading in-game"
     Verify Prism actually launched the modpack: the main menu should say

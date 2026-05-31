@@ -1,0 +1,53 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "poipole-1T",
+      "pokemon": "poipole min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "15-35",
+      "weight": 0.3,
+      "weightMultipliers": [
+        {
+          "multiplier": 2.5,
+          "condition": {
+            "neededNearbyBlocks": [
+              "minecraft:bee_nest"
+            ]
+          }
+        }
+      ],
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_forest"
+        ]
+      }
+    },
+    {
+      "id": "poipole-2T",
+      "pokemon": "poipole min_perfect_ivs=3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "15-35",
+      "weight": 0.3,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons ultra_beast spawn pool \u2014 tier=Ubers weight=0.3 bucket=ultra-rare"
+}

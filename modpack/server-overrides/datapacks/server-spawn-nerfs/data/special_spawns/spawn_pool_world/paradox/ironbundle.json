@@ -14,7 +14,7 @@
       "spawnablePositionType": "grounded",
       "bucket": "ultra-rare",
       "level": "40-75",
-      "weight": 3.0,
+      "weight": 0.3,
       "condition": {
         "timeRange": "night",
         "biomes": [
@@ -23,5 +23,5 @@
       }
     }
   ],
-  "_comment": "Override of AllTheMons paradox spawn pool \u2014 bucket promoted to 'ultra-rare'"
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 tier=Ubers weight=0.3 bucket=ultra-rare"
 }

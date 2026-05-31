@@ -14,7 +14,7 @@
       "spawnablePositionType": "grounded",
       "bucket": "ultra-rare",
       "level": "1-10",
-      "weight": 0.8333,
+      "weight": 0.3,
       "weightMultiplier": {
         "multiplier": 1.5,
         "condition": {
@@ -41,7 +41,7 @@
       "spawnablePositionType": "grounded",
       "bucket": "ultra-rare",
       "level": "10-50",
-      "weight": 0.5,
+      "weight": 0.3,
       "weightMultiplier": {
         "multiplier": 1.5,
         "condition": {
@@ -68,7 +68,7 @@
       "spawnablePositionType": "grounded",
       "bucket": "ultra-rare",
       "level": "50-80",
-      "weight": 0.1667,
+      "weight": 0.3,
       "weightMultiplier": {
         "multiplier": 1.5,
         "condition": {
@@ -85,5 +85,5 @@
       }
     }
   ],
-  "_comment": "Override of AllTheMons legendary spawn pool \u2014 weight \u00d7 0.3333 (1/3 of upstream)"
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 tier=Ubers weight=0.3 bucket=ultra-rare"
 }

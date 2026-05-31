@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "zeraora-1T",
+      "pokemon": "zeraora min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "60",
+      "weight": 1.125,
+      "condition": {
+        "canSeeSky": true,
+        "biomes": [
+          "#cobblemon:is_desert"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons mythical spawn pool \u2014 tier=UU+ weight=1.125 bucket=ultra-rare"
+}

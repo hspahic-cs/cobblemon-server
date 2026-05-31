@@ -25,22 +25,49 @@ root README.
   pointing at "Gym 2", actual next step is `first_pvp_win`.
 
 ### Changed (gameplay)
-- **Legendary spawn rates reduced to 1/3 of upstream.** New datapack
-  `server-spawn-nerfs` overrides every entry under AllTheMons'
-  `data/special_spawns/spawn_pool_world/legendary/<species>.json` with
-  `weight` multiplied by 0.333. Covers 62 species / 80 spawn entries.
-- **Paradox spawn rates moved from `rare` bucket to `ultra-rare`**
-  (weight unchanged). Net effect: paradoxes drop from a 0.5% bucket
-  roll to a 0.2% bucket roll → roughly 2.4× rarer than upstream. Per
-  spawn attempt, paradoxes end up ~1.6× rarer than post-nerf
-  legendaries — leaving paradoxes slightly more common on raw spawn
-  rate to compensate for the fact that legendaries have an alternate
-  acquisition path via LegendaryMonuments pedestals while paradoxes
-  have no such fallback. Covers 17 species / 19 spawn entries.
-- Reproducible: `ops/gen_spawn_nerfs.py` regenerates the datapack from
-  the current AllTheMons zip. Re-run after bumping AllTheMons to pick
-  up new entries, or to change the nerf strategy (`CATEGORIES` dict at
-  the top of the script).
+- **Tier-based spawn rates for legendaries, mythicals, paradoxes,
+  and ultra beasts.** New datapack `server-spawn-nerfs` overrides
+  every entry under AllTheMons'
+  `data/special_spawns/spawn_pool_world/{legendary,mythical,paradox,ultra_beast}/<species>.json`.
+
+  Each species is classified by its peak Gen 6+ competitive tier
+  (using the **final evolved form's** tier where applicable — Cosmog
+  → Solgaleo, Kubfu → Urshifu, Poipole → Naganadel). Final weights
+  are flat per tier (× 0.75 global nerf applied on top of the tier
+  baseline):
+
+  | Tier | Weight | Examples |
+  |------|-------:|----------|
+  | AG | 0.15 | Miraidon, Koraidon, Eternatus, Arceus, Deoxys |
+  | Ubers | 0.30 | Box legends (Lugia, Kyogre, Dialga, Reshiram, Xerneas, Solgaleo line), all ultra-Ubers paradoxes (Flutter Mane, Iron Bundle), Pheromosa, Naganadel |
+  | OU | 0.60 | Tapus, Heatran, Latios/Latias, Therian-form Landorus etc., most paradoxes, most UBs |
+  | UU+ | 1.125 | Articuno/Zapdos/Moltres, Entei/Raikou/Suicune, Regis, Glastrier, Phione |
+
+  Every entry also gets `bucket: "ultra-rare"` (legendaries/mythicals/
+  UBs already are; paradoxes get promoted from `rare`, replacing the
+  bucket-promotion-only treatment from the earlier draft of this PR).
+
+  108 species / 139 spawn entries covered. Aggregate "any legendary"
+  rate ends up close to the previous draft's blanket × 1/3 nerf
+  (~1 per 10–15 hrs of biome-matched play), but redistributed
+  tier-aware: upstream outliers like Heatran drop to tier baseline,
+  forgotten species like Suicune become findable again.
+
+  **Pseudo-legendaries intentionally not in scope** — they spawn from
+  cobblemon-base spawn pools as *base forms* (Dratini/Gible/Bagon
+  etc.), so "how rare a wild Bagon should be" is a separate balance
+  question from legendary spawn rates.
+
+  **Borderline calls**: `regigigas` → UU+ (Slow Start nullifies its
+  legendary stats); `calyrex` → Ubers (counting peak Calyrex-Shadow
+  Rider); `zacian`/`zamazenta` → Ubers (Hero forms in pool, not
+  Crowned-AG); `hoopa` → Ubers (Unbound peak); `meltan` → OU (final
+  form Melmetal); `darkrai` → Ubers (Dark Void banned).
+
+- Reproducible: `ops/gen_spawn_nerfs.py` regenerates the datapack
+  from the current AllTheMons zip. Re-run after bumping AllTheMons
+  to pick up new species (script emits a warning for any unmapped
+  species so you know to add them to `SPECIES_TIERS`).
 
 ### Changed
 - **Exeggcute / Cobbleworkers chain promoted to mainline styling.**

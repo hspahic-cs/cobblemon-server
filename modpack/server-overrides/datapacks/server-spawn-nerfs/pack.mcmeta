@@ -1,6 +1,6 @@
 {
   "pack": {
     "pack_format": 48,
-    "description": "Reduce natural spawn rates for legendary + paradox Pokemon (overrides AllTheMons spawn pools)."
+    "description": "Tier-based spawn rates for legendaries, mythicals, paradoxes, and ultra beasts (overrides AllTheMons spawn pools)."
   }
 }

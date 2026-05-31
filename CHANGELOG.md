@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.35] - 2026-05-31
+
+### Fixed
+- **Ship `config/cobblemon/main.json` and `config/rctmod-server.toml`
+  from the repo.** A prod audit surfaced four settings drifted back to
+  Cobblemon / rctmod vanilla defaults — none of which the repo was
+  managing, so a mod-config rewrite (or any path that recreated the
+  file) silently reset them.
+
+  Pinned values:
+
+  | File | Key | Value | Why |
+  |------|-----|-------|-----|
+  | `cobblemon/main.json` | `healPercent` | `0.0` | Disable out-of-battle passive HP regen — players are meant to use the carrot/healer flow |
+  | `cobblemon/main.json` | `defaultFaintTimer` | `2147483647` | Disable fainted-Pokémon auto-revive (Integer.MAX_VALUE ≈ never), forcing healer-block use |
+  | `rctmod-server.toml` | `initialLevelCap` | `200` | Match the intended progression range; prod was at the rctmod default `15` |
+  | `rctmod-server.toml` | `allowOverLeveling` | `true` | Permit player Pokémon to exceed the cap; prod default was `false` |
+
+  Caveat: NeoForge/Cobblemon configs are whole-file writes. Pinning the
+  full file means on Cobblemon updates that add new keys we have to
+  re-baseline manually — otherwise the deploy keeps shipping the older
+  default for any newly-added field. Tracking this in CHANGELOG so the
+  next Cobblemon bump triggers a config rebase.
+
 ## [0.7.34] - 2026-05-30
 
 ### Fixed

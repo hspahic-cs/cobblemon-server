@@ -12,6 +12,35 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.34] - 2026-05-30
+
+### Fixed
+- **Players returning from spawn (or any locked dim) to overworld /
+  nether / end are no longer stuck in Adventure mode.** Three related
+  holes in `WorldRulesHook`:
+
+  1. `onPlayerLoggedOut` cleared the saved gamemode without restoring
+     it first, so a player who logged out at spawn was persisted to
+     NBT in ADVENTURE. On next login `applyLock` captured ADVENTURE
+     as their "prior" gamemode; later `restoreLock` set them back to
+     ADVENTURE on exit. Fix: logout now restores the saved survival
+     mode before clearing the entry, so the player's saved NBT
+     reflects survival.
+  2. `restoreLock` early-returned when no saved entry existed,
+     leaving the player in whatever locked-dim gamemode they had
+     (covers paths where the player landed in ADVENTURE via a
+     teleport that didn't fire `PlayerChangedDimensionEvent`, or
+     first-ever joins straight into a locked dim). Fix: default to
+     `GameType.SURVIVAL` when no saved entry — matches
+     server.properties' `gamemode=survival` default.
+  3. The `restoreLock` path only fires on the `locked → allowed`
+     transition, so players already stuck in ADVENTURE in the
+     overworld (legacy state from #1/#2) had no in-game recovery
+     — non-ops can't `/gamemode` themselves. Added a
+     `healStuckAdventure` pass on login and on every same-allowed-dim
+     transition (overworld ↔ nether ↔ end portal hops) that snaps
+     any non-op caught in ADVENTURE back to SURVIVAL.
+
 ## [0.7.33] - 2026-05-30
 
 ### Fixed

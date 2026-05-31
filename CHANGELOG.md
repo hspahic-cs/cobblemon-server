@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.36] - 2026-05-31
+
+### Fixed
+- **Wild Pokémon defeats no longer say "for defeating trainer".** A
+  prod log audit caught wild battles routing through `GymDefeatHook`'s
+  trainer branch and emitting the trainer-bounty message. Root cause:
+  `PokemonBattleActor` and `MultiPokemonBattleActor` both extend
+  Cobblemon's `AIBattleActor` (`PokemonBattleActor` carries a
+  `RandomBattleAI`), so the post-0.7.31 widened
+  `is AIBattleActor` discriminator classified wild battles as trainer
+  fights. Tightened to "AIBattleActor that is NOT a (Multi)PokemonBattleActor"
+  and added a separate `payWildBounty` path that pays the same formula
+  but emits "§7you found on the Pokémon" instead.
+- Wild bounty stays on (the existing payout was unintended but the team
+  decided to keep it). The change is message-only from a player POV
+  unless they were watching closely.
+
 ## [0.7.35] - 2026-05-31
 
 ### Fixed

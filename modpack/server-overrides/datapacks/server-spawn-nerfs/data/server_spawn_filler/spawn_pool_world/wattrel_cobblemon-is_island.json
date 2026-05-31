@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "wattrel-hotfix-cobblemon-is_island",
+      "pokemon": "wattrel",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "3-28",
+      "weight": 34.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_island"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: wattrel added to #cobblemon:is_island ultra-rare bucket to dilute legendary dominance"
+}

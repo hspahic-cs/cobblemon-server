@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "kilowattrel-hotfix-cobblemon-is_island",
+      "pokemon": "kilowattrel",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "25-49",
+      "weight": 34.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_island"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: kilowattrel added to #cobblemon:is_island ultra-rare bucket to dilute legendary dominance"
+}

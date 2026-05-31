@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "chatot-hotfix-cobblemon-is_sky",
+      "pokemon": "chatot",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "16-41",
+      "weight": 5.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sky"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: chatot added to #cobblemon:is_sky ultra-rare bucket to dilute legendary dominance"
+}

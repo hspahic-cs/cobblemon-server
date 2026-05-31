@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "golurk-hotfix-cobblemon-is_deep_dark",
+      "pokemon": "golurk",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "43-48",
+      "weight": 9.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: golurk added to #cobblemon:is_deep_dark ultra-rare bucket to dilute legendary dominance"
+}

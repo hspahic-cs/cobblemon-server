@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "murkrow-hotfix-cobblemon-is_sky",
+      "pokemon": "murkrow",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "16-41",
+      "weight": 5.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sky"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: murkrow added to #cobblemon:is_sky ultra-rare bucket to dilute legendary dominance"
+}

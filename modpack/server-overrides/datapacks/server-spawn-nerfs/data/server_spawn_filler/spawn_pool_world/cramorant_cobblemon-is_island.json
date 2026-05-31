@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "cramorant-hotfix-cobblemon-is_island",
+      "pokemon": "cramorant",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "23-48",
+      "weight": 34.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_island"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: cramorant added to #cobblemon:is_island ultra-rare bucket to dilute legendary dominance"
+}

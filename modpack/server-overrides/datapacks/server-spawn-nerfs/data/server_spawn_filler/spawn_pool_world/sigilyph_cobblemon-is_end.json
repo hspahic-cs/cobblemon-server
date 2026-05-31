@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "sigilyph-hotfix-cobblemon-is_end",
+      "pokemon": "sigilyph",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "24-49",
+      "weight": 5.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: sigilyph added to #cobblemon:is_end ultra-rare bucket to dilute legendary dominance"
+}

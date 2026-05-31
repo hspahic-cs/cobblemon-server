@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "bramblin-hotfix-cobblemon-nether-is_desert",
+      "pokemon": "bramblin",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "3-28",
+      "weight": 5.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_desert"
+        ]
+      }
+    }
+  ],
+  "_comment": "Hotfix filler: bramblin added to #cobblemon:nether/is_desert ultra-rare bucket to dilute legendary dominance"
+}

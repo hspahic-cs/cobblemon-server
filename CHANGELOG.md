@@ -25,49 +25,50 @@ root README.
   pointing at "Gym 2", actual next step is `first_pvp_win`.
 
 ### Changed (gameplay)
-- **Tier-based spawn rates for legendaries, mythicals, paradoxes,
-  and ultra beasts.** New datapack `server-spawn-nerfs` overrides
-  every entry under AllTheMons'
-  `data/special_spawns/spawn_pool_world/{legendary,mythical,paradox,ultra_beast}/<species>.json`.
+- **Spawn-rate hotfix — three narrow changes.** New datapack
+  `server-spawn-nerfs`. A larger per-tier per-biome calibration is
+  scoped to a separate WIP PR; this hotfix lands the most-impactful
+  bits today.
 
-  Each species is classified by its peak Gen 6+ competitive tier
-  (using the **final evolved form's** tier where applicable — Cosmog
-  → Solgaleo, Kubfu → Urshifu, Poipole → Naganadel). Final weights
-  are flat per tier (× 0.75 global nerf applied on top of the tier
-  baseline):
+  1. **Ultra-rare bucket roll % slashed to 1/3 of upstream.**
+     Cobblemon's baked-in bucket weights are
+     `common 94.3 / uncommon 5 / rare 0.5 / ultra-rare 0.2`. We ship
+     a `data/cobblemon/spawn_data/buckets.json` override that drops
+     ultra-rare to `0.0667`. Every ultra-rare encounter — legendary,
+     mythical, paradox, ultra-beast, pseudo-legend, starter — fires
+     ~3× less often. Other buckets renormalize at roll time so their
+     effective % grows slightly to absorb the gap.
+  2. **Paradoxes promoted from `rare` bucket → `ultra-rare`.**
+     Without this, paradoxes would have escaped the bucket slash.
+     Weights unchanged from AllTheMons upstream; only the bucket
+     field is rewritten on every paradox entry (17 species files).
+  3. **Filler added to legendary-dominated biomes.** Seven biomes
+     have their ultra-rare bucket composed entirely (or almost
+     entirely) of legendaries with no non-competitive species to
+     dilute. Added thematic filler at weights calibrated to bring
+     the competitive share to ~20% of the bucket in each:
 
-  | Tier | Weight | Examples |
-  |------|-------:|----------|
-  | AG | 0.15 | Miraidon, Koraidon, Eternatus, Arceus, Deoxys |
-  | Ubers | 0.30 | Box legends (Lugia, Kyogre, Dialga, Reshiram, Xerneas, Solgaleo line), all ultra-Ubers paradoxes (Flutter Mane, Iron Bundle), Pheromosa, Naganadel |
-  | OU | 0.60 | Tapus, Heatran, Latios/Latias, Therian-form Landorus etc., most paradoxes, most UBs |
-  | UU+ | 1.125 | Articuno/Zapdos/Moltres, Entei/Raikou/Suicune, Regis, Glastrier, Phione |
+     | Biome | Filler species |
+     |---|---|
+     | `nether/is_soul_sand` (Yveltal-only) | Duskull, Dusclops, Dusknoir |
+     | `nether/is_desert` (Blacephalon-only) | Cubone, Bramblin, Salandit, Ekans |
+     | `is_deep_dark` | Golett, Spiritomb, Golurk, Mawile |
+     | `is_end` | Unown, Gothita, Elgyem, Sigilyph |
+     | `is_island` | Wattrel, Kilowattrel, Cramorant, Poltchageist |
+     | `is_sky` | Chatot, Squawkabilly, Murkrow, Pidgey |
+     | `is_peak` | Growlithe, Meditite, Medicham, Delibird |
 
-  Every entry also gets `bucket: "ultra-rare"` (legendaries/mythicals/
-  UBs already are; paradoxes get promoted from `rare`, replacing the
-  bucket-promotion-only treatment from the earlier draft of this PR).
+     All picks come from species that already spawn in the same
+     biome at common/uncommon/rare buckets — guaranteed-thematic by
+     Cobblemon's own biome→species mapping. New entries live in our
+     own `data/server_spawn_filler/spawn_pool_world/` namespace so
+     they don't collide with upstream species files.
 
-  108 species / 139 spawn entries covered. Aggregate "any legendary"
-  rate ends up close to the previous draft's blanket × 1/3 nerf
-  (~1 per 10–15 hrs of biome-matched play), but redistributed
-  tier-aware: upstream outliers like Heatran drop to tier baseline,
-  forgotten species like Suicune become findable again.
-
-  **Pseudo-legendaries intentionally not in scope** — they spawn from
-  cobblemon-base spawn pools as *base forms* (Dratini/Gible/Bagon
-  etc.), so "how rare a wild Bagon should be" is a separate balance
-  question from legendary spawn rates.
-
-  **Borderline calls**: `regigigas` → UU+ (Slow Start nullifies its
-  legendary stats); `calyrex` → Ubers (counting peak Calyrex-Shadow
-  Rider); `zacian`/`zamazenta` → Ubers (Hero forms in pool, not
-  Crowned-AG); `hoopa` → Ubers (Unbound peak); `meltan` → OU (final
-  form Melmetal); `darkrai` → Ubers (Dark Void banned).
-
-- Reproducible: `ops/gen_spawn_nerfs.py` regenerates the datapack
-  from the current AllTheMons zip. Re-run after bumping AllTheMons
-  to pick up new species (script emits a warning for any unmapped
-  species so you know to add them to `SPECIES_TIERS`).
+  Generator: `ops/gen_spawn_hotfix.py`. Re-run after bumping
+  AllTheMons / Cobblemon. The larger per-tier per-species
+  calibration design (with target % per tier per biome, comp-only-
+  decreases constraint, etc.) was scoped out — to land in a follow-
+  up WIP PR.
 
 ### Changed
 - **Exeggcute / Cobbleworkers chain promoted to mainline styling.**

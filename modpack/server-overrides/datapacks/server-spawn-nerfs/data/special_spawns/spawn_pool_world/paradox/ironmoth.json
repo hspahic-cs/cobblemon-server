@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ironmoth-1T",
+      "pokemon": "ironmoth min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "40-75",
+      "weight": 3.0,
+      "condition": {
+        "timeRange": "night",
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      }
+    }
+  ],
+  "_comment": "Paradox bucket: rare \u2192 ultra-rare. Weight unchanged from AllTheMons."
+}

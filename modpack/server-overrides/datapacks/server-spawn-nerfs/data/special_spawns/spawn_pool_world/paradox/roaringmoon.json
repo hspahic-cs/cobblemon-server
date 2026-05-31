@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "roaringmoon-1T",
+      "pokemon": "roaringmoon min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "40-75",
+      "weight": 3.0,
+      "condition": {
+        "timeRange": "day",
+        "biomes": [
+          "#cobblemon:is_mountain",
+          "#cobblemon:is_dripstone"
+        ]
+      }
+    }
+  ],
+  "_comment": "Paradox bucket: rare \u2192 ultra-rare. Weight unchanged from AllTheMons."
+}

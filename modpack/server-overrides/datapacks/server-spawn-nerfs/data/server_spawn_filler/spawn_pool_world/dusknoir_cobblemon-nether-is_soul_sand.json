@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "dusknoir-filler-cobblemon-nether-is_soul_sand",
+      "pokemon": "dusknoir",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "41-53",
+      "weight": 3.3333,
+      "condition": {
+        "biomes": [
+          "#cobblemon:nether/is_soul_sand"
+        ]
+      }
+    }
+  ],
+  "_comment": "Filler: dusknoir added to #cobblemon:nether/is_soul_sand ultra-rare bucket to dilute legendary share to ~20%."
+}

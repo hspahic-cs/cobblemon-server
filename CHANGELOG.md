@@ -12,6 +12,66 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.38] - 2026-05-31
+
+### Fixed
+- **`reach_income_1000` (Founding Fortune) no longer promises a Master
+  Ball for placing the supply camp.** The `► Next:` preview advertised
+  "Reward: Poké Healer; 1 Master Ball" but the `join_colony` reward
+  function only sets `cq_reward_item_pokehealer` — players placed the
+  camp expecting a master ball, got just the healer. Preview now
+  matches reality (Poké Healer only).
+- Fixed stale `► Next:` preview on `ranch_carrot_farm` — was
+  pointing at "Gym 2", actual next step is `first_pvp_win`.
+
+### Changed (gameplay)
+- **Ultra-rare spawn rate × 1/3.** New `server-spawn-nerfs` datapack
+  overrides `data/cobblemon/spawn_data/buckets.json` to set the
+  ultra-rare bucket weight from Cobblemon's default `0.2` to `0.0667`.
+  Every ultra-rare encounter — legendary, mythical, paradox,
+  ultra-beast, pseudo-legend, starter — fires ~3× less often. Other
+  buckets renormalize at roll time so their effective % grows
+  slightly to absorb the gap.
+- **Paradoxes moved into the ultra-rare bucket.** AllTheMons ships
+  paradoxes in the `rare` bucket; the datapack rewrites every paradox
+  entry's `bucket` field to `ultra-rare` (17 species, weights
+  unchanged from AllTheMons). Without this, paradoxes would have
+  escaped the bucket slash above.
+- **Filler entries in legendary-dominated biomes.** Seven biomes had
+  their ultra-rare bucket composed entirely (or almost entirely) of
+  legendaries with no non-competitive species to dilute. Added
+  thematic filler so the competitive share lands at roughly 20% of
+  the bucket in each:
+
+  | Biome | Filler species |
+  |---|---|
+  | `nether/is_soul_sand` | Duskull, Dusclops, Dusknoir |
+  | `nether/is_desert` | Cubone, Bramblin, Salandit, Ekans |
+  | `is_deep_dark` | Golett, Spiritomb, Golurk, Mawile |
+  | `is_end` | Unown, Gothita, Elgyem, Sigilyph |
+  | `is_island` | Wattrel, Kilowattrel, Cramorant, Poltchageist |
+  | `is_sky` | Chatot, Squawkabilly, Murkrow, Pidgey |
+  | `is_peak` | Growlithe, Meditite, Medicham, Delibird |
+
+  All picks come from species that already spawn in the same biome
+  at common/uncommon/rare buckets — thematic by construction. New
+  entries live in `data/server_spawn_filler/spawn_pool_world/`.
+
+  Generator: `ops/gen_spawn_hotfix.py`. Re-run after bumping
+  AllTheMons or Cobblemon.
+
+### Changed
+- **Exeggcute / Cobbleworkers chain promoted to mainline styling.**
+  The four quests on the mainline arc between Gym 1 and Gym 2
+  (`reach_income_250 → evolve_exeggutor → ranch_carrot_farm →
+  first_pvp_win`) now use the same gold `[Mainline Quest Complete]`
+  chat header + `frame: "challenge"` advancement tile +
+  `announce_to_chat: true` as `defeat_elite_four`. Previously they
+  were styled as side/task quests (`[Quest Complete]` green, `frame:
+  "task"`, no chat broadcast), which made the whole
+  Cobbleworkers-introduction arc visually invisible relative to the
+  gym/E4 milestones it sits between.
+
 ## [0.7.37] - 2026-05-31
 
 ### Changed

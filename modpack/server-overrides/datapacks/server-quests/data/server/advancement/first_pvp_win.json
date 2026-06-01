@@ -11,7 +11,7 @@
     "icon": {
       "id": "cobblemon:focus_band"
     },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true
   },

@@ -10,9 +10,9 @@
     "icon": {
       "id": "minecraft:emerald"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
-    "announce_to_chat": false
+    "announce_to_chat": true
   },
   "criteria": {
     "done": {

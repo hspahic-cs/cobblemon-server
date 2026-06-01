@@ -2,12 +2,14 @@ package com.cobblemonmarket
 
 import com.cobblemonmarket.commands.MarketCommands
 import com.cobblemonmarket.config.ItemConfig
+import com.cobblemonmarket.economy.QuestRewards
 import com.cobblemonmarket.gui.MarketNpcHook
 import com.cobblemonmarket.config.ItemEntry
 import com.cobblemonmarket.config.MarketConfig
 import com.cobblemonmarket.data.MarketStore
 import com.cobblemonmarket.data.PlayerSpendStore
 import com.cobblemonmarket.pricing.PricingEngine
+import net.minecraft.server.level.ServerPlayer
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -15,6 +17,7 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.loading.FMLPaths
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -38,6 +41,7 @@ class CobblemonMarket(modBus: IEventBus, container: ModContainer) {
 
         NeoForge.EVENT_BUS.addListener(::onRegisterCommands)
         NeoForge.EVENT_BUS.addListener(::onServerTickPost)
+        NeoForge.EVENT_BUS.addListener(::onPlayerLoggedIn)
         NeoForge.EVENT_BUS.register(MarketNpcHook)
 
         logger.info("Cobblemon Market initialized! ${items.size} items, market state loaded.")
@@ -45,6 +49,17 @@ class CobblemonMarket(modBus: IEventBus, container: ModContainer) {
 
     private fun onRegisterCommands(event: RegisterCommandsEvent) {
         MarketCommands.register(event.dispatcher)
+    }
+
+    /**
+     * Re-check income-threshold advancements on every login. Covers the case where the player
+     * built up balance via non-sell sources (trainer bounties, /pay, etc.) before the income
+     * quest's prerequisite cleared — the threshold-crossing check on a subsequent sell never
+     * fires because they never went below the threshold to begin with.
+     */
+    private fun onPlayerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
+        val player = event.entity as? ServerPlayer ?: return
+        QuestRewards.checkIncomeThresholds(player)
     }
 
     private var recoveryTickCounter: Int = 0

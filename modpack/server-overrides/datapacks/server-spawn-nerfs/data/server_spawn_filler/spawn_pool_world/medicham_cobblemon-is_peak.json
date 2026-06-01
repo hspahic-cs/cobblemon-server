@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "medicham-filler-cobblemon-is_peak",
+      "pokemon": "medicham",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "37-41",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_peak"
+        ]
+      }
+    }
+  ],
+  "_comment": "Filler: medicham added to #cobblemon:is_peak ultra-rare bucket to dilute legendary share to ~20%."
+}

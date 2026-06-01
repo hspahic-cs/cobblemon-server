@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "poltchageist-filler-cobblemon-is_island",
+      "pokemon": "poltchageist matcha_authenticity=counterfeit",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "6-31",
+      "weight": 34.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_island"
+        ]
+      }
+    }
+  ],
+  "_comment": "Filler: poltchageist added to #cobblemon:is_island ultra-rare bucket to dilute legendary share to ~20%."
+}

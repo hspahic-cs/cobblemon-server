@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ironleaves-1T",
+      "pokemon": "ironleaves min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "60-80",
+      "weight": 1.0,
+      "condition": {
+        "timeRange": "night",
+        "biomes": [
+          "#cobblemon:is_forest"
+        ]
+      }
+    }
+  ],
+  "_comment": "Paradox bucket: rare \u2192 ultra-rare. Weight unchanged from AllTheMons."
+}

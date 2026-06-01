@@ -12,6 +12,143 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.42] - 2026-06-01
+
+### Fixed
+- **`reach_income_250` (Pocket Change) and other income-threshold
+  quests now award when the player's balance meets the threshold,
+  regardless of how it got there.** Previously the check fired only
+  when a specific sell deposit *crossed* the threshold
+  (`balanceBefore < N && balanceAfter >= N`). Players who built up
+  ¢250+ from trainer bounties before beating Gym 1 — the quest's
+  prerequisite — never saw the award because subsequent sells stayed
+  strictly above 250 (no crossing).
+
+  Behavior change:
+  - `QuestRewards.checkIncomeThresholds(player)` now re-evaluates
+    every threshold against current balance and awards any reached.
+    `awardQuest` is already idempotent (`progress.isDone` short-
+    circuit), so the re-check is safe to call from anywhere.
+  - Called on every sell deposit (existing path, simplified) AND
+    on every login via `PlayerEvent.PlayerLoggedInEvent` (new). Login
+    handles the "already had enough money when the quest unlocked"
+    case retroactively.
+
+  Same logic covers the `reach_income_1000 / _10000 / _100000` tiers.
+
+### Fixed
+- **Poké Healer quote now shows the real carrot price.** The
+  cobblemon-carrots → cobblemon-market reflection bridge invoked
+  `PricingEngine.buyPrice` as if it were a static method
+  (`Method.invoke(null, …)`), but `PricingEngine` is a Kotlin
+  `object` — `buyPrice` is bound to its `INSTANCE` singleton, not
+  static. Every call NPE'd and the bridge fell back to the flat
+  `carrotPrice` config (`= 5`) for the prompt's per-carrot price
+  + total cost. Meanwhile the confirm-time charge went through the
+  (working) TradeOps path at the live market price, so a player
+  quoted "$5 × 10 = $50" actually got charged $80 if elasticity
+  had pushed carrots to $8/each. Bridge now resolves
+  `PricingEngine.INSTANCE` at startup and passes it as the receiver
+  — prompt + charge use the same live price.
+
+## [0.7.40] - 2026-06-01
+
+### Fixed
+- **Carrots now grow at normal speed everywhere, every season.** New
+  datapack `server-crop-fertility` adds `minecraft:carrots` to Serene
+  Seasons' `year_round_crops` tag. Carrots are seasonal infrastructure
+  on this server — the starter quest chain (`evolve_exeggutor` →
+  `ranch_carrot_farm`) hands the player a Pasture Block + bonemeal +
+  Exeggutor and expects the carrots to actually grow, and the Poké
+  Healer block consumes carrots per heal. Under SS defaults carrots
+  were only fertile in spring + autumn (~48 of 96 in-game days);
+  tropical biomes (savanna/desert/jungle/etc.) were even worse
+  because SS treats those as permanent summer, leaving carrots
+  out-of-season every day there.
+
+  Other crops (wheat, potatoes, beets, pumpkins, melons) still follow
+  the seasonal calendar — only carrots are pulled into the
+  always-fertile pool.
+
+## [0.7.39] - 2026-05-31
+
+### Changed
+- **Public chat is now global, not proximity-based.** NeoEssentials
+  shipped with a `local` chat channel as the default (100-block
+  radius); players typing in chat could only reach others within that
+  range. The `chat.json` override pins
+  `chat.channels.local.enabled: false` so the `global` channel
+  becomes the effective default — all chat reaches all players.
+  Staff channel still works via `/staff`.
+
+  Shipping `modpack/server-overrides/config/neoessentials/chat.json`
+  also pins the rest of the chat settings (formatting templates,
+  mentions, badges, anti-spam) so future NeoEssentials updates can't
+  silently revert them. Prod was migrated from the legacy monolithic
+  `config.json` to NeoEssentials' split-file layout (via the in-game
+  `/neoessentials config split` admin command) so both servers
+  consume the same file shape.
+
+## [0.7.38] - 2026-05-31
+
+### Fixed
+- **`reach_income_1000` (Founding Fortune) no longer promises a Master
+  Ball for placing the supply camp.** The `► Next:` preview advertised
+  "Reward: Poké Healer; 1 Master Ball" but the `join_colony` reward
+  function only sets `cq_reward_item_pokehealer` — players placed the
+  camp expecting a master ball, got just the healer. Preview now
+  matches reality (Poké Healer only).
+- Fixed stale `► Next:` preview on `ranch_carrot_farm` — was
+  pointing at "Gym 2", actual next step is `first_pvp_win`.
+
+### Changed (gameplay)
+- **Ultra-rare spawn rate × 1/3.** New `server-spawn-nerfs` datapack
+  overrides `data/cobblemon/spawn_data/buckets.json` to set the
+  ultra-rare bucket weight from Cobblemon's default `0.2` to `0.0667`.
+  Every ultra-rare encounter — legendary, mythical, paradox,
+  ultra-beast, pseudo-legend, starter — fires ~3× less often. Other
+  buckets renormalize at roll time so their effective % grows
+  slightly to absorb the gap.
+- **Paradoxes moved into the ultra-rare bucket.** AllTheMons ships
+  paradoxes in the `rare` bucket; the datapack rewrites every paradox
+  entry's `bucket` field to `ultra-rare` (17 species, weights
+  unchanged from AllTheMons). Without this, paradoxes would have
+  escaped the bucket slash above.
+- **Filler entries in legendary-dominated biomes.** Seven biomes had
+  their ultra-rare bucket composed entirely (or almost entirely) of
+  legendaries with no non-competitive species to dilute. Added
+  thematic filler so the competitive share lands at roughly 20% of
+  the bucket in each:
+
+  | Biome | Filler species |
+  |---|---|
+  | `nether/is_soul_sand` | Duskull, Dusclops, Dusknoir |
+  | `nether/is_desert` | Cubone, Bramblin, Salandit, Ekans |
+  | `is_deep_dark` | Golett, Spiritomb, Golurk, Mawile |
+  | `is_end` | Unown, Gothita, Elgyem, Sigilyph |
+  | `is_island` | Wattrel, Kilowattrel, Cramorant, Poltchageist |
+  | `is_sky` | Chatot, Squawkabilly, Murkrow, Pidgey |
+  | `is_peak` | Growlithe, Meditite, Medicham, Delibird |
+
+  All picks come from species that already spawn in the same biome
+  at common/uncommon/rare buckets — thematic by construction. New
+  entries live in `data/server_spawn_filler/spawn_pool_world/`.
+
+  Generator: `ops/gen_spawn_hotfix.py`. Re-run after bumping
+  AllTheMons or Cobblemon.
+
+### Changed
+- **Exeggcute / Cobbleworkers chain promoted to mainline styling.**
+  The four quests on the mainline arc between Gym 1 and Gym 2
+  (`reach_income_250 → evolve_exeggutor → ranch_carrot_farm →
+  first_pvp_win`) now use the same gold `[Mainline Quest Complete]`
+  chat header + `frame: "challenge"` advancement tile +
+  `announce_to_chat: true` as `defeat_elite_four`. Previously they
+  were styled as side/task quests (`[Quest Complete]` green, `frame:
+  "task"`, no chat broadcast), which made the whole
+  Cobbleworkers-introduction arc visually invisible relative to the
+  gym/E4 milestones it sits between.
+
 ## [0.7.37] - 2026-05-31
 
 ### Changed

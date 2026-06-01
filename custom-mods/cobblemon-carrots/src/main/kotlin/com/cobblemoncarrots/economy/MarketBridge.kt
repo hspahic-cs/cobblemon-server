@@ -39,6 +39,7 @@ object MarketBridge {
     private var storeGetOrCreate: Method? = null        // MarketStore.getOrCreate(String): ItemState
     private var stateStock: Method? = null              // ItemState.getStock(): Double
     private var pricingBuyPrice: Method? = null         // PricingEngine.buyPrice(Int, Double, Int, Double): Int
+    private var pricingInstance: Any? = null            // PricingEngine.INSTANCE (Kotlin object singleton)
     private var tradeOpsInstance: Any? = null           // TradeOps singleton (object)
     private var tradeOpsBuyForConsumption: Method? = null
     private var tradeResultSuccess: Class<*>? = null
@@ -67,6 +68,13 @@ object MarketBridge {
                 stateStock = stateClass.getMethod("getStock")
 
                 val pricing = Class.forName(PRICING_CLASS)
+                // PricingEngine is a Kotlin `object` (singleton), so `buyPrice` is an instance
+                // method bound to the `INSTANCE` field — NOT a static method. Pre-fix we passed
+                // null as the receiver to Method.invoke which NPE'd every call; the bridge then
+                // silently fell back to `cfg.carrotPrice` (5) for the prompt display while the
+                // healer's actual confirm-time charge went through the (working) TradeOps path
+                // at the live market price. Result: prompt said $5/each, player got charged $8+.
+                pricingInstance = pricing.getField("INSTANCE").get(null)
                 pricingBuyPrice = pricing.getMethod(
                     "buyPrice",
                     Int::class.javaPrimitiveType, Double::class.javaPrimitiveType,
@@ -110,7 +118,7 @@ object MarketBridge {
             val basePrice = entryBaseBuyPrice!!.invoke(entry) as Int
             val baseStock = entryBaseStock!!.invoke(entry) as Int
             val elasticity = entryElasticity!!.invoke(entry) as Double
-            pricingBuyPrice!!.invoke(null, basePrice, stock, baseStock, elasticity) as Int
+            pricingBuyPrice!!.invoke(pricingInstance, basePrice, stock, baseStock, elasticity) as Int
         } catch (e: Throwable) { log.error("getCarrotBuyPrice failed", e); null }
     }
 

@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.39] - 2026-05-31
+
+### Changed
+- **Public chat is now global, not proximity-based.** NeoEssentials
+  shipped with a `local` chat channel as the default (100-block
+  radius); players typing in chat could only reach others within that
+  range. The `chat.json` override pins
+  `chat.channels.local.enabled: false` so the `global` channel
+  becomes the effective default — all chat reaches all players.
+  Staff channel still works via `/staff`.
+
+  Shipping `modpack/server-overrides/config/neoessentials/chat.json`
+  also pins the rest of the chat settings (formatting templates,
+  mentions, badges, anti-spam) so future NeoEssentials updates can't
+  silently revert them. Prod was migrated from the legacy monolithic
+  `config.json` to NeoEssentials' split-file layout (via the in-game
+  `/neoessentials config split` admin command) so both servers
+  consume the same file shape.
+
 ## [0.7.38] - 2026-05-31
 
 ### Fixed

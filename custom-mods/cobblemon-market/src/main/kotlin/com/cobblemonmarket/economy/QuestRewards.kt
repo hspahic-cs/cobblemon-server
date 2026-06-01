@@ -2,6 +2,7 @@ package com.cobblemonmarket.economy
 
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import org.slf4j.LoggerFactory
 
 /**
  * Income-threshold quest awards. For every threshold the player's current balance meets or
@@ -21,6 +22,8 @@ import net.minecraft.server.level.ServerPlayer
  */
 object QuestRewards {
 
+    private val log = LoggerFactory.getLogger("cobblemon-market/quest-rewards")
+
     // Aligned with the datapack's actual advancement files
     // (reach_income_250 / _1000 / _10000 / _100000). Any threshold here without a matching
     // advancement file silently no-ops in awardQuest, and any advancement without a threshold
@@ -35,16 +38,29 @@ object QuestRewards {
         val balance = EconomyBridge.getBalance(player.uuid)
         for (threshold in INCOME_THRESHOLDS) {
             if (balance >= threshold) {
-                awardQuest(player, "server:reach_income_$threshold")
+                awardQuest(player, "server:reach_income_$threshold", balance)
             }
         }
     }
 
-    private fun awardQuest(player: ServerPlayer, advancementId: String, criterion: String = "done") {
+    /**
+     * Award the given advancement. Logs the outcome at INFO so the result of every
+     * threshold-check is visible in `debug.log` — players reporting "I crossed but never got
+     * the award" can be diagnosed by looking for the player's name + advancementId here.
+     */
+    private fun awardQuest(player: ServerPlayer, advancementId: String, balanceObserved: Int, criterion: String = "done") {
         val rl = ResourceLocation.parse(advancementId)
-        val holder = player.server.advancements.get(rl) ?: return
+        val holder = player.server.advancements.get(rl)
+        if (holder == null) {
+            log.warn("award skipped — advancement {} not registered (balance={} player={})",
+                advancementId, balanceObserved, player.gameProfile.name)
+            return
+        }
         val progress = player.advancements.getOrStartProgress(holder)
-        if (progress.isDone) return
-        player.advancements.award(holder, criterion)
+        if (progress.isDone) return  // already complete; nothing to do, no log noise
+        val awarded = player.advancements.award(holder, criterion)
+        log.info("award {} for {} balance={} criterion={} → {}",
+            advancementId, player.gameProfile.name, balanceObserved, criterion,
+            if (awarded) "OK" else "REJECTED (criterion mismatch / advancement gate?)")
     }
 }

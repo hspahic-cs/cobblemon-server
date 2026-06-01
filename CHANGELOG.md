@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.41] - 2026-06-01
+
+### Fixed
+- **Poké Healer quote now shows the real carrot price.** The
+  cobblemon-carrots → cobblemon-market reflection bridge invoked
+  `PricingEngine.buyPrice` as if it were a static method
+  (`Method.invoke(null, …)`), but `PricingEngine` is a Kotlin
+  `object` — `buyPrice` is bound to its `INSTANCE` singleton, not
+  static. Every call NPE'd and the bridge fell back to the flat
+  `carrotPrice` config (`= 5`) for the prompt's per-carrot price
+  + total cost. Meanwhile the confirm-time charge went through the
+  (working) TradeOps path at the live market price, so a player
+  quoted "$5 × 10 = $50" actually got charged $80 if elasticity
+  had pushed carrots to $8/each. Bridge now resolves
+  `PricingEngine.INSTANCE` at startup and passes it as the receiver
+  — prompt + charge use the same live price.
+
 ## [0.7.40] - 2026-06-01
 
 ### Fixed

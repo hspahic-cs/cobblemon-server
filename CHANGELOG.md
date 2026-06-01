@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.40] - 2026-06-01
+
+### Fixed
+- **Carrots now grow at normal speed everywhere, every season.** New
+  datapack `server-crop-fertility` adds `minecraft:carrots` to Serene
+  Seasons' `year_round_crops` tag. Carrots are seasonal infrastructure
+  on this server — the starter quest chain (`evolve_exeggutor` →
+  `ranch_carrot_farm`) hands the player a Pasture Block + bonemeal +
+  Exeggutor and expects the carrots to actually grow, and the Poké
+  Healer block consumes carrots per heal. Under SS defaults carrots
+  were only fertile in spring + autumn (~48 of 96 in-game days);
+  tropical biomes (savanna/desert/jungle/etc.) were even worse
+  because SS treats those as permanent summer, leaving carrots
+  out-of-season every day there.
+
+  Other crops (wheat, potatoes, beets, pumpkins, melons) still follow
+  the seasonal calendar — only carrots are pulled into the
+  always-fertile pool.
+
 ## [0.7.39] - 2026-05-31
 
 ### Changed

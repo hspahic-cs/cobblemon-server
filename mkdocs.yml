@@ -68,6 +68,8 @@ nav:
   - Joining the server:
       - Install the modpack: install.md
       - Connect: connect.md
+  - Reference:
+      - Cobbleworkers jobs: cobbleworkers.md
   - Quickstart: quickstart.md
   - Playing:
       - Economy & Automation: economy-and-automation.md

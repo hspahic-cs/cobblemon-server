@@ -24,7 +24,7 @@ inputs:
     description: |
       If 'true', also runs packwiz-installer-bootstrap -s server to
       download the resolved third-party server jars into modpack/mods/.
-      Deploy workflows need this; pr-validation and release.yml don't.
+      Deploy workflows need this; pr-validation doesn't.
     required: false
     default: 'false'
   set-pack-version:

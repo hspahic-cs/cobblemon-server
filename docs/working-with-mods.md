@@ -184,34 +184,26 @@ You can tail server logs from your Mac to confirm mods loaded correctly:
 ssh sysadmin@192.168.1.20 'tail -f /opt/cobblemon-dev/logs/latest.log'
 ```
 
-### 8. Tag the release (optional, before promoting to prod)
-
-If dev looks good and you want a downloadable .mrpack on GitHub:
-
-```sh
-git tag v0.4.2
-git push origin v0.4.2
-```
-
-This fires `release.yml`, which builds a fresh .mrpack and drafts a GitHub
-Release with all six jars + the .mrpack attached. Publish it from the UI or:
-
-```sh
-gh release edit v0.4.2 --draft=false
-```
-
-Friends now have a downloadable URL:
-`https://github.com/hspahic-cs/cobblemon-server/releases/tag/v0.4.2`
-
-### 9. Promote to prod
+### 8. Promote to prod (also tags + publishes the Release)
 
 Once you're confident the version on dev is good:
 
 ```sh
-gh workflow run deploy-prod.yml --ref main -f tag=v0.4.2
+gh workflow run deploy-prod.yml --ref main -f version=0.4.2
 ```
 
-Or use the UI: Actions → Deploy prod → Run workflow → enter `v0.4.2`.
+Or use the UI: Actions → Deploy prod → Run workflow → enter `0.4.2`.
+
+The workflow:
+1. Refuses to run if dev isn't already on the same version (override with
+   `skip_dev_check` only if you know what you're doing).
+2. Deploys prod and waits for the service to come up healthy.
+3. **On green health-check**, auto-creates tag `v0.4.2` from `main` (if it
+   doesn't already exist) and publishes the official GitHub Release —
+   .mrpack + all six custom-mod jars attached, marked as Latest.
+
+Friends now have a downloadable URL:
+`https://github.com/hspahic-cs/cobblemon-server/releases/tag/v0.4.2`
 
 This refuses to run if dev isn't already on the same version (safety check).
 Override with the `skip_dev_check` input only if you know what you're doing.
@@ -396,7 +388,6 @@ it for Fabric-via-Connector mods. Bump CHANGELOG and re-deploy.
 | `CHANGELOG.md` | THE deploy signal — bump this to ship |
 | `scripts/bump-version.sh` | Sync version across pack.toml + cobblemon-npc/gradle.properties |
 | `.github/workflows/deploy-dev.yml` | Edit dev deploy flow itself |
-| `.github/workflows/deploy-prod.yml` | Edit prod deploy flow itself |
-| `.github/workflows/release.yml` | Edit how the .mrpack and GitHub Release are built |
+| `.github/workflows/deploy-prod.yml` | Edit prod deploy flow (also creates tag + publishes GitHub Release) |
 | `.github/workflows/pr-validation.yml` | Edit PR build checks |
 | `ops/snapshots/` | Edit snapshot/reset scripts (then redeploy to VM) |

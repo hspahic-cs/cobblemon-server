@@ -2,8 +2,8 @@ name: Publish .mrpack to GitHub Release
 description: |
   Exports modpack/*.mrpack via packwiz, optionally clears prior assets on
   a rolling release tag, and uploads the new mrpack via softprops. Used
-  by deploy-dev (rolling dev-latest pre-release) and release.yml (per-tag
-  release).
+  by deploy-dev (rolling dev-latest pre-release) and deploy-prod (per-tag
+  official release).
 
 inputs:
   tag-name:
@@ -17,7 +17,7 @@ inputs:
     required: false
     default: 'false'
   draft:
-    description: "Pass 'true' to leave as draft (release.yml does this)"
+    description: "Pass 'true' to leave as draft. Currently unused."
     required: false
     default: 'false'
   body:

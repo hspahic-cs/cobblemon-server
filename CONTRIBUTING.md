@@ -34,14 +34,15 @@ Branch off `main` for every change. Never push directly to `main`.
 
 **dev** auto-deploys when a commit lands on `main` whose CHANGELOG.md adds a new
 version heading. **prod** deploys only when you manually run the `Deploy prod`
-workflow against a tag.
+workflow against a version. Prod deploy is also where the `vX.Y.Z` tag and
+official GitHub Release get created — there's no separate tag-push step.
 
 ```
-PR opens          → pr-validation.yml builds all 6 mods + validates packwiz
+PR opens                       → pr-validation.yml builds all 6 mods + validates packwiz
 PR merges (no CHANGELOG bump)  → no deploy
-PR merges (CHANGELOG bumped)   → deploy-dev.yml fires, dev gets the new version
-git tag vX.Y.Z + push          → release.yml drafts a GitHub Release
-manual run Deploy prod (tag)   → prod gets the version (refuses if dev isn't on it yet)
+PR merges (CHANGELOG bumped)   → deploy-dev.yml fires, dev gets the new version + dev-latest pre-release refreshed
+manual run Deploy prod (X.Y.Z) → prod gets the version (refuses if dev isn't on it yet),
+                                 then on green health-check creates tag vX.Y.Z + publishes GitHub Release
 ```
 
 The "deploy signal is the CHANGELOG entry" rule means casual commits on main
@@ -73,9 +74,9 @@ When you're ready to deploy:
 4. `deploy-dev.yml` fires automatically; cobblemon-dev gets the new build
    within ~3-4 min.
 5. Connect to dev with your NeoForge MC client; smoke-test.
-6. Tag the same version: `git tag vX.Y.Z && git push --tags`. `release.yml`
-   drafts a GitHub Release with the .mrpack and individual jars.
-7. From the GitHub Actions UI, run `Deploy prod` and supply the tag.
+6. From the GitHub Actions UI, run `Deploy prod` and enter the version
+   (e.g. `0.7.42`). On green health-check it auto-creates the `vX.Y.Z` tag
+   and publishes the official GitHub Release with .mrpack + jars attached.
 
 ## Adding a new mod (your own)
 

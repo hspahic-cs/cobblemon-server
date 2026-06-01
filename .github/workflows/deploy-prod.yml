@@ -1,8 +1,9 @@
 name: Deploy prod
 
-# Manually-triggered prod deploy. Takes a tag (e.g. v0.4.0), checks out that
-# ref, builds all custom mods at that version, and deploys to cobblemon-prod
-# on the same VM as dev.
+# Manually-triggered prod deploy. Takes a version (e.g. 0.7.42), deploys to
+# cobblemon-prod, and — once the VM service comes up healthy — auto-creates
+# the v<version> tag (if missing) and publishes the official GitHub Release.
+# Prod deploy is the canonical release path: tag + release happen here.
 #
 # Promotion gate: refuses to deploy a version that hasn't already been deployed
 # to dev (verified by reading /opt/cobblemon-dev/.deployed_version on the VM).
@@ -12,13 +13,16 @@ name: Deploy prod
 on:
   workflow_dispatch:
     inputs:
-      tag:
-        description: 'Tag to deploy (e.g. v0.4.0). Must already exist on origin.'
+      version:
+        description: 'Version to deploy (e.g. 0.7.42). Tag v<version> is created if missing.'
         required: true
       skip_dev_check:
         description: 'Skip the "deployed-to-dev-first" check (use with caution).'
         type: boolean
         default: false
+
+permissions:
+  contents: write   # push the v<version> tag and publish the GitHub Release
 
 jobs:
   deploy:
@@ -35,21 +39,41 @@ jobs:
       DEV_INSTALL_DIR: /opt/cobblemon-dev
       KEEP_VERSIONS: 5
     steps:
-      - name: Resolve target ref
+      - name: Resolve target version + tag
         id: ref
         run: |
-          REF="${{ inputs.tag }}"
-          if [[ ! "$REF" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error::Tag must be of the form vX.Y.Z (got: $REF)"
+          # Lenient: strip any leading 'v' the user may have typed.
+          VERSION="${{ inputs.version }}"
+          VERSION="${VERSION#v}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::version must be X.Y.Z (got: ${{ inputs.version }})"
             exit 1
           fi
-          VERSION="${REF#v}"
-          echo "ref=$REF" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Decide checkout ref (existing tag, else main)
+        id: checkout-ref
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # If the tag already exists on origin, deploy that exact ref so
+          # re-runs are idempotent. Otherwise deploy main and tag from it
+          # after the deploy succeeds.
+          if gh api "repos/${{ github.repository }}/git/ref/tags/${{ steps.ref.outputs.tag }}" >/dev/null 2>&1; then
+            echo "ref=${{ steps.ref.outputs.tag }}" >> "$GITHUB_OUTPUT"
+            echo "tag_exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${{ steps.ref.outputs.tag }} already on origin — deploying it."
+          else
+            echo "ref=main" >> "$GITHUB_OUTPUT"
+            echo "tag_exists=false" >> "$GITHUB_OUTPUT"
+            echo "Tag ${{ steps.ref.outputs.tag }} not on origin — deploying main and tagging after deploy."
+          fi
 
       - uses: actions/checkout@v4
         with:
-          ref: ${{ steps.ref.outputs.ref }}
+          ref: ${{ steps.checkout-ref.outputs.ref }}
+          fetch-depth: 0   # full history for tag-from-main path
 
       - name: Tailscale + SSH setup
         uses: ./.github/actions/tailscale-ssh
@@ -77,6 +101,10 @@ jobs:
           mod-version: ${{ steps.ref.outputs.version }}
           set-pack-version: ${{ steps.ref.outputs.version }}
           resolve-server-tree: 'true'
+
+      - name: Capture deployed commit SHA
+        id: sha
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Rsync mods to VM staging
         run: |
@@ -160,9 +188,42 @@ jobs:
             if ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
               "sudo -n /usr/bin/systemctl is-active ${{ env.SERVICE }}" | grep -q '^active$'; then
               echo "${{ env.SERVICE }} is active"
-              exit 0
+              break
             fi
             sleep 2
+            if [[ $i -eq 30 ]]; then
+              echo "${{ env.SERVICE }} did not become active within 60s" >&2
+              exit 1
+            fi
           done
-          echo "${{ env.SERVICE }} did not become active within 60s" >&2
-          exit 1
+
+      # ─── Auto-tag + publish Release ──────────────────────────────────────────
+      # Only runs after deploy + health-check have succeeded. If an earlier step
+      # fails, no tag is created — keeps tags-on-origin in sync with what's
+      # actually live on prod.
+
+      - name: Create tag on origin (if missing)
+        if: steps.checkout-ref.outputs.tag_exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh api -X POST "repos/${{ github.repository }}/git/refs" \
+            -f ref="refs/tags/${{ steps.ref.outputs.tag }}" \
+            -f sha="${{ steps.sha.outputs.sha }}"
+          echo "Created ${{ steps.ref.outputs.tag }} -> ${{ steps.sha.outputs.sha }}"
+
+      - name: Publish GitHub Release
+        uses: ./.github/actions/publish-mrpack
+        with:
+          tag-name: ${{ steps.ref.outputs.tag }}
+          release-name: ${{ steps.ref.outputs.tag }}
+          prerelease: 'false'
+          draft: 'false'
+          rolling: 'false'
+          extra-files: custom-mods/*/build/libs/cobblemon-*-${{ steps.ref.outputs.version }}.jar
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/${{ steps.ref.outputs.tag }}/CHANGELOG.md) for changes.
+
+            **Prod server:** `108.21.168.120:25565`

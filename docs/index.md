@@ -2,6 +2,7 @@
 
 A private Pokémon-themed Minecraft server. Catch, train, battle, build.
 
+
 ## Joining
 
 You'll need a few things before you can connect:

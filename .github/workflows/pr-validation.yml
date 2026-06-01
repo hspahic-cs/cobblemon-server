@@ -1,20 +1,39 @@
 name: PR validation
 
-# Builds every custom mod and validates the modpack manifest on every PR
-# touching the modpack or custom-mods. No deploy. Acts as the merge gate
-# AND populates the gradle/packwiz/per-mod jar caches that downstream
-# workflows (deploy-dev, deploy-prod, release) restore from.
+# Always runs on every PR so it reports a status — required by branch
+# protection. Whether it does real work depends on what the PR actually
+# touches: a docs-only PR returns success immediately without running the
+# 9-minute build. A PR touching custom-mods/, modpack/, or the build
+# action goes through the full build + test + packwiz validation gate.
+#
+# This shape (always-run, conditional work) is the standard fix for the
+# "required check never reports because paths-filter excluded it" gotcha:
+# putting `paths:` at the workflow level skips the run, but GitHub still
+# expects the status, so docs-only PRs hang as un-mergeable.
 
 on:
   pull_request:
-    paths:
-      - 'custom-mods/**'
-      - 'modpack/**'
-      - '.github/workflows/pr-validation.yml'
-      - '.github/actions/**'
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      mods: ${{ steps.filter.outputs.mods }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            mods:
+              - 'custom-mods/**'
+              - 'modpack/**'
+              - '.github/workflows/pr-validation.yml'
+              - '.github/actions/**'
+
   build-and-validate:
+    needs: changes
+    if: needs.changes.outputs.mods == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,3 +58,25 @@ jobs:
           if ! git diff --exit-code -- index.toml; then
             echo "::warning::packwiz refresh changed index.toml — committed index is stale."
           fi
+
+  # Status check the branch-protection rule requires. Always runs (never
+  # skipped by paths), and succeeds when build-and-validate either passed
+  # or wasn't needed. Without this aggregator, branch protection would
+  # have to require build-and-validate directly, which paths-skip would
+  # leave eternally pending on docs-only PRs.
+  pr-validation:
+    needs: [changes, build-and-validate]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify build-and-validate passed (or was correctly skipped)
+        run: |
+          MODS_TOUCHED='${{ needs.changes.outputs.mods }}'
+          BUILD_RESULT='${{ needs.build-and-validate.result }}'
+          echo "mods touched: $MODS_TOUCHED"
+          echo "build-and-validate result: $BUILD_RESULT"
+          if [[ "$MODS_TOUCHED" == "true" && "$BUILD_RESULT" != "success" ]]; then
+            echo "::error::PR touched mod files but build-and-validate did not succeed (got: $BUILD_RESULT)"
+            exit 1
+          fi
+          echo "PR validation OK."

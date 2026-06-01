@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "meditite-filler-cobblemon-is_peak",
+      "pokemon": "meditite",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "3-28",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_peak"
+        ]
+      }
+    }
+  ],
+  "_comment": "Filler: meditite added to #cobblemon:is_peak ultra-rare bucket to dilute legendary share to ~20%."
+}

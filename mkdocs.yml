@@ -68,4 +68,11 @@ nav:
   - Joining the server:
       - Install the modpack: install.md
       - Connect: connect.md
+  - Reference:
+      - Cobbleworkers jobs: cobbleworkers.md
+  - Quickstart: quickstart.md
+  - Playing:
+      - Economy & Automation: economy-and-automation.md
+      - Minecolonies: minecolonies.md
+      - Pokémon Spawns: pokemon-spawns.md
   # - Commands: commands.md   # TODO: add once we draft these

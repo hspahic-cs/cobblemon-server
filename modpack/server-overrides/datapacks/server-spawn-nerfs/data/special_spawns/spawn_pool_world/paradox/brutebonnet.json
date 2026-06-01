@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "brutebonnet-1T",
+      "pokemon": "brutebonnet min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "40-75",
+      "weight": 3.0,
+      "condition": {
+        "timeRange": "day",
+        "biomes": [
+          "#cobblemon:is_jungle"
+        ]
+      }
+    }
+  ],
+  "_comment": "Paradox bucket: rare \u2192 ultra-rare. Weight unchanged from AllTheMons."
+}

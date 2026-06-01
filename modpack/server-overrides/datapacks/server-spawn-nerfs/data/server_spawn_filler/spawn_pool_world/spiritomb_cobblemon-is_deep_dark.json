@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "spiritomb-filler-cobblemon-is_deep_dark",
+      "pokemon": "spiritomb",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "24-49",
+      "weight": 9.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_deep_dark"
+        ]
+      }
+    }
+  ],
+  "_comment": "Filler: spiritomb added to #cobblemon:is_deep_dark ultra-rare bucket to dilute legendary share to ~20%."
+}

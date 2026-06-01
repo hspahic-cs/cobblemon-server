@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "squawkabilly-filler-cobblemon-is_sky",
+      "pokemon": "squawkabilly",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "17-42",
+      "weight": 5.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sky"
+        ]
+      }
+    }
+  ],
+  "_comment": "Filler: squawkabilly added to #cobblemon:is_sky ultra-rare bucket to dilute legendary share to ~20%."
+}

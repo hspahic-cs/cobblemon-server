@@ -5,9 +5,9 @@
     "title": { "text": "Sunny Side Up" },
     "description": { "text": "Use the Leaf Stone to evolve your Exeggcute into Exeggutor." },
     "icon": { "id": "cobblemon:pasture" },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
-    "announce_to_chat": false
+    "announce_to_chat": true
   },
   "criteria": {
     "done": { "trigger": "minecraft:impossible" }

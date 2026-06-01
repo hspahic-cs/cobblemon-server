@@ -12,7 +12,29 @@ root README.
 
 ## [Unreleased]
 
-## [0.7.41] - 2026-06-01
+## [0.7.42] - 2026-06-01
+
+### Fixed
+- **`reach_income_250` (Pocket Change) and other income-threshold
+  quests now award when the player's balance meets the threshold,
+  regardless of how it got there.** Previously the check fired only
+  when a specific sell deposit *crossed* the threshold
+  (`balanceBefore < N && balanceAfter >= N`). Players who built up
+  ¢250+ from trainer bounties before beating Gym 1 — the quest's
+  prerequisite — never saw the award because subsequent sells stayed
+  strictly above 250 (no crossing).
+
+  Behavior change:
+  - `QuestRewards.checkIncomeThresholds(player)` now re-evaluates
+    every threshold against current balance and awards any reached.
+    `awardQuest` is already idempotent (`progress.isDone` short-
+    circuit), so the re-check is safe to call from anywhere.
+  - Called on every sell deposit (existing path, simplified) AND
+    on every login via `PlayerEvent.PlayerLoggedInEvent` (new). Login
+    handles the "already had enough money when the quest unlocked"
+    case retroactively.
+
+  Same logic covers the `reach_income_1000 / _10000 / _100000` tiers.
 
 ### Fixed
 - **Poké Healer quote now shows the real carrot price.** The

@@ -12,6 +12,64 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.42] - 2026-06-01
+
+### Fixed
+- **`reach_income_250` (Pocket Change) and other income-threshold
+  quests now award when the player's balance meets the threshold,
+  regardless of how it got there.** Previously the check fired only
+  when a specific sell deposit *crossed* the threshold
+  (`balanceBefore < N && balanceAfter >= N`). Players who built up
+  ¢250+ from trainer bounties before beating Gym 1 — the quest's
+  prerequisite — never saw the award because subsequent sells stayed
+  strictly above 250 (no crossing).
+
+  Behavior change:
+  - `QuestRewards.checkIncomeThresholds(player)` now re-evaluates
+    every threshold against current balance and awards any reached.
+    `awardQuest` is already idempotent (`progress.isDone` short-
+    circuit), so the re-check is safe to call from anywhere.
+  - Called on every sell deposit (existing path, simplified) AND
+    on every login via `PlayerEvent.PlayerLoggedInEvent` (new). Login
+    handles the "already had enough money when the quest unlocked"
+    case retroactively.
+
+  Same logic covers the `reach_income_1000 / _10000 / _100000` tiers.
+
+### Fixed
+- **Poké Healer quote now shows the real carrot price.** The
+  cobblemon-carrots → cobblemon-market reflection bridge invoked
+  `PricingEngine.buyPrice` as if it were a static method
+  (`Method.invoke(null, …)`), but `PricingEngine` is a Kotlin
+  `object` — `buyPrice` is bound to its `INSTANCE` singleton, not
+  static. Every call NPE'd and the bridge fell back to the flat
+  `carrotPrice` config (`= 5`) for the prompt's per-carrot price
+  + total cost. Meanwhile the confirm-time charge went through the
+  (working) TradeOps path at the live market price, so a player
+  quoted "$5 × 10 = $50" actually got charged $80 if elasticity
+  had pushed carrots to $8/each. Bridge now resolves
+  `PricingEngine.INSTANCE` at startup and passes it as the receiver
+  — prompt + charge use the same live price.
+
+## [0.7.40] - 2026-06-01
+
+### Fixed
+- **Carrots now grow at normal speed everywhere, every season.** New
+  datapack `server-crop-fertility` adds `minecraft:carrots` to Serene
+  Seasons' `year_round_crops` tag. Carrots are seasonal infrastructure
+  on this server — the starter quest chain (`evolve_exeggutor` →
+  `ranch_carrot_farm`) hands the player a Pasture Block + bonemeal +
+  Exeggutor and expects the carrots to actually grow, and the Poké
+  Healer block consumes carrots per heal. Under SS defaults carrots
+  were only fertile in spring + autumn (~48 of 96 in-game days);
+  tropical biomes (savanna/desert/jungle/etc.) were even worse
+  because SS treats those as permanent summer, leaving carrots
+  out-of-season every day there.
+
+  Other crops (wheat, potatoes, beets, pumpkins, melons) still follow
+  the seasonal calendar — only carrots are pulled into the
+  always-fertile pool.
+
 ## [0.7.39] - 2026-05-31
 
 ### Changed

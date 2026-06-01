@@ -68,4 +68,6 @@ nav:
   - Joining the server:
       - Install the modpack: install.md
       - Connect: connect.md
+  - Reference:
+      - Cobbleworkers jobs: cobbleworkers.md
   # - Commands: commands.md   # TODO: add once we draft these

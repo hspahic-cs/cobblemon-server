@@ -180,10 +180,8 @@ object TradeOps {
             entry.effectiveSellClamp,
         )
 
-        val balanceBefore = EconomyBridge.getBalance(player.uuid)
         EconomyBridge.deposit(player.uuid, totalProceeds)
-        val balanceAfter = EconomyBridge.getBalance(player.uuid)
-        QuestRewards.checkIncomeThresholds(player, balanceBefore, balanceAfter)
+        QuestRewards.checkIncomeThresholds(player)
 
         val avgPrice = (totalProceeds + qty / 2) / qty
         CobblemonMarket.marketStore.recordPriceTick(

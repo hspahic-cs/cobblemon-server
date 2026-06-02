@@ -5,9 +5,11 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonbridge.CobblemonBridge
+import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.network.chat.Component
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.loading.FMLPaths
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent
@@ -52,6 +54,11 @@ object LegendaryMonumentLock {
 
     /** The LM legendary currently live in the world. Null if none active. */
     @Volatile private var activeLmPokemon: Pokemon? = null
+    @Volatile private var activeLmLevel: ServerLevel? = null
+    @Volatile private var activeLmPos: BlockPos? = null
+
+    /** Scan radius (each axis) around the spawn position when draining altar blocks. */
+    private const val DRAIN_RADIUS = 8
 
     fun init() {
         val file = FMLPaths.CONFIGDIR.get()
@@ -92,6 +99,8 @@ object LegendaryMonumentLock {
             }
 
             activeLmPokemon = pokemon
+            activeLmLevel = event.entity.level() as? ServerLevel
+            activeLmPos = event.entity.blockPosition()
             CobblemonBridge.logger.info(
                 "monument-lock: {} spawned in LM structure — one chance to catch it",
                 pokemon.species.name,
@@ -110,7 +119,11 @@ object LegendaryMonumentLock {
             val active = activeLmPokemon ?: return@subscribe
             if (event.pokemon !== active) return@subscribe
 
+            val captureLevel = activeLmLevel
+            val capturePos = activeLmPos
             activeLmPokemon = null
+            activeLmLevel = null
+            activeLmPos = null
             writeLock()
             val catcher = event.player.gameProfile.name
             val species = event.pokemon.species.name
@@ -118,6 +131,9 @@ object LegendaryMonumentLock {
                 "monument-lock: LOCKED — {} caught {} from an LM structure",
                 catcher, species,
             )
+            if (captureLevel != null && capturePos != null) {
+                drainAltar(captureLevel, capturePos)
+            }
             event.player.server.playerList.players.forEach {
                 it.sendSystemMessage(Component.literal(
                     "§6[Legendary Monument] §f$catcher has caught $species! " +
@@ -143,6 +159,8 @@ object LegendaryMonumentLock {
         server.execute {
             if (locked || activeLmPokemon !== active) return@execute  // already handled by POKEMON_CAPTURED
             activeLmPokemon = null
+            activeLmLevel = null
+            activeLmPos = null
             CobblemonBridge.logger.info("monument-lock: LM legendary left without being caught — monument is open again")
             server.playerList.players.forEach {
                 it.sendSystemMessage(Component.literal(
@@ -157,7 +175,31 @@ object LegendaryMonumentLock {
         lockFile?.deleteIfExists()
         locked = false
         activeLmPokemon = null
+        activeLmLevel = null
+        activeLmPos = null
         CobblemonBridge.logger.info("monument-lock: reset by admin")
+    }
+
+    /**
+     * Replaces every `legendarymonuments:*` block within [DRAIN_RADIUS] of [origin] with
+     * crying obsidian, giving the monument a visually "spent" appearance.
+     */
+    private fun drainAltar(level: ServerLevel, origin: BlockPos) {
+        val cryingObsidian = Blocks.CRYING_OBSIDIAN.defaultBlockState()
+        var count = 0
+        for (x in -DRAIN_RADIUS..DRAIN_RADIUS) {
+            for (y in -DRAIN_RADIUS..DRAIN_RADIUS) {
+                for (z in -DRAIN_RADIUS..DRAIN_RADIUS) {
+                    val pos = origin.offset(x, y, z)
+                    val state = level.getBlockState(pos)
+                    if (state.block.builtInRegistryHolder().key()?.location()?.namespace == LM_NAMESPACE) {
+                        level.setBlock(pos, cryingObsidian, 3)
+                        count++
+                    }
+                }
+            }
+        }
+        CobblemonBridge.logger.info("monument-lock: drained {} LM blocks around {}", count, origin)
     }
 
     private fun isInsideLmStructure(entity: PokemonEntity): Boolean {

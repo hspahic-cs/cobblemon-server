@@ -8,6 +8,7 @@ import com.cobblemonbridge.CobblemonBridge
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.ChunkPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.bus.api.SubscribeEvent
@@ -34,7 +35,7 @@ import kotlin.io.path.writeText
  *    will ever spawn from any LM structure.
  *
  * Detection:
- *  - Structure namespace check (`legendarymonuments:*`) at spawn time via [getAllStructuresAt].
+ *  - Structure namespace check (`legendarymonuments:*`) at spawn time via [startsForStructure] (2D chunk-based, Y-agnostic).
  *  - Caught vs. fled distinguished by [Pokemon.isWild] on the next server tick after entity
  *    removal: capture calls [party.add] in the same tick before our scheduled check runs,
  *    so isWild() == false means caught; true means fled/despawned.
@@ -57,8 +58,11 @@ object LegendaryMonumentLock {
     @Volatile private var activeLmLevel: ServerLevel? = null
     @Volatile private var activeLmPos: BlockPos? = null
 
-    /** Scan radius (each axis) around the spawn position when draining altar blocks. */
-    private const val DRAIN_RADIUS = 8
+    /** XZ scan radius around the structure anchor when draining altar blocks. */
+    private const val DRAIN_RADIUS_XZ = 48
+    /** Full Y range to scan (structure anchor down to bedrock, up to build limit). */
+    private const val DRAIN_Y_MIN = -64
+    private const val DRAIN_Y_MAX = 320
 
     fun init() {
         val file = FMLPaths.CONFIGDIR.get()
@@ -120,7 +124,7 @@ object LegendaryMonumentLock {
             if (event.pokemon !== active) return@subscribe
 
             val captureLevel = activeLmLevel
-            val capturePos = activeLmPos
+            val spawnPos = activeLmPos
             activeLmPokemon = null
             activeLmLevel = null
             activeLmPos = null
@@ -131,8 +135,9 @@ object LegendaryMonumentLock {
                 "monument-lock: LOCKED — {} caught {} from an LM structure",
                 catcher, species,
             )
-            if (captureLevel != null && capturePos != null) {
-                drainAltar(captureLevel, capturePos)
+            if (captureLevel != null && spawnPos != null) {
+                val anchorPos = findStructureAnchor(captureLevel, spawnPos) ?: spawnPos
+                drainAltar(captureLevel, anchorPos)
             }
             event.player.server.playerList.players.forEach {
                 it.sendSystemMessage(Component.literal(
@@ -181,16 +186,40 @@ object LegendaryMonumentLock {
     }
 
     /**
-     * Replaces every `legendarymonuments:*` block within [DRAIN_RADIUS] of [origin] with
-     * crying obsidian, giving the monument a visually "spent" appearance.
+     * Returns the lowest bounding-box Y of the LM structure start whose chunk contains
+     * [spawnPos], giving a ground-level anchor for the drain scan.
+     * Falls back to null if no structure start is found (caller uses spawnPos).
      */
-    private fun drainAltar(level: ServerLevel, origin: BlockPos) {
+    private fun findStructureAnchor(level: ServerLevel, spawnPos: BlockPos): BlockPos? {
+        val structureManager = level.structureManager()
+        val registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
+        val chunkPos = ChunkPos(spawnPos)
+        for ((key, structure) in registry.entrySet()) {
+            if (key.location().namespace != LM_NAMESPACE) continue
+            val starts = structureManager.startsForStructure(chunkPos, structure)
+            if (starts.isNotEmpty()) {
+                val bb = starts.first().boundingBox
+                return BlockPos(bb.minX + (bb.maxX - bb.minX) / 2, bb.minY, bb.minZ + (bb.maxZ - bb.minZ) / 2)
+            }
+        }
+        return null
+    }
+
+    /**
+     * Replaces every `legendarymonuments:*` block within [DRAIN_RADIUS_XZ] XZ and the full
+     * world Y range of [anchor] with crying obsidian, giving the monument a spent appearance.
+     *
+     * [anchor] should be the structure's ground-level bounding-box centre (from
+     * [findStructureAnchor]), not the entity's spawn position — tall structures like Bell Tower
+     * spawn legendaries at the apex (y≈242) while their altar blocks sit near y≈125.
+     */
+    private fun drainAltar(level: ServerLevel, anchor: BlockPos) {
         val cryingObsidian = Blocks.CRYING_OBSIDIAN.defaultBlockState()
         var count = 0
-        for (x in -DRAIN_RADIUS..DRAIN_RADIUS) {
-            for (y in -DRAIN_RADIUS..DRAIN_RADIUS) {
-                for (z in -DRAIN_RADIUS..DRAIN_RADIUS) {
-                    val pos = origin.offset(x, y, z)
+        for (x in -DRAIN_RADIUS_XZ..DRAIN_RADIUS_XZ) {
+            for (y in DRAIN_Y_MIN..DRAIN_Y_MAX) {
+                for (z in -DRAIN_RADIUS_XZ..DRAIN_RADIUS_XZ) {
+                    val pos = BlockPos(anchor.x + x, y, anchor.z + z)
                     val state = level.getBlockState(pos)
                     if (state.block.builtInRegistryHolder().key()?.location()?.namespace == LM_NAMESPACE) {
                         level.setBlock(pos, cryingObsidian, 3)
@@ -199,15 +228,23 @@ object LegendaryMonumentLock {
                 }
             }
         }
-        CobblemonBridge.logger.info("monument-lock: drained {} LM blocks around {}", count, origin)
+        CobblemonBridge.logger.info("monument-lock: drained {} LM blocks around {}", count, anchor)
     }
 
     private fun isInsideLmStructure(entity: PokemonEntity): Boolean {
         val level = entity.level() as? ServerLevel ?: return false
         val structureManager = level.structureManager()
         val registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
-        return structureManager.getAllStructuresAt(entity.blockPosition()).keys
-            .any { structure -> registry.getKey(structure)?.namespace == LM_NAMESPACE }
+        val chunkPos = ChunkPos(entity.blockPosition())
+        // getAllStructuresAt does a 3D bounding-box check — entities spawned at the top of tall
+        // structures (e.g. Bell Tower apex at y=242) fall outside piece boxes and get missed.
+        // getStructureWithPieceAt is also 3D. Use startsForStructure per chunk instead, which
+        // checks only the 2D chunk footprint and is Y-agnostic.
+        return registry.entrySet()
+            .filter { (key, _) -> key.location().namespace == LM_NAMESPACE }
+            .any { (_, structure) ->
+                structureManager.startsForStructure(chunkPos, structure).isNotEmpty()
+            }
     }
 
     private fun writeLock() {

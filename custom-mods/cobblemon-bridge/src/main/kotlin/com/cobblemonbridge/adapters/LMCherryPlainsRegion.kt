@@ -35,44 +35,44 @@ class LMCherryPlainsRegion(
         registry: Registry<Biome>,
         mapper: Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>>,
     ) {
-        // Point 1
+        // Point 1 — warm, low-humidity, inland plateau, low erosion
         addBiome(
             mapper,
             Climate.parameters(
-                Climate.Parameter.span(-0.2f, 0.5f),    // temperature
-                Climate.Parameter.span(-0.4f, 0.4f),    // humidity
-                Climate.Parameter.span(0.35f, 1.0f),    // continentalness
-                Climate.Parameter.span(-0.8f, -0.3f),   // erosion
+                Climate.Parameter.span(-0.1f, 0.5f),    // temperature
+                Climate.Parameter.span(-0.5f, 0.1f),    // humidity
+                Climate.Parameter.span(0.3f, 1.0f),     // continentalness
+                Climate.Parameter.span(-0.8f, -0.25f),  // erosion
                 Climate.Parameter.span(0.0f, 0.0f),     // depth
-                Climate.Parameter.span(-0.3f, 0.3f),    // weirdness
+                Climate.Parameter.span(-0.6f, 0.6f),    // weirdness
                 0.0f,                                   // offset
             ),
             biomeKey,
         )
-        // Point 2
+        // Point 2 — slightly warmer, drier, more inland
         addBiome(
             mapper,
             Climate.parameters(
-                Climate.Parameter.span(-0.1f, 0.6f),
-                Climate.Parameter.span(-0.5f, 0.5f),
-                Climate.Parameter.span(0.4f, 0.9f),
-                Climate.Parameter.span(-0.75f, -0.25f),
+                Climate.Parameter.span(0.0f, 0.6f),
+                Climate.Parameter.span(-0.6f, 0.2f),
+                Climate.Parameter.span(0.4f, 1.0f),
+                Climate.Parameter.span(-0.75f, -0.2f),
                 Climate.Parameter.span(0.0f, 0.0f),
-                Climate.Parameter.span(-0.4f, 0.4f),
+                Climate.Parameter.span(-0.7f, 0.7f),
                 0.0f,
             ),
             biomeKey,
         )
-        // Point 3
+        // Point 3 — warmest variant, dry continental interior
         addBiome(
             mapper,
             Climate.parameters(
-                Climate.Parameter.span(0.0f, 0.7f),
-                Climate.Parameter.span(-0.3f, 0.6f),
+                Climate.Parameter.span(0.1f, 0.7f),
+                Climate.Parameter.span(-0.5f, 0.3f),
                 Climate.Parameter.span(0.5f, 1.0f),
-                Climate.Parameter.span(-0.7f, -0.2f),
+                Climate.Parameter.span(-0.7f, -0.15f),
                 Climate.Parameter.span(0.0f, 0.0f),
-                Climate.Parameter.span(-0.5f, 0.5f),
+                Climate.Parameter.span(-0.8f, 0.8f),
                 0.0f,
             ),
             biomeKey,

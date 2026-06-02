@@ -6,6 +6,7 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonbridge.CobblemonBridge
 import net.minecraft.core.registries.Registries
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.network.chat.Component
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.loading.FMLPaths
@@ -45,8 +46,9 @@ object LegendaryMonumentLock {
     private const val FLAG_NAME = "monument_lock.flag"
 
     @Volatile private var lockFile: Path? = null
-    @Volatile var locked: Boolean = false
-        private set
+    @Volatile private var locked: Boolean = false
+
+    fun isLocked(): Boolean = locked
 
     /** The LM legendary currently live in the world. Null if none active. */
     @Volatile private var activeLmPokemon: Pokemon? = null
@@ -159,12 +161,11 @@ object LegendaryMonumentLock {
     }
 
     private fun isInsideLmStructure(entity: PokemonEntity): Boolean {
-        val level = entity.level()
+        val level = entity.level() as? ServerLevel ?: return false
         val structureManager = level.structureManager()
         val registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
-        return structureManager.getAllStructuresAt(entity.blockPosition()).keys.any { structure ->
-            registry.getKey(structure)?.namespace == LM_NAMESPACE
-        }
+        return structureManager.getAllStructuresAt(entity.blockPosition()).keys
+            .any { structure -> registry.getKey(structure)?.namespace == LM_NAMESPACE }
     }
 
     private fun writeLock() {

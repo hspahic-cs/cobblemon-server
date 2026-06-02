@@ -12,6 +12,33 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.48] - 2026-06-02
+
+### Fixed
+- **Monument lock: spawn detection broken for tall structures.** `getAllStructuresAt`
+  is a 3D bounding-box check — legendaries spawning at the apex of Bell Tower
+  (y≈242) were above all structure piece boxes and slipped past undetected.
+  Switched to `startsForStructure(ChunkPos, Predicate)` which checks only the
+  2D chunk footprint and is Y-agnostic.
+- **Monument lock: altar drain never reached ground level.** `drainAltar` scanned
+  ±8 blocks around the entity's spawn position (y≈242), missing altar blocks at
+  y≈125. Added `findStructureAnchor` to resolve the structure's bounding-box
+  ground-level centre, then scans the full world Y range (−64..320) within
+  ±48 XZ of that anchor.
+- **Monument lock: duplicate region registration on world reload.** Added a
+  one-shot `registered` guard on `LegendaryMonumentsTerraBlenderShim` so
+  repeated `ServerAboutToStartEvent` fires can't stack duplicate TB region
+  registrations.
+
+### Changed
+- **Cherry Plains biome size retuned.** Previous over-tightening (0.7.47) made
+  biomes postage-stamp sized. Climate spans widened and region weight set to 2
+  for a reasonable frequency without dominating the overworld.
+- **Terralith biome scale increased.** New `server-terralith-biome-scale`
+  datapack overrides `temperature`, `vegetation`, and `base_erosion` density
+  functions with `xz_scale` 0.25 → 0.1, making Terralith biomes ~2.5× wider
+  in newly generated chunks.
+
 ## [0.7.47] - 2026-06-02
 
 ### Added

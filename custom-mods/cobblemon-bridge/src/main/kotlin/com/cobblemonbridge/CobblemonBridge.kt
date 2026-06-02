@@ -11,6 +11,7 @@ import com.cobblemonbridge.battle.GymPrereqHook
 import com.cobblemonbridge.commands.CommandAliases
 import com.cobblemonbridge.commands.GymTpCommands
 import com.cobblemonbridge.commands.HologramCommands
+import com.cobblemonbridge.commands.MonumentCommand
 import com.cobblemonbridge.commands.ProfileCommand
 import com.cobblemonbridge.commands.SpawnCommands
 import com.cobblemonbridge.commands.HomeAliases
@@ -26,6 +27,7 @@ import com.cobblemonbridge.quests.HealQuestHook
 import com.cobblemonbridge.quests.PartyLevelHook
 import com.cobblemonbridge.quests.PokedexProgressHook
 import com.cobblemonbridge.quests.SetHomeHook
+import com.cobblemonbridge.wild.LegendaryMonumentLock
 import com.cobblemonbridge.wild.TradeCapHook
 import com.cobblemonbridge.wild.WildBattleAdjustHook
 import com.cobblemonbridge.wild.WildBattleRewardHook
@@ -82,6 +84,8 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // RCT's adjustPlayerLevels (which turned out to be dead config — its BattleRules field
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
+        LegendaryMonumentLock.registerEvents()
+        NeoForge.EVENT_BUS.register(LegendaryMonumentLock)
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)
 
@@ -116,6 +120,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
         TradeCommand.register(event.dispatcher)
+        MonumentCommand.register(event.dispatcher)
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -124,6 +129,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         SpawnCommands.init()
         WildCommand.init()
         HologramCommands.init()
+        LegendaryMonumentLock.init()
         com.cobblemonbridge.profile.FavoriteTracker.init()
     }
 

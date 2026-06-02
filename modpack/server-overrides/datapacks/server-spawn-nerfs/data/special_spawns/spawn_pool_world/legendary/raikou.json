@@ -1,0 +1,41 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "raikou-1T",
+      "pokemon": "raikou min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "60",
+      "weight": 0.0,
+      "weightMultipliers": [
+        {
+          "multiplier": 4,
+          "condition": {
+            "isThundering": true
+          },
+          "anticondition": {
+            "biomes": [
+              "#cobblemon:is_arid",
+              "#cobblemon:is_snowy"
+            ]
+          }
+        }
+      ],
+      "condition": {
+        "canSeeSky": true,
+        "biomes": [
+          "#cobblemon:is_overworld"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 tier=UU+\u2192LM-suppressed weight=0.0 bucket=ultra-rare"
+}

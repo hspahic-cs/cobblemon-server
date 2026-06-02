@@ -1,0 +1,22 @@
+{
+  "enabled": true,
+  "spawns": [
+    {
+      "id": "regice-1T",
+      "pokemon": "regice min_perfect_ivs=3",
+      "type": "pokemon",
+      "spawnablePositionType": "fishing",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_frozen_ocean"
+        ],
+        "canSeeSky": true,
+        "minLureLevel": 3
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 tier=UU+\u2192LM-suppressed weight=0.0 bucket=ultra-rare"
+}

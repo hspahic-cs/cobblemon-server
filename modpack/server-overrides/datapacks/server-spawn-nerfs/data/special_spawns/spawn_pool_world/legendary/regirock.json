@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "regirock-1T",
+      "pokemon": "regirock min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.0,
+      "condition": {
+        "canSeeSky": true,
+        "biomes": [
+          "#cobblemon:is_desert"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 tier=UU+\u2192LM-suppressed weight=0.0 bucket=ultra-rare"
+}

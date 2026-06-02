@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "spawns": [
+    {
+      "id": "regigigas-1T",
+      "pokemon": "regigigas min_perfect_ivs=3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_sandy"
+        ],
+        "structures": [
+          "#minecraft:village"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 tier=UU+\u2192LM-suppressed weight=0.0 bucket=ultra-rare"
+}

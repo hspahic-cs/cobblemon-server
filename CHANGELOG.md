@@ -12,6 +12,91 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.43] - 2026-06-01
+
+### Changed (gameplay)
+- **Ultra-rare bucket roll cut from 0.2 → 0.01** (~20× nerf vs vanilla
+  Cobblemon, ~6.7× rarer than 0.7.38's hotfix value of 0.0667). The
+  override now lives at `config/cobblemon/spawning/best-spawner-config.json`
+  instead of the datapack-side `data/cobblemon/spawn_data/buckets.json`
+  the hotfix used. Cobblemon's `BestSpawnerConfig.Companion.loadExternal()`
+  reads from the *config* path (verified by disassembling
+  `Cobblemon-neoforge-1.7.3+1.21.1.jar`), so the datapack-side override
+  in 0.7.38 was a no-op — only the in-jar default of 0.2 was actually
+  taking effect. `replaceWithNewVersion` is set to `false` so future
+  Cobblemon updates won't silently restore the upstream value.
+
+  The 0.7.38 datapack `data/cobblemon/spawn_data/buckets.json` file is
+  removed (it never did anything).
+
+- **LegendaryMonuments-covered species suppressed from wild spawning
+  (weight=0).** LM v7.8 ships dedicated questlines (pedestals, shrines,
+  treats, monument completion vouchers from cobblemon-gacha) for 46
+  species across all 9 generations. Allowing them to also spawn
+  randomly in the wild undermines the intended acquisition path. The
+  44 species that have ATM spawn pools are now overridden to
+  `weight: 0` (the other 2 — Ting-Lu and Virizion — have no ATM spawn
+  entries, so no override is written). LM coverage list verified
+  against in-game LM UI:
+
+  | Gen | LM-covered |
+  |---|---|
+  | 1 | articuno, zapdos, moltres, mew |
+  | 2 | raikou, entei, suicune, lugia, ho-oh, celebi |
+  | 3 | regirock, regice, registeel, latias, latios |
+  | 4 | regigigas, cresselia, darkrai, heatran, mesprit, azelf, uxie, dialga, palkia, giratina, arceus |
+  | 5 | cobalion, terrakion, virizion, keldeo, reshiram, zekrom, kyurem, victini |
+  | 6 | hoopa |
+  | 7 | cosmog, meltan |
+  | 8 | zacian, zamazenta, eternatus, regieleki, regidrago |
+  | 9 | chien-pao, chi-yu, ting-lu, wo-chien |
+
+- **Per-tier weights for the remaining 64 species** (legendaries +
+  mythicals not in LM, all paradoxes, all UBs). Each species
+  classified by peak Gen 6+ competitive tier (final-evolved-form
+  basis — Cosmog mapped pre-LM-override; Kubfu → Urshifu; Poipole →
+  Naganadel). Steep curve, 20× spread top to bottom:
+
+  | Tier | Weight | Examples (post-LM filter) |
+  |------|-------:|----------|
+  | AG | 0.05 | Miraidon, Koraidon, Deoxys |
+  | Ubers | 0.10 | Kyogre, Groudon, Rayquaza, Xerneas, Yveltal, Calyrex, Necrozma, Terapagos, Flutter Mane, Iron Bundle, Roaring Moon, Iron Valiant, Pheromosa |
+  | OU | 0.30 | Tapus, Ogerpon, Therian Forces of Nature, Great Tusk, Iron Treads, Slither Wing, Iron Moth, most UBs |
+  | UU+ | 1.00 | Glastrier, Phione, Zarude, Zeraora, Brute Bonnet, Iron Leaves, Scream Tail, Guzzlord |
+
+  Replaces upstream AllTheMons weights (which range 0.05–11.5
+  per-species and don't track competitive viability). Suicune
+  (upstream 0.5) and Articuno (upstream 2.0) — both UU+ — now both
+  spawn at the same 1.0; Heatran (upstream 11.5 across 3 entries)
+  drops to 0.3.
+
+  **Mythical floor:** mythicals are additionally capped at the Ubers
+  weight regardless of competitive tier. Mew (OU), Jirachi (OU),
+  Phione (UU+), etc. all spawn at 0.10 — game-defining mythicals
+  shouldn't outpace Ubers-tier legendaries.
+
+- **Paradox bucket promotion** stays from 0.7.38 (rare → ultra-rare).
+  Without this, paradoxes would escape the bucket-roll nerf since
+  upstream puts them in the `rare` bucket.
+
+- **Biome filler removed.** 0.7.38 added 27 thematic species (Duskull
+  in soul_sand, Cubone in nether_desert, Unown in end, etc.) into
+  the ultra-rare bucket of 7 biomes to dilute legendary share to
+  ~20% in legend-only biomes. With LM suppression in this release,
+  most biomes' ultra-rare candidates are non-LM legendaries +
+  paradoxes anyway, so the filler is no longer load-bearing. A few
+  biomes (soul_sand, deep_dark) end up with very thin ultra-rare
+  pools — players just need to roam more for legendaries from those
+  biomes, which is consistent with the "ultra-rare = rare" intent.
+
+- 108 ATM species covered: 44 LM-suppressed (weight=0), 64 at tier
+  weights. `ops/gen_spawn_nerfs.py` is the source of truth — re-run
+  after bumping AllTheMons or LegendaryMonuments to pick up new
+  species (warns on unmapped species and on LM species without ATM
+  spawn pools).
+
+  Replaces `ops/gen_spawn_hotfix.py` from 0.7.38.
+
 ## [0.7.42] - 2026-06-01
 
 ### Fixed

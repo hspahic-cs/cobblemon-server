@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "xurkitree-1T",
+      "pokemon": "xurkitree min_perfect_ivs=3",
+      "presets": [
+        "natural"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "60",
+      "weight": 0.3,
+      "weightMultipliers": [
+        {
+          "multiplier": 2.5,
+          "condition": {
+            "neededNearbyBlocks": [
+              "minecraft:lightning_rod"
+            ]
+          }
+        }
+      ],
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_end"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons ultra_beast spawn pool \u2014 tier=OU weight=0.3 bucket=ultra-rare"
+}

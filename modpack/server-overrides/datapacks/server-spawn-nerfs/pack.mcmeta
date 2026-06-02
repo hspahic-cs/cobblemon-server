@@ -1,6 +1,6 @@
 {
   "pack": {
     "pack_format": 48,
-    "description": "Ultra-rare bucket \u00d7 1/3, paradoxes in ultra-rare bucket, filler entries in legendary-dominated biomes."
+    "description": "Tier-based spawn rates for legendaries, mythicals, paradoxes, and ultra beasts (overrides AllTheMons spawn pools)."
   }
 }

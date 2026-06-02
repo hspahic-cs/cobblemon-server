@@ -1,0 +1,44 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "pecharunt-1T",
+      "pokemon": "pecharunt min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "50-75",
+      "weight": 0.1,
+      "weightMultipliers": [
+        {
+          "multiplier": 1.5,
+          "condition": {
+            "timeRange": "night"
+          }
+        },
+        {
+          "multiplier": 5.0,
+          "condition": {
+            "neededNearbyBlocks": [
+              "minecraft:composter"
+            ]
+          }
+        }
+      ],
+      "condition": {
+        "minSkyLight": 8,
+        "maxSkyLight": 15,
+        "biomes": [
+          "#cobblemon:is_swamp"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons mythical spawn pool \u2014 tier=OU\u2192Ubers-floor weight=0.1 bucket=ultra-rare"
+}

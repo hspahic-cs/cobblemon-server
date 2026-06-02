@@ -69,10 +69,9 @@ nav:
       - Install the modpack: install.md
       - Connect: connect.md
   - Reference:
+      - Gym trainers: gym-trainers.md
+      - Pokémon spawn biomes: spawn-lookup.md
       - Cobbleworkers jobs: cobbleworkers.md
-  - Quickstart: quickstart.md
-  - Playing:
-      - Economy & Automation: economy-and-automation.md
-      - Minecolonies: minecolonies.md
-      - Pokémon Spawns: pokemon-spawns.md
+      - Quests: quests.md
+      - Finding legendaries: legendaries.md
   # - Commands: commands.md   # TODO: add once we draft these

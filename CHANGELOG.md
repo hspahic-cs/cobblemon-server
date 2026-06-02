@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.47] - 2026-06-02
+
+### Added
+- **Legendary Monument one-shot global lock.** Only one LM legendary may be
+  alive in the world at a time. Catching it permanently locks the monument —
+  no further legendaries will spawn from any `legendarymonuments:*` structure.
+  Fleeing or despawning resets the monument so players can try again.
+  On capture, all `legendarymonuments:*` blocks within 8 blocks of the spawn
+  point are replaced with crying obsidian so players can see the monument has
+  been spent. Lock persists across restarts (`monument_lock.flag`).
+  Ops can reset via `/monument admin reset` or check state with
+  `/monument admin status`.
+
 ## [0.7.46] - 2026-06-02
 
 ### Fixed

@@ -12,6 +12,40 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.46] - 2026-06-02
+
+### Fixed
+- **0.7.45 follow-up: don't load LM's class at all.** 0.7.45 stub-shipped
+  `terrablender.api.TerraBlenderApi` to satisfy LM's missing supertype.
+  That bricked the JVM with a JPMS split-package error
+  (`Modules cobblemon_bridge and terrablender export package terrablender.api
+  to module fabric_api`) — both modules can't export the same package
+  under Java's module system. Dev wouldn't start.
+
+  0.7.46 throws away the "load LM's class" approach and replicates
+  what LM 7.8's `LegendaryMonumentsTerraBlender$1.addBiomes` would have
+  done, in our own `LMCherryPlainsRegion` Kotlin class that extends
+  `terrablender.api.Region` directly. Three climate parameter points
+  (extracted from LM's bytecode), region weight 3, type OVERWORLD.
+
+  We never reference LM's class symbolically, so no missing-supertype
+  load failure and no stub interface to collide with.
+
+  To compile a `Region` subclass without a binary dep on TerraBlender
+  (which isn't on a Maven we can reach), this PR vendors a 6.8KB
+  compile-only stubs jar at
+  `custom-mods/cobblemon-bridge/libs/terrablender-api-stubs.jar`,
+  containing just `Region`, `Regions`, `RegionType` extracted from the
+  real TB jar. Stubs jar is `compileOnly` and never lands in the bridge
+  runtime jar; at runtime the JVM resolves `terrablender.api.*` from
+  the real TB jar in the modpack.
+
+  Refresh that stubs jar on TerraBlender bumps:
+  `jar xf TerraBlender-neoforge-X.Y.Z.jar terrablender/api && jar cf libs/terrablender-api-stubs.jar terrablender/api`.
+
+  If LM 7.9+ retunes its climate spans, re-extract the floats from the
+  new bytecode — this shim still registers the 7.8 values.
+
 ## [0.7.45] - 2026-06-02
 
 ### Fixed

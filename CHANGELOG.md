@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.45] - 2026-06-02
+
+### Fixed
+- **0.7.44 follow-up: stub `terrablender.api.TerraBlenderApi`.** 0.7.44's
+  shim threw `NoClassDefFoundError: terrablender/api/TerraBlenderApi` on
+  every dev boot, before the reflective `Class.forName(...)` of LM's
+  entrypoint could complete. Cause: NeoForge TerraBlender 4.1 doesn't
+  ship that interface (TB on NeoForge uses a `@Mod`-class entrypoint,
+  not a Fabric-Loader-iterated one). LM 7.8 was compiled against the
+  Fabric-side TerraBlender that DID export it, so JVM resolution of
+  LM's class fails when its supertype can't be found.
+
+  Added a 3-line stub interface at the same FQN
+  (`custom-mods/cobblemon-bridge/src/main/java/terrablender/api/TerraBlenderApi.java`).
+  JVM now finds the supertype, LM's class loads, the rest of the shim
+  reaches `onTerraBlenderInitialized()` which calls `Regions.register(...)`
+  on NeoForge TB's real `Regions` class.
+
+  Drop the stub the day NeoForge TerraBlender ships the interface again.
+
 ## [0.7.44] - 2026-06-02
 
 ### Fixed

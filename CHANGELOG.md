@@ -12,6 +12,41 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.44] - 2026-06-02
+
+### Fixed
+- **LegendaryMonuments biomes finally generate.** LM 7.8 is a Fabric mod
+  loaded via Sinytra Connector. Its TerraBlender region (the
+  `legendarymonuments:cherry_plains` biome and its climate-parameter
+  ranges) is registered through the Fabric `terrablender` entrypoint —
+  which Connector does not pass through to NeoForge TerraBlender 4.1.
+  Confirmed on dev: only the two vanilla TB regions
+  (`minecraft:overworld`, `minecraft:nether`) appeared in
+  `[terrablender/]: Registered region ...` startup lines; nothing from
+  LM. Visible symptom: `/locate biome legendarymonuments:cherry_plains`
+  reported "could not find ... within a reasonable distance" because the
+  biome had no parameter footprint and never spawned.
+
+  Fix is a tiny shim in `cobblemon-bridge`
+  (`adapters/LegendaryMonumentsTerraBlenderShim.kt`) that subscribes to
+  `ServerAboutToStartEvent` at `EventPriority.HIGHEST` (TB's own
+  registration runs at `LOWEST`, so we land first) and reflectively
+  invokes `github.jorgaomc.world.biome.LegendaryMonumentsTerraBlender#onTerraBlenderInitialized`
+  — the exact entrypoint Connector skipped. LM's method already
+  encodes its authored climate parameters, so we don't reimplement
+  any worldgen logic; we just fire the call. Reflection keeps LM off
+  the compile classpath, gated by `ModList.isLoaded("legendarymonuments")`,
+  so cobblemon-bridge stays usable without LM.
+
+  Note: existing chunks were generated without this region and will not
+  retroactively grow cherry_plains. The biome will only appear in
+  newly explored wilderness.
+
+  Terralith is also broken in a similar way (its biomes don't appear
+  either) but that's a different mechanism — Terralith ships zero
+  entrypoints and relies on TerraBlender allowlisting it via
+  `terrablender.toml`. Out of scope for this release.
+
 ## [0.7.43] - 2026-06-01
 
 ### Changed (gameplay)

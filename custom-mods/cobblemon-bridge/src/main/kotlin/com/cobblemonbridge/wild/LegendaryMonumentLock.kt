@@ -199,7 +199,7 @@ object LegendaryMonumentLock {
             val starts = structureManager.startsForStructure(chunkPos) { it == structure }
             if (starts.isNotEmpty()) {
                 val bb = starts.first().getBoundingBox()
-                return BlockPos(bb.minX + (bb.maxX - bb.minX) / 2, bb.minY, bb.minZ + (bb.maxZ - bb.minZ) / 2)
+                return BlockPos(bb.minX() + (bb.maxX() - bb.minX()) / 2, bb.minY(), bb.minZ() + (bb.maxZ() - bb.minZ()) / 2)
             }
         }
         return null

@@ -1,63 +1,55 @@
 package com.cobblemonbridge.adapters
 
 import com.cobblemonbridge.CobblemonBridge
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.biome.Biome
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
+import terrablender.api.Regions
+import terrablender.api.RegionType
 
 /**
- * Compat shim: invoke Legendary Monuments' Fabric `terrablender` entrypoint, which Sinytra
- * Connector does not pass through to NeoForge TerraBlender on 1.21.1.
+ * Compat shim: register Legendary Monuments' `cherry_plains` biome with NeoForge TerraBlender,
+ * which Sinytra Connector skipped because LM uses a Fabric-side `terrablender` entrypoint that
+ * NeoForge TB 4.1 doesn't read.
  *
- * **What's broken upstream.** LM 7.8 is a Fabric mod loaded via Connector. Its TerraBlender
- * region (`legendarymonuments:cherry_plains`, plus its climate-parameter ranges) is registered
- * in `github.jorgaomc.world.biome.LegendaryMonumentsTerraBlender#onTerraBlenderInitialized`,
- * declared in `fabric.mod.json` under `entrypoints.terrablender`. NeoForge TerraBlender 4.1
- * doesn't read Fabric entrypoints, and Connector doesn't translate this one. Result: LM's
- * `main` entrypoint fires (structures/dimensions/items all register), the biome JSON loads, but
- * `Regions.register(...)` is never called, so the biome has no parameter footprint and never
- * generates. Visible symptom: `/locate biome legendarymonuments:cherry_plains` reports "could
- * not find ... within a reasonable distance" because vanilla locate-biome traverses a fixed
- * radius and the biome is empty everywhere.
+ * **History.**
+ * - 0.7.44: tried `Class.forName(...)` on LM's entrypoint and reflectively call its
+ *   `onTerraBlenderInitialized()`. Failed — LM declares `implements terrablender.api.TerraBlenderApi`,
+ *   which NeoForge TB 4.1 doesn't ship (NeoForge entrypoints are `@Mod`-class). Threw
+ *   `NoClassDefFoundError` before reaching the constructor.
+ * - 0.7.45: tried to ship a stub `terrablender.api.TerraBlenderApi` interface in cobblemon-bridge.
+ *   Bricked the JVM with a JPMS split-package error (`cobblemon_bridge` and `terrablender`
+ *   modules can't both export `terrablender.api`).
+ * - 0.7.46 (this): don't load LM's class at all. Replicate what its `addBiomes` would have done,
+ *   in our own [LMCherryPlainsRegion] subclass of `terrablender.api.Region`, against TB's actual
+ *   NeoForge API. We never reference LM's class symbolically, so no missing-supertype error.
  *
- * Confirmed on 0.7.43 dev: the only TB region registrations in `latest.log` are the two
- * vanilla defaults (`minecraft:overworld`, `minecraft:nether`). No LM line.
+ * **Why a sourceSet of stubs.** TerraBlender isn't on a Maven we have access to, so we vendor
+ * three signature-only files in `libs/terrablender-stubs-src/` to compile our subclass against.
+ * Stubs aren't shipped in the runtime jar; the JVM resolves `terrablender.api.*` from TB's real
+ * jar at runtime.
  *
- * **What this does.** Subscribes to [ServerAboutToStartEvent] at [EventPriority.HIGHEST] so we
- * run before TB's own `LOWEST`-priority handler consumes the region map, then reflectively
- * instantiates LM's entrypoint class and invokes `onTerraBlenderInitialized()`. That method
- * itself does the `Regions.register(new Region(... CHERRY_PLAINS ...))` call with LM's
- * authored climate parameters — we don't reimplement parameter math, we just fire the call
- * that Connector skipped.
+ * **Climate parameters** are LM 7.8's, extracted by disassembling
+ * `LegendaryMonumentsTerraBlender$1.addBiomes`. Three points, region weight 3, type OVERWORLD.
+ * If LM 7.9+ retunes them, the biome still spawns — just in slightly different climates than
+ * the new LM intended. Worth re-extracting on LM bumps.
  *
- * **Reflection vs. compile-time dep.** LM's class only exists at runtime, loaded by Connector
- * from a remapped jar. Compiling against it would force LM onto our compile classpath and
- * break builds where LM is absent. Reflection keeps cobblemon-bridge usable standalone, with
- * graceful degradation if LM isn't installed (or if LM 7.9+ renames the class — see caveat).
- *
- * **Caveat.** Pinned to `github.jorgaomc.world.biome.LegendaryMonumentsTerraBlender`. If LM
- * upstream renames or restructures that class, this shim silently no-ops with a WARN line.
- * If LM ships a real NeoForge-native build (not Connector-loaded), this shim becomes
- * redundant — they'll register their region the normal way. Safe to leave registered;
- * `ModList.isLoaded("legendarymonuments")` is the gate.
- *
- * **Limited scope.** LM only. Terralith ships zero entrypoints (pure datapack); making it work
- * via TerraBlender is a different mechanism and is out of scope here.
- *
- * **Existing chunks unaffected.** Worldgen runs once per chunk. Chunks generated before this
- * shim shipped won't grow a cherry_plains biome retroactively — the biome will only appear in
- * newly explored wilderness.
+ * **Existing chunks unaffected.** Worldgen runs once per chunk; pre-shim chunks won't grow
+ * cherry_plains retroactively. Newly explored wilderness will.
  */
 object LegendaryMonumentsTerraBlenderShim {
 
     private const val LM_MOD_ID = "legendarymonuments"
-    private const val LM_TERRABLENDER_CLASS = "github.jorgaomc.world.biome.LegendaryMonumentsTerraBlender"
-    private const val LM_TERRABLENDER_METHOD = "onTerraBlenderInitialized"
+    private const val REGION_WEIGHT = 3
 
     /**
-     * Run before TerraBlender's own server-about-to-start handler (which is registered at
-     * [EventPriority.LOWEST] — see `terrablender.core.TerraBlenderNeoForge`). NeoForge fires
+     * Run before TerraBlender's own `ServerAboutToStartEvent` handler (registered at
+     * `EventPriority.LOWEST` — see `terrablender.core.TerraBlenderNeoForge`). NeoForge fires
      * higher priorities first, so this lands while TB's region map is still open.
      */
     @Suppress("UNUSED_PARAMETER")
@@ -65,15 +57,26 @@ object LegendaryMonumentsTerraBlenderShim {
     fun onServerAboutToStart(event: ServerAboutToStartEvent) {
         if (ModList.get()?.isLoaded(LM_MOD_ID) != true) return
         try {
-            val cls = Class.forName(LM_TERRABLENDER_CLASS)
-            val instance = cls.getDeclaredConstructor().newInstance()
-            cls.getMethod(LM_TERRABLENDER_METHOD).invoke(instance)
-            CobblemonBridge.logger.info(
-                "Invoked $LM_TERRABLENDER_CLASS.$LM_TERRABLENDER_METHOD() (Connector terrablender-entrypoint shim)"
+            val biomeKey: ResourceKey<Biome> = ResourceKey.create(
+                Registries.BIOME,
+                ResourceLocation.fromNamespaceAndPath(LM_MOD_ID, "cherry_plains"),
             )
-        } catch (_: ClassNotFoundException) {
+            val region = LMCherryPlainsRegion(
+                name = ResourceLocation.fromNamespaceAndPath(LM_MOD_ID, "cherry_plains"),
+                type = RegionType.OVERWORLD,
+                weight = REGION_WEIGHT,
+                biomeKey = biomeKey,
+            )
+            Regions.register(region)
+            CobblemonBridge.logger.info(
+                "Registered LM region {}:cherry_plains (3 climate points, OVERWORLD, weight={})",
+                LM_MOD_ID, REGION_WEIGHT,
+            )
+        } catch (_: NoClassDefFoundError) {
+            // TB not on classpath at runtime — shouldn't happen if LM is loaded (LM depends on
+            // TB), but guard anyway so a missing TB jar doesn't crash bridge.
             CobblemonBridge.logger.debug(
-                "LM detected but $LM_TERRABLENDER_CLASS not on classpath — entrypoint class likely renamed in this LM build, skipping shim"
+                "TerraBlender API not on runtime classpath, skipping LM cherry_plains shim"
             )
         } catch (t: Throwable) {
             CobblemonBridge.logger.warn(

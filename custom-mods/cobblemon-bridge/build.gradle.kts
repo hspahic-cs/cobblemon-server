@@ -35,9 +35,24 @@ neoForge {
     }
 }
 
+// TerraBlender API isn't on a Maven we can reach (Forge maven 401s; NeoForge mods aren't on
+// Maven Central). Vendor a 6.8KB compile-only stubs jar containing just three classes —
+// Region/Regions/RegionType — extracted from the real TB jar. Lets `LMCherryPlainsRegion`
+// extend `terrablender.api.Region` at compile time. At runtime the JVM resolves
+// `terrablender.api.*` from the real TB jar in the modpack, not from this stubs jar (which
+// is `compileOnly` and never lands in the bridge runtime jar).
+//
+// Refresh this jar from the live TB jar when bumping TerraBlender. Steps:
+//   jar xf TerraBlender-neoforge-X.Y.Z.jar terrablender/api
+//   jar cf libs/terrablender-api-stubs.jar terrablender/api
+// If TerraBlender ever publishes to a public Maven, replace with a normal compileOnly dep.
+
 dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:${project.property("kotlin_for_forge_version")}")
     implementation("com.cobblemon:neoforge:${project.property("cobblemon_version")}")
+
+    // TerraBlender API stubs (compile-only). See note above the sourceSets block.
+    compileOnly(files("libs/terrablender-api-stubs.jar"))
 
     // Mixin annotation API — runtime is provided by NeoForge. We deliberately DO NOT use the
     // Mixin AP (annotation processor) because our DataPackManagerMixin targets a class from

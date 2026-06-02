@@ -147,9 +147,10 @@ jobs:
               mv staging/${VERSION_DIR} ./
             fi
             # Best-effort sweep of any leaked swap-* dirs from prior runs.
-            # rm may exit non-zero if files inside are owned by another
-            # user (e.g. sysadmin from a manual repair) — that's fine.
-            rm -rf mods.swap-new mods.swap-old.* || true
+            # .connector/ inside old swap dirs is written by sysadmin at boot,
+            # so deployer can't rm it directly — use the sudo wrapper instead.
+            rm -rf mods.swap-new || true
+            sudo -n /usr/local/sbin/cobblemon-cleanup-swap || true
             cp -al ${VERSION_DIR} mods.swap-new
             # Connector caches transformed Fabric jars under mods/.connector/
             # at first boot. The service runs as sysadmin (not deployer), so
@@ -164,7 +165,7 @@ jobs:
               mv mods \$SWAP_OLD
             fi
             mv mods.swap-new mods
-            rm -rf \$SWAP_OLD || true
+            sudo -n /usr/local/sbin/cobblemon-cleanup-swap || true
             sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}
             ls -1dt mods.v*/ 2>/dev/null | tail -n +$((${{ env.KEEP_VERSIONS }} + 1)) | xargs -r rm -rf
             echo '${{ steps.ver.outputs.version }}' > .deployed_version

@@ -23,5 +23,5 @@
       }
     }
   ],
-  "_comment": "Paradox bucket: rare \u2192 ultra-rare. Weight unchanged from AllTheMons."
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 tier=UU+ weight=1.0 bucket=ultra-rare"
 }

@@ -14,7 +14,7 @@
       "spawnablePositionType": "grounded",
       "bucket": "ultra-rare",
       "level": "40-75",
-      "weight": 3.0,
+      "weight": 0.1,
       "weightMultipliers": [
         {
           "multiplier": 2.5,
@@ -34,5 +34,5 @@
       }
     }
   ],
-  "_comment": "Paradox bucket: rare \u2192 ultra-rare. Weight unchanged from AllTheMons."
+  "_comment": "Override of AllTheMons paradox spawn pool \u2014 tier=Ubers weight=0.1 bucket=ultra-rare"
 }

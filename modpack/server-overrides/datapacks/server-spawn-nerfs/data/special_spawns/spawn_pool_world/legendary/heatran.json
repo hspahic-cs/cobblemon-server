@@ -1,0 +1,65 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "heatran-1T",
+      "pokemon": "heatran min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.0,
+      "condition": {
+        "minSkyLight": 0,
+        "maxSkyLight": 7,
+        "canSeeSky": false,
+        "biomes": [
+          "#cobblemon:is_badlands"
+        ]
+      }
+    },
+    {
+      "id": "heatran-2T",
+      "pokemon": "heatran min_perfect_ivs=3",
+      "presets": [
+        "natural",
+        "wild"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.0,
+      "condition": {
+        "biomes": [
+          "#cobblemon:is_volcanic"
+        ]
+      }
+    },
+    {
+      "id": "heatran-3T",
+      "pokemon": "heatran min_perfect_ivs=3",
+      "presets": [
+        "lava"
+      ],
+      "type": "pokemon",
+      "spawnablePositionType": "surface",
+      "bucket": "ultra-rare",
+      "level": "70",
+      "weight": 0.0,
+      "condition": {
+        "maxY": 127,
+        "biomes": [
+          "#cobblemon:nether/is_wasteland"
+        ]
+      }
+    }
+  ],
+  "_comment": "Override of AllTheMons legendary spawn pool \u2014 tier=OU\u2192LM-suppressed weight=0.0 bucket=ultra-rare"
+}

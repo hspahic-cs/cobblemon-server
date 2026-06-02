@@ -27,7 +27,42 @@ Put your Pokémon to work. Park one on a Pasture Block and it'll auto-harvest, m
 
 ## Layout
 
-<!-- DIAGRAM PLACEHOLDER -->
+A 5×5 area centred on the Pasture Block. The chest needs to be directly adjacent (here shown to the right, but it can be any side, rotate the layout however you like).
+
+<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;margin:8px 0;">
+<div style="display:grid;grid-template-columns:repeat(5,48px);gap:3px;">
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#b388ff;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#a0795c;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+</div>
+<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;">
+<span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:18px;height:18px;background:#7cb342;border-radius:2px;"></span>Farmable</span>
+<span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:18px;height:18px;background:#b388ff;border-radius:2px;"></span>Pasture Block</span>
+<span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:18px;height:18px;background:#a0795c;border-radius:2px;"></span>Chest</span>
+</div>
+</div>
 
 ## Setup
 

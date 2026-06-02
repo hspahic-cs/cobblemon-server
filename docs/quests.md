@@ -15,26 +15,25 @@ Every quest available on the server, grouped by chain.
 | 7 | **Nurse Joy** | Heal a Pokémon with carrots or a Poké Healer. | Revive |
 | 8 | **First Trainer Down** | Defeat any wild trainer NPC. | Exeggcute Egg |
 | 9 | **Trained Up** | Train any party Pokémon to level 20 (your starting level cap). | Sophisticated Backpack |
-| 10 | **Gym 1: Clay** | Defeat the Ground-type gym leader. | $150 |
+| 10 | **Gym 1: Clay** | Defeat the Ground-type gym leader. | $150 + Rare Key |
 | 11 | **Pocket Change** | Sell enough items to reach $250. | Leaf Stone |
 | 12 | **Sunny Side Up** | Use the Leaf Stone to evolve your Exeggcute into Exeggutor. | Pasture Block |
 | 13 | **Farm Hands** | Place your Pasture Block to set up your first automated farm. | 16 Bone Meal |
 | 14 | **First Blood** | Win your first Ranked PvP battle. | Common Egg |
-| 15 | **Gym 2: Gardenia** | Defeat the Grass-type gym leader. | Rare Key |
-| 16 | **Gym 3: Korrina** | Defeat the Fighting-type gym leader. | Rare Key |
-| 17 | **Gym 4: Byron** | Defeat the Steel-type gym leader. | Rare Key |
-| 18 | **Gym 5: Blaine** | Defeat the Fire-type gym leader. | Rare Key |
-| 19 | **Gym 6: Volkner** | Defeat the Electric-type gym leader. | Rare Key |
-| 20 | **Gym 7: Crasher Wake** | Defeat the Water-type gym leader. | Rare Key |
-| 21 | **Gym 8: Sabrina** | Defeat the Psychic-type gym leader. | Rare Key |
-| 22 | **Gym 9: Drayden** | Defeat the Dragon-type gym leader. | Rare Key |
-| 23 | **Gym 10: Morty** | Defeat the Ghost-type gym leader. | Ultra Key |
-| 24 | **Defeat the Elite Four** | Travel to /warp elite4 and defeat all four Elite Four members: Lorelei, Cynthia, Agatha, and Lance. | $5,000 |
-| 25 | **Elite Four #1** | Defeat Elite Four #1: Weather Wars. | Rare Key |
-| 26 | **Elite Four #2** | Defeat Elite Four #2: Hyper Offense. | Rare Key |
-| 27 | **Elite Four #3** | Defeat Elite Four #3: Full Stall. | Rare Key |
-| 28 | **Elite Four #4** | Defeat Elite Four #4: Dragon Boss. | Ultra Key |
-| 29 | **Pokémon Champion** | Defeat the Champion and claim the title. | Ultra Key |
+| 15 | **Gym 2: Gardenia** | Defeat the Grass-type gym leader. | $300 + Rare Key |
+| 16 | **Gym 3: Korrina** | Defeat the Fighting-type gym leader. | $450 + Rare Key |
+| 17 | **Gym 4: Byron** | Defeat the Steel-type gym leader. | $600 + Rare Key |
+| 18 | **Gym 5: Blaine** | Defeat the Fire-type gym leader. | $750 + Rare Key |
+| 19 | **Gym 6: Volkner** | Defeat the Electric-type gym leader. | $900 + Rare Key |
+| 20 | **Gym 7: Crasher Wake** | Defeat the Water-type gym leader. | $1,050 + Rare Key |
+| 21 | **Gym 8: Sabrina** | Defeat the Psychic-type gym leader. | $1,200 + Rare Key |
+| 22 | **Gym 9: Drayden** | Defeat the Dragon-type gym leader. | $1,350 + Rare Key |
+| 23 | **Gym 10: Morty** | Defeat the Ghost-type gym leader. | $1,500 + Ultra Key |
+| 24 | **Elite Four #1** | Defeat Elite Four #1: Weather Wars. | $3,000 + Rare Key |
+| 25 | **Elite Four #2** | Defeat Elite Four #2: Hyper Offense. | $3,150 + Rare Key |
+| 26 | **Elite Four #3** | Defeat Elite Four #3: Full Stall. | $3,300 + Rare Key |
+| 27 | **Elite Four #4** | Defeat Elite Four #4: Dragon Boss. | $3,450 + Ultra Key |
+| 28 | **Pokémon Champion** | Defeat the Champion and claim the title. | $5,000 + Ultra Key |
 
 ## Monetary milestones (optional)
 
@@ -65,28 +64,28 @@ Every quest available on the server, grouped by chain.
 
 | # | Quest | Condition | Reward |
 |---:|---|---|---|
-| 1 | **Viola** | Defeat Viola (Bug-type, Level 60). | Rare Key |
-| 2 | **Cheren** | Defeat Cheren (Normal-type, Level 60). | Rare Key |
-| 3 | **Lt. Surge** | Defeat Lt. Surge (Electric-type, Level 60). | Rare Key |
-| 4 | **Grant** | Defeat Grant (Rock-type, Level 60). | Rare Key |
-| 5 | **Skyla** | Defeat Skyla (Flying-type, Level 60). | Rare Key |
-| 6 | **Brycen** | Defeat Brycen (Ice-type, Level 60). | Rare Key |
-| 7 | **Valerie** | Defeat Valerie (Fairy-type, Level 60). | Rare Key |
-| 8 | **Marnie** | Defeat Marnie (Dark-type, Level 60). | Rare Key |
-| 9 | **Professor Oak** | Defeat Professor Oak Kanto's strongest, hand-picked. | Ultra Key |
+| 1 | **Viola** | Defeat Viola (Bug-type, Level 60). | $1,650 + Rare Key |
+| 2 | **Cheren** | Defeat Cheren (Normal-type, Level 60). | $1,800 + Rare Key |
+| 3 | **Lt. Surge** | Defeat Lt. Surge (Electric-type, Level 60). | $1,950 + Rare Key |
+| 4 | **Grant** | Defeat Grant (Rock-type, Level 60). | $2,100 + Rare Key |
+| 5 | **Skyla** | Defeat Skyla (Flying-type, Level 60). | $2,250 + Rare Key |
+| 6 | **Brycen** | Defeat Brycen (Ice-type, Level 60). | $2,400 + Rare Key |
+| 7 | **Valerie** | Defeat Valerie (Fairy-type, Level 60). | $2,550 + Rare Key |
+| 8 | **Marnie** | Defeat Marnie (Dark-type, Level 60). | $2,700 + Rare Key |
+| 9 | **Professor Oak** | Defeat Professor Oak Kanto's strongest, hand-picked. | $2,850 + Ultra Key |
 
 ## Challenge gyms (Hard Mode, optional)
 
 | # | Quest | Condition | Reward |
 |---:|---|---|---|
-| 1 | **Gym 1: Clay Challenge** | Defeat the challenge variant of Gym 1. | Rare Key |
-| 2 | **Gym 2: Gardenia Challenge** | Defeat the challenge variant of Gym 2. | Rare Key |
-| 3 | **Gym 3: Korrina Challenge** | Defeat the challenge variant of Gym 3. | Rare Key |
-| 4 | **Gym 4: Byron Challenge** | Defeat the challenge variant of Gym 4. | Rare Key |
-| 5 | **Gym 5: Blaine Challenge** | Defeat the challenge variant of Gym 5. | Rare Key |
-| 6 | **Gym 6: Volkner Challenge** | Defeat the challenge variant of Gym 6. | Rare Key |
-| 7 | **Gym 7: Crasher Wake Challenge** | Defeat the challenge variant of Gym 7. | Rare Key |
-| 8 | **Gym 8: Sabrina Challenge** | Defeat the challenge variant of Gym 8. | Rare Key |
-| 9 | **Gym 9: Drayden Challenge** | Defeat the challenge variant of Gym 9. | Rare Key |
-| 10 | **Gym 10: Morty Challenge** | Defeat the challenge variant of Gym 10. | Ultra Key |
+| 1 | **Gym 1: Clay Challenge** | Defeat the challenge variant of Gym 1. | $150 + Rare Key |
+| 2 | **Gym 2: Gardenia Challenge** | Defeat the challenge variant of Gym 2. | $300 + Rare Key |
+| 3 | **Gym 3: Korrina Challenge** | Defeat the challenge variant of Gym 3. | $450 + Rare Key |
+| 4 | **Gym 4: Byron Challenge** | Defeat the challenge variant of Gym 4. | $600 + Rare Key |
+| 5 | **Gym 5: Blaine Challenge** | Defeat the challenge variant of Gym 5. | $750 + Rare Key |
+| 6 | **Gym 6: Volkner Challenge** | Defeat the challenge variant of Gym 6. | $900 + Rare Key |
+| 7 | **Gym 7: Crasher Wake Challenge** | Defeat the challenge variant of Gym 7. | $1,050 + Rare Key |
+| 8 | **Gym 8: Sabrina Challenge** | Defeat the challenge variant of Gym 8. | $1,200 + Rare Key |
+| 9 | **Gym 9: Drayden Challenge** | Defeat the challenge variant of Gym 9. | $1,350 + Rare Key |
+| 10 | **Gym 10: Morty Challenge** | Defeat the challenge variant of Gym 10. | $1,500 + Ultra Key |
 

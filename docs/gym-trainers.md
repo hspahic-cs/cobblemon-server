@@ -204,7 +204,7 @@ Gyms 1 to 10 are the **mainline** progression. Gyms 11 to 19 are **optional rota
     | 70 | Chansey | Naturalcure | Eviolite | Softboiled, Seismictoss, Thunderwave, Healbell |
     | 70 | Gyarados | Intimidate | Life Orb | Dragondance, Waterfall, Earthquake, Icefang |
 
-??? abstract "Elite Four 1"
+??? abstract "Elite Four 1: Lorelei"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -215,7 +215,7 @@ Gyms 1 to 10 are the **mainline** progression. Gyms 11 to 19 are **optional rota
     | 65 | Hippowdon | Sandstream | Leftovers | Slackoff, Earthquake, Whirlwind, Toxic |
     | 65 | Hooh | Regenerator | Heavy Duty Boots | Sacredfire, Bravebird, Recover, Earthquake |
 
-??? abstract "Elite Four 2"
+??? abstract "Elite Four 2: Cynthia"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -226,7 +226,7 @@ Gyms 1 to 10 are the **mainline** progression. Gyms 11 to 19 are **optional rota
     | 65 | Tyranitar | Sandstream | Focus Sash | Stoneedge, Crunch, Earthquake, Dragondance |
     | 65 | Conkeldurr | Guts | Flame Orb | Drainpunch, Machpunch, Knockoff, Bulkup |
 
-??? abstract "Elite Four 3"
+??? abstract "Elite Four 3: Agatha"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -237,7 +237,7 @@ Gyms 1 to 10 are the **mainline** progression. Gyms 11 to 19 are **optional rota
     | 65 | Blissey | Naturalcure | Heavy Duty Boots | Softboiled, Seismictoss, Toxic, Teleport |
     | 65 | Corviknight | Pressure | Leftovers | Bravebird, Roost, Defog, Uturn |
 
-??? abstract "Elite Four 4"
+??? abstract "Elite Four 4: Lance"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|

@@ -27,8 +27,6 @@ Put your Pokémon to work. Park one on a Pasture Block and it'll auto-harvest, m
 
 ## Layout
 
-A 5×5 area centred on the Pasture Block. The chest needs to be directly adjacent (here shown to the right, but it can be any side, rotate the layout however you like).
-
 <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;margin:8px 0;">
 <div style="display:grid;grid-template-columns:repeat(5,48px);gap:3px;">
 <div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>

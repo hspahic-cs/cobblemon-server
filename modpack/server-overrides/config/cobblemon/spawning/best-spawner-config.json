@@ -7,9 +7,9 @@
     "surface": 1.0
   },
   "buckets": [
-    { "name": "common", "weight": 94.3 },
+    { "name": "common", "weight": 94.899 },
     { "name": "uncommon", "weight": 5 },
-    { "name": "rare", "weight": 0.5 },
-    { "name": "ultra-rare", "weight": 0.01 }
+    { "name": "rare", "weight": 0.1 },
+    { "name": "ultra-rare", "weight": 0.001 }
   ]
 }

@@ -1,6 +1,7 @@
 package com.cobblemonbridge
 
 import com.cobblemonbridge.adapters.CobbleloootsAdapter
+import com.cobblemonbridge.adapters.LegendaryMonumentsTerraBlenderShim
 import com.cobblemonbridge.battle.AdjustLevelHook
 import com.cobblemonbridge.battle.E4GauntletHook
 import com.cobblemonbridge.battle.GivePartyExpHook
@@ -88,6 +89,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(EntityAnchor)
         NeoForge.EVENT_BUS.register(TradeLifecycle)
         NeoForge.EVENT_BUS.register(WorldRulesHook)
+        NeoForge.EVENT_BUS.register(LegendaryMonumentsTerraBlenderShim)
 
         val cobbleloots = CobbleloootsAdapter.isPresent()
         if (cobbleloots) {

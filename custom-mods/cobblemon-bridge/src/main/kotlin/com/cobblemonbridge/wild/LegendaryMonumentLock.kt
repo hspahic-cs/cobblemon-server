@@ -196,9 +196,9 @@ object LegendaryMonumentLock {
         val chunkPos = ChunkPos(spawnPos)
         for ((key, structure) in registry.entrySet()) {
             if (key.location().namespace != LM_NAMESPACE) continue
-            val starts = structureManager.startsForStructure(chunkPos, structure)
+            val starts = structureManager.startsForStructure(chunkPos) { it == structure }
             if (starts.isNotEmpty()) {
-                val bb = starts.first().boundingBox
+                val bb = starts.first().getBoundingBox()
                 return BlockPos(bb.minX + (bb.maxX - bb.minX) / 2, bb.minY, bb.minZ + (bb.maxZ - bb.minZ) / 2)
             }
         }
@@ -240,11 +240,9 @@ object LegendaryMonumentLock {
         // structures (e.g. Bell Tower apex at y=242) fall outside piece boxes and get missed.
         // getStructureWithPieceAt is also 3D. Use startsForStructure per chunk instead, which
         // checks only the 2D chunk footprint and is Y-agnostic.
-        return registry.entrySet()
-            .filter { (key, _) -> key.location().namespace == LM_NAMESPACE }
-            .any { (_, structure) ->
-                structureManager.startsForStructure(chunkPos, structure).isNotEmpty()
-            }
+        return structureManager.startsForStructure(chunkPos) { structure ->
+            registry.getKey(structure)?.namespace == LM_NAMESPACE
+        }.isNotEmpty()
     }
 
     private fun writeLock() {

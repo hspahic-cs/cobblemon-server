@@ -1,6 +1,6 @@
 # Gym trainers
 
-Every gym leader's team — levels, abilities, held items, and moves. Each gym has a standard fight and a Hard Mode "Challenge" variant.
+Every gym leader's team — levels, abilities, held items, and moves.
 
 Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rotating + Elite Four + Champion). Click a gym to expand.
 
@@ -12,14 +12,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 15 | Drilbur | Sandrush | — | Earthquake, Rockslide, Swordsdance, Rapidspin |
     | 15 | Wooper | Waterabsorb | — | Scald, Earthquake, Recover, Toxic |
 
-??? abstract "Gym 1: Clay (Hard Mode) — Ground-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 20 | Hippopotas | Sandstream | Eviolite | Stealthrock, Yawn, Earthquake, Slackoff |
-    | 20 | Drilbur | Sandrush | Life Orb | Earthquake, Rockslide, Swordsdance, Rapidspin |
-    | 20 | Wooper | Waterabsorb | Eviolite | Scald, Earthquake, Recover, Toxic |
-
 ??? abstract "Gym 2: Gardenia — Grass-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
@@ -27,14 +19,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 20 | Cottonee | Prankster | Eviolite | Leechseed, Encore, Stunspore, Gigadrain |
     | 20 | Servine | Contrary | — | Leafstorm, Glare, Gigadrain, Hiddenpower |
     | 20 | Shroomish | Effectspore | — | Spore, Bulletseed, Drainpunch, Rocktomb |
-
-??? abstract "Gym 2: Gardenia (Hard Mode) — Grass-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 25 | Cottonee | Prankster | Eviolite | Leechseed, Encore, Stunspore, Gigadrain |
-    | 25 | Servine | Contrary | Life Orb | Leafstorm, Glare, Gigadrain, Hiddenpower |
-    | 25 | Shroomish | Effectspore | Focus Sash | Spore, Bulletseed, Drainpunch, Rocktomb |
 
 ??? abstract "Gym 3: Korrina — Fighting-type"
 
@@ -45,15 +29,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 25 | Croagunk | Dryskin | — | Drainpunch, Suckerpunch, Poisonjab, Fakeout |
     | 25 | Timburr | Ironfist | — | Drainpunch, Machpunch, Rockslide, Bulkup |
 
-??? abstract "Gym 3: Korrina (Hard Mode) — Fighting-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 30 | Mienfoo | Regenerator | Eviolite | Uturn, Drainpunch, Knockoff, Fakeout |
-    | 30 | Combusken | Speedboost | Life Orb | Protect, Swordsdance, Blazekick, Skyuppercut |
-    | 30 | Croagunk | Dryskin | Eviolite | Drainpunch, Suckerpunch, Poisonjab, Fakeout |
-    | 30 | Timburr | Ironfist | Eviolite | Drainpunch, Machpunch, Rockslide, Bulkup |
-
 ??? abstract "Gym 4: Byron — Steel-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
@@ -63,16 +38,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 30 | Scizor | Technician | — | Bulletpunch, Uturn, Superpower, Pursuit |
     | 30 | Metang | Clearbody | — | Meteormash, Zenheadbutt, Bulletpunch, Icepunch |
     | 30 | Lairon | Rockhead | — | Ironhead, Rockslide, Earthquake, Stealthrock |
-
-??? abstract "Gym 4: Byron (Hard Mode) — Steel-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 35 | Skarmory | Sturdy | Leftovers | Spikes, Whirlwind, Roost, Bravebird |
-    | 35 | Ferroseed | Ironbarbs | Eviolite | Stealthrock, Leechseed, Thunderwave, Gyroball |
-    | 35 | Scizor | Technician | Choice Band | Bulletpunch, Uturn, Superpower, Pursuit |
-    | 35 | Metang | Clearbody | Eviolite | Meteormash, Zenheadbutt, Bulletpunch, Icepunch |
-    | 35 | Lairon | Rockhead | Eviolite | Ironhead, Rockslide, Earthquake, Stealthrock |
 
 ??? abstract "Gym 5: Blaine — Fire-type"
 
@@ -85,17 +50,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 35 | Centiskorch | Flashfire | — | Firelash, Leechlife, Coil, Powerwhip |
     | 35 | Torkoal | Drought | — | Rapidspin, Lavaplume, Yawn, Stealthrock |
 
-??? abstract "Gym 5: Blaine (Hard Mode) — Fire-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 40 | Ninetales | Drought | Heat Rock | Fireblast, Solarbeam, Willowisp, Nastyplot |
-    | 40 | Arcanine | Intimidate | Choice Band | Flareblitz, Extremespeed, Wildcharge, Closecombat |
-    | 40 | Charmeleon | Solarpower | Eviolite | Fireblast, Dragonpulse, Solarbeam, Focusblast |
-    | 40 | Houndoom | Flashfire | Life Orb | Nastyplot, Darkpulse, Fireblast, Solarbeam |
-    | 40 | Centiskorch | Flashfire | Heavy Duty Boots | Firelash, Leechlife, Coil, Powerwhip |
-    | 40 | Torkoal | Drought | Leftovers | Rapidspin, Lavaplume, Yawn, Stealthrock |
-
 ??? abstract "Gym 6: Volkner — Electric-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
@@ -106,17 +60,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 40 | Jolteon | Voltabsorb | Choice Specs | Thunderbolt, Shadowball, Voltswitch, Weatherball |
     | 40 | Electivire | Motordrive | Life Orb | Wildcharge, Earthquake, Icepunch, Firepunch |
     | 40 | Luxray | Intimidate | Quick Claw | Wildcharge, Crunch, Voltswitch, Icefang |
-
-??? abstract "Gym 6: Volkner (Hard Mode) — Electric-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 45 | Galvantula | Compoundeyes | Focus Sash | Thunder, Bugbuzz, Stickyweb, Thunderwave |
-    | 45 | Magnezone | Magnetpull | Assault Vest | Thunderbolt, Flashcannon, Thunderwave, Voltswitch |
-    | 45 | Lanturn | Voltabsorb | Leftovers | Scald, Thunderbolt, Icebeam, Voltswitch |
-    | 45 | Jolteon | Voltabsorb | Choice Specs | Thunderbolt, Shadowball, Voltswitch, Weatherball |
-    | 45 | Electivire | Motordrive | Life Orb | Wildcharge, Earthquake, Icepunch, Firepunch |
-    | 45 | Luxray | Intimidate | Choice Band | Wildcharge, Crunch, Voltswitch, Icefang |
 
 ??? abstract "Gym 7: Crasher Wake — Water-type"
 
@@ -129,17 +72,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 45 | Swampert | Torrent | — | Stealthrock, Earthquake, Icepunch, Flipturn |
     | 45 | Gastrodon | Stormdrain | — | Scald, Earthpower, Recover, Toxic |
 
-??? abstract "Gym 7: Crasher Wake (Hard Mode) — Water-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 50 | Pelipper | Drizzle | Damp Rock | Scald, Uturn, Roost, Defog |
-    | 50 | Kingdra | Swiftswim | Life Orb | Hydropump, Dracometeor, Hurricane, Flashcannon |
-    | 50 | Barraskewda | Swiftswim | Choice Band | Liquidation, Closecombat, Poisonjab, Aquajet |
-    | 50 | Kabutops | Swiftswim | Life Orb | Swordsdance, Waterfall, Stoneedge, Aquajet |
-    | 50 | Swampert | Torrent | Leftovers | Stealthrock, Earthquake, Icepunch, Flipturn |
-    | 50 | Gastrodon | Stormdrain | Leftovers | Scald, Earthpower, Recover, Toxic |
-
 ??? abstract "Gym 8: Sabrina — Psychic-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
@@ -150,17 +82,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 50 | Alakazam | Magicguard | — | Nastyplot, Psychic, Shadowball, Focusblast |
     | 50 | Bronzong | Levitate | — | Stealthrock, Trickroom, Gyroball, Toxic |
     | 50 | Medicham | Purepower | — | Highjumpkick, Zenheadbutt, Icepunch, Bulletpunch |
-
-??? abstract "Gym 8: Sabrina (Hard Mode) — Psychic-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 55 | Slowbro | Regenerator | Heavy Duty Boots | Futuresight, Teleport, Scald, Slackoff |
-    | 55 | Reuniclus | Magicguard | Life Orb | Trickroom, Psyshock, Focusblast, Shadowball |
-    | 55 | Hatterene | Magicbounce | Life Orb | Trickroom, Psychic, Dazzlinggleam, Mysticalfire |
-    | 55 | Alakazam | Magicguard | Life Orb | Nastyplot, Psychic, Shadowball, Focusblast |
-    | 55 | Bronzong | Levitate | Leftovers | Stealthrock, Trickroom, Gyroball, Toxic |
-    | 55 | Medicham | Purepower | Choice Scarf | Highjumpkick, Zenheadbutt, Icepunch, Bulletpunch |
 
 ??? abstract "Gym 9: Drayden — Dragon-type"
 
@@ -173,17 +94,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 55 | Goodra | Sapsipper | — | Dracometeor, Sludgebomb, Flamethrower, Thunderbolt |
     | 55 | Kingdra | Sniper | — | Focusenergy, Dracometeor, Hydropump, Icebeam |
 
-??? abstract "Gym 9: Drayden (Hard Mode) — Dragon-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 60 | Garchomp | Roughskin | Rocky Helmet | Stealthrock, Swordsdance, Earthquake, Scaleshot |
-    | 60 | Salamence | Moxie | Life Orb | Dragondance, Dualwingbeat, Earthquake, Dragonclaw |
-    | 60 | Haxorus | Moldbreaker | Choice Scarf | Outrage, Closecombat, Earthquake, Firstimpression |
-    | 60 | Kommoo | Bulletproof | Leftovers | Stealthrock, Bodypress, Dragontail, Toxic |
-    | 60 | Goodra | Sapsipper | Assault Vest | Dracometeor, Sludgebomb, Flamethrower, Thunderbolt |
-    | 60 | Kingdra | Sniper | Scope Lens | Focusenergy, Dracometeor, Hydropump, Icebeam |
-
 ??? abstract "Gym 10: Morty — Ghost-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
@@ -194,17 +104,6 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Dusclops | Pressure | — | Willowisp, Seismictoss, Painsplit, Nightshade |
     | 60 | Mimikyu | Disguise | — | Swordsdance, Shadowsneak, Playrough, Shadowclaw |
     | 60 | Annihilape | Defiant | — | Bulkup, Drainpunch, Ragefist, Shadowclaw |
-
-??? abstract "Gym 10: Morty (Hard Mode) — Ghost-type"
-
-    | Lv | Pokémon | Ability | Item | Moves |
-    |---:|---|---|---|---|
-    | 65 | Sableye | Prankster | Leftovers | Willowisp, Recover, Knockoff, Taunt |
-    | 65 | Gengar | Cursedbody | Black Sludge | Substitute, Disable, Shadowball, Focusblast |
-    | 65 | Aegislash | Stancechange | Weakness Policy | Kingsshield, Swordsdance, Shadowsneak, Sacredsword |
-    | 65 | Dusclops | Pressure | Eviolite | Willowisp, Seismictoss, Painsplit, Nightshade |
-    | 65 | Mimikyu | Disguise | Life Orb | Swordsdance, Shadowsneak, Playrough, Shadowclaw |
-    | 65 | Annihilape | Defiant | Leftovers | Bulkup, Drainpunch, Ragefist, Shadowclaw |
 
 ??? abstract "Gym 11: Viola — Bug-type"
 

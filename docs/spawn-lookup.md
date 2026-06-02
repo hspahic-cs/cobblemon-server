@@ -1207,14 +1207,7 @@ Type a partial name to filter. Bucket rarity (within ultra-rare bucket too) dete
 })();
 </script>
 
-## Notes on biome labels
+## Notes
 
-- Bare labels (e.g. `ocean`, `swamp`, `jungle`) are Cobblemon biome tags — they cover every vanilla and modded biome that's tagged with that label.
-- `nether-X` labels are nether sub-biome tags (e.g. `nether-basalt`, `nether-soul_sand`).
-- `vanilla-X` is the literal vanilla biome (`vanilla-nether` = the nether dimension's bulk biomes).
-- Buckets in colour: <span style="color:#888;font-weight:600;">common</span> 94.3%, <span style="color:#4a8;font-weight:600;">uncommon</span> 5%, <span style="color:#48a;font-weight:600;">rare</span> 0.5%, <span style="color:#a48;font-weight:600;">ultra-rare</span> 0.067% per spawn attempt.
-
-## Notes on coverage
-
-This list includes vanilla Cobblemon + the AllTheMons addon (legendaries, mythicals, paradoxes, ultra beasts). Some species (notably legendaries with only one biome) are very biome-specific — read the row carefully.
+Each label is a **tag** that covers many concrete biomes. For example `forest` includes Oak Forest, Birch Forest, Dark Oak Forest, Old Growth Spruce Taiga, and several modded biomes that share the same tag. If a Pokémon's row says `forest`, it spawns in any biome tagged that way.
 

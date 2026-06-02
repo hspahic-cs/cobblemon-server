@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Scales Terralith biome size up by reducing climate noise frequency (xz_scale 0.25 -> 0.1)."
+  }
+}

@@ -45,7 +45,8 @@ import terrablender.api.RegionType
 object LegendaryMonumentsTerraBlenderShim {
 
     private const val LM_MOD_ID = "legendarymonuments"
-    private const val REGION_WEIGHT = 3
+    private const val REGION_WEIGHT = 2
+    @Volatile private var registered = false
 
     /**
      * Run before TerraBlender's own `ServerAboutToStartEvent` handler (registered at
@@ -56,6 +57,8 @@ object LegendaryMonumentsTerraBlenderShim {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onServerAboutToStart(event: ServerAboutToStartEvent) {
         if (ModList.get()?.isLoaded(LM_MOD_ID) != true) return
+        if (registered) return
+        registered = true
         try {
             val biomeKey: ResourceKey<Biome> = ResourceKey.create(
                 Registries.BIOME,

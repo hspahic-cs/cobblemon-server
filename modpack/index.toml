@@ -183,10 +183,6 @@ file = "mods/glitchcore.pw.toml"
 hash = "dbd756dd9bb17e6ecebcf2d7052a67a2da1c7dd378bc2089bc154916080fe031"
 metafile = true
 
-[[files]]
-file = "mods/immediatelyfast.pw.toml"
-hash = "3d47b1d933d04934a606be1cbb67481860c3d68c9ed4efc387c7745d23b732a7"
-metafile = true
 
 [[files]]
 file = "mods/in-control.pw.toml"

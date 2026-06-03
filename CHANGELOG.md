@@ -12,6 +12,62 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.58] - 2026-06-02
+
+### Changed
+- **Monument lock: drain on activation, re-spawn via Cobblemon.** When LM spawns
+  a legendary inside an LM structure, we now cancel its entity, drain the
+  activation block to crying obsidian (permanently spending the altar), and
+  re-spawn the same species/level via `PokemonProperties.createEntity`. This
+  sidesteps LM's incomplete spawn pipeline (no moveset init, no client sync) —
+  the re-spawned entity is a normal wild Pokemon with proper battle UI, moves,
+  and despawn behavior. Outcome (catch / flee / loss / disconnect) no longer
+  matters: the altar is already spent on activation, so there's no post-battle
+  bookkeeping. Removes the `BATTLE_FLED` / `BATTLE_VICTORY` / `initializeMoveset`
+  band-aids from 0.7.54–0.7.57.
+
+## [0.7.57] - 2026-06-03
+
+### Fixed
+- **Monument lock: disconnect mid-battle leaves active slot permanently blocked.**
+  `BATTLE_FLED` doesn't fire on player disconnect — the active slot stayed set, blocking
+  all future legendary spawns and causing a crash when the player reconnected and tried
+  to fight again. Now also subscribes to `BATTLE_VICTORY` (covers disconnect/player loss)
+  so the slot is cleared on any battle end.
+
+## [0.7.56] - 2026-06-03
+
+### Fixed
+- **Monument lock: Kyurem (and other large-cave) pedestal returns null.** The ±4 block
+  scan radius was too small — Kyurem Cave spawns the legendary far from the activation
+  pedestal. Widened to ±16 XZ / -24..+4 Y.
+- **Server crash (ConcurrentModificationException) when battling LM legendary.** The
+  previous bounding-box drain replaced thousands of blocks in one tick, causing
+  `DistanceManager.runAllUpdates` to fail with CME. Fixed in 0.7.52 (single pedestal
+  drain); this version just documents it.
+
+### Removed
+- **ImmediatelyFast** client mod dropped — confirmed to break Cobblemon battle UI
+  (moves/flee/switch buttons not rendering).
+
+## [0.7.55] - 2026-06-03
+
+### Fixed
+- **LM legendary battle UI missing moves.** LM spawns legendaries via `PokemonProperties`
+  without going through Cobblemon's full spawn pipeline, so `initializeMoveset()` is never
+  called. The battle screen renders but shows no moves/flee/switch. Now calls
+  `pokemon.initializeMoveset()` at join time if the moveset is empty.
+
+## [0.7.54] - 2026-06-03
+
+### Fixed
+- **Monument lock: "another legendary already active" after fleeing battle.** When a player
+  flees a battle with an LM legendary, the entity stays alive in the world so
+  `onEntityLeaveLevel` never fires and `activeLmPokemon` was never cleared. Every subsequent
+  altar activation was blocked. Now subscribes to `BATTLE_FLED` to clear the blocking slot
+  while keeping the tracked pokemon reference so the altar still drains when the entity
+  eventually leaves the world.
+
 ## [0.7.53] - 2026-06-03
 
 ### Fixed

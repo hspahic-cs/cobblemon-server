@@ -31,8 +31,9 @@ import kotlin.io.path.writeText
  * Rules:
  *  - Only one LM legendary may be alive in the world at a time. A second spawn attempt
  *    while one is active is cancelled.
- *  - If the legendary leaves the world uncaught (fled from battle, despawned), the monument
- *    resets and can produce another.
+ *  - The monument is one-shot regardless of outcome — if the legendary flees or despawns
+ *    the altar is still permanently spent. Players can't exploit the reset by luring the
+ *    legendary away and fleeing the battle.
  *  - If the legendary is caught, the monument is permanently locked — no further legendaries
  *    will ever spawn from any LM structure.
  *
@@ -180,13 +181,22 @@ object LegendaryMonumentLock {
             // POKEMON_CAPTURED fires in the same tick as entity removal but may sequence after
             // this scheduled task — guard with isWild() so we never mis-classify a capture as a flee.
             if (!active.isWild()) return@execute
+            // Monument is one-shot regardless of outcome — lock on flee too so players can't
+            // repeatedly activate the altar by luring the legendary away and fleeing the battle.
+            val fleeLevel = activeLmLevel
+            val fleePos = activeLmPos
             activeLmPokemon = null
             activeLmLevel = null
             activeLmPos = null
-            CobblemonBridge.logger.info("monument-lock: LM legendary left without being caught — monument is open again")
+            writeLock()
+            CobblemonBridge.logger.info("monument-lock: LOCKED — LM legendary fled, monument is spent")
+            if (fleeLevel != null && fleePos != null) {
+                val anchorPos = findStructureAnchor(fleeLevel, fleePos) ?: fleePos
+                drainAltar(fleeLevel, anchorPos)
+            }
             server.playerList.players.forEach {
                 it.sendSystemMessage(Component.literal(
-                    "§6[Legendary Monument] §7The legendary escaped... The monument can be challenged again."
+                    "§6[Legendary Monument] §7The legendary escaped... but the monument's power is spent."
                 ))
             }
         }

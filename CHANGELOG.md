@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.51] - 2026-06-03
+
+### Changed
+- **Monument lock: altar is now one-shot regardless of outcome.** Previously the
+  monument reset if the legendary fled, allowing players to exploit the altar by
+  luring the legendary away and fleeing the battle repeatedly. Now the altar is
+  permanently spent and drained whether the legendary is caught or flees.
+
 ## [0.7.50] - 2026-06-03
 
 ### Fixed

@@ -15,6 +15,7 @@ You'll need a few things before you can connect:
 - **[Pokémon spawn biomes](spawn-lookup.md)**, look up which biomes any species spawns in.
 - **[Cobbleworkers jobs](cobbleworkers.md)**, which Pokémon do which job on a Pasture Block.
 - **[Quests](quests.md)**, all quest names, conditions, and rewards in chain order.
+- **[PvP rules](pvp.md)**, the short list of restrictions.
 - **[Finding legendaries](legendaries.md)**, Legendary Monuments + how they work here.
 
 ## What's running

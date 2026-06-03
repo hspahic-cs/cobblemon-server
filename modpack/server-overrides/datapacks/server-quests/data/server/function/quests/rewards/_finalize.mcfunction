@@ -103,8 +103,11 @@ tag @a[tag=cq_reward_item_rare_candy] remove cq_reward_item_rare_candy
 execute as @a[tag=cq_reward_item_master_ball] at @s run give @s cobblemon:master_ball 1
 tag @a[tag=cq_reward_item_master_ball] remove cq_reward_item_master_ball
 
-# reach_pokedex_100 (side quest): 1 PokéNav
-execute as @a[tag=cq_reward_item_pokedex_100] at @s run give @s cobblenav:pokenav_item 1
+# reach_pokedex_100 (side quest): 1 PokéNav. Item grant is handled by
+# cobblemon-bridge's PokedexProgressHook (Kotlin-side give), not by this datapack.
+# The Kotlin path is idempotent via a per-player persistent NBT flag and handles
+# inventory-overflow (drops at feet). The mcfunction give was silently failing in
+# prod, so we just strip the tag here without granting.
 tag @a[tag=cq_reward_item_pokedex_100] remove cq_reward_item_pokedex_100
 
 # defeat_elite_four (mainline): 1 master ball + ultra gacha key. Cash bonus ($5000)

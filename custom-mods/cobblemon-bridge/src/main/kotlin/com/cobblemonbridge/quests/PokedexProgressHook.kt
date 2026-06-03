@@ -4,7 +4,12 @@ import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemonbridge.CobblemonBridge
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.item.ItemStack
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -32,7 +37,16 @@ object PokedexProgressHook {
 
     private const val THRESHOLD = 100
     private const val ADVANCEMENT_ID = "server:reach_pokedex_100"
+    private const val POKENAV_ITEM_ID = "cobblenav:pokenav_item"
+
+    /** Persistent NBT key on the player marking that the Centurion PokéNav has been granted.
+     *  Idempotency lives here, not on the advancement — the advancement was completed for many
+     *  players before the reward changed from Master Ball + Ultra Key to PokéNav, and we need
+     *  to backfill them on their next dex update. */
+    private const val POKENAV_AWARDED_KEY = "cobblemon_bridge:centurion_pokenav_awarded"
+
     private val warnedOnce = AtomicBoolean(false)
+    private val pokenavMissingWarnedOnce = AtomicBoolean(false)
 
     fun registerEvents() {
         CobblemonEvents.POKEDEX_DATA_CHANGED_POST.subscribe(Priority.NORMAL) { event ->
@@ -74,6 +88,43 @@ object PokedexProgressHook {
                 ADVANCEMENT_ID, player.gameProfile.name, count,
             )
         }
+        // Grant the PokéNav directly from Kotlin. The mcfunction give path was unreliable for
+        // cobblenav:pokenav_item (silent failures in prod despite the tellraw firing), and any
+        // player who completed the advancement before the reward changed from Master Ball +
+        // Ultra Key never got a PokéNav at all. Both classes are handled here:
+        //   - new completers: advancement fires for the first time, this runs immediately
+        //   - retro completers: advancement is already done, this runs on next dex update
+        // Idempotency via a per-player persistent NBT flag (see POKENAV_AWARDED_KEY).
+        grantPokenavOnce(player)
+    }
+
+    private fun grantPokenavOnce(player: ServerPlayer) {
+        if (player.persistentData.getBoolean(POKENAV_AWARDED_KEY)) return
+        val itemId = ResourceLocation.parse(POKENAV_ITEM_ID)
+        val item = BuiltInRegistries.ITEM.getOptional(itemId).orElse(null)
+        if (item == null) {
+            if (pokenavMissingWarnedOnce.compareAndSet(false, true)) {
+                CobblemonBridge.logger.warn(
+                    "centurion: {} not registered (Cobblenav mod missing?) — skipping grant",
+                    POKENAV_ITEM_ID,
+                )
+            }
+            return
+        }
+        val stack = ItemStack(item, 1)
+        val added = player.inventory.add(stack)
+        if (!added || !stack.isEmpty) {
+            // Inventory full — drop the leftover at the player's feet.
+            val drop = ItemEntity(player.level(), player.x, player.y, player.z, stack.copy())
+            player.level().addFreshEntity(drop)
+            player.sendSystemMessage(Component.literal(
+                "§6[Centurion] §fYour PokéNav was dropped at your feet (inventory full)."
+            ))
+        }
+        player.persistentData.putBoolean(POKENAV_AWARDED_KEY, true)
+        CobblemonBridge.logger.info(
+            "centurion: granted PokéNav to {}", player.gameProfile.name,
+        )
     }
 
     private fun currentServer(): net.minecraft.server.MinecraftServer? =

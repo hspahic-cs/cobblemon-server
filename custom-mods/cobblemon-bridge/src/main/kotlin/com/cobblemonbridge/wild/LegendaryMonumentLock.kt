@@ -40,6 +40,8 @@ object LegendaryMonumentLock {
 
     private const val LM_NAMESPACE = "legendarymonuments"
 
+    // Deploy-skip canary: this comment exists to verify code-only PRs don't trigger the dev deploy.
+
     /** The legendary we re-spawned and are tracking. Cleared when it leaves the world. */
     @Volatile private var activeLmPokemon: Pokemon? = null
 

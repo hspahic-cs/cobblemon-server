@@ -19,16 +19,16 @@ object MonumentCommand {
                         .executes { ctx ->
                             LegendaryMonumentLock.reset()
                             ctx.source.sendSystemMessage(
-                                Component.literal("§a[Monument] Lock cleared — legendary spawns from monuments are re-enabled.")
+                                Component.literal("§a[Monument] All spent altars cleared — every monument can spawn again.")
                             )
                             1
                         }
                     )
                     .then(Commands.literal("status")
                         .executes { ctx ->
-                            val status = if (LegendaryMonumentLock.isLocked()) "§cLOCKED" else "§aopen"
+                            val count = LegendaryMonumentLock.spentCount()
                             ctx.source.sendSystemMessage(
-                                Component.literal("§e[Monument] §fSpawn lock: $status")
+                                Component.literal("§e[Monument] §f$count altar(s) permanently spent.")
                             )
                             1
                         }

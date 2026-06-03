@@ -210,15 +210,17 @@ object LegendaryMonumentLock {
     }
 
     /**
-     * Scans ±4 XZ and -8..+1 Y around [spawnPos] for the nearest LM activation block.
+     * Scans ±16 XZ and -24..+4 Y around [spawnPos] for the nearest LM activation block.
      * Covers pedestals (*_pedestal), locks (*_lock), and other spawner blocks.
+     * Large radius needed for structures like Kyurem Cave where the pokemon spawns
+     * far from the activation pedestal.
      */
     private fun findPedestal(level: ServerLevel, spawnPos: BlockPos): BlockPos? {
         var nearest: BlockPos? = null
         var nearestDist = Int.MAX_VALUE
-        for (dx in -4..4) {
-            for (dy in -8..1) {
-                for (dz in -4..4) {
+        for (dx in -16..16) {
+            for (dy in -24..4) {
+                for (dz in -16..16) {
                     val pos = spawnPos.offset(dx, dy, dz)
                     val id = level.getBlockState(pos).block
                         .builtInRegistryHolder().key()?.location() ?: continue

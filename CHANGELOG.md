@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.56] - 2026-06-03
+
+### Fixed
+- **Monument lock: Kyurem (and other large-cave) pedestal returns null.** The ±4 block
+  scan radius was too small — Kyurem Cave spawns the legendary far from the activation
+  pedestal. Widened to ±16 XZ / -24..+4 Y.
+- **Server crash (ConcurrentModificationException) when battling LM legendary.** The
+  previous bounding-box drain replaced thousands of blocks in one tick, causing
+  `DistanceManager.runAllUpdates` to fail with CME. Fixed in 0.7.52 (single pedestal
+  drain); this version just documents it.
+
+### Removed
+- **ImmediatelyFast** client mod dropped — confirmed to break Cobblemon battle UI
+  (moves/flee/switch buttons not rendering).
+
 ## [0.7.55] - 2026-06-03
 
 ### Fixed

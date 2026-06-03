@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.55] - 2026-06-03
+
+### Fixed
+- **LM legendary battle UI missing moves.** LM spawns legendaries via `PokemonProperties`
+  without going through Cobblemon's full spawn pipeline, so `initializeMoveset()` is never
+  called. The battle screen renders but shows no moves/flee/switch. Now calls
+  `pokemon.initializeMoveset()` at join time if the moveset is empty.
+
 ## [0.7.54] - 2026-06-03
 
 ### Fixed

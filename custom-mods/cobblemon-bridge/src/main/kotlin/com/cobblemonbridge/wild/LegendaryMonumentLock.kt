@@ -135,6 +135,16 @@ object LegendaryMonumentLock {
             return
         }
 
+        // LM spawns via PokemonProperties without going through Cobblemon's full spawn
+        // pipeline, so the moveset may not be initialized — battle UI won't show moves.
+        if (pokemon.moveSet.getMoves().isEmpty()) {
+            pokemon.initializeMoveset()
+            CobblemonBridge.logger.info(
+                "monument-lock: initialized moveset for LM-spawned {}",
+                pokemon.species.name,
+            )
+        }
+
         activeLmPokemon = pokemon
         trackedLmPokemon = pokemon
         activeLmPedestal = pedestal

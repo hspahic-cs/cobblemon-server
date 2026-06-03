@@ -103,9 +103,8 @@ tag @a[tag=cq_reward_item_rare_candy] remove cq_reward_item_rare_candy
 execute as @a[tag=cq_reward_item_master_ball] at @s run give @s cobblemon:master_ball 1
 tag @a[tag=cq_reward_item_master_ball] remove cq_reward_item_master_ball
 
-# reach_pokedex_100 (side quest): 1 master ball + ultra gacha key
-execute as @a[tag=cq_reward_item_pokedex_100] at @s run give @s cobblemon:master_ball 1
-execute as @a[tag=cq_reward_item_pokedex_100] at @s run gacha grant @s ultra 1
+# reach_pokedex_100 (side quest): 1 PokéNav
+execute as @a[tag=cq_reward_item_pokedex_100] at @s run give @s cobblenav:pokenav_item 1
 tag @a[tag=cq_reward_item_pokedex_100] remove cq_reward_item_pokedex_100
 
 # defeat_elite_four (mainline): 1 master ball + ultra gacha key. Cash bonus ($5000)

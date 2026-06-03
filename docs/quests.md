@@ -58,7 +58,7 @@ Every quest available on the server, grouped by chain.
 
 | # | Quest | Condition | Reward |
 |---:|---|---|---|
-| 1 | **Centurion** | Catch 100 different Pokémon species. | 1 Master Ball + Ultra Key |
+| 1 | **Centurion** | Catch 100 different Pokémon species. | PokéNav |
 
 ## Rotating gyms (optional)
 

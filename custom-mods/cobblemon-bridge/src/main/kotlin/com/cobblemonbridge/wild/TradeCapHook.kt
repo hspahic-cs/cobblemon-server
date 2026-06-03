@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.pokemon.TradeEvent
 import com.cobblemonbridge.CobblemonBridge
+import com.cobblemonbridge.eggs.BredTagHook
 import com.cobblemonbridge.quests.LevelCap
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
@@ -27,6 +28,26 @@ object TradeCapHook {
             val p2 = resolvePlayer(server, event.tradeParticipant2.uuid)
             val incoming1 = event.tradeParticipant2Pokemon  // p1 receives p2's offered mon
             val incoming2 = event.tradeParticipant1Pokemon  // p2 receives p1's offered mon
+
+            // Bred Pokémon are non-tradeable (both directions). Applies to vanilla Cobblemon
+            // trade GUI; the custom /trade flow does its own check in TradeManager.execute.
+            val bredBlockers = mutableListOf<String>()
+            if (BredTagHook.isBred(incoming1)) {
+                bredBlockers += "${incoming1.species.name} (offered by ${p2?.gameProfile?.name ?: "?"})"
+            }
+            if (BredTagHook.isBred(incoming2)) {
+                bredBlockers += "${incoming2.species.name} (offered by ${p1?.gameProfile?.name ?: "?"})"
+            }
+            if (bredBlockers.isNotEmpty()) {
+                event.cancel()
+                val msg = Component.literal(
+                    "§c[Trade Blocked] Bred Pokémon cannot be traded.\n§7" + bredBlockers.joinToString("; "),
+                )
+                p1?.sendSystemMessage(msg)
+                p2?.sendSystemMessage(msg)
+                CobblemonBridge.logger.info("Trade cancelled — bred: {}", bredBlockers.joinToString("; "))
+                return@subscribe
+            }
 
             val violations = mutableListOf<String>()
             if (p1 != null && !isExempt(incoming1)) {

@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.pokemon.evolution.variants.TradeEvolution
 import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.economy.EconomyBridge
+import com.cobblemonbridge.eggs.BredTagHook
 import com.cobblemonbridge.quests.LevelCap
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
@@ -283,7 +284,25 @@ object TradeManager {
             return
         }
 
-        // 1. Validate level caps on each side (RECEIVER's cap vs incoming Pokémon levels).
+        // 1. Bred Pokémon are non-tradeable. Mirror of TradeCapHook for the custom /trade flow.
+        val bredBlockers = mutableListOf<String>()
+        for (mon in session.offer1.pokemon) if (BredTagHook.isBred(mon)) {
+            bredBlockers += "${p1.gameProfile.name} offered ${mon.species.name} (bred)"
+        }
+        for (mon in session.offer2.pokemon) if (BredTagHook.isBred(mon)) {
+            bredBlockers += "${p2.gameProfile.name} offered ${mon.species.name} (bred)"
+        }
+        if (bredBlockers.isNotEmpty()) {
+            val msg = "§c[Trade] Blocked, bred Pokémon cannot be traded:\n  §7" +
+                bredBlockers.joinToString("\n  §7")
+            p1.sendSystemMessage(Component.literal(msg))
+            p2.sendSystemMessage(Component.literal(msg))
+            session.unconfirmBoth()
+            TradeMenu.refresh(session)
+            return
+        }
+
+        // 2. Validate level caps on each side (RECEIVER's cap vs incoming Pokémon levels).
         val capP1 = LevelCap.forPlayer(p1)
         val capP2 = LevelCap.forPlayer(p2)
         val violations = mutableListOf<String>()
@@ -306,7 +325,7 @@ object TradeManager {
             return
         }
 
-        // 2. Validate money — sender still has what they offered.
+        // 3. Validate money — sender still has what they offered.
         if (EconomyBridge.getBalance(p1.uuid) < session.offer1.money) {
             unconfirmedNotice(session, p1, "${p1.gameProfile.name} can no longer cover \$${session.offer1.money}")
             return
@@ -316,7 +335,7 @@ object TradeManager {
             return
         }
 
-        // 3. Validate party stability — each staged Pokémon must still be in the sender's party.
+        // 4. Validate party stability — each staged Pokémon must still be in the sender's party.
         val party1 = Cobblemon.storage.getParty(p1)
         val party2 = Cobblemon.storage.getParty(p2)
         val party1Uuids = (0 until party1.size()).mapNotNull { party1.get(it)?.uuid }.toSet()
@@ -330,8 +349,8 @@ object TradeManager {
             return
         }
 
-        // 4. Atomic phase — past this point we mutate state.
-        // 4a. Pokemon: remove from sender, add to receiver (overflow to PC).
+        // 5. Atomic phase — past this point we mutate state.
+        // 5a. Pokemon: remove from sender, add to receiver (overflow to PC).
         val incomingToP1 = session.offer2.pokemon.toList()
         val incomingToP2 = session.offer1.pokemon.toList()
         for (mon in incomingToP2) party1.remove(mon)
@@ -345,7 +364,7 @@ object TradeManager {
             if (!party2.add(mon)) pcP2.add(mon)
         }
 
-        // 4a.1. Trade evolutions — for each Pokémon that arrived on a side, walk its evolution
+        // 5a.1. Trade evolutions — for each Pokémon that arrived on a side, walk its evolution
         //       list and attempt any `TradeEvolution`. The "context" partner is the FIRST mon
         //       the receiver sent OUT as their exchange — required by held-item variants
         //       (Onix + Metal Coat → Steelix) and link-trade pairs (Karrablast ↔ Shelmet).
@@ -356,7 +375,7 @@ object TradeManager {
         if (partnerForP1Side != null) attemptTradeEvolutions(incomingToP1, partnerForP1Side)
         if (partnerForP2Side != null) attemptTradeEvolutions(incomingToP2, partnerForP2Side)
 
-        // 4b. Items: shovel each side's item slots into the other player's inventory.
+        // 5b. Items: shovel each side's item slots into the other player's inventory.
         for (slot in TradeMenu.itemSlotsFor(p1.uuid)) {
             val stack = session.container.removeItemNoUpdate(slot)
             if (!stack.isEmpty) returnItem(p2, stack)  // received by p2
@@ -366,7 +385,7 @@ object TradeManager {
             if (!stack.isEmpty) returnItem(p1, stack)  // received by p1
         }
 
-        // 4c. Money: withdraw from each side; only deposit on the other if the withdraw
+        // 5c. Money: withdraw from each side; only deposit on the other if the withdraw
         //     actually succeeded. Pre-0.7.14 the return value was ignored and a failed
         //     withdraw still triggered the deposit, which would silently print money out of
         //     thin air. Now any withdraw failure aborts the deposit and logs the discrepancy
@@ -400,7 +419,7 @@ object TradeManager {
             }
         }
 
-        // 5. Tear down session + close menus + chat summary.
+        // 6. Tear down session + close menus + chat summary.
         sessions.remove(session.p1Uuid)
         sessions.remove(session.p2Uuid)
         TradeMenu.closeFor(session)

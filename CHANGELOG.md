@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.49] - 2026-06-03
+
+### Fixed
+- **Monument lock: spawn detection completely broken.** LM spawns legendaries by
+  directly constructing a `PokemonEntity` via `PokemonProperties` (not through
+  Cobblemon's spawn pipeline), so `CobblemonEvents.POKEMON_ENTITY_SPAWN` never
+  fires for them. Switched to NeoForge's `EntityJoinLevelEvent` which fires for
+  all entity adds regardless of origin.
+
 ## [0.7.48] - 2026-06-02
 
 ### Fixed

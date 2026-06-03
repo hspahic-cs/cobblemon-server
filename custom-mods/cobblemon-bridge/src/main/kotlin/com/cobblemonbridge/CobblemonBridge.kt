@@ -84,7 +84,6 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // RCT's adjustPlayerLevels (which turned out to be dead config — its BattleRules field
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
-        LegendaryMonumentLock.registerEvents()
         NeoForge.EVENT_BUS.register(LegendaryMonumentLock)
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)

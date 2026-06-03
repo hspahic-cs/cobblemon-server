@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.59] - 2026-06-02
+
+### Changed
+- **Monument lock: world is the source of truth — drop in-memory spent-altars set
+  and persistence.** The persisted `spent_altars.json` was causing false positives:
+  stale entries from earlier versions blocked fresh activations even after
+  `/monument admin reset`, and `findPedestal`'s ±16-block scan picked up *any*
+  drained altar in the radius and matched it as "spent". Now the only check is
+  "is a legendary already active?" — a pedestal block exists or it doesn't, and
+  drained pedestals are crying obsidian (different namespace) so the scan skips
+  them automatically. `/monument admin reset` now clears just the active-legendary
+  slot; to restore a drained altar, use `/setblock` to put the original pedestal
+  back.
+
 ## [0.7.58] - 2026-06-02
 
 ### Changed

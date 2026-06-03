@@ -19,17 +19,18 @@ object MonumentCommand {
                         .executes { ctx ->
                             LegendaryMonumentLock.reset()
                             ctx.source.sendSystemMessage(
-                                Component.literal("§a[Monument] All spent altars cleared — every monument can spawn again.")
+                                Component.literal("§a[Monument] Active-legendary slot cleared. To restore a drained altar, /setblock the crying obsidian back to the original pedestal.")
                             )
                             1
                         }
                     )
                     .then(Commands.literal("status")
                         .executes { ctx ->
-                            val count = LegendaryMonumentLock.spentCount()
-                            ctx.source.sendSystemMessage(
-                                Component.literal("§e[Monument] §f$count altar(s) permanently spent.")
-                            )
+                            val msg = if (LegendaryMonumentLock.isActive())
+                                "§e[Monument] §fA legendary is currently active."
+                            else
+                                "§e[Monument] §fNo legendary active."
+                            ctx.source.sendSystemMessage(Component.literal(msg))
                             1
                         }
                     )

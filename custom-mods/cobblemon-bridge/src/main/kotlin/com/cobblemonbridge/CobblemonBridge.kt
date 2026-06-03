@@ -18,6 +18,7 @@ import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
 import com.cobblemonbridge.commands.TradeCommand
 import com.cobblemonbridge.commands.WildCommand
+import com.cobblemonbridge.eggs.BredTagHook
 import com.cobblemonbridge.eggs.EggDefeatHook
 import com.cobblemonbridge.gymtp.GymTpNpcHook
 import com.cobblemonbridge.gymtp.GymTpRegistry
@@ -84,6 +85,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // RCT's adjustPlayerLevels (which turned out to be dead config — its BattleRules field
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
+        BredTagHook.registerEvents()
         NeoForge.EVENT_BUS.register(LegendaryMonumentLock)
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)

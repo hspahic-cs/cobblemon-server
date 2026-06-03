@@ -161,10 +161,10 @@ object LegendaryMonumentLock {
     }
 
     /**
-     * Fires when any entity leaves the level. We only care about the active LM legendary
-     * entity. Schedules a next-tick check so [POKEMON_CAPTURED] (same-tick, sequential) can
-     * fire first if this removal was part of a capture. After that tick, [Pokemon.isWild]
-     * is false for a caught pokemon and true for a fled/despawned one.
+     * Fires when any entity leaves the level. We only care about the active LM legendary.
+     * Schedules a next-tick check so Cobblemon's capture logic (which runs in the same tick
+     * as the entity removal) can complete first. On the next tick we check [Pokemon.isWild]:
+     * false = caught (POKEMON_CAPTURED already locked us), true = fled/despawned.
      */
     @SubscribeEvent
     fun onEntityLeaveLevel(event: EntityLeaveLevelEvent) {
@@ -174,7 +174,12 @@ object LegendaryMonumentLock {
 
         val server = ServerLifecycleHooks.getCurrentServer() ?: return
         server.execute {
-            if (locked || activeLmPokemon !== active) return@execute  // already handled by POKEMON_CAPTURED
+            // If already locked, POKEMON_CAPTURED handled it.
+            if (locked) return@execute
+            // isWild() == false means Cobblemon already moved it into a player's party (caught).
+            // POKEMON_CAPTURED fires in the same tick as entity removal but may sequence after
+            // this scheduled task — guard with isWild() so we never mis-classify a capture as a flee.
+            if (!active.isWild()) return@execute
             activeLmPokemon = null
             activeLmLevel = null
             activeLmPos = null

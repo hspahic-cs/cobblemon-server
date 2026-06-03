@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.50] - 2026-06-03
+
+### Fixed
+- **Monument lock: capture mis-classified as flee.** `onEntityLeaveLevel` scheduled
+  a next-tick check expecting `POKEMON_CAPTURED` to have already nulled
+  `activeLmPokemon` — but Cobblemon's capture event sequences after the NeoForge
+  scheduled task, so the check saw the pokemon still active and declared it fled.
+  Fixed by checking `active.isWild()` directly: false means Cobblemon already
+  moved it into a player's party (caught), so we exit without resetting the lock.
+
 ## [0.7.49] - 2026-06-03
 
 ### Fixed

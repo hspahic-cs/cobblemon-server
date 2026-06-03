@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.52] - 2026-06-03
+
+### Fixed
+- **Monument drain: adjacent pedestals (Dialga/Palkia, Zekrom/Reshiram) both draining.**
+  Previous bounding-box scan covered the entire structure — Spear Pillar is one structure
+  whose box contains both pedestals. Switched to scanning ±4 XZ / -8..+1 Y around the
+  legendary's spawn position for the nearest `legendarymonuments:*_pedestal` block, then
+  replacing only that single block. Pedestals 10 blocks apart are never confused.
+
 ## [0.7.51] - 2026-06-03
 
 ### Fixed

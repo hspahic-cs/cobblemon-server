@@ -203,6 +203,8 @@ object LegendaryMonumentLock {
     private fun isActivationBlock(path: String): Boolean =
         path.endsWith("_pedestal") ||
         path.endsWith("_lock") ||
+        path.endsWith("_shrine") ||
+        path.endsWith("_stake") ||
         path == "pokemon_trial_spawner" ||
         path == "sanctuary_block" ||
         path == "hoopa_boss_summon"

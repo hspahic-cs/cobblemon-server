@@ -3,12 +3,15 @@ package com.cobblemonbridge.wild
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonbridge.CobblemonBridge
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.loading.FMLPaths
@@ -19,101 +22,108 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import kotlin.io.path.createDirectories
-import kotlin.io.path.deleteIfExists
 import kotlin.io.path.exists
+import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 /**
- * Legendary Monuments one-shot global lock.
+ * Legendary Monuments per-altar one-shot lock.
  *
  * Rules:
+ *  - Each altar is independently one-shot. Catching or fleeing a legendary permanently
+ *    spends that altar; all other altars in the world remain available.
  *  - Only one LM legendary may be alive in the world at a time. A second spawn attempt
  *    while one is active is cancelled.
- *  - The monument is one-shot regardless of outcome — the altar is permanently spent and
- *    drained whether the legendary is caught or flees. Players can't exploit a reset by
- *    luring the legendary away and fleeing the battle.
+ *  - The altar drains (replaced with crying obsidian) within its own structure bounding
+ *    box only — adjacent structures are unaffected.
  *
  * Detection:
  *  - [EntityJoinLevelEvent] fires for all entity adds regardless of origin. LM spawns
  *    legendaries by directly constructing a [PokemonEntity] via `PokemonProperties`,
  *    bypassing Cobblemon's spawn pipeline entirely.
- *  - On entity removal, a next-tick check reads [Pokemon.isWild] to pick the right
- *    broadcast message (caught vs fled) — both paths lock and drain.
+ *  - On entity removal, [Pokemon.isWild] distinguishes caught (false) from fled (true)
+ *    for the broadcast message — both outcomes spend the altar.
  *
- * Persistence: `config/cobblemon-bridge/runtime/monument_lock.flag` — zero-byte sentinel.
+ * Persistence: `config/cobblemon-bridge/runtime/spent_altars.json` — list of anchor positions.
  * Admin reset: `/monument admin reset`.
  */
 object LegendaryMonumentLock {
 
     private const val LM_NAMESPACE = "legendarymonuments"
-    private const val FLAG_NAME = "monument_lock.flag"
+    private const val DATA_FILE = "spent_altars.json"
+    private val GSON = Gson()
 
-    @Volatile private var lockFile: Path? = null
-    @Volatile private var locked: Boolean = false
+    private var dataFile: Path? = null
 
-    fun isLocked(): Boolean = locked
+    /** Anchor positions (bounding-box centre at minY) of permanently spent altars. */
+    private val spentAltars: MutableSet<BlockPos> = mutableSetOf()
 
     /** The LM legendary currently live in the world. Null if none active. */
     @Volatile private var activeLmPokemon: Pokemon? = null
-    @Volatile private var activeLmLevel: ServerLevel? = null
-    @Volatile private var activeLmPos: BlockPos? = null
+    @Volatile private var activeLmBoundingBox: BoundingBox? = null
+    @Volatile private var activeLmAnchor: BlockPos? = null
 
-    /** XZ scan radius around the structure anchor when draining altar blocks. */
-    private const val DRAIN_RADIUS_XZ = 48
-    /** Full Y range to scan (structure anchor down to bedrock, up to build limit). */
-    private const val DRAIN_Y_MIN = -64
-    private const val DRAIN_Y_MAX = 320
+    fun spentCount(): Int = spentAltars.size
 
     fun init() {
         val file = FMLPaths.CONFIGDIR.get()
             .resolve("cobblemon-bridge")
             .resolve("runtime")
-            .resolve(FLAG_NAME)
-        lockFile = file
-        locked = file.exists()
-        CobblemonBridge.logger.info(
-            "monument-lock: status={}",
-            if (locked) "LOCKED" else "open",
-        )
+            .resolve(DATA_FILE)
+        dataFile = file
+        if (file.exists()) {
+            try {
+                val type = object : TypeToken<List<Map<String, Int>>>() {}.type
+                val list: List<Map<String, Int>> = GSON.fromJson(file.readText(), type)
+                list.forEach { spentAltars.add(BlockPos(it["x"]!!, it["y"]!!, it["z"]!!)) }
+            } catch (_: Exception) {}
+        }
+        CobblemonBridge.logger.info("monument-lock: {} spent altar(s) loaded", spentAltars.size)
     }
 
-    /**
-     * Fires when any entity joins the level — including LM-spawned legendaries, which are
-     * created directly via PokemonProperties and never pass through POKEMON_ENTITY_SPAWN.
-     */
     @SubscribeEvent(priority = EventPriority.HIGH)
     fun onEntityJoinLevel(event: EntityJoinLevelEvent) {
         val entity = event.entity as? PokemonEntity ?: return
         val level = event.level as? ServerLevel ?: return
         val pokemon = entity.pokemon
         if (!pokemon.isLegendary() && !pokemon.isMythical()) return
-        if (!isInsideLmStructure(entity)) return
 
-        if (locked) {
+        val (anchor, bbox) = findStructureInfo(level, entity.blockPosition()) ?: return
+
+        if (anchor in spentAltars) {
             event.isCanceled = true
             CobblemonBridge.logger.debug(
-                "monument-lock: cancelled {} join — permanently locked",
-                pokemon.species.name,
+                "monument-lock: cancelled {} join — altar at {} is spent",
+                pokemon.species.name, anchor,
             )
+            level.server.playerList.players.forEach {
+                it.sendSystemMessage(Component.literal(
+                    "§6[Legendary Monument] §7This altar has already been spent — its legendary will not return."
+                ))
+            }
             return
         }
 
         if (activeLmPokemon != null) {
             event.isCanceled = true
             CobblemonBridge.logger.debug(
-                "monument-lock: cancelled {} join — {} is already active",
-                pokemon.species.name,
-                activeLmPokemon!!.species.name,
+                "monument-lock: cancelled {} join — {} is already active elsewhere",
+                pokemon.species.name, activeLmPokemon!!.species.name,
             )
+            level.server.playerList.players.forEach {
+                it.sendSystemMessage(Component.literal(
+                    "§6[Legendary Monument] §7Another legendary is already active — wait for it to be caught or to flee."
+                ))
+            }
             return
         }
 
         activeLmPokemon = pokemon
-        activeLmLevel = level
-        activeLmPos = entity.blockPosition()
+        activeLmBoundingBox = bbox
+        activeLmAnchor = anchor
         CobblemonBridge.logger.info(
-            "monument-lock: {} joined world in LM structure — altar is now spent",
-            pokemon.species.name,
+            "monument-lock: {} joined world in LM structure at {} — altar is now spent",
+            pokemon.species.name, anchor,
         )
         level.server.playerList.players.forEach {
             it.sendSystemMessage(Component.literal(
@@ -123,12 +133,6 @@ object LegendaryMonumentLock {
         }
     }
 
-    /**
-     * Fires when any entity leaves the level. Schedules a next-tick check so Cobblemon's
-     * capture logic (same tick as entity removal) can complete first. On the next tick,
-     * [Pokemon.isWild] distinguishes caught (false) from fled (true) for the broadcast
-     * message — both outcomes lock and drain the altar.
-     */
     @SubscribeEvent
     fun onEntityLeaveLevel(event: EntityLeaveLevelEvent) {
         val entity = event.entity as? PokemonEntity ?: return
@@ -137,28 +141,24 @@ object LegendaryMonumentLock {
 
         val server = ServerLifecycleHooks.getCurrentServer() ?: return
         server.execute {
-            if (locked) return@execute
-            val leaveLevel = activeLmLevel
-            val leavePos = activeLmPos
+            val bbox = activeLmBoundingBox
+            val anchor = activeLmAnchor ?: return@execute
             val caught = !active.isWild()
             activeLmPokemon = null
-            activeLmLevel = null
-            activeLmPos = null
-            writeLock()
-            if (leaveLevel != null && leavePos != null) {
-                val anchorPos = findStructureAnchor(leaveLevel, leavePos) ?: leavePos
-                drainAltar(leaveLevel, anchorPos)
-            }
+            activeLmBoundingBox = null
+            activeLmAnchor = null
+            spendAltar(anchor)
+            if (bbox != null) drainAltar(server.overworld(), bbox)
             if (caught) {
-                CobblemonBridge.logger.info("monument-lock: LOCKED — {} caught from LM structure", active.species.name)
+                CobblemonBridge.logger.info("monument-lock: {} caught — altar at {} spent", active.species.name, anchor)
                 server.playerList.players.forEach {
                     it.sendSystemMessage(Component.literal(
                         "§6[Legendary Monument] §f${active.species.name} was caught! " +
-                        "§7The monument's power is spent — no legendary will spawn there again."
+                        "§7The monument's power is spent — this legendary will not return."
                     ))
                 }
             } else {
-                CobblemonBridge.logger.info("monument-lock: LOCKED — {} fled from LM structure, monument is spent", active.species.name)
+                CobblemonBridge.logger.info("monument-lock: {} fled — altar at {} spent", active.species.name, anchor)
                 server.playerList.players.forEach {
                     it.sendSystemMessage(Component.literal(
                         "§6[Legendary Monument] §7The legendary escaped... but the monument's power is spent."
@@ -168,46 +168,41 @@ object LegendaryMonumentLock {
         }
     }
 
-    /** Clears both the permanent lock and any in-progress active legendary. */
+    /** Resets all spent altars and any active legendary. Admin use only. */
     fun reset() {
-        lockFile?.deleteIfExists()
-        locked = false
+        spentAltars.clear()
         activeLmPokemon = null
-        activeLmLevel = null
-        activeLmPos = null
-        CobblemonBridge.logger.info("monument-lock: reset by admin")
+        activeLmBoundingBox = null
+        activeLmAnchor = null
+        try { dataFile?.let { Files.deleteIfExists(it) } } catch (_: Exception) {}
+        CobblemonBridge.logger.info("monument-lock: all altars reset by admin")
     }
 
-    /**
-     * Returns the ground-level bounding-box centre of the LM structure whose chunk contains
-     * [spawnPos]. Falls back to null (caller uses spawnPos).
-     */
-    private fun findStructureAnchor(level: ServerLevel, spawnPos: BlockPos): BlockPos? {
+    private data class StructureInfo(val anchor: BlockPos, val bbox: BoundingBox)
+
+    private fun findStructureInfo(level: ServerLevel, pos: BlockPos): StructureInfo? {
         val structureManager = level.structureManager()
         val registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
-        val chunkPos = ChunkPos(spawnPos)
+        val chunkPos = ChunkPos(pos)
         for ((key, structure) in registry.entrySet()) {
             if (key.location().namespace != LM_NAMESPACE) continue
             val starts = structureManager.startsForStructure(chunkPos) { it == structure }
             if (starts.isNotEmpty()) {
                 val bb = starts.first().getBoundingBox()
-                return BlockPos(bb.minX() + (bb.maxX() - bb.minX()) / 2, bb.minY(), bb.minZ() + (bb.maxZ() - bb.minZ()) / 2)
+                val anchor = BlockPos(bb.minX() + (bb.maxX() - bb.minX()) / 2, bb.minY(), bb.minZ() + (bb.maxZ() - bb.minZ()) / 2)
+                return StructureInfo(anchor, bb)
             }
         }
         return null
     }
 
-    /**
-     * Replaces every `legendarymonuments:*` block within [DRAIN_RADIUS_XZ] XZ and the full
-     * world Y range around [anchor] with crying obsidian.
-     */
-    private fun drainAltar(level: ServerLevel, anchor: BlockPos) {
+    private fun drainAltar(level: ServerLevel, bbox: BoundingBox) {
         val cryingObsidian = Blocks.CRYING_OBSIDIAN.defaultBlockState()
         var count = 0
-        for (x in -DRAIN_RADIUS_XZ..DRAIN_RADIUS_XZ) {
-            for (y in DRAIN_Y_MIN..DRAIN_Y_MAX) {
-                for (z in -DRAIN_RADIUS_XZ..DRAIN_RADIUS_XZ) {
-                    val pos = BlockPos(anchor.x + x, y, anchor.z + z)
+        for (x in bbox.minX()..bbox.maxX()) {
+            for (y in bbox.minY()..bbox.maxY()) {
+                for (z in bbox.minZ()..bbox.maxZ()) {
+                    val pos = BlockPos(x, y, z)
                     val state = level.getBlockState(pos)
                     if (state.block.builtInRegistryHolder().key()?.location()?.namespace == LM_NAMESPACE) {
                         level.setBlock(pos, cryingObsidian, 3)
@@ -216,25 +211,20 @@ object LegendaryMonumentLock {
                 }
             }
         }
-        CobblemonBridge.logger.info("monument-lock: drained {} LM blocks around {}", count, anchor)
+        CobblemonBridge.logger.info("monument-lock: drained {} LM blocks in bbox {}", count, bbox)
     }
 
-    private fun isInsideLmStructure(entity: PokemonEntity): Boolean {
-        val level = entity.level() as? ServerLevel ?: return false
-        val structureManager = level.structureManager()
-        val registry = level.registryAccess().registryOrThrow(Registries.STRUCTURE)
-        val chunkPos = ChunkPos(entity.blockPosition())
-        return structureManager.startsForStructure(chunkPos) { structure ->
-            registry.getKey(structure)?.namespace == LM_NAMESPACE
-        }.isNotEmpty()
-    }
-
-    private fun writeLock() {
-        val file = lockFile ?: return
-        file.parent.createDirectories()
-        val tmp = file.resolveSibling("$FLAG_NAME.tmp")
-        tmp.writeText("")
-        Files.move(tmp, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
-        locked = true
+    private fun spendAltar(anchor: BlockPos) {
+        spentAltars.add(anchor)
+        val file = dataFile ?: return
+        try {
+            file.parent.createDirectories()
+            val list = spentAltars.map { mapOf("x" to it.x, "y" to it.y, "z" to it.z) }
+            val tmp = file.resolveSibling("$DATA_FILE.tmp")
+            tmp.writeText(GSON.toJson(list))
+            Files.move(tmp, file, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE)
+        } catch (e: Exception) {
+            CobblemonBridge.logger.warn("monument-lock: failed to persist spent altars", e)
+        }
     }
 }

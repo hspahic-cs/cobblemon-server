@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.51] - 2026-06-03
+
+### Fixed
+- **Monument lock: global lock was wrong design.** The single `locked` flag shut down every
+  altar in the world after one catch. Replaced with a per-altar `spentAltars` set keyed by
+  structure bounding-box anchor — each altar is independently one-shot; all others stay open.
+- **Monument lock: adjacent altars both draining.** Fixed-radius scan (±48 blocks) overlapped
+  adjacent structures (e.g. Dialga/Palkia altars). Drain now iterates the specific structure's
+  own bounding box — adjacent structures are untouched.
+- **Monument lock: "message fires but nothing spawns" on spent altars.** When a spent altar
+  was triggered, the entity was cancelled silently (debug log only) while LM had already
+  broadcast its own message. Now sends an explicit player-facing "this altar is spent" message.
+- **Monument lock: persist spent altars as JSON.** Replaces the single `monument_lock.flag`
+  sentinel with `spent_altars.json` containing each spent anchor position.
+
 ## [0.7.50] - 2026-06-03
 
 ### Fixed

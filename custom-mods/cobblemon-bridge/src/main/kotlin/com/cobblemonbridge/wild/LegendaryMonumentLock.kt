@@ -1,7 +1,6 @@
 package com.cobblemonbridge.wild
 
-import com.cobblemon.mod.common.api.Priority
-import com.cobblemon.mod.common.api.events.CobblemonEvents
+import com.cobblemon.mod.common.api.pokemon.PokemonProperties
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonbridge.CobblemonBridge
@@ -18,7 +17,6 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.loading.FMLPaths
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent
-import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
@@ -30,16 +28,16 @@ import kotlin.io.path.writeText
 /**
  * Legendary Monuments per-pedestal one-shot lock.
  *
- * Rules:
- *  - Each pedestal is independently one-shot. Catching or fleeing permanently spends
- *    that pedestal; all others remain available.
- *  - Only one LM legendary may be alive in the world at a time.
- *  - On spend, only the single pedestal block is replaced with crying obsidian —
- *    adjacent pedestals (e.g. Dialga/Palkia at Spear Pillar) are untouched.
- *
- * Pedestal identification: scan ±4 XZ, -8..+1 Y around the legendary's spawn position
- * for the nearest `legendarymonuments:*_pedestal` block. That block's position is the
- * altar key — precise enough that pedestals 10 blocks apart are never confused.
+ * Drain-on-activation model:
+ *  - When LM spawns a legendary inside an LM structure, we cancel its entity, drain
+ *    the activation block to crying obsidian (permanently spending the altar), and
+ *    re-spawn the same species/level via Cobblemon's own spawn API. This sidesteps
+ *    LM's incomplete spawn pipeline (no moveset init, no client sync) — the
+ *    re-spawned entity is a normal wild Pokemon.
+ *  - Outcome (catch / flee / loss / disconnect) doesn't matter: the altar is already
+ *    drained on activation, so there's no post-battle bookkeeping.
+ *  - Only one LM legendary may be alive at a time. The slot clears when the
+ *    re-spawned entity leaves the world (caught, despawned, or killed).
  *
  * Persistence: `config/cobblemon-bridge/runtime/spent_altars.json`.
  * Admin reset: `/monument admin reset`.
@@ -55,12 +53,8 @@ object LegendaryMonumentLock {
     /** Pedestal block positions that have been permanently spent. */
     private val spentAltars: MutableSet<BlockPos> = mutableSetOf()
 
-    /** Non-null while the legendary is alive and blocking a second spawn. Cleared on battle-flee. */
+    /** The legendary we re-spawned and are tracking. Cleared when it leaves the world. */
     @Volatile private var activeLmPokemon: Pokemon? = null
-    /** The pokemon we're tracking for drain — same as activeLmPokemon except after a battle-flee. */
-    @Volatile private var trackedLmPokemon: Pokemon? = null
-    @Volatile private var activeLmPedestal: BlockPos? = null
-    @Volatile private var activeLmLevel: ServerLevel? = null
 
     fun spentCount(): Int = spentAltars.size
 
@@ -78,30 +72,6 @@ object LegendaryMonumentLock {
             } catch (_: Exception) {}
         }
         CobblemonBridge.logger.info("monument-lock: {} spent pedestal(s) loaded", spentAltars.size)
-
-        // Clear the blocking slot whenever a battle involving our legendary ends —
-        // covers flee, player disconnect, and player loss. In all these cases the legendary
-        // entity stays alive in the world, so onEntityLeaveLevel won't fire and the slot
-        // would stay blocked forever. Keep trackedLmPokemon/activeLmPedestal so the altar
-        // still drains when the entity eventually leaves the world.
-        val clearOnBattleEnd = { battle: com.cobblemon.mod.common.api.battles.model.PokemonBattle ->
-            val active = activeLmPokemon ?: return@clearOnBattleEnd
-            val isOurBattle = battle.actors.any { actor ->
-                actor.pokemonList.any { it.effectedPokemon === active }
-            }
-            if (!isOurBattle) return@clearOnBattleEnd
-            activeLmPokemon = null
-            CobblemonBridge.logger.info(
-                "monument-lock: battle ended for {} — active slot cleared, legendary still in world",
-                active.species.name,
-            )
-        }
-        CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL) { event ->
-            clearOnBattleEnd(event.battle)
-        }
-        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
-            clearOnBattleEnd(event.battle)
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -111,6 +81,9 @@ object LegendaryMonumentLock {
         val pokemon = entity.pokemon
         if (!pokemon.isLegendary() && !pokemon.isMythical()) return
         if (!isInsideLmStructure(entity)) return
+
+        // If we've already re-spawned this entity, let it through — it's our doing.
+        if (pokemon === activeLmPokemon) return
 
         val pedestal = findPedestal(level, entity.blockPosition())
 
@@ -142,85 +115,78 @@ object LegendaryMonumentLock {
             return
         }
 
-        // LM spawns via PokemonProperties without going through Cobblemon's full spawn
-        // pipeline, so the moveset may not be initialized — battle UI won't show moves.
-        if (pokemon.moveSet.getMoves().isEmpty()) {
-            pokemon.initializeMoveset()
-            CobblemonBridge.logger.info(
-                "monument-lock: initialized moveset for LM-spawned {}",
-                pokemon.species.name,
-            )
-        }
+        // Drain + re-spawn. Cancel LM's entity so it never enters the world; the
+        // re-spawn we queue will be a normal Cobblemon-spawned wild Pokemon with
+        // proper moveset, client sync, and despawn behavior.
+        event.isCanceled = true
 
-        activeLmPokemon = pokemon
-        trackedLmPokemon = pokemon
-        activeLmPedestal = pedestal
-        activeLmLevel = level
-        CobblemonBridge.logger.info(
-            "monument-lock: {} spawned at pedestal {} — altar is now spent",
-            pokemon.species.name, pedestal,
-        )
-        level.server.playerList.players.forEach {
-            it.sendSystemMessage(Component.literal(
-                "§6[Legendary Monument] §fA wild ${pokemon.species.name} has appeared at a Legendary Monument! " +
-                "§7This is your only chance..."
-            ))
+        val species = pokemon.species.name
+        val level_ = pokemon.level
+        val shiny = pokemon.shiny
+        val spawnPos = entity.position()
+
+        val server = level.server
+        server.execute {
+            // Drain first — ensures the altar is spent even if re-spawn fails for any reason.
+            if (pedestal != null) {
+                spendAltar(pedestal)
+                drainPedestal(level, pedestal)
+            }
+
+            val propsString = buildString {
+                append(species)
+                append(" level=").append(level_)
+                if (shiny) append(" shiny")
+            }
+            val props = PokemonProperties.parse(propsString)
+            val newEntity = props.createEntity(level)
+            newEntity.moveTo(spawnPos.x, spawnPos.y, spawnPos.z, entity.yRot, entity.xRot)
+            activeLmPokemon = newEntity.pokemon
+            if (!level.addFreshEntity(newEntity)) {
+                CobblemonBridge.logger.warn(
+                    "monument-lock: failed to add re-spawned {} at {}",
+                    species, spawnPos,
+                )
+                activeLmPokemon = null
+                return@execute
+            }
+
+            CobblemonBridge.logger.info(
+                "monument-lock: drained pedestal {} and re-spawned {} (level {}{}) at {}",
+                pedestal, species, level_, if (shiny) ", shiny" else "", spawnPos,
+            )
+            level.server.playerList.players.forEach {
+                it.sendSystemMessage(Component.literal(
+                    "§6[Legendary Monument] §fA wild ${species} has appeared at a Legendary Monument! " +
+                    "§7This is your only chance..."
+                ))
+            }
         }
     }
 
     @SubscribeEvent
     fun onEntityLeaveLevel(event: EntityLeaveLevelEvent) {
         val entity = event.entity as? PokemonEntity ?: return
-        val tracked = trackedLmPokemon ?: return
-        if (entity.pokemon !== tracked) return
-
-        val server = ServerLifecycleHooks.getCurrentServer() ?: return
-        server.execute {
-            val pedestal = activeLmPedestal
-            val level = activeLmLevel
-            val caught = !tracked.isWild()
-            activeLmPokemon = null
-            trackedLmPokemon = null
-            activeLmPedestal = null
-            activeLmLevel = null
-            if (pedestal != null) {
-                spendAltar(pedestal)
-                if (level != null) drainPedestal(level, pedestal)
-            }
-            if (caught) {
-                CobblemonBridge.logger.info("monument-lock: {} caught — pedestal {} spent", tracked.species.name, pedestal)
-                server.playerList.players.forEach {
-                    it.sendSystemMessage(Component.literal(
-                        "§6[Legendary Monument] §f${tracked.species.name} was caught! " +
-                        "§7The monument's power is spent — this legendary will not return."
-                    ))
-                }
-            } else {
-                CobblemonBridge.logger.info("monument-lock: {} left world — pedestal {} spent", tracked.species.name, pedestal)
-                server.playerList.players.forEach {
-                    it.sendSystemMessage(Component.literal(
-                        "§6[Legendary Monument] §7The legendary left the world... the monument's power is spent."
-                    ))
-                }
-            }
-        }
+        val active = activeLmPokemon ?: return
+        if (entity.pokemon !== active) return
+        activeLmPokemon = null
+        CobblemonBridge.logger.info(
+            "monument-lock: {} left world — slot cleared",
+            active.species.name,
+        )
     }
 
     fun reset() {
         spentAltars.clear()
         activeLmPokemon = null
-        trackedLmPokemon = null
-        activeLmPedestal = null
-        activeLmLevel = null
         try { dataFile?.let { Files.deleteIfExists(it) } } catch (_: Exception) {}
         CobblemonBridge.logger.info("monument-lock: all pedestals reset by admin")
     }
 
     /**
      * Scans ±16 XZ and -24..+4 Y around [spawnPos] for the nearest LM activation block.
-     * Covers pedestals (*_pedestal), locks (*_lock), and other spawner blocks.
-     * Large radius needed for structures like Kyurem Cave where the pokemon spawns
-     * far from the activation pedestal.
+     * Covers pedestals, locks, shrines, stakes, and other spawner blocks. Large radius
+     * needed for structures like Kyurem Cave where the pokemon spawns far from the pedestal.
      */
     private fun findPedestal(level: ServerLevel, spawnPos: BlockPos): BlockPos? {
         var nearest: BlockPos? = null

@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.58] - 2026-06-02
+
+### Changed
+- **Monument lock: drain on activation, re-spawn via Cobblemon.** When LM spawns
+  a legendary inside an LM structure, we now cancel its entity, drain the
+  activation block to crying obsidian (permanently spending the altar), and
+  re-spawn the same species/level via `PokemonProperties.createEntity`. This
+  sidesteps LM's incomplete spawn pipeline (no moveset init, no client sync) —
+  the re-spawned entity is a normal wild Pokemon with proper battle UI, moves,
+  and despawn behavior. Outcome (catch / flee / loss / disconnect) no longer
+  matters: the altar is already spent on activation, so there's no post-battle
+  bookkeeping. Removes the `BATTLE_FLED` / `BATTLE_VICTORY` / `initializeMoveset`
+  band-aids from 0.7.54–0.7.57.
+
 ## [0.7.57] - 2026-06-03
 
 ### Fixed

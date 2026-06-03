@@ -175,9 +175,8 @@ object LegendaryMonumentLock {
     }
 
     /**
-     * Scans ±4 XZ and -8..+1 Y around [spawnPos] for the nearest
-     * `legendarymonuments:*_pedestal` block. The legendary spawns directly
-     * above/on its pedestal so this range is always sufficient.
+     * Scans ±4 XZ and -8..+1 Y around [spawnPos] for the nearest LM activation block.
+     * Covers pedestals (*_pedestal), locks (*_lock), and other spawner blocks.
      */
     private fun findPedestal(level: ServerLevel, spawnPos: BlockPos): BlockPos? {
         var nearest: BlockPos? = null
@@ -188,7 +187,7 @@ object LegendaryMonumentLock {
                     val pos = spawnPos.offset(dx, dy, dz)
                     val id = level.getBlockState(pos).block
                         .builtInRegistryHolder().key()?.location() ?: continue
-                    if (id.namespace == LM_NAMESPACE && id.path.endsWith("_pedestal")) {
+                    if (id.namespace == LM_NAMESPACE && isActivationBlock(id.path)) {
                         val dist = dx * dx + dy * dy + dz * dz
                         if (dist < nearestDist) {
                             nearestDist = dist
@@ -200,6 +199,13 @@ object LegendaryMonumentLock {
         }
         return nearest
     }
+
+    private fun isActivationBlock(path: String): Boolean =
+        path.endsWith("_pedestal") ||
+        path.endsWith("_lock") ||
+        path == "pokemon_trial_spawner" ||
+        path == "sanctuary_block" ||
+        path == "hoopa_boss_summon"
 
     /** Replaces only the single pedestal block with crying obsidian. */
     private fun drainPedestal(level: ServerLevel, pedestal: BlockPos) {

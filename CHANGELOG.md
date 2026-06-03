@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.53] - 2026-06-03
+
+### Fixed
+- **Monument drain: lock blocks not recognized as activation blocks.** LM uses `*_lock`
+  blocks (Regice, Regirock, Registeel, Regigigas, Victini, temple) and other spawner blocks
+  (`pokemon_trial_spawner`, `sanctuary_block`, `hoopa_boss_summon`) in addition to
+  `*_pedestal`. `findPedestal` now matches all of them via `isActivationBlock()`.
+
 ## [0.7.52] - 2026-06-03
 
 ### Fixed

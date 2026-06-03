@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.53] - 2026-06-03
+
+### Fixed
+- **Monument drain: lock blocks not recognized as activation blocks.** LM uses `*_lock`
+  blocks (Regice, Regirock, Registeel, Regigigas, Victini, temple) and other spawner blocks
+  (`pokemon_trial_spawner`, `sanctuary_block`, `hoopa_boss_summon`) in addition to
+  `*_pedestal`. `findPedestal` now matches all of them via `isActivationBlock()`.
+
+## [0.7.52] - 2026-06-03
+
+### Fixed
+- **Monument drain: adjacent pedestals (Dialga/Palkia, Zekrom/Reshiram) both draining.**
+  Previous bounding-box scan covered the entire structure — Spear Pillar is one structure
+  whose box contains both pedestals. Switched to scanning ±4 XZ / -8..+1 Y around the
+  legendary's spawn position for the nearest `legendarymonuments:*_pedestal` block, then
+  replacing only that single block. Pedestals 10 blocks apart are never confused.
+
 ## [0.7.51] - 2026-06-03
 
 ### Fixed

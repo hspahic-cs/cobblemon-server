@@ -12,6 +12,12 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.60] - 2026-06-03
+
+### Changed
+- **No-op deploy verification.** Comment-only nudge in `LegendaryMonumentLock.kt`
+  to confirm the CHANGELOG-triggered dev deploy fires end-to-end.
+
 ## [0.7.59] - 2026-06-02
 
 ### Changed

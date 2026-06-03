@@ -1,12 +1,12 @@
 # Install the modpack
 
-Everything you need to join — NeoForge, Cobblemon, Minecolonies, performance
-and QoL mods, and our in-house gym mod — ships in one `.mrpack` file.
+Everything you need to join, NeoForge, Cobblemon, Minecolonies, performance
+and QoL mods, and our in-house gym mod, ships in one `.mrpack` file.
 
 ## Prerequisites
 
 - A legitimate Minecraft Java Edition account (Mojang/Microsoft).
-- **Java 21** — required by NeoForge 1.21.1.
+- **Java 21**, required by NeoForge 1.21.1.
     - macOS: `brew install openjdk@21`
     - Windows / Linux: [Adoptium Temurin 21](https://adoptium.net/)
 
@@ -19,8 +19,8 @@ Download: [prismlauncher.org/download](https://prismlauncher.org/download/)
 
 On first launch it'll ask for:
 
-- Your Microsoft account — sign in.
-- A Java install — point it at the Java 21 you set up above.
+- Your Microsoft account, sign in.
+- A Java install, point it at the Java 21 you set up above.
 
 ## 2. Import the modpack
 

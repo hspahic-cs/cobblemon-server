@@ -6,16 +6,17 @@ A private Pokémon-themed Minecraft server. Catch, train, battle, build.
 
 You'll need a few things before you can connect:
 
-1. **[Install the modpack](install.md)** — one-time setup with Prism Launcher.
-2. **[Connect to the server](connect.md)** — get the IP from Harris and join.
+1. **[Install the modpack](install.md)**, one-time setup with Prism Launcher.
+2. **[Connect to the server](connect.md)**, get the IP from Harris and join.
 
 ## Reference
 
-- **[Gym trainers](gym-trainers.md)** — every gym leader's team, levels, items, moves.
-- **[Pokémon spawn biomes](spawn-lookup.md)** — look up which biomes any species spawns in.
-- **[Cobbleworkers jobs](cobbleworkers.md)** — which Pokémon do which job on a Pasture Block.
-- **[Quests](quests.md)** — all quest names, conditions, and rewards in chain order.
-- **[Finding legendaries](legendaries.md)** — Legendary Monuments + how they work here.
+- **[Gym trainers](gym-trainers.md)**, every gym leader's team, levels, items, moves.
+- **[Pokémon spawn biomes](spawn-lookup.md)**, look up which biomes any species spawns in.
+- **[Cobbleworkers jobs](cobbleworkers.md)**, which Pokémon do which job on a Pasture Block.
+- **[Quests](quests.md)**, all quest names, conditions, and rewards in chain order.
+- **[PvP rules](pvp.md)**, the short list of restrictions.
+- **[Finding legendaries](legendaries.md)**, Legendary Monuments + how they work here.
 
 ## What's running
 

@@ -1,56 +1,56 @@
 # Gym trainers
 
-Every gym leader's team — levels, abilities, held items, and moves.
+Every gym leader's team: levels, abilities, held items, moves.
 
-Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rotating + Elite Four + Champion). Click a gym to expand.
+Gyms 1 to 10 are the **mainline** progression. Gyms 11 to 19 are **optional rotating** fights. The Elite Four and Champion (Gyms 20 to 24) are required to beat the game. Click a gym to expand.
 
-??? abstract "Gym 1: Clay — Ground-type"
+??? abstract "Gym 1: Clay, Ground-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 15 | Hippopotas | Sandstream | Eviolite | Stealthrock, Yawn, Earthquake, Slackoff |
-    | 15 | Drilbur | Sandrush | — | Earthquake, Rockslide, Swordsdance, Rapidspin |
-    | 15 | Wooper | Waterabsorb | — | Scald, Earthquake, Recover, Toxic |
+    | 15 | Drilbur | Sandrush |  | Earthquake, Rockslide, Swordsdance, Rapidspin |
+    | 15 | Wooper | Waterabsorb |  | Scald, Earthquake, Recover, Toxic |
 
-??? abstract "Gym 2: Gardenia — Grass-type"
+??? abstract "Gym 2: Gardenia, Grass-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 20 | Cottonee | Prankster | Eviolite | Leechseed, Encore, Stunspore, Gigadrain |
-    | 20 | Servine | Contrary | — | Leafstorm, Glare, Gigadrain, Hiddenpower |
-    | 20 | Shroomish | Effectspore | — | Spore, Bulletseed, Drainpunch, Rocktomb |
+    | 20 | Servine | Contrary |  | Leafstorm, Glare, Gigadrain, Hiddenpower |
+    | 20 | Shroomish | Effectspore |  | Spore, Bulletseed, Drainpunch, Rocktomb |
 
-??? abstract "Gym 3: Korrina — Fighting-type"
+??? abstract "Gym 3: Korrina, Fighting-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 25 | Mienfoo | Regenerator | Eviolite | Uturn, Drainpunch, Knockoff, Fakeout |
     | 25 | Combusken | Speedboost | Life Orb | Protect, Swordsdance, Blazekick, Skyuppercut |
-    | 25 | Croagunk | Dryskin | — | Drainpunch, Suckerpunch, Poisonjab, Fakeout |
-    | 25 | Timburr | Ironfist | — | Drainpunch, Machpunch, Rockslide, Bulkup |
+    | 25 | Croagunk | Dryskin |  | Drainpunch, Suckerpunch, Poisonjab, Fakeout |
+    | 25 | Timburr | Ironfist |  | Drainpunch, Machpunch, Rockslide, Bulkup |
 
-??? abstract "Gym 4: Byron — Steel-type"
+??? abstract "Gym 4: Byron, Steel-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 30 | Skarmory | Sturdy | Leftovers | Spikes, Whirlwind, Roost, Bravebird |
     | 30 | Ferroseed | Ironbarbs | Eviolite | Stealthrock, Leechseed, Thunderwave, Gyroball |
-    | 30 | Scizor | Technician | — | Bulletpunch, Uturn, Superpower, Pursuit |
-    | 30 | Metang | Clearbody | — | Meteormash, Zenheadbutt, Bulletpunch, Icepunch |
-    | 30 | Lairon | Rockhead | — | Ironhead, Rockslide, Earthquake, Stealthrock |
+    | 30 | Scizor | Technician |  | Bulletpunch, Uturn, Superpower, Pursuit |
+    | 30 | Metang | Clearbody |  | Meteormash, Zenheadbutt, Bulletpunch, Icepunch |
+    | 30 | Lairon | Rockhead |  | Ironhead, Rockslide, Earthquake, Stealthrock |
 
-??? abstract "Gym 5: Blaine — Fire-type"
+??? abstract "Gym 5: Blaine, Fire-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 35 | Ninetales | Drought | Heat Rock | Fireblast, Solarbeam, Willowisp, Nastyplot |
     | 35 | Arcanine | Intimidate | Choice Band | Flareblitz, Extremespeed, Wildcharge, Closecombat |
     | 35 | Charmeleon | Solarpower | Eviolite | Fireblast, Dragonpulse, Solarbeam, Focusblast |
-    | 35 | Houndoom | Flashfire | — | Nastyplot, Darkpulse, Fireblast, Solarbeam |
-    | 35 | Centiskorch | Flashfire | — | Firelash, Leechlife, Coil, Powerwhip |
-    | 35 | Torkoal | Drought | — | Rapidspin, Lavaplume, Yawn, Stealthrock |
+    | 35 | Houndoom | Flashfire |  | Nastyplot, Darkpulse, Fireblast, Solarbeam |
+    | 35 | Centiskorch | Flashfire |  | Firelash, Leechlife, Coil, Powerwhip |
+    | 35 | Torkoal | Drought |  | Rapidspin, Lavaplume, Yawn, Stealthrock |
 
-??? abstract "Gym 6: Volkner — Electric-type"
+??? abstract "Gym 6: Volkner, Electric-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -61,51 +61,51 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 40 | Electivire | Motordrive | Life Orb | Wildcharge, Earthquake, Icepunch, Firepunch |
     | 40 | Luxray | Intimidate | Quick Claw | Wildcharge, Crunch, Voltswitch, Icefang |
 
-??? abstract "Gym 7: Crasher Wake — Water-type"
+??? abstract "Gym 7: Crasher Wake, Water-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 45 | Pelipper | Drizzle | Damp Rock | Scald, Uturn, Roost, Defog |
     | 45 | Kingdra | Swiftswim | Life Orb | Hydropump, Dracometeor, Hurricane, Flashcannon |
     | 45 | Barraskewda | Swiftswim | Choice Band | Liquidation, Closecombat, Poisonjab, Aquajet |
-    | 45 | Kabutops | Swiftswim | — | Swordsdance, Waterfall, Stoneedge, Aquajet |
-    | 45 | Swampert | Torrent | — | Stealthrock, Earthquake, Icepunch, Flipturn |
-    | 45 | Gastrodon | Stormdrain | — | Scald, Earthpower, Recover, Toxic |
+    | 45 | Kabutops | Swiftswim |  | Swordsdance, Waterfall, Stoneedge, Aquajet |
+    | 45 | Swampert | Torrent |  | Stealthrock, Earthquake, Icepunch, Flipturn |
+    | 45 | Gastrodon | Stormdrain |  | Scald, Earthpower, Recover, Toxic |
 
-??? abstract "Gym 8: Sabrina — Psychic-type"
+??? abstract "Gym 8: Sabrina, Psychic-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 50 | Slowbro | Regenerator | Heavy Duty Boots | Futuresight, Teleport, Scald, Slackoff |
     | 50 | Reuniclus | Magicguard | Life Orb | Trickroom, Psyshock, Focusblast, Shadowball |
     | 50 | Hatterene | Magicbounce | Life Orb | Trickroom, Psychic, Dazzlinggleam, Mysticalfire |
-    | 50 | Alakazam | Magicguard | — | Nastyplot, Psychic, Shadowball, Focusblast |
-    | 50 | Bronzong | Levitate | — | Stealthrock, Trickroom, Gyroball, Toxic |
-    | 50 | Medicham | Purepower | — | Highjumpkick, Zenheadbutt, Icepunch, Bulletpunch |
+    | 50 | Alakazam | Magicguard |  | Nastyplot, Psychic, Shadowball, Focusblast |
+    | 50 | Bronzong | Levitate |  | Stealthrock, Trickroom, Gyroball, Toxic |
+    | 50 | Medicham | Purepower |  | Highjumpkick, Zenheadbutt, Icepunch, Bulletpunch |
 
-??? abstract "Gym 9: Drayden — Dragon-type"
+??? abstract "Gym 9: Drayden, Dragon-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 55 | Garchomp | Roughskin | Rocky Helmet | Stealthrock, Swordsdance, Earthquake, Scaleshot |
     | 55 | Salamence | Moxie | Life Orb | Dragondance, Dualwingbeat, Earthquake, Dragonclaw |
     | 55 | Haxorus | Moldbreaker | Choice Scarf | Outrage, Closecombat, Earthquake, Firstimpression |
-    | 55 | Kommoo | Bulletproof | — | Stealthrock, Bodypress, Dragontail, Toxic |
-    | 55 | Goodra | Sapsipper | — | Dracometeor, Sludgebomb, Flamethrower, Thunderbolt |
-    | 55 | Kingdra | Sniper | — | Focusenergy, Dracometeor, Hydropump, Icebeam |
+    | 55 | Kommoo | Bulletproof |  | Stealthrock, Bodypress, Dragontail, Toxic |
+    | 55 | Goodra | Sapsipper |  | Dracometeor, Sludgebomb, Flamethrower, Thunderbolt |
+    | 55 | Kingdra | Sniper |  | Focusenergy, Dracometeor, Hydropump, Icebeam |
 
-??? abstract "Gym 10: Morty — Ghost-type"
+??? abstract "Gym 10: Morty, Ghost-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
     | 60 | Sableye | Prankster | Leftovers | Willowisp, Recover, Knockoff, Taunt |
     | 60 | Gengar | Cursedbody | Black Sludge | Substitute, Disable, Shadowball, Focusblast |
     | 60 | Aegislash | Stancechange | Weakness Policy | Kingsshield, Swordsdance, Shadowsneak, Sacredsword |
-    | 60 | Dusclops | Pressure | — | Willowisp, Seismictoss, Painsplit, Nightshade |
-    | 60 | Mimikyu | Disguise | — | Swordsdance, Shadowsneak, Playrough, Shadowclaw |
-    | 60 | Annihilape | Defiant | — | Bulkup, Drainpunch, Ragefist, Shadowclaw |
+    | 60 | Dusclops | Pressure |  | Willowisp, Seismictoss, Painsplit, Nightshade |
+    | 60 | Mimikyu | Disguise |  | Swordsdance, Shadowsneak, Playrough, Shadowclaw |
+    | 60 | Annihilape | Defiant |  | Bulkup, Drainpunch, Ragefist, Shadowclaw |
 
-??? abstract "Gym 11: Viola — Bug-type"
+??? abstract "Gym 11 (optional rotating): Viola, Bug-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -116,7 +116,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Heracross | Guts | Flame Orb | Megahorn, Closecombat, Rockslide, Earthquake |
     | 60 | Volcarona | Flamebody | Heavy Duty Boots | Quiverdance, Bugbuzz, Fierydance, Psychic |
 
-??? abstract "Gym 12: Cheren — Normal-type"
+??? abstract "Gym 12 (optional rotating): Cheren, Normal-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -127,7 +127,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Staraptor | Intimidate | Flying Gem | Acrobatics, Closecombat, Quickattack, Roost |
     | 60 | Snorlax | Thickfat | Leftovers | Return, Curse, Rest, Sleeptalk |
 
-??? abstract "Gym 13: Lt. Surge — Electric-type"
+??? abstract "Gym 13 (optional rotating): Lt. Surge, Electric-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -138,7 +138,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Magnezone | Analytic | Assault Vest | Thunderbolt, Flashcannon, Voltswitch, Bodypress |
     | 60 | Pikachu | Lightningrod | Light Ball | Thunderbolt, Surf, Alluringvoice, Volttackle |
 
-??? abstract "Gym 14: Grant — Rock-type"
+??? abstract "Gym 14 (optional rotating): Grant, Rock-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -149,7 +149,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Tyranitar | Sandstream | Assault Vest | Stoneedge, Crunch, Earthquake, Icepunch |
     | 60 | Lycanroc | Sandrush | Choice Band | Stoneedge, Closecombat, Playrough, Accelerock |
 
-??? abstract "Gym 15: Skyla — Flying-type"
+??? abstract "Gym 15 (optional rotating): Skyla, Flying-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -158,9 +158,9 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Hawlucha | Unburden | White Herb | Closecombat, Acrobatics, Throatchop, Swordsdance |
     | 60 | Togekiss | Serenegrace | Weakness Policy | Tailwind, Airslash, Aurasphere, Roost |
     | 60 | Braviary | Tintedlens | Heavy Duty Boots | Esperwing, Airslash, Shadowball, Calmmind |
-    | 60 | Oricorio | Dancer | — | Revelationdance, Airslash, Quiverdance, Roost |
+    | 60 | Oricorio | Dancer |  | Revelationdance, Airslash, Quiverdance, Roost |
 
-??? abstract "Gym 16: Brycen — Ice-type"
+??? abstract "Gym 16 (optional rotating): Brycen, Ice-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -171,7 +171,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Froslass | Snowcloak | Icy Rock | Snowscape, Thunderwave, Hex, Icebeam |
     | 60 | Cetitan | Slushrush | Sitrus Berry | Bellydrum, Icespinner, Earthquake, Playrough |
 
-??? abstract "Gym 17: Valerie — Fairy-type"
+??? abstract "Gym 17 (optional rotating): Valerie, Fairy-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -182,7 +182,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Azumarill | Hugepower | Choice Band | Playrough, Liquidation, Aquajet, Icespinner |
     | 60 | Clefable | Magicguard | Life Orb | Moonblast, Flamethrower, Thunderbolt, Moonlight |
 
-??? abstract "Gym 18: Marnie — Dark-type"
+??? abstract "Gym 18 (optional rotating): Marnie, Dark-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -193,18 +193,18 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 60 | Zoroark | Illusion | Life Orb | Nastyplot, Nightdaze, Psychic, Encore |
     | 60 | Hydreigon | Levitate | Expert Belt | Darkpulse, Dracometeor, Flamethrower, Earthpower |
 
-??? abstract "Gym 19: Professor Oak — Kanto Master-type"
+??? abstract "Gym 19 (optional rotating): Professor Oak, Kanto Master-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 70 | Mewtwo | Insomnia | — | Psystrike, Aurasphere, Icebeam, Fireblast |
+    | 70 | Mewtwo | Insomnia |  | Psystrike, Aurasphere, Icebeam, Fireblast |
     | 70 | Snorlax | Thickfat | Leftovers | Bodyslam, Earthquake, Crunch, Rest |
     | 70 | Dragonite | Multiscale | Heavy Duty Boots | Dragondance, Extremespeed, Earthquake, Outrage |
     | 70 | Gengar | Cursedbody | Choice Specs | Shadowball, Sludgewave, Focusblast, Thunderbolt |
     | 70 | Chansey | Naturalcure | Eviolite | Softboiled, Seismictoss, Thunderwave, Healbell |
     | 70 | Gyarados | Intimidate | Life Orb | Dragondance, Waterfall, Earthquake, Icefang |
 
-??? abstract "Gym 20: Lorelei — Weather Wars-type"
+??? abstract "Elite Four 1: Lorelei"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -215,7 +215,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 65 | Hippowdon | Sandstream | Leftovers | Slackoff, Earthquake, Whirlwind, Toxic |
     | 65 | Hooh | Regenerator | Heavy Duty Boots | Sacredfire, Bravebird, Recover, Earthquake |
 
-??? abstract "Gym 21: Cynthia — Hyper Offense-type"
+??? abstract "Elite Four 2: Cynthia"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -226,7 +226,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 65 | Tyranitar | Sandstream | Focus Sash | Stoneedge, Crunch, Earthquake, Dragondance |
     | 65 | Conkeldurr | Guts | Flame Orb | Drainpunch, Machpunch, Knockoff, Bulkup |
 
-??? abstract "Gym 22: Agatha — Stall-type"
+??? abstract "Elite Four 3: Agatha"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -237,7 +237,7 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 65 | Blissey | Naturalcure | Heavy Duty Boots | Softboiled, Seismictoss, Toxic, Teleport |
     | 65 | Corviknight | Pressure | Leftovers | Bravebird, Roost, Defog, Uturn |
 
-??? abstract "Gym 23: Lance — Dragon Boss-type"
+??? abstract "Elite Four 4: Lance"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -248,12 +248,12 @@ Gyms 1–10 are the **mainline** progression. Gyms 11–24 are **optional** (rot
     | 65 | Haxorus | Moldbreaker | Choice Scarf | Outrage, Closecombat, Earthquake, Firstimpression |
     | 65 | Eternatus | Pressure | Life Orb | Dragonpulse, Flamethrower, Sludgebomb, Recover |
 
-??? abstract "Gym 24: Pokémon Champion — Sky Conqueror-type"
+??? abstract "Champion"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 70 | Rayquaza | Airlock | — | Dragonascent, Earthquake, Dragondance, Extremespeed |
-    | 70 | Rayquaza | Airlock | — | Dragonascent, Dracometeor, Surf, Thunderbolt |
+    | 70 | Rayquaza | Airlock |  | Dragonascent, Earthquake, Dragondance, Extremespeed |
+    | 70 | Rayquaza | Airlock |  | Dragonascent, Dracometeor, Surf, Thunderbolt |
     | 70 | Garchomp | Roughskin | Life Orb | Swordsdance, Scaleshot, Earthquake, Stoneedge |
     | 70 | Salamence | Intimidate | Life Orb | Dragondance, Dragonclaw, Earthquake, Fireblast |
     | 70 | Latios | Levitate | Choice Specs | Dracometeor, Psychic, Thunderbolt, Mysticalfire |

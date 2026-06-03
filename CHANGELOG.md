@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.54] - 2026-06-03
+
+### Fixed
+- **Monument lock: "another legendary already active" after fleeing battle.** When a player
+  flees a battle with an LM legendary, the entity stays alive in the world so
+  `onEntityLeaveLevel` never fires and `activeLmPokemon` was never cleared. Every subsequent
+  altar activation was blocked. Now subscribes to `BATTLE_FLED` to clear the blocking slot
+  while keeping the tracked pokemon reference so the altar still drains when the entity
+  eventually leaves the world.
+
 ## [0.7.53] - 2026-06-03
 
 ### Fixed

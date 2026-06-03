@@ -1,5 +1,7 @@
 package com.cobblemonbridge.wild
 
+import com.cobblemon.mod.common.api.Priority
+import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonbridge.CobblemonBridge
@@ -53,7 +55,10 @@ object LegendaryMonumentLock {
     /** Pedestal block positions that have been permanently spent. */
     private val spentAltars: MutableSet<BlockPos> = mutableSetOf()
 
+    /** Non-null while the legendary is alive and blocking a second spawn. Cleared on battle-flee. */
     @Volatile private var activeLmPokemon: Pokemon? = null
+    /** The pokemon we're tracking for drain — same as activeLmPokemon except after a battle-flee. */
+    @Volatile private var trackedLmPokemon: Pokemon? = null
     @Volatile private var activeLmPedestal: BlockPos? = null
     @Volatile private var activeLmLevel: ServerLevel? = null
 
@@ -73,6 +78,23 @@ object LegendaryMonumentLock {
             } catch (_: Exception) {}
         }
         CobblemonBridge.logger.info("monument-lock: {} spent pedestal(s) loaded", spentAltars.size)
+
+        // If the player flees the battle, the legendary entity stays alive in the world so
+        // onEntityLeaveLevel never fires. Clear activeLmPokemon to unblock future spawns,
+        // but keep trackedLmPokemon/activeLmPedestal so when the entity eventually leaves
+        // the world the altar still drains correctly.
+        CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL) { event ->
+            val active = activeLmPokemon ?: return@subscribe
+            val isOurBattle = event.battle.actors.any { actor ->
+                actor.pokemonList.any { it.effectedPokemon === active }
+            }
+            if (!isOurBattle) return@subscribe
+            activeLmPokemon = null
+            CobblemonBridge.logger.info(
+                "monument-lock: player fled battle with {} — active slot cleared, legendary still in world",
+                active.species.name,
+            )
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -114,6 +136,7 @@ object LegendaryMonumentLock {
         }
 
         activeLmPokemon = pokemon
+        trackedLmPokemon = pokemon
         activeLmPedestal = pedestal
         activeLmLevel = level
         CobblemonBridge.logger.info(
@@ -131,15 +154,16 @@ object LegendaryMonumentLock {
     @SubscribeEvent
     fun onEntityLeaveLevel(event: EntityLeaveLevelEvent) {
         val entity = event.entity as? PokemonEntity ?: return
-        val active = activeLmPokemon ?: return
-        if (entity.pokemon !== active) return
+        val tracked = trackedLmPokemon ?: return
+        if (entity.pokemon !== tracked) return
 
         val server = ServerLifecycleHooks.getCurrentServer() ?: return
         server.execute {
             val pedestal = activeLmPedestal
             val level = activeLmLevel
-            val caught = !active.isWild()
+            val caught = !tracked.isWild()
             activeLmPokemon = null
+            trackedLmPokemon = null
             activeLmPedestal = null
             activeLmLevel = null
             if (pedestal != null) {
@@ -147,18 +171,18 @@ object LegendaryMonumentLock {
                 if (level != null) drainPedestal(level, pedestal)
             }
             if (caught) {
-                CobblemonBridge.logger.info("monument-lock: {} caught — pedestal {} spent", active.species.name, pedestal)
+                CobblemonBridge.logger.info("monument-lock: {} caught — pedestal {} spent", tracked.species.name, pedestal)
                 server.playerList.players.forEach {
                     it.sendSystemMessage(Component.literal(
-                        "§6[Legendary Monument] §f${active.species.name} was caught! " +
+                        "§6[Legendary Monument] §f${tracked.species.name} was caught! " +
                         "§7The monument's power is spent — this legendary will not return."
                     ))
                 }
             } else {
-                CobblemonBridge.logger.info("monument-lock: {} fled — pedestal {} spent", active.species.name, pedestal)
+                CobblemonBridge.logger.info("monument-lock: {} left world — pedestal {} spent", tracked.species.name, pedestal)
                 server.playerList.players.forEach {
                     it.sendSystemMessage(Component.literal(
-                        "§6[Legendary Monument] §7The legendary escaped... but the monument's power is spent."
+                        "§6[Legendary Monument] §7The legendary left the world... the monument's power is spent."
                     ))
                 }
             }
@@ -168,6 +192,7 @@ object LegendaryMonumentLock {
     fun reset() {
         spentAltars.clear()
         activeLmPokemon = null
+        trackedLmPokemon = null
         activeLmPedestal = null
         activeLmLevel = null
         try { dataFile?.let { Files.deleteIfExists(it) } } catch (_: Exception) {}

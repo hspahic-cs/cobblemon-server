@@ -79,21 +79,28 @@ object LegendaryMonumentLock {
         }
         CobblemonBridge.logger.info("monument-lock: {} spent pedestal(s) loaded", spentAltars.size)
 
-        // If the player flees the battle, the legendary entity stays alive in the world so
-        // onEntityLeaveLevel never fires. Clear activeLmPokemon to unblock future spawns,
-        // but keep trackedLmPokemon/activeLmPedestal so when the entity eventually leaves
-        // the world the altar still drains correctly.
-        CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL) { event ->
-            val active = activeLmPokemon ?: return@subscribe
-            val isOurBattle = event.battle.actors.any { actor ->
+        // Clear the blocking slot whenever a battle involving our legendary ends —
+        // covers flee, player disconnect, and player loss. In all these cases the legendary
+        // entity stays alive in the world, so onEntityLeaveLevel won't fire and the slot
+        // would stay blocked forever. Keep trackedLmPokemon/activeLmPedestal so the altar
+        // still drains when the entity eventually leaves the world.
+        val clearOnBattleEnd = { battle: com.cobblemon.mod.common.api.battles.model.PokemonBattle ->
+            val active = activeLmPokemon ?: return@clearOnBattleEnd
+            val isOurBattle = battle.actors.any { actor ->
                 actor.pokemonList.any { it.effectedPokemon === active }
             }
-            if (!isOurBattle) return@subscribe
+            if (!isOurBattle) return@clearOnBattleEnd
             activeLmPokemon = null
             CobblemonBridge.logger.info(
-                "monument-lock: player fled battle with {} — active slot cleared, legendary still in world",
+                "monument-lock: battle ended for {} — active slot cleared, legendary still in world",
                 active.species.name,
             )
+        }
+        CobblemonEvents.BATTLE_FLED.subscribe(Priority.NORMAL) { event ->
+            clearOnBattleEnd(event.battle)
+        }
+        CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event ->
+            clearOnBattleEnd(event.battle)
         }
     }
 

@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.57] - 2026-06-03
+
+### Fixed
+- **Monument lock: disconnect mid-battle leaves active slot permanently blocked.**
+  `BATTLE_FLED` doesn't fire on player disconnect — the active slot stayed set, blocking
+  all future legendary spawns and causing a crash when the player reconnected and tried
+  to fight again. Now also subscribes to `BATTLE_VICTORY` (covers disconnect/player loss)
+  so the slot is cleared on any battle end.
+
 ## [0.7.56] - 2026-06-03
 
 ### Fixed

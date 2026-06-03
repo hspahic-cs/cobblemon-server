@@ -11,8 +11,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.network.chat.Component
 import net.minecraft.world.level.block.Blocks
+import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.loading.FMLPaths
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent
 import net.neoforged.neoforge.event.entity.EntityLeaveLevelEvent
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.nio.file.Files
@@ -35,7 +37,10 @@ import kotlin.io.path.writeText
  *    will ever spawn from any LM structure.
  *
  * Detection:
- *  - Structure namespace check (`legendarymonuments:*`) at spawn time via [startsForStructure] (2D chunk-based, Y-agnostic).
+ *  - Structure namespace check (`legendarymonuments:*`) via NeoForge [EntityJoinLevelEvent] —
+ *    LM spawns legendaries by directly constructing a [PokemonEntity] via `PokemonProperties`,
+ *    bypassing Cobblemon's spawn pipeline and [CobblemonEvents.POKEMON_ENTITY_SPAWN] entirely.
+ *    [EntityJoinLevelEvent] fires for all entity adds regardless of origin.
  *  - Caught vs. fled distinguished by [Pokemon.isWild] on the next server tick after entity
  *    removal: capture calls [party.add] in the same tick before our scheduled check runs,
  *    so isWild() == false means caught; true means fled/despawned.
@@ -78,46 +83,6 @@ object LegendaryMonumentLock {
     }
 
     fun registerEvents() {
-        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGH) { event ->
-            val pokemon = event.entity.pokemon
-            if (!pokemon.isLegendary() && !pokemon.isMythical()) return@subscribe
-            if (!isInsideLmStructure(event.entity)) return@subscribe
-
-            if (locked) {
-                event.cancel()
-                CobblemonBridge.logger.debug(
-                    "monument-lock: cancelled {} spawn — permanently locked",
-                    pokemon.species.name,
-                )
-                return@subscribe
-            }
-
-            if (activeLmPokemon != null) {
-                event.cancel()
-                CobblemonBridge.logger.debug(
-                    "monument-lock: cancelled {} spawn — {} is already active",
-                    pokemon.species.name,
-                    activeLmPokemon!!.species.name,
-                )
-                return@subscribe
-            }
-
-            activeLmPokemon = pokemon
-            activeLmLevel = event.entity.level() as? ServerLevel
-            activeLmPos = event.entity.blockPosition()
-            CobblemonBridge.logger.info(
-                "monument-lock: {} spawned in LM structure — one chance to catch it",
-                pokemon.species.name,
-            )
-            val server = event.entity.server ?: return@subscribe
-            server.playerList.players.forEach {
-                it.sendSystemMessage(Component.literal(
-                    "§6[Legendary Monument] §fA wild ${pokemon.species.name} has appeared at a Legendary Monument! " +
-                    "§7Catch it before it's gone..."
-                ))
-            }
-        }
-
         // POKEMON_CAPTURED: fast-path exit when no LM legendary is active — negligible overhead.
         CobblemonEvents.POKEMON_CAPTURED.subscribe(Priority.NORMAL) { event ->
             val active = activeLmPokemon ?: return@subscribe
@@ -145,6 +110,53 @@ object LegendaryMonumentLock {
                     "§7The monument's power is spent — no legendary will spawn there again."
                 ))
             }
+        }
+    }
+
+    /**
+     * Fires when any entity joins the level — including LM-spawned legendaries, which are
+     * created directly via PokemonProperties and never pass through POKEMON_ENTITY_SPAWN.
+     */
+    @SubscribeEvent(priority = EventPriority.HIGH)
+    fun onEntityJoinLevel(event: EntityJoinLevelEvent) {
+        val entity = event.entity as? PokemonEntity ?: return
+        val level = event.level as? ServerLevel ?: return
+        val pokemon = entity.pokemon
+        if (!pokemon.isLegendary() && !pokemon.isMythical()) return
+        if (!isInsideLmStructure(entity)) return
+
+        if (locked) {
+            event.isCanceled = true
+            CobblemonBridge.logger.debug(
+                "monument-lock: cancelled {} join — permanently locked",
+                pokemon.species.name,
+            )
+            return
+        }
+
+        if (activeLmPokemon != null) {
+            event.isCanceled = true
+            CobblemonBridge.logger.debug(
+                "monument-lock: cancelled {} join — {} is already active",
+                pokemon.species.name,
+                activeLmPokemon!!.species.name,
+            )
+            return
+        }
+
+        activeLmPokemon = pokemon
+        activeLmLevel = level
+        activeLmPos = entity.blockPosition()
+        CobblemonBridge.logger.info(
+            "monument-lock: {} joined world in LM structure — one chance to catch it",
+            pokemon.species.name,
+        )
+        val server = level.server
+        server.playerList.players.forEach {
+            it.sendSystemMessage(Component.literal(
+                "§6[Legendary Monument] §fA wild ${pokemon.species.name} has appeared at a Legendary Monument! " +
+                "§7Catch it before it's gone..."
+            ))
         }
     }
 

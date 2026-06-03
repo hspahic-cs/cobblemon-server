@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.50] - 2026-06-03
+
+### Fixed
+- **Monument lock: capture mis-classified as flee.** The previous `activeLmPokemon !== active`
+  guard in `onEntityLeaveLevel` assumed `POKEMON_CAPTURED` would null it out first, but
+  Cobblemon's event sequences after the NeoForge scheduled task. Switched to `active.isWild()`:
+  false means already in a player's party (caught).
+
+### Changed
+- **Monument lock: altar is now one-shot regardless of outcome.** Previously the monument
+  reset if the legendary fled, allowing repeated altar activations by luring the legendary
+  away and fleeing. Both catch and flee now permanently lock and drain the altar.
+- **Monument lock: removed dead `POKEMON_CAPTURED` subscription.** Both code paths now go
+  through `onEntityLeaveLevel`; the separate Cobblemon event handler is gone.
+
 ## [0.7.49] - 2026-06-03
 
 ### Fixed

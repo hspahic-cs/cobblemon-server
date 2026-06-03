@@ -62,6 +62,17 @@ object LegendaryMonumentLock {
         // If we've already re-spawned this entity, let it through — it's our doing.
         if (pokemon === activeLmPokemon) return
 
+        // Player-owned legendaries (sent out from a party in battle) spawn entities
+        // too — don't intercept them. Only wild LM spawns matter here.
+        if (!pokemon.isWild()) return
+
+        // No pedestal in range means this isn't a fresh LM activation. Most common
+        // cause: chunk reload of a re-spawned legendary whose altar is already
+        // drained (crying obsidian, different namespace, scan returns null). Leave
+        // the entity alone — it's already a normal wild Pokemon from a prior run.
+        val pedestal = findPedestal(level, entity.blockPosition())
+        if (pedestal == null) return
+
         if (activeLmPokemon != null) {
             event.isCanceled = true
             CobblemonBridge.logger.debug(
@@ -81,7 +92,6 @@ object LegendaryMonumentLock {
         // proper moveset, client sync, and despawn behavior.
         event.isCanceled = true
 
-        val pedestal = findPedestal(level, entity.blockPosition())
         val species = pokemon.species.name
         val pokemonLevel = pokemon.level
         val shiny = pokemon.shiny
@@ -89,9 +99,7 @@ object LegendaryMonumentLock {
 
         val server = level.server
         server.execute {
-            if (pedestal != null) {
-                drainPedestal(level, pedestal)
-            }
+            drainPedestal(level, pedestal)
 
             val propsString = buildString {
                 append(species)
@@ -100,6 +108,12 @@ object LegendaryMonumentLock {
             }
             val props = PokemonProperties.parse(propsString)
             val newEntity = props.createEntity(level)
+            // PokemonProperties.createEntity doesn't initialize the moveset — same gap
+            // as LM's spawn path. Without this the battle UI renders without moves
+            // and the player can't act ("not your turn"). See 0.7.55 history.
+            if (newEntity.pokemon.moveSet.getMoves().isEmpty()) {
+                newEntity.pokemon.initializeMoveset()
+            }
             newEntity.moveTo(spawnPos.x, spawnPos.y, spawnPos.z, entity.yRot, entity.xRot)
             activeLmPokemon = newEntity.pokemon
             if (!level.addFreshEntity(newEntity)) {

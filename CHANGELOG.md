@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.61] - 2026-06-03
+
+### Fixed
+- **Monument lock: handler intercepts player-owned legendaries.** Sending out a
+  legendary from your party while standing in an LM structure made the handler
+  treat it as a fresh wild spawn — it canceled the entity and broke the battle
+  UI ("not your turn to act"). Now bails on `!pokemon.isWild()`.
+- **Monument lock: chunk-reload re-spawn loop.** A re-spawned legendary saves
+  to disk; when its chunk reloads, `EntityJoinLevel` fires again, finds the
+  pedestal already drained (no match in the scan), and the old code re-ran the
+  spawn path with `pedestal=null`, drifting the entity each cycle. Now bails
+  when `findPedestal` returns null — the only valid case for our handler is a
+  fresh activation with a real pedestal.
+- **Monument lock: battle UI renders without moves.** `PokemonProperties.createEntity`
+  doesn't initialize the moveset (same gap as LM's spawn path). Re-introduced
+  the 0.7.55 `initializeMoveset()` call, now on our re-spawned entity.
+
 ## [0.7.60] - 2026-06-03
 
 ### Changed

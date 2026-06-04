@@ -60,13 +60,17 @@ jobs:
           git clone --depth 1 https://github.com/pmariglia/foul-play.git _foul_play
           (cd _foul_play && git fetch --depth 1 origin "$FOUL_PLAY_COMMIT" && git checkout "$FOUL_PLAY_COMMIT")
 
-      # rsync flags: -rltDvz keeps recursion + symlinks + mtimes + special
-      # files + compression. We deliberately drop -p / -g / -o (perms, group,
-      # owner) — deployer has ACL rwx on app/ + foul-play/ but can't chgrp,
-      # because those dirs are owned by cobblemon-bridge.
+      # rsync flags chosen for deployer-can-write-but-doesn't-own destination:
+      #   -r          recursive
+      #   -tvz        mtimes (files only — see -O), verbose, compression
+      #   -O          --omit-dir-times: don't try to set mtime on directories
+      #                (would fail on app/. since deployer doesn't own the dir)
+      #   --no-{perms,owner,group}: don't preserve attrs we can't set
+      # Net effect: file content + file mtimes get synced, dir attrs stay
+      # whatever install.sh configured them to.
       - name: Rsync bridge app to VM
         run: |
-          rsync -rltDvz --delete \
+          rsync -rtvzO --delete --no-perms --no-owner --no-group \
             --exclude='__pycache__' \
             --exclude='*.pyc' \
             --exclude='install.sh' \
@@ -76,7 +80,7 @@ jobs:
 
       - name: Rsync foul-play source to VM
         run: |
-          rsync -rltDvz --delete \
+          rsync -rtvzO --delete --no-perms --no-owner --no-group \
             --exclude='.git' \
             --exclude='__pycache__' \
             --exclude='*.pyc' \

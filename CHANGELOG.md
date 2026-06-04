@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.62] - 2026-06-03
+
+### Added
+- **Gym AI A/B/C test datapack (`server-gym-ai-test`).** Dev-only datapack with
+  9 trainer JSONs (Sabrina / Surge / Blaine × 3 AI variants), all sharing each
+  leader's hardmode team capped at L50 so the AI is the only variable. Variants:
+  A=`rb` (RunBunAI, current prod), B=`cbl` (StrongBattleAI), C=`sd5`
+  (SelfdotGen5AI). Spawn with `/function server:aitest/spawn_a` (or `_b`, `_c`),
+  remove with `/function server:aitest/cleanup`. Trainers are labeled
+  `AI Test [A]: Sabrina` etc. so a play-tester sees only the letter, not the
+  AI mapping. Source-of-truth generator: `ops/gen_gym_ai_test_datapack.py`.
+
 ## [0.7.61] - 2026-06-03
 
 ### Fixed

@@ -25,17 +25,13 @@ tag @a[tag=cq_reward_egg_uncommon] remove cq_reward_egg_uncommon
 execute as @a[tag=cq_reward_egg_exeggcute] at @s run gacha giveegg @s beginner
 tag @a[tag=cq_reward_egg_exeggcute] remove cq_reward_egg_exeggcute
 
-# ─── Key rewards (count always 1 for current quest layout) ──────────────
-execute as @a[tag=cq_reward_key_common_1] at @s run gacha grant @s common 1
+# ─── Key rewards ─────────────────────────────────────────────────────────
+# Gym/E4 key grants now live in cobblemon-bridge's AdvancementHook (Kotlin-side),
+# so they no longer depend on this function parsing cleanly. Lines kept only to
+# strip stale tags set by gym reward functions (which still tag for legacy reasons).
 tag @a[tag=cq_reward_key_common_1] remove cq_reward_key_common_1
-
-execute as @a[tag=cq_reward_key_uncommon_1] at @s run gacha grant @s uncommon 1
 tag @a[tag=cq_reward_key_uncommon_1] remove cq_reward_key_uncommon_1
-
-execute as @a[tag=cq_reward_key_rare_1] at @s run gacha grant @s rare 1
 tag @a[tag=cq_reward_key_rare_1] remove cq_reward_key_rare_1
-
-execute as @a[tag=cq_reward_key_ultra_1] at @s run gacha grant @s ultra 1
 tag @a[tag=cq_reward_key_ultra_1] remove cq_reward_key_ultra_1
 
 # ─── Item bundles per quest ─────────────────────────────────────────────

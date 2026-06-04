@@ -37,7 +37,10 @@ object PokedexProgressHook {
 
     private const val THRESHOLD = 100
     private const val ADVANCEMENT_ID = "server:reach_pokedex_100"
-    private const val POKENAV_ITEM_ID = "cobblenav:pokenav_item"
+    /** Cobblenav registers ONLY colored variants as concrete items (no base `pokenav_item`).
+     *  `pokenav_item_red` was confirmed by ops as a valid id that works with `/give`. Any
+     *  other color would also work — red is the player-facing default. */
+    private const val POKENAV_ITEM_ID = "cobblenav:pokenav_item_red"
 
     /** Persistent NBT key on the player marking that the Centurion PokéNav has been granted.
      *  Idempotency lives here, not on the advancement — the advancement was completed for many

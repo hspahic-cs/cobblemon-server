@@ -41,7 +41,7 @@ Every quest available on the server, grouped by chain.
 |---:|---|---|---|
 | 1 | **Founding Fortune** | Earn $1,000 enough to bankroll a colony. | Minecolonies Supply Camp |
 | 2 | **Find a Home** | Start or join a Minecolonies town. | Poké Healer |
-| 3 | **Comfortable** | Hold $10,000 in your wallet. | 1 Master Ball |
+| 3 | **Comfortable** | Hold $10,000 in your wallet. | Rare Key |
 | 4 | **Tycoon** | Hold $100,000 in your wallet. | Ultra Key |
 
 ## Ranked ELO milestones (optional)

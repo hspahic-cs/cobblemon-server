@@ -95,7 +95,7 @@ object QuestCommand {
         put("server:reach_income_250",     "§fPasture Block")
         put("server:first_pvp_win",        "§aCommon Egg")
         put("server:reach_income_1000",    "§fMinecolonies Supply Camp")
-        put("server:reach_income_10000",   "§f1 Master Ball")
+        put("server:reach_income_10000",   "§5Rare Key")
         put("server:reach_income_100000",  "§6Ultra Key")
         put("server:reach_elo_1100",       "§fGreat Ball + Super Potion")
         put("server:reach_elo_1200",       "§fUltra Ball + Hyper Potion")
@@ -103,7 +103,7 @@ object QuestCommand {
         put("server:reach_elo_1500",       "§f1 Master Ball")
         put("server:reach_elo_2000",       "§6Ultra Key")
         put("server:join_colony",          "§fPoké Healer")
-        put("server:reach_pokedex_100",    "§f1 Master Ball + §6Ultra Key")
+        put("server:reach_pokedex_100",    "§fPokéNav")
         // Gyms: most Rare Key; 10/19/23/24 are Ultra Key.
         for (i in 1..24) {
             val tier = if (i == 10 || i == 19 || i == 23 || i == 24) "§6Ultra Key" else "§5Rare Key"

@@ -35,10 +35,11 @@ import net.neoforged.neoforge.event.entity.player.AdvancementEvent
  * everything is up.
  *
  * Advancement-id pattern matching:
- *   - `server:beat_gym_N` → `$150 × N` cash + key (gyms 1..24)
+ *   - `server:beat_gym_N` → `$150 × N` cash + key (gyms 1..23)
+ *   - `server:beat_gym_24` (Champion) → flat `$5,000` + ultra key (was via the now-deleted
+ *     `server:defeat_elite_four` advancement; rolled into the Champion fight in 0.7.64)
  *   - `server:beat_gym_N_challenge` → same `$150 × N` cash + key (Hard Mode pays the
  *     same as base — 0.7.8 design call)
- *   - `server:defeat_elite_four` → flat `$5,000`
  *
  * Gym → key tier mapping (mirrors `beat_gym_N.mcfunction` → `cq_reward_key_*` tags):
  *   - Gym 1-9, 11-18, 20-22: `rare` key
@@ -51,7 +52,7 @@ import net.neoforged.neoforge.event.entity.player.AdvancementEvent
 object AdvancementHook {
 
     private val GYM_ID_REGEX = Regex("""^server:beat_gym_(\d+)(_challenge)?$""")
-    private const val ELITE_FOUR_BOUNTY = 5_000
+    private const val CHAMPION_BOUNTY = 5_000
 
     private val ULTRA_KEY_GYMS: Set<Int> = setOf(10, 19, 23, 24)
 
@@ -64,13 +65,16 @@ object AdvancementHook {
         if (gymMatch != null) {
             val gymId = gymMatch.groupValues[1].toIntOrNull() ?: return
             val isChallenge = gymMatch.groupValues[2] == "_challenge"
-            payBounty(player, 150 * gymId, "defeating gym $gymId" + if (isChallenge) " (Hard Mode)" else "")
+            // Champion (gym 24) gets the flat $5,000 that used to live on the now-deleted
+            // defeat_elite_four advancement. Every other gym follows the $150 × N curve.
+            val cash = if (gymId == 24) CHAMPION_BOUNTY else 150 * gymId
+            val reason = if (gymId == 24) {
+                "defeating the Champion"
+            } else {
+                "defeating gym $gymId" + if (isChallenge) " (Hard Mode)" else ""
+            }
+            payBounty(player, cash, reason)
             grantGymKey(player, gymId)
-            return
-        }
-
-        if (id == "server:defeat_elite_four") {
-            payBounty(player, ELITE_FOUR_BOUNTY, "defeating the Elite Four")
             return
         }
     }

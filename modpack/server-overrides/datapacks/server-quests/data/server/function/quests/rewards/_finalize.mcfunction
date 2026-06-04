@@ -106,10 +106,8 @@ tag @a[tag=cq_reward_item_master_ball] remove cq_reward_item_master_ball
 # prod, so we just strip the tag here without granting.
 tag @a[tag=cq_reward_item_pokedex_100] remove cq_reward_item_pokedex_100
 
-# defeat_elite_four (mainline): 1 master ball + ultra gacha key. Cash bonus ($5000)
-# paid directly via /eco give in defeat_elite_four.mcfunction.
-execute as @a[tag=cq_reward_item_elite_four] at @s run give @s cobblemon:master_ball 1
-execute as @a[tag=cq_reward_item_elite_four] at @s run gacha grant @s ultra 1
+# defeat_elite_four removed in 0.7.64 (duplicate of beat_gym_23). Tag-removal kept as
+# safety net to clear stale tags from players who triggered the old reward path.
 tag @a[tag=cq_reward_item_elite_four] remove cq_reward_item_elite_four
 
 # ELO milestones: progressive battle kit

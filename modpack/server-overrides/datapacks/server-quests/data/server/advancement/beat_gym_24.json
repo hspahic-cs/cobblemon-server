@@ -1,6 +1,6 @@
 {
-  "_comment": "0.7.26 \u2014 re-parented from beat_gym_23 (Lance) to defeat_elite_four so the Champion fight visually requires beating ALL four Elite Four members, not just Lance. RCT doesn't actually gate Champion entry on advancements \u2014 this is purely UI/tree placement to make the canonical mainline progression visible.",
-  "parent": "server:defeat_elite_four",
+  "_comment": "0.7.64 \u2014 re-parented from defeat_elite_four (deleted in this release as a duplicate) back to beat_gym_23. The consecutive-E4 requirement is now enforced at runtime by cobblemon-bridge's E4GauntletHook (dimension leash + party stability, added in 0.7.63), not via advancement requirements, so beat_gym_23 being parent is enough \u2014 the player can only complete it by beating Lance after Lorelei/Cynthia/Agatha in sequence.",
+  "parent": "server:beat_gym_23",
   "display": {
     "title": {
       "text": "Pok\u00e9mon Champion"

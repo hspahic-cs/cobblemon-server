@@ -12,6 +12,41 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.64] - 2026-06-04
+
+### Changed
+- **Comfortable income quest reward → Rare Key** (was 1 Master Ball). Granted directly
+  from `reach_income_10000.mcfunction` via `gacha grant @s rare 1`; the shared
+  `cq_reward_key_rare_1` tag doesn't work for non-gym quests since 0.7.63 moved gym
+  keys to `AdvancementHook` and stripped the `_finalize` grant lines.
+- **HUD: drop gyms 11-19.** The rotating gym slots are branch content (extra keys),
+  not mainline progression. After beating gym 10 the HUD jumps straight to E4 1.
+  Rotating gyms still appear in `/quests list` under "Rotating Gyms".
+- **HUD: E4 quest text now mentions the consecutive requirement.**
+  - E4 1: "Defeat Elite Four 1: Lorelei"
+  - E4 2: "Beat E4 2: Cynthia — consecutively after E4 1"
+  - E4 3: "Beat E4 3: Agatha — fighting E4 1-3 consecutively"
+  - E4 4: "Beat E4 4: Lance — fighting all four trainers consecutively"
+- **`/quests list` reward labels resynced.** `reach_income_10000` now says "Rare Key"
+  and `reach_pokedex_100` now says "PokéNav" (was "1 Master Ball + Ultra Key").
+- **Income quest title drift fixed.** `reach_income_10000` tellraw said "Tycoon"
+  (the title of the $100k quest, not the $10k one); now correctly says "Comfortable".
+  `reach_income_100000` said "Mogul" — now correctly "Tycoon" to match the
+  advancement title.
+
+### Removed
+- **Duplicate `defeat_elite_four` advancement + reward function.** Beating Lance
+  (`beat_gym_23`) already requires all four E4 trainers thanks to 0.7.63's
+  `E4GauntletHook` (dimension leash + party stability), so the AND-of-four
+  advancement was just firing in parallel with `beat_gym_23`, double-toasting and
+  double-paying. `beat_gym_24` re-parented from `defeat_elite_four` back to
+  `beat_gym_23`. The flat $5,000 bounty that used to live on `defeat_elite_four`
+  is now paid on Champion completion (`beat_gym_24`) instead — Champion bounty
+  goes from $150 × 24 = $3,600 to a flat $5,000. The Master Ball that used to
+  come with `defeat_elite_four` is dropped (Champion still gives Ultra Key).
+- **`_finalize.mcfunction` `cq_reward_item_elite_four` block** — tag-removal kept
+  as a safety net for any in-flight tags, but no item dispatch.
+
 ## [0.7.63] - 2026-06-03
 
 ### Fixed

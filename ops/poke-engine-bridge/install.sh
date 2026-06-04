@@ -108,9 +108,11 @@ EOF
 chmod 0440 "$SUDOERS_FILE"
 visudo -c -f "$SUDOERS_FILE" >/dev/null
 
-echo "==> ACL grant: deployer rwx on $INSTALL_DIR/app (rsync target on later deploys)"
-setfacl -R -m u:deployer:rwx "$INSTALL_DIR/app"
-setfacl -R -d -m u:deployer:rwx "$INSTALL_DIR/app"
+echo "==> ACL grant: deployer rwx on app/ + foul-play/ (both rsynced on each deploy)"
+for d in "$INSTALL_DIR/app" "$INSTALL_DIR/foul-play"; do
+  setfacl -R -m u:deployer:rwx "$d"
+  setfacl -R -d -m u:deployer:rwx "$d"
+done
 
 systemctl daemon-reload
 systemctl enable ${SVC_NAME}.service

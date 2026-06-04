@@ -26,9 +26,22 @@ if ! id -u "$SVC_USER" >/dev/null 2>&1; then
   useradd --system --home-dir "$INSTALL_DIR" --shell /usr/sbin/nologin "$SVC_USER"
 fi
 
+echo "==> adding deployer to '$SVC_USER' group (rsync target write access)"
+if id deployer >/dev/null 2>&1 && ! id -nG deployer | tr ' ' '\n' | grep -qx "$SVC_USER"; then
+  usermod -aG "$SVC_USER" deployer
+fi
+
 echo "==> creating $INSTALL_DIR layout"
 mkdir -p "$INSTALL_DIR"/{app,foul-play,venv,smogon-cache}
 chown -R "$SVC_USER:$SVC_USER" "$INSTALL_DIR"
+# Group rwx + setgid on the rsync targets (app/, foul-play/) so that:
+#   - deployer (member of the cobblemon-bridge group) can rsync into them
+#   - new files/dirs inherit the cobblemon-bridge group → service user can
+#     also write back (e.g. foul-play/data/smogon_stats_cache/ created at
+#     import time by pkmn_sets.py).
+# venv/ stays cobblemon-bridge-only — only install.sh ever writes to it.
+chmod g+rwX "$INSTALL_DIR/app" "$INSTALL_DIR/foul-play"
+find "$INSTALL_DIR/app" "$INSTALL_DIR/foul-play" -type d -exec chmod g+s {} \;
 
 echo "==> installing system deps (python3-venv, build tools for poke-engine wheel)"
 apt-get update -qq
@@ -107,12 +120,6 @@ deployer ALL=(root) NOPASSWD: /usr/bin/systemctl status ${SVC_NAME}
 EOF
 chmod 0440 "$SUDOERS_FILE"
 visudo -c -f "$SUDOERS_FILE" >/dev/null
-
-echo "==> ACL grant: deployer rwx on app/ + foul-play/ (both rsynced on each deploy)"
-for d in "$INSTALL_DIR/app" "$INSTALL_DIR/foul-play"; do
-  setfacl -R -m u:deployer:rwx "$d"
-  setfacl -R -d -m u:deployer:rwx "$d"
-done
 
 systemctl daemon-reload
 systemctl enable ${SVC_NAME}.service

@@ -51,7 +51,9 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
     battle.opponent.name = constants.ID_LOOKUP[req.gym_side]
 
     battle.request_json = req.request_json
-    battle.rqid = req.request_json[constants.RQID]
+    # Cobblemon's |request| JSON omits `rqid` — only the real Showdown server
+    # uses it to ack choices, which we never do. find_best_move doesn't read it.
+    battle.rqid = req.request_json.get(constants.RQID)
     battle.user.initialize_first_turn_user_from_json(req.request_json)
 
     # Smogon priors. SmogonSets/TeamDatasets cache themselves at module level

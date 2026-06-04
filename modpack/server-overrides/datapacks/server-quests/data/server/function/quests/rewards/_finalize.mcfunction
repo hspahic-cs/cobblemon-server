@@ -25,17 +25,13 @@ tag @a[tag=cq_reward_egg_uncommon] remove cq_reward_egg_uncommon
 execute as @a[tag=cq_reward_egg_exeggcute] at @s run gacha giveegg @s beginner
 tag @a[tag=cq_reward_egg_exeggcute] remove cq_reward_egg_exeggcute
 
-# ─── Key rewards (count always 1 for current quest layout) ──────────────
-execute as @a[tag=cq_reward_key_common_1] at @s run gacha grant @s common 1
+# ─── Key rewards ─────────────────────────────────────────────────────────
+# Gym/E4 key grants now live in cobblemon-bridge's AdvancementHook (Kotlin-side),
+# so they no longer depend on this function parsing cleanly. Lines kept only to
+# strip stale tags set by gym reward functions (which still tag for legacy reasons).
 tag @a[tag=cq_reward_key_common_1] remove cq_reward_key_common_1
-
-execute as @a[tag=cq_reward_key_uncommon_1] at @s run gacha grant @s uncommon 1
 tag @a[tag=cq_reward_key_uncommon_1] remove cq_reward_key_uncommon_1
-
-execute as @a[tag=cq_reward_key_rare_1] at @s run gacha grant @s rare 1
 tag @a[tag=cq_reward_key_rare_1] remove cq_reward_key_rare_1
-
-execute as @a[tag=cq_reward_key_ultra_1] at @s run gacha grant @s ultra 1
 tag @a[tag=cq_reward_key_ultra_1] remove cq_reward_key_ultra_1
 
 # ─── Item bundles per quest ─────────────────────────────────────────────
@@ -103,8 +99,11 @@ tag @a[tag=cq_reward_item_rare_candy] remove cq_reward_item_rare_candy
 execute as @a[tag=cq_reward_item_master_ball] at @s run give @s cobblemon:master_ball 1
 tag @a[tag=cq_reward_item_master_ball] remove cq_reward_item_master_ball
 
-# reach_pokedex_100 (side quest): 1 PokéNav
-execute as @a[tag=cq_reward_item_pokedex_100] at @s run give @s cobblenav:pokenav_item 1
+# reach_pokedex_100 (side quest): 1 PokéNav. Item grant is handled by
+# cobblemon-bridge's PokedexProgressHook (Kotlin-side give), not by this datapack.
+# The Kotlin path is idempotent via a per-player persistent NBT flag and handles
+# inventory-overflow (drops at feet). The mcfunction give was silently failing in
+# prod, so we just strip the tag here without granting.
 tag @a[tag=cq_reward_item_pokedex_100] remove cq_reward_item_pokedex_100
 
 # defeat_elite_four (mainline): 1 master ball + ultra gacha key. Cash bonus ($5000)

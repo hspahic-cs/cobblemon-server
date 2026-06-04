@@ -60,9 +60,13 @@ jobs:
           git clone --depth 1 https://github.com/pmariglia/foul-play.git _foul_play
           (cd _foul_play && git fetch --depth 1 origin "$FOUL_PLAY_COMMIT" && git checkout "$FOUL_PLAY_COMMIT")
 
+      # rsync flags: -rltDvz keeps recursion + symlinks + mtimes + special
+      # files + compression. We deliberately drop -p / -g / -o (perms, group,
+      # owner) — deployer has ACL rwx on app/ + foul-play/ but can't chgrp,
+      # because those dirs are owned by cobblemon-bridge.
       - name: Rsync bridge app to VM
         run: |
-          rsync -az --delete \
+          rsync -rltDvz --delete \
             --exclude='__pycache__' \
             --exclude='*.pyc' \
             --exclude='install.sh' \
@@ -72,7 +76,7 @@ jobs:
 
       - name: Rsync foul-play source to VM
         run: |
-          rsync -az --delete \
+          rsync -rltDvz --delete \
             --exclude='.git' \
             --exclude='__pycache__' \
             --exclude='*.pyc' \

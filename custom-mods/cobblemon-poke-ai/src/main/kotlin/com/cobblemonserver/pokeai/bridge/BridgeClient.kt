@@ -14,7 +14,12 @@ class BridgeUnavailable(message: String, cause: Throwable? = null) : RuntimeExce
 data class PickResponse(val moveChoice: String, val searchMs: Int)
 
 class BridgeClient(
+    // Force HTTP/1.1 — Java HttpClient defaults to HTTP/2, which sends an
+    // h2c upgrade preamble that uvicorn doesn't support. Result: uvicorn
+    // ignores the upgrade and the body never makes it through (422 with
+    // empty body on every POST).
     private val httpClient: HttpClient = HttpClient.newBuilder()
+        .version(HttpClient.Version.HTTP_1_1)
         .connectTimeout(Duration.ofMillis(2000))
         .build(),
 ) {

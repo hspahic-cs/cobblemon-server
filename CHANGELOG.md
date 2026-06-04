@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.66] - 2026-06-04
+
+### Fixed
+- **`cobblemon-poke-ai`: force HTTP/1.1 on bridge requests.** Java HttpClient
+  defaults to HTTP/2 (h2c upgrade), which uvicorn rejects, sending the body
+  empty and the bridge returning 422. Manifested in-game as the gym AI
+  infinitely switching out (every turn falling back to StrongBattleAI).
+
 ## [0.7.65] - 2026-06-04
 
 ### Added

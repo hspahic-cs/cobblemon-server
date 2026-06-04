@@ -1,0 +1,92 @@
+plugins {
+    id 'net.neoforged.moddev' version '2.0.78'
+    id 'org.jetbrains.kotlin.jvm' version '2.2.20'
+}
+
+version = project.mod_version
+group = project.mod_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(project.java_version.toInteger())
+}
+
+kotlin {
+    jvmToolchain(project.java_version.toInteger())
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'Kotlin For Forge'
+        url 'https://thedarkcolour.github.io/KotlinForForge/'
+    }
+    maven {
+        name 'Cobblemon'
+        url 'https://maven.impactdev.net/repository/development/'
+    }
+    maven {
+        name 'Modrinth'
+        url 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
+}
+
+neoForge {
+    version = project.neoforge_version
+
+    // Tell moddev which mod ID this source set produces — needed so the dev-run
+    // classpath gets registered as a "mod" rather than being treated as random
+    // classpath classes (which is why @Mod-annotated classes don't get
+    // constructed without this).
+    mods {
+        "${project.mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+
+    runs {
+        server {
+            server()
+            gameDirectory = file('run/server')
+            programArgument '--nogui'
+        }
+    }
+
+    parchment {
+        minecraftVersion = '1.21.1'
+        mappingsVersion = '2024.11.17'
+    }
+}
+
+dependencies {
+    implementation "thedarkcolour:kotlinforforge-neoforge:${project.kotlin_for_forge_version}"
+
+    compileOnly "com.cobblemon:neoforge:${project.cobblemon_version}"
+
+    // RCT API exposes JTO + BattleAI registration. Modrinth project CBfM2yw7
+    // ("Radical Cobblemon Trainers API"); slug is `rctapi`.
+    compileOnly "maven.modrinth:rctapi:${project.rctapi_version}"
+}
+
+processResources {
+    def expandProps = [
+        'mod_id'           : project.mod_id,
+        'mod_version'      : project.mod_version,
+        'minecraft_version': project.minecraft_version,
+        'neoforge_version' : project.neoforge_version,
+    ]
+    inputs.properties(expandProps)
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand(expandProps)
+    }
+}
+
+jar {
+    from('LICENSE') {
+        rename { "${it}_${archives_base_name}" }
+    }
+}

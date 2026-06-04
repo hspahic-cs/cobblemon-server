@@ -1,0 +1,58 @@
+package com.cobblemonserver.pokeai.bridge
+
+import com.cobblemonserver.pokeai.BridgeConfig
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
+import java.time.Duration
+
+class BridgeUnavailable(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
+
+data class PickResponse(val moveChoice: String, val searchMs: Int)
+
+class BridgeClient(
+    private val httpClient: HttpClient = HttpClient.newBuilder()
+        .connectTimeout(Duration.ofMillis(2000))
+        .build(),
+) {
+    private val gson = Gson()
+
+    fun pick(
+        battleId: String,
+        requestJson: JsonObject,
+        logLines: List<String>,
+        gymSide: String,
+    ): PickResponse {
+        val body = JsonObject().apply {
+            add("request_json", requestJson)
+            add("log_lines", gson.toJsonTree(logLines))
+            addProperty("gym_side", gymSide)
+            addProperty("pokemon_format", BridgeConfig.pokemonFormat)
+            addProperty("generation", BridgeConfig.generation)
+            addProperty("smogon_stats_format", BridgeConfig.smogonStatsFormat)
+            addProperty("search_time_ms", BridgeConfig.searchTimeMs)
+        }
+        val httpReq = HttpRequest.newBuilder(URI.create("${BridgeConfig.url}/battles/$battleId/pick"))
+            .timeout(Duration.ofMillis(BridgeConfig.timeoutMs))
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(gson.toJson(body)))
+            .build()
+
+        val httpResp = try {
+            httpClient.send(httpReq, HttpResponse.BodyHandlers.ofString())
+        } catch (e: Exception) {
+            throw BridgeUnavailable("bridge request failed: ${e.message}", e)
+        }
+        if (httpResp.statusCode() != 200) {
+            throw BridgeUnavailable("bridge returned ${httpResp.statusCode()}: ${httpResp.body()}")
+        }
+        val json = gson.fromJson(httpResp.body(), JsonObject::class.java)
+        return PickResponse(
+            moveChoice = json.get("move_choice").asString,
+            searchMs = json.get("search_ms")?.asInt ?: 0,
+        )
+    }
+}

@@ -1,42 +1,41 @@
 # server-gym-ai-test
 
-Dev-only datapack for A/B/C testing RCT AI types against a real player.
+Dev-only datapack for head-to-head **rb vs pe** AI testing on real player battles.
 
 ## Setup
 
-3 leaders × 3 AI variants = 9 trainer JSONs, all sharing the same hardmode team
-(EVs/IVs/natures/items copied from each leader's `_challenge.json` in `server-gyms`)
+3 leaders × 2 AI variants = 6 trainer JSONs, all sharing each leader's hardmode
+team (EVs/IVs/natures/items copied from `_challenge.json` in `server-gyms`)
 with every Pokemon level clamped to 50 so the only variable is the AI.
 
-## Variant → AI mapping (single-blind — keep hidden from play-tester)
+## Variant → AI mapping
 
-| Variant | `ai.type` | Class                | Notes                                                  |
-|---------|-----------|----------------------|--------------------------------------------------------|
-| **A**   | `rb`      | RunBunAI             | Run & Bun (rbrctai add-on) — current prod AI on gyms   |
-| **B**   | `cbl`     | StrongBattleAI       | Cobblemon's built-in StrongBattleAI (default skill=5)  |
-| **C**   | `sd5`     | SelfdotGen5AI        | Gen-5-style heuristic AI (rctapi experimental)         |
+| Variant | `ai.type` | Class      | Notes                                                  |
+|---------|-----------|------------|--------------------------------------------------------|
+| **rb**  | `rb`      | RunBunAI   | Run & Bun (rbrctai add-on) — current prod AI on gyms   |
+| **pe**  | `pe`      | PokeEngineAI | poke-engine MCTS via local FastAPI bridge ([phase 1](../../../../custom-mods/cobblemon-poke-ai)) |
 
-Type strings verified against rctapi-0.15.2 + rbrctai-0.15.3 (decompiled
-`*Config.register()` → `JTO.registerParser`). A 4th type `rct` (RCTBattleAI,
-the unconfigured default) is also registered but not used here.
+Trainer NPCs are labeled in-game as `AI Test [rb]: Sabrina` and `AI Test [pe]: Sabrina`
+so the play-tester sees which AI they're fighting.
 
-Trainer NPCs are labeled in-game as `AI Test [A]: Sabrina` etc., so the play-tester
-sees only the letter, not which AI is which.
+> The pe variant requires `cobblemon-poke-ai` mod loaded **and** the
+> `poke-engine-bridge` service running on 127.0.0.1:8642. If the bridge is
+> down the mod falls back to `StrongBattleAI(skill=5)`.
 
 ## Usage
 
-Stand where you want the leaders to spawn (they line up 3 blocks apart along your
-facing direction), then run **one** of:
+Stand where you want the leaders to spawn — the per-leader command places **both**
+variants of that leader 3 blocks apart along your facing direction.
 
 ```
-/function server:aitest/spawn_a
-/function server:aitest/spawn_b
-/function server:aitest/spawn_c
+/function server:aitest/spawn_sabrina
+/function server:aitest/spawn_surge
+/function server:aitest/spawn_blaine
 /function server:aitest/cleanup
 ```
 
-`cleanup` removes all 9 (any variant). Re-running `spawn_x` clears that variant's
-3 trainers first, so it's safe to re-spawn after a battle.
+`cleanup` removes all 6. Re-running `spawn_<leader>` clears that leader's pair
+first, so it's safe to re-spawn after a battle.
 
 ## Regenerate
 

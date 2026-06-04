@@ -12,6 +12,43 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.63] - 2026-06-03
+
+### Fixed
+- **Root cause of broken gym keys / Centurion PokéNav: wrong cobblenav item id.**
+  PR #129 added `give @s cobblenav:pokenav_item 1` to `_finalize.mcfunction`,
+  but `pokenav_item` isn't a concrete item — Cobblenav only registers colored
+  variants (`pokenav_item_red`, `pokenav_item_yellow`, etc.). Brigadier rejected
+  the line at function-load time and unloaded `_finalize.mcfunction` entirely,
+  silently breaking every `schedule function .../_finalize` dispatch. Symptom:
+  chat fires + cash arrives (Kotlin-side) but gym keys, quest eggs, master
+  balls, leaf stones never show up. Fixed by switching to `pokenav_item_red`.
+- **Gym keys via Kotlin (defense in depth).** `AdvancementHook` now grants the
+  gym key on `server:beat_gym_N` / `_challenge`: ultra for gym 10/19/23/24,
+  rare for the rest. Runs `/gacha grant <player> <tier> 1` via
+  `performPrefixedCommand` with an op-4 source. Gym keys no longer depend on
+  `_finalize` parsing cleanly. `_finalize.mcfunction`'s `cq_reward_key_*`
+  execute lines stripped to prevent double-grant; tag-removal kept.
+- **Centurion PokéNav grant via Kotlin.** `PokedexProgressHook` resolves
+  `cobblenav:pokenav_item_red` via `BuiltInRegistries`, adds to inventory, drops
+  at feet on overflow. Idempotent per-player via
+  `cobblemon_bridge:centurion_pokenav_awarded`. Backfills players who hit 100
+  caught before the reward changed (any pokédex update triggers the check).
+- **Crate / gacha eggs no longer tagged as bred.** `PokemonEggMixin` injects at
+  Cobreeding's `inventoryTick → hatchEgg` call site, reads
+  `custom_data.cobblemongacha_tier`, and tells `BredTagHook` to skip the bred
+  tag for that hatch. Restores tradeability of `/gacha giveegg` outputs (gacha
+  pulls + quest-reward eggs). The mixin commit was lost in PR #129's
+  squash-merge.
+
+### Changed
+- **Elite Four gauntlet: dimension leash + party stability.** Snapshot dimension
+  and Pokémon UUIDs at E4 1 interact. Any `PlayerChangedDimensionEvent` out of
+  that dimension (portal, `/home`, `/tpa`, death-respawn) fails the gauntlet.
+  Each subsequent E4 battle start re-checks the party against the snapshot;
+  PC swaps, deposits, or releases cancel the battle and fail the gauntlet.
+  Items and healing are untouched — only the party roster is locked.
+
 ## [0.7.62] - 2026-06-03
 
 ### Added

@@ -1,9 +1,9 @@
 {
-  "name": "AI Test [A]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "AI Test [pe]: Surge",
+  "identity": "Electric",
+  "textureResource": "rctmod:textures/trainers/single/leader_lt_surge_0033.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,12 +16,12 @@
   "bag": [],
   "team": [
     {
-      "species": "ninetales",
+      "species": "galvantula",
       "level": 50,
       "nature": "timid",
       "ivs": {
         "hp": 31,
-        "atk": 31,
+        "atk": 0,
         "def": 31,
         "spa": 31,
         "spd": 31,
@@ -35,51 +35,22 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "drought",
-      "heldItem": "cobblemon:heat_rock",
+      "ability": "compoundeyes",
+      "heldItem": "cobblemon:focus_sash",
       "moveset": [
-        "fireblast",
-        "solarbeam",
-        "willowisp",
-        "nastyplot"
+        "stickyweb",
+        "thunder",
+        "bugbuzz",
+        "energyball"
       ]
     },
     {
-      "species": "arcanine",
-      "level": 50,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "intimidate",
-      "heldItem": "cobblemon:choice_band",
-      "moveset": [
-        "flareblitz",
-        "extremespeed",
-        "wildcharge",
-        "closecombat"
-      ]
-    },
-    {
-      "species": "charmeleon",
+      "species": "electrode",
       "level": 50,
       "nature": "timid",
       "ivs": {
         "hp": 31,
-        "atk": 31,
+        "atk": 0,
         "def": 31,
         "spa": 31,
         "spd": 31,
@@ -93,80 +64,23 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "solarpower",
-      "heldItem": "cobblemon:eviolite",
-      "moveset": [
-        "fireblast",
-        "dragonpulse",
-        "solarbeam",
-        "focusblast"
-      ]
-    },
-    {
-      "species": "houndoom",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "flashfire",
+      "form": "hisuian",
+      "ability": "static",
       "heldItem": "cobblemon:life_orb",
       "moveset": [
-        "nastyplot",
-        "darkpulse",
-        "fireblast",
-        "solarbeam"
+        "voltswitch",
+        "gigadrain",
+        "leafstorm",
+        "electroball"
       ]
     },
     {
-      "species": "centiskorch",
-      "level": 50,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 4
-      },
-      "ability": "flashfire",
-      "heldItem": "cobblemon:heavy_duty_boots",
-      "moveset": [
-        "firelash",
-        "leechlife",
-        "coil",
-        "powerwhip"
-      ]
-    },
-    {
-      "species": "torkoal",
+      "species": "rotom",
       "level": 50,
       "nature": "bold",
       "ivs": {
         "hp": 31,
-        "atk": 31,
+        "atk": 0,
         "def": 31,
         "spa": 31,
         "spd": 31,
@@ -176,18 +90,107 @@
         "hp": 252,
         "atk": 0,
         "def": 252,
-        "spa": 4,
-        "spd": 0,
+        "spa": 0,
+        "spd": 4,
         "spe": 0
       },
-      "ability": "drought",
+      "form": "wash",
+      "ability": "levitate",
       "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "rapidspin",
-        "lavaplume",
-        "yawn",
-        "stealthrock"
+        "hydropump",
+        "voltswitch",
+        "thunderwave",
+        "painsplit"
       ]
+    },
+    {
+      "species": "eelektross",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "levitate",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "coil",
+        "supercellslam",
+        "drainpunch",
+        "dragonclaw"
+      ]
+    },
+    {
+      "species": "magnezone",
+      "level": 50,
+      "nature": "naive",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "analytic",
+      "heldItem": "cobblemon:assault_vest",
+      "moveset": [
+        "thunderbolt",
+        "flashcannon",
+        "voltswitch",
+        "bodypress"
+      ]
+    },
+    {
+      "species": "pikachu",
+      "level": 50,
+      "nature": "naive",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "lightningrod",
+      "heldItem": "cobblemon:light_ball",
+      "moveset": [
+        "thunderbolt",
+        "surf",
+        "alluringvoice",
+        "volttackle"
+      ],
+      "gender": "MALE"
     }
   ]
 }

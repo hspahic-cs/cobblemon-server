@@ -1,0 +1,112 @@
+name: Deploy poke-engine-bridge
+
+# Deploys the gym-AI bridge service to the LAN VM. Triggered by changes to
+# ops/poke-engine-bridge/** on main, or manually via workflow_dispatch.
+#
+# The bridge is shared by cobblemon-prod and cobblemon-dev (both Java
+# servers POST to 127.0.0.1:8642). One install, one systemd unit.
+#
+# First-time setup is manual (see ops/poke-engine-bridge/install.sh — needs
+# sysadmin sudo for useradd/systemd registration). This workflow handles
+# code-only redeploys: rsync app + foul-play source, restart service.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'ops/poke-engine-bridge/**'
+      - '.github/workflows/deploy-bridge.yml'
+  workflow_dispatch:
+
+# foul-play source is pinned to the commit we developed against locally.
+# Bump when we want to track upstream changes.
+env:
+  FOUL_PLAY_COMMIT: 13db2786b4fdbc742d627e21dd4ee1de6bf963b0
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-bridge
+      cancel-in-progress: false
+    env:
+      VM_HOST: cobblemon-dev          # tailnet hostname (single VM hosts both envs)
+      VM_USER: deployer
+      INSTALL_DIR: /opt/poke-engine-bridge
+      SERVICE: poke-engine-bridge
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tailscale + SSH setup
+        uses: ./.github/actions/tailscale-ssh
+        with:
+          ts-oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          ts-oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          ssh-private-key: ${{ secrets.DEPLOYER_SSH_KEY }}
+          vm-host: ${{ env.VM_HOST }}
+
+      - name: Confirm install.sh has been run
+        run: |
+          if ! ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+                 "test -d ${{ env.INSTALL_DIR }}/venv && test -d ${{ env.INSTALL_DIR }}/app"; then
+            echo "::error::${{ env.INSTALL_DIR }}/{venv,app} missing — run install.sh manually first."
+            echo "::error::See ops/poke-engine-bridge/install.sh for one-time setup."
+            exit 1
+          fi
+
+      - name: Clone foul-play source at pinned commit
+        run: |
+          mkdir -p _foul_play
+          git clone --depth 1 https://github.com/pmariglia/foul-play.git _foul_play
+          (cd _foul_play && git fetch --depth 1 origin "$FOUL_PLAY_COMMIT" && git checkout "$FOUL_PLAY_COMMIT")
+
+      - name: Rsync bridge app to VM
+        run: |
+          rsync -az --delete \
+            --exclude='__pycache__' \
+            --exclude='*.pyc' \
+            --exclude='install.sh' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            ops/poke-engine-bridge/ \
+            ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/app/
+
+      - name: Rsync foul-play source to VM
+        run: |
+          rsync -az --delete \
+            --exclude='.git' \
+            --exclude='__pycache__' \
+            --exclude='*.pyc' \
+            --exclude='.venv' \
+            --exclude='logs' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            _foul_play/ \
+            ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/foul-play/
+
+      - name: Restart bridge service
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+            "sudo -n /usr/bin/systemctl restart ${{ env.SERVICE }}"
+
+      - name: Wait for service to come up
+        run: |
+          for i in $(seq 1 15); do
+            if ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+                 "sudo -n /usr/bin/systemctl is-active ${{ env.SERVICE }}" | grep -q '^active$'; then
+              echo "${{ env.SERVICE }} is active"
+              break
+            fi
+            sleep 2
+            if [[ $i -eq 15 ]]; then
+              echo "::error::${{ env.SERVICE }} did not become active within 30s"
+              ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+                "sudo -n /usr/bin/systemctl status ${{ env.SERVICE }} --no-pager || true"
+              exit 1
+            fi
+          done
+
+      - name: Smoke-test /healthz over SSH (bridge listens on 127.0.0.1 only)
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+            "curl -sf http://127.0.0.1:8642/healthz" \
+            | grep -q '"status":"ok"' \
+            || (echo "::error::healthz did not return ok"; exit 1)

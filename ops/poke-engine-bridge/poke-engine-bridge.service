@@ -1,0 +1,27 @@
+[Unit]
+Description=poke-engine-bridge (Cobblemon gym-AI MCTS)
+After=network.target
+
+[Service]
+Type=simple
+User=cobblemon-bridge
+Group=cobblemon-bridge
+WorkingDirectory=/opt/poke-engine-bridge/app
+EnvironmentFile=/etc/default/poke-engine-bridge
+Environment=PYTHONPATH=/opt/poke-engine-bridge/foul-play
+ExecStart=/opt/poke-engine-bridge/venv/bin/uvicorn app:app \
+    --host 127.0.0.1 \
+    --port ${PORT} \
+    --workers ${WORKERS} \
+    --log-level info
+Restart=on-failure
+RestartSec=5
+# Light hardening — bridge has no business writing outside its own dir.
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/poke-engine-bridge
+
+[Install]
+WantedBy=multi-user.target

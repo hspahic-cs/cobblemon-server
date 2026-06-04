@@ -1,9 +1,9 @@
 {
-  "name": "AI Test [B]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "AI Test [rb]: Sabrina",
+  "identity": "Psychic",
+  "textureResource": "rctmod:textures/trainers/single/leader_sabrina_01a4.png",
   "ai": {
-    "type": "cbl",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,152 +16,7 @@
   "bag": [],
   "team": [
     {
-      "species": "ninetales",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "drought",
-      "heldItem": "cobblemon:heat_rock",
-      "moveset": [
-        "fireblast",
-        "solarbeam",
-        "willowisp",
-        "nastyplot"
-      ]
-    },
-    {
-      "species": "arcanine",
-      "level": 50,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "intimidate",
-      "heldItem": "cobblemon:choice_band",
-      "moveset": [
-        "flareblitz",
-        "extremespeed",
-        "wildcharge",
-        "closecombat"
-      ]
-    },
-    {
-      "species": "charmeleon",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "solarpower",
-      "heldItem": "cobblemon:eviolite",
-      "moveset": [
-        "fireblast",
-        "dragonpulse",
-        "solarbeam",
-        "focusblast"
-      ]
-    },
-    {
-      "species": "houndoom",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "flashfire",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "nastyplot",
-        "darkpulse",
-        "fireblast",
-        "solarbeam"
-      ]
-    },
-    {
-      "species": "centiskorch",
-      "level": 50,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 4
-      },
-      "ability": "flashfire",
-      "heldItem": "cobblemon:heavy_duty_boots",
-      "moveset": [
-        "firelash",
-        "leechlife",
-        "coil",
-        "powerwhip"
-      ]
-    },
-    {
-      "species": "torkoal",
+      "species": "slowbro",
       "level": 50,
       "nature": "bold",
       "ivs": {
@@ -180,13 +35,158 @@
         "spd": 0,
         "spe": 0
       },
-      "ability": "drought",
+      "ability": "regenerator",
+      "heldItem": "cobblemon:heavy_duty_boots",
+      "moveset": [
+        "futuresight",
+        "teleport",
+        "scald",
+        "slackoff"
+      ]
+    },
+    {
+      "species": "reuniclus",
+      "level": 50,
+      "nature": "quiet",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "magicguard",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "trickroom",
+        "psyshock",
+        "focusblast",
+        "shadowball"
+      ]
+    },
+    {
+      "species": "hatterene",
+      "level": 50,
+      "nature": "quiet",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "magicbounce",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "trickroom",
+        "psychic",
+        "dazzlinggleam",
+        "mysticalfire"
+      ]
+    },
+    {
+      "species": "alakazam",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "magicguard",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "nastyplot",
+        "psychic",
+        "shadowball",
+        "focusblast"
+      ]
+    },
+    {
+      "species": "bronzong",
+      "level": 50,
+      "nature": "sassy",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "levitate",
       "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "rapidspin",
-        "lavaplume",
-        "yawn",
-        "stealthrock"
+        "stealthrock",
+        "trickroom",
+        "gyroball",
+        "toxic"
+      ]
+    },
+    {
+      "species": "medicham",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "purepower",
+      "heldItem": "cobblemon:choice_scarf",
+      "moveset": [
+        "highjumpkick",
+        "zenheadbutt",
+        "icepunch",
+        "bulletpunch"
       ]
     }
   ]

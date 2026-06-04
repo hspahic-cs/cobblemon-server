@@ -1,9 +1,9 @@
 {
-  "name": "AI Test [A]: Sabrina",
-  "identity": "Psychic",
-  "textureResource": "rctmod:textures/trainers/single/leader_sabrina_01a4.png",
+  "name": "AI Test [pe]: Blaine",
+  "identity": "Fire",
+  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,94 +16,7 @@
   "bag": [],
   "team": [
     {
-      "species": "slowbro",
-      "level": 50,
-      "nature": "bold",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 4,
-        "spd": 0,
-        "spe": 0
-      },
-      "ability": "regenerator",
-      "heldItem": "cobblemon:heavy_duty_boots",
-      "moveset": [
-        "futuresight",
-        "teleport",
-        "scald",
-        "slackoff"
-      ]
-    },
-    {
-      "species": "reuniclus",
-      "level": 50,
-      "nature": "quiet",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "magicguard",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "trickroom",
-        "psyshock",
-        "focusblast",
-        "shadowball"
-      ]
-    },
-    {
-      "species": "hatterene",
-      "level": 50,
-      "nature": "quiet",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "magicbounce",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "trickroom",
-        "psychic",
-        "dazzlinggleam",
-        "mysticalfire"
-      ]
-    },
-    {
-      "species": "alakazam",
+      "species": "ninetales",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -122,48 +35,19 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "magicguard",
-      "heldItem": "cobblemon:life_orb",
+      "ability": "drought",
+      "heldItem": "cobblemon:heat_rock",
       "moveset": [
-        "nastyplot",
-        "psychic",
-        "shadowball",
-        "focusblast"
+        "fireblast",
+        "solarbeam",
+        "willowisp",
+        "nastyplot"
       ]
     },
     {
-      "species": "bronzong",
+      "species": "arcanine",
       "level": 50,
-      "nature": "sassy",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 128,
-        "spa": 0,
-        "spd": 128,
-        "spe": 0
-      },
-      "ability": "levitate",
-      "heldItem": "cobblemon:leftovers",
-      "moveset": [
-        "stealthrock",
-        "trickroom",
-        "gyroball",
-        "toxic"
-      ]
-    },
-    {
-      "species": "medicham",
-      "level": 50,
-      "nature": "jolly",
+      "nature": "adamant",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -180,13 +64,129 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "purepower",
-      "heldItem": "cobblemon:choice_scarf",
+      "ability": "intimidate",
+      "heldItem": "cobblemon:choice_band",
       "moveset": [
-        "highjumpkick",
-        "zenheadbutt",
-        "icepunch",
-        "bulletpunch"
+        "flareblitz",
+        "extremespeed",
+        "wildcharge",
+        "closecombat"
+      ]
+    },
+    {
+      "species": "charmeleon",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "solarpower",
+      "heldItem": "cobblemon:eviolite",
+      "moveset": [
+        "fireblast",
+        "dragonpulse",
+        "solarbeam",
+        "focusblast"
+      ]
+    },
+    {
+      "species": "houndoom",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "flashfire",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "nastyplot",
+        "darkpulse",
+        "fireblast",
+        "solarbeam"
+      ]
+    },
+    {
+      "species": "centiskorch",
+      "level": 50,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 4
+      },
+      "ability": "flashfire",
+      "heldItem": "cobblemon:heavy_duty_boots",
+      "moveset": [
+        "firelash",
+        "leechlife",
+        "coil",
+        "powerwhip"
+      ]
+    },
+    {
+      "species": "torkoal",
+      "level": 50,
+      "nature": "bold",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 4,
+        "spd": 0,
+        "spe": 0
+      },
+      "ability": "drought",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "rapidspin",
+        "lavaplume",
+        "yawn",
+        "stealthrock"
       ]
     }
   ]

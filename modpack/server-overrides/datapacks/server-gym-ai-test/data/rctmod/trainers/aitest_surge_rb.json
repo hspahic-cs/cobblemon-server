@@ -1,9 +1,9 @@
 {
-  "name": "AI Test [C]: Surge",
+  "name": "AI Test [rb]: Surge",
   "identity": "Electric",
   "textureResource": "rctmod:textures/trainers/single/leader_lt_surge_0033.png",
   "ai": {
-    "type": "sd5",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

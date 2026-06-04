@@ -56,9 +56,17 @@ legendary-monuments-data/
 **/.kotlin/
 **/.idea/
 
+# moddev's local runServer output (custom-mods/<mod>/run/) — generated worlds,
+# downloaded runtime mod jars, world data. Never committed.
+custom-mods/*/run/
+
 # MkDocs build output + local venv
 /site/
 /.docs-venv/
+
+# Python (ops/ scripts and services)
+**/__pycache__/
+*.pyc
 
 # Misc
 *.lock

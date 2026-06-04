@@ -12,6 +12,31 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.63] - 2026-06-04
+
+### Added
+- **Tier 1 gym AI: poke-engine bridge.** New `cobblemon-poke-ai` mod registers
+  AI type `pe` via rctapi's JTO. Trainer JSONs that opt in (`"ai": {"type": "pe"}`)
+  route move selection to a local FastAPI service (`ops/poke-engine-bridge/`)
+  that wraps foul-play's parser + poke-engine MCTS. Stateless: mod sends the
+  full Showdown event log each turn; bridge rebuilds `Battle` from scratch
+  per call so workers run independently. Bridge listens on 127.0.0.1:8642
+  with 4 uvicorn workers (configurable in `/etc/default/poke-engine-bridge`).
+  Both cobblemon-prod and cobblemon-dev share one bridge instance.
+  - On any bridge error (timeout, connection refused, unparseable response),
+    the mod falls back to `StrongBattleAI(skill=5)` so battles keep moving.
+  - First-time VM install: `sudo bash ops/poke-engine-bridge/install.sh` (rustup
+    + venv + poke-engine 0.0.46 build, ~5 min). After that, deploys via the
+    new `deploy-bridge.yml` workflow.
+
+### Changed
+- **`server-gym-ai-test` datapack: rb-vs-pe head-to-head.** Refactored from
+  three separate A/B/C variants (rb / cbl / sd5) to a paired rb-vs-pe shape.
+  Each per-leader spawn (`/function server:aitest/spawn_sabrina`,
+  `/spawn_surge`, `/spawn_blaine`) drops both variants side-by-side so the
+  play-tester can fight both in one session and compare directly. Trainers
+  are labeled `AI Test [rb]: Sabrina` and `AI Test [pe]: Sabrina`.
+
 ## [0.7.62] - 2026-06-03
 
 ### Added

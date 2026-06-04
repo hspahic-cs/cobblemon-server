@@ -1,9 +1,9 @@
 {
-  "name": "AI Test [B]: Surge",
-  "identity": "Electric",
-  "textureResource": "rctmod:textures/trainers/single/leader_lt_surge_0033.png",
+  "name": "AI Test [pe]: Sabrina",
+  "identity": "Psychic",
+  "textureResource": "rctmod:textures/trainers/single/leader_sabrina_01a4.png",
   "ai": {
-    "type": "cbl",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,71 +16,12 @@
   "bag": [],
   "team": [
     {
-      "species": "galvantula",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 0,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "compoundeyes",
-      "heldItem": "cobblemon:focus_sash",
-      "moveset": [
-        "stickyweb",
-        "thunder",
-        "bugbuzz",
-        "energyball"
-      ]
-    },
-    {
-      "species": "electrode",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 0,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "form": "hisuian",
-      "ability": "static",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "voltswitch",
-        "gigadrain",
-        "leafstorm",
-        "electroball"
-      ]
-    },
-    {
-      "species": "rotom",
+      "species": "slowbro",
       "level": 50,
       "nature": "bold",
       "ivs": {
         "hp": 31,
-        "atk": 0,
+        "atk": 31,
         "def": 31,
         "spa": 31,
         "spd": 31,
@@ -90,22 +31,137 @@
         "hp": 252,
         "atk": 0,
         "def": 252,
-        "spa": 0,
-        "spd": 4,
+        "spa": 4,
+        "spd": 0,
         "spe": 0
       },
-      "form": "wash",
-      "ability": "levitate",
-      "heldItem": "cobblemon:leftovers",
+      "ability": "regenerator",
+      "heldItem": "cobblemon:heavy_duty_boots",
       "moveset": [
-        "hydropump",
-        "voltswitch",
-        "thunderwave",
-        "painsplit"
+        "futuresight",
+        "teleport",
+        "scald",
+        "slackoff"
       ]
     },
     {
-      "species": "eelektross",
+      "species": "reuniclus",
+      "level": 50,
+      "nature": "quiet",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "magicguard",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "trickroom",
+        "psyshock",
+        "focusblast",
+        "shadowball"
+      ]
+    },
+    {
+      "species": "hatterene",
+      "level": 50,
+      "nature": "quiet",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "magicbounce",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "trickroom",
+        "psychic",
+        "dazzlinggleam",
+        "mysticalfire"
+      ]
+    },
+    {
+      "species": "alakazam",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "magicguard",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "nastyplot",
+        "psychic",
+        "shadowball",
+        "focusblast"
+      ]
+    },
+    {
+      "species": "bronzong",
+      "level": 50,
+      "nature": "sassy",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "levitate",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "stealthrock",
+        "trickroom",
+        "gyroball",
+        "toxic"
+      ]
+    },
+    {
+      "species": "medicham",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -124,73 +180,14 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "levitate",
-      "heldItem": "cobblemon:leftovers",
+      "ability": "purepower",
+      "heldItem": "cobblemon:choice_scarf",
       "moveset": [
-        "coil",
-        "supercellslam",
-        "drainpunch",
-        "dragonclaw"
+        "highjumpkick",
+        "zenheadbutt",
+        "icepunch",
+        "bulletpunch"
       ]
-    },
-    {
-      "species": "magnezone",
-      "level": 50,
-      "nature": "naive",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "analytic",
-      "heldItem": "cobblemon:assault_vest",
-      "moveset": [
-        "thunderbolt",
-        "flashcannon",
-        "voltswitch",
-        "bodypress"
-      ]
-    },
-    {
-      "species": "pikachu",
-      "level": 50,
-      "nature": "naive",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "lightningrod",
-      "heldItem": "cobblemon:light_ball",
-      "moveset": [
-        "thunderbolt",
-        "surf",
-        "alluringvoice",
-        "volttackle"
-      ],
-      "gender": "MALE"
     }
   ]
 }

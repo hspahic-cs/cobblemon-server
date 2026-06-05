@@ -17,6 +17,7 @@ import json
 import logging
 import os
 import random
+import re
 from concurrent.futures import ProcessPoolExecutor
 from copy import deepcopy
 from dataclasses import dataclass
@@ -84,6 +85,7 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
     battle.user.name = req.gym_side
     battle.opponent.name = constants.ID_LOOKUP[req.gym_side]
 
+    req = strip_cobblemon_uuids(req)
     battle.request_json = req.request_json
     # Cobblemon's |request| JSON omits `rqid` — only the real Showdown server
     # uses it to ack choices, which we never do. find_best_move doesn't read it.
@@ -150,6 +152,63 @@ def _normalize_log_lines(log_entries: list[str], gym_side: str) -> list[str]:
         out.append(line)
         i += 1
     return out
+
+
+# --- Cobblemon protocol normalization ---------------------------------------
+#
+# Cobblemon's Showdown fork injects a Pokemon UUID as an extra token in the
+# details string ("Slowbro, <uuid>, L50, M" — vanilla is "Slowbro, L50, M")
+# and uses the UUID as the nickname in protocol idents ("p2a: <uuid>").
+# foul-play parses the level from details[1] (the UUID -> ValueError -> level
+# silently defaults to 100) and matches request mons to protocol mons by
+# nickname (UUID != "Slowbro" -> no match -> a blank phantom is fabricated
+# on the side, orphaning the real mon's moves/ability/item).
+#
+# Fix: map UUID -> species from every details occurrence, drop the UUID token
+# from details, and rewrite UUID nicknames to species names everywhere.
+# Limitation: two same-species mons on one team collapse to one identity.
+
+UUID_RE = re.compile(r"[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}")
+DETAILS_UUID_RE = re.compile(
+    r"(?P<species>[^,|]+), (?P<uuid>[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12})"
+)
+
+
+def strip_cobblemon_uuids(req: PickRequest) -> PickRequest:
+    uuid_to_species: dict[str, str] = {}
+
+    def collect_and_strip(text: str) -> str:
+        def repl(m):
+            # the species group can carry junk prefix when matching inside
+            # serialized JSON ('"details": "Slowbro') — keep the full text in
+            # the substitution (drops only ", <uuid>") but clean the mapping
+            species = m.group("species").split('"')[-1].split(":")[-1].strip()
+            uuid_to_species[m.group("uuid")] = species
+            return m.group("species")
+
+        return DETAILS_UUID_RE.sub(repl, text)
+
+    request_json = json.loads(collect_and_strip(json.dumps(req.request_json)))
+    log_lines = [collect_and_strip(line) for line in req.log_lines]
+
+    # second pass: any remaining UUID occurrences (idents like "p2a: <uuid>")
+    def replace_known(text: str) -> str:
+        return UUID_RE.sub(
+            lambda m: uuid_to_species.get(m.group(0), m.group(0)), text
+        )
+
+    request_json = json.loads(replace_known(json.dumps(request_json)))
+    log_lines = [replace_known(line) for line in log_lines]
+    return PickRequest(
+        request_json=request_json,
+        log_lines=log_lines,
+        gym_side=req.gym_side,
+        pokemon_format=req.pokemon_format,
+        generation=req.generation,
+        smogon_stats_format=req.smogon_stats_format,
+        search_time_ms=req.search_time_ms,
+        opponent_team_packed=req.opponent_team_packed,
+    )
 
 
 # --- Perfect information ("open team sheet") -------------------------------

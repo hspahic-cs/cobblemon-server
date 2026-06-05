@@ -11,10 +11,12 @@ from fp.battle import Battle, Pokemon
 
 from bridge import (
     PackedPokemon,
+    PickRequest,
     overlay_opponent_team,
     parse_packed_team,
     safest_move,
     select_choice,
+    strip_cobblemon_uuids,
 )
 
 
@@ -192,6 +194,66 @@ def test_safest_move_fully_pruned_row_never_wins():
     s2 = ["nightslash"]
     matrix = [None, -1.0]
     assert safest_move(s1, s2, matrix) == "switch bronzong"
+
+
+def _uuid_pick_request():
+    # exact shapes from the 2026-06-05 live audit dump
+    slowbro_uuid = "28c0d5db-9b76-4780-97ce-48315f40bc09"
+    torterra_uuid = "e32a67ca-92d1-43bf-a21d-f30d9cf4bbd2"
+    request_json = {
+        "side": {
+            "id": "p2",
+            "pokemon": [
+                {
+                    "ident": "p2: Slowbro",
+                    "details": f"Slowbro, {slowbro_uuid}, L50, M",
+                    "condition": "202/202",
+                    "active": True,
+                    "stats": {"atk": 85, "def": 130, "spa": 130, "spd": 90, "spe": 50},
+                    "moves": ["futuresight", "teleport", "scald", "slackoff"],
+                    "ability": "regenerator",
+                    "item": "heavydutyboots",
+                }
+            ],
+        }
+    }
+    log_lines = [
+        f"|switch|p1a: {torterra_uuid}|Torterra, {torterra_uuid}, L55, M|100/100",
+        f"|switch|p2a: {slowbro_uuid}|Slowbro, {slowbro_uuid}, L50, M|202/202",
+        f"|move|p1a: {torterra_uuid}|Earthquake|p2a: {slowbro_uuid}",
+    ]
+    return PickRequest(
+        request_json=request_json,
+        log_lines=log_lines,
+        gym_side="p2",
+        pokemon_format="gen9customgame",
+        generation="gen9",
+        smogon_stats_format="gen9nationaldex",
+        search_time_ms=1000,
+    )
+
+
+def test_strip_cobblemon_uuids_details_and_idents():
+    req = strip_cobblemon_uuids(_uuid_pick_request())
+
+    pkmn = req.request_json["side"]["pokemon"][0]
+    # details parseable by from_switch_string again: name, L50, M
+    assert pkmn["details"] == "Slowbro, L50, M"
+    # untouched fields survive the JSON round-trip
+    assert pkmn["moves"] == ["futuresight", "teleport", "scald", "slackoff"]
+    assert pkmn["stats"]["def"] == 130
+
+    assert req.log_lines == [
+        "|switch|p1a: Torterra|Torterra, L55, M|100/100",
+        "|switch|p2a: Slowbro|Slowbro, L50, M|202/202",
+        "|move|p1a: Torterra|Earthquake|p2a: Slowbro",
+    ]
+
+
+def test_strip_cobblemon_uuids_level_parses():
+    req = strip_cobblemon_uuids(_uuid_pick_request())
+    pkmn = Pokemon.from_switch_string(req.request_json["side"]["pokemon"][0]["details"])
+    assert pkmn.level == 50  # was 100: the UUID token broke level parsing
 
 
 def test_overlay_adds_unrevealed_mon_to_reserve():

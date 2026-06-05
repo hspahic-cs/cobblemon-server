@@ -1,0 +1,8 @@
+{
+  "url": "http://192.168.1.213:8642",
+  "timeoutMs": 15000,
+  "searchTimeMs": 2000,
+  "pokemonFormat": "gen9customgame",
+  "generation": "gen9",
+  "smogonStatsFormat": "gen9nationaldex"
+}

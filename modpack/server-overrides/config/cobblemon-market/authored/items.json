@@ -1151,7 +1151,7 @@
     "vendorTag": "",
     "sellable": true
   },
-  "simpletms:tm_absorb": {
+  "simpletms:tr_absorb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1160,7 +1160,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_acid": {
+  "simpletms:tr_acid": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1169,7 +1169,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_acidarmor": {
+  "simpletms:tr_acidarmor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1178,7 +1178,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_acidspray": {
+  "simpletms:tr_acidspray": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1187,7 +1187,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_acrobatics": {
+  "simpletms:tr_acrobatics": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1196,7 +1196,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_acupressure": {
+  "simpletms:tr_acupressure": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1205,7 +1205,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_aerialace": {
+  "simpletms:tr_aerialace": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1214,7 +1214,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_afteryou": {
+  "simpletms:tr_afteryou": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1223,7 +1223,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_agility": {
+  "simpletms:tr_agility": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1232,7 +1232,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_aircutter": {
+  "simpletms:tr_aircutter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1241,7 +1241,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_airslash": {
+  "simpletms:tr_airslash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1250,7 +1250,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_alluringvoice": {
+  "simpletms:tr_alluringvoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1259,7 +1259,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_allyswitch": {
+  "simpletms:tr_allyswitch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1268,7 +1268,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_amnesia": {
+  "simpletms:tr_amnesia": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1277,7 +1277,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_ancientpower": {
+  "simpletms:tr_ancientpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1286,7 +1286,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_aquacutter": {
+  "simpletms:tr_aquacutter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1295,7 +1295,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_aquajet": {
+  "simpletms:tr_aquajet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1304,7 +1304,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_aquaring": {
+  "simpletms:tr_aquaring": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1313,7 +1313,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_aquatail": {
+  "simpletms:tr_aquatail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1322,7 +1322,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_armthrust": {
+  "simpletms:tr_armthrust": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1331,7 +1331,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_aromatherapy": {
+  "simpletms:tr_aromatherapy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1340,7 +1340,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_aromaticmist": {
+  "simpletms:tr_aromaticmist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1349,7 +1349,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_assist": {
+  "simpletms:tr_assist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1358,7 +1358,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_assurance": {
+  "simpletms:tr_assurance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1367,7 +1367,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_astonish": {
+  "simpletms:tr_astonish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1376,7 +1376,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_attract": {
+  "simpletms:tr_attract": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1385,7 +1385,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_aurasphere": {
+  "simpletms:tr_aurasphere": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1394,7 +1394,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_aurorabeam": {
+  "simpletms:tr_aurorabeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1403,7 +1403,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_auroraveil": {
+  "simpletms:tr_auroraveil": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1412,7 +1412,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_autotomize": {
+  "simpletms:tr_autotomize": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1421,7 +1421,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_avalanche": {
+  "simpletms:tr_avalanche": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1430,7 +1430,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_axekick": {
+  "simpletms:tr_axekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1439,7 +1439,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_babydolleyes": {
+  "simpletms:tr_babydolleyes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1448,7 +1448,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_barrier": {
+  "simpletms:tr_barrier": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1457,7 +1457,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_batonpass": {
+  "simpletms:tr_batonpass": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1466,7 +1466,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_beatup": {
+  "simpletms:tr_beatup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1475,7 +1475,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_belch": {
+  "simpletms:tr_belch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1484,7 +1484,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_bellydrum": {
+  "simpletms:tr_bellydrum": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1493,7 +1493,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_bestow": {
+  "simpletms:tr_bestow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1502,7 +1502,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_bide": {
+  "simpletms:tr_bide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1511,7 +1511,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_bind": {
+  "simpletms:tr_bind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1520,7 +1520,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_bite": {
+  "simpletms:tr_bite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1529,7 +1529,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_blastburn": {
+  "simpletms:tr_blastburn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1538,7 +1538,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_blazekick": {
+  "simpletms:tr_blazekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1547,7 +1547,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_blizzard": {
+  "simpletms:tr_blizzard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1556,7 +1556,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_block": {
+  "simpletms:tr_block": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1565,7 +1565,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_bodypress": {
+  "simpletms:tr_bodypress": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1574,7 +1574,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_bodyslam": {
+  "simpletms:tr_bodyslam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1583,7 +1583,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_boomburst": {
+  "simpletms:tr_boomburst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1592,7 +1592,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_bounce": {
+  "simpletms:tr_bounce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1601,7 +1601,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_bravebird": {
+  "simpletms:tr_bravebird": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1610,7 +1610,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_breakingswipe": {
+  "simpletms:tr_breakingswipe": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1619,7 +1619,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_brickbreak": {
+  "simpletms:tr_brickbreak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1628,7 +1628,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_brine": {
+  "simpletms:tr_brine": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1637,7 +1637,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_brutalswing": {
+  "simpletms:tr_brutalswing": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1646,7 +1646,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_bubble": {
+  "simpletms:tr_bubble": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1655,7 +1655,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_bubblebeam": {
+  "simpletms:tr_bubblebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1664,7 +1664,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_bugbite": {
+  "simpletms:tr_bugbite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1673,7 +1673,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_bugbuzz": {
+  "simpletms:tr_bugbuzz": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1682,7 +1682,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_bulkup": {
+  "simpletms:tr_bulkup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1691,7 +1691,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_bulldoze": {
+  "simpletms:tr_bulldoze": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1700,7 +1700,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_bulletpunch": {
+  "simpletms:tr_bulletpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1709,7 +1709,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_bulletseed": {
+  "simpletms:tr_bulletseed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1718,7 +1718,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_burningjealousy": {
+  "simpletms:tr_burningjealousy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1727,7 +1727,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_burnup": {
+  "simpletms:tr_burnup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1736,7 +1736,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_calmmind": {
+  "simpletms:tr_calmmind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1745,7 +1745,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_camouflage": {
+  "simpletms:tr_camouflage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1754,7 +1754,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_captivate": {
+  "simpletms:tr_captivate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1763,7 +1763,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_celebrate": {
+  "simpletms:tr_celebrate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1772,7 +1772,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_charge": {
+  "simpletms:tr_charge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1781,7 +1781,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_chargebeam": {
+  "simpletms:tr_chargebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1790,7 +1790,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_charm": {
+  "simpletms:tr_charm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1799,7 +1799,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_chillingwater": {
+  "simpletms:tr_chillingwater": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1808,7 +1808,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_chipaway": {
+  "simpletms:tr_chipaway": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1817,7 +1817,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_circlethrow": {
+  "simpletms:tr_circlethrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1826,7 +1826,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_clamp": {
+  "simpletms:tr_clamp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1835,7 +1835,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_clearsmog": {
+  "simpletms:tr_clearsmog": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1844,7 +1844,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_closecombat": {
+  "simpletms:tr_closecombat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1853,7 +1853,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_coaching": {
+  "simpletms:tr_coaching": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1862,7 +1862,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_coil": {
+  "simpletms:tr_coil": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1871,7 +1871,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_cometpunch": {
+  "simpletms:tr_cometpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1880,7 +1880,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_comeuppance": {
+  "simpletms:tr_comeuppance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1889,7 +1889,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_confide": {
+  "simpletms:tr_confide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1898,7 +1898,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_confuseray": {
+  "simpletms:tr_confuseray": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1907,7 +1907,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_confusion": {
+  "simpletms:tr_confusion": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1916,7 +1916,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_constrict": {
+  "simpletms:tr_constrict": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1925,7 +1925,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_copycat": {
+  "simpletms:tr_copycat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1934,7 +1934,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_corrosivegas": {
+  "simpletms:tr_corrosivegas": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1943,7 +1943,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_cosmicpower": {
+  "simpletms:tr_cosmicpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1952,7 +1952,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_cottonguard": {
+  "simpletms:tr_cottonguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1961,7 +1961,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_cottonspore": {
+  "simpletms:tr_cottonspore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1970,7 +1970,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_counter": {
+  "simpletms:tr_counter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1979,7 +1979,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_covet": {
+  "simpletms:tr_covet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1988,7 +1988,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_crabhammer": {
+  "simpletms:tr_crabhammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -1997,7 +1997,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_craftyshield": {
+  "simpletms:tr_craftyshield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2006,7 +2006,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_crosschop": {
+  "simpletms:tr_crosschop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2015,7 +2015,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_crosspoison": {
+  "simpletms:tr_crosspoison": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2024,7 +2024,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_crunch": {
+  "simpletms:tr_crunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2033,7 +2033,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_crushclaw": {
+  "simpletms:tr_crushclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2042,7 +2042,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_curse": {
+  "simpletms:tr_curse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2051,7 +2051,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_cut": {
+  "simpletms:tr_cut": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2060,7 +2060,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_darkestlariat": {
+  "simpletms:tr_darkestlariat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2069,7 +2069,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_darkpulse": {
+  "simpletms:tr_darkpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2078,7 +2078,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_dazzlinggleam": {
+  "simpletms:tr_dazzlinggleam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2087,7 +2087,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_defensecurl": {
+  "simpletms:tr_defensecurl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2096,7 +2096,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_defog": {
+  "simpletms:tr_defog": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2105,7 +2105,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_destinybond": {
+  "simpletms:tr_destinybond": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2114,7 +2114,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_detect": {
+  "simpletms:tr_detect": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2123,7 +2123,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_dig": {
+  "simpletms:tr_dig": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2132,7 +2132,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_disable": {
+  "simpletms:tr_disable": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2141,7 +2141,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_disarmingvoice": {
+  "simpletms:tr_disarmingvoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2150,7 +2150,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_discharge": {
+  "simpletms:tr_discharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2159,7 +2159,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_dive": {
+  "simpletms:tr_dive": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2168,7 +2168,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_dizzypunch": {
+  "simpletms:tr_dizzypunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2177,7 +2177,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_doubleedge": {
+  "simpletms:tr_doubleedge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2186,7 +2186,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_doublehit": {
+  "simpletms:tr_doublehit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2195,7 +2195,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_doublekick": {
+  "simpletms:tr_doublekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2204,7 +2204,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_doubleslap": {
+  "simpletms:tr_doubleslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2213,7 +2213,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_doubleteam": {
+  "simpletms:tr_doubleteam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2222,7 +2222,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_dracometeor": {
+  "simpletms:tr_dracometeor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2231,7 +2231,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragonbreath": {
+  "simpletms:tr_dragonbreath": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2240,7 +2240,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragoncheer": {
+  "simpletms:tr_dragoncheer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2249,7 +2249,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragonclaw": {
+  "simpletms:tr_dragonclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2258,7 +2258,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragondance": {
+  "simpletms:tr_dragondance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2267,7 +2267,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragonhammer": {
+  "simpletms:tr_dragonhammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2276,7 +2276,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragonpulse": {
+  "simpletms:tr_dragonpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2285,7 +2285,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragonrage": {
+  "simpletms:tr_dragonrage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2294,7 +2294,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragonrush": {
+  "simpletms:tr_dragonrush": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2303,7 +2303,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dragontail": {
+  "simpletms:tr_dragontail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2312,7 +2312,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_drainingkiss": {
+  "simpletms:tr_drainingkiss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2321,7 +2321,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_drainpunch": {
+  "simpletms:tr_drainpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2330,7 +2330,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_dreameater": {
+  "simpletms:tr_dreameater": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2339,7 +2339,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_drillpeck": {
+  "simpletms:tr_drillpeck": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2348,7 +2348,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_drillrun": {
+  "simpletms:tr_drillrun": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2357,7 +2357,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_dualchop": {
+  "simpletms:tr_dualchop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2366,7 +2366,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_dualwingbeat": {
+  "simpletms:tr_dualwingbeat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2375,7 +2375,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_dynamicpunch": {
+  "simpletms:tr_dynamicpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2384,7 +2384,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_earthpower": {
+  "simpletms:tr_earthpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2393,7 +2393,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_earthquake": {
+  "simpletms:tr_earthquake": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2402,7 +2402,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_echoedvoice": {
+  "simpletms:tr_echoedvoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2411,7 +2411,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_eerieimpulse": {
+  "simpletms:tr_eerieimpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2420,7 +2420,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_eggbomb": {
+  "simpletms:tr_eggbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2429,7 +2429,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_electricterrain": {
+  "simpletms:tr_electricterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2438,7 +2438,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_electrify": {
+  "simpletms:tr_electrify": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2447,7 +2447,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_electroball": {
+  "simpletms:tr_electroball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2456,7 +2456,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_electroweb": {
+  "simpletms:tr_electroweb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2465,7 +2465,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_embargo": {
+  "simpletms:tr_embargo": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2474,7 +2474,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_ember": {
+  "simpletms:tr_ember": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2483,7 +2483,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_encore": {
+  "simpletms:tr_encore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2492,7 +2492,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_endeavor": {
+  "simpletms:tr_endeavor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2501,7 +2501,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_endure": {
+  "simpletms:tr_endure": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2510,7 +2510,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_energyball": {
+  "simpletms:tr_energyball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2519,7 +2519,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_entrainment": {
+  "simpletms:tr_entrainment": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2528,7 +2528,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_eruption": {
+  "simpletms:tr_eruption": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2537,7 +2537,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_expandingforce": {
+  "simpletms:tr_expandingforce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2546,7 +2546,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_explosion": {
+  "simpletms:tr_explosion": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2555,7 +2555,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_extrasensory": {
+  "simpletms:tr_extrasensory": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2564,7 +2564,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_extremespeed": {
+  "simpletms:tr_extremespeed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2573,7 +2573,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_facade": {
+  "simpletms:tr_facade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2582,7 +2582,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_fairywind": {
+  "simpletms:tr_fairywind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2591,7 +2591,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_fakeout": {
+  "simpletms:tr_fakeout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2600,7 +2600,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_faketears": {
+  "simpletms:tr_faketears": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2609,7 +2609,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_falseswipe": {
+  "simpletms:tr_falseswipe": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2618,7 +2618,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_featherdance": {
+  "simpletms:tr_featherdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2627,7 +2627,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_feint": {
+  "simpletms:tr_feint": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2636,7 +2636,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_feintattack": {
+  "simpletms:tr_feintattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2645,7 +2645,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_fellstinger": {
+  "simpletms:tr_fellstinger": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2654,7 +2654,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_fierywrath": {
+  "simpletms:tr_fierywrath": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2663,7 +2663,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_finalgambit": {
+  "simpletms:tr_finalgambit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2672,7 +2672,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_fireblast": {
+  "simpletms:tr_fireblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2681,7 +2681,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_firefang": {
+  "simpletms:tr_firefang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2690,7 +2690,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_firelash": {
+  "simpletms:tr_firelash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2699,7 +2699,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_firepledge": {
+  "simpletms:tr_firepledge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2708,7 +2708,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_firepunch": {
+  "simpletms:tr_firepunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2717,7 +2717,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_firespin": {
+  "simpletms:tr_firespin": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2726,7 +2726,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_firstimpression": {
+  "simpletms:tr_firstimpression": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2735,7 +2735,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_fissure": {
+  "simpletms:tr_fissure": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2744,7 +2744,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_flail": {
+  "simpletms:tr_flail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2753,7 +2753,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_flameburst": {
+  "simpletms:tr_flameburst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2762,7 +2762,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_flamecharge": {
+  "simpletms:tr_flamecharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2771,7 +2771,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_flamethrower": {
+  "simpletms:tr_flamethrower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2780,7 +2780,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_flamewheel": {
+  "simpletms:tr_flamewheel": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2789,7 +2789,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_flareblitz": {
+  "simpletms:tr_flareblitz": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2798,7 +2798,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_flash": {
+  "simpletms:tr_flash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2807,7 +2807,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_flashcannon": {
+  "simpletms:tr_flashcannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2816,7 +2816,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_flatter": {
+  "simpletms:tr_flatter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2825,7 +2825,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_fling": {
+  "simpletms:tr_fling": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2834,7 +2834,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_flipturn": {
+  "simpletms:tr_flipturn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2843,7 +2843,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_flowershield": {
+  "simpletms:tr_flowershield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2852,7 +2852,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_fly": {
+  "simpletms:tr_fly": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2861,7 +2861,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_focusblast": {
+  "simpletms:tr_focusblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2870,7 +2870,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_focusenergy": {
+  "simpletms:tr_focusenergy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2879,7 +2879,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_focuspunch": {
+  "simpletms:tr_focuspunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2888,7 +2888,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_followme": {
+  "simpletms:tr_followme": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2897,7 +2897,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_forcepalm": {
+  "simpletms:tr_forcepalm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2906,7 +2906,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_foresight": {
+  "simpletms:tr_foresight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2915,7 +2915,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_foulplay": {
+  "simpletms:tr_foulplay": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2924,7 +2924,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_freezedry": {
+  "simpletms:tr_freezedry": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2933,7 +2933,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_frenzyplant": {
+  "simpletms:tr_frenzyplant": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2942,7 +2942,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_frostbreath": {
+  "simpletms:tr_frostbreath": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2951,7 +2951,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_frustration": {
+  "simpletms:tr_frustration": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2960,7 +2960,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_furyattack": {
+  "simpletms:tr_furyattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2969,7 +2969,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_furycutter": {
+  "simpletms:tr_furycutter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2978,7 +2978,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_furyswipes": {
+  "simpletms:tr_furyswipes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2987,7 +2987,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_futuresight": {
+  "simpletms:tr_futuresight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -2996,7 +2996,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_gastroacid": {
+  "simpletms:tr_gastroacid": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3005,7 +3005,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_gigadrain": {
+  "simpletms:tr_gigadrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3014,7 +3014,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_gigaimpact": {
+  "simpletms:tr_gigaimpact": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3023,7 +3023,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_glare": {
+  "simpletms:tr_glare": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3032,7 +3032,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_grassknot": {
+  "simpletms:tr_grassknot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3041,7 +3041,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_grasspledge": {
+  "simpletms:tr_grasspledge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3050,7 +3050,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_grasswhistle": {
+  "simpletms:tr_grasswhistle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3059,7 +3059,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_grassyglide": {
+  "simpletms:tr_grassyglide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3068,7 +3068,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_grassyterrain": {
+  "simpletms:tr_grassyterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3077,7 +3077,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_gravity": {
+  "simpletms:tr_gravity": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3086,7 +3086,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_growl": {
+  "simpletms:tr_growl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3095,7 +3095,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_growth": {
+  "simpletms:tr_growth": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3104,7 +3104,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_grudge": {
+  "simpletms:tr_grudge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3113,7 +3113,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_guardsplit": {
+  "simpletms:tr_guardsplit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3122,7 +3122,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_guardswap": {
+  "simpletms:tr_guardswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3131,7 +3131,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_guillotine": {
+  "simpletms:tr_guillotine": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3140,7 +3140,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_gunkshot": {
+  "simpletms:tr_gunkshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3149,7 +3149,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_gust": {
+  "simpletms:tr_gust": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3158,7 +3158,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_gyroball": {
+  "simpletms:tr_gyroball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3167,7 +3167,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_hail": {
+  "simpletms:tr_hail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3176,7 +3176,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_hammerarm": {
+  "simpletms:tr_hammerarm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3185,7 +3185,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_happyhour": {
+  "simpletms:tr_happyhour": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3194,7 +3194,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_harden": {
+  "simpletms:tr_harden": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3203,7 +3203,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hardpress": {
+  "simpletms:tr_hardpress": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3212,7 +3212,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_haze": {
+  "simpletms:tr_haze": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3221,7 +3221,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_headbutt": {
+  "simpletms:tr_headbutt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3230,7 +3230,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_headlongrush": {
+  "simpletms:tr_headlongrush": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3239,7 +3239,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_headsmash": {
+  "simpletms:tr_headsmash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3248,7 +3248,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_healbell": {
+  "simpletms:tr_healbell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3257,7 +3257,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_healblock": {
+  "simpletms:tr_healblock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3266,7 +3266,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_healingwish": {
+  "simpletms:tr_healingwish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3275,7 +3275,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_healpulse": {
+  "simpletms:tr_healpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3284,7 +3284,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_heartstamp": {
+  "simpletms:tr_heartstamp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3293,7 +3293,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_heartswap": {
+  "simpletms:tr_heartswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3302,7 +3302,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_heatcrash": {
+  "simpletms:tr_heatcrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3311,7 +3311,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_heatwave": {
+  "simpletms:tr_heatwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3320,7 +3320,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_heavyslam": {
+  "simpletms:tr_heavyslam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3329,7 +3329,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_helpinghand": {
+  "simpletms:tr_helpinghand": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3338,7 +3338,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hex": {
+  "simpletms:tr_hex": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3347,7 +3347,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_hiddenpower": {
+  "simpletms:tr_hiddenpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3356,7 +3356,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_highhorsepower": {
+  "simpletms:tr_highhorsepower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3365,7 +3365,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_highjumpkick": {
+  "simpletms:tr_highjumpkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3374,7 +3374,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_holdback": {
+  "simpletms:tr_holdback": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3383,7 +3383,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_holdhands": {
+  "simpletms:tr_holdhands": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3392,7 +3392,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_honeclaws": {
+  "simpletms:tr_honeclaws": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3401,7 +3401,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_hornattack": {
+  "simpletms:tr_hornattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3410,7 +3410,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_horndrill": {
+  "simpletms:tr_horndrill": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3419,7 +3419,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hornleech": {
+  "simpletms:tr_hornleech": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3428,7 +3428,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_howl": {
+  "simpletms:tr_howl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3437,7 +3437,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hurricane": {
+  "simpletms:tr_hurricane": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3446,7 +3446,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_hydrocannon": {
+  "simpletms:tr_hydrocannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3455,7 +3455,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_hydropump": {
+  "simpletms:tr_hydropump": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3464,7 +3464,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_hyperbeam": {
+  "simpletms:tr_hyperbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3473,7 +3473,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hyperfang": {
+  "simpletms:tr_hyperfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3482,7 +3482,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hypervoice": {
+  "simpletms:tr_hypervoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3491,7 +3491,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_hypnosis": {
+  "simpletms:tr_hypnosis": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3500,7 +3500,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_iceball": {
+  "simpletms:tr_iceball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3509,7 +3509,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_icebeam": {
+  "simpletms:tr_icebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3518,7 +3518,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_icefang": {
+  "simpletms:tr_icefang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3527,7 +3527,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_icehammer": {
+  "simpletms:tr_icehammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3536,7 +3536,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_icepunch": {
+  "simpletms:tr_icepunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3545,7 +3545,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_iceshard": {
+  "simpletms:tr_iceshard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3554,7 +3554,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_icespinner": {
+  "simpletms:tr_icespinner": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3563,7 +3563,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_iciclecrash": {
+  "simpletms:tr_iciclecrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3572,7 +3572,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_iciclespear": {
+  "simpletms:tr_iciclespear": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3581,7 +3581,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_icywind": {
+  "simpletms:tr_icywind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3590,7 +3590,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_imprison": {
+  "simpletms:tr_imprison": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3599,7 +3599,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_incinerate": {
+  "simpletms:tr_incinerate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3608,7 +3608,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_inferno": {
+  "simpletms:tr_inferno": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3617,7 +3617,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_infestation": {
+  "simpletms:tr_infestation": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3626,7 +3626,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_ingrain": {
+  "simpletms:tr_ingrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3635,7 +3635,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_iondeluge": {
+  "simpletms:tr_iondeluge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3644,7 +3644,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_irondefense": {
+  "simpletms:tr_irondefense": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3653,7 +3653,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_ironhead": {
+  "simpletms:tr_ironhead": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3662,7 +3662,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_irontail": {
+  "simpletms:tr_irontail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3671,7 +3671,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_jumpkick": {
+  "simpletms:tr_jumpkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3680,7 +3680,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_karatechop": {
+  "simpletms:tr_karatechop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3689,7 +3689,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_knockoff": {
+  "simpletms:tr_knockoff": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3698,7 +3698,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_laserfocus": {
+  "simpletms:tr_laserfocus": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3707,7 +3707,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_lashout": {
+  "simpletms:tr_lashout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3716,7 +3716,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_lastresort": {
+  "simpletms:tr_lastresort": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3725,7 +3725,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_lastrespects": {
+  "simpletms:tr_lastrespects": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3734,7 +3734,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_lavaplume": {
+  "simpletms:tr_lavaplume": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3743,7 +3743,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_leafage": {
+  "simpletms:tr_leafage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3752,7 +3752,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_leafblade": {
+  "simpletms:tr_leafblade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3761,7 +3761,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_leafstorm": {
+  "simpletms:tr_leafstorm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3770,7 +3770,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_leaftornado": {
+  "simpletms:tr_leaftornado": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3779,7 +3779,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_leechlife": {
+  "simpletms:tr_leechlife": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3788,7 +3788,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_leechseed": {
+  "simpletms:tr_leechseed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3797,7 +3797,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_leer": {
+  "simpletms:tr_leer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3806,7 +3806,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_lick": {
+  "simpletms:tr_lick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3815,7 +3815,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_lifedew": {
+  "simpletms:tr_lifedew": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3824,7 +3824,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_lightscreen": {
+  "simpletms:tr_lightscreen": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3833,7 +3833,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_liquidation": {
+  "simpletms:tr_liquidation": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3842,7 +3842,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_lockon": {
+  "simpletms:tr_lockon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3851,7 +3851,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_lowkick": {
+  "simpletms:tr_lowkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3860,7 +3860,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_lowsweep": {
+  "simpletms:tr_lowsweep": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3869,7 +3869,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_luckychant": {
+  "simpletms:tr_luckychant": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3878,7 +3878,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_lunge": {
+  "simpletms:tr_lunge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3887,7 +3887,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_machpunch": {
+  "simpletms:tr_machpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3896,7 +3896,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_magicalleaf": {
+  "simpletms:tr_magicalleaf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3905,7 +3905,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_magiccoat": {
+  "simpletms:tr_magiccoat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3914,7 +3914,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_magicroom": {
+  "simpletms:tr_magicroom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3923,7 +3923,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_magnetbomb": {
+  "simpletms:tr_magnetbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3932,7 +3932,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_magneticflux": {
+  "simpletms:tr_magneticflux": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3941,7 +3941,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_magnetrise": {
+  "simpletms:tr_magnetrise": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3950,7 +3950,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_magnitude": {
+  "simpletms:tr_magnitude": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3959,7 +3959,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_matblock": {
+  "simpletms:tr_matblock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3968,7 +3968,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_meanlook": {
+  "simpletms:tr_meanlook": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3977,7 +3977,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_meditate": {
+  "simpletms:tr_meditate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3986,7 +3986,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_mefirst": {
+  "simpletms:tr_mefirst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -3995,7 +3995,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_megadrain": {
+  "simpletms:tr_megadrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4004,7 +4004,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_megahorn": {
+  "simpletms:tr_megahorn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4013,7 +4013,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_megakick": {
+  "simpletms:tr_megakick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4022,7 +4022,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_megapunch": {
+  "simpletms:tr_megapunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4031,7 +4031,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_memento": {
+  "simpletms:tr_memento": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4040,7 +4040,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_metalburst": {
+  "simpletms:tr_metalburst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4049,7 +4049,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_metalclaw": {
+  "simpletms:tr_metalclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4058,7 +4058,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_metalsound": {
+  "simpletms:tr_metalsound": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4067,7 +4067,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_meteorbeam": {
+  "simpletms:tr_meteorbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4076,7 +4076,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_meteormash": {
+  "simpletms:tr_meteormash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4085,7 +4085,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_metronome": {
+  "simpletms:tr_metronome": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4094,7 +4094,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_milkdrink": {
+  "simpletms:tr_milkdrink": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4103,7 +4103,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_mimic": {
+  "simpletms:tr_mimic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4112,7 +4112,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_mindreader": {
+  "simpletms:tr_mindreader": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4121,7 +4121,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_minimize": {
+  "simpletms:tr_minimize": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4130,7 +4130,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_miracleeye": {
+  "simpletms:tr_miracleeye": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4139,7 +4139,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_mirrorcoat": {
+  "simpletms:tr_mirrorcoat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4148,7 +4148,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_mirrormove": {
+  "simpletms:tr_mirrormove": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4157,7 +4157,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_mirrorshot": {
+  "simpletms:tr_mirrorshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4166,7 +4166,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_mist": {
+  "simpletms:tr_mist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4175,7 +4175,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_mistyexplosion": {
+  "simpletms:tr_mistyexplosion": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4184,7 +4184,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_mistyterrain": {
+  "simpletms:tr_mistyterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4193,7 +4193,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_moonblast": {
+  "simpletms:tr_moonblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4202,7 +4202,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_moonlight": {
+  "simpletms:tr_moonlight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4211,7 +4211,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_morningsun": {
+  "simpletms:tr_morningsun": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4220,7 +4220,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_mudbomb": {
+  "simpletms:tr_mudbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4229,7 +4229,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_muddywater": {
+  "simpletms:tr_muddywater": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4238,7 +4238,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_mudshot": {
+  "simpletms:tr_mudshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4247,7 +4247,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_mudslap": {
+  "simpletms:tr_mudslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4256,7 +4256,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_mudsport": {
+  "simpletms:tr_mudsport": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4265,7 +4265,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_mysticalfire": {
+  "simpletms:tr_mysticalfire": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4274,7 +4274,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_nastyplot": {
+  "simpletms:tr_nastyplot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4283,7 +4283,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_naturalgift": {
+  "simpletms:tr_naturalgift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4292,7 +4292,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_naturepower": {
+  "simpletms:tr_naturepower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4301,7 +4301,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_needlearm": {
+  "simpletms:tr_needlearm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4310,7 +4310,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_nightmare": {
+  "simpletms:tr_nightmare": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4319,7 +4319,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_nightshade": {
+  "simpletms:tr_nightshade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4328,7 +4328,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_nightslash": {
+  "simpletms:tr_nightslash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4337,7 +4337,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_nobleroar": {
+  "simpletms:tr_nobleroar": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4346,7 +4346,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_nuzzle": {
+  "simpletms:tr_nuzzle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4355,7 +4355,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_octazooka": {
+  "simpletms:tr_octazooka": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4364,7 +4364,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_odorsleuth": {
+  "simpletms:tr_odorsleuth": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4373,7 +4373,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_ominouswind": {
+  "simpletms:tr_ominouswind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4382,7 +4382,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_orderup": {
+  "simpletms:tr_orderup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4391,7 +4391,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_outrage": {
+  "simpletms:tr_outrage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4400,7 +4400,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_overheat": {
+  "simpletms:tr_overheat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4409,7 +4409,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_painsplit": {
+  "simpletms:tr_painsplit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4418,7 +4418,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_paraboliccharge": {
+  "simpletms:tr_paraboliccharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4427,7 +4427,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_partingshot": {
+  "simpletms:tr_partingshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4436,7 +4436,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_payback": {
+  "simpletms:tr_payback": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4445,7 +4445,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_payday": {
+  "simpletms:tr_payday": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4454,7 +4454,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_peck": {
+  "simpletms:tr_peck": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4463,7 +4463,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_perishsong": {
+  "simpletms:tr_perishsong": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4472,7 +4472,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_petalblizzard": {
+  "simpletms:tr_petalblizzard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4481,7 +4481,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_petaldance": {
+  "simpletms:tr_petaldance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4490,7 +4490,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_phantomforce": {
+  "simpletms:tr_phantomforce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4499,7 +4499,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_photongeyser": {
+  "simpletms:tr_photongeyser": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4508,7 +4508,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_pinmissile": {
+  "simpletms:tr_pinmissile": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4517,7 +4517,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_playnice": {
+  "simpletms:tr_playnice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4526,7 +4526,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_playrough": {
+  "simpletms:tr_playrough": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4535,7 +4535,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_pluck": {
+  "simpletms:tr_pluck": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4544,7 +4544,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_poisonfang": {
+  "simpletms:tr_poisonfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4553,7 +4553,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_poisongas": {
+  "simpletms:tr_poisongas": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4562,7 +4562,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_poisonjab": {
+  "simpletms:tr_poisonjab": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4571,7 +4571,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_poisonpowder": {
+  "simpletms:tr_poisonpowder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4580,7 +4580,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_poisonsting": {
+  "simpletms:tr_poisonsting": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4589,7 +4589,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_poisontail": {
+  "simpletms:tr_poisontail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4598,7 +4598,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_pollenpuff": {
+  "simpletms:tr_pollenpuff": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4607,7 +4607,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_poltergeist": {
+  "simpletms:tr_poltergeist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4616,7 +4616,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_pounce": {
+  "simpletms:tr_pounce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4625,7 +4625,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_pound": {
+  "simpletms:tr_pound": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4634,7 +4634,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_powdersnow": {
+  "simpletms:tr_powdersnow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4643,7 +4643,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_powergem": {
+  "simpletms:tr_powergem": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4652,7 +4652,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_powershift": {
+  "simpletms:tr_powershift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4661,7 +4661,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_powersplit": {
+  "simpletms:tr_powersplit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4670,7 +4670,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_powerswap": {
+  "simpletms:tr_powerswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4679,7 +4679,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_powertrick": {
+  "simpletms:tr_powertrick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4688,7 +4688,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_powertrip": {
+  "simpletms:tr_powertrip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4697,7 +4697,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_poweruppunch": {
+  "simpletms:tr_poweruppunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4706,7 +4706,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_powerwhip": {
+  "simpletms:tr_powerwhip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4715,7 +4715,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_protect": {
+  "simpletms:tr_protect": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4724,7 +4724,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_psybeam": {
+  "simpletms:tr_psybeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4733,7 +4733,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychic": {
+  "simpletms:tr_psychic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4742,7 +4742,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychicfangs": {
+  "simpletms:tr_psychicfangs": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4751,7 +4751,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychicnoise": {
+  "simpletms:tr_psychicnoise": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4760,7 +4760,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychicterrain": {
+  "simpletms:tr_psychicterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4769,7 +4769,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychocut": {
+  "simpletms:tr_psychocut": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4778,7 +4778,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychoshift": {
+  "simpletms:tr_psychoshift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4787,7 +4787,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psychup": {
+  "simpletms:tr_psychup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4796,7 +4796,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_psyshock": {
+  "simpletms:tr_psyshock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4805,7 +4805,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_psywave": {
+  "simpletms:tr_psywave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4814,7 +4814,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_punishment": {
+  "simpletms:tr_punishment": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4823,7 +4823,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_pursuit": {
+  "simpletms:tr_pursuit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4832,7 +4832,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_quash": {
+  "simpletms:tr_quash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4841,7 +4841,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_quickattack": {
+  "simpletms:tr_quickattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4850,7 +4850,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_quickguard": {
+  "simpletms:tr_quickguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4859,7 +4859,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_quiverdance": {
+  "simpletms:tr_quiverdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4868,7 +4868,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_rage": {
+  "simpletms:tr_rage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4877,7 +4877,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_ragepowder": {
+  "simpletms:tr_ragepowder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4886,7 +4886,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_ragingfury": {
+  "simpletms:tr_ragingfury": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4895,7 +4895,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_raindance": {
+  "simpletms:tr_raindance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4904,7 +4904,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_rapidspin": {
+  "simpletms:tr_rapidspin": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4913,7 +4913,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_razorleaf": {
+  "simpletms:tr_razorleaf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4922,7 +4922,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_razorshell": {
+  "simpletms:tr_razorshell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4931,7 +4931,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_razorwind": {
+  "simpletms:tr_razorwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4940,7 +4940,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_recover": {
+  "simpletms:tr_recover": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4949,7 +4949,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_recycle": {
+  "simpletms:tr_recycle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4958,7 +4958,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_reflect": {
+  "simpletms:tr_reflect": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4967,7 +4967,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_reflecttype": {
+  "simpletms:tr_reflecttype": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4976,7 +4976,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_refresh": {
+  "simpletms:tr_refresh": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4985,7 +4985,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_rest": {
+  "simpletms:tr_rest": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -4994,7 +4994,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_retaliate": {
+  "simpletms:tr_retaliate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5003,7 +5003,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_return": {
+  "simpletms:tr_return": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5012,7 +5012,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_revenge": {
+  "simpletms:tr_revenge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5021,7 +5021,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_reversal": {
+  "simpletms:tr_reversal": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5030,7 +5030,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_risingvoltage": {
+  "simpletms:tr_risingvoltage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5039,7 +5039,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_roar": {
+  "simpletms:tr_roar": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5048,7 +5048,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_rockblast": {
+  "simpletms:tr_rockblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5057,7 +5057,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_rockclimb": {
+  "simpletms:tr_rockclimb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5066,7 +5066,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_rockpolish": {
+  "simpletms:tr_rockpolish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5075,7 +5075,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_rockslide": {
+  "simpletms:tr_rockslide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5084,7 +5084,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_rocksmash": {
+  "simpletms:tr_rocksmash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5093,7 +5093,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_rockthrow": {
+  "simpletms:tr_rockthrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5102,7 +5102,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_rocktomb": {
+  "simpletms:tr_rocktomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5111,7 +5111,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_rockwrecker": {
+  "simpletms:tr_rockwrecker": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5120,7 +5120,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_roleplay": {
+  "simpletms:tr_roleplay": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5129,7 +5129,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_rollingkick": {
+  "simpletms:tr_rollingkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5138,7 +5138,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_rollout": {
+  "simpletms:tr_rollout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5147,7 +5147,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_roost": {
+  "simpletms:tr_roost": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5156,7 +5156,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_rototiller": {
+  "simpletms:tr_rototiller": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5165,7 +5165,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_round": {
+  "simpletms:tr_round": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5174,7 +5174,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sacredfire": {
+  "simpletms:tr_sacredfire": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5183,7 +5183,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_sacredsword": {
+  "simpletms:tr_sacredsword": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5192,7 +5192,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_safeguard": {
+  "simpletms:tr_safeguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5201,7 +5201,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sandattack": {
+  "simpletms:tr_sandattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5210,7 +5210,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_sandstorm": {
+  "simpletms:tr_sandstorm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5219,7 +5219,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_sandtomb": {
+  "simpletms:tr_sandtomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5228,7 +5228,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_scald": {
+  "simpletms:tr_scald": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5237,7 +5237,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_scaleshot": {
+  "simpletms:tr_scaleshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5246,7 +5246,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_scaryface": {
+  "simpletms:tr_scaryface": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5255,7 +5255,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_scorchingsands": {
+  "simpletms:tr_scorchingsands": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5264,7 +5264,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_scratch": {
+  "simpletms:tr_scratch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5273,7 +5273,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_screech": {
+  "simpletms:tr_screech": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5282,7 +5282,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_secretpower": {
+  "simpletms:tr_secretpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5291,7 +5291,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_seedbomb": {
+  "simpletms:tr_seedbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5300,7 +5300,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_seismictoss": {
+  "simpletms:tr_seismictoss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5309,7 +5309,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_selfdestruct": {
+  "simpletms:tr_selfdestruct": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5318,7 +5318,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_shadowball": {
+  "simpletms:tr_shadowball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5327,7 +5327,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_shadowclaw": {
+  "simpletms:tr_shadowclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5336,7 +5336,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_shadowpunch": {
+  "simpletms:tr_shadowpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5345,7 +5345,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_shadowsneak": {
+  "simpletms:tr_shadowsneak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5354,7 +5354,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_sharpen": {
+  "simpletms:tr_sharpen": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5363,7 +5363,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_shedtail": {
+  "simpletms:tr_shedtail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5372,7 +5372,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sheercold": {
+  "simpletms:tr_sheercold": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5381,7 +5381,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_shellsidearm": {
+  "simpletms:tr_shellsidearm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5390,7 +5390,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_shellsmash": {
+  "simpletms:tr_shellsmash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5399,7 +5399,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_shiftgear": {
+  "simpletms:tr_shiftgear": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5408,7 +5408,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_shockwave": {
+  "simpletms:tr_shockwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5417,7 +5417,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_signalbeam": {
+  "simpletms:tr_signalbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5426,7 +5426,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_silverwind": {
+  "simpletms:tr_silverwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5435,7 +5435,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_simplebeam": {
+  "simpletms:tr_simplebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5444,7 +5444,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sing": {
+  "simpletms:tr_sing": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5453,7 +5453,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_skillswap": {
+  "simpletms:tr_skillswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5462,7 +5462,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_skittersmack": {
+  "simpletms:tr_skittersmack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5471,7 +5471,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_skullbash": {
+  "simpletms:tr_skullbash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5480,7 +5480,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_skyattack": {
+  "simpletms:tr_skyattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5489,7 +5489,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_skydrop": {
+  "simpletms:tr_skydrop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5498,7 +5498,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_skyuppercut": {
+  "simpletms:tr_skyuppercut": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5507,7 +5507,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_slackoff": {
+  "simpletms:tr_slackoff": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5516,7 +5516,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_slam": {
+  "simpletms:tr_slam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5525,7 +5525,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_slash": {
+  "simpletms:tr_slash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5534,7 +5534,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sleeppowder": {
+  "simpletms:tr_sleeppowder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5543,7 +5543,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_sleeptalk": {
+  "simpletms:tr_sleeptalk": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5552,7 +5552,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sludge": {
+  "simpletms:tr_sludge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5561,7 +5561,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_sludgebomb": {
+  "simpletms:tr_sludgebomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5570,7 +5570,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_sludgewave": {
+  "simpletms:tr_sludgewave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5579,7 +5579,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_smackdown": {
+  "simpletms:tr_smackdown": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5588,7 +5588,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_smartstrike": {
+  "simpletms:tr_smartstrike": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5597,7 +5597,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_smellingsalts": {
+  "simpletms:tr_smellingsalts": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5606,7 +5606,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_smog": {
+  "simpletms:tr_smog": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5615,7 +5615,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_smokescreen": {
+  "simpletms:tr_smokescreen": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5624,7 +5624,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_snarl": {
+  "simpletms:tr_snarl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5633,7 +5633,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_snatch": {
+  "simpletms:tr_snatch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5642,7 +5642,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_snore": {
+  "simpletms:tr_snore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5651,7 +5651,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_snowscape": {
+  "simpletms:tr_snowscape": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5660,7 +5660,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_soak": {
+  "simpletms:tr_soak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5669,7 +5669,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_solarbeam": {
+  "simpletms:tr_solarbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5678,7 +5678,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_solarblade": {
+  "simpletms:tr_solarblade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5687,7 +5687,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_sonicboom": {
+  "simpletms:tr_sonicboom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5696,7 +5696,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_spark": {
+  "simpletms:tr_spark": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5705,7 +5705,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_speedswap": {
+  "simpletms:tr_speedswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5714,7 +5714,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_spiderweb": {
+  "simpletms:tr_spiderweb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5723,7 +5723,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_spikecannon": {
+  "simpletms:tr_spikecannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5732,7 +5732,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_spikes": {
+  "simpletms:tr_spikes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5741,7 +5741,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_spikyshield": {
+  "simpletms:tr_spikyshield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5750,7 +5750,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_spinout": {
+  "simpletms:tr_spinout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5759,7 +5759,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_spite": {
+  "simpletms:tr_spite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5768,7 +5768,7 @@
     "vendorTag": "tm_ghost",
     "sellable": false
   },
-  "simpletms:tm_spitup": {
+  "simpletms:tr_spitup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5777,7 +5777,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_splash": {
+  "simpletms:tr_splash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5786,7 +5786,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_spore": {
+  "simpletms:tr_spore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5795,7 +5795,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_spotlight": {
+  "simpletms:tr_spotlight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5804,7 +5804,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_stealthrock": {
+  "simpletms:tr_stealthrock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5813,7 +5813,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_steamroller": {
+  "simpletms:tr_steamroller": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5822,7 +5822,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_steelbeam": {
+  "simpletms:tr_steelbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5831,7 +5831,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_steelroller": {
+  "simpletms:tr_steelroller": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5840,7 +5840,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_steelwing": {
+  "simpletms:tr_steelwing": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5849,7 +5849,7 @@
     "vendorTag": "tm_steel",
     "sellable": false
   },
-  "simpletms:tm_stickyweb": {
+  "simpletms:tr_stickyweb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5858,7 +5858,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_stockpile": {
+  "simpletms:tr_stockpile": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5867,7 +5867,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_stomp": {
+  "simpletms:tr_stomp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5876,7 +5876,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_stompingtantrum": {
+  "simpletms:tr_stompingtantrum": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5885,7 +5885,7 @@
     "vendorTag": "tm_ground",
     "sellable": false
   },
-  "simpletms:tm_stoneedge": {
+  "simpletms:tr_stoneedge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5894,7 +5894,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_storedpower": {
+  "simpletms:tr_storedpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5903,7 +5903,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_stormthrow": {
+  "simpletms:tr_stormthrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5912,7 +5912,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_strength": {
+  "simpletms:tr_strength": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5921,7 +5921,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_strengthsap": {
+  "simpletms:tr_strengthsap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5930,7 +5930,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_stringshot": {
+  "simpletms:tr_stringshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5939,7 +5939,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_struggle": {
+  "simpletms:tr_struggle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5948,7 +5948,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_strugglebug": {
+  "simpletms:tr_strugglebug": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5957,7 +5957,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_stuffcheeks": {
+  "simpletms:tr_stuffcheeks": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5966,7 +5966,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_stunspore": {
+  "simpletms:tr_stunspore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5975,7 +5975,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_submission": {
+  "simpletms:tr_submission": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5984,7 +5984,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_substitute": {
+  "simpletms:tr_substitute": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -5993,7 +5993,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_suckerpunch": {
+  "simpletms:tr_suckerpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6002,7 +6002,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_sunnyday": {
+  "simpletms:tr_sunnyday": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6011,7 +6011,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_supercellslam": {
+  "simpletms:tr_supercellslam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6020,7 +6020,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_superfang": {
+  "simpletms:tr_superfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6029,7 +6029,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_superpower": {
+  "simpletms:tr_superpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6038,7 +6038,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_supersonic": {
+  "simpletms:tr_supersonic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6047,7 +6047,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_surf": {
+  "simpletms:tr_surf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6056,7 +6056,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_swagger": {
+  "simpletms:tr_swagger": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6065,7 +6065,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_swallow": {
+  "simpletms:tr_swallow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6074,7 +6074,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_sweetkiss": {
+  "simpletms:tr_sweetkiss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6083,7 +6083,7 @@
     "vendorTag": "tm_fairy",
     "sellable": false
   },
-  "simpletms:tm_sweetscent": {
+  "simpletms:tr_sweetscent": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6092,7 +6092,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_swift": {
+  "simpletms:tr_swift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6101,7 +6101,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_switcheroo": {
+  "simpletms:tr_switcheroo": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6110,7 +6110,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_swordsdance": {
+  "simpletms:tr_swordsdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6119,7 +6119,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_synchronoise": {
+  "simpletms:tr_synchronoise": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6128,7 +6128,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_synthesis": {
+  "simpletms:tr_synthesis": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6137,7 +6137,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_syrupbomb": {
+  "simpletms:tr_syrupbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6146,7 +6146,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_tackle": {
+  "simpletms:tr_tackle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6155,7 +6155,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_tailslap": {
+  "simpletms:tr_tailslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6164,7 +6164,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_tailwhip": {
+  "simpletms:tr_tailwhip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6173,7 +6173,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_tailwind": {
+  "simpletms:tr_tailwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6182,7 +6182,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_takedown": {
+  "simpletms:tr_takedown": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6191,7 +6191,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_taunt": {
+  "simpletms:tr_taunt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6200,7 +6200,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_tearfullook": {
+  "simpletms:tr_tearfullook": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6209,7 +6209,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_teeterdance": {
+  "simpletms:tr_teeterdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6218,7 +6218,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_telekinesis": {
+  "simpletms:tr_telekinesis": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6227,7 +6227,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_teleport": {
+  "simpletms:tr_teleport": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6236,7 +6236,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_temperflare": {
+  "simpletms:tr_temperflare": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6245,7 +6245,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_terablast": {
+  "simpletms:tr_terablast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6254,7 +6254,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_terrainpulse": {
+  "simpletms:tr_terrainpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6263,7 +6263,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_thief": {
+  "simpletms:tr_thief": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6272,7 +6272,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_thrash": {
+  "simpletms:tr_thrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6281,7 +6281,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_throatchop": {
+  "simpletms:tr_throatchop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6290,7 +6290,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_thunder": {
+  "simpletms:tr_thunder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6299,7 +6299,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_thunderbolt": {
+  "simpletms:tr_thunderbolt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6308,7 +6308,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_thunderfang": {
+  "simpletms:tr_thunderfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6317,7 +6317,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_thunderouskick": {
+  "simpletms:tr_thunderouskick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6326,7 +6326,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_thunderpunch": {
+  "simpletms:tr_thunderpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6335,7 +6335,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_thundershock": {
+  "simpletms:tr_thundershock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6344,7 +6344,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_thunderwave": {
+  "simpletms:tr_thunderwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6353,7 +6353,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_tickle": {
+  "simpletms:tr_tickle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6362,7 +6362,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_tidyup": {
+  "simpletms:tr_tidyup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6371,7 +6371,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_torment": {
+  "simpletms:tr_torment": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6380,7 +6380,7 @@
     "vendorTag": "tm_dark",
     "sellable": false
   },
-  "simpletms:tm_toxic": {
+  "simpletms:tr_toxic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6389,7 +6389,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_toxicspikes": {
+  "simpletms:tr_toxicspikes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6398,7 +6398,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_trailblaze": {
+  "simpletms:tr_trailblaze": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6407,7 +6407,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_transform": {
+  "simpletms:tr_transform": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6416,7 +6416,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_triattack": {
+  "simpletms:tr_triattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6425,7 +6425,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_trick": {
+  "simpletms:tr_trick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6434,7 +6434,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_trickroom": {
+  "simpletms:tr_trickroom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6443,7 +6443,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_tripleaxel": {
+  "simpletms:tr_tripleaxel": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6452,7 +6452,7 @@
     "vendorTag": "tm_ice",
     "sellable": false
   },
-  "simpletms:tm_triplekick": {
+  "simpletms:tr_triplekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6461,7 +6461,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_trumpcard": {
+  "simpletms:tr_trumpcard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6470,7 +6470,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_twineedle": {
+  "simpletms:tr_twineedle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6479,7 +6479,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_twister": {
+  "simpletms:tr_twister": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6488,7 +6488,7 @@
     "vendorTag": "tm_dragon",
     "sellable": false
   },
-  "simpletms:tm_upperhand": {
+  "simpletms:tr_upperhand": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6497,7 +6497,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_uproar": {
+  "simpletms:tr_uproar": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6506,7 +6506,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_uturn": {
+  "simpletms:tr_uturn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6515,7 +6515,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_vacuumwave": {
+  "simpletms:tr_vacuumwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6524,7 +6524,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_venomdrench": {
+  "simpletms:tr_venomdrench": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6533,7 +6533,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_venoshock": {
+  "simpletms:tr_venoshock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6542,7 +6542,7 @@
     "vendorTag": "tm_poison",
     "sellable": false
   },
-  "simpletms:tm_vinewhip": {
+  "simpletms:tr_vinewhip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6551,7 +6551,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_visegrip": {
+  "simpletms:tr_visegrip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6560,7 +6560,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_vitalthrow": {
+  "simpletms:tr_vitalthrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6569,7 +6569,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_voltswitch": {
+  "simpletms:tr_voltswitch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6578,7 +6578,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_wakeupslap": {
+  "simpletms:tr_wakeupslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6587,7 +6587,7 @@
     "vendorTag": "tm_fighting",
     "sellable": false
   },
-  "simpletms:tm_waterfall": {
+  "simpletms:tr_waterfall": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6596,7 +6596,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_watergun": {
+  "simpletms:tr_watergun": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6605,7 +6605,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_waterpledge": {
+  "simpletms:tr_waterpledge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6614,7 +6614,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_waterpulse": {
+  "simpletms:tr_waterpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6623,7 +6623,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_watersport": {
+  "simpletms:tr_watersport": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6632,7 +6632,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_waterspout": {
+  "simpletms:tr_waterspout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6641,7 +6641,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_wavecrash": {
+  "simpletms:tr_wavecrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6650,7 +6650,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_weatherball": {
+  "simpletms:tr_weatherball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6659,7 +6659,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_whirlpool": {
+  "simpletms:tr_whirlpool": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6668,7 +6668,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_whirlwind": {
+  "simpletms:tr_whirlwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6677,7 +6677,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_wideguard": {
+  "simpletms:tr_wideguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6686,7 +6686,7 @@
     "vendorTag": "tm_rock",
     "sellable": false
   },
-  "simpletms:tm_wildcharge": {
+  "simpletms:tr_wildcharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6695,7 +6695,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_willowisp": {
+  "simpletms:tr_willowisp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6704,7 +6704,7 @@
     "vendorTag": "tm_fire",
     "sellable": false
   },
-  "simpletms:tm_wingattack": {
+  "simpletms:tr_wingattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6713,7 +6713,7 @@
     "vendorTag": "tm_flying",
     "sellable": false
   },
-  "simpletms:tm_wish": {
+  "simpletms:tr_wish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6722,7 +6722,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_withdraw": {
+  "simpletms:tr_withdraw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6731,7 +6731,7 @@
     "vendorTag": "tm_water",
     "sellable": false
   },
-  "simpletms:tm_wonderroom": {
+  "simpletms:tr_wonderroom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6740,7 +6740,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_woodhammer": {
+  "simpletms:tr_woodhammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6749,7 +6749,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_workup": {
+  "simpletms:tr_workup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6758,7 +6758,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_worryseed": {
+  "simpletms:tr_worryseed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6767,7 +6767,7 @@
     "vendorTag": "tm_grass",
     "sellable": false
   },
-  "simpletms:tm_wrap": {
+  "simpletms:tr_wrap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6776,7 +6776,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_wringout": {
+  "simpletms:tr_wringout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6785,7 +6785,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_xscissor": {
+  "simpletms:tr_xscissor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6794,7 +6794,7 @@
     "vendorTag": "tm_bug",
     "sellable": false
   },
-  "simpletms:tm_yawn": {
+  "simpletms:tr_yawn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6803,7 +6803,7 @@
     "vendorTag": "tm_normal",
     "sellable": false
   },
-  "simpletms:tm_zapcannon": {
+  "simpletms:tr_zapcannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6812,7 +6812,7 @@
     "vendorTag": "tm_electric",
     "sellable": false
   },
-  "simpletms:tm_zenheadbutt": {
+  "simpletms:tr_zenheadbutt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -6821,7 +6821,7 @@
     "vendorTag": "tm_psychic",
     "sellable": false
   },
-  "simpletms:tm_zingzap": {
+  "simpletms:tr_zingzap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,

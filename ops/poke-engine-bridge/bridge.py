@@ -14,6 +14,7 @@ See memory/reference_foul_play_api_mapping.md for the foul-play surface notes.
 from __future__ import annotations
 
 import logging
+import random
 from copy import deepcopy
 from dataclasses import dataclass
 
@@ -240,6 +241,46 @@ def _apply_truth(pkmn: Pokemon, pm: PackedPokemon) -> None:
             pkmn.add_move(mv)
 
 
+# Selection knobs (see select_choice). Tuned for "gym leader" feel: fight for
+# mistakes instead of wall-cycling when the engine reads the position as lost.
+NEAR_BEST_VISITS_RATIO = 0.75  # foul-play's own near-best rule
+DEFEATISM_SCORE = 0.35  # below this eval, MCTS "all lines lose" defeatism kicks in
+AGGRESSION_VISITS_RATIO = 0.40  # min visit share (vs top pick) for an attack override
+
+
+def select_choice(options: list[tuple[str, int, float]]) -> str:
+    """Pick a move from MCTS (move_choice, visits, avg_score) tuples.
+
+    Baseline is foul-play's rule: weighted draw among choices within 75% of
+    the most-visited one (strict max-visits loops deterministically).
+
+    On top: an anti-defeatism override. MCTS scores positions against a
+    perfect opponent, so when every line "loses" (eval < DEFEATISM_SCORE) it
+    drifts into loss-delaying switch cycles — stalling and fighting score the
+    same against perfection. Against a human they don't: take the best attack
+    instead when one carries a credible visit share. (Forced switches are
+    unaffected — there is no attack option on those turns.)
+    """
+    options = sorted(options, key=lambda x: x[1], reverse=True)
+    best_choice, best_visits, best_score = options[0]
+
+    if best_choice.startswith("switch ") and best_score < DEFEATISM_SCORE:
+        attacks = [o for o in options if not o[0].startswith("switch ")]
+        if attacks and attacks[0][1] >= AGGRESSION_VISITS_RATIO * best_visits:
+            logger.info(
+                "anti-defeatism override: %s (visits %d) over %s (visits %d, score=%.3f)",
+                attacks[0][0],
+                attacks[0][1],
+                best_choice,
+                best_visits,
+                best_score,
+            )
+            return attacks[0][0]
+
+    near_best = [o for o in options if o[1] >= NEAR_BEST_VISITS_RATIO * best_visits]
+    return random.choices(near_best, weights=[o[1] for o in near_best])[0][0]
+
+
 def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
     """Single deep MCTS over the one true battle state.
 
@@ -252,12 +293,25 @@ def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
     state_string = battle_to_poke_engine_state(battle).to_string()
     logger.debug("perfect-info state: %s", state_string)
     result = get_result_from_mcts(state_string, search_time_ms, 0)
-    best = max(result.side_one, key=lambda x: x.visits)
+    options = [
+        (
+            o.move_choice,
+            o.visits,
+            o.total_score / o.visits if o.visits else 0.0,
+        )
+        for o in result.side_one
+    ]
+    choice = select_choice(options)
+    chosen = next(o for o in options if o[0] == choice)
     logger.info(
         "perfect-info choice: %s (visits %d/%d, avg_score=%.3f)",
-        best.move_choice,
-        best.visits,
+        choice,
+        chosen[1],
         result.total_visits,
-        best.total_score / best.visits if best.visits else 0.0,
+        chosen[2],
     )
-    return best.move_choice
+    # poke-engine emits "No Move" when the side has no legal action this
+    # request (e.g. waiting on the opponent's faint replacement).
+    if choice.lower() in ("no move", "none"):
+        return "pass"
+    return choice

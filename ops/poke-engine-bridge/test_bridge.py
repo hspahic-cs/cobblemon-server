@@ -9,7 +9,12 @@ Run from this directory with foul-play on PYTHONPATH:
 import constants
 from fp.battle import Battle, Pokemon
 
-from bridge import PackedPokemon, overlay_opponent_team, parse_packed_team
+from bridge import (
+    PackedPokemon,
+    overlay_opponent_team,
+    parse_packed_team,
+    select_choice,
+)
 
 
 def packed_entry(
@@ -126,6 +131,42 @@ def test_overlay_preserves_hp_fraction_across_spread_change():
     assert abs(active.hp / active.max_hp - fraction_before) < 0.01
     # real spread applied: jolly 252 Spe at L78 outruns the default-spread calc
     assert active.stats[constants.SPEED] > 150
+
+
+def test_select_choice_clear_winner():
+    # one dominant option: near-best set is a singleton, always picked
+    options = [("psychic", 900, 0.6), ("switch bronzong", 100, 0.55)]
+    assert select_choice(options) == "psychic"
+
+
+def test_select_choice_anti_defeatism_prefers_attack_when_losing():
+    # losing position (score < 0.35), top pick is a switch, attack has
+    # >= 40% of its visits -> attack overrides
+    options = [
+        ("switch slowbro", 500, 0.15),
+        ("icepunch", 250, 0.14),
+        ("switch reuniclus", 200, 0.13),
+    ]
+    assert select_choice(options) == "icepunch"
+
+
+def test_select_choice_no_override_when_winning():
+    # same shape but healthy eval: switch stands (attack is below the 75%
+    # near-best cutoff, so the draw can't pick it either)
+    options = [("switch slowbro", 500, 0.60), ("icepunch", 250, 0.59)]
+    assert select_choice(options) == "switch slowbro"
+
+
+def test_select_choice_no_override_without_credible_attack():
+    # losing, but the only attack has a tiny visit share: keep the switch
+    options = [("switch slowbro", 500, 0.10), ("tackle", 50, 0.02)]
+    assert select_choice(options) == "switch slowbro"
+
+
+def test_select_choice_forced_switch_unaffected():
+    # force-switch turns offer only switches; override is a no-op
+    options = [("switch slowbro", 300, 0.10), ("switch reuniclus", 280, 0.09)]
+    assert select_choice(options) in ("switch slowbro", "switch reuniclus")
 
 
 def test_overlay_adds_unrevealed_mon_to_reserve():

@@ -14,14 +14,17 @@ See memory/reference_foul_play_api_mapping.md for the foul-play surface notes.
 from __future__ import annotations
 
 import logging
+from copy import deepcopy
 from dataclasses import dataclass
 
 import constants
 from constants import BattleType
 from data.pkmn_sets import SmogonSets, TeamDatasets
-from fp.battle import Battle
+from fp.battle import Battle, Pokemon
 from fp.battle_modifier import process_battle_updates
-from fp.search.main import find_best_move
+from fp.helpers import calculate_stats, normalize_name
+from fp.search.main import find_best_move, get_result_from_mcts
+from fp.search.poke_engine_helpers import battle_to_poke_engine_state
 
 logger = logging.getLogger(__name__)
 
@@ -35,10 +38,16 @@ class PickRequest:
     generation: str
     smogon_stats_format: str
     search_time_ms: int
+    # Cobblemon packed-team string for the opposing (player) side. When present,
+    # the bridge plays with perfect information instead of sampling Smogon sets.
+    opponent_team_packed: str | None = None
 
 
 def pick_move(battle_id: str, req: PickRequest) -> str:
     battle = _build_battle(battle_id, req)
+    if req.opponent_team_packed:
+        overlay_opponent_team(battle, parse_packed_team(req.opponent_team_packed))
+        return _find_best_move_perfect_info(battle, req.search_time_ms)
     return find_best_move(battle)
 
 
@@ -66,7 +75,189 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
     battle.started = True
 
     if req.log_lines:
-        battle.msg_list = list(req.log_lines)
+        battle.msg_list = _normalize_log_lines(req.log_lines, req.gym_side)
         process_battle_updates(battle)
 
     return battle
+
+
+def _normalize_log_lines(log_entries: list[str], gym_side: str) -> list[str]:
+    """Flatten Cobblemon's showdownMessages into the per-line protocol stream
+    foul-play expects.
+
+    Two adjustments:
+    - Each entry can contain multiple newline-separated protocol lines (Cobblemon
+      stores whole rawMessage blocks). Split them out.
+    - `|split|<side>` is followed by a private line (real HPs, for that side)
+      and a public line (percent HPs, for everyone else). Showdown's websocket
+      pre-filters this for clients; Cobblemon doesn't, so we see both. Pick the
+      private line iff <side> is our gym side, otherwise the public one. Drop
+      the `|split|` marker itself in either case.
+    """
+    flat: list[str] = []
+    for entry in log_entries:
+        for line in entry.split("\n"):
+            if line.strip():
+                flat.append(line)
+
+    out: list[str] = []
+    i = 0
+    while i < len(flat):
+        line = flat[i]
+        if line.startswith("|split|") and i + 2 < len(flat):
+            split_side = line[len("|split|"):].strip()
+            private_line = flat[i + 1]
+            public_line = flat[i + 2]
+            out.append(private_line if split_side == gym_side else public_line)
+            i += 3
+            continue
+        out.append(line)
+        i += 1
+    return out
+
+
+# --- Perfect information ("open team sheet") -------------------------------
+#
+# The mod sends the player's full team in Cobblemon's packed-team format
+# (BattleRegistry.packTeam()). This is NOT the standard Showdown packed format:
+# Cobblemon's fork inserts uuid/currentHp/status/statusDuration after the
+# species fields ("REQUIRES OUR SHOWDOWN" in their source). Field layout:
+#
+#   0 name (showdownId)   1 species (blank)     2 uuid
+#   3 currentHp           4 status              5 statusDuration
+#   6 item                7 ability             8 moves (csv)
+#   9 movePp (csv)       10 nature             11 evs (csv)
+#  12 gender             13 ivs (csv)          14 shiny
+#  15 level              16 misc (happiness,ball,hpType,gmax,dmax,teraType)
+#
+# EV/IV csv order is Stats.PERMANENT = hp,atk,def,spa,spd,spe — the same order
+# foul-play's calculate_stats expects.
+
+
+@dataclass
+class PackedPokemon:
+    name: str
+    hp: int
+    status: str | None
+    item: str | None
+    ability: str
+    moves: list[str]
+    nature: str
+    evs: tuple[int, ...]
+    ivs: tuple[int, ...]
+    level: int
+    tera_type: str | None
+
+
+def parse_packed_team(packed: str) -> list[PackedPokemon]:
+    mons = []
+    for entry in packed.split("]"):
+        if not entry.strip():
+            continue
+        f = entry.split("|")
+        misc = f[16].split(",") if len(f) > 16 else []
+        tera_type = normalize_name(misc[5]) if len(misc) > 5 and misc[5] else None
+        mons.append(
+            PackedPokemon(
+                name=normalize_name(f[0]),
+                hp=int(f[3]),
+                status=f[4] or None,
+                item=normalize_name(f[6]) if f[6] else None,
+                ability=normalize_name(f[7]),
+                moves=[normalize_name(m) for m in f[8].split(",") if m],
+                nature=normalize_name(f[10]),
+                evs=tuple(int(x) for x in f[11].split(",")),
+                ivs=tuple(int(x) for x in f[13].split(",")),
+                level=int(f[15]),
+                tera_type=tera_type,
+            )
+        )
+    return mons
+
+
+def overlay_opponent_team(battle: Battle, team: list[PackedPokemon]) -> None:
+    """Overlay ground truth from the team sheet onto battle.opponent.
+
+    The log replay already produced Pokemon objects for everything revealed,
+    with correct *live* state (HP%, status, boosts, consumed/knocked-off
+    items). We fill in what the log can't know — unrevealed moves, ability,
+    spread, held item — and create reserve entries for mons never sent out.
+
+    Merge rules err toward the log for live state and toward the sheet for
+    static build info: an item is only set if foul-play still considers it
+    unknown (None means "tracked as removed", which must survive).
+    """
+    revealed = [p for p in [battle.opponent.active, *battle.opponent.reserve] if p]
+    matched: set[int] = set()
+    for pm in team:
+        pkmn = next(
+            (
+                p
+                for p in revealed
+                if id(p) not in matched
+                and (p.name == pm.name or p.base_name == pm.name)
+            ),
+            None,
+        )
+        if pkmn is None:
+            pkmn = Pokemon(pm.name, pm.level)
+            _apply_truth(pkmn, pm)
+            # Never revealed: the sheet's raw HP/status are current state.
+            # Our max_hp comes from the same stat formula Cobblemon uses, so
+            # raw HP is comparable; clamp for safety.
+            pkmn.hp = min(pm.hp, pkmn.max_hp)
+            pkmn.status = pm.status
+            battle.opponent.reserve.append(pkmn)
+        else:
+            matched.add(id(pkmn))
+            _apply_truth(pkmn, pm)
+
+
+def _apply_truth(pkmn: Pokemon, pm: PackedPokemon) -> None:
+    # Spread: recalc stats from real nature/EVs/IVs, preserving HP fraction
+    # (same approach as Pokemon.set_spread, which doesn't accept IVs).
+    hp_fraction = pkmn.hp / pkmn.max_hp
+    stats = calculate_stats(
+        pkmn.base_stats, pkmn.level, ivs=pm.ivs, evs=pm.evs, nature=pm.nature
+    )
+    pkmn.nature = pm.nature
+    pkmn.evs = pm.evs
+    pkmn.stats = stats
+    pkmn.max_hp = pkmn.stats.pop(constants.HITPOINTS)
+    pkmn.hp = round(pkmn.max_hp * hp_fraction)
+
+    if pkmn.ability is None:
+        pkmn.ability = pm.ability
+    # item None means the log saw it removed (knock off, consumed berry, ...)
+    if pkmn.item == constants.UNKNOWN_ITEM:
+        pkmn.item = pm.item
+    if pkmn.tera_type is None:
+        pkmn.tera_type = pm.tera_type
+
+    known_moves = {m.name for m in pkmn.moves}
+    for mv in pm.moves:
+        if mv not in known_moves:
+            pkmn.add_move(mv)
+
+
+def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
+    """Single deep MCTS over the one true battle state.
+
+    With the opponent's team fully known there is no hidden information to
+    marginalize over, so foul-play's sample-N-worlds loop (find_best_move)
+    collapses to one search using the entire time budget.
+    """
+    battle = deepcopy(battle)
+    battle.opponent.lock_moves()
+    state_string = battle_to_poke_engine_state(battle).to_string()
+    logger.debug("perfect-info state: %s", state_string)
+    result = get_result_from_mcts(state_string, search_time_ms, 0)
+    best = max(result.side_one, key=lambda x: x.visits)
+    logger.info(
+        "perfect-info choice: %s (visits %d/%d, avg_score=%.3f)",
+        best.move_choice,
+        best.visits,
+        result.total_visits,
+        best.total_score / best.visits if best.visits else 0.0,
+    )
+    return best.move_choice

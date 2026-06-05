@@ -45,6 +45,9 @@ class PickRequestBody(BaseModel):
     generation: str = "gen9"
     smogon_stats_format: str = "gen9nationaldex"
     search_time_ms: int = 1000
+    # Cobblemon packed-team string for the player's side; enables the
+    # perfect-information search path (see bridge.overlay_opponent_team).
+    opponent_team_packed: str | None = None
 
 
 class PickResponse(BaseModel):
@@ -68,6 +71,7 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
         generation=body.generation,
         smogon_stats_format=body.smogon_stats_format,
         search_time_ms=body.search_time_ms,
+        opponent_team_packed=body.opponent_team_packed,
     )
     started = time.monotonic()
     choice = pick_move(battle_id, req)

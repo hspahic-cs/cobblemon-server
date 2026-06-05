@@ -17,177 +17,177 @@
   "team": [
     {
       "species": "pelipper",
-      "level": 45,
-      "nature": "hardy",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "drizzle",
-      "heldItem": "cobblemon:damp_rock",
       "moveset": [
-        "scald",
+        "weatherball",
+        "hurricane",
         "uturn",
-        "roost",
-        "defog"
-      ]
+        "roost"
+      ],
+      "heldItem": "cobblemon:damp_rock"
+    },
+    {
+      "species": "palafin",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "zerotohero",
+      "moveset": [
+        "flipturn",
+        "wavecrash",
+        "jetpunch",
+        "icepunch"
+      ],
+      "heldItem": "cobblemon:choice_band"
+    },
+    {
+      "species": "basculegion",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "swiftswim",
+      "moveset": [
+        "liquidation",
+        "flipturn",
+        "lastrespects",
+        "psychicfangs"
+      ],
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "lanturn",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "voltabsorb",
+      "moveset": [
+        "voltswitch",
+        "scald",
+        "thunder",
+        "raindance"
+      ],
+      "heldItem": "cobblemon:leftovers"
     },
     {
       "species": "kingdra",
-      "level": 45,
-      "nature": "hardy",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "swiftswim",
-      "heldItem": "cobblemon:life_orb",
       "moveset": [
         "hydropump",
-        "dracometeor",
-        "hurricane",
-        "flashcannon"
-      ]
+        "dragonpulse",
+        "icebeam",
+        "surf"
+      ],
+      "heldItem": "cobblemon:life_orb"
     },
     {
-      "species": "barraskewda",
-      "level": 45,
-      "nature": "hardy",
+      "species": "primarina",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "swiftswim",
-      "heldItem": "cobblemon:choice_band",
-      "moveset": [
-        "liquidation",
-        "closecombat",
-        "poisonjab",
-        "aquajet"
-      ]
-    },
-    {
-      "species": "kabutops",
-      "level": 45,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "swiftswim",
-      "heldItem": "",
-      "moveset": [
-        "swordsdance",
-        "waterfall",
-        "stoneedge",
-        "aquajet"
-      ]
-    },
-    {
-      "species": "swampert",
-      "level": 45,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "torrent",
-      "heldItem": "",
       "moveset": [
-        "stealthrock",
-        "earthquake",
-        "icepunch",
-        "flipturn"
-      ]
-    },
-    {
-      "species": "gastrodon",
-      "level": 45,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "stormdrain",
-      "heldItem": "",
-      "moveset": [
-        "scald",
-        "earthpower",
-        "recover",
-        "toxic"
-      ]
+        "calmmind",
+        "surf",
+        "moonblast",
+        "energyball"
+      ],
+      "heldItem": "cobblemon:leftovers"
     }
   ]
 }

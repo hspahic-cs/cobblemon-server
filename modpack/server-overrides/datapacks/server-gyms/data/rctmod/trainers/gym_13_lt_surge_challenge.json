@@ -1,9 +1,9 @@
 {
-  "name": "AI Test [pe]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "Gym Leader Lt. Surge",
+  "identity": "Electric",
+  "textureResource": "rctmod:textures/trainers/single/leader_lt_surge_0033.png",
   "ai": {
-    "type": "pe",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,7 +16,7 @@
   "bag": [],
   "team": [
     {
-      "species": "torkoal",
+      "species": "galvantula",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -35,17 +35,17 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "drought",
+      "ability": "compoundeyes",
       "moveset": [
-        "lavaplume",
-        "rapidspin",
-        "solarbeam",
-        "explosion"
+        "stickyweb",
+        "thunder",
+        "bugbuzz",
+        "energyball"
       ],
-      "heldItem": "cobblemon:heat_rock"
+      "heldItem": "cobblemon:focus_sash"
     },
     {
-      "species": "scovillain",
+      "species": "electrode",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -64,43 +64,17 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "chlorophyll",
+      "ability": "static",
       "moveset": [
-        "growth",
-        "fireblast",
-        "solarbeam",
-        "stompingtantrum"
+        "voltswitch",
+        "gigadrain",
+        "leafstorm",
+        "electroball"
       ],
-      "heldItem": "cobblemon:life_orb"
-    },
-    {
-      "species": "chandelure",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "flamebody",
-      "moveset": [
-        "fireblast",
-        "shadowball",
-        "energyball",
-        "psychic"
-      ],
-      "heldItem": "cobblemon:choice_specs"
+      "heldItem": "cobblemon:life_orb",
+      "aspects": [
+        "hisuian"
+      ]
     },
     {
       "species": "rotom",
@@ -124,15 +98,15 @@
       },
       "ability": "levitate",
       "moveset": [
-        "overheat",
+        "hydropump",
         "voltswitch",
-        "willowisp",
-        "sunnyday"
+        "thunderwave",
+        "painsplit"
       ],
-      "heldItem": "cobblemon:heavy_duty_boots"
+      "heldItem": "cobblemon:leftovers"
     },
     {
-      "species": "arcanine",
+      "species": "eelektross",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -151,22 +125,19 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "rockhead",
+      "ability": "levitate",
       "moveset": [
-        "flareblitz",
-        "headsmash",
-        "closecombat",
-        "extremespeed"
+        "coil",
+        "supercellslam",
+        "drainpunch",
+        "dragonclaw"
       ],
-      "heldItem": "cobblemon:life_orb",
-      "aspects": [
-        "hisuian"
-      ]
+      "heldItem": "cobblemon:leftovers"
     },
     {
-      "species": "blaziken",
+      "species": "magnezone",
       "level": 50,
-      "nature": "jolly",
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -177,20 +148,49 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 252,
+        "atk": 0,
         "def": 0,
-        "spa": 0,
+        "spa": 252,
         "spd": 4,
         "spe": 252
       },
-      "ability": "speedboost",
+      "ability": "analytic",
       "moveset": [
-        "swordsdance",
-        "blazekick",
-        "closecombat",
-        "earthquake"
+        "thunderbolt",
+        "flashcannon",
+        "voltswitch",
+        "bodypress"
       ],
-      "heldItem": "cobblemon:focus_sash"
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "pikachu",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "lightningrod",
+      "moveset": [
+        "thunderbolt",
+        "surf",
+        "alluringvoice",
+        "volttackle"
+      ],
+      "heldItem": "cobblemon:light_ball"
     }
   ]
 }

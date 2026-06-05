@@ -15,91 +15,178 @@
   "bag": [],
   "team": [
     {
-      "species": "hippopotas",
-      "level": 15,
-      "nature": "hardy",
+      "species": "gliscor",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "sandstream",
-      "heldItem": "cobblemon:eviolite",
+      "ability": "poisonheal",
       "moveset": [
-        "stealthrock",
-        "yawn",
+        "spikes",
         "earthquake",
-        "slackoff"
-      ]
+        "dualwingbeat",
+        "roost"
+      ],
+      "heldItem": "cobblemon:toxic_orb"
     },
     {
-      "species": "drilbur",
-      "level": 15,
-      "nature": "hardy",
+      "species": "mudsdale",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "sandrush",
-      "heldItem": "",
+      "ability": "stamina",
       "moveset": [
         "earthquake",
-        "rockslide",
-        "swordsdance",
-        "rapidspin"
-      ]
+        "stoneedge",
+        "bodypress",
+        "heavyslam"
+      ],
+      "heldItem": "cobblemon:assault_vest"
     },
     {
-      "species": "wooper",
-      "level": 15,
-      "nature": "hardy",
+      "species": "gastrodon",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "waterabsorb",
-      "heldItem": "",
+      "ability": "stormdrain",
       "moveset": [
         "scald",
+        "earthpower",
+        "icebeam",
+        "recover"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "excadrill",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "moldbreaker",
+      "moveset": [
         "earthquake",
-        "recover",
-        "toxic"
-      ]
+        "ironhead",
+        "rockslide",
+        "xscissor"
+      ],
+      "heldItem": "cobblemon:choice_band"
+    },
+    {
+      "species": "krookodile",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "moxie",
+      "moveset": [
+        "earthquake",
+        "darkestlariat",
+        "closecombat",
+        "gunkshot"
+      ],
+      "heldItem": "cobblemon:choice_scarf"
+    },
+    {
+      "species": "garchomp",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "roughskin",
+      "moveset": [
+        "scaleshot",
+        "earthquake",
+        "ironhead",
+        "swordsdance"
+      ],
+      "heldItem": "cobblemon:loaded_dice"
     }
   ],
   "textureResource": "rctmod:textures/trainers/single/veteran_clayton_0387.png"

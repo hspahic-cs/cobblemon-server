@@ -38,8 +38,13 @@ def _tera_keys(obj, path="") -> list[str]:
 
 
 def main() -> None:
+    # hard-mode roster when one exists (the ShepskyDad L50 teams), else base
     gym_files = sorted(
-        p for p in GYMS.glob("gym_*.json") if not p.stem.endswith("_challenge")
+        (
+            challenge if (challenge := p.with_name(f"{p.stem}_challenge.json")).exists() else p
+        )
+        for p in GYMS.glob("gym_*.json")
+        if not p.stem.endswith("_challenge")
     )
     assert gym_files, f"no gym trainers found in {GYMS}"
 
@@ -68,7 +73,7 @@ def main() -> None:
         leaks = _tera_keys(trainer)
         assert not leaks, f"{path.name}: tera config leaked: {leaks}"
 
-        trainer_id = f"aitest_{path.stem}_pe"
+        trainer_id = f"aitest_{path.stem.removesuffix('_challenge')}_pe"
         out = TRAINERS_OUT / f"{trainer_id}.json"
         out.write_text(json.dumps(trainer, indent=2) + "\n")
 

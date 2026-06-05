@@ -15,120 +15,178 @@
   "bag": [],
   "team": [
     {
-      "species": "mienfoo",
-      "level": 25,
-      "nature": "hardy",
+      "species": "sneasler",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "regenerator",
-      "heldItem": "cobblemon:eviolite",
+      "ability": "poisontouch",
       "moveset": [
-        "uturn",
-        "drainpunch",
-        "knockoff",
-        "fakeout"
-      ]
+        "closecombat",
+        "direclaw",
+        "throatchop",
+        "uturn"
+      ],
+      "heldItem": "cobblemon:choice_band"
     },
     {
-      "species": "combusken",
-      "level": 25,
-      "nature": "hardy",
+      "species": "conkeldurr",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "speedboost",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "protect",
-        "swordsdance",
-        "blazekick",
-        "skyuppercut"
-      ]
-    },
-    {
-      "species": "croagunk",
-      "level": 25,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "dryskin",
-      "heldItem": "",
+      "ability": "guts",
       "moveset": [
         "drainpunch",
-        "suckerpunch",
-        "poisonjab",
-        "fakeout"
-      ]
+        "earthquake",
+        "icepunch",
+        "machpunch"
+      ],
+      "heldItem": "cobblemon:flame_orb"
     },
     {
-      "species": "timburr",
-      "level": 25,
-      "nature": "hardy",
+      "species": "scrafty",
+      "level": 50,
+      "nature": "bold",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "shedskin",
+      "moveset": [
+        "bulkup",
+        "rest",
+        "drainpunch",
+        "crunch"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "lucario",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "steadfast",
+      "moveset": [
+        "nastyplot",
+        "aurasphere",
+        "flashcannon",
+        "darkpulse"
+      ],
+      "heldItem": "cobblemon:life_orb"
+    },
+    {
+      "species": "bewear",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "fluffy",
+      "moveset": [
+        "closecombat",
+        "return",
+        "darkestlariat",
+        "earthquake"
+      ],
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "pawmot",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "ironfist",
-      "heldItem": "",
       "moveset": [
-        "drainpunch",
-        "machpunch",
-        "rockslide",
-        "bulkup"
-      ]
+        "thunderpunch",
+        "icepunch",
+        "closecombat",
+        "revivalblessing"
+      ],
+      "heldItem": "cobblemon:leppa_berry"
     }
   ],
   "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_0308.png"

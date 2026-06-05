@@ -1,9 +1,8 @@
 {
-  "name": "AI Test [pe]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "Gym Leader Skyla",
+  "identity": "Flying",
   "ai": {
-    "type": "pe",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,7 +15,7 @@
   "bag": [],
   "team": [
     {
-      "species": "torkoal",
+      "species": "noivern",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -35,19 +34,19 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "drought",
+      "ability": "infiltrator",
       "moveset": [
-        "lavaplume",
-        "rapidspin",
-        "solarbeam",
-        "explosion"
+        "taunt",
+        "hurricane",
+        "dracometeor",
+        "heatwave"
       ],
-      "heldItem": "cobblemon:heat_rock"
+      "heldItem": "cobblemon:wide_lens"
     },
     {
-      "species": "scovillain",
+      "species": "corviknight",
       "level": 50,
-      "nature": "timid",
+      "nature": "bold",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -57,82 +56,24 @@
         "spe": 31
       },
       "evs": {
-        "hp": 0,
+        "hp": 252,
         "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
       },
-      "ability": "chlorophyll",
+      "ability": "mirrorarmor",
       "moveset": [
-        "growth",
-        "fireblast",
-        "solarbeam",
-        "stompingtantrum"
+        "roost",
+        "defog",
+        "uturn",
+        "bodypress"
       ],
-      "heldItem": "cobblemon:life_orb"
+      "heldItem": "cobblemon:leftovers"
     },
     {
-      "species": "chandelure",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "flamebody",
-      "moveset": [
-        "fireblast",
-        "shadowball",
-        "energyball",
-        "psychic"
-      ],
-      "heldItem": "cobblemon:choice_specs"
-    },
-    {
-      "species": "rotom",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "levitate",
-      "moveset": [
-        "overheat",
-        "voltswitch",
-        "willowisp",
-        "sunnyday"
-      ],
-      "heldItem": "cobblemon:heavy_duty_boots"
-    },
-    {
-      "species": "arcanine",
+      "species": "hawlucha",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -151,22 +92,80 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "rockhead",
+      "ability": "unburden",
       "moveset": [
-        "flareblitz",
-        "headsmash",
         "closecombat",
-        "extremespeed"
+        "acrobatics",
+        "throatchop",
+        "swordsdance"
       ],
-      "heldItem": "cobblemon:life_orb",
+      "heldItem": "cobblemon:white_herb"
+    },
+    {
+      "species": "togekiss",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "serenegrace",
+      "moveset": [
+        "tailwind",
+        "airslash",
+        "aurasphere",
+        "roost"
+      ],
+      "heldItem": "cobblemon:weakness_policy"
+    },
+    {
+      "species": "braviary",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "tintedlens",
+      "moveset": [
+        "esperwing",
+        "airslash",
+        "shadowball",
+        "calmmind"
+      ],
+      "heldItem": "cobblemon:heavy_duty_boots",
       "aspects": [
         "hisuian"
       ]
     },
     {
-      "species": "blaziken",
+      "species": "oricorio",
       "level": 50,
-      "nature": "jolly",
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -177,20 +176,21 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 252,
+        "atk": 0,
         "def": 0,
-        "spa": 0,
+        "spa": 252,
         "spd": 4,
         "spe": 252
       },
-      "ability": "speedboost",
+      "ability": "dancer",
       "moveset": [
-        "swordsdance",
-        "blazekick",
-        "closecombat",
-        "earthquake"
+        "revelationdance",
+        "airslash",
+        "quiverdance",
+        "roost"
       ],
-      "heldItem": "cobblemon:focus_sash"
+      "heldItem": "cobblemon:zap_plate"
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/bird_keeper_audrey_0493.png"
 }

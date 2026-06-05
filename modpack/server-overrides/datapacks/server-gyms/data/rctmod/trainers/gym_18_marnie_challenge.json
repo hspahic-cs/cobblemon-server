@@ -1,9 +1,8 @@
 {
-  "name": "AI Test [pe]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "Gym Leader Marnie",
+  "identity": "Dark",
   "ai": {
-    "type": "pe",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,9 +15,9 @@
   "bag": [],
   "team": [
     {
-      "species": "torkoal",
+      "species": "grimmsnarl",
       "level": 50,
-      "nature": "timid",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -29,23 +28,113 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 0,
+        "atk": 252,
         "def": 0,
-        "spa": 252,
+        "spa": 0,
         "spd": 4,
         "spe": 252
       },
-      "ability": "drought",
+      "ability": "prankster",
       "moveset": [
-        "lavaplume",
-        "rapidspin",
-        "solarbeam",
-        "explosion"
+        "partingshot",
+        "darkestlariat",
+        "spiritbreak",
+        "taunt"
       ],
-      "heldItem": "cobblemon:heat_rock"
+      "heldItem": "cobblemon:leftovers"
     },
     {
-      "species": "scovillain",
+      "species": "lokix",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "tintedlens",
+      "moveset": [
+        "firstimpression",
+        "throatchop",
+        "suckerpunch",
+        "uturn"
+      ],
+      "heldItem": "cobblemon:scope_lens"
+    },
+    {
+      "species": "muk",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "poisontouch",
+      "moveset": [
+        "crunch",
+        "poisonjab",
+        "drainpunch",
+        "pursuit"
+      ],
+      "heldItem": "cobblemon:black_sludge",
+      "aspects": [
+        "alolan"
+      ]
+    },
+    {
+      "species": "weavile",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "pickpocket",
+      "moveset": [
+        "knockoff",
+        "tripleaxel",
+        "poisonjab",
+        "lowkick"
+      ],
+      "heldItem": "cobblemon:choice_band"
+    },
+    {
+      "species": "zoroark",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -64,46 +153,17 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "chlorophyll",
+      "ability": "illusion",
       "moveset": [
-        "growth",
-        "fireblast",
-        "solarbeam",
-        "stompingtantrum"
+        "nastyplot",
+        "nightdaze",
+        "psychic",
+        "encore"
       ],
       "heldItem": "cobblemon:life_orb"
     },
     {
-      "species": "chandelure",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "flamebody",
-      "moveset": [
-        "fireblast",
-        "shadowball",
-        "energyball",
-        "psychic"
-      ],
-      "heldItem": "cobblemon:choice_specs"
-    },
-    {
-      "species": "rotom",
+      "species": "hydreigon",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -124,73 +184,13 @@
       },
       "ability": "levitate",
       "moveset": [
-        "overheat",
-        "voltswitch",
-        "willowisp",
-        "sunnyday"
+        "darkpulse",
+        "dracometeor",
+        "flamethrower",
+        "earthpower"
       ],
-      "heldItem": "cobblemon:heavy_duty_boots"
-    },
-    {
-      "species": "arcanine",
-      "level": 50,
-      "nature": "jolly",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "rockhead",
-      "moveset": [
-        "flareblitz",
-        "headsmash",
-        "closecombat",
-        "extremespeed"
-      ],
-      "heldItem": "cobblemon:life_orb",
-      "aspects": [
-        "hisuian"
-      ]
-    },
-    {
-      "species": "blaziken",
-      "level": 50,
-      "nature": "jolly",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "speedboost",
-      "moveset": [
-        "swordsdance",
-        "blazekick",
-        "closecombat",
-        "earthquake"
-      ],
-      "heldItem": "cobblemon:focus_sash"
+      "heldItem": "cobblemon:expert_belt"
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_04e1.png"
 }

@@ -1,9 +1,8 @@
 {
-  "name": "AI Test [pe]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "Gym Leader Grant",
+  "identity": "Rock",
   "ai": {
-    "type": "pe",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,9 +15,9 @@
   "bag": [],
   "team": [
     {
-      "species": "torkoal",
+      "species": "kleavor",
       "level": 50,
-      "nature": "timid",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -29,23 +28,23 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 0,
+        "atk": 252,
         "def": 0,
-        "spa": 252,
+        "spa": 0,
         "spd": 4,
         "spe": 252
       },
-      "ability": "drought",
+      "ability": "sharpness",
       "moveset": [
-        "lavaplume",
-        "rapidspin",
-        "solarbeam",
-        "explosion"
+        "stoneaxe",
+        "xscissor",
+        "aerialace",
+        "closecombat"
       ],
-      "heldItem": "cobblemon:heat_rock"
+      "heldItem": "cobblemon:focus_sash"
     },
     {
-      "species": "scovillain",
+      "species": "glimmora",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -64,75 +63,17 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "chlorophyll",
+      "ability": "toxicdebris",
       "moveset": [
-        "growth",
-        "fireblast",
-        "solarbeam",
-        "stompingtantrum"
+        "powergem",
+        "sludgewave",
+        "earthpower",
+        "rockpolish"
       ],
       "heldItem": "cobblemon:life_orb"
     },
     {
-      "species": "chandelure",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "flamebody",
-      "moveset": [
-        "fireblast",
-        "shadowball",
-        "energyball",
-        "psychic"
-      ],
-      "heldItem": "cobblemon:choice_specs"
-    },
-    {
-      "species": "rotom",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "levitate",
-      "moveset": [
-        "overheat",
-        "voltswitch",
-        "willowisp",
-        "sunnyday"
-      ],
-      "heldItem": "cobblemon:heavy_duty_boots"
-    },
-    {
-      "species": "arcanine",
+      "species": "garganacl",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -151,20 +92,46 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "rockhead",
+      "ability": "purifyingsalt",
       "moveset": [
-        "flareblitz",
-        "headsmash",
-        "closecombat",
-        "extremespeed"
+        "saltcure",
+        "bodypress",
+        "recover",
+        "curse"
       ],
-      "heldItem": "cobblemon:life_orb",
-      "aspects": [
-        "hisuian"
-      ]
+      "heldItem": "cobblemon:leftovers"
     },
     {
-      "species": "blaziken",
+      "species": "cradily",
+      "level": 50,
+      "nature": "bold",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "stormdrain",
+      "moveset": [
+        "ancientpower",
+        "leechseed",
+        "recover",
+        "gigadrain"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "tyranitar",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -183,14 +150,44 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "speedboost",
+      "ability": "sandstream",
       "moveset": [
-        "swordsdance",
-        "blazekick",
-        "closecombat",
-        "earthquake"
+        "stoneedge",
+        "crunch",
+        "earthquake",
+        "icepunch"
       ],
-      "heldItem": "cobblemon:focus_sash"
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "lycanroc",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "sandrush",
+      "moveset": [
+        "stoneedge",
+        "closecombat",
+        "playrough",
+        "accelerock"
+      ],
+      "heldItem": "cobblemon:choice_band"
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/veteran_grant_0392.png"
 }

@@ -16,37 +16,39 @@
   "team": [
     {
       "species": "ninetales",
-      "level": 60,
+      "level": 50,
       "nature": "timid",
       "ivs": {
         "hp": 31,
-        "atk": 0,
+        "atk": 31,
         "def": 31,
         "spa": 31,
         "spd": 31,
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 0,
         "def": 0,
         "spa": 252,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
-      "form": "alolan",
       "ability": "snowwarning",
-      "heldItem": "cobblemon:light_clay",
       "moveset": [
         "auroraveil",
         "blizzard",
         "moonblast",
         "darkpulse"
+      ],
+      "heldItem": "cobblemon:light_clay",
+      "aspects": [
+        "alolan"
       ]
     },
     {
       "species": "mamoswine",
-      "level": 60,
+      "level": 50,
       "nature": "jolly",
       "ivs": {
         "hp": 31,
@@ -57,56 +59,55 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 252,
         "def": 0,
         "spa": 0,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
       "ability": "thickfat",
-      "heldItem": "cobblemon:weakness_policy",
       "moveset": [
         "iciclecrash",
         "earthquake",
         "iceshard",
         "trailblaze"
       ],
-      "gender": "MALE"
+      "heldItem": "cobblemon:weakness_policy"
     },
     {
       "species": "lapras",
-      "level": 60,
+      "level": 50,
       "nature": "timid",
       "ivs": {
         "hp": 31,
-        "atk": 0,
+        "atk": 31,
         "def": 31,
         "spa": 31,
         "spd": 31,
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 0,
         "def": 0,
         "spa": 252,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
       "ability": "waterabsorb",
-      "heldItem": "cobblemon:leftovers",
       "moveset": [
         "freezedry",
         "snowscape",
         "surf",
         "psychic"
-      ]
+      ],
+      "heldItem": "cobblemon:leftovers"
     },
     {
       "species": "crabominable",
-      "level": 60,
-      "nature": "adamant",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -116,55 +117,26 @@
         "spe": 31
       },
       "evs": {
-        "hp": 248,
+        "hp": 0,
         "atk": 252,
         "def": 0,
         "spa": 0,
-        "spd": 8,
-        "spe": 0
+        "spd": 4,
+        "spe": 252
       },
       "ability": "ironfist",
-      "heldItem": "cobblemon:assault_vest",
       "moveset": [
         "icehammer",
         "drainpunch",
         "earthquake",
         "thunderpunch"
-      ]
+      ],
+      "heldItem": "cobblemon:assault_vest"
     },
     {
       "species": "froslass",
-      "level": 60,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 0,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "snowcloak",
-      "heldItem": "cobblemon:icy_rock",
-      "moveset": [
-        "snowscape",
-        "thunderwave",
-        "hex",
-        "icebeam"
-      ]
-    },
-    {
-      "species": "cetitan",
-      "level": 60,
-      "nature": "adamant",
+      "level": 50,
+      "nature": "calm",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -174,21 +146,50 @@
         "spe": 31
       },
       "evs": {
-        "hp": 248,
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "snowcloak",
+      "moveset": [
+        "snowscape",
+        "thunderwave",
+        "hex",
+        "icebeam"
+      ],
+      "heldItem": "cobblemon:icy_rock"
+    },
+    {
+      "species": "cetitan",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
         "atk": 252,
         "def": 0,
         "spa": 0,
-        "spd": 8,
-        "spe": 0
+        "spd": 4,
+        "spe": 252
       },
       "ability": "slushrush",
-      "heldItem": "cobblemon:sitrus_berry",
       "moveset": [
         "bellydrum",
         "icespinner",
         "earthquake",
         "playrough"
-      ]
+      ],
+      "heldItem": "cobblemon:sitrus_berry"
     }
   ],
   "textureResource": "rctmod:textures/trainers/single/skier_bjorn_0356.png"

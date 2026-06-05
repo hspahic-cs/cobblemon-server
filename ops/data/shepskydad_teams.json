@@ -1,0 +1,1982 @@
+{
+ "Normal": [
+  {
+   "species": "Smeargle",
+   "form": "",
+   "ability": "Own Tempo",
+   "held_item": "Focus Sash",
+   "moves": [
+    "Spore",
+    "Ceaseless Edge",
+    "Stone Axe",
+    "Memento"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Zoroark",
+   "form": "hisuian",
+   "ability": "Illusion",
+   "held_item": "Life Orb",
+   "moves": [
+    "Nasty Plot",
+    "Bitter Malice",
+    "Hyper Voice",
+    "Psychic"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Ursaluna",
+   "form": "",
+   "ability": "Guts",
+   "held_item": "Flame Orb",
+   "moves": [
+    "Facade",
+    "Earthquake",
+    "Play Rough",
+    "Seed Bomb"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Farigiraf",
+   "form": "",
+   "ability": "Cud Chew",
+   "held_item": "Sitrus Berry",
+   "moves": [
+    "Twin Beam",
+    "Dazzling Gleam",
+    "Thunderbolt",
+    "Earthquake"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Staraptor",
+   "form": "",
+   "ability": "Intimidate",
+   "held_item": "Flying Gem",
+   "moves": [
+    "Acrobatics",
+    "Close Combat",
+    "Quick Attack",
+    "Roost"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Snorlax",
+   "form": "",
+   "ability": "Thick Fat",
+   "held_item": "Leftovers",
+   "moves": [
+    "Return",
+    "Curse",
+    "Rest",
+    "Sleep Talk"
+   ],
+   "move_categories": [
+    "physical",
+    "status",
+    "status",
+    ""
+   ]
+  }
+ ],
+ "Bug": [
+  {
+   "species": "Araquanid",
+   "form": "",
+   "ability": "Water Bubble",
+   "held_item": "Mystic Water",
+   "moves": [
+    "Liquidation",
+    "Leech Life",
+    "Mirror Coat",
+    "Sticky Web"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Shedinja",
+   "form": "",
+   "ability": "Wonder Guard",
+   "held_item": "Focus Sash",
+   "moves": [
+    "Swords Dance",
+    "X-Scissor",
+    "Shadow Claw",
+    "Sucker Punch"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Scizor",
+   "form": "",
+   "ability": "Technician",
+   "held_item": "Choice Band",
+   "moves": [
+    "U-Turn",
+    "Bullet Punch",
+    "Close Combat",
+    "Dual Wingbeat"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Vikavolt",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Choice Specs",
+   "moves": [
+    "Thunderbolt",
+    "Bug Buzz",
+    "Energy Ball",
+    "Volt Switch"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Heracross",
+   "form": "",
+   "ability": "Guts",
+   "held_item": "Flame Orb",
+   "moves": [
+    "Megahorn",
+    "Close Combat",
+    "Rock Slide",
+    "Earthquake"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Volcarona",
+   "form": "",
+   "ability": "Flame Body",
+   "held_item": "Heavy-Duty Boots",
+   "moves": [
+    "Quiver Dance",
+    "Bug Buzz",
+    "Fiery Dance",
+    "Psychic"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Ice": [
+  {
+   "species": "Ninetales",
+   "form": "alolan",
+   "ability": "Snow Warning",
+   "held_item": "Light Clay",
+   "moves": [
+    "Aurora Veil",
+    "Blizzard",
+    "Moonblast",
+    "Dark Pulse"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Mamoswine",
+   "form": "",
+   "ability": "Thick Fat",
+   "held_item": "Weakness Policy",
+   "moves": [
+    "Icicle Crash",
+    "Earthquake",
+    "Ice Shard",
+    "Trailblaze"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Lapras",
+   "form": "",
+   "ability": "Water Absorb",
+   "held_item": "Leftovers",
+   "moves": [
+    "Freeze-Dry",
+    "Snowscape",
+    "Surf",
+    "Psychic"
+   ],
+   "move_categories": [
+    "special",
+    "status",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Crabominable",
+   "form": "",
+   "ability": "Iron Fist",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Ice Hammer",
+    "Drain Punch",
+    "Earthquake",
+    "Thunder Punch"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Froslass",
+   "form": "",
+   "ability": "Snow Cloak",
+   "held_item": "Icy Rock",
+   "moves": [
+    "Snowscape",
+    "Thunder Wave",
+    "Hex",
+    "Ice Beam"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Cetitan",
+   "form": "",
+   "ability": "Slush Rush",
+   "held_item": "Sitrus Berry",
+   "moves": [
+    "Belly Drum",
+    "Ice Spinner",
+    "Earthquake",
+    "Play Rough"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Poison": [
+  {
+   "species": "Scolipede",
+   "form": "",
+   "ability": "Speed Boost",
+   "held_item": "Payapa Berry",
+   "moves": [
+    "Toxic Spikes",
+    "Megahorn",
+    "Aqua Tail",
+    "Earthquake"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Crobat",
+   "form": "",
+   "ability": "Inner Focus",
+   "held_item": "Black Sludge",
+   "moves": [
+    "Roost",
+    "Super Fang",
+    "Fly",
+    "U-Turn"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Salazzle",
+   "form": "",
+   "ability": "Corrosion",
+   "held_item": "Air Balloon",
+   "moves": [
+    "Flamethrower",
+    "Encore",
+    "Substitute",
+    "Toxic"
+   ],
+   "move_categories": [
+    "special",
+    "status",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Slowking",
+   "form": "",
+   "ability": "Regenerator",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Sludge Wave",
+    "Psychic",
+    "Flamethrower",
+    "Ice Beam"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Revavroom",
+   "form": "",
+   "ability": "Filter",
+   "held_item": "Lum Berry",
+   "moves": [
+    "Shift Gear",
+    "Gunk Shot",
+    "Iron Head",
+    "High Horsepower"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Overqwil",
+   "form": "",
+   "ability": "Intimidate",
+   "held_item": "Life Orb",
+   "moves": [
+    "Barb Barrage",
+    "Crunch",
+    "Liquidation",
+    "Swords Dance"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Grass": [
+  {
+   "species": "Rillaboom",
+   "form": "",
+   "ability": "Grassy Surge",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Drum Beating",
+    "High Horsepower",
+    "U-Turn",
+    "Grassy Glide"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Amoongus",
+   "form": "",
+   "ability": "Regenerator",
+   "held_item": "Black Sludge",
+   "moves": [
+    "Spore",
+    "Giga Drain",
+    "Sludge Bomb",
+    "Hex"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Ferrothorn",
+   "form": "",
+   "ability": "Iron Barbs",
+   "held_item": "Rocky Helmet",
+   "moves": [
+    "Power Whip",
+    "Gyro Ball",
+    "Body Press",
+    "Leech Seed"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Sinistcha",
+   "form": "",
+   "ability": "Heatproof",
+   "held_item": "Leftovers",
+   "moves": [
+    "Matcha Gotcha",
+    "Strength Sap",
+    "Shadow Ball",
+    "Scald"
+   ],
+   "move_categories": [
+    "special",
+    "status",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Arboliva",
+   "form": "",
+   "ability": "Harvest",
+   "held_item": "Sitrus Berry",
+   "moves": [
+    "Energy Ball",
+    "Hyper Voice",
+    "Earth Power",
+    "Substitute"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Rotom",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Choice Scarf",
+   "moves": [
+    "Thunderbolt",
+    "Leaf Storm",
+    "Volt Switch",
+    "Trick"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Flying": [
+  {
+   "species": "Noivern",
+   "form": "",
+   "ability": "Infiltrator",
+   "held_item": "Wide Lens",
+   "moves": [
+    "Taunt",
+    "Hurricane",
+    "Draco Meteor",
+    "Heat Wave"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Corviknight",
+   "form": "",
+   "ability": "Mirror Armor",
+   "held_item": "Leftovers",
+   "moves": [
+    "Roost",
+    "Defog",
+    "U-Turn",
+    "Body Press"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Hawlucha",
+   "form": "",
+   "ability": "Unburden",
+   "held_item": "White Herb",
+   "moves": [
+    "Close Combat",
+    "Acrobatics",
+    "Throat Chop",
+    "Swords Dance"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Togekiss",
+   "form": "",
+   "ability": "Serene Grace",
+   "held_item": "Weakness Policy",
+   "moves": [
+    "Tailwind",
+    "Air Slash",
+    "Aura Sphere",
+    "Roost"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Braviary",
+   "form": "hisuian",
+   "ability": "Tinted Lens",
+   "held_item": "Heavy-Duty Boots",
+   "moves": [
+    "Esper Wing",
+    "Air Slash",
+    "Shadow Ball",
+    "Calm Mind"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Oricorio",
+   "form": "",
+   "ability": "Dancer",
+   "held_item": "Zap Plate",
+   "moves": [
+    "Revelation Dance",
+    "Air Slash",
+    "Quiver Dance",
+    "Roost"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "status",
+    ""
+   ]
+  }
+ ],
+ "Ghost": [
+  {
+   "species": "Spiritomb",
+   "form": "",
+   "ability": "Pressure",
+   "held_item": "Leftovers",
+   "moves": [
+    "Will-o-Wisp",
+    "Hex",
+    "Dark Pulse",
+    "Pain Split"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Mimikyu",
+   "form": "",
+   "ability": "Disguise",
+   "held_item": "Lum Berry",
+   "moves": [
+    "Swords Dance",
+    "Shadow Claw",
+    "Play Rough",
+    "Drain Punch"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Dusclops",
+   "form": "",
+   "ability": "Pressure",
+   "held_item": "Eviolite",
+   "moves": [
+    "Rest",
+    "Sleep Talk",
+    "Night Shade",
+    "Curse"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Annihilape",
+   "form": "",
+   "ability": "Defiant",
+   "held_item": "Leftovers",
+   "moves": [
+    "Rage Fist",
+    "Drain Punch",
+    "Bulk Up",
+    "Taunt"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Gengar",
+   "form": "",
+   "ability": "Cursed Body",
+   "held_item": "Leftovers",
+   "moves": [
+    "Shadow Ball",
+    "Sludge Wave",
+    "Dazzling Gleam",
+    "Destiny Bond"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Houndstone",
+   "form": "",
+   "ability": "Fluffy",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Last Respects",
+    "Body Press",
+    "Play Rough",
+    "Shadow Sneak"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Electric": [
+  {
+   "species": "Galvantula",
+   "form": "",
+   "ability": "Compound Eyes",
+   "held_item": "Focus Sash",
+   "moves": [
+    "Sticky Web",
+    "Thunder",
+    "Bug Buzz",
+    "Energy Ball"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Electrode",
+   "form": "hisuian",
+   "ability": "Static",
+   "held_item": "Life Orb",
+   "moves": [
+    "Volt Switch",
+    "Giga Drain",
+    "Leaf Storm",
+    "Electro Ball"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Rotom",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Leftovers",
+   "moves": [
+    "Hydro Pump",
+    "Volt Switch",
+    "Thunder Wave",
+    "Pain Split"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Eelektross",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Leftovers",
+   "moves": [
+    "Coil",
+    "Supercell Slam",
+    "Drain Punch",
+    "Dragon Claw"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Magnezone",
+   "form": "",
+   "ability": "Analytic",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Thunderbolt",
+    "Flash Cannon",
+    "Volt Switch",
+    "Body Press"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Pikachu",
+   "form": "",
+   "ability": "Lightning Rod",
+   "held_item": "Light Ball",
+   "moves": [
+    "Thunderbolt",
+    "Surf",
+    "Alluring Voice",
+    "Volt Tackle"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Rock": [
+  {
+   "species": "Kleavor",
+   "form": "",
+   "ability": "Sharpness",
+   "held_item": "Focus Sash",
+   "moves": [
+    "Stone Axe",
+    "X-Scissor",
+    "Aerial Ace",
+    "Close Combat"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Glimmora",
+   "form": "",
+   "ability": "Toxic Debris",
+   "held_item": "Life Orb",
+   "moves": [
+    "Power Gem",
+    "Sludge Wave",
+    "Earth Power",
+    "Rock Polish"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Garganacl",
+   "form": "",
+   "ability": "Purifying Salt",
+   "held_item": "Leftovers",
+   "moves": [
+    "Salt Cure",
+    "Body Press",
+    "Recover",
+    "Curse"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Cradily",
+   "form": "",
+   "ability": "Storm Drain",
+   "held_item": "Leftovers",
+   "moves": [
+    "Ancient Power",
+    "Leech Seed",
+    "Recover",
+    "Giga Drain"
+   ],
+   "move_categories": [
+    "physical",
+    "status",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Tyranitar",
+   "form": "",
+   "ability": "Sand Stream",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Stone Edge",
+    "Crunch",
+    "Earthquake",
+    "Ice Punch"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Lycanroc",
+   "form": "",
+   "ability": "Sand Rush",
+   "held_item": "Choice Band",
+   "moves": [
+    "Stone Edge",
+    "Close Combat",
+    "Play Rough",
+    "Accelerock"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Fire": [
+  {
+   "species": "Torkoal",
+   "form": "",
+   "ability": "Drought",
+   "held_item": "Heat Rock",
+   "moves": [
+    "Lava Plume",
+    "Rapid Spin",
+    "Solar Beam",
+    "Explosion"
+   ],
+   "move_categories": [
+    "special",
+    "physical",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Scovillain",
+   "form": "",
+   "ability": "Chlorophyll",
+   "held_item": "Life Orb",
+   "moves": [
+    "Growth",
+    "Fire Blast",
+    "Solar Beam",
+    "Stomping Tantrum"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Chandelure",
+   "form": "",
+   "ability": "Flame Body",
+   "held_item": "Choice Specs",
+   "moves": [
+    "Fire Blast",
+    "Shadow Ball",
+    "Energy Ball",
+    "Psychic"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Rotom",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Heavy-Duty Boots",
+   "moves": [
+    "Overheat",
+    "Volt Switch",
+    "Will-o-Wisp",
+    "Sunny Day"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Arcanine",
+   "form": "hisuian",
+   "ability": "Rock Head",
+   "held_item": "Life Orb",
+   "moves": [
+    "Flare Blitz",
+    "Head Smash",
+    "Close Combat",
+    "Extreme Speed"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Blaziken",
+   "form": "",
+   "ability": "Speed Boost",
+   "held_item": "Focus Sash",
+   "moves": [
+    "Swords Dance",
+    "Blaze Kick",
+    "Close Combat",
+    "Earthquake"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Fighting": [
+  {
+   "species": "Sneasler",
+   "form": "",
+   "ability": "Poison Touch",
+   "held_item": "Choice Band",
+   "moves": [
+    "Close Combat",
+    "Dire Claw",
+    "Throat Chop",
+    "U-Turn"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Conkeldurr",
+   "form": "",
+   "ability": "Guts",
+   "held_item": "Flame Orb",
+   "moves": [
+    "Drain Punch",
+    "Earthquake",
+    "Ice Punch",
+    "Mach Punch"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Scrafty",
+   "form": "",
+   "ability": "Shed Skin",
+   "held_item": "Leftovers",
+   "moves": [
+    "Bulk Up",
+    "Rest",
+    "Drain Punch",
+    "Crunch"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Lucario",
+   "form": "",
+   "ability": "Steadfast",
+   "held_item": "Life Orb",
+   "moves": [
+    "Nasty Plot",
+    "Aura Sphere",
+    "Flash Cannon",
+    "Dark Pulse"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Bewear",
+   "form": "",
+   "ability": "Fluffy",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Close Combat",
+    "Return",
+    "Darkest Lariat",
+    "Earthquake"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Pawmot",
+   "form": "",
+   "ability": "Iron Fist",
+   "held_item": "Leppa Berry",
+   "moves": [
+    "Thunder Punch",
+    "Ice Punch",
+    "Close Combat",
+    "Revival Blessing"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Psychic": [
+  {
+   "species": "Indeedee",
+   "form": "",
+   "ability": "Psychic Surge",
+   "held_item": "Terrain Extender",
+   "moves": [
+    "Expanding Force",
+    "Dazzling Gleam",
+    "Follow Me",
+    "Helping Hand"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Hatterene",
+   "form": "",
+   "ability": "Magic Bounce",
+   "held_item": "Life Orb",
+   "moves": [
+    "Trick Room",
+    "Expanding Force",
+    "Draining Kiss",
+    "Mystical Fire"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Metagross",
+   "form": "",
+   "ability": "Clear Body",
+   "held_item": "Weakness Policy",
+   "moves": [
+    "Psychic Fangs",
+    "Iron Head",
+    "Hammer Arm",
+    "Shadow Claw"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Rabsca",
+   "form": "",
+   "ability": "Synchronize",
+   "held_item": "Light Clay",
+   "moves": [
+    "Reflect",
+    "Light Screen",
+    "Bug Buzz",
+    "Expanding Force"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Gothitelle",
+   "form": "",
+   "ability": "Shadow Tag",
+   "held_item": "Leftovers",
+   "moves": [
+    "Psychic",
+    "Foul Play",
+    "Heal Pulse",
+    "Trick Room"
+   ],
+   "move_categories": [
+    "special",
+    "physical",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Espathra",
+   "form": "",
+   "ability": "Speed Boost",
+   "held_item": "Focus Sash",
+   "moves": [
+    "Protect",
+    "Lumina Crash",
+    "Dazzling Gleam",
+    "Shadow Ball"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Dark": [
+  {
+   "species": "Grimmsnarl",
+   "form": "",
+   "ability": "Prankster",
+   "held_item": "Leftovers",
+   "moves": [
+    "Parting Shot",
+    "Darkest Lariat",
+    "Spirit Break",
+    "Taunt"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Lokix",
+   "form": "",
+   "ability": "Tinted Lens",
+   "held_item": "Scope Lens",
+   "moves": [
+    "First Impression",
+    "Throat Chop",
+    "Sucker Punch",
+    "U-Turn"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Alolan Muk",
+   "form": "",
+   "ability": "Poison Touch",
+   "held_item": "Black Sludge",
+   "moves": [
+    "Crunch",
+    "Poison Jab",
+    "Drain Punch",
+    "Pursuit"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Weavile",
+   "form": "",
+   "ability": "Pickpocket",
+   "held_item": "Choice Band",
+   "moves": [
+    "Knock Off",
+    "Triple Axel",
+    "Poison Jab",
+    "Low Kick"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Zoroark",
+   "form": "",
+   "ability": "Illusion",
+   "held_item": "Life Orb",
+   "moves": [
+    "Nasty Plot",
+    "Night Daze",
+    "Psychic",
+    "Encore"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Hydreigon",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Expert Belt",
+   "moves": [
+    "Dark Pulse",
+    "Draco Meteor",
+    "Flamethrower",
+    "Earth Power"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Ground": [
+  {
+   "species": "Gliscor",
+   "form": "",
+   "ability": "Poison Heal",
+   "held_item": "Toxic Orb",
+   "moves": [
+    "Spikes",
+    "Earthquake",
+    "Dual Wingbeat",
+    "Roost"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Mudsdale",
+   "form": "",
+   "ability": "Stamina",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Earthquake",
+    "Stone Edge",
+    "Body Press",
+    "Heavy Slam"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Gastrodon",
+   "form": "",
+   "ability": "Storm Drain",
+   "held_item": "Leftovers",
+   "moves": [
+    "Scald",
+    "Earth Power",
+    "Ice Beam",
+    "Recover"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Excadrill",
+   "form": "",
+   "ability": "Mold Breaker",
+   "held_item": "Choice Band",
+   "moves": [
+    "Earthquake",
+    "Iron Head",
+    "Rock Slide",
+    "X-Scissor"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Krookodile",
+   "form": "",
+   "ability": "Moxie",
+   "held_item": "Choice Scarf",
+   "moves": [
+    "Earthquake",
+    "Darkest Lariat",
+    "Close Combat",
+    "Gunk Shot"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Garchomp",
+   "form": "",
+   "ability": "Rough Skin",
+   "held_item": "Loaded Dice",
+   "moves": [
+    "Scale Shot",
+    "Earthquake",
+    "Iron Head",
+    "Swords Dance"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Water": [
+  {
+   "species": "Pelipper",
+   "form": "",
+   "ability": "Drizzle",
+   "held_item": "Damp Rock",
+   "moves": [
+    "Weather Ball",
+    "Hurricane",
+    "U-Turn",
+    "Roost"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Palafin",
+   "form": "",
+   "ability": "Zero to Hero",
+   "held_item": "Choice Band",
+   "moves": [
+    "Flip Turn",
+    "Wave Crash",
+    "Jet Punch",
+    "Ice Punch"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Basculegion",
+   "form": "",
+   "ability": "Swift Swim",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Liquidation",
+    "Flip Turn",
+    "Last Respects",
+    "Psychic Fangs"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Lanturn",
+   "form": "",
+   "ability": "Volt Absorb",
+   "held_item": "Leftovers",
+   "moves": [
+    "Volt Switch",
+    "Scald",
+    "Thunder",
+    "Rain Dance"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Kingdra",
+   "form": "",
+   "ability": "Swift Swim",
+   "held_item": "Life Orb",
+   "moves": [
+    "Hydro Pump",
+    "Dragon Pulse",
+    "Ice Beam",
+    "Surf"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Primarina",
+   "form": "",
+   "ability": "Torrent",
+   "held_item": "Leftovers",
+   "moves": [
+    "Calm Mind",
+    "Surf",
+    "Moonblast",
+    "Energy Ball"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Steel": [
+  {
+   "species": "Skarmory",
+   "form": "",
+   "ability": "Sturdy",
+   "held_item": "Rocky Helmet",
+   "moves": [
+    "Spikes",
+    "Roost",
+    "Whirlwind",
+    "Body Press"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Aegislash",
+   "form": "",
+   "ability": "Stance Change",
+   "held_item": "Weakness Policy",
+   "moves": [
+    "King's Shield",
+    "Swords Dance",
+    "Iron Head",
+    "Shadow Sneak"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Bronzong",
+   "form": "",
+   "ability": "Levitate",
+   "held_item": "Leftovers",
+   "moves": [
+    "Gyro Ball",
+    "Psychic Noise",
+    "Toxic",
+    "Protect"
+   ],
+   "move_categories": [
+    "physical",
+    "special",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Goodra",
+   "form": "hisuian",
+   "ability": "Shell Armor",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Heavy Slam",
+    "Dragon Tail",
+    "Surf",
+    "Flamethrower"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Gholdengo",
+   "form": "",
+   "ability": "Good as Gold",
+   "held_item": "Choice Scarf",
+   "moves": [
+    "Make it Rain",
+    "Shadow Ball",
+    "Dazzling Gleam",
+    "Power Gem"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Archaludon",
+   "form": "",
+   "ability": "Stamina",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Flash Cannon",
+    "Dragon Pulse",
+    "Earthquake",
+    "Body Press"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "physical",
+    ""
+   ]
+  }
+ ],
+ "Fairy": [
+  {
+   "species": "Klefki",
+   "form": "",
+   "ability": "Prankster",
+   "held_item": "Sticky Barb",
+   "moves": [
+    "Switcheroo",
+    "Thunder Wave",
+    "Spikes",
+    "Draining Kiss"
+   ],
+   "move_categories": [
+    "status",
+    "status",
+    "status",
+    ""
+   ]
+  },
+  {
+   "species": "Sylveon",
+   "form": "",
+   "ability": "Pixilate",
+   "held_item": "Choice Specs",
+   "moves": [
+    "Hyper Voice",
+    "Mystical Fire",
+    "Shadow Ball",
+    "Psychic"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Weezing",
+   "form": "galarian",
+   "ability": "Levitate",
+   "held_item": "Rocky Helmet",
+   "moves": [
+    "Strange Steam",
+    "Sludge Bomb",
+    "Flamethrower",
+    "Will-o-Wisp"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Florges",
+   "form": "",
+   "ability": "Flower Veil",
+   "held_item": "Leftovers",
+   "moves": [
+    "Calm Mind",
+    "Moonblast",
+    "Psychic",
+    "Synthesis"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Azumarill",
+   "form": "",
+   "ability": "Huge Power",
+   "held_item": "Choice Band",
+   "moves": [
+    "Play Rough",
+    "Liquidation",
+    "Aqua Jet",
+    "Ice Spinner"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Clefable",
+   "form": "",
+   "ability": "Magic Guard",
+   "held_item": "Life Orb",
+   "moves": [
+    "Moonblast",
+    "Flamethrower",
+    "Thunderbolt",
+    "Moonlight"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  }
+ ],
+ "Dragon": [
+  {
+   "species": "Cyclizar",
+   "form": "",
+   "ability": "Regenerator",
+   "held_item": "Choice Scarf",
+   "moves": [
+    "Shed Tail",
+    "Outrage",
+    "Return",
+    "U-turn"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Kommo-o",
+   "form": "",
+   "ability": "Soundproof",
+   "held_item": "Throat Spray",
+   "moves": [
+    "Clangorous Soul",
+    "Clanging Scales",
+    "Aura Sphere",
+    "Flash Cannon"
+   ],
+   "move_categories": [
+    "status",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Dracovish",
+   "form": "",
+   "ability": "Strong Jaw",
+   "held_item": "Choice Scarf",
+   "moves": [
+    "Fishious Rend",
+    "Outrage",
+    "Psychic Fangs",
+    "Crunch"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Dragonite",
+   "form": "",
+   "ability": "Multiscale",
+   "held_item": "Heavy-Duty Boots",
+   "moves": [
+    "Dragon Dance",
+    "Dragon Claw",
+    "Earthquake",
+    "Ice Spinner"
+   ],
+   "move_categories": [
+    "status",
+    "physical",
+    "physical",
+    ""
+   ]
+  },
+  {
+   "species": "Dragalge",
+   "form": "",
+   "ability": "Adaptability",
+   "held_item": "Assault Vest",
+   "moves": [
+    "Draco Meteor",
+    "Sludge Wave",
+    "Focus Blast",
+    "Flip Turn"
+   ],
+   "move_categories": [
+    "special",
+    "special",
+    "special",
+    ""
+   ]
+  },
+  {
+   "species": "Dragapult",
+   "form": "",
+   "ability": "Clear Body",
+   "held_item": "Life Orb",
+   "moves": [
+    "Dragon Darts",
+    "Phantom Force",
+    "Fire Blast",
+    "Thunderbolt"
+   ],
+   "move_categories": [
+    "physical",
+    "physical",
+    "special",
+    ""
+   ]
+  }
+ ]
+}

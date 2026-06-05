@@ -16,178 +16,178 @@
   "bag": [],
   "team": [
     {
-      "species": "sableye",
-      "level": 60,
-      "nature": "hardy",
+      "species": "spiritomb",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "prankster",
-      "heldItem": "cobblemon:leftovers",
-      "moveset": [
-        "willowisp",
-        "recover",
-        "knockoff",
-        "taunt"
-      ]
-    },
-    {
-      "species": "gengar",
-      "level": 60,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "cursedbody",
-      "heldItem": "cobblemon:black_sludge",
-      "moveset": [
-        "substitute",
-        "disable",
-        "shadowball",
-        "focusblast"
-      ]
-    },
-    {
-      "species": "aegislash",
-      "level": 60,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "stancechange",
-      "heldItem": "cobblemon:weakness_policy",
-      "moveset": [
-        "kingsshield",
-        "swordsdance",
-        "shadowsneak",
-        "sacredsword"
-      ]
-    },
-    {
-      "species": "dusclops",
-      "level": 60,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "pressure",
-      "heldItem": "",
       "moveset": [
         "willowisp",
-        "seismictoss",
-        "painsplit",
-        "nightshade"
-      ]
+        "hex",
+        "darkpulse",
+        "painsplit"
+      ],
+      "heldItem": "cobblemon:leftovers"
     },
     {
       "species": "mimikyu",
-      "level": 60,
-      "nature": "hardy",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "disguise",
-      "heldItem": "",
       "moveset": [
         "swordsdance",
-        "shadowsneak",
+        "shadowclaw",
         "playrough",
-        "shadowclaw"
-      ]
+        "drainpunch"
+      ],
+      "heldItem": "cobblemon:lum_berry"
+    },
+    {
+      "species": "dusclops",
+      "level": 50,
+      "nature": "calm",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "pressure",
+      "moveset": [
+        "rest",
+        "sleeptalk",
+        "nightshade",
+        "curse"
+      ],
+      "heldItem": "cobblemon:eviolite"
     },
     {
       "species": "annihilape",
-      "level": 60,
-      "nature": "hardy",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "defiant",
-      "heldItem": "",
       "moveset": [
-        "bulkup",
-        "drainpunch",
         "ragefist",
-        "shadowclaw"
-      ]
+        "drainpunch",
+        "bulkup",
+        "taunt"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "gengar",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "cursedbody",
+      "moveset": [
+        "shadowball",
+        "sludgewave",
+        "dazzlinggleam",
+        "destinybond"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "houndstone",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "fluffy",
+      "moveset": [
+        "lastrespects",
+        "bodypress",
+        "playrough",
+        "shadowsneak"
+      ],
+      "heldItem": "cobblemon:assault_vest"
     }
   ]
 }

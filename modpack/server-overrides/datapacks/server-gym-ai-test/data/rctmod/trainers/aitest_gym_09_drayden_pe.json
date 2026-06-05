@@ -15,178 +15,178 @@
   "bag": [],
   "team": [
     {
-      "species": "garchomp",
-      "level": 55,
-      "nature": "hardy",
+      "species": "cyclizar",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "roughskin",
-      "heldItem": "cobblemon:rocky_helmet",
+      "ability": "regenerator",
       "moveset": [
-        "stealthrock",
-        "swordsdance",
-        "earthquake",
-        "scaleshot"
-      ]
-    },
-    {
-      "species": "salamence",
-      "level": 55,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "moxie",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "dragondance",
-        "dualwingbeat",
-        "earthquake",
-        "dragonclaw"
-      ]
-    },
-    {
-      "species": "haxorus",
-      "level": 55,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "moldbreaker",
-      "heldItem": "cobblemon:choice_scarf",
-      "moveset": [
+        "shedtail",
         "outrage",
-        "closecombat",
-        "earthquake",
-        "firstimpression"
-      ]
+        "return",
+        "uturn"
+      ],
+      "heldItem": "cobblemon:choice_scarf"
     },
     {
       "species": "kommoo",
-      "level": 55,
-      "nature": "hardy",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "bulletproof",
-      "heldItem": "",
+      "ability": "soundproof",
       "moveset": [
-        "stealthrock",
-        "bodypress",
-        "dragontail",
-        "toxic"
-      ]
+        "clangoroussoul",
+        "clangingscales",
+        "aurasphere",
+        "flashcannon"
+      ],
+      "heldItem": "cobblemon:throat_spray"
     },
     {
-      "species": "goodra",
-      "level": 55,
-      "nature": "hardy",
+      "species": "dracovish",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "sapsipper",
-      "heldItem": "",
+      "ability": "strongjaw",
+      "moveset": [
+        "fishiousrend",
+        "outrage",
+        "psychicfangs",
+        "crunch"
+      ],
+      "heldItem": "cobblemon:choice_scarf"
+    },
+    {
+      "species": "dragonite",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "multiscale",
+      "moveset": [
+        "dragondance",
+        "dragonclaw",
+        "earthquake",
+        "icespinner"
+      ],
+      "heldItem": "cobblemon:heavy_duty_boots"
+    },
+    {
+      "species": "dragalge",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "adaptability",
       "moveset": [
         "dracometeor",
-        "sludgebomb",
-        "flamethrower",
+        "sludgewave",
+        "focusblast",
+        "flipturn"
+      ],
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "dragapult",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "clearbody",
+      "moveset": [
+        "dragondarts",
+        "phantomforce",
+        "fireblast",
         "thunderbolt"
-      ]
-    },
-    {
-      "species": "kingdra",
-      "level": 55,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "sniper",
-      "heldItem": "",
-      "moveset": [
-        "focusenergy",
-        "dracometeor",
-        "hydropump",
-        "icebeam"
-      ]
+      ],
+      "heldItem": "cobblemon:life_orb"
     }
   ],
   "textureResource": "rctmod:textures/trainers/single/dragon_tamer_drake_049a.png"

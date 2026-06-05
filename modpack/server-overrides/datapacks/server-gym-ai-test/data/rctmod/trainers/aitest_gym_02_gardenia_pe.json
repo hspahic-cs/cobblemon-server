@@ -16,91 +16,178 @@
   "bag": [],
   "team": [
     {
-      "species": "cottonee",
-      "level": 20,
-      "nature": "hardy",
+      "species": "rillaboom",
+      "level": 50,
+      "nature": "jolly",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "prankster",
-      "heldItem": "cobblemon:eviolite",
+      "ability": "grassysurge",
       "moveset": [
-        "leechseed",
-        "encore",
-        "stunspore",
-        "gigadrain"
-      ]
+        "drumbeating",
+        "highhorsepower",
+        "uturn",
+        "grassyglide"
+      ],
+      "heldItem": "cobblemon:assault_vest"
     },
     {
-      "species": "servine",
-      "level": 20,
-      "nature": "hardy",
+      "species": "amoonguss",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
       },
       "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
-      "ability": "contrary",
-      "heldItem": "",
-      "moveset": [
-        "leafstorm",
-        "glare",
-        "gigadrain",
-        "hiddenpower"
-      ]
-    },
-    {
-      "species": "shroomish",
-      "level": 20,
-      "nature": "hardy",
-      "ivs": {
-        "hp": 15,
-        "atk": 15,
-        "def": 15,
-        "spa": 15,
-        "spd": 15,
-        "spe": 15
-      },
-      "evs": {
-        "hp": 85,
-        "atk": 85,
-        "def": 85,
-        "spa": 85,
-        "spd": 85,
-        "spe": 85
-      },
-      "ability": "effectspore",
-      "heldItem": "",
+      "ability": "regenerator",
       "moveset": [
         "spore",
-        "bulletseed",
-        "drainpunch",
-        "rocktomb"
-      ]
+        "gigadrain",
+        "sludgebomb",
+        "hex"
+      ],
+      "heldItem": "cobblemon:black_sludge"
+    },
+    {
+      "species": "ferrothorn",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "ironbarbs",
+      "moveset": [
+        "powerwhip",
+        "gyroball",
+        "bodypress",
+        "leechseed"
+      ],
+      "heldItem": "cobblemon:rocky_helmet"
+    },
+    {
+      "species": "sinistcha",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "heatproof",
+      "moveset": [
+        "matchagotcha",
+        "strengthsap",
+        "shadowball",
+        "scald"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "arboliva",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "harvest",
+      "moveset": [
+        "energyball",
+        "hypervoice",
+        "earthpower",
+        "substitute"
+      ],
+      "heldItem": "cobblemon:sitrus_berry"
+    },
+    {
+      "species": "rotom",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "levitate",
+      "moveset": [
+        "thunderbolt",
+        "leafstorm",
+        "voltswitch",
+        "trick"
+      ],
+      "heldItem": "cobblemon:choice_scarf"
     }
   ]
 }

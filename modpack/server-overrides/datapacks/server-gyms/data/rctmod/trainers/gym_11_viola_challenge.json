@@ -1,9 +1,8 @@
 {
-  "name": "AI Test [pe]: Blaine",
-  "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "name": "Gym Leader Viola",
+  "identity": "Bug",
   "ai": {
-    "type": "pe",
+    "type": "rb",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -16,9 +15,9 @@
   "bag": [],
   "team": [
     {
-      "species": "torkoal",
+      "species": "araquanid",
       "level": 50,
-      "nature": "timid",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -29,25 +28,25 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 0,
+        "atk": 252,
         "def": 0,
-        "spa": 252,
+        "spa": 0,
         "spd": 4,
         "spe": 252
       },
-      "ability": "drought",
+      "ability": "waterbubble",
       "moveset": [
-        "lavaplume",
-        "rapidspin",
-        "solarbeam",
-        "explosion"
+        "liquidation",
+        "leechlife",
+        "mirrorcoat",
+        "stickyweb"
       ],
-      "heldItem": "cobblemon:heat_rock"
+      "heldItem": "cobblemon:mystic_water"
     },
     {
-      "species": "scovillain",
+      "species": "shedinja",
       "level": 50,
-      "nature": "timid",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -58,25 +57,25 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 0,
+        "atk": 252,
         "def": 0,
-        "spa": 252,
+        "spa": 0,
         "spd": 4,
         "spe": 252
       },
-      "ability": "chlorophyll",
+      "ability": "wonderguard",
       "moveset": [
-        "growth",
-        "fireblast",
-        "solarbeam",
-        "stompingtantrum"
+        "swordsdance",
+        "xscissor",
+        "shadowclaw",
+        "suckerpunch"
       ],
-      "heldItem": "cobblemon:life_orb"
+      "heldItem": "cobblemon:focus_sash"
     },
     {
-      "species": "chandelure",
+      "species": "scizor",
       "level": 50,
-      "nature": "timid",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -87,23 +86,23 @@
       },
       "evs": {
         "hp": 0,
-        "atk": 0,
+        "atk": 252,
         "def": 0,
-        "spa": 252,
+        "spa": 0,
         "spd": 4,
         "spe": 252
       },
-      "ability": "flamebody",
+      "ability": "technician",
       "moveset": [
-        "fireblast",
-        "shadowball",
-        "energyball",
-        "psychic"
+        "uturn",
+        "bulletpunch",
+        "closecombat",
+        "dualwingbeat"
       ],
-      "heldItem": "cobblemon:choice_specs"
+      "heldItem": "cobblemon:choice_band"
     },
     {
-      "species": "rotom",
+      "species": "vikavolt",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -124,15 +123,15 @@
       },
       "ability": "levitate",
       "moveset": [
-        "overheat",
-        "voltswitch",
-        "willowisp",
-        "sunnyday"
+        "thunderbolt",
+        "bugbuzz",
+        "energyball",
+        "voltswitch"
       ],
-      "heldItem": "cobblemon:heavy_duty_boots"
+      "heldItem": "cobblemon:choice_specs"
     },
     {
-      "species": "arcanine",
+      "species": "heracross",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -151,46 +150,44 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "rockhead",
+      "ability": "guts",
       "moveset": [
-        "flareblitz",
-        "headsmash",
+        "megahorn",
         "closecombat",
-        "extremespeed"
-      ],
-      "heldItem": "cobblemon:life_orb",
-      "aspects": [
-        "hisuian"
-      ]
-    },
-    {
-      "species": "blaziken",
-      "level": 50,
-      "nature": "jolly",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "speedboost",
-      "moveset": [
-        "swordsdance",
-        "blazekick",
-        "closecombat",
+        "rockslide",
         "earthquake"
       ],
-      "heldItem": "cobblemon:focus_sash"
+      "heldItem": "cobblemon:flame_orb"
+    },
+    {
+      "species": "volcarona",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "flamebody",
+      "moveset": [
+        "quiverdance",
+        "bugbuzz",
+        "fierydance",
+        "psychic"
+      ],
+      "heldItem": "cobblemon:heavy_duty_boots"
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/cameraman_tevin_0400.png"
 }

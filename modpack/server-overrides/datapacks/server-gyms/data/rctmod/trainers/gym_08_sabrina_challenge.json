@@ -1,5 +1,5 @@
 {
-  "name": "Hard Mode: Gym Leader Sabrina",
+  "name": "Gym Leader Sabrina",
   "identity": "Psychic",
   "textureResource": "rctmod:textures/trainers/single/leader_sabrina_01a4.png",
   "ai": {
@@ -16,95 +16,8 @@
   "bag": [],
   "team": [
     {
-      "species": "slowbro",
-      "level": 55,
-      "nature": "bold",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 4,
-        "spd": 0,
-        "spe": 0
-      },
-      "ability": "regenerator",
-      "heldItem": "cobblemon:heavy_duty_boots",
-      "moveset": [
-        "futuresight",
-        "teleport",
-        "scald",
-        "slackoff"
-      ]
-    },
-    {
-      "species": "reuniclus",
-      "level": 55,
-      "nature": "quiet",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "magicguard",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "trickroom",
-        "psyshock",
-        "focusblast",
-        "shadowball"
-      ]
-    },
-    {
-      "species": "hatterene",
-      "level": 55,
-      "nature": "quiet",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "magicbounce",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "trickroom",
-        "psychic",
-        "dazzlinggleam",
-        "mysticalfire"
-      ]
-    },
-    {
-      "species": "alakazam",
-      "level": 55,
+      "species": "indeedee",
+      "level": 50,
       "nature": "timid",
       "ivs": {
         "hp": 31,
@@ -115,26 +28,84 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 0,
         "def": 0,
         "spa": 252,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
-      "ability": "magicguard",
-      "heldItem": "cobblemon:life_orb",
+      "ability": "psychicsurge",
       "moveset": [
-        "nastyplot",
-        "psychic",
-        "shadowball",
-        "focusblast"
-      ]
+        "expandingforce",
+        "dazzlinggleam",
+        "followme",
+        "helpinghand"
+      ],
+      "heldItem": "cobblemon:terrain_extender"
     },
     {
-      "species": "bronzong",
-      "level": 55,
-      "nature": "sassy",
+      "species": "hatterene",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "magicbounce",
+      "moveset": [
+        "trickroom",
+        "expandingforce",
+        "drainingkiss",
+        "mysticalfire"
+      ],
+      "heldItem": "cobblemon:life_orb"
+    },
+    {
+      "species": "metagross",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "clearbody",
+      "moveset": [
+        "psychicfangs",
+        "ironhead",
+        "hammerarm",
+        "shadowclaw"
+      ],
+      "heldItem": "cobblemon:weakness_policy"
+    },
+    {
+      "species": "rabsca",
+      "level": 50,
+      "nature": "calm",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -151,19 +122,19 @@
         "spd": 128,
         "spe": 0
       },
-      "ability": "levitate",
-      "heldItem": "cobblemon:leftovers",
+      "ability": "synchronize",
       "moveset": [
-        "stealthrock",
-        "trickroom",
-        "gyroball",
-        "toxic"
-      ]
+        "reflect",
+        "lightscreen",
+        "bugbuzz",
+        "expandingforce"
+      ],
+      "heldItem": "cobblemon:light_clay"
     },
     {
-      "species": "medicham",
-      "level": 55,
-      "nature": "jolly",
+      "species": "gothitelle",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -173,21 +144,50 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
-        "atk": 252,
+        "hp": 0,
+        "atk": 0,
         "def": 0,
-        "spa": 0,
-        "spd": 0,
+        "spa": 252,
+        "spd": 4,
         "spe": 252
       },
-      "ability": "purepower",
-      "heldItem": "cobblemon:choice_scarf",
+      "ability": "shadowtag",
       "moveset": [
-        "highjumpkick",
-        "zenheadbutt",
-        "icepunch",
-        "bulletpunch"
-      ]
+        "psychic",
+        "foulplay",
+        "healpulse",
+        "trickroom"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "espathra",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "speedboost",
+      "moveset": [
+        "protect",
+        "luminacrash",
+        "dazzlinggleam",
+        "shadowball"
+      ],
+      "heldItem": "cobblemon:focus_sash"
     }
   ]
 }

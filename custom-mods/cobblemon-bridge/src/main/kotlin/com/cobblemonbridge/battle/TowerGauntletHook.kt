@@ -185,8 +185,9 @@ object TowerGauntletHook {
             val floor = activeFloor.remove(player.uuid) ?: continue
             if (floor < LAST_FLOOR) {
                 nextFloor[player.uuid] = floor + 1
+                teleportToFloor(player, floor + 1)
                 player.sendSystemMessage(Component.literal(
-                    "${PREFIX}Floor $floor cleared! Next: §efloor ${floor + 1}§f."
+                    "${PREFIX}Floor $floor cleared! Taking you up to §efloor ${floor + 1}§f…"
                 ))
             } else {
                 completeRun(player)
@@ -205,7 +206,17 @@ object TowerGauntletHook {
         failRun(player, "fled")
     }
 
-    /** Run ended (clear or loss) → warp back to the tower's return spot (or floor 1). */
+    /** The tower's floors are physically separate — teleports move the player through them.
+     *  Win floor N → warp up to floor N+1's spot; lose anywhere → warp down to floor 1;
+     *  clear floor 3 → warp to the return spot (or floor 1 if unset). The floor positions
+     *  double as the NPC anchors, so arrival is right next to the leader. */
+    private fun teleportToFloor(player: ServerPlayer, floor: Int) {
+        TowerManager.store().floor(floor)?.let {
+            com.cobblemonbridge.util.DelayedTeleports.schedule(player, it)
+        }
+    }
+
+    /** Run complete → warp to the tower's return spot (or floor 1). */
     private fun teleportOut(player: ServerPlayer) {
         TowerManager.store().returnPos()?.let {
             com.cobblemonbridge.util.DelayedTeleports.schedule(player, it)
@@ -236,9 +247,9 @@ object TowerGauntletHook {
         val hadRun = nextFloor.containsKey(player.uuid)
         clearRun(player.uuid)
         if (hadRun) {
-            teleportOut(player)
+            teleportToFloor(player, 1)
             player.sendSystemMessage(Component.literal(
-                "${PREFIX}Run over ($reason). §7Back to the bottom — start again any time before midnight."
+                "${PREFIX}Run over ($reason). §7Back to floor 1 — start again any time before midnight."
             ))
             CobblemonBridge.logger.info("tower: run {} for {}", reason, player.gameProfile.name)
         }

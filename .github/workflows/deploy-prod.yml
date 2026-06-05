@@ -227,4 +227,4 @@ jobs:
           body: |
             See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/${{ steps.ref.outputs.tag }}/CHANGELOG.md) for changes.
 
-            **Prod server:** `108.21.168.120:25565`
+            **Prod server:** ask Harris for the address.

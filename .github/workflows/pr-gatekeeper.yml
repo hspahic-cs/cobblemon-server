@@ -1,0 +1,39 @@
+# Auto-close PRs from anyone not on the allowlist. GitHub offers no way to
+# prevent PR creation on a public repo, so this closes unwanted ones on
+# arrival (a drive-by bot PR prompted this). To approve a new contributor,
+# add their GitHub username to ALLOWED below.
+#
+# Safety note: pull_request_target runs with write permissions in the BASE
+# repo context — this job must never check out or execute PR code.
+name: PR gatekeeper
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close PRs from non-allowlisted authors
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          ALLOWED=(
+            hspahic-cs
+            # add approved contributors here
+          )
+          for a in "${ALLOWED[@]}"; do
+            if [[ "$AUTHOR" == "$a" ]]; then
+              echo "$AUTHOR is allowlisted"
+              exit 0
+            fi
+          done
+          echo "$AUTHOR is not allowlisted — closing PR #$PR"
+          gh pr close "$PR" --repo "$GITHUB_REPOSITORY" \
+            --comment "Thanks for the interest, but this repo only accepts PRs from approved contributors. If you'd like to contribute, contact the maintainer first."

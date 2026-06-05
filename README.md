@@ -3,7 +3,7 @@
 Modpack + custom mods for our private Pokémon-themed Minecraft server.
 Two NeoForge servers (`cobblemon-prod`, `cobblemon-dev`) run on a single
 home VM at `192.168.1.20`. Friends connect from the internet via
-`108.21.168.120:25565` (prod) / `:25566` (dev).
+`<server address>:25565` (prod) / `:25566` (dev).
 
 ## Platform
 

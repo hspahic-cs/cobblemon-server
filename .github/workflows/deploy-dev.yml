@@ -200,7 +200,7 @@ jobs:
             Rolling pre-release tracking the head of `cobblemon-dev`.
 
             **Version:** ${{ steps.ver.outputs.version }}
-            **Dev server:** `108.21.168.120:25566`
+            **Dev server:** ask Harris for the address.
 
             Grab the `.mrpack` below and import into PrismLauncher: **Add Instance → Import → file**.
 
@@ -211,7 +211,6 @@ jobs:
             echo "## Modpack download"
             echo
             echo "**Version:** ${{ steps.ver.outputs.version }}"
-            echo "**Dev server:** \`108.21.168.120:25566\`"
             echo
             echo "[Download .mrpack from the dev-latest release](https://github.com/${{ github.repository }}/releases/tag/dev-latest)"
             echo

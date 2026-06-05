@@ -30,8 +30,8 @@ Two servers run side-by-side on the same VM. dev is for testing changes
 before they go to prod.
 
 **External access for friends:**
-- prod: `108.21.168.120:25565`
-- dev:  `108.21.168.120:25566`
+- prod: `<server address>:25565`
+- dev:  `<server address>:25566`
 
 ## How deploys are triggered
 
@@ -175,7 +175,7 @@ on the run summary page. Players testing on dev open the run from the
 [Actions tab](https://github.com/hspahic-cs/cobblemon-server/actions/workflows/deploy-dev.yml),
 scroll to the bottom, and download the artifact (kept 30 days).
 
-Then add server `108.21.168.120:25566` in your MC client and join. Verify
+Then add server `<server address>:25566` in your MC client and join. Verify
 your change works.
 
 You can tail server logs from your Mac to confirm mods loaded correctly:

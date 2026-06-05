@@ -12,12 +12,21 @@ from fp.battle import Battle, Pokemon
 from bridge import (
     PackedPokemon,
     PickRequest,
+    _normalize_log_lines,
     overlay_opponent_team,
     parse_packed_team,
     safest_move,
     select_choice,
     strip_cobblemon_uuids,
 )
+
+
+def test_normalize_translates_snow_weather():
+    # Cobblemon's fork emits the pre-gen9 name; foul-play knows "snowscape"
+    out = _normalize_log_lines(["|-weather|Snow", "|-weather|Snow|[upkeep]"], "p2")
+    assert out == ["|-weather|Snowscape", "|-weather|Snowscape|[upkeep]"]
+    # already-modern lines pass through untouched
+    assert _normalize_log_lines(["|-weather|Snowscape"], "p2") == ["|-weather|Snowscape"]
 
 
 def packed_entry(

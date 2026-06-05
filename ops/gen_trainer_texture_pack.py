@@ -25,10 +25,13 @@ TRAINER_DIRS = [
     REPO / "modpack/server-overrides/datapacks/server-gyms/data/rctmod/trainers",
     REPO / "modpack/server-overrides/datapacks/server-gym-ai-test/data/rctmod/trainers",
 ]
-# Ships inside the cobblemon-poke-ai mod jar — mod assets/ load automatically
-# on every client (no resource pack install/enable), and mods may provide
-# assets for another mod's namespace (rctmod).
-PACK_DIR = REPO / "custom-mods/cobblemon-poke-ai/src/main/resources"
+# Ships inside the cobblemon-npc mod jar — that mod goes to BOTH sides
+# (cobblemon-poke-ai is in CI's SERVER_ONLY list and never reaches clients).
+# Mirrors how RCT's own built-ins work: the client needs the trainer DATA
+# (data/rctmod/trainers/<id>.json) to bind a texture to a trainer id, plus
+# the texture itself (assets/rctmod/textures/trainers/single/<id>.png).
+# Server-side the world datapack overrides the jar's data copies.
+PACK_DIR = REPO / "custom-mods/cobblemon-npc/src/main/resources"
 
 
 def main() -> None:
@@ -38,11 +41,16 @@ def main() -> None:
 
     out_textures = PACK_DIR / "assets/rctmod/textures/trainers/single"
     out_textures.mkdir(parents=True, exist_ok=True)
+    out_data = PACK_DIR / "data/rctmod/trainers"
+    out_data.mkdir(parents=True, exist_ok=True)
 
     written, missing = 0, []
     for trainer_dir in TRAINER_DIRS:
         for path in sorted(trainer_dir.glob("*.json")):
             trainer = json.loads(path.read_text())
+            # client-side copy of the trainer definition (texture binding
+            # needs the trainer data present on the client)
+            (out_data / path.name).write_text(path.read_text())
             ref = trainer.get("textureResource")
             if not ref:
                 missing.append(f"{path.stem} (no textureResource)")

@@ -171,6 +171,12 @@ def _normalize_log_lines(log_entries: list[str], gym_side: str) -> list[str]:
     i = 0
     while i < len(flat):
         line = flat[i]
+        # Cobblemon's Showdown fork uses the pre-gen9 weather name; foul-play
+        # only knows the modern one (constants.SNOW == "snowscape").
+        if line.startswith("|-weather|Snow") and not line.startswith(
+            "|-weather|Snowscape"
+        ):
+            line = line.replace("|-weather|Snow", "|-weather|Snowscape", 1)
         if line.startswith("|split|") and i + 2 < len(flat):
             split_side = line[len("|split|"):].strip()
             private_line = flat[i + 1]

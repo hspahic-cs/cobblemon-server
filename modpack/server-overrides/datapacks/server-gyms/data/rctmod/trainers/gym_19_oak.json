@@ -3,11 +3,8 @@
   "identity": "Kanto Master",
   "textureResource": "rctmod:textures/trainers/single/prof_prof_oak_01ff.png",
   "ai": {
-    "type": "rb",
-    "data": {
-      "canMega": true,
-      "canTera": false
-    }
+    "type": "pe",
+    "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

@@ -2,12 +2,8 @@
   "name": "Pokémon Champion",
   "identity": "Sky Conqueror",
   "ai": {
-    "type": "rb",
-    "data": {
-      "canMega": true,
-      "canTera": true,
-      "teraTarget": "rayquaza"
-    }
+    "type": "pe",
+    "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

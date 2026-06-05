@@ -3,7 +3,7 @@
   "identity": "Steel",
   "textureResource": "rctmod:textures/trainers/single/gym_leader_byron_0399.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

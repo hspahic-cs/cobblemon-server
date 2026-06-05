@@ -2,7 +2,7 @@
   "name": "Gym Leader Brycen",
   "identity": "Ice",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

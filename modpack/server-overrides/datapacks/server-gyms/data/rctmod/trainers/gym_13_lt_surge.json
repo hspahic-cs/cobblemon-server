@@ -3,7 +3,7 @@
   "identity": "Electric",
   "textureResource": "rctmod:textures/trainers/single/leader_lt_surge_0033.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

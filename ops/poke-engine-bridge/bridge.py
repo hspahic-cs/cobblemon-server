@@ -13,6 +13,7 @@ See memory/reference_foul_play_api_mapping.md for the foul-play surface notes.
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import random
@@ -46,6 +47,11 @@ logger = logging.getLogger(__name__)
 SEARCH_ALGORITHM = os.environ.get("BRIDGE_SEARCH_ALGORITHM", "mcts")
 MCTS_BATCHES = int(os.environ.get("BRIDGE_MCTS_BATCHES", "1"))
 LOG_STATE = os.environ.get("BRIDGE_LOG_STATE", "0").lower() not in ("0", "", "false")
+# Terastallization is disabled on the server. The engine wheel is compiled
+# with the tera feature, so "-tera" options still appear in search results;
+# we drop them before selection. Proper fix: build poke-engine without the
+# `terastallization` cargo feature (planned for the cluster image).
+ALLOW_TERA = os.environ.get("BRIDGE_ALLOW_TERA", "0").lower() not in ("0", "", "false")
 
 
 @dataclass
@@ -95,6 +101,17 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
 
     if req.log_lines:
         battle.msg_list = _normalize_log_lines(req.log_lines, req.gym_side)
+        if LOG_STATE:
+            # Audit aids: what the request claims the gym side is, and the
+            # switch lines the replay will apply on top of it.
+            logger.info(
+                "audit request side: %s",
+                json.dumps(req.request_json.get("side", {})),
+            )
+            logger.info(
+                "audit switch lines: %s",
+                [l for l in battle.msg_list if "switch|" in l][:12],
+            )
         process_battle_updates(battle)
 
     return battle
@@ -233,6 +250,11 @@ def overlay_opponent_team(battle: Battle, team: list[PackedPokemon]) -> None:
 
 
 def _apply_truth(pkmn: Pokemon, pm: PackedPokemon) -> None:
+    # Level first: revealed mons are created via from_switch_string, which
+    # defaults to 100 when the protocol line omits the level token. Stats
+    # below are computed from it. (Attacker level scales the damage formula
+    # directly, so a wrong level ~doubles/halves simulated damage.)
+    pkmn.level = pm.level
     # Spread: recalc stats from real nature/EVs/IVs, preserving HP fraction
     # (same approach as Pokemon.set_spread, which doesn't accept IVs).
     hp_fraction = pkmn.hp / pkmn.max_hp
@@ -346,6 +368,7 @@ def _search_mcts(state_string: str, search_time_ms: int) -> str:
     options = [
         (mv, int(visits), total_score / visits if visits else 0.0)
         for mv, (visits, total_score) in merged.items()
+        if ALLOW_TERA or not mv.endswith("-tera")
     ]
     choice = select_choice(options)
     chosen = next(o for o in options if o[0] == choice)
@@ -383,7 +406,13 @@ def _search_expectiminimax(state_string: str, search_time_ms: int) -> str:
     result = iterative_deepening_expectiminimax(
         PokeEngineState.from_string(state_string), search_time_ms
     )
-    choice = safest_move(result.side_one, result.side_two, result.matrix)
+    side_one, matrix = result.side_one, result.matrix
+    if not ALLOW_TERA:
+        n2 = len(result.side_two)
+        kept = [i for i, mv in enumerate(side_one) if not mv.endswith("-tera")]
+        side_one = [side_one[i] for i in kept]
+        matrix = [c for i in kept for c in result.matrix[i * n2 : (i + 1) * n2]]
+    choice = safest_move(side_one, result.side_two, matrix)
     logger.info(
         "expectiminimax choice: %s (depth=%d, options=%d)",
         choice,

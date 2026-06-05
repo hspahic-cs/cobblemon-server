@@ -131,7 +131,7 @@
       "heldItem": "cobblemon:weakness_policy"
     },
     {
-      "species": "braviary",
+      "species": "drifblim",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -150,17 +150,14 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "tintedlens",
+      "ability": "aftermath",
       "moveset": [
-        "esperwing",
-        "airslash",
         "shadowball",
+        "airslash",
+        "thunderbolt",
         "calmmind"
       ],
-      "heldItem": "cobblemon:heavy_duty_boots",
-      "aspects": [
-        "hisuian"
-      ]
+      "heldItem": "cobblemon:heavy_duty_boots"
     },
     {
       "species": "oricorio",
@@ -189,7 +186,7 @@
         "quiverdance",
         "roost"
       ],
-      "heldItem": "cobblemon:zap_plate"
+      "heldItem": "cobblemon:flame_plate"
     }
   ],
   "textureResource": "rctmod:textures/trainers/single/bird_keeper_audrey_0493.png"

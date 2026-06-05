@@ -37,15 +37,73 @@
       },
       "ability": "psychicsurge",
       "moveset": [
+        "batonpass",
         "expandingforce",
-        "dazzlinggleam",
-        "followme",
-        "helpinghand"
+        "hypervoice",
+        "mysticalfire"
       ],
       "heldItem": "cobblemon:terrain_extender"
     },
     {
-      "species": "hatterene",
+      "species": "meowstic",
+      "level": 50,
+      "nature": "bold",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 128,
+        "spa": 0,
+        "spd": 128,
+        "spe": 0
+      },
+      "ability": "prankster",
+      "moveset": [
+        "reflect",
+        "lightscreen",
+        "batonpass",
+        "expandingforce"
+      ],
+      "heldItem": "cobblemon:light_clay"
+    },
+    {
+      "species": "gardevoir",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "synchronize",
+      "moveset": [
+        "expandingforce",
+        "moonblast",
+        "mysticalfire",
+        "trick"
+      ],
+      "heldItem": "cobblemon:choice_specs"
+    },
+    {
+      "species": "espeon",
       "level": 50,
       "nature": "timid",
       "ivs": {
@@ -66,15 +124,15 @@
       },
       "ability": "magicbounce",
       "moveset": [
-        "trickroom",
-        "expandingforce",
-        "drainingkiss",
-        "mysticalfire"
+        "calmmind",
+        "psychic",
+        "shadowball",
+        "drainingkiss"
       ],
-      "heldItem": "cobblemon:life_orb"
+      "heldItem": "cobblemon:colbur_berry"
     },
     {
-      "species": "metagross",
+      "species": "gallade",
       "level": 50,
       "nature": "jolly",
       "ivs": {
@@ -93,17 +151,17 @@
         "spd": 4,
         "spe": 252
       },
-      "ability": "clearbody",
+      "ability": "sharpness",
       "moveset": [
-        "psychicfangs",
-        "ironhead",
-        "hammerarm",
-        "shadowclaw"
+        "psychocut",
+        "sacredsword",
+        "nightslash",
+        "agility"
       ],
-      "heldItem": "cobblemon:weakness_policy"
+      "heldItem": "cobblemon:life_orb"
     },
     {
-      "species": "rabsca",
+      "species": "sigilyph",
       "level": 50,
       "nature": "calm",
       "ivs": {
@@ -122,72 +180,14 @@
         "spd": 128,
         "spe": 0
       },
-      "ability": "synchronize",
+      "ability": "magicguard",
       "moveset": [
-        "reflect",
-        "lightscreen",
-        "bugbuzz",
-        "expandingforce"
+        "cosmicpower",
+        "storedpower",
+        "roost",
+        "psychoshift"
       ],
-      "heldItem": "cobblemon:light_clay"
-    },
-    {
-      "species": "gothitelle",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "shadowtag",
-      "moveset": [
-        "psychic",
-        "foulplay",
-        "healpulse",
-        "trickroom"
-      ],
-      "heldItem": "cobblemon:leftovers"
-    },
-    {
-      "species": "espathra",
-      "level": 50,
-      "nature": "timid",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "speedboost",
-      "moveset": [
-        "protect",
-        "luminacrash",
-        "dazzlinggleam",
-        "shadowball"
-      ],
-      "heldItem": "cobblemon:focus_sash"
+      "heldItem": "cobblemon:toxic_orb"
     }
   ]
 }

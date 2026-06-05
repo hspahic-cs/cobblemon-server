@@ -48,6 +48,11 @@ SPECIES_FIXES = {
     "amoongus": "amoonguss",
 }
 
+# teams listing >6 mons: which one to drop (user decision; else first 6 kept)
+DROP_WHEN_OVER = {
+    "Dark": "Lokix",
+}
+
 
 def norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", s.lower())
@@ -68,8 +73,9 @@ def parse_wiki(path: str) -> dict:
         end = re.search(r"\n===? [^=\n]+? ===?\n", w[m.end():])
         body = w[m.end() : m.end() + end.start()] if end else w[m.end():]
         # Flying/Psychic carry h4 sub-teams (Team #1.., Battle #1/#2-doubles);
-        # use only the first (singles) sub-team
-        subs = list(re.finditer(r"\n==== [^=\n]+? ====\n", body))
+        # use only the first (singles) sub-team. NB: the first heading sits at
+        # the very start of the body (no leading newline) — anchor accordingly.
+        subs = list(re.finditer(r"(?:^|\n)==== [^=\n]+? ====\n", body))
         if subs:
             sub_end = subs[1].start() if len(subs) > 1 else len(body)
             body = body[subs[0].end() : sub_end]
@@ -98,9 +104,15 @@ def parse_wiki(path: str) -> dict:
             )
         assert 6 <= len(mons) <= 7, f"{name}: expected 6-7 mons, got {len(mons)}"
         if len(mons) > 6:
-            print(f"note: {name} lists {len(mons)} mons — keeping the first 6 "
-                  f"(dropping {mons[6]['species']})")
-        teams[name] = mons[:6]
+            drop = DROP_WHEN_OVER.get(name)
+            if drop and any(m["species"].strip() == drop for m in mons):
+                mons = [m for m in mons if m["species"].strip() != drop]
+                print(f"note: {name} lists 7 mons — dropping {drop} (configured)")
+            else:
+                print(f"note: {name} lists {len(mons)} mons — keeping the first 6 "
+                      f"(dropping {mons[6]['species']})")
+                mons = mons[:6]
+        teams[name] = mons
     missing = [t for t in TYPE_SECTIONS if t not in teams]
     assert not missing, f"missing type sections: {missing}"
     return teams

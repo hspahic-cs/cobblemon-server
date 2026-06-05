@@ -44,35 +44,6 @@
       "heldItem": "cobblemon:leftovers"
     },
     {
-      "species": "lokix",
-      "level": 50,
-      "nature": "jolly",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 4,
-        "spe": 252
-      },
-      "ability": "tintedlens",
-      "moveset": [
-        "firstimpression",
-        "throatchop",
-        "suckerpunch",
-        "uturn"
-      ],
-      "heldItem": "cobblemon:scope_lens"
-    },
-    {
       "species": "muk",
       "level": 50,
       "nature": "jolly",
@@ -190,6 +161,35 @@
         "earthpower"
       ],
       "heldItem": "cobblemon:expert_belt"
+    },
+    {
+      "species": "kingambit",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "supremeoverlord",
+      "moveset": [
+        "swordsdance",
+        "kowtowcleave",
+        "ironhead",
+        "suckerpunch"
+      ],
+      "heldItem": "cobblemon:chople_berry"
     }
   ],
   "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_04e1.png"

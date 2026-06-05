@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.8.1] - 2026-06-05
+
+### Fixed
+- **Trainer skins actually reach clients.** 0.8.0 embedded them in
+  `cobblemon-poke-ai`, which is server-only and never ships in the client
+  mrpack. They now live in `cobblemon-npc` (both sides), together with
+  client-side copies of the trainer data RCT needs to bind id→texture.
+- **Ice battles crashed the bridge**: Cobblemon emits the pre-gen9
+  `|-weather|Snow`; foul-play only knows `Snowscape`. Translated in the
+  bridge's protocol normalization.
+
+### Changed
+- **AI-test spawns come in chunks of 3** (`spawn_1`…`spawn_8`, each with a
+  next-chunk chat hint) instead of one 24-leader row; `cleanup` unchanged.
+
 ## [0.8.0] - 2026-06-05
 
 ### Added

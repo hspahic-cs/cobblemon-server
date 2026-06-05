@@ -23,6 +23,20 @@ FUNCTIONS_OUT = AITEST / "data/server/function/aitest"
 SPACING = 3  # blocks between leaders along +X
 
 
+def _tera_keys(obj, path="") -> list[str]:
+    """Paths of any dict keys mentioning tera (canTera, teraType, teraTarget...)."""
+    found = []
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if "tera" in k.lower():
+                found.append(f"{path}/{k}")
+            found += _tera_keys(v, f"{path}/{k}")
+    elif isinstance(obj, list):
+        for i, v in enumerate(obj):
+            found += _tera_keys(v, f"{path}[{i}]")
+    return found
+
+
 def main() -> None:
     gym_files = sorted(
         p for p in GYMS.glob("gym_*.json") if not p.stem.endswith("_challenge")
@@ -46,6 +60,13 @@ def main() -> None:
         names.append(display)
         trainer["name"] = f"AI Test [pe]: {display}"
         trainer["ai"] = {"type": "pe", "data": {}}
+
+        # Terastallization is disabled server-wide. Source files keep tera only
+        # in ai.data (replaced above), but guard against future hard-mode teams
+        # introducing it elsewhere (teraType on mons etc.). Key-based check —
+        # substrings false-positive on e.g. the "waterabsorb" ability.
+        leaks = _tera_keys(trainer)
+        assert not leaks, f"{path.name}: tera config leaked: {leaks}"
 
         trainer_id = f"aitest_{path.stem}_pe"
         out = TRAINERS_OUT / f"{trainer_id}.json"

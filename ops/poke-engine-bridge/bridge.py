@@ -19,6 +19,7 @@ import os
 import random
 import re
 from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures.process import BrokenProcessPool
 from copy import deepcopy
 from dataclasses import dataclass
 
@@ -432,16 +433,43 @@ def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
     return choice
 
 
+# Warm worker pool for root-parallel MCTS, created lazily per uvicorn worker
+# and reused across picks — spawning a pool per call cost ~1.4s/turn. Workers
+# inherit the loaded foul-play modules via fork. Replaced if a deploy restart
+# ever kills the children mid-search (BrokenProcessPool).
+_mcts_pool: ProcessPoolExecutor | None = None
+
+
+def _get_mcts_pool() -> ProcessPoolExecutor:
+    global _mcts_pool
+    if _mcts_pool is None:
+        _mcts_pool = ProcessPoolExecutor(max_workers=MCTS_BATCHES)
+    return _mcts_pool
+
+
 def _search_mcts(state_string: str, search_time_ms: int) -> str:
     if MCTS_BATCHES > 1:
         # Root parallelization: independent searches of the SAME state merged
         # by visit count. Diversifies tree exploration and uses spare cores.
-        with ProcessPoolExecutor(max_workers=MCTS_BATCHES) as executor:
+        global _mcts_pool
+        try:
             futures = [
-                executor.submit(get_result_from_mcts, state_string, search_time_ms, i)
+                _get_mcts_pool().submit(
+                    get_result_from_mcts, state_string, search_time_ms, i
+                )
                 for i in range(MCTS_BATCHES)
             ]
-        results = [f.result() for f in futures]
+            results = [f.result() for f in futures]
+        except BrokenProcessPool:
+            logger.warning("mcts pool broken — recreating and retrying once")
+            _mcts_pool = None
+            futures = [
+                _get_mcts_pool().submit(
+                    get_result_from_mcts, state_string, search_time_ms, i
+                )
+                for i in range(MCTS_BATCHES)
+            ]
+            results = [f.result() for f in futures]
     else:
         results = [get_result_from_mcts(state_string, search_time_ms, 0)]
 

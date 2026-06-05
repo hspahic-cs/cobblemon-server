@@ -14,7 +14,9 @@ See memory/reference_foul_play_api_mapping.md for the foul-play surface notes.
 from __future__ import annotations
 
 import logging
+import os
 import random
+from concurrent.futures import ProcessPoolExecutor
 from copy import deepcopy
 from dataclasses import dataclass
 
@@ -26,8 +28,24 @@ from fp.battle_modifier import process_battle_updates
 from fp.helpers import calculate_stats, normalize_name
 from fp.search.main import find_best_move, get_result_from_mcts
 from fp.search.poke_engine_helpers import battle_to_poke_engine_state
+from poke_engine import (
+    State as PokeEngineState,
+    iterative_deepening_expectiminimax,
+)
 
 logger = logging.getLogger(__name__)
+
+# Perfect-info search knobs (env, read at import — restart the service to change):
+#   BRIDGE_SEARCH_ALGORITHM  "mcts" (default) | "expectiminimax"
+#   BRIDGE_MCTS_BATCHES      root-parallel MCTS: N independent searches of the
+#                            same state in worker processes, visit counts merged.
+#                            (installed poke-engine 0.0.46 predates the threads
+#                            param, so parallelism has to live above the engine)
+#   BRIDGE_LOG_STATE         "1" to log the serialized engine state every pick
+#                            (audit tool — ~1-2KB per turn, dev only)
+SEARCH_ALGORITHM = os.environ.get("BRIDGE_SEARCH_ALGORITHM", "mcts")
+MCTS_BATCHES = int(os.environ.get("BRIDGE_MCTS_BATCHES", "1"))
+LOG_STATE = os.environ.get("BRIDGE_LOG_STATE", "0").lower() not in ("0", "", "false")
 
 
 @dataclass
@@ -282,7 +300,7 @@ def select_choice(options: list[tuple[str, int, float]]) -> str:
 
 
 def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
-    """Single deep MCTS over the one true battle state.
+    """Search the one true battle state.
 
     With the opponent's team fully known there is no hidden information to
     marginalize over, so foul-play's sample-N-worlds loop (find_best_move)
@@ -291,27 +309,85 @@ def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
     battle = deepcopy(battle)
     battle.opponent.lock_moves()
     state_string = battle_to_poke_engine_state(battle).to_string()
-    logger.debug("perfect-info state: %s", state_string)
-    result = get_result_from_mcts(state_string, search_time_ms, 0)
-    options = [
-        (
-            o.move_choice,
-            o.visits,
-            o.total_score / o.visits if o.visits else 0.0,
-        )
-        for o in result.side_one
-    ]
-    choice = select_choice(options)
-    chosen = next(o for o in options if o[0] == choice)
-    logger.info(
-        "perfect-info choice: %s (visits %d/%d, avg_score=%.3f)",
-        choice,
-        chosen[1],
-        result.total_visits,
-        chosen[2],
-    )
+    if LOG_STATE:
+        logger.info("perfect-info state: %s", state_string)
+    if SEARCH_ALGORITHM == "expectiminimax":
+        choice = _search_expectiminimax(state_string, search_time_ms)
+    else:
+        choice = _search_mcts(state_string, search_time_ms)
     # poke-engine emits "No Move" when the side has no legal action this
     # request (e.g. waiting on the opponent's faint replacement).
     if choice.lower() in ("no move", "none"):
         return "pass"
+    return choice
+
+
+def _search_mcts(state_string: str, search_time_ms: int) -> str:
+    if MCTS_BATCHES > 1:
+        # Root parallelization: independent searches of the SAME state merged
+        # by visit count. Diversifies tree exploration and uses spare cores.
+        with ProcessPoolExecutor(max_workers=MCTS_BATCHES) as executor:
+            futures = [
+                executor.submit(get_result_from_mcts, state_string, search_time_ms, i)
+                for i in range(MCTS_BATCHES)
+            ]
+        results = [f.result() for f in futures]
+    else:
+        results = [get_result_from_mcts(state_string, search_time_ms, 0)]
+
+    merged: dict[str, list[float]] = {}  # move -> [visits, total_score]
+    total_visits = 0
+    for result in results:
+        total_visits += result.total_visits
+        for o in result.side_one:
+            entry = merged.setdefault(o.move_choice, [0, 0.0])
+            entry[0] += o.visits
+            entry[1] += o.total_score
+    options = [
+        (mv, int(visits), total_score / visits if visits else 0.0)
+        for mv, (visits, total_score) in merged.items()
+    ]
+    choice = select_choice(options)
+    chosen = next(o for o in options if o[0] == choice)
+    logger.info(
+        "perfect-info choice: %s (visits %d/%d across %d batch(es), avg_score=%.3f)",
+        choice,
+        chosen[1],
+        total_visits,
+        len(results),
+        chosen[2],
+    )
+    return choice
+
+
+def safest_move(side_one: list[str], side_two: list[str], matrix: list) -> str:
+    """Maximin over an expectiminimax payoff matrix (row-major s1 x s2).
+
+    Reimplemented rather than using IterativeDeepeningResult.get_safest_move:
+    the upstream helper never advances its matrix index (0.0.46), so it
+    compares every row by cell [0]. Pruned branches are None — a pruned cell
+    can't be this row's realized worst case, so it's skipped; a fully-pruned
+    row can never be chosen.
+    """
+    best_move, best_worst = side_one[0], float("-inf")
+    n2 = len(side_two)
+    for i, mv in enumerate(side_one):
+        row = [s for s in matrix[i * n2 : (i + 1) * n2] if s is not None]
+        worst = min(row) if row else float("-inf")
+        if worst > best_worst:
+            best_move, best_worst = mv, worst
+    return best_move
+
+
+def _search_expectiminimax(state_string: str, search_time_ms: int) -> str:
+    result = iterative_deepening_expectiminimax(
+        PokeEngineState.from_string(state_string), search_time_ms
+    )
+    choice = safest_move(result.side_one, result.side_two, result.matrix)
+    logger.info(
+        "expectiminimax choice: %s (depth=%d, options=%d)",
+        choice,
+        result.depth_searched,
+        len(result.side_one),
+    )
     return choice

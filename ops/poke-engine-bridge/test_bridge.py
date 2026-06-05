@@ -13,6 +13,7 @@ from bridge import (
     PackedPokemon,
     overlay_opponent_team,
     parse_packed_team,
+    safest_move,
     select_choice,
 )
 
@@ -167,6 +168,30 @@ def test_select_choice_forced_switch_unaffected():
     # force-switch turns offer only switches; override is a no-op
     options = [("switch slowbro", 300, 0.10), ("switch reuniclus", 280, 0.09)]
     assert select_choice(options) in ("switch slowbro", "switch reuniclus")
+
+
+def test_safest_move_maximin():
+    # row worst-cases: psychic -> 1.0, switch -> 2.0 => maximin picks switch
+    s1 = ["psychic", "switch bronzong"]
+    s2 = ["nightslash", "swordsdance"]
+    matrix = [5.0, 1.0, 2.0, 3.0]
+    assert safest_move(s1, s2, matrix) == "switch bronzong"
+
+
+def test_safest_move_ignores_pruned_cells():
+    # pruned (None) cells aren't a realized worst case; psychic's only real
+    # cell is 4.0 which beats switch's worst of 3.0
+    s1 = ["psychic", "switch bronzong"]
+    s2 = ["nightslash", "swordsdance"]
+    matrix = [4.0, None, 3.0, 3.5]
+    assert safest_move(s1, s2, matrix) == "psychic"
+
+
+def test_safest_move_fully_pruned_row_never_wins():
+    s1 = ["psychic", "switch bronzong"]
+    s2 = ["nightslash"]
+    matrix = [None, -1.0]
+    assert safest_move(s1, s2, matrix) == "switch bronzong"
 
 
 def test_overlay_adds_unrevealed_mon_to_reserve():

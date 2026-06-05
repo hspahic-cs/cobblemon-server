@@ -1,0 +1,32 @@
+{
+  "parent": "server:beat_gym_13",
+  "display": {
+    "title": {
+      "text": "Gym 13: Lt. Surge \u2014 Challenge"
+    },
+    "description": {
+      "text": "Defeat the challenge variant of Gym 13."
+    },
+    "icon": {
+      "id": "cobblemon:ultra_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_13_lt_surge_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_gym_13_challenge"
+  }
+}

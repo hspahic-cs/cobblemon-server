@@ -1,0 +1,32 @@
+{
+  "parent": "server:beat_gym_11",
+  "display": {
+    "title": {
+      "text": "Gym 11: Viola \u2014 Challenge"
+    },
+    "description": {
+      "text": "Defeat the challenge variant of Gym 11."
+    },
+    "icon": {
+      "id": "cobblemon:ultra_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_11_viola_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_gym_11_challenge"
+  }
+}

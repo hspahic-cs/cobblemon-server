@@ -116,4 +116,32 @@ object BridgeTags {
 
     fun isGymTpNpc(tags: Iterable<String>): Boolean =
         tags.any { it == GYM_TP_NPC }
+
+    /**
+     * Tag marking an NPC as part of the daily battle tower. Stamped by
+     * [com.cobblemonbridge.tower.TowerManager] on rotation; used as the kill-selector when
+     * yesterday's leaders are despawned. Carried IN ADDITION to [TOWER_FLOOR].
+     *
+     * Tower leaders deliberately do NOT carry [GYM_ID]/[GYM_CHALLENGE] — the tower has its own
+     * gating ([com.cobblemonbridge.battle.TowerGauntletHook]) and must not be locked behind
+     * GymPrereqHook's beat-the-mainline-gym-first rule.
+     */
+    const val TOWER: String = "$NAMESPACE.tower"
+
+    fun isTower(tags: Iterable<String>): Boolean =
+        tags.any { it == TOWER }
+
+    /** Tag prefix marking which tower floor (1-3) an NPC guards. */
+    const val TOWER_FLOOR: String = "$NAMESPACE.tower_floor"
+
+    /** `cobblemon_bridge.tower_floor.<N>` → N. Range 1..3 — the tower has exactly three floors. */
+    fun parseTowerFloor(tag: String): Int? {
+        val prefix = "$TOWER_FLOOR."
+        if (!tag.startsWith(prefix)) return null
+        val floor = tag.removePrefix(prefix).toIntOrNull() ?: return null
+        return if (floor in 1..3) floor else null
+    }
+
+    fun findTowerFloor(tags: Iterable<String>): Int? =
+        tags.firstNotNullOfOrNull { parseTowerFloor(it) }
 }

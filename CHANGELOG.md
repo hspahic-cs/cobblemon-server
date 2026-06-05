@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-06-05
+
+### Added
+- **Daily Battle Tower** (cobblemon-bridge). The three-floor building at spawn
+  now hosts a rotating daily gauntlet: every server-local midnight, three of
+  the 18 challenge-mode gym leaders are picked (deterministic per day) and
+  summoned at op-configured floor positions. Beat all three in order
+  (1→2→3) without using a healing machine for a **Rare Key** — once per
+  player per day, unlimited retries until midnight. Party is locked for the
+  run (PC swaps fail it); items are allowed. Battles are flat L50 via
+  `adjust_level.50`. Tower wins still count toward the one-time
+  `beat_gym_N_challenge` advancements (shared trainer ids — by design).
+  Setup: `/tower setfloor 1..3` standing at each leader spot, then
+  `/tower rotate`; `/tower status` shows the day's lineup.
+
 ## [0.8.2] - 2026-06-05
 
 ### Added

@@ -25,8 +25,10 @@ TRAINER_DIRS = [
     REPO / "modpack/server-overrides/datapacks/server-gyms/data/rctmod/trainers",
     REPO / "modpack/server-overrides/datapacks/server-gym-ai-test/data/rctmod/trainers",
 ]
-PACK_DIR = REPO / "modpack/resourcepacks/rct-server-trainers"
-PACK_FORMAT = 34  # 1.21–1.21.1
+# Ships inside the cobblemon-poke-ai mod jar — mod assets/ load automatically
+# on every client (no resource pack install/enable), and mods may provide
+# assets for another mod's namespace (rctmod).
+PACK_DIR = REPO / "custom-mods/cobblemon-poke-ai/src/main/resources"
 
 
 def main() -> None:
@@ -53,19 +55,6 @@ def main() -> None:
                 continue
             (out_textures / f"{path.stem}.png").write_bytes(jar.read(jar_entry))
             written += 1
-
-    (PACK_DIR / "pack.mcmeta").write_text(
-        json.dumps(
-            {
-                "pack": {
-                    "pack_format": PACK_FORMAT,
-                    "description": "Skins for this server's custom RCT trainers (gyms + AI test)",
-                }
-            },
-            indent=2,
-        )
-        + "\n"
-    )
 
     print(f"wrote {written} textures to {out_textures}")
     if missing:

@@ -1,5 +1,5 @@
 {
-  "name": "Pok\u00e9mon Champion",
+  "name": "Pokémon Champion",
   "identity": "Sky Conqueror",
   "ai": {
     "type": "rb",
@@ -193,5 +193,6 @@
         "outrage"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/champion_jax_05b7.png"
 }

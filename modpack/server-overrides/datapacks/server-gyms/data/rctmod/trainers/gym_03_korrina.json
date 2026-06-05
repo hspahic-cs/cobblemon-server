@@ -130,5 +130,6 @@
         "bulkup"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_0308.png"
 }

@@ -26,6 +26,7 @@ jobs:
         run: |
           ALLOWED=(
             hspahic-cs
+            almutwakel
             # add approved contributors here
           )
           for a in "${ALLOWED[@]}"; do

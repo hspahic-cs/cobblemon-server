@@ -30,7 +30,7 @@ on Discord) for a tour and to get pointed at your first gym.
 
 !!! warning "Connection refused / timeout"
     Double-check the IP and port. If everything looks right, ping Harris;
-    the server is a home VM and occasionally goes down for upgrades.
+    the server occasionally goes down for upgrades.
 
 !!! warning "Mod-load conflicts"
     If the connect attempt errors with mismatched mod IDs, do a clean

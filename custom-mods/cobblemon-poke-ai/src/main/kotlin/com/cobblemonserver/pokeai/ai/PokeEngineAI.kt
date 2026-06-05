@@ -140,7 +140,16 @@ class PokeEngineAI(
         // so we fall back rather than send something Showdown will reject.
         val move = moveset?.moves?.firstOrNull { normalize(it.id) == normalize(moveId) }
             ?: return null
-        return MoveActionResponse(move.id, null, gimmick)
+        if (!move.canBeUsed()) return null
+        // MoveActionResponse.isValid requires a targetPnx whenever the move's
+        // target list is non-empty — even in singles. Mirror RandomBattleAI:
+        // prefer a non-allied target, else any. (Sending null gets the response
+        // rejected with IllegalActionChoiceException and the turn is passed.)
+        val targets = if (move.mustBeUsed()) null
+            else move.target.targetList(activeBattlePokemon)?.takeIf { it.isNotEmpty() }
+        if (targets == null) return MoveActionResponse(move.id, null, gimmick)
+        val chosenTarget = targets.filter { !it.isAllied(activeBattlePokemon) }.randomOrNull() ?: targets.random()
+        return MoveActionResponse(move.id, (chosenTarget as ActiveBattlePokemon).getPNX(), gimmick)
     }
 
     private fun normalize(s: String): String =

@@ -1,0 +1,32 @@
+{
+  "parent": "server:beat_gym_15",
+  "display": {
+    "title": {
+      "text": "Gym 15: Skyla \u2014 Challenge"
+    },
+    "description": {
+      "text": "Defeat the challenge variant of Gym 15."
+    },
+    "icon": {
+      "id": "cobblemon:ultra_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_15_skyla_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_gym_15_challenge"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "server:beat_gym_16",
+  "display": {
+    "title": {
+      "text": "Gym 16: Brycen \u2014 Challenge"
+    },
+    "description": {
+      "text": "Defeat the challenge variant of Gym 16."
+    },
+    "icon": {
+      "id": "cobblemon:ultra_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_16_brycen_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_gym_16_challenge"
+  }
+}

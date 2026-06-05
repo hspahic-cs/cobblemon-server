@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.8.2] - 2026-06-05
+
+### Added
+- **Challenge-mode gym rewards for gyms 11–18.** Each challenge gym now has
+  its own advancement (`server:beat_gym_N_challenge`, triggered by RCT's
+  `defeat_count` on the exact `gym_NN_*_challenge` trainer id) and reward
+  function. First-time challenge win per leader grants a Rare Key +
+  `$150 × N` via `AdvancementHook` — same plumbing as gyms 1–10, no mod
+  changes needed. Completable in any order. E4/Champion (19–24)
+  intentionally have no challenge variants.
+
 ## [0.8.1] - 2026-06-05
 
 ### Fixed

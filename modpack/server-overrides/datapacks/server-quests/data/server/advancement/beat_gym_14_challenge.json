@@ -1,0 +1,32 @@
+{
+  "parent": "server:beat_gym_14",
+  "display": {
+    "title": {
+      "text": "Gym 14: Grant \u2014 Challenge"
+    },
+    "description": {
+      "text": "Defeat the challenge variant of Gym 14."
+    },
+    "icon": {
+      "id": "cobblemon:ultra_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "gym_14_grant_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_gym_14_challenge"
+  }
+}

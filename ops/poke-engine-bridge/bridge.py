@@ -67,6 +67,11 @@ class PickRequest:
     # Cobblemon packed-team string for the opposing (player) side. When present,
     # the bridge plays with perfect information instead of sampling Smogon sets.
     opponent_team_packed: str | None = None
+    # Cobblemon's BattleAI.choose() forceSwitch parameter. The |request| JSON in
+    # showdownMessages can be stale on pivot turns (Volt Switch/U-turn/Teleport
+    # KOs), so this is the authoritative "you must pick a switch now" signal —
+    # without it the engine returns "No Move" and the battle softlocks.
+    force_switch: bool = False
 
 
 def pick_move(battle_id: str, req: PickRequest) -> str:
@@ -90,6 +95,12 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
     # Cobblemon's |request| JSON omits `rqid` — only the real Showdown server
     # uses it to ack choices, which we never do. find_best_move doesn't read it.
     battle.rqid = req.request_json.get(constants.RQID)
+    # Mirror foul-play's request handler (battle_modifier.request), which our
+    # out-of-band request_json bypasses; OR with the mod's authoritative flag.
+    battle.force_switch = req.force_switch or bool(
+        req.request_json.get(constants.FORCE_SWITCH)
+    )
+    battle.wait = bool(req.request_json.get(constants.WAIT))
     battle.user.initialize_first_turn_user_from_json(req.request_json)
 
     # Smogon priors. SmogonSets/TeamDatasets cache themselves at module level
@@ -225,6 +236,7 @@ def strip_cobblemon_uuids(req: PickRequest) -> PickRequest:
         smogon_stats_format=req.smogon_stats_format,
         search_time_ms=req.search_time_ms,
         opponent_team_packed=req.opponent_team_packed,
+        force_switch=req.force_switch,
     )
 
 

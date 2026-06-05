@@ -64,15 +64,23 @@ class PokeEngineAI(
         }.getOrNull()
 
         val response = try {
-            client.pick(battleId, requestJson, logLines, gymSide, opponentTeamPacked)
+            client.pick(battleId, requestJson, logLines, gymSide, opponentTeamPacked, forceSwitch)
         } catch (e: BridgeUnavailable) {
             log.warn("bridge unavailable for battle={} — falling back to StrongBattleAI: {}", battleId, e.message)
             return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch, e.message ?: "bridge error")
         }
 
-        return parseChoice(response.moveChoice, activeBattlePokemon, moveset)
-            ?: delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,
+        val parsed = parseChoice(response.moveChoice, activeBattlePokemon, moveset)
+            ?: return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,
                 "could not parse move_choice='${response.moveChoice}'")
+        // A pass on a force-switch turn deadlocks the battle (the sim waits
+        // for a switch forever and the player's UI never comes back). Never
+        // let one through — StrongBattleAI will pick a replacement.
+        if (forceSwitch && parsed is PassActionResponse) {
+            return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,
+                "bridge returned pass on a force-switch turn")
+        }
+        return parsed
     }
 
     private fun delegateToFallback(

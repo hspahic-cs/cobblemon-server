@@ -31,11 +31,15 @@ class BridgeClient(
         logLines: List<String>,
         gymSide: String,
         opponentTeamPacked: String? = null,
+        forceSwitch: Boolean = false,
     ): PickResponse {
         val body = JsonObject().apply {
             add("request_json", requestJson)
             add("log_lines", gson.toJsonTree(logLines))
             addProperty("gym_side", gymSide)
+            // authoritative pivot/faint signal — the |request| in the log can
+            // be stale on Volt Switch/U-turn/Teleport KO turns
+            addProperty("force_switch", forceSwitch)
             addProperty("pokemon_format", BridgeConfig.pokemonFormat)
             addProperty("generation", BridgeConfig.generation)
             addProperty("smogon_stats_format", BridgeConfig.smogonStatsFormat)

@@ -103,6 +103,23 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
 
     if req.log_lines:
         battle.msg_list = _normalize_log_lines(req.log_lines, req.gym_side)
+        # Stateless-rebuild quirk: the latest request marks the CURRENT active,
+        # but the replay starts at turn 0 with the lead's |switch| line.
+        # foul-play's switch_or_drag only searches the reserve, so if the
+        # request-active mon is the one "switching in", it isn't found and a
+        # blank phantom is fabricated in its place (a mon that led and is
+        # active again later spends the whole pick as a moveless ghost).
+        # Demote the request-active into the reserve and let the replay
+        # promote the right mon at the right time.
+        gym_switch_prefixes = (
+            f"|switch|{req.gym_side}a",
+            f"|drag|{req.gym_side}a",
+        )
+        if battle.user.active is not None and any(
+            line.startswith(gym_switch_prefixes) for line in battle.msg_list
+        ):
+            battle.user.reserve.append(battle.user.active)
+            battle.user.active = None
         if LOG_STATE:
             # Audit aids: what the request claims the gym side is, and the
             # switch lines the replay will apply on top of it.

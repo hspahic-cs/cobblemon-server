@@ -256,6 +256,77 @@ def test_strip_cobblemon_uuids_level_parses():
     assert pkmn.level == 50  # was 100: the UUID token broke level parsing
 
 
+def test_request_active_mon_survives_replay():
+    """The lead mon must not become a phantom when it is also the current active.
+
+    Stateless rebuild: the latest request marks Slowbro active NOW, while the
+    replay starts at turn 0 with Slowbro's lead |switch|. switch_or_drag only
+    searches the reserve, so without the demotion in _build_battle the replay
+    fabricates a moveless phantom (observed live: gym lead had no moves
+    whenever it was on the field, 'No Move' in a 1v1 endgame).
+    """
+    from fp.battle_modifier import process_battle_updates
+
+    battle = Battle(battle_tag="phantom-test")
+    battle.generation = "gen9"
+    battle.user.name = "p2"
+    battle.opponent.name = "p1"
+    battle.user.initialize_first_turn_user_from_json(
+        {
+            "side": {
+                "id": "p2",
+                "pokemon": [
+                    {
+                        "ident": "p2: Slowbro",
+                        "details": "Slowbro, L50, M",
+                        "condition": "202/202",
+                        "active": True,
+                        "stats": {"atk": 85, "def": 130, "spa": 130, "spd": 90, "spe": 50},
+                        "moves": ["futuresight", "teleport", "scald", "slackoff"],
+                        "ability": "regenerator",
+                        "item": "heavydutyboots",
+                    },
+                    {
+                        "ident": "p2: Bronzong",
+                        "details": "Bronzong, L50",
+                        "condition": "174/174",
+                        "active": False,
+                        "stats": {"atk": 109, "def": 136, "spa": 99, "spd": 136, "spe": 43},
+                        "moves": ["stealthrock", "trickroom", "gyroball", "toxic"],
+                        "ability": "levitate",
+                        "item": "leftovers",
+                    },
+                ],
+            }
+        }
+    )
+    battle.started = True
+    battle.msg_list = [
+        "|switch|p1a: Greninja|Greninja, L53, M|100/100",
+        "|switch|p2a: Slowbro|Slowbro, L50, M|202/202",
+        "|switch|p2a: Bronzong|Bronzong, L50|174/174",
+        "|switch|p2a: Slowbro|Slowbro, L50, M|202/202",
+    ]
+
+    # the demotion under test (mirrors _build_battle)
+    battle.user.reserve.append(battle.user.active)
+    battle.user.active = None
+    process_battle_updates(battle)
+
+    active = battle.user.active
+    assert active.name == "slowbro"
+    assert {m.name for m in active.moves} == {
+        "futuresight",
+        "teleport",
+        "scald",
+        "slackoff",
+    }
+    assert active.ability == "regenerator"
+    assert active.item == "heavydutyboots"
+    # no phantom duplicate left behind
+    assert [p.name for p in battle.user.reserve] == ["bronzong"]
+
+
 def test_overlay_adds_unrevealed_mon_to_reserve():
     battle = _battle_with_revealed_opponent()
     packed = "]".join(

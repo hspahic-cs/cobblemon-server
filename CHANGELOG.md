@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.7.67] - 2026-06-05
+
+### Changed
+- **TM vendor now sells TRs.** All 631 `simpletms:tm_<move>` entries in
+  `cobblemon-market`'s `items.json` swapped to `simpletms:tr_<move>` (every TM
+  has a corresponding TR in SimpleTMs 2.3.3 — verified 1:1 coverage). Pricing,
+  stock, elasticity, and `vendorTag` (`tm_grass`, `tm_fire`, etc.) preserved
+  so the existing per-type vendor NPCs still scope to the same item sets. The
+  vendor itself is still tagged "tm_*" in NPC metadata — only the items it
+  hands out are now reusable TRs instead of single-use TMs.
+
 ## [0.7.66] - 2026-06-04
 
 ### Fixed

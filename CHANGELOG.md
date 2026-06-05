@@ -25,7 +25,14 @@ root README.
   `adjust_level.50`. Tower wins still count toward the one-time
   `beat_gym_N_challenge` advancements (shared trainer ids — by design).
   Setup: `/tower setfloor 1..3` standing at each leader spot, then
-  `/tower rotate`; `/tower status` shows the day's lineup.
+  `/tower rotate`; `/tower status` shows the day's lineup. When a run ends
+  (clear or loss) the player is teleported to `/tower setreturn` (default:
+  floor 1).
+- **Gym-win return teleport.** Beating gym leaders 1–10 (mainline or
+  challenge) teleports the player to the `/gymreturn set` point ~1s after
+  the battle ends — every win, not just the first. Opt-in: unset = no
+  teleport. Tower fights against the same leaders are excluded (the tower
+  handles its own run-end teleport), as are gyms 11+ / E4 / Champion.
 
 ## [0.8.2] - 2026-06-05
 

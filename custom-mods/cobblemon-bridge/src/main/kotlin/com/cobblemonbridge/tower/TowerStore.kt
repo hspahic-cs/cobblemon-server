@@ -38,6 +38,8 @@ private data class TowerFile(
     val floors: Map<String, WarpPos> = emptyMap(),
     val lastRotatedEpochDay: Long? = null,
     val clearedEpochDay: Map<String, Long> = emptyMap(),
+    /** Where players are teleported when a run ends (clear or loss). Null → floor 1. */
+    val returnPos: WarpPos? = null,
 )
 
 class TowerStore private constructor(
@@ -59,6 +61,14 @@ class TowerStore private constructor(
 
     fun setLastRotatedEpochDay(day: Long) {
         data = data.copy(lastRotatedEpochDay = day)
+        save()
+    }
+
+    /** Run-end teleport target — explicit return spot if set, else floor 1 (the bottom). */
+    fun returnPos(): WarpPos? = data.returnPos ?: floor(1)
+
+    fun setReturnPos(pos: WarpPos) {
+        data = data.copy(returnPos = pos)
         save()
     }
 

@@ -66,6 +66,11 @@ object TowerGauntletHook {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.HIGH) { event -> onBattleStarted(event) }
     }
 
+    /** True while the player is mid-tower-battle. Read by [GymReturnHook] (at HIGH priority,
+     *  before our NORMAL victory handler consumes the entry) to tell tower fights apart from
+     *  gym-area fights against the same trainer ids. */
+    fun isFightingTower(uuid: UUID): Boolean = activeFloor.containsKey(uuid)
+
     /** Rotation swapped the NPCs — every in-flight run is void. Called by [TowerManager.rotate]. */
     fun resetAllRuns() {
         nextFloor.clear()
@@ -200,9 +205,17 @@ object TowerGauntletHook {
         failRun(player, "fled")
     }
 
+    /** Run ended (clear or loss) → warp back to the tower's return spot (or floor 1). */
+    private fun teleportOut(player: ServerPlayer) {
+        TowerManager.store().returnPos()?.let {
+            com.cobblemonbridge.util.DelayedTeleports.schedule(player, it)
+        }
+    }
+
     private fun completeRun(player: ServerPlayer) {
         val wasVoided = player.uuid in voided
         clearRun(player.uuid)
+        teleportOut(player)
         if (wasVoided) {
             player.sendSystemMessage(Component.literal(
                 "${PREFIX}Tower cleared — but the healing machine voided today's key. Come back tomorrow!"
@@ -223,8 +236,9 @@ object TowerGauntletHook {
         val hadRun = nextFloor.containsKey(player.uuid)
         clearRun(player.uuid)
         if (hadRun) {
+            teleportOut(player)
             player.sendSystemMessage(Component.literal(
-                "${PREFIX}Run over ($reason). §7Start again at floor 1 any time before midnight."
+                "${PREFIX}Run over ($reason). §7Back to the bottom — start again any time before midnight."
             ))
             CobblemonBridge.logger.info("tower: run {} for {}", reason, player.gameProfile.name)
         }

@@ -33,6 +33,9 @@ object TowerCommands {
                         }
                     )
                 )
+                .then(Commands.literal("setreturn")
+                    .executes { ctx -> setReturn(ctx.source); 1 }
+                )
                 .then(Commands.literal("rotate")
                     .executes { ctx -> forceRotate(ctx.source); 1 }
                 )
@@ -50,6 +53,18 @@ object TowerCommands {
         source.sendSystemMessage(Component.literal(
             "§a[Tower] Floor $floor → ${"%.1f".format(pos.x)}, ${"%.1f".format(pos.y)}, ${"%.1f".format(pos.z)} §8($dim)" +
             if (TowerManager.store().floorsConfigured()) " §7— all floors set; run /tower rotate to summon." else ""
+        ))
+    }
+
+    /** Capture the sender's position as the run-end return spot (clear or loss). Optional —
+     *  unset falls back to floor 1. */
+    private fun setReturn(source: CommandSourceStack) {
+        val pos = source.position
+        val rot = source.rotation
+        val dim = source.level.dimension().location().toString()
+        TowerManager.store().setReturnPos(WarpPos(pos.x, pos.y, pos.z, dim, rot.y, rot.x))
+        source.sendSystemMessage(Component.literal(
+            "§a[Tower] Return spot → ${"%.1f".format(pos.x)}, ${"%.1f".format(pos.y)}, ${"%.1f".format(pos.z)} §8($dim)"
         ))
     }
 

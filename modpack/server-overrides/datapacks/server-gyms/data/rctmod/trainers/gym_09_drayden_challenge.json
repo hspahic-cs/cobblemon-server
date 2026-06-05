@@ -1,8 +1,8 @@
 {
-  "name": "Hard Mode: Gym Leader Drayden",
+  "name": "Gym Leader Drayden",
   "identity": "Dragon",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -15,8 +15,8 @@
   "bag": [],
   "team": [
     {
-      "species": "garchomp",
-      "level": 60,
+      "species": "cyclizar",
+      "level": 50,
       "nature": "jolly",
       "ivs": {
         "hp": 31,
@@ -27,84 +27,26 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 252,
         "def": 0,
         "spa": 0,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
-      "ability": "roughskin",
-      "heldItem": "cobblemon:rocky_helmet",
+      "ability": "regenerator",
       "moveset": [
-        "stealthrock",
-        "swordsdance",
-        "earthquake",
-        "scaleshot"
-      ]
-    },
-    {
-      "species": "salamence",
-      "level": 60,
-      "nature": "jolly",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "moxie",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "dragondance",
-        "dualwingbeat",
-        "earthquake",
-        "dragonclaw"
-      ]
-    },
-    {
-      "species": "haxorus",
-      "level": 60,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "moldbreaker",
-      "heldItem": "cobblemon:choice_scarf",
-      "moveset": [
+        "shedtail",
         "outrage",
-        "closecombat",
-        "earthquake",
-        "firstimpression"
-      ]
+        "return",
+        "uturn"
+      ],
+      "heldItem": "cobblemon:choice_scarf"
     },
     {
       "species": "kommoo",
-      "level": 60,
-      "nature": "impish",
+      "level": 50,
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -114,79 +56,138 @@
         "spe": 31
       },
       "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 0,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "bulletproof",
-      "heldItem": "cobblemon:leftovers",
-      "moveset": [
-        "stealthrock",
-        "bodypress",
-        "dragontail",
-        "toxic"
-      ]
-    },
-    {
-      "species": "goodra",
-      "level": 60,
-      "nature": "calm",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 0,
-        "spa": 4,
-        "spd": 252,
-        "spe": 0
-      },
-      "ability": "sapsipper",
-      "heldItem": "cobblemon:assault_vest",
-      "moveset": [
-        "dracometeor",
-        "sludgebomb",
-        "flamethrower",
-        "thunderbolt"
-      ]
-    },
-    {
-      "species": "kingdra",
-      "level": 60,
-      "nature": "modest",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 0,
         "def": 0,
         "spa": 252,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
-      "ability": "sniper",
-      "heldItem": "cobblemon:scope_lens",
+      "ability": "soundproof",
       "moveset": [
-        "focusenergy",
+        "clangoroussoul",
+        "clangingscales",
+        "aurasphere",
+        "flashcannon"
+      ],
+      "heldItem": "cobblemon:throat_spray"
+    },
+    {
+      "species": "dracovish",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "strongjaw",
+      "moveset": [
+        "fishiousrend",
+        "outrage",
+        "psychicfangs",
+        "crunch"
+      ],
+      "heldItem": "cobblemon:choice_scarf"
+    },
+    {
+      "species": "dragonite",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "multiscale",
+      "moveset": [
+        "dragondance",
+        "dragonclaw",
+        "earthquake",
+        "icespinner"
+      ],
+      "heldItem": "cobblemon:heavy_duty_boots"
+    },
+    {
+      "species": "dragalge",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "adaptability",
+      "moveset": [
         "dracometeor",
-        "hydropump",
-        "icebeam"
-      ]
+        "sludgewave",
+        "focusblast",
+        "flipturn"
+      ],
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "dragapult",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "clearbody",
+      "moveset": [
+        "dragondarts",
+        "phantomforce",
+        "fireblast",
+        "thunderbolt"
+      ],
+      "heldItem": "cobblemon:life_orb"
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/dragon_tamer_drake_049a.png"
 }

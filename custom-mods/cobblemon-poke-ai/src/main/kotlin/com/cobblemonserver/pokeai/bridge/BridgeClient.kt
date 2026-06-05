@@ -30,15 +30,23 @@ class BridgeClient(
         requestJson: JsonObject,
         logLines: List<String>,
         gymSide: String,
+        opponentTeamPacked: String? = null,
+        forceSwitch: Boolean = false,
     ): PickResponse {
         val body = JsonObject().apply {
             add("request_json", requestJson)
             add("log_lines", gson.toJsonTree(logLines))
             addProperty("gym_side", gymSide)
+            // authoritative pivot/faint signal — the |request| in the log can
+            // be stale on Volt Switch/U-turn/Teleport KO turns
+            addProperty("force_switch", forceSwitch)
             addProperty("pokemon_format", BridgeConfig.pokemonFormat)
             addProperty("generation", BridgeConfig.generation)
             addProperty("smogon_stats_format", BridgeConfig.smogonStatsFormat)
             addProperty("search_time_ms", BridgeConfig.searchTimeMs)
+            // Player's full team — lets the bridge search with perfect
+            // information instead of guessing sets from Smogon stats.
+            opponentTeamPacked?.let { addProperty("opponent_team_packed", it) }
         }
         val httpReq = HttpRequest.newBuilder(URI.create("${BridgeConfig.url}/battles/$battleId/pick"))
             .timeout(Duration.ofMillis(BridgeConfig.timeoutMs))

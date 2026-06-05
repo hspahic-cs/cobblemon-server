@@ -2,7 +2,7 @@
   "name": "Gym Leader Viola",
   "identity": "Bug",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -190,5 +190,6 @@
         "psychic"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/cameraman_tevin_0400.png"
 }

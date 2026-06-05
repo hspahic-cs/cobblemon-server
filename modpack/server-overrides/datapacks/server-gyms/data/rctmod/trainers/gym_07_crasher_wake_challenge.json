@@ -1,9 +1,9 @@
 {
-  "name": "Hard Mode: Gym Leader Crasher Wake",
+  "name": "Gym Leader Crasher Wake",
   "identity": "Water",
   "textureResource": "rctmod:textures/trainers/single/gym_leader_wake_03d7.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -18,7 +18,7 @@
     {
       "species": "pelipper",
       "level": 50,
-      "nature": "bold",
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -28,26 +28,113 @@
         "spe": 31
       },
       "evs": {
-        "hp": 252,
+        "hp": 0,
         "atk": 0,
-        "def": 252,
-        "spa": 4,
-        "spd": 0,
-        "spe": 0
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
       },
       "ability": "drizzle",
-      "heldItem": "cobblemon:damp_rock",
       "moveset": [
-        "scald",
+        "weatherball",
+        "hurricane",
         "uturn",
-        "roost",
-        "defog"
-      ]
+        "roost"
+      ],
+      "heldItem": "cobblemon:damp_rock"
+    },
+    {
+      "species": "palafin",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "zerotohero",
+      "moveset": [
+        "flipturn",
+        "wavecrash",
+        "jetpunch",
+        "icepunch"
+      ],
+      "heldItem": "cobblemon:choice_band"
+    },
+    {
+      "species": "basculegion",
+      "level": 50,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "swiftswim",
+      "moveset": [
+        "liquidation",
+        "flipturn",
+        "lastrespects",
+        "psychicfangs"
+      ],
+      "heldItem": "cobblemon:assault_vest"
+    },
+    {
+      "species": "lanturn",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 252
+      },
+      "ability": "voltabsorb",
+      "moveset": [
+        "voltswitch",
+        "scald",
+        "thunder",
+        "raindance"
+      ],
+      "heldItem": "cobblemon:leftovers"
     },
     {
       "species": "kingdra",
       "level": 50,
-      "nature": "modest",
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -57,26 +144,26 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 0,
         "atk": 0,
         "def": 0,
         "spa": 252,
-        "spd": 0,
+        "spd": 4,
         "spe": 252
       },
       "ability": "swiftswim",
-      "heldItem": "cobblemon:life_orb",
       "moveset": [
         "hydropump",
-        "dracometeor",
-        "hurricane",
-        "flashcannon"
-      ]
+        "dragonpulse",
+        "icebeam",
+        "surf"
+      ],
+      "heldItem": "cobblemon:life_orb"
     },
     {
-      "species": "barraskewda",
+      "species": "primarina",
       "level": 50,
-      "nature": "adamant",
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -86,108 +173,21 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
-        "atk": 252,
+        "hp": 0,
+        "atk": 0,
         "def": 0,
-        "spa": 0,
-        "spd": 0,
+        "spa": 252,
+        "spd": 4,
         "spe": 252
-      },
-      "ability": "swiftswim",
-      "heldItem": "cobblemon:choice_band",
-      "moveset": [
-        "liquidation",
-        "closecombat",
-        "poisonjab",
-        "aquajet"
-      ]
-    },
-    {
-      "species": "kabutops",
-      "level": 50,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "swiftswim",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "swordsdance",
-        "waterfall",
-        "stoneedge",
-        "aquajet"
-      ]
-    },
-    {
-      "species": "swampert",
-      "level": 50,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 252,
-        "def": 4,
-        "spa": 0,
-        "spd": 0,
-        "spe": 0
       },
       "ability": "torrent",
-      "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "stealthrock",
-        "earthquake",
-        "icepunch",
-        "flipturn"
-      ]
-    },
-    {
-      "species": "gastrodon",
-      "level": 50,
-      "nature": "bold",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 0,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "stormdrain",
-      "heldItem": "cobblemon:leftovers",
-      "moveset": [
-        "scald",
-        "earthpower",
-        "recover",
-        "toxic"
-      ]
+        "calmmind",
+        "surf",
+        "moonblast",
+        "energyball"
+      ],
+      "heldItem": "cobblemon:leftovers"
     }
   ]
 }

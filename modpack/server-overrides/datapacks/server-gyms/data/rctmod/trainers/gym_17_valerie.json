@@ -2,7 +2,7 @@
   "name": "Gym Leader Valerie",
   "identity": "Fairy",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -190,5 +190,6 @@
         "moonlight"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/picnicker_valerie_01d4.png"
 }

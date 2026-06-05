@@ -3,6 +3,7 @@ package com.cobblemonserver.pokeai.ai
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.api.battles.model.ai.BattleAI
 import com.cobblemon.mod.common.battles.ActiveBattlePokemon
+import com.cobblemon.mod.common.battles.BattleRegistry.packTeam
 import com.cobblemon.mod.common.battles.BattleSide
 import com.cobblemon.mod.common.battles.MoveActionResponse
 import com.cobblemon.mod.common.battles.PassActionResponse
@@ -51,16 +52,35 @@ class PokeEngineAI(
 
         val logLines = battle.showdownMessages.toList()
 
+        // Perfect information: the player's full team, in Cobblemon's packed
+        // format. The bridge uses it instead of guessing sets from Smogon
+        // usage stats — random/casual teams confuse that inference badly.
+        // Best-effort: on any serialization hiccup, send nothing and let the
+        // bridge fall back to set sampling.
+        val opponentTeamPacked = runCatching {
+            aiSide.getOppositeSide().actors.flatMap { it.pokemonList }.packTeam()
+        }.onFailure {
+            log.warn("could not pack opposing team for battle={}: {}", battleId, it.message)
+        }.getOrNull()
+
         val response = try {
-            client.pick(battleId, requestJson, logLines, gymSide)
+            client.pick(battleId, requestJson, logLines, gymSide, opponentTeamPacked, forceSwitch)
         } catch (e: BridgeUnavailable) {
             log.warn("bridge unavailable for battle={} — falling back to StrongBattleAI: {}", battleId, e.message)
             return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch, e.message ?: "bridge error")
         }
 
-        return parseChoice(response.moveChoice, activeBattlePokemon, moveset)
-            ?: delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,
+        val parsed = parseChoice(response.moveChoice, activeBattlePokemon, moveset)
+            ?: return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,
                 "could not parse move_choice='${response.moveChoice}'")
+        // A pass on a force-switch turn deadlocks the battle (the sim waits
+        // for a switch forever and the player's UI never comes back). Never
+        // let one through — StrongBattleAI will pick a replacement.
+        if (forceSwitch && parsed is PassActionResponse) {
+            return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,
+                "bridge returned pass on a force-switch turn")
+        }
+        return parsed
     }
 
     private fun delegateToFallback(
@@ -128,7 +148,16 @@ class PokeEngineAI(
         // so we fall back rather than send something Showdown will reject.
         val move = moveset?.moves?.firstOrNull { normalize(it.id) == normalize(moveId) }
             ?: return null
-        return MoveActionResponse(move.id, null, gimmick)
+        if (!move.canBeUsed()) return null
+        // MoveActionResponse.isValid requires a targetPnx whenever the move's
+        // target list is non-empty — even in singles. Mirror RandomBattleAI:
+        // prefer a non-allied target, else any. (Sending null gets the response
+        // rejected with IllegalActionChoiceException and the turn is passed.)
+        val targets = if (move.mustBeUsed()) null
+            else move.target.targetList(activeBattlePokemon)?.takeIf { it.isNotEmpty() }
+        if (targets == null) return MoveActionResponse(move.id, null, gimmick)
+        val chosenTarget = targets.filter { !it.isAllied(activeBattlePokemon) }.randomOrNull() ?: targets.random()
+        return MoveActionResponse(move.id, (chosenTarget as ActiveBattlePokemon).getPNX(), gimmick)
     }
 
     private fun normalize(s: String): String =

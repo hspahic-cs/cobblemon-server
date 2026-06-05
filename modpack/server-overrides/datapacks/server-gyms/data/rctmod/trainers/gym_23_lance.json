@@ -3,7 +3,7 @@
   "identity": "Dragon Boss",
   "textureResource": "rctmod:textures/trainers/single/champion_lance_0027.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

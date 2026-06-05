@@ -2,7 +2,7 @@
   "name": "Gym Leader Marnie",
   "identity": "Dark",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -191,5 +191,6 @@
         "earthpower"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_04e1.png"
 }

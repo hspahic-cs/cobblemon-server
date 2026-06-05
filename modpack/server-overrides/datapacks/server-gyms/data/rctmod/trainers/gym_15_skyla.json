@@ -2,7 +2,7 @@
   "name": "Gym Leader Skyla",
   "identity": "Flying",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -191,5 +191,6 @@
         "roost"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/bird_keeper_audrey_0493.png"
 }

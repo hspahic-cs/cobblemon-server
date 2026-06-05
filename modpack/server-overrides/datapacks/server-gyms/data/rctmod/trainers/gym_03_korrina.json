@@ -2,7 +2,7 @@
   "name": "Gym Leader Korrina",
   "identity": "Fighting",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -130,5 +130,6 @@
         "bulkup"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_0308.png"
 }

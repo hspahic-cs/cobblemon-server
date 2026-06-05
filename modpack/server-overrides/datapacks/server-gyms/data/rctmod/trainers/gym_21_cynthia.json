@@ -3,7 +3,7 @@
   "identity": "Hyper Offense",
   "textureResource": "rctmod:textures/trainers/single/champion_cynthia_03a5.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

@@ -2,7 +2,7 @@
   "name": "Gym Leader Clay",
   "identity": "Ground",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",
@@ -101,5 +101,6 @@
         "toxic"
       ]
     }
-  ]
+  ],
+  "textureResource": "rctmod:textures/trainers/single/veteran_clayton_0387.png"
 }

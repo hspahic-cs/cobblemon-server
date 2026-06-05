@@ -3,7 +3,7 @@
   "identity": "Stall",
   "textureResource": "rctmod:textures/trainers/single/elite_four_agatha_0053.png",
   "ai": {
-    "type": "rb",
+    "type": "pe",
     "data": {}
   },
   "battleFormat": "GEN_9_SINGLES",

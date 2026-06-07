@@ -29,6 +29,13 @@ def main() -> None:
     parser.add_argument("logfile")
     parser.add_argument("--turn", type=int, default=0, help="1-based; 0 = last")
     parser.add_argument("--search-ms", type=int, default=1000)
+    parser.add_argument(
+        "--temperature",
+        type=float,
+        default=None,
+        help="override opponent-fallibility temperature (0=perfect opponent). "
+        "Default: use the value logged in the turn record.",
+    )
     parser.add_argument("--list", action="store_true", help="summarize turns and exit")
     args = parser.parse_args()
 
@@ -68,7 +75,11 @@ def main() -> None:
         search_time_ms=args.search_ms,
         opponent_team_packed=t.get("opponent_team_packed"),
         force_switch=t.get("force_switch", False),
+        temperature=args.temperature
+        if args.temperature is not None
+        else t.get("temperature", 0.0),
     )
+    print(f"--- temperature: {req.temperature}")
     choice = pick_move(t["battle_id"], req)
     print(f"--- replay pick: {choice}")
 

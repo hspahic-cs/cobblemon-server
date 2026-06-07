@@ -29,11 +29,12 @@ from data.pkmn_sets import SmogonSets, TeamDatasets
 from fp.battle import Battle, Pokemon
 from fp.battle_modifier import process_battle_updates
 from fp.helpers import calculate_stats, normalize_name
-from fp.search.main import find_best_move, get_result_from_mcts
+from fp.search.main import find_best_move
 from fp.search.poke_engine_helpers import battle_to_poke_engine_state
 from poke_engine import (
     State as PokeEngineState,
     iterative_deepening_expectiminimax,
+    monte_carlo_tree_search,
 )
 
 logger = logging.getLogger(__name__)
@@ -73,13 +74,21 @@ class PickRequest:
     # KOs), so this is the authoritative "you must pick a switch now" signal —
     # without it the engine returns "No Move" and the battle softlocks.
     force_switch: bool = False
+    # Opponent-fallibility temperature for the perfect-info MCTS. 0 = perfect
+    # opponent (original behaviour); higher values make the search assume the
+    # player sometimes misplays, so it punishes greedy lines (e.g. free setup).
+    # Intended as a per-gym difficulty dial. Only the perfect-info MCTS path
+    # honours it.
+    temperature: float = 0.0
 
 
 def pick_move(battle_id: str, req: PickRequest) -> str:
     battle = _build_battle(battle_id, req)
     if req.opponent_team_packed:
         overlay_opponent_team(battle, parse_packed_team(req.opponent_team_packed))
-        return _find_best_move_perfect_info(battle, req.search_time_ms)
+        return _find_best_move_perfect_info(
+            battle, req.search_time_ms, req.temperature
+        )
     return find_best_move(battle)
 
 
@@ -416,7 +425,9 @@ def select_choice(options: list[tuple[str, int, float]]) -> str:
     return random.choices(near_best, weights=[o[1] for o in near_best])[0][0]
 
 
-def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
+def _find_best_move_perfect_info(
+    battle: Battle, search_time_ms: int, temperature: float = 0.0
+) -> str:
     """Search the one true battle state.
 
     With the opponent's team fully known there is no hidden information to
@@ -429,9 +440,11 @@ def _find_best_move_perfect_info(battle: Battle, search_time_ms: int) -> str:
     if LOG_STATE:
         logger.info("perfect-info state: %s", state_string)
     if SEARCH_ALGORITHM == "expectiminimax":
+        # expectiminimax is maximin (worst-case opponent) and does not model
+        # opponent fallibility, so temperature is ignored on this path.
         choice = _search_expectiminimax(state_string, search_time_ms)
     else:
-        choice = _search_mcts(state_string, search_time_ms)
+        choice = _search_mcts(state_string, search_time_ms, temperature)
     # poke-engine emits "No Move" when the side has no legal action this
     # request (e.g. waiting on the opponent's faint replacement).
     if choice.lower() in ("no move", "none"):
@@ -453,7 +466,24 @@ def _get_mcts_pool() -> ProcessPoolExecutor:
     return _mcts_pool
 
 
-def _search_mcts(state_string: str, search_time_ms: int) -> str:
+def _run_mcts(state_string: str, search_time_ms: int, temperature: float):
+    """Top-level (picklable) MCTS call used directly and by the worker pool.
+
+    Calls poke-engine's single-threaded MCTS with the opponent-fallibility
+    temperature. threads=1 keeps the search on the temperature-aware path.
+
+    Backward-compatible: the `temperature` arg only exists on our patched
+    poke-engine. When temperature is 0 (the default until gyms are calibrated)
+    we call the stock 3-arg signature, so this bridge runs unchanged on an
+    unpatched image. A non-zero temperature requires the patched engine.
+    """
+    state = PokeEngineState.from_string(state_string)
+    if temperature:
+        return monte_carlo_tree_search(state, search_time_ms, 1, temperature)
+    return monte_carlo_tree_search(state, search_time_ms)
+
+
+def _search_mcts(state_string: str, search_time_ms: int, temperature: float = 0.0) -> str:
     if MCTS_BATCHES > 1:
         # Root parallelization: independent searches of the SAME state merged
         # by visit count. Diversifies tree exploration and uses spare cores.
@@ -461,7 +491,7 @@ def _search_mcts(state_string: str, search_time_ms: int) -> str:
         try:
             futures = [
                 _get_mcts_pool().submit(
-                    get_result_from_mcts, state_string, search_time_ms, i
+                    _run_mcts, state_string, search_time_ms, temperature
                 )
                 for i in range(MCTS_BATCHES)
             ]
@@ -471,13 +501,13 @@ def _search_mcts(state_string: str, search_time_ms: int) -> str:
             _mcts_pool = None
             futures = [
                 _get_mcts_pool().submit(
-                    get_result_from_mcts, state_string, search_time_ms, i
+                    _run_mcts, state_string, search_time_ms, temperature
                 )
                 for i in range(MCTS_BATCHES)
             ]
             results = [f.result() for f in futures]
     else:
-        results = [get_result_from_mcts(state_string, search_time_ms, 0)]
+        results = [_run_mcts(state_string, search_time_ms, temperature)]
 
     merged: dict[str, list[float]] = {}  # move -> [visits, total_score]
     total_visits = 0
@@ -492,6 +522,17 @@ def _search_mcts(state_string: str, search_time_ms: int) -> str:
         for mv, (visits, total_score) in merged.items()
         if ALLOW_TERA or not mv.endswith("-tera")
     ]
+    # Full option set per pick — lets us see *why* a move won (visit share vs
+    # avg_score) and spot the engine undervaluing setup/aggression. Shows up in
+    # replay.py output too. Format: move=<visits>v/<avg_score>.
+    logger.info(
+        "perfect-info options (n=%d): %s",
+        len(options),
+        ", ".join(
+            f"{mv}={v}v/{sc:.3f}"
+            for mv, v, sc in sorted(options, key=lambda o: o[1], reverse=True)
+        ),
+    )
     choice = select_choice(options)
     chosen = next(o for o in options if o[0] == choice)
     logger.info(

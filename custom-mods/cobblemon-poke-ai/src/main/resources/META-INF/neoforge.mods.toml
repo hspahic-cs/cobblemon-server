@@ -11,6 +11,9 @@ description = '''
 poke-engine-backed BattleAI for Cobblemon NPC trainers. Routes move selection through a local FastAPI bridge wrapping foul-play + poke-engine MCTS.
 '''
 
+[[mixins]]
+config = "cobblemon_poke_ai.mixins.json"
+
 [[dependencies.${mod_id}]]
 modId = "neoforge"
 type = "required"

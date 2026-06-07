@@ -31,6 +31,14 @@ import org.slf4j.LoggerFactory
 class PokeEngineAI(
     private val client: BridgeClient = BridgeClient(),
     private val fallback: BattleAI = StrongBattleAI(5),
+    // Per-gym opponent-fallibility temperature passed to the bridge MCTS.
+    // 0 = perfect opponent; higher = punishes greedy player lines. Set from
+    // the trainer JSON's `ai.data.temperature` via PokeEngineAIConfig.
+    private val temperature: Double = 0.0,
+    // Per-gym player level cap (0 = disabled). Read by BattleManagerMixin at
+    // battle start to set the battle format's adjustLevel. Set from the trainer
+    // JSON's `ai.data.levelCap` via PokeEngineAIConfig.
+    val levelCap: Int = 0,
 ) : BattleAI {
 
     override fun choose(
@@ -64,7 +72,9 @@ class PokeEngineAI(
         }.getOrNull()
 
         val response = try {
-            client.pick(battleId, requestJson, logLines, gymSide, opponentTeamPacked, forceSwitch)
+            client.pick(
+                battleId, requestJson, logLines, gymSide, opponentTeamPacked, forceSwitch, temperature,
+            )
         } catch (e: BridgeUnavailable) {
             log.warn("bridge unavailable for battle={} — falling back to StrongBattleAI: {}", battleId, e.message)
             return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch, e.message ?: "bridge error")
@@ -92,7 +102,50 @@ class PokeEngineAI(
         reason: String,
     ): ShowdownActionResponse {
         log.debug("falling back to StrongBattleAI: {}", reason)
-        return fallback.choose(activeBattlePokemon, battle, aiSide, moveset, forceSwitch)
+        return try {
+            fallback.choose(activeBattlePokemon, battle, aiSide, moveset, forceSwitch)
+        } catch (e: Exception) {
+            // StrongBattleAI is not crash-safe — e.g. its TrackerActor NPEs when
+            // asked to choose during a forced-switch upkeep (singles, no ally).
+            // An uncaught throw here kills the whole battle ("A battle error has
+            // occurred"). Return a guaranteed-legal action instead.
+            log.warn(
+                "fallback StrongBattleAI threw for battle={} (fallback reason={}): {} — using safe default",
+                battle.battleId, reason, e.toString(),
+            )
+            safeDefault(activeBattlePokemon, moveset, forceSwitch)
+        }
+    }
+
+    /**
+     * Last-resort legal action when both the bridge and the StrongBattleAI
+     * fallback are unusable. Prefers a real move; on a force-switch (or when no
+     * move is usable) sends out the first available reserve; passes only if
+     * nothing else is legal. Keeps the battle alive rather than crashing it.
+     */
+    private fun safeDefault(
+        activeBattlePokemon: ActiveBattlePokemon,
+        moveset: ShowdownMoveset?,
+        forceSwitch: Boolean,
+    ): ShowdownActionResponse {
+        fun firstSwitch(): ShowdownActionResponse? =
+            activeBattlePokemon.actor.pokemonList.firstOrNull { it.canBeSentOut() }?.let {
+                it.willBeSwitchedIn = true
+                SwitchActionResponse(it.uuid)
+            }
+
+        if (forceSwitch) return firstSwitch() ?: PassActionResponse
+
+        val move = moveset?.moves?.firstOrNull { it.canBeUsed() }
+        if (move != null) {
+            val targets = if (move.mustBeUsed()) null
+                else move.target.targetList(activeBattlePokemon)?.takeIf { it.isNotEmpty() }
+            if (targets == null) return MoveActionResponse(move.id, null)
+            val chosenTarget = targets.filter { !it.isAllied(activeBattlePokemon) }.randomOrNull()
+                ?: targets.random()
+            return MoveActionResponse(move.id, (chosenTarget as ActiveBattlePokemon).getPNX())
+        }
+        return firstSwitch() ?: PassActionResponse
     }
 
     private fun latestRequestJson(battle: PokemonBattle): JsonObject? {

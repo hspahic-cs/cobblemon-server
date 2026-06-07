@@ -4,7 +4,7 @@
   "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 2.0, "levelCap": 50 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {
@@ -104,6 +104,7 @@
     },
     {
       "species": "rotom",
+      "aspects": ["heat-appliance"],
       "level": 50,
       "nature": "timid",
       "ivs": {

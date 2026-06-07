@@ -78,6 +78,7 @@
     },
     {
       "species": "rotom",
+      "aspects": ["wash-appliance"],
       "level": 50,
       "nature": "timid",
       "ivs": {

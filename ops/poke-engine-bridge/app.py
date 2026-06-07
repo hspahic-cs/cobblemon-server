@@ -75,6 +75,9 @@ class PickRequestBody(BaseModel):
     # BattleAI.choose() forceSwitch flag — authoritative pivot/faint signal
     # (the |request| JSON in the log can be stale on pivot turns).
     force_switch: bool = False
+    # Per-gym opponent-fallibility temperature for the MCTS (0 = perfect
+    # opponent). Higher = the AI assumes the player misplays and punishes greed.
+    temperature: float = 0.0
 
 
 class PickResponse(BaseModel):
@@ -100,6 +103,7 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
         search_time_ms=body.search_time_ms,
         opponent_team_packed=body.opponent_team_packed,
         force_switch=body.force_switch,
+        temperature=body.temperature,
     )
     started = time.monotonic()
     try:

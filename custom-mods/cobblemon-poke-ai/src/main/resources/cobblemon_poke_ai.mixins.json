@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.cobblemonserver.pokeai.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BattleManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

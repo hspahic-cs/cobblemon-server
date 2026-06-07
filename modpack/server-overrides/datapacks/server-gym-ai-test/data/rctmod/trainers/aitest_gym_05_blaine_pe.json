@@ -104,6 +104,7 @@
     },
     {
       "species": "rotom",
+      "aspects": ["heat-appliance"],
       "level": 50,
       "nature": "timid",
       "ivs": {

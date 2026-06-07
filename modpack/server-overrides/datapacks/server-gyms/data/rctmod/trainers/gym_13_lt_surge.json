@@ -46,6 +46,7 @@
     },
     {
       "species": "electrode",
+      "aspects": ["hisuian"],
       "level": 60,
       "nature": "timid",
       "ivs": {
@@ -76,6 +77,7 @@
     },
     {
       "species": "rotom",
+      "aspects": ["wash-appliance"],
       "level": 60,
       "nature": "bold",
       "ivs": {

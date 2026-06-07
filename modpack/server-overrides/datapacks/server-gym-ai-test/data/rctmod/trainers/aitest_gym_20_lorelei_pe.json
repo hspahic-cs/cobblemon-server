@@ -75,6 +75,7 @@
     },
     {
       "species": "ninetales",
+      "aspects": ["alolan"],
       "level": 65,
       "nature": "timid",
       "ivs": {

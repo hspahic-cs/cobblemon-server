@@ -162,6 +162,7 @@
     },
     {
       "species": "rotom",
+      "aspects": ["mow-appliance"],
       "level": 50,
       "nature": "timid",
       "ivs": {

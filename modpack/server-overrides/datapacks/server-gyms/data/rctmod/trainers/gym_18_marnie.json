@@ -75,6 +75,7 @@
     },
     {
       "species": "muk",
+      "aspects": ["alolan"],
       "level": 60,
       "nature": "bold",
       "ivs": {

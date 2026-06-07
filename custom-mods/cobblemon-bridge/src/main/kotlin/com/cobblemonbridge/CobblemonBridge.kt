@@ -14,6 +14,8 @@ import com.cobblemonbridge.commands.HologramCommands
 import com.cobblemonbridge.commands.MonumentCommand
 import com.cobblemonbridge.commands.ProfileCommand
 import com.cobblemonbridge.commands.SpawnCommands
+import com.cobblemonbridge.commands.TowerCommands
+import com.cobblemonbridge.commands.GymReturnCommands
 import com.cobblemonbridge.commands.HomeAliases
 import com.cobblemonbridge.commands.QuestCommand
 import com.cobblemonbridge.commands.TradeCommand
@@ -69,6 +71,13 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(GymBattleAdjustHook)
         E4GauntletHook.registerEvents()
         NeoForge.EVENT_BUS.register(E4GauntletHook)
+        com.cobblemonbridge.battle.TowerGauntletHook.registerEvents()
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.battle.TowerGauntletHook)
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.tower.TowerManager)
+        // GymReturnHook subscribes BATTLE_VICTORY at HIGH — must see the tower's activeFloor
+        // before TowerGauntletHook's NORMAL handler consumes it (tower fights don't gym-teleport).
+        com.cobblemonbridge.battle.GymReturnHook.registerEvents()
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.util.DelayedTeleports)
         NeoForge.EVENT_BUS.register(SetHomeHook)
         NeoForge.EVENT_BUS.register(HealQuestHook)
         PartyLevelHook.registerEvents()
@@ -118,6 +127,8 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         WildCommand.register(event.dispatcher)
         GymTpCommands.register(event.dispatcher)
         SpawnCommands.register(event.dispatcher)
+        TowerCommands.register(event.dispatcher)
+        GymReturnCommands.register(event.dispatcher)
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
         TradeCommand.register(event.dispatcher)
@@ -128,6 +139,8 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
     private fun onServerStarting(event: ServerStartingEvent) {
         GymTpRegistry.init()
         SpawnCommands.init()
+        com.cobblemonbridge.tower.TowerManager.init()
+        com.cobblemonbridge.battle.GymReturnHook.init()
         WildCommand.init()
         HologramCommands.init()
         LegendaryMonumentLock.init()

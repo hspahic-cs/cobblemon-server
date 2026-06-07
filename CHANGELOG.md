@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.9.1] - 2026-06-06
+
+### Fixed
+- **Prod crash loop: MineColonies stuck-citizen pathing crash.** A stuck
+  colonist's `PathingStuckHandler.tryUnstuck` read a path node past the end
+  of a 1-node path (`AIOOBE: Index 1 out of bounds for length 1`) on the
+  server thread — "Ticking entity" crash, hung save, watchdog kill, repeat
+  (prod, 2026-06-07 01:54 + 02:13 UTC). Two-layer fix:
+  - MineColonies `1.1.1301` → `1.1.1327` (includes upstream's partial
+    bounds-check fe40f38, which only guards the negative side).
+  - `PathingStuckHandlerMixin` in cobblemon-bridge wraps `checkStuck` and
+    suppresses out-of-bounds path reads (logs + skips the tick) — covers
+    the past-the-end variant upstream still misses. Soft mixin (`require=0`):
+    no-ops if MineColonies is absent or renames the class.
+
 ## [0.9.0] - 2026-06-05
 
 ### Added

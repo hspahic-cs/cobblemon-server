@@ -12,6 +12,33 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-06-07
+
+### Added
+- **Gym AI punishes greedy play (softmax-opponent search).** poke-engine's MCTS
+  now samples the player's move from a softmax over its value estimates at a
+  per-gym `temperature` (trainer `ai.data.temperature`), so the AI plans a best
+  response to a fallible opponent — setting up and pressing advantages instead
+  of switch-cycling when it reads a position as lost. `temperature: 0` keeps the
+  original perfect-opponent behaviour (Elite 4). The bridge ships a patched
+  poke-engine (hspahic-cs/poke-engine fork, gen9, tera-free) plus per-pick
+  option logging. aitest gyms 1-18 enabled with a temperature tier
+  (2.0 / 1.5 / 1.0 by gym range); E4 / champion left perfect.
+- **Per-gym player level cap.** Trainer `ai.data.levelCap` (e.g. 50) clamps the
+  player's team to that level for the battle via a mixin into RCT's battle build
+  — over-leveled teams are pulled down, under-leveled up. Enabled on aitest gyms
+  1-18 (challenge gyms); omitted for the Elite 4.
+
+### Fixed
+- **Gym battle crash ("A battle error has occurred").** The pe-AI's
+  StrongBattleAI fallback NPE'd during forced-switch upkeep and killed the whole
+  battle; the fallback is now crash-safe (returns a guaranteed-legal action and
+  logs why it fell back).
+- **Wrong Pokemon forms on gym teams.** 17 trainers were missing form aspects
+  (Rotom `*-appliance`, Alolan Ninetales/Muk, Galarian Weezing, Hisuian
+  Electrode/Zoroark/Braviary), so they spawned base forms with mismatched
+  movesets/typing.
+
 ## [0.9.1] - 2026-06-06
 
 ### Fixed

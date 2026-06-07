@@ -37,6 +37,15 @@ RUN python -m venv /venv
 RUN sed 's| --features poke-engine/terastallization||' /foul-play/requirements.txt > /tmp/requirements.txt \
     && /venv/bin/pip install --no-cache-dir -r /tmp/requirements.txt
 
+# Override stock poke-engine 0.0.46 with our patched build (hspahic-cs/poke-engine
+# fork), which adds the opponent-fallibility `temperature` param to the MCTS so
+# the gym AI can punish greedy play. Same tera-free build flags as foul-play's
+# pin (--no-default-features). Bump POKE_ENGINE_REF to track the fork.
+ARG POKE_ENGINE_REF=38fca549475c0fac3f9941bd0ddcf0bc228b19a0
+RUN /venv/bin/pip install --no-cache-dir --force-reinstall --no-deps \
+    "poke-engine @ git+https://github.com/hspahic-cs/poke-engine.git@${POKE_ENGINE_REF}#subdirectory=poke-engine-py" \
+    --config-settings="build-args=--no-default-features"
+
 COPY requirements.txt /tmp/bridge-requirements.txt
 RUN /venv/bin/pip install --no-cache-dir -r /tmp/bridge-requirements.txt
 

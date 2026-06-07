@@ -27,6 +27,10 @@ root README.
     the past-the-end variant upstream still misses. Soft mixin (`require=0`):
     no-ops if MineColonies is absent or renames the class.
 
+### Changed
+- **Xaero's Minimap `25.3.10` → `25.3.13`** and **Xaero's World Map
+  `1.40.11` → `1.40.16`** — routine upstream updates.
+
 ## [0.9.0] - 2026-06-05
 
 ### Added

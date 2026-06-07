@@ -12,6 +12,12 @@ root README.
 
 ## [Unreleased]
 
+## [0.9.2] - 2026-06-07
+
+### Changed
+- **Xaero's Minimap `25.3.10` → `25.3.13`** and **Xaero's World Map
+  `1.40.11` → `1.40.16`** — routine upstream updates.
+
 ## [0.9.1] - 2026-06-06
 
 ### Fixed

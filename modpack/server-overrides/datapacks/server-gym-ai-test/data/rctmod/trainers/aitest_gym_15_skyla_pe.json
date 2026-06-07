@@ -3,7 +3,7 @@
   "identity": "Flying",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 1.0, "levelCap": 50 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

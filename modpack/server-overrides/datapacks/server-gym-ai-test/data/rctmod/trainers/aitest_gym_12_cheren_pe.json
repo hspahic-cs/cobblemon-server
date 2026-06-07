@@ -3,7 +3,7 @@
   "identity": "Normal",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 1.5, "levelCap": 50 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

@@ -4,7 +4,7 @@
   "textureResource": "rctmod:textures/trainers/single/gym_leader_wake_03d7.png",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 1.5, "levelCap": 50 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

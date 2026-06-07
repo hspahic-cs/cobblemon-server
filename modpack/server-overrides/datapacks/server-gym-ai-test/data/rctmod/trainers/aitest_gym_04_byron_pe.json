@@ -4,7 +4,7 @@
   "textureResource": "rctmod:textures/trainers/single/gym_leader_byron_0399.png",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 2.0, "levelCap": 50 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

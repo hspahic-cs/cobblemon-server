@@ -35,7 +35,9 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 # uvicorn handle outer concurrency via worker processes; each worker stays
 # at parallelism=1 so cores aren't oversubscribed.
 FoulPlayConfig.parallelism = 1
-FoulPlayConfig.search_time_ms = 1000
+# Default only — each /pick overrides this from the request's search_time_ms
+# (the mod sends it; see cobblemon-poke-ai BridgeConfig). Kept in sync at 3000.
+FoulPlayConfig.search_time_ms = 3000
 
 # When set, every /pick appends one JSON line to <dir>/<battle_id>.jsonl:
 # the verbatim request body plus the outcome (pick or error). Each line is a

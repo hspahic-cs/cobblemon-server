@@ -4,6 +4,7 @@
   "package": "com.cobblemonserver.pokeai.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AIBattleActorMixin",
     "BattleManagerMixin"
   ],
   "injectors": {

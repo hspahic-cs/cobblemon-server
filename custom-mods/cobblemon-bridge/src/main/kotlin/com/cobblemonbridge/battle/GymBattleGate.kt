@@ -30,6 +30,13 @@ import net.minecraft.world.entity.Entity
 object GymBattleGate {
 
     fun beforeStartBattle(trainer: Entity, player: ServerPlayer): Boolean {
+        // Flat level-cap gyms (pe AI-test): no gym_id progression — just cap and allow.
+        // (Right-click also stashes via GymBattleAdjustHook.onEntityInteract; this covers any
+        // force-battle path. Idempotent — same player, same cap.)
+        BridgeTags.findLevelCap(trainer.tags)?.let {
+            GymBattleAdjustHook.stashCap(player.uuid, it)
+            return true
+        }
         val gymId = BridgeTags.findGymId(trainer.tags) ?: return true
         val isChallenge = BridgeTags.isGymChallenge(trainer.tags)
 

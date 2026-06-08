@@ -35,10 +35,6 @@ class PokeEngineAI(
     // 0 = perfect opponent; higher = punishes greedy player lines. Set from
     // the trainer JSON's `ai.data.temperature` via PokeEngineAIConfig.
     private val temperature: Double = 0.0,
-    // Per-gym player level cap (0 = disabled). Read by BattleManagerMixin at
-    // battle start to set the battle format's adjustLevel. Set from the trainer
-    // JSON's `ai.data.levelCap` via PokeEngineAIConfig.
-    val levelCap: Int = 0,
 ) : BattleAI {
 
     override fun choose(

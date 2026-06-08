@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.4] - 2026-06-08
+
+### Fixed
+- **AI-test gym level cap now applies to every leader, not just the first two.**
+  `rctmod trainer summon_persistent` ignores the command's `positioned` context
+  and spawns the trainer at the player's feet, but the spawn functions tagged via
+  a selector with `distance=..5` measured from each leader's intended `^offset`
+  slot. Only the leaders at `^0`/`^3` fell inside the radius — every leader past
+  `^3` (Blaine T2, all Byrons, challenge Cheren, etc.) was never tagged
+  `cobblemon_bridge.level_cap.50`, so `GymBattleAdjustHook` left the challenger's
+  party at full level. Each trainer is now identified by its unique `TrainerId`
+  at `@s` (no distance clamp), tagged there, then `tp`'d out to its row slot.
+
+### Changed
+- `ops/gen_aitest_gyms.py` now emits the `level_cap` tag itself (was hand-patched
+  into the generated functions before) and preserves hand-tuned `ai.data` (the
+  per-leader softmax `temperature` sweep) across regens, so re-running the
+  generator no longer wipes the tuning or drops the cap.
+
 ## [0.10.3] - 2026-06-07
 
 ### Fixed

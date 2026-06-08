@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.2] - 2026-06-07
+
+### Fixed
+- **Gym AI no longer freezes the server thread.** The bridge call (poke-engine
+  MCTS, ~1-2s) ran synchronously inside `AIBattleActor.onChoiceRequested()` on
+  the server thread, so every AI turn stalled the whole server (~2s "Can't keep
+  up", dropped battle packets → the player's move menu sometimes failed to render
+  mid-battle). PokeEngineAI choices now compute on a worker thread and submit via
+  `setActionResponses` back on the server thread — the battle waits for the
+  response like it does for a human player. Multiple battles also search in
+  parallel now instead of serializing on the main thread.
+
 ## [0.10.1] - 2026-06-07
 
 ### Fixed

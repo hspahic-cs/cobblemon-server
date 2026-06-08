@@ -176,9 +176,19 @@ class PokeEngineAI(
     ): ShowdownActionResponse? {
         val trimmed = choice.trim()
         if (trimmed.startsWith("switch ")) {
-            val name = trimmed.removePrefix("switch ").trim()
+            val name = normalize(trimmed.removePrefix("switch ").trim())
+            // The bridge names switch targets by the foul-play/Showdown id, which
+            // is form-qualified (e.g. "arcaninehisui", "rotomheat") — matching
+            // bare species.name ("arcanine"/"rotom") misses every formed mon and
+            // softlocks the battle on forced switches. Match the Pokemon's own
+            // (form-aware) showdownId first, with species.name as a fallback.
             val target = activeBattlePokemon.actor.pokemonList
-                .firstOrNull { it.canBeSentOut() && normalize(it.effectedPokemon.species.name) == normalize(name) }
+                .firstOrNull {
+                    it.canBeSentOut() && (
+                        normalize(it.effectedPokemon.showdownId()) == name ||
+                        normalize(it.effectedPokemon.species.name) == name
+                    )
+                }
                 ?: return null
             target.willBeSwitchedIn = true
             return SwitchActionResponse(target.uuid)

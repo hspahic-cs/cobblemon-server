@@ -24,6 +24,12 @@ root README.
   response like it does for a human player. Multiple battles also search in
   parallel now instead of serializing on the main thread.
 
+### Changed
+- **Gym AI search time 2s → 3s.** Now that the search runs off-thread it no
+  longer costs server TPS, so the bridge gets a longer think budget for stronger
+  play. Default in `BridgeConfig` is 3000ms; the per-server runtime config
+  (`config/cobblemon-poke-ai.json`) carries the live value.
+
 ## [0.10.1] - 2026-06-07
 
 ### Fixed

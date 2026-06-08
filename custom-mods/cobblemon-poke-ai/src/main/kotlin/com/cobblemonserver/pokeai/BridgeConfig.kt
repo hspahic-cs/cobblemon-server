@@ -15,7 +15,7 @@ private const val CONFIG_FILE_NAME = "cobblemon-poke-ai.json"
 data class BridgeConfigModel(
     val url: String = "http://127.0.0.1:8642",
     val timeoutMs: Long = 8000L,
-    val searchTimeMs: Int = 1000,
+    val searchTimeMs: Int = 3000,
     val pokemonFormat: String = "gen9customgame",
     val generation: String = "gen9",
     val smogonStatsFormat: String = "gen9nationaldex",

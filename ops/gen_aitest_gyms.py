@@ -21,6 +21,10 @@ TRAINERS_OUT = AITEST / "data/rctmod/trainers"
 FUNCTIONS_OUT = AITEST / "data/server/function/aitest"
 
 SPACING = 3  # blocks between leaders along +X
+# Flat L50 player cap applied by cobblemon-bridge's GymBattleAdjustHook — the
+# tag the bridge reads to down-level the challenger's party for the duration of
+# the fight. AI-test gyms all clamp to 50 regardless of which leader they clone.
+BRIDGE_LEVEL_CAP = "cobblemon_bridge.level_cap.50"
 
 
 def _tera_keys(obj, path="") -> list[str]:
@@ -56,7 +60,18 @@ def main() -> None:
         display = trainer["name"].replace("Gym Leader ", "").replace("Champion ", "")
         names.append(display)
         trainer["name"] = f"AI Test [pe]: {display}"
-        trainer["ai"] = {"type": "pe", "data": {}}
+
+        trainer_id = f"aitest_{path.stem.removesuffix('_challenge')}_pe"
+        out = TRAINERS_OUT / f"{trainer_id}.json"
+
+        # Preserve hand-tuned ai.data across regens. The generator owns the team,
+        # name, and AI type, but the per-leader softmax `temperature` is balance
+        # content tuned in-place — clobbering it back to {} every regen would wipe
+        # the tuning sweep. New leaders (no existing file) start with empty data.
+        prior_data = {}
+        if out.exists():
+            prior_data = json.loads(out.read_text()).get("ai", {}).get("data", {})
+        trainer["ai"] = {"type": "pe", "data": prior_data}
 
         # Terastallization is disabled server-wide. Source files keep tera only
         # in ai.data (replaced above), but guard against future hard-mode teams
@@ -65,8 +80,6 @@ def main() -> None:
         leaks = _tera_keys(trainer)
         assert not leaks, f"{path.name}: tera config leaked: {leaks}"
 
-        trainer_id = f"aitest_{path.stem.removesuffix('_challenge')}_pe"
-        out = TRAINERS_OUT / f"{trainer_id}.json"
         out.write_text(json.dumps(trainer, indent=2) + "\n")
 
         if i % chunk_size == 0:
@@ -88,16 +101,24 @@ def main() -> None:
         ]
         for j, (trainer_id, display) in enumerate(chunk):
             offset = j * SPACING
+            # `rctmod trainer summon_persistent` ignores the command's `positioned`
+            # context and always spawns the trainer at the player's feet — so the
+            # selector must match *there* (at @s), NOT at the ^offset slot. The old
+            # `distance=..5` was measured from ^offset and silently dropped every
+            # leader past ^3, leaving them untagged (no level cap). Identify the mon
+            # by its unique TrainerId at @s, then tp it out to its row slot.
             sel = (
-                f'@e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,'
+                f'@e[type=rctmod:trainer,limit=1,sort=nearest,'
                 f'nbt={{TrainerId:"{trainer_id}"}}]'
             )
             lines += [
                 f"# {display}  (+{offset}x)",
-                f"execute at @s positioned ^{offset} ^ ^ run rctmod trainer summon_persistent {trainer_id}",
-                f"execute at @s positioned ^{offset} ^ ^ run tag {sel} add aitest",
-                f"execute at @s positioned ^{offset} ^ ^ run tag {sel} add {chunk_tag}",
-                f"execute at @s positioned ^{offset} ^ ^ run data merge entity {sel} {{Invulnerable:1b,PersistenceRequired:1b}}",
+                f"execute at @s run rctmod trainer summon_persistent {trainer_id}",
+                f"execute at @s run tag {sel} add aitest",
+                f"execute at @s run tag {sel} add {chunk_tag}",
+                f"execute at @s run tag {sel} add {BRIDGE_LEVEL_CAP}",
+                f"execute at @s run data merge entity {sel} {{Invulnerable:1b,PersistenceRequired:1b}}",
+                f"execute at @s positioned ^{offset} ^ ^ run tp {sel} ~ ~ ~",
                 "",
             ]
         nxt = (

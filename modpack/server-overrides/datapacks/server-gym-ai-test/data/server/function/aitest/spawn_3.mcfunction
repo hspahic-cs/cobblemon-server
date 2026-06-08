@@ -5,24 +5,27 @@
 kill @e[type=rctmod:trainer,tag=aitest.chunk3]
 
 # Crasher Wake  (+0x)
-execute at @s positioned ^0 ^ ^ run rctmod trainer summon_persistent aitest_gym_07_crasher_wake_pe
-execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] add aitest
-execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] add cobblemon_bridge.level_cap.50
-execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] add aitest.chunk3
-execute at @s positioned ^0 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s run rctmod trainer summon_persistent aitest_gym_07_crasher_wake_pe
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] add aitest
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] add aitest.chunk3
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] add cobblemon_bridge.level_cap.50
+execute at @s run data merge entity @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s positioned ^0 ^ ^ run tp @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_07_crasher_wake_pe"}] ~ ~ ~
 
 # Sabrina  (+3x)
-execute at @s positioned ^3 ^ ^ run rctmod trainer summon_persistent aitest_gym_08_sabrina_pe
-execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] add aitest
-execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] add cobblemon_bridge.level_cap.50
-execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] add aitest.chunk3
-execute at @s positioned ^3 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s run rctmod trainer summon_persistent aitest_gym_08_sabrina_pe
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] add aitest
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] add aitest.chunk3
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] add cobblemon_bridge.level_cap.50
+execute at @s run data merge entity @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s positioned ^3 ^ ^ run tp @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_08_sabrina_pe"}] ~ ~ ~
 
 # Drayden  (+6x)
-execute at @s positioned ^6 ^ ^ run rctmod trainer summon_persistent aitest_gym_09_drayden_pe
-execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] add aitest
-execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] add cobblemon_bridge.level_cap.50
-execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] add aitest.chunk3
-execute at @s positioned ^6 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s run rctmod trainer summon_persistent aitest_gym_09_drayden_pe
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] add aitest
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] add aitest.chunk3
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] add cobblemon_bridge.level_cap.50
+execute at @s run data merge entity @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s positioned ^6 ^ ^ run tp @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_09_drayden_pe"}] ~ ~ ~
 
 tellraw @s [{"text":"§a✓ Chunk 3/8: Crasher Wake, Sabrina, Drayden","bold":true},{"text":"\n§7Next: §f/function server:aitest/spawn_4"},{"text":"\n§7Cleanup: §f/function server:aitest/cleanup"}]

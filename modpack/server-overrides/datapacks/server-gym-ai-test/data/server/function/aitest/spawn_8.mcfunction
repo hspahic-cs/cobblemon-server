@@ -5,24 +5,27 @@
 kill @e[type=rctmod:trainer,tag=aitest.chunk8]
 
 # Elite Four Agatha  (+0x)
-execute at @s positioned ^0 ^ ^ run rctmod trainer summon_persistent aitest_gym_22_agatha_pe
-execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] add aitest
-execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] add cobblemon_bridge.level_cap.50
-execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] add aitest.chunk8
-execute at @s positioned ^0 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s run rctmod trainer summon_persistent aitest_gym_22_agatha_pe
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] add aitest
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] add aitest.chunk8
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] add cobblemon_bridge.level_cap.50
+execute at @s run data merge entity @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s positioned ^0 ^ ^ run tp @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_22_agatha_pe"}] ~ ~ ~
 
 # Elite Four Lance  (+3x)
-execute at @s positioned ^3 ^ ^ run rctmod trainer summon_persistent aitest_gym_23_lance_pe
-execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] add aitest
-execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] add cobblemon_bridge.level_cap.50
-execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] add aitest.chunk8
-execute at @s positioned ^3 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s run rctmod trainer summon_persistent aitest_gym_23_lance_pe
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] add aitest
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] add aitest.chunk8
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] add cobblemon_bridge.level_cap.50
+execute at @s run data merge entity @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s positioned ^3 ^ ^ run tp @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_23_lance_pe"}] ~ ~ ~
 
 # Pokémon Champion  (+6x)
-execute at @s positioned ^6 ^ ^ run rctmod trainer summon_persistent aitest_gym_24_champion_pe
-execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] add aitest
-execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] add cobblemon_bridge.level_cap.50
-execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] add aitest.chunk8
-execute at @s positioned ^6 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s run rctmod trainer summon_persistent aitest_gym_24_champion_pe
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] add aitest
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] add aitest.chunk8
+execute at @s run tag @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] add cobblemon_bridge.level_cap.50
+execute at @s run data merge entity @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
+execute at @s positioned ^6 ^ ^ run tp @e[type=rctmod:trainer,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_24_champion_pe"}] ~ ~ ~
 
 tellraw @s [{"text":"§a✓ Chunk 8/8: Elite Four Agatha, Elite Four Lance, Pokémon Champion","bold":true},{"text":"\n§7That was the last chunk."},{"text":"\n§7Cleanup: §f/function server:aitest/cleanup"}]

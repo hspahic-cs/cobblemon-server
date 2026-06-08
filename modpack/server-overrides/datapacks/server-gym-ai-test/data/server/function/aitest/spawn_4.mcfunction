@@ -7,18 +7,21 @@ kill @e[type=rctmod:trainer,tag=aitest.chunk4]
 # Morty  (+0x)
 execute at @s positioned ^0 ^ ^ run rctmod trainer summon_persistent aitest_gym_10_morty_pe
 execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_10_morty_pe"}] add aitest
+execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_10_morty_pe"}] add cobblemon_bridge.level_cap.50
 execute at @s positioned ^0 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_10_morty_pe"}] add aitest.chunk4
 execute at @s positioned ^0 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_10_morty_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
 
 # Viola  (+3x)
 execute at @s positioned ^3 ^ ^ run rctmod trainer summon_persistent aitest_gym_11_viola_pe
 execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_11_viola_pe"}] add aitest
+execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_11_viola_pe"}] add cobblemon_bridge.level_cap.50
 execute at @s positioned ^3 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_11_viola_pe"}] add aitest.chunk4
 execute at @s positioned ^3 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_11_viola_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
 
 # Cheren  (+6x)
 execute at @s positioned ^6 ^ ^ run rctmod trainer summon_persistent aitest_gym_12_cheren_pe
 execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_12_cheren_pe"}] add aitest
+execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_12_cheren_pe"}] add cobblemon_bridge.level_cap.50
 execute at @s positioned ^6 ^ ^ run tag @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_12_cheren_pe"}] add aitest.chunk4
 execute at @s positioned ^6 ^ ^ run data merge entity @e[type=rctmod:trainer,distance=..5,limit=1,sort=nearest,nbt={TrainerId:"aitest_gym_12_cheren_pe"}] {Invulnerable:1b,PersistenceRequired:1b}
 

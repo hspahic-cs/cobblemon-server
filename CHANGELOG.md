@@ -12,6 +12,23 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.3] - 2026-06-07
+
+### Fixed
+- **Gym losses no longer fully heal the player's team.** The 0.10.0 level cap
+  used Cobblemon's `adjustLevel`, which clones the player team — so battle damage
+  hit the throwaway clone and your real Pokémon came out untouched (full HP win
+  or lose). Replaced with a flat down-level via cobblemon-bridge's crash-safe
+  `GymBattleAdjustHook` (mutates the real Pokémon's level + NBT-restores it; no
+  clone → damage persists).
+
+### Changed
+- **Gym player level cap now a flat `level_cap` tag.** New
+  `cobblemon_bridge.level_cap.<N>` entity tag applies a flat cap via the same
+  crash-safe down-level the formula gyms use (vs the `gym_id` progression
+  formula). The pe AI-test gyms are tagged `level_cap.50`. Removed the old
+  clone-based cap (`PokeEngineAIConfig.levelCap` + `BattleManagerMixin`).
+
 ## [0.10.2] - 2026-06-07
 
 ### Fixed

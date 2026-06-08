@@ -97,6 +97,25 @@ object BridgeTags {
         tags.firstNotNullOfOrNull { parseGymId(it) }
 
     /**
+     * Tag prefix that sets a FLAT player level cap (numeric suffix), applied via
+     * [GymBattleAdjustHook]'s crash-safe down-level (mutate real Pokémon + NBT restore — no
+     * clone, so battle damage persists). Unlike [GYM_ID] this is not a progression id and
+     * carries no formula: the suffix IS the cap. Use it for the pe AI-test gyms, which want a
+     * flat L50 regardless of which gym they clone. `cobblemon_bridge.level_cap.50` → 50.
+     */
+    const val LEVEL_CAP: String = "$NAMESPACE.level_cap"
+
+    fun parseLevelCap(tag: String): Int? {
+        val prefix = "$LEVEL_CAP."
+        if (!tag.startsWith(prefix)) return null
+        val cap = tag.removePrefix(prefix).toIntOrNull() ?: return null
+        return if (cap in 1..100) cap else null
+    }
+
+    fun findLevelCap(tags: Iterable<String>): Int? =
+        tags.firstNotNullOfOrNull { parseLevelCap(it) }
+
+    /**
      * Tag marking a gym leader as the **challenge variant**. Carried in addition to
      * `cobblemon_bridge.gym_id.<N>`, NOT as a replacement — so [GymBattleAdjustHook] still sees
      * the shared gym_id and downlevels the player to the gym's cap, while [GymDefeatHook]

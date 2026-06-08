@@ -61,8 +61,9 @@ object GymBattleAdjustHook {
     private const val SWEEPER_INTERVAL_TICKS = 20  // 1 second
     private var sweeperTickCounter = 0
 
-    /** playerUuid → (gymId, capturedAtMs). In-memory only — the persisted restore data lives in
-     *  player NBT, not here. */
+    /** playerUuid → (resolvedCap, capturedAtMs). The cap is already resolved (formula for
+     *  gym_id, or the flat value for a level_cap tag) — applyToBattle uses it directly.
+     *  In-memory only — the persisted restore data lives in player NBT, not here. */
     private val pendingByPlayer: MutableMap<UUID, Pair<Int, Long>> = ConcurrentHashMap()
 
     private fun capForGym(gymId: Int): Int = 20 + 5 * (gymId - 1)
@@ -79,18 +80,24 @@ object GymBattleAdjustHook {
         }
     }
 
-    /** Stash a gym_id for a player. Called from EntityInteract (right-click) and from
-     *  [GymBattleGate] (force-battle). Idempotent — same value either way per interaction. */
-    fun stashGymId(uuid: UUID, gymId: Int) {
-        pendingByPlayer[uuid] = gymId to System.currentTimeMillis()
+    /** Stash an already-resolved flat cap (e.g. from a `level_cap` tag). */
+    fun stashCap(uuid: UUID, cap: Int) {
+        pendingByPlayer[uuid] = cap to System.currentTimeMillis()
     }
+
+    /** Stash a gym_id's (formula) cap for a player. Called from [GymBattleGate] (force-battle).
+     *  Idempotent per interaction. */
+    fun stashGymId(uuid: UUID, gymId: Int) = stashCap(uuid, capForGym(gymId))
 
     @SubscribeEvent(priority = EventPriority.LOW)
     fun onEntityInteract(event: PlayerInteractEvent.EntityInteract) {
         if (event.level.isClientSide || event.isCanceled) return
         val player = event.entity as? ServerPlayer ?: return
-        val gymId = BridgeTags.findGymId(event.target.tags) ?: return
-        stashGymId(player.uuid, gymId)
+        // A flat level_cap tag wins over the gym_id formula (pe AI-test gyms use a flat L50).
+        val cap = BridgeTags.findLevelCap(event.target.tags)
+            ?: BridgeTags.findGymId(event.target.tags)?.let(::capForGym)
+            ?: return
+        pendingByPlayer[player.uuid] = cap to System.currentTimeMillis()
     }
 
     /** Crash-recovery: on every login, restore any in-flight downlevel that wasn't cleared
@@ -147,9 +154,8 @@ object GymBattleAdjustHook {
         for (actor in battle.actors.filterIsInstance<PlayerBattleActor>()) {
             val player = actor.entity as? ServerPlayer ?: continue
             val stash = pendingByPlayer.remove(player.uuid) ?: continue
-            val (gymId, capturedAt) = stash
+            val (cap, capturedAt) = stash
             if (now - capturedAt > STASH_TTL_MS) continue
-            val cap = capForGym(gymId)
             val originals = mutableMapOf<UUID, Int>()
             for (bp in actor.pokemonList) {
                 val mon = bp.effectedPokemon
@@ -168,8 +174,8 @@ object GymBattleAdjustHook {
                 val original = originals[mon.uuid] ?: continue
                 mon.level = cap
                 CobblemonBridge.logger.debug(
-                    "Gym {} downlevel: {}'s {} L{} → L{}",
-                    gymId, player.gameProfile.name, mon.species.name, original, cap,
+                    "Gym downlevel: {}'s {} L{} → L{}",
+                    player.gameProfile.name, mon.species.name, original, cap,
                 )
             }
         }

@@ -12,19 +12,19 @@ import com.gitlab.srcmc.rctapi.api.util.JTO
  * - [temperature]: opponent-fallibility for the bridge MCTS. 0 = perfect
  *   opponent (hardest, e.g. Elite 4); higher values make the AI assume the
  *   player misplays and punish greedy lines (free setup, bad switch-ins).
- * - [levelCap]: if > 0, the player's Pokemon are set to this level for the
- *   battle (an over-leveled team is clamped down; an under-leveled team is
- *   raised). 0 disables. Applied by BattleManagerMixin. Use it for the
- *   challenge gyms; leave it off (0) for the Elite 4.
+ *
+ * Player level capping is handled separately by cobblemon-bridge's
+ * GymBattleAdjustHook via a `cobblemon_bridge.level_cap.<N>` entity tag (flat,
+ * crash-safe down-level — no clone, so battle damage persists).
  */
 @JvmRecord
-data class PokeEngineAIConfig(val temperature: Double = 0.0, val levelCap: Int = 0) {
+data class PokeEngineAIConfig(val temperature: Double = 0.0) {
     companion object {
         @JvmStatic
         fun register() {
             JTO.registerParser<PokeEngineAIConfig, PokeEngineAI>(
                 "pe",
-                { cfg -> PokeEngineAI(temperature = cfg.temperature, levelCap = cfg.levelCap) },
+                { cfg -> PokeEngineAI(temperature = cfg.temperature) },
                 { PokeEngineAIConfig() },
                 PokeEngineAIConfig::class.java,
             )

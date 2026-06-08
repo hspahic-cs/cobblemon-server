@@ -12,6 +12,22 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-06-07
+
+### Fixed
+- **Gym AI softlock when switching to formed Pokémon.** The 0.10.0 form fixes
+  made gym mons spawn correctly formed (Arcanine-Hisui, Rotom-Heat, …), but the
+  mod matched the bridge's form-qualified switch target (`arcaninehisui`,
+  `rotomheat`) against bare `species.name` (`arcanine`, `rotom`) — so every
+  switch to a formed mon failed to resolve, fell back to StrongBattleAI (which
+  then NPE'd), and on a forced switch could hang the battle ("battle" button
+  vanishes). `parseChoice` now matches the Pokémon's form-aware `showdownId()`.
+
+### Added
+- **Temperature A/B test trainers.** `server:aitest/spawn_temp_test` spawns
+  Blaine and Byron at `temperature` 0 / 1 / 2 (level cap 50) side by side for
+  tuning. Cleanup via `server:aitest/cleanup`.
+
 ## [0.10.0] - 2026-06-07
 
 ### Added

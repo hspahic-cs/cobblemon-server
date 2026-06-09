@@ -54,12 +54,21 @@ object TowerGauntletHook {
     private const val PREFIX = "§d§l[Battle Tower] §f"
     private val HEALING_MACHINE_ID = ResourceLocation.fromNamespaceAndPath("cobblemon", "healing_machine")
 
+    /** The tower is gated on beating mainline gym 10 (same advancement that unlocks gyms 11-23
+     *  in [GymPrereqHook]). Checked both here (floor-1 interact, defence-in-depth) and at the
+     *  entry NPC ([com.cobblemonbridge.battle.TowerEntryHook]). */
+    private val GATE_ADVANCEMENT = ResourceLocation.fromNamespaceAndPath("server", "beat_gym_10")
+    private val GATE_LOCKED_MSG = "${PREFIX}Locked — clear the §e10th Gym§f first to enter the Battle Tower."
+
     /** Next floor the player must fight. Present = run active. */
     private val nextFloor: MutableMap<UUID, Int> = ConcurrentHashMap()
     /** Floor currently being fought — set on interact, consumed on battle end. */
     private val activeFloor: MutableMap<UUID, Int> = ConcurrentHashMap()
     /** Party (Pokémon UUIDs) at run start. Any mismatch at a tower battle start fails the run. */
     private val partySnapshot: MutableMap<UUID, Set<UUID>> = ConcurrentHashMap()
+    /** Difficulty the run is locked to ("hard"/"normal"), set when the player engages a floor-1
+     *  leader. Every later floor must be the SAME difficulty — no mixing. */
+    private val runDifficulty: MutableMap<UUID, String> = ConcurrentHashMap()
 
     fun registerEvents() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event -> onVictory(event) }
@@ -77,6 +86,7 @@ object TowerGauntletHook {
         nextFloor.clear()
         activeFloor.clear()
         partySnapshot.clear()
+        runDifficulty.clear()
     }
 
     /**
@@ -103,10 +113,38 @@ object TowerGauntletHook {
         nextFloor.remove(uuid)
         activeFloor.remove(uuid)
         partySnapshot.remove(uuid)
+        runDifficulty.remove(uuid)
     }
 
     private fun clearedToday(uuid: UUID): Boolean =
         TowerManager.store().clearedEpochDay(uuid) == TowerManager.todayEpochDay()
+
+    /** True once the player has beaten mainline gym 10 — the tower entry gate. */
+    fun hasClearedGate(player: ServerPlayer): Boolean {
+        val adv = player.server.advancements.get(GATE_ADVANCEMENT) ?: return false
+        return player.advancements.getOrStartProgress(adv).isDone
+    }
+
+    /** Entry-NPC path ([TowerEntryHook]): gate-check, warp to floor 1, arm the run. Messages the
+     *  player and returns false if the gate isn't cleared. The single public way in from the NPC,
+     *  so all run state stays owned here. */
+    fun startFromEntry(player: ServerPlayer): Boolean {
+        if (clearedToday(player.uuid)) {
+            player.sendSystemMessage(Component.literal(
+                "${PREFIX}Already cleared today — new leaders arrive at midnight."
+            ))
+            return false
+        }
+        if (!hasClearedGate(player)) {
+            player.sendSystemMessage(Component.literal(GATE_LOCKED_MSG))
+            return false
+        }
+        // Warp to floor 1 (both leaders stand there); the difficulty is chosen by which one the
+        // player engages. beginRun arms the gauntlet without locking a difficulty yet.
+        teleportToFloor(player, 1, null)
+        beginRun(player)
+        return true
+    }
 
     // ─── Interact gate: floors in order, once-per-day ──────────────────────
     @SubscribeEvent(priority = EventPriority.LOW)
@@ -123,30 +161,56 @@ object TowerGauntletHook {
             return
         }
 
-        val expected = nextFloor[player.uuid]
-        when {
-            // No active run: floor 1 starts one, anything else bounces.
-            expected == null && floor == 1 -> startRun(player)
-            expected == null -> {
+        val difficulty = BridgeTags.findTowerDifficulty(event.target.tags) ?: BridgeTags.DIFFICULTY_HARD
+
+        var expected = nextFloor[player.uuid]
+        if (expected == null) {
+            // No active run — only a floor-1 leader starts one, past the beat_gym_10 gate.
+            if (floor != 1) {
                 event.isCanceled = true
                 player.sendSystemMessage(Component.literal(
                     "${PREFIX}Start at §efloor 1§f — the tower is fought bottom-up."
                 ))
                 return
             }
-            // Active run: only the next floor's leader accepts.
-            floor != expected -> {
+            if (!hasClearedGate(player)) {
                 event.isCanceled = true
-                val msg = if (floor < expected) "You already beat floor $floor — head up to §efloor $expected§f."
-                          else "Beat §efloor $expected§f first."
-                player.sendSystemMessage(Component.literal(PREFIX + msg))
+                player.sendSystemMessage(Component.literal(GATE_LOCKED_MSG))
                 return
             }
+            beginRun(player)
+            expected = 1
+        }
+
+        // Lock the run to the difficulty of the FIRST leader engaged; every later floor must match
+        // (no hard-then-normal cheesing). Difficulty is committed at floor 1.
+        val locked = runDifficulty[player.uuid]
+        if (locked == null) {
+            runDifficulty[player.uuid] = difficulty
+        } else if (difficulty != locked) {
+            event.isCanceled = true
+            val want = if (locked == BridgeTags.DIFFICULTY_HARD) "§cHard§f" else "§aNormal§f"
+            player.sendSystemMessage(Component.literal(
+                "${PREFIX}You're on the $want run — fight the $want leader on every floor (no switching mid-run)."
+            ))
+            return
+        }
+
+        // Only the next floor's leader accepts.
+        if (floor != expected) {
+            event.isCanceled = true
+            val msg = if (floor < expected!!) "You already beat floor $floor — head up to §efloor $expected§f."
+                      else "Beat §efloor $expected§f first."
+            player.sendSystemMessage(Component.literal(PREFIX + msg))
+            return
         }
         activeFloor[player.uuid] = floor
     }
 
-    private fun startRun(player: ServerPlayer) {
+    /** Arm a fresh tower run: lock the party and set the next floor to 1. Idempotent re-arm is
+     *  harmless. Called from the floor-1 interact gate and from [TowerEntryHook] after the warp.
+     *  Callers are responsible for the [hasClearedGate] check. */
+    fun beginRun(player: ServerPlayer) {
         nextFloor[player.uuid] = 1
         partySnapshot[player.uuid] = snapshotPartyUuids(player)
         player.sendSystemMessage(Component.literal(
@@ -195,7 +259,7 @@ object TowerGauntletHook {
             val floor = activeFloor.remove(player.uuid) ?: continue
             if (floor < LAST_FLOOR) {
                 nextFloor[player.uuid] = floor + 1
-                teleportToFloor(player, floor + 1)
+                teleportToFloor(player, floor + 1, runDifficulty[player.uuid])
                 player.sendSystemMessage(Component.literal(
                     "${PREFIX}Floor $floor cleared! Taking you up to §efloor ${floor + 1}§f…"
                 ))
@@ -217,11 +281,13 @@ object TowerGauntletHook {
     }
 
     /** The tower's floors are physically separate — teleports move the player through them.
-     *  Win floor N → warp up to floor N+1's spot; lose anywhere → warp down to floor 1;
-     *  clear floor 3 → warp to the return spot (or floor 1 if unset). The floor positions
-     *  double as the NPC anchors, so arrival is right next to the leader. */
-    private fun teleportToFloor(player: ServerPlayer, floor: Int) {
-        TowerManager.store().floor(floor)?.let {
+     *  Win floor N → warp up to floor N+1's spot; lose/flee/heal → warp to the entry/start spot
+     *  ([teleportToEntry]); clear floor 3 → warp to the return spot. The floor positions double as
+     *  the NPC anchors, so arrival is right next to the leader. */
+    private fun teleportToFloor(player: ServerPlayer, floor: Int, difficulty: String?) {
+        val store = TowerManager.store()
+        val diff = difficulty ?: BridgeTags.DIFFICULTY_HARD
+        (store.floor(floor, diff) ?: store.floor(floor, BridgeTags.DIFFICULTY_HARD))?.let {
             com.cobblemonbridge.util.DelayedTeleports.schedule(player, it)
         }
     }
@@ -233,26 +299,42 @@ object TowerGauntletHook {
         }
     }
 
+    /** Run failed → warp back to the entry/start spot (where the entry NPC is), not floor 1, so the
+     *  player restarts the gauntlet from the bottom. Falls back to the return spot, then floor 1. */
+    private fun teleportToEntry(player: ServerPlayer) {
+        val store = TowerManager.store()
+        (store.entryPos() ?: store.returnPos() ?: store.floor(1, BridgeTags.DIFFICULTY_HARD))?.let {
+            com.cobblemonbridge.util.DelayedTeleports.schedule(player, it)
+        }
+    }
+
     private fun completeRun(player: ServerPlayer) {
+        // Capture the run difficulty BEFORE clearing it — it picks the key tier.
+        val hard = runDifficulty[player.uuid] != BridgeTags.DIFFICULTY_NORMAL
         clearRun(player.uuid)
         teleportOut(player)
         if (clearedToday(player.uuid)) return  // belt-and-braces; interact gate already blocks
         TowerManager.store().markCleared(player.uuid, TowerManager.todayEpochDay())
+        val keyTier = if (hard) "rare" else "common"
         val src = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
-        player.server.commands.performPrefixedCommand(src, "gacha grant ${player.gameProfile.name} rare 1")
+        player.server.commands.performPrefixedCommand(src, "gacha grant ${player.gameProfile.name} $keyTier 1")
+        val label = if (hard) "§6§l✦ Rare Key" else "§a§l✦ Common Key"
+        val mode = if (hard) "§cHard" else "§aNormal"
         player.sendSystemMessage(Component.literal(
-            "${PREFIX}§6§lTower cleared! §e§l✦ Rare Key §fawarded. New leaders at midnight."
+            "${PREFIX}§6§lTower cleared §r§7($mode§7)! $label §fawarded. No more tower keys today — new leaders at midnight."
         ))
-        CobblemonBridge.logger.info("tower: cleared by {} — rare key granted", player.gameProfile.name)
+        CobblemonBridge.logger.info(
+            "tower: cleared by {} ({}) — {} key granted", player.gameProfile.name, if (hard) "hard" else "normal", keyTier,
+        )
     }
 
     private fun failRun(player: ServerPlayer, reason: String) {
         val hadRun = nextFloor.containsKey(player.uuid)
         clearRun(player.uuid)
         if (hadRun) {
-            teleportToFloor(player, 1)
+            teleportToEntry(player)
             player.sendSystemMessage(Component.literal(
-                "${PREFIX}Run over ($reason). §7Back to floor 1 — start again any time before midnight."
+                "${PREFIX}Run over ($reason). §7Back to the start — talk to the Receptionist to try again before midnight."
             ))
             CobblemonBridge.logger.info("tower: run {} for {}", reason, player.gameProfile.name)
         }

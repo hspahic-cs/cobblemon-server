@@ -40,20 +40,33 @@ private data class TowerFile(
     val clearedEpochDay: Map<String, Long> = emptyMap(),
     /** Where players are teleported when a run ends (clear or loss). Null → floor 1. */
     val returnPos: WarpPos? = null,
+    /** Where the entry-NPC greeter stands (the bottom of the tower). Captured by
+     *  `/tower setentry`; informational — the NPC itself carries the tower_entry tag. */
+    val entryPos: WarpPos? = null,
 )
 
 class TowerStore private constructor(
     private val file: Path,
     private var data: TowerFile,
 ) {
-    fun floor(n: Int): WarpPos? = data.floors[n.toString()]
+    /** Floor positions are keyed `<floor>_<difficulty>` (e.g. "1_hard", "1_normal"). Legacy plain
+     *  "1"/"2"/"3" keys (set before the two-difficulty split) are read as the HARD spot, so existing
+     *  setups keep working until normal spots are added. */
+    fun floor(n: Int, difficulty: String): WarpPos? =
+        data.floors["${n}_$difficulty"]
+            ?: if (difficulty == "hard") data.floors[n.toString()] else null
 
-    /** All three floors set → the tower is operational and rotation may summon. */
-    fun floorsConfigured(): Boolean = (1..3).all { data.floors.containsKey(it.toString()) }
+    /** Tower can run as soon as all three HARD spots are configured (legacy or new). Normal spots
+     *  are optional — normal-mode leaders only spawn on floors where a normal spot is set. */
+    fun floorsConfigured(): Boolean = (1..3).all { floor(it, "hard") != null }
 
-    fun setFloor(n: Int, pos: WarpPos) {
+    /** True if a normal-mode spot is configured for floor [n]. */
+    fun hasNormal(n: Int): Boolean = data.floors.containsKey("${n}_normal")
+
+    fun setFloor(n: Int, difficulty: String, pos: WarpPos) {
         require(n in 1..3) { "tower floor must be 1..3 (got $n)" }
-        data = data.copy(floors = data.floors + (n.toString() to pos))
+        require(difficulty == "hard" || difficulty == "normal") { "difficulty must be hard|normal" }
+        data = data.copy(floors = data.floors + ("${n}_$difficulty" to pos))
         save()
     }
 
@@ -65,10 +78,17 @@ class TowerStore private constructor(
     }
 
     /** Run-end teleport target — explicit return spot if set, else floor 1 (the bottom). */
-    fun returnPos(): WarpPos? = data.returnPos ?: floor(1)
+    fun returnPos(): WarpPos? = data.returnPos ?: floor(1, "hard")
 
     fun setReturnPos(pos: WarpPos) {
         data = data.copy(returnPos = pos)
+        save()
+    }
+
+    fun entryPos(): WarpPos? = data.entryPos
+
+    fun setEntryPos(pos: WarpPos) {
+        data = data.copy(entryPos = pos)
         save()
     }
 

@@ -73,6 +73,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(E4GauntletHook)
         com.cobblemonbridge.battle.TowerGauntletHook.registerEvents()
         NeoForge.EVENT_BUS.register(com.cobblemonbridge.battle.TowerGauntletHook)
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.battle.TowerEntryHook)
         NeoForge.EVENT_BUS.register(com.cobblemonbridge.tower.TowerManager)
         // GymReturnHook subscribes BATTLE_VICTORY at HIGH — must see the tower's activeFloor
         // before TowerGauntletHook's NORMAL handler consumes it (tower fights don't gym-teleport).

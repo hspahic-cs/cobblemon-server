@@ -3,7 +3,7 @@
   "identity": "Dragon",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 0.5 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

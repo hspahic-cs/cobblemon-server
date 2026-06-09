@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.5] - 2026-06-08
+
+### Changed
+- **Challenge gyms now play at softmax temperature 0.5** (`ai.data.temperature`
+  on all 18 `gym_*_challenge` trainers, previously unset → 0.0). T=0 was sharp
+  maximin; a mild 0.5 keeps most of that strength while shaving off the rare
+  cautious-stall draws against casual lines — a "challenging but fair" feel.
+  Informed by offline self-play tuning (gym MCTS vs greedy/optimal players).
+
+### Removed
+- **AI-test gyms + temperature A/B-test datapack** (`server-gym-ai-test`) and its
+  generators (`ops/gen_aitest_gyms.py`, `ops/gen_gym_ai_test_datapack.py`). The
+  temperature sweep is done; the test gyms and `aitest`/temp-test spawn functions
+  are no longer needed on the server. NOTE: the deploy rsyncs datapacks
+  non-destructively, so this datapack must also be removed from each live world's
+  `datapacks/` directory (and any spawned aitest trainers killed) — it won't be
+  deleted by the deploy alone.
+
 ## [0.10.4] - 2026-06-08
 
 ### Fixed

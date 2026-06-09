@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_17_fairy_challenge"
+          "bt_17_fairy_challenge"
         ],
         "trainer_type": null
       }

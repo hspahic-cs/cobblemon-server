@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_01_ground_challenge"
+          "bt_01_ground_challenge"
         ],
         "trainer_type": null
       }

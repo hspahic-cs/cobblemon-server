@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_04_steel_challenge"
+          "bt_04_steel_challenge"
         ],
         "trainer_type": null
       }

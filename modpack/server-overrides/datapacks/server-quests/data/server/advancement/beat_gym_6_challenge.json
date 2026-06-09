@@ -20,8 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_06_roxie_challenge",
-          "gym_06_electric_challenge"
+          "bt_06_electric_challenge"
         ],
         "trainer_type": null
       }

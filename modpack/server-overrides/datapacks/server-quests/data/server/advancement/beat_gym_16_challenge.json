@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_16_ice_challenge"
+          "bt_16_ice_challenge"
         ],
         "trainer_type": null
       }

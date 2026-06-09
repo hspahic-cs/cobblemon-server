@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_15_flying_challenge"
+          "bt_15_flying_challenge"
         ],
         "trainer_type": null
       }

@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_05_fire_challenge"
+          "bt_05_fire_challenge"
         ],
         "trainer_type": null
       }

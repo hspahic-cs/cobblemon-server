@@ -21,7 +21,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_02_grass"
+          "gym_02_grass",
+          "bt_02_grass"
         ],
         "trainer_type": null
       }

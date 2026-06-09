@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_13_poison"
+          "gym_13_poison",
+          "bt_13_poison"
         ],
         "trainer_type": null
       }

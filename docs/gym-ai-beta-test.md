@@ -39,7 +39,7 @@ The chunks:
 | `spawn_2` | Byron, Blaine, Volkner |
 | `spawn_3` | Crasher Wake, Sabrina, Drayden |
 | `spawn_4` | Morty, Viola, Cheren |
-| `spawn_5` | Lt. Surge, Grant, Skyla |
+| `spawn_5` | Koga, Grant, Skyla |
 | `spawn_6` | Brycen, Valerie, Marnie |
 | `spawn_7` | Oak, Lorelei, Cynthia |
 | `spawn_8` | Agatha, Lance, Champion |
@@ -88,7 +88,7 @@ chunk gives you a fresh copy of the leader.
 | 10 | Morty | ☐ | | |
 | 11 | Viola | ☐ | | |
 | 12 | Cheren | ☐ | | |
-| 13 | Lt. Surge | ☐ | | |
+| 13 | Koga | ☐ | | |
 | 14 | Grant | ☐ | | |
 | 15 | Skyla | ☐ | | |
 | 16 | Brycen | ☐ | | |

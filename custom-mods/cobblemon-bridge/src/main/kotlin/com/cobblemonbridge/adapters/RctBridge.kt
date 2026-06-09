@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Reflection bridge to RCT's trainer registry, so we can map a Cobblemon `PokemonBattle.battleId`
- * directly to the trainer JSON id of the trainer that's fighting (e.g. `"gym_06_volkner"`).
+ * directly to the trainer JSON id of the trainer that's fighting (e.g. `"gym_06_electric"`).
  * Compile-time independent of rctmod / rctapi.
  *
  * Reflection chain (all in `com.gitlab.srcmc.rctmod`):
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  *     .getTrainerManager(): TrainerManager
  *     .getBattle(UUID): Optional<TrainerBattle>
  *   TrainerBattle.getTrainerSideMobs(): List<TrainerMob>          // 1 mob in 1v1 gym fights
- *   TrainerMob.getTrainerId(): String                             // e.g. "gym_06_volkner"
+ *   TrainerMob.getTrainerId(): String                             // e.g. "gym_06_electric"
  * ```
  *
  * **0.7.14 fix:** between 0.7.9 (when this bridge was first written) and now, RCT moved the
@@ -55,8 +55,8 @@ object RctBridge {
     /**
      * Returns the trainer JSON id for the trainer participating in [battleUuid], or null if
      * the battle isn't a trainer battle / RCT isn't loaded / reflection fails. The string is
-     * the bare JSON stem (matches `data/rctmod/trainers/<id>.json`), e.g. `"gym_06_volkner"`
-     * or `"gym_03_korrina_challenge"`.
+     * the bare JSON stem (matches `data/rctmod/trainers/<id>.json`), e.g. `"gym_06_electric"`
+     * or `"gym_03_fighting_challenge"`.
      *
      * Pulls the first mob from `TrainerBattle.getTrainerSideMobs()`. For 1v1 gym fights that's
      * the only entry; for multi-vs-multi battles we'd want the mob whose id matches the gym
@@ -89,9 +89,9 @@ object RctBridge {
         return gymId to isChallenge
     }
 
-    /** `gym_06_volkner` → (6, false); `gym_03_korrina_challenge` → (3, true). The body
+    /** `gym_06_electric` → (6, false); `gym_03_fighting_challenge` → (3, true). The body
      *  segment is non-greedy + anchored so trailing `_challenge` is detected reliably even
-     *  for multi-word trainer names like `gym_07_crasher_wake`. */
+     *  for multi-word trainer names like `gym_07_water`. */
     private val GYM_ID_REGEX = Regex("""^gym_(\d+)_.+?(_challenge)?$""")
 
     private fun ensureResolved(): Boolean {

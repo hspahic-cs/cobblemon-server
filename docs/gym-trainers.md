@@ -127,7 +127,7 @@ Gyms 1 to 10 are the **mainline** progression. Gyms 11 to 19 are **optional rota
     | 60 | Staraptor | Intimidate | Flying Gem | Acrobatics, Closecombat, Quickattack, Roost |
     | 60 | Snorlax | Thickfat | Leftovers | Return, Curse, Rest, Sleeptalk |
 
-??? abstract "Gym 13 (optional rotating): Lt. Surge, Electric-type"
+??? abstract "Gym 13 (optional rotating): Koga, Poison-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|

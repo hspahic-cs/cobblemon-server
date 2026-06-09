@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_07_crasher_wake"
+          "gym_07_water"
         ],
         "trainer_type": null
       }

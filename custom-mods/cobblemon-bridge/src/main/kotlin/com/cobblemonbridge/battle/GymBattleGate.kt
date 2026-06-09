@@ -30,14 +30,25 @@ import net.minecraft.world.entity.Entity
 object GymBattleGate {
 
     fun beforeStartBattle(trainer: Entity, player: ServerPlayer): Boolean {
-        // Flat level-cap gyms (pe AI-test): no gym_id progression — just cap and allow.
-        // (Right-click also stashes via GymBattleAdjustHook.onEntityInteract; this covers any
-        // force-battle path. Idempotent — same player, same cap.)
-        BridgeTags.findLevelCap(trainer.tags)?.let {
-            GymBattleAdjustHook.stashCap(player.uuid, it)
+        // Tower NPCs (tower_floor tag, no gym_id): floor-ordered and force-battle-proof. A tower
+        // battle may only begin at floor 1 or the player's current next floor — so a sethome /
+        // teleport to a higher floor, or an on-sight force-battle, can't skip floor 1. Their L50
+        // scaling rides a separate adjust_level.50 tag, so no cap is stashed here.
+        BridgeTags.findTowerFloor(trainer.tags)?.let { floor ->
+            return TowerGauntletHook.mayFightFloor(player.uuid, floor)
+        }
+        val flatCap = BridgeTags.findLevelCap(trainer.tags)
+        val gymId = BridgeTags.findGymId(trainer.tags)
+        if (gymId == null) {
+            // Standalone flat-cap gym (pe AI-test) with no progression id — just cap and allow.
+            // (Right-click also stashes via GymBattleAdjustHook.onEntityInteract; this covers any
+            // force-battle path. Idempotent — same player, same cap.)
+            flatCap?.let { GymBattleAdjustHook.stashCap(player.uuid, it) }
             return true
         }
-        val gymId = BridgeTags.findGymId(trainer.tags) ?: return true
+        // A flat level_cap tag overrides the gym_id formula (challenge gyms carry level_cap.50 so
+        // the player fights at the team's true L50), but must NOT bypass the prereq gates below.
+        val cap = flatCap ?: GymBattleAdjustHook.capForGym(gymId)
         val isChallenge = BridgeTags.isGymChallenge(trainer.tags)
 
         if (isChallenge) {
@@ -53,7 +64,7 @@ object GymBattleGate {
                 )
                 return false
             }
-            GymBattleAdjustHook.stashGymId(player.uuid, gymId)
+            GymBattleAdjustHook.stashCap(player.uuid, cap)
             return true
         }
 
@@ -67,7 +78,7 @@ object GymBattleGate {
                 return false
             }
             E4GauntletHook.stashActive(player.uuid, gymId)
-            GymBattleAdjustHook.stashGymId(player.uuid, gymId)
+            GymBattleAdjustHook.stashCap(player.uuid, cap)
             return true
         }
 
@@ -86,7 +97,7 @@ object GymBattleGate {
                 return false
             }
         }
-        GymBattleAdjustHook.stashGymId(player.uuid, gymId)
+        GymBattleAdjustHook.stashCap(player.uuid, cap)
         return true
     }
 

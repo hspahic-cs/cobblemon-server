@@ -52,7 +52,7 @@ biome tags, signature items) and only flip `spawnWeightFactor` from `0.25` to `0
 | 10 | Morty | Ghost | wiki Ghost team |
 | 11 | Viola | Bug | wiki Bug team |
 | 12 | Cheren | Normal | wiki Normal team |
-| 13 | Lt. Surge | Electric | wiki Electric team |
+| 13 | Koga | Poison | wiki Poison team (restored Poison type; was Lt. Surge/Electric) |
 | 14 | Grant | Rock | wiki Rock team |
 | 15 | Skyla | Flying | wiki Flying Team #2 (Pom-Pom Oricorio variant) |
 | 16 | Brycen | Ice | wiki Ice team |
@@ -104,7 +104,7 @@ The generator applies these defaults to every imported Pokémon:
 - `evs: { hp: 4, atk: 252, spe: 252 }` (fast + offensive default — tune per Pokémon role later)
 
 To rebalance a specific Pokémon (e.g. give Skyla's Corviknight a defensive spread), edit its
-entry in `trainers/gym_15_skyla.json` directly. The generator (`/tmp/gen_trainers.py`) is a
+entry in `trainers/gym_15_flying.json` directly. The generator (`/tmp/gen_trainers.py`) is a
 one-shot bootstrap, not a recurring build step — once you've tuned a JSON, regenerating would
 clobber the tuning.
 

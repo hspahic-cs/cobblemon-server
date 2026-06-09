@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_11_viola_challenge"
+          "gym_11_bug_challenge"
         ],
         "trainer_type": null
       }

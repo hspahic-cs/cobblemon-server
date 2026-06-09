@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Lt. Surge"
+      "text": "Koga"
     },
     "description": {
-      "text": "Defeat Lt. Surge (Electric-type, Level 60)."
+      "text": "Defeat Koga (Poison-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_13_lt_surge"
+          "gym_13_poison"
         ],
         "trainer_type": null
       }

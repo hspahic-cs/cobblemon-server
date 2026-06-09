@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 /**
  * Patches RCTmod's {@code DataPackManager.findResource} so trainer IDs in a non-{@code rctmod}
- * namespace (like our datapack's {@code server:gym_01_clay}) don't crash the client renderer.
+ * namespace (like our datapack's {@code server:gym_01_ground}) don't crash the client renderer.
  *
  * <p>The bug: {@code findResource(trainerId, type)} concatenates the trainer id into a texture
  * path like {@code <type>/<trainerId>.<suffix>} and passes that to

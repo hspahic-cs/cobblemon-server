@@ -4,7 +4,7 @@
   "textureResource": "rctmod:textures/trainers/single/leader_morty_001c.png",
   "ai": {
     "type": "pe",
-    "data": {}
+    "data": { "temperature": 0.5 }
   },
   "battleFormat": "GEN_9_SINGLES",
   "battleRules": {

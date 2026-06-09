@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_12_cheren"
+          "gym_12_normal"
         ],
         "trainer_type": null
       }

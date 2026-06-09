@@ -66,7 +66,7 @@ Every quest available on the server, grouped by chain.
 |---:|---|---|---|
 | 1 | **Viola** | Defeat Viola (Bug-type, Level 60). | $1,650 + Rare Key |
 | 2 | **Cheren** | Defeat Cheren (Normal-type, Level 60). | $1,800 + Rare Key |
-| 3 | **Lt. Surge** | Defeat Lt. Surge (Electric-type, Level 60). | $1,950 + Rare Key |
+| 3 | **Koga** | Defeat Koga (Poison-type, Level 60). | $1,950 + Rare Key |
 | 4 | **Grant** | Defeat Grant (Rock-type, Level 60). | $2,100 + Rare Key |
 | 5 | **Skyla** | Defeat Skyla (Flying-type, Level 60). | $2,250 + Rare Key |
 | 6 | **Brycen** | Defeat Brycen (Ice-type, Level 60). | $2,400 + Rare Key |

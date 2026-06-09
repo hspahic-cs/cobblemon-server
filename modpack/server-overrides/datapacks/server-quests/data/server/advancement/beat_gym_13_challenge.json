@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_13",
   "display": {
     "title": {
-      "text": "Gym 13: Lt. Surge \u2014 Challenge"
+      "text": "Gym 13: Koga \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 13."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_13_lt_surge_challenge"
+          "gym_13_poison_challenge"
         ],
         "trainer_type": null
       }

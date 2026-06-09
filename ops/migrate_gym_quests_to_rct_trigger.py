@@ -25,29 +25,29 @@ ADVANCEMENT_DIR = REPO / "modpack/server-overrides/datapacks/server-quests/data/
 REWARDS_DIR = REPO / "modpack/server-overrides/datapacks/server-quests/data/server/function/quests/rewards"
 
 # Gym → list of trainer ids. Most gyms have one trainer; gym 6 has two
-# (gym_06_roxie + gym_06_volkner) and defeating EITHER counts as gym 6.
+# (gym_06_roxie + gym_06_electric) and defeating EITHER counts as gym 6.
 # Trainer id list sourced from modpack/server-overrides/datapacks/server-gyms/data/rctmod/trainers/
 # (the repo's authoritative gym definitions — earlier mistakenly thought this lived only on
 # the server; it's in the repo, just under server-overrides/datapacks/).
 GYM_TRAINERS: dict[int, list[str]] = {
-    1: ["gym_01_clay"],
-    2: ["gym_02_gardenia"],
-    3: ["gym_03_korrina"],
-    4: ["gym_04_byron"],
-    5: ["gym_05_blaine"],
-    6: ["gym_06_roxie", "gym_06_volkner"],
-    7: ["gym_07_crasher_wake"],
-    8: ["gym_08_sabrina"],
-    9: ["gym_09_drayden"],
-    10: ["gym_10_morty"],
-    11: ["gym_11_viola"],
-    12: ["gym_12_cheren"],
-    13: ["gym_13_lt_surge"],
-    14: ["gym_14_grant"],
-    15: ["gym_15_skyla"],
-    16: ["gym_16_brycen"],
-    17: ["gym_17_valerie"],
-    18: ["gym_18_marnie"],
+    1: ["gym_01_ground"],
+    2: ["gym_02_grass"],
+    3: ["gym_03_fighting"],
+    4: ["gym_04_steel"],
+    5: ["gym_05_fire"],
+    6: ["gym_06_roxie", "gym_06_electric"],
+    7: ["gym_07_water"],
+    8: ["gym_08_psychic"],
+    9: ["gym_09_dragon"],
+    10: ["gym_10_ghost"],
+    11: ["gym_11_bug"],
+    12: ["gym_12_normal"],
+    13: ["gym_13_poison"],
+    14: ["gym_14_rock"],
+    15: ["gym_15_flying"],
+    16: ["gym_16_ice"],
+    17: ["gym_17_fairy"],
+    18: ["gym_18_dark"],
     19: ["gym_19_oak"],
     20: ["gym_20_lorelei"],
     21: ["gym_21_cynthia"],

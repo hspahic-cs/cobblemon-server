@@ -12,6 +12,42 @@ root README.
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-06-09
+
+### Added
+- **Challenge-gym spawn commands for all 18 gyms.** `spawn_<N>_challenge` /
+  `delete_<N>_challenge` now exist for gyms 11–18 (previously only 1–10), plus
+  `spawn_all_challenge` / `delete_all_challenge`. `list` shows real leader names
+  and challenge rows for 11–18; `help` lists the new commands. Challenge mob +
+  loot tables added for 11–18 so they behave exactly like 1–10.
+- **Poison gym restored — Koga (gym 13).** Gym 13 was a duplicate Electric gym
+  (Lt. Surge); it is now Koga / Poison with ShepskyDad's Poison team (Scolipede,
+  Crobat, Salazzle, Galarian Slowking, Revavroom, Overqwil), wearing RCT's
+  `leader_koga_01a2` ninja sprite. Restores full 18-type coverage — Poison was
+  lost when gym 6 was swapped Roxie→Volkner (Electric). All other 14 non-excluded
+  challenge teams were verified an exact match to ShepskyDad's lists.
+
+### Changed
+- **Gym files renamed by type, not leader.** `gym_NN_<leader>` → `gym_NN_<type>`
+  (e.g. `gym_01_ground`, `gym_06_electric`) for gyms 1–18, across the server
+  datapack and the cobblemon-npc client-skin jar, with every reference updated
+  (spawn/delete functions, advancements, battle-tower roster, `ops/` generators).
+  Leader display names are unchanged; gyms 19–24 keep their leader names.
+- **Smaller biomes.** Terralith `xz_scale` 0.1 → 0.18 (affects newly-generated
+  chunks only).
+- **Battle tower: healing resets the run.** Using a healing machine mid-run now
+  sends the player back to floor 1 (previously the run continued and only the key
+  was voided).
+
+### Fixed
+- **Challenge gyms now cap the player at L50.** Challenge spawns carry a flat
+  `level_cap.50` tag, and `GymBattleGate` applies it without bypassing the
+  "beat the mainline gym first" prereq. Previously challenge gyms used the gym
+  progression formula (e.g. gym 1 capped the player at L20 against an L50 team).
+- **Battle tower floor order is force-battle-proof.** Floor order is now enforced
+  at the battle-start choke point (not just on right-click), so teleporting to a
+  higher floor or an on-sight force-battle can't skip floor 1.
+
 ## [0.10.6] - 2026-06-08
 
 ### Added

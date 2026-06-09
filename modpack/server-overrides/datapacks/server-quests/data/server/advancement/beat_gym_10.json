@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_10_morty"
+          "gym_10_ghost"
         ],
         "trainer_type": null
       }

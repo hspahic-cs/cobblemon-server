@@ -43,16 +43,18 @@ import java.util.concurrent.ConcurrentHashMap
  *   3. On player login we check the NBT and restore any pending levels — covering crash,
  *      disconnect-mid-battle, and any other path that skipped step 2.
  *
- * The gym_id is stashed at battle entry — via [EventPriority.LOW] EntityInteract for the
- * right-click path, or via [stashGymId] called from [GymBattleGate] (the Mixin gate) for the
+ * The cap is stashed at battle entry — via [EventPriority.LOW] EntityInteract for the
+ * right-click path, or via [stashCap] called from [GymBattleGate] (the Mixin gate) for the
  * force-battle path. Both end up funneling through [applyToBattle] on [BattleStartedEvent.Pre].
  *
- * Cap formula: `cap = 20 + 5 × (gymId − 1)`. Matches `LevelCap` going INTO the gym
- * (i.e., before beating it). Gym 1 → 20, gym 2 → 25, …, gym 10 → 65.
+ * Cap formula: `cap = 20 + 5 × (gymId − 1)` (see [capForGym]). Matches `LevelCap` going INTO the
+ * gym (i.e., before beating it). Gym 1 → 20, gym 2 → 25, …, gym 10 → 65. Challenge gyms instead
+ * carry a flat `level_cap.50` tag, so the player fights at the team's true L50.
  *
- * Both the mainline and challenge variants of a gym carry the same `gym_id.<N>` tag, so they
- * share a cap — exactly what the design wants ("downleveled to 20 for both Clay and Challenge
- * Clay; the difference is Clay's team is L15 while Challenge Clay's team is L20").
+ * Both variants carry the same `gym_id.<N>` tag, but the challenge variant ALSO carries a flat
+ * `level_cap.50` tag which takes precedence ([BridgeTags.findLevelCap] before the formula). So
+ * mainline Clay downlevels the player to the gym-1 formula cap (L20) against his L15 team, while
+ * Challenge Clay downlevels to a flat L50 against his L50 team — a true L50-vs-L50 fight.
  */
 object GymBattleAdjustHook {
 
@@ -66,7 +68,7 @@ object GymBattleAdjustHook {
      *  In-memory only — the persisted restore data lives in player NBT, not here. */
     private val pendingByPlayer: MutableMap<UUID, Pair<Int, Long>> = ConcurrentHashMap()
 
-    private fun capForGym(gymId: Int): Int = 20 + 5 * (gymId - 1)
+    fun capForGym(gymId: Int): Int = 20 + 5 * (gymId - 1)
 
     fun registerEvents() {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL) { event ->
@@ -84,10 +86,6 @@ object GymBattleAdjustHook {
     fun stashCap(uuid: UUID, cap: Int) {
         pendingByPlayer[uuid] = cap to System.currentTimeMillis()
     }
-
-    /** Stash a gym_id's (formula) cap for a player. Called from [GymBattleGate] (force-battle).
-     *  Idempotent per interaction. */
-    fun stashGymId(uuid: UUID, gymId: Int) = stashCap(uuid, capForGym(gymId))
 
     @SubscribeEvent(priority = EventPriority.LOW)
     fun onEntityInteract(event: PlayerInteractEvent.EntityInteract) {

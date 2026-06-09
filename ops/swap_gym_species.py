@@ -10,17 +10,17 @@ ROOT = Path("modpack/server-overrides/datapacks/server-gyms/data/rctmod/trainers
 
 # (file_stem, old_species, new_species, new_ability, new_moveset)
 SWAPS = [
-    ("gym_03_korrina", "pancham", "timburr", "ironfist",
+    ("gym_03_fighting", "pancham", "timburr", "ironfist",
         ["drainpunch", "machpunch", "rockslide", "bulkup"]),
-    ("gym_03_korrina_challenge", "pancham", "timburr", "ironfist",
+    ("gym_03_fighting_challenge", "pancham", "timburr", "ironfist",
         ["drainpunch", "machpunch", "rockslide", "bulkup"]),
-    ("gym_04_byron", "pawniard", "lairon", "rockhead",
+    ("gym_04_steel", "pawniard", "lairon", "rockhead",
         ["ironhead", "rockslide", "earthquake", "stealthrock"]),
-    ("gym_04_byron_challenge", "pawniard", "lairon", "rockhead",
+    ("gym_04_steel_challenge", "pawniard", "lairon", "rockhead",
         ["ironhead", "rockslide", "earthquake", "stealthrock"]),
-    ("gym_11_viola", "vikavolt", "galvantula", "compoundeyes",
+    ("gym_11_bug", "vikavolt", "galvantula", "compoundeyes",
         ["thunder", "bugbuzz", "stickyweb", "thunderwave"]),
-    ("gym_18_marnie", "lokix", "absol", "superluck",
+    ("gym_18_dark", "lokix", "absol", "superluck",
         ["nightslash", "psychocut", "suckerpunch", "swordsdance"]),
     ("gym_21_cynthia", "bisharp", "tyranitar", "sandstream",
         ["stoneedge", "crunch", "earthquake", "dragondance"]),

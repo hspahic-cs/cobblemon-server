@@ -9,13 +9,13 @@ ROOT = Path("modpack/server-overrides/datapacks/server-gyms/data/rctmod/trainers
 
 # Gym basename → RCT texture filename (within textures/trainers/single/).
 SKINS: dict[str, str] = {
-    "gym_02_gardenia":     "gym_leader_gardenia_03d6.png",
-    "gym_04_byron":        "gym_leader_byron_0399.png",
-    "gym_05_blaine":       "leader_blaine_01a3.png",
-    "gym_07_crasher_wake": "gym_leader_wake_03d7.png",
-    "gym_08_sabrina":      "leader_sabrina_01a4.png",
-    "gym_10_morty":        "leader_morty_001c.png",
-    "gym_13_lt_surge":     "leader_lt_surge_0033.png",
+    "gym_02_grass":     "gym_leader_gardenia_03d6.png",
+    "gym_04_steel":        "gym_leader_byron_0399.png",
+    "gym_05_fire":       "leader_blaine_01a3.png",
+    "gym_07_water": "gym_leader_wake_03d7.png",
+    "gym_08_psychic":      "leader_sabrina_01a4.png",
+    "gym_10_ghost":        "leader_morty_001c.png",
+    "gym_13_poison":     "leader_koga_01a2.png",
     "gym_19_oak":          "prof_prof_oak_01ff.png",
     "gym_20_lorelei":      "elite_four_lorelei_004d.png",
     "gym_21_cynthia":      "champion_cynthia_03a5.png",

@@ -1,5 +1,5 @@
 # Awarded by the rctmod:defeat_count trigger on the advancement when the player defeats
-# Clay (trainer_id=gym_01_clay). 0.7.29: stripped the `eco give` line (it was added in
+# Clay (trainer_id=gym_01_ground). 0.7.29: stripped the `eco give` line (it was added in
 # 0.7.26 but /eco isn't registered at datapack-load time, so the whole function silently
 # failed to load and players got NO reward) — gym bounty is now paid by Kotlin
 # AdvancementHook listening to AdvancementEarnEvent. Also stripped the

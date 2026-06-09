@@ -27,12 +27,15 @@ import java.util.concurrent.ConcurrentHashMap
  * machine grants one rare key per player per day.
  *
  * Rules (player-facing):
- *   - Floors strictly in order; floor N+1's leader refuses the interact until floor N falls.
+ *   - Floors strictly in order. Both the interact gate AND the battle-start gate
+ *     ([com.cobblemonbridge.battle.GymBattleGate] via [mayFightFloor]) refuse any floor that
+ *     isn't the player's current one — so a sethome/teleport to a higher floor, or an on-sight
+ *     force-battle, can't skip floor 1.
  *   - Party locked for the run ([partySnapshot], same mechanism as [E4GauntletHook]) — a PC
  *     swap is a free heal, so any roster change fails the run.
- *   - Items ARE allowed mid-battle; only the healing machine is banned. Using one mid-run
- *     doesn't stop the fights — it just voids the key ([voided]).
- *   - Losing / fleeing / disconnecting resets the run. Unlimited retries until the
+ *   - Items ARE allowed mid-battle, but using a healing machine mid-run RESETS the run (back to
+ *     floor 1), same as a loss — no cheap full heal between floors.
+ *   - Losing / fleeing / disconnecting / healing resets the run. Unlimited retries until the
  *     midnight rotation; the key itself stays once-per-day ([TowerStore.clearedEpochDay]).
  *
  * Differences from the E4 gauntlet, deliberate:
@@ -57,8 +60,6 @@ object TowerGauntletHook {
     private val activeFloor: MutableMap<UUID, Int> = ConcurrentHashMap()
     /** Party (Pokémon UUIDs) at run start. Any mismatch at a tower battle start fails the run. */
     private val partySnapshot: MutableMap<UUID, Set<UUID>> = ConcurrentHashMap()
-    /** Players who used a healing machine mid-run — run continues, key is voided. */
-    private val voided: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
 
     fun registerEvents() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event -> onVictory(event) }
@@ -76,7 +77,21 @@ object TowerGauntletHook {
         nextFloor.clear()
         activeFloor.clear()
         partySnapshot.clear()
-        voided.clear()
+    }
+
+    /**
+     * Force-battle-proof floor gate, called from [com.cobblemonbridge.battle.GymBattleGate] at
+     * the `startBattleWith` choke point (covers BOTH right-click and on-sight force-battle). A
+     * tower battle may only begin at floor 1 (which starts a run via the interact gate) or at the
+     * player's current [nextFloor]. Anything else — a teleport to a higher floor, a force-battle
+     * from a leader who locked eyes — is refused, so floor 1 can never be skipped. Stateless wrt
+     * event ordering: it reads [nextFloor], which is advanced by [onVictory], not by the interact
+     * that triggers this battle.
+     */
+    fun mayFightFloor(uuid: UUID, floor: Int): Boolean {
+        if (clearedToday(uuid)) return false
+        val expected = nextFloor[uuid]
+        return if (expected == null) floor == 1 else floor == expected
     }
 
     private fun snapshotPartyUuids(player: ServerPlayer): Set<UUID> {
@@ -88,7 +103,6 @@ object TowerGauntletHook {
         nextFloor.remove(uuid)
         activeFloor.remove(uuid)
         partySnapshot.remove(uuid)
-        voided.remove(uuid)
     }
 
     private fun clearedToday(uuid: UUID): Boolean =
@@ -135,10 +149,9 @@ object TowerGauntletHook {
     private fun startRun(player: ServerPlayer) {
         nextFloor[player.uuid] = 1
         partySnapshot[player.uuid] = snapshotPartyUuids(player)
-        voided.remove(player.uuid)
         player.sendSystemMessage(Component.literal(
             "${PREFIX}Run started! Beat all §e3 floors§f in order §7— party locked, items allowed, " +
-            "§cno healing machine§7 — §ffor a §eRare Key§f. Losing just resets the run."
+            "§cno healing machine§7 §ffor a §eRare Key§f. Losing §7or healing§f resets the run."
         ))
         CobblemonBridge.logger.info(
             "tower: run started for {} (party size={})",
@@ -146,9 +159,11 @@ object TowerGauntletHook {
         )
     }
 
-    // ─── Healing machine voids the key ─────────────────────────────────────
+    // ─── Healing machine resets the run ────────────────────────────────────
     /** HIGHEST priority for the same reason as [com.cobblemonbridge.quests.HealQuestHook]:
-     *  Cobblemon's own healing-machine handler SUCCEEDs (cancels) the event at NORMAL. */
+     *  Cobblemon's own healing-machine handler SUCCEEDs (cancels) the event at NORMAL, so we must
+     *  observe the click before it's swallowed. Healing mid-run RESETS the run — no cheap full
+     *  heal between floors. The heal itself still goes through; the player is just back at floor 1. */
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onUseBlock(event: PlayerInteractEvent.RightClickBlock) {
         if (event.level.isClientSide) return
@@ -156,12 +171,7 @@ object TowerGauntletHook {
         if (!nextFloor.containsKey(player.uuid)) return  // no active run
         val blockId = BuiltInRegistries.BLOCK.getKey(event.level.getBlockState(event.pos).block)
         if (blockId != HEALING_MACHINE_ID) return
-        if (voided.add(player.uuid)) {
-            player.sendSystemMessage(Component.literal(
-                "${PREFIX}§cHealing machine used — today's key is voided. §7You can still finish the run for practice, or wait for tomorrow's leaders."
-            ))
-            CobblemonBridge.logger.info("tower: key voided for {} (healing machine)", player.gameProfile.name)
-        }
+        failRun(player, "healing machine")
     }
 
     // ─── Party stability at battle start ───────────────────────────────────
@@ -224,15 +234,8 @@ object TowerGauntletHook {
     }
 
     private fun completeRun(player: ServerPlayer) {
-        val wasVoided = player.uuid in voided
         clearRun(player.uuid)
         teleportOut(player)
-        if (wasVoided) {
-            player.sendSystemMessage(Component.literal(
-                "${PREFIX}Tower cleared — but the healing machine voided today's key. Come back tomorrow!"
-            ))
-            return
-        }
         if (clearedToday(player.uuid)) return  // belt-and-braces; interact gate already blocks
         TowerManager.store().markCleared(player.uuid, TowerManager.todayEpochDay())
         val src = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()

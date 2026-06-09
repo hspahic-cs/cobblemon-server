@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_10_morty_challenge"
+          "gym_10_ghost_challenge"
         ],
         "trainer_type": null
       }

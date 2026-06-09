@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_12_cheren_challenge"
+          "gym_12_normal_challenge"
         ],
         "trainer_type": null
       }

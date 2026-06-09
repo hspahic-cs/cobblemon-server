@@ -3,216 +3,309 @@
   "totalWeightPct": 100.0,
   "entries": [
     {
-      "lootTier": "Floor",
-      "label": "1 Ability Patch",
-      "weightPct": 16.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:ability_patch",
-          "count": 1
-        }
-      ],
-      "notes": "Rare high-tier is ultra floor"
-    },
-    {
-      "lootTier": "Floor",
-      "label": "Uncommon Pokémon Egg (2 perfect IVs)",
-      "weightPct": 14.0,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "uncommon",
-          "shiny": false,
-          "requireHiddenAbility": false
-        }
-      ],
-      "notes": "Non-shiny egg weight bumped (0.7.12)"
-    },
-    {
-      "lootTier": "Floor",
-      "label": "10 Rare Candy",
-      "weightPct": 13.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:rare_candy",
-          "count": 10
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Floor",
-      "label": "TBD Ultra Reward #1",
-      "weightPct": 8.0,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "TBD Ultra Reward #1",
-          "count": 1
-        }
-      ],
-      "notes": "Farming combo"
-    },
-    {
-      "lootTier": "Floor",
-      "label": "Competitive Ready-Kit (3 Vitamins each + 2 Mints)",
-      "weightPct": 7.0,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "Competitive Ready-Kit (3 Vitamins each + 2 Mints)",
-          "count": 1
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
-      "label": "TBD Ultra Reward #2",
-      "weightPct": 8.0,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "TBD Ultra Reward #2",
-          "count": 1
-        }
-      ],
-      "notes": "Rare jackpot is ultra mid"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "TBD Ultra Reward #3",
-      "weightPct": 7.0,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "TBD Ultra Reward #3",
-          "count": 1
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Ultra-Rare Pokémon Egg (3 perfect IVs)",
-      "weightPct": 8.0,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "ultra_rare",
-          "shiny": false,
-          "requireHiddenAbility": false
-        }
-      ],
-      "notes": "Non-shiny egg weight bumped (0.7.12)"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "TBD Ultra Reward #4",
-      "weightPct": 5.5,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "TBD Ultra Reward #4",
-          "count": 1
-        }
-      ],
-      "notes": "Stacked PvP bundle"
-    },
-    {
-      "lootTier": "High",
-      "label": "1 Shiny Egg (1 guaranteed perfect IV)",
-      "weightPct": 4.0,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "rare",
-          "shiny": true,
-          "requireHiddenAbility": false
-        }
-      ],
-      "notes": "Shiny w/ IV head start — weight preserved (0.7.12)"
-    },
-    {
-      "lootTier": "High",
-      "label": "Ultra-Rare Pokémon Egg (3 perfect IVs + Hidden Ability)",
-      "weightPct": 3.0,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "ultra_rare",
-          "shiny": false,
-          "requireHiddenAbility": true
-        }
-      ],
-      "notes": "HA + strong IVs — bumped (0.7.12)"
-    },
-    {
-      "lootTier": "High",
-      "label": "TBD Ultra Reward #5",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "TBD Ultra Reward #5",
-          "count": 1
-        }
-      ],
-      "notes": "Double-up — extremely lucky"
-    },
-    {
-      "lootTier": "High",
-      "label": "TBD Ultra Reward #6",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "placeholder",
-          "kind": "tbd_ultra",
-          "label": "TBD Ultra Reward #6",
-          "count": 1
-        }
-      ],
-      "notes": "Filler for the slot freed by removing Gold Bottle Cap (0.7.12)"
-    },
-    {
       "lootTier": "Jackpot",
-      "label": "1 Shiny Egg",
-      "weightPct": 1.0,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "rare",
-          "shiny": true,
-          "requireHiddenAbility": false
-        }
-      ],
-      "notes": "Best shiny egg in the game — weight preserved (0.7.12)"
-    },
-    {
-      "lootTier": "Jackpot",
-      "label": "2 Ultra Keys",
+      "label": "Azure Flute",
       "weightPct": 0.5,
       "items": [
         {
-          "type": "gacha_key",
-          "tier": "ultra",
-          "count": 2
+          "type": "vanilla",
+          "id": "legendarymonuments:azure_flute",
+          "count": 1
         }
       ],
-      "notes": "Wow"
+      "notes": "Summons ARCEUS — grand jackpot"
     },
     {
       "lootTier": "Jackpot",
-      "label": "1 Master Ball",
+      "label": "Totem of Undying (Zacian)",
       "weightPct": 1.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "minecraft:totem_of_undying",
+          "count": 1
+        }
+      ],
+      "notes": "Zacian summon catalyst"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Griseous Orb",
+      "weightPct": 1.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:griseous_orb",
+          "count": 1
+        }
+      ],
+      "notes": "Giratina Origin Forme item"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Rainbow Feather",
+      "weightPct": 1.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:rainbow_feather",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Ho-Oh"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Red Chain",
+      "weightPct": 1.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:red_chain",
+          "count": 1
+        }
+      ],
+      "notes": "Creation-trio control item"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Shiny Egg",
+      "weightPct": 1.5,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "rare",
+          "shiny": true,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Shiny cobbreeding egg (rare pool)"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Light Stone",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:lightstone",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Reshiram"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Dark Stone",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:darkstone",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Zekrom"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Truth Bottle",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:truthbottle",
+          "count": 1
+        }
+      ],
+      "notes": "Reshiram / Kyurem line"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Ideals Bottle",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:idealsbottle",
+          "count": 1
+        }
+      ],
+      "notes": "Zekrom / Kyurem line"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Proof of Conquest (U)",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:proof_of_conquest_u",
+          "count": 1
+        }
+      ],
+      "notes": "Proof of Conquest U"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Proof of Conquest (A)",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:proof_of_conquest_a",
+          "count": 1
+        }
+      ],
+      "notes": "Proof of Conquest A"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Proof of Conquest (M)",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:proof_of_conquest_m",
+          "count": 1
+        }
+      ],
+      "notes": "Proof of Conquest M"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Mew Pedestal",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:mew_pedestal",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Mew"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Lati Pedestal",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:latias_pedestal",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Latios / Latias (Eon duo, one pedestal)"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Fullmoon Whistle",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:fullmoon_whistle",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Cresselia"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Newmoon Whistle",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:newmoon_whistle",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Darkrai"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Raikou Pedestal",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:raikou_pedestal",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Raikou"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Suicune Pedestal",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:suicune_pedestal",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Suicune"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Entei Pedestal",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:entei_pedestal",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Entei"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Liberty Pass",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:liberty_pass",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Victini"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Curry of Justice",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:curry_of_justice",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Keldeo"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Titan Key",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:titan_key",
+          "count": 1
+        }
+      ],
+      "notes": "Titan summon"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Master Ball",
+      "weightPct": 3.5,
       "items": [
         {
           "type": "vanilla",
@@ -220,7 +313,125 @@
           "count": 1
         }
       ],
-      "notes": "Replaces the removed monument-questline pedestal (0.7.12)"
+      "notes": "Guaranteed catch"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "2 Ability Patches",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:ability_patch",
+          "count": 2
+        }
+      ],
+      "notes": "Hidden ability — top PvP item"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "20 Eye of Ender",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "minecraft:ender_eye",
+          "count": 20
+        }
+      ],
+      "notes": "Stronghold / summon-altar utility"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Rock Golem Key",
+      "weightPct": 5.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:rock_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regirock"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Steel Golem Key",
+      "weightPct": 5.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:steel_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Registeel"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Ice Golem Key",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:ice_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regice"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Ultra Egg",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "ultra_rare",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Cobbreeding egg — ultra-rare pool"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Dragon Golem Key",
+      "weightPct": 4.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:dragon_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regidrago"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Ash Cap",
+      "weightPct": 4.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:ash_cap",
+          "count": 1
+        }
+      ],
+      "notes": "Ash-Cap Pikachu cosmetic"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "2 Ultra Keys",
+      "weightPct": 4.0,
+      "items": [
+        {
+          "type": "gacha_key",
+          "tier": "ultra",
+          "count": 2
+        }
+      ],
+      "notes": "Re-roll the ultra crate"
     }
   ]
 }

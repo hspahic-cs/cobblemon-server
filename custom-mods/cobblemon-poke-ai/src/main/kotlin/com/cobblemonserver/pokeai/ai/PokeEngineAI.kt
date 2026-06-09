@@ -45,6 +45,10 @@ class PokeEngineAI(
         forceSwitch: Boolean,
     ): ShowdownActionResponse {
         val battleId = battle.battleId.toString()
+        // Record this as a foul-play battle so the defeat-bounty hook can apply its money
+        // multiplier (read cross-mod by cobblemon-bridge). Marked even on the fallback path —
+        // the trainer is still configured for foul-play AI.
+        FoulPlayBattles.mark(battle.battleId)
 
         val requestJson = latestRequestJson(battle)
             ?: return delegateToFallback(activeBattlePokemon, battle, aiSide, moveset, forceSwitch,

@@ -87,22 +87,27 @@ object GymDefeatHook {
         }
         if (!losersIncludeTrainer) return  // mixed PvP / spectator / unknown — nothing to do
 
-        // Gym-detection lives on so we DON'T double-pay: gym defeats get the big flat
-        // gym bounty from the mcfunction; non-gym defeats get the per-defeat NPC bounty
-        // from here.
-        val trainerId = com.cobblemonbridge.adapters.RctBridge
-            .trainerIdForBattle(event.battle.battleId)
+        val battleId = event.battle.battleId
+        val trainerId = com.cobblemonbridge.adapters.RctBridge.trainerIdForBattle(battleId)
         val isGymBattle = trainerId
             ?.let(com.cobblemonbridge.adapters.RctBridge::parseGymTrainerId) != null
+        val foulPlay = com.cobblemonbridge.adapters.PokeAiBridge.wasFoulPlay(battleId)
 
-        if (isGymBattle) return  // gym path handled entirely by RCT trigger + mcfunction
+        // Non-foul-play gym/E4 defeats pay nothing here — they get the one-time achievement reward
+        // (AdvancementHook) only. Everything else gets the per-defeat NPC bounty; foul-play NPCs
+        // (incl. foul-play gyms / tower challenge leaders) get it at a 1.5× money multiplier.
+        if (isGymBattle && !foulPlay) return
 
+        val multiplier = if (foulPlay) FOUL_PLAY_BOUNTY_MULTIPLIER else 1.0
         for (winner in event.winners) {
             val playerActor = winner as? PlayerBattleActor ?: continue
             val player = playerActor.entity as? ServerPlayer ?: continue
-            payNpcBounty(player, trainerId, event.losers)
+            payNpcBounty(player, trainerId, event.losers, multiplier)
         }
     }
+
+    /** Foul-play (poke-engine AI) NPCs pay 1.5× the per-defeat fight bounty. */
+    private const val FOUL_PLAY_BOUNTY_MULTIPLIER = 1.5
 
     /**
      * Income payout for defeating a non-gym trainer NPC (random RCT trainers, etc.). Formula:
@@ -136,16 +141,24 @@ object GymDefeatHook {
         return kotlin.math.max(1, (numerator + 5) / 6)
     }
 
-    private fun payNpcBounty(player: ServerPlayer, trainerId: String?, losers: Iterable<BattleActor>) {
-        val amount = npcBounty(losers)
+    private fun payNpcBounty(
+        player: ServerPlayer,
+        trainerId: String?,
+        losers: Iterable<BattleActor>,
+        multiplier: Double = 1.0,
+    ) {
+        val base = npcBounty(losers)
+        val amount = if (multiplier == 1.0) base
+                     else kotlin.math.max(1, kotlin.math.ceil(base * multiplier).toInt())
         CobblemonBridge.logger.info(
-            "npc-defeat: trainer={} player={} bounty=\${}",
-            trainerId ?: "<unknown>", player.gameProfile.name, amount,
+            "npc-defeat: trainer={} player={} bounty=\${} (x{})",
+            trainerId ?: "<unknown>", player.gameProfile.name, amount, multiplier,
         )
         if (amount <= 0) return
         EconomyBridge.deposit(player.uuid, amount)
+        val suffix = if (multiplier > 1.0) " §6(foul-play §lx$multiplier§r§6)" else ""
         player.sendSystemMessage(Component.literal(
-            "§6+ §e\$$amount §7for defeating trainer"
+            "§6+ §e\$$amount §7for defeating trainer$suffix"
         ))
     }
 

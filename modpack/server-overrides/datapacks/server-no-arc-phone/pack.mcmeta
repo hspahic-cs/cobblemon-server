@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Prevents crafting the Legendary Monuments Arc Phone. Overrides legendarymonuments:arc_phone_recipe with a neoforge:false condition so the recipe never loads (removed from crafting table, recipe book, and JEI). Existing items and /give are unaffected."
+  }
+}

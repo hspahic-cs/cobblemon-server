@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.10.6] - 2026-06-08
+
+### Added
+- **`server-no-arc-phone` datapack — Arc Phone is no longer craftable.** Overrides
+  `legendarymonuments:arc_phone_recipe` with a `neoforge:false` condition so the
+  recipe never registers (gone from the crafting table, recipe book, and JEI).
+  Server-side only via the world datapack overlay — the Legendary Monuments jar is
+  untouched. Existing Arc Phones and `/give` are unaffected; this blocks crafting
+  only, not other potential sources (loot/structure rewards).
+
 ## [0.10.5] - 2026-06-08
 
 ### Changed

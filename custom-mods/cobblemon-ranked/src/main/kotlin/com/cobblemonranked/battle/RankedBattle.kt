@@ -153,9 +153,10 @@ object RankedBattleManager {
     ) {
         val config = CobblemonRanked.config
 
-        // Legality check
-        val p1Legendaries = team1.count { it.isLegendary() }
-        val p2Legendaries = team2.count { it.isLegendary() }
+        // Legality check. countsAsLegendary() includes Paradox Pokémon (paradox label), which
+        // Cobblemon's isLegendary() does not — many Paradox mons are Ubers-tier.
+        val p1Legendaries = team1.count { it.countsAsLegendary() }
+        val p2Legendaries = team2.count { it.countsAsLegendary() }
 
         if (p1Legendaries > config.maxLegendaries && p2Legendaries > config.maxLegendaries) {
             broadcast(player1.server,

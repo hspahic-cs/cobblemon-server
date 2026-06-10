@@ -31,7 +31,11 @@ sealed class ItemSpec {
     /**
      * Cobbreeding Pokémon egg. `pool` references a rarity tier in `EggPools` ("common",
      * "uncommon", "rare", "ultra_rare"). At grant time, RewardGranter picks a random species
-     * from the pool (filtered by `requireHiddenAbility` if set) and runs `givepokemonegg`.
+     * from the whole pool and runs `givepokemonegg`; Hidden Ability (`ha=yes`) is granted when
+     * the rolled species is flagged `hasHiddenAbility` in the pool — it is NOT gated by this spec.
+     *
+     * `requireHiddenAbility` is retained only for JSON back-compat (older tables / the admin
+     * `giveegg ... ha` override) and no longer filters the pool on a normal pull.
      */
     data class CobbreedingEgg(
         val pool: String,

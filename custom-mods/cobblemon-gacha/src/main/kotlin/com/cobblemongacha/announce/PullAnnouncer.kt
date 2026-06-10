@@ -78,6 +78,7 @@ object PullAnnouncer {
             KeyTier.COMMON -> 0xFFFFFF   // white
             KeyTier.RARE -> 0xCC2222     // red
             KeyTier.ULTRA -> 0x8B00FF    // purple
+            KeyTier.POKEMON -> 0x55FF55  // green
         }
         val (shape, hasTrail, hasTwinkle, fadeColors) = when (lootTier) {
             LootTier.Floor -> Quad(FireworkExplosion.Shape.SMALL_BALL, false, false, IntList.of())

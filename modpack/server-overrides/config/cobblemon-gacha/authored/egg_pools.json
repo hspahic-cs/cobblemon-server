@@ -291,6 +291,11 @@
       "id": "sprigatito",
       "hasHiddenAbility": true,
       "notes": "Yes"
+    },
+    {
+      "id": "charcadet",
+      "hasHiddenAbility": false,
+      "notes": "Armarouge/Ceruledge"
     }
   ],
   "uncommon": [

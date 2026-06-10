@@ -134,26 +134,30 @@ object RewardGranter {
 
     /**
      * Pick a species from the pool, dispatch `/givepokemonegg`, and return both the display stack
-     * (for inventory placeholder + announce hover) and the announce label. The label includes the
-     * species, shiny tag, and a `[Hidden Ability]` suffix when applicable. If the pool is unknown
-     * or filtered to nothing, logs and skips (returns null).
+     * (for inventory placeholder + announce hover) and the announce label. `ha=yes` is added when
+     * the rolled species is flagged as an HA mon, and the label gets a `(Hidden Ability)` suffix to
+     * match. If the pool is unknown or empty, logs and skips (returns null).
      */
     private fun dispatchEgg(player: ServerPlayer, spec: ItemSpec.CobbreedingEgg): EggOutcome? {
-        val species = CobblemonGacha.eggPools.pick(spec.pool, spec.requireHiddenAbility)
-        if (species == null) {
+        val picked = CobblemonGacha.eggPools.pickSpecies(spec.pool)
+        if (picked == null) {
             CobblemonGacha.logger.warn(
-                "Egg pool '{}' produced no species (requireHA={}); skipping grant for {}",
-                spec.pool, spec.requireHiddenAbility, player.gameProfile.name,
+                "Egg pool '{}' produced no species; skipping grant for {}",
+                spec.pool, player.gameProfile.name,
             )
             return null
         }
+        val species = picked.id
+        // Hidden Ability is granted whenever the rolled species is flagged as an HA mon in the
+        // egg pool — there is no separate "HA-only" egg type.
+        val grantHa = picked.hasHiddenAbility
         // Build the PokemonProperties argument list. `min_perfect_ivs=2` is always present so every
         // egg hatches with two random perfect IVs. `shiny=true` and `ha=yes` are conditional.
         val args = buildList {
             add(species)
             add("min_perfect_ivs=2")
             if (spec.shiny) add("shiny=true")
-            if (spec.requireHiddenAbility) add("ha=yes")
+            if (grantHa) add("ha=yes")
         }.joinToString(" ")
         val cmd = "givepokemonegg ${player.gameProfile.name} $args"
         val src = player.server.createCommandSourceStack()
@@ -164,7 +168,7 @@ object RewardGranter {
         // synchronously visible to ItemStack.get(...). Use TickScheduler so the tag-pass runs on
         // a *later* server tick (server.execute(...) runs on the same tick — too eager).
         TickScheduler.later(2) { tagGrantedEggWithTier(player, spec.pool) }
-        return EggOutcome(eggDisplayStack(spec, species), announceLabel(spec, species))
+        return EggOutcome(eggDisplayStack(spec, species, grantHa), announceLabel(spec, species, grantHa))
     }
 
     /** Public entry for callers outside the normal gacha-pull flow (e.g. `/gacha admin giveegg`).
@@ -211,10 +215,10 @@ object RewardGranter {
      * perfect IVs — but we don't surface IVs in the announce text (they're per-pull and not
      * particularly readable in chat).
      */
-    private fun announceLabel(spec: ItemSpec.CobbreedingEgg, species: String): String {
+    private fun announceLabel(spec: ItemSpec.CobbreedingEgg, species: String, ha: Boolean): String {
         val shinyTag = if (spec.shiny) "§e✦ Shiny §f" else "§f"
         val speciesTitle = species.replaceFirstChar { it.uppercase() }
-        val haTag = if (spec.requireHiddenAbility) " §d(Hidden Ability)" else ""
+        val haTag = if (ha) " §d(Hidden Ability)" else ""
         return "$shinyTag$speciesTitle Egg$haTag"
     }
 
@@ -225,7 +229,7 @@ object RewardGranter {
      * `Items.TURTLE_EGG` (distinct green-spotted block sprite) and stamped a lore line so the
      * row reads unambiguously as a Pokémon egg.
      */
-    private fun eggDisplayStack(spec: ItemSpec.CobbreedingEgg, species: String? = null): ItemStack {
+    private fun eggDisplayStack(spec: ItemSpec.CobbreedingEgg, species: String? = null, ha: Boolean = false): ItemStack {
         val stack = ItemStack(Items.TURTLE_EGG)
         val tierLabel = spec.pool.replace('_', ' ').replaceFirstChar { it.uppercase() }
         val shinyPrefix = if (spec.shiny) "§e✦ Shiny " else "§a"
@@ -234,7 +238,7 @@ object RewardGranter {
         } else {
             "$shinyPrefix$tierLabel Pokémon Egg"
         }
-        val name = if (spec.requireHiddenAbility) "$base §d(HA)" else base
+        val name = if (ha) "$base §d(HA)" else base
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(name))
         stack.set(
             DataComponents.LORE,

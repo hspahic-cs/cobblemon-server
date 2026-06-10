@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.storage.party.PartyStore
 import com.cobblemon.mod.common.api.storage.pc.PCStore
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemonranked.battle.isParadox
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
@@ -131,7 +132,12 @@ class TeamSelectionMenu private constructor(
      */
     private fun pokemonStack(pokemon: Pokemon, isSelected: Boolean): ItemStack {
         val stack = com.cobblemon.mod.common.item.PokemonItem.from(pokemon)
-        val legendary = if (pokemon.isLegendary()) " §c[LEGENDARY]" else ""
+        // Both count toward the maxLegendaries cap — see countsAsLegendary().
+        val legendary = when {
+            pokemon.isLegendary() -> " §c[LEGENDARY]"
+            pokemon.isParadox() -> " §c[PARADOX]"
+            else -> ""
+        }
         val statePrefix = if (isSelected) "§a✓ " else ""
         stack.set(DataComponents.CUSTOM_NAME,
             Component.literal("$statePrefix${pokemon.species.name} Lv.${pokemon.level}$legendary"))

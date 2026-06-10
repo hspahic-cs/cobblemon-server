@@ -108,7 +108,7 @@ object AdvancementHook {
      *  op-2 perm gate is satisfied and output is suppressed (the player already got a
      *  tellraw from `beat_gym_N.mcfunction` — no need for a second chat line). */
     private fun grantGymKey(player: ServerPlayer, gymId: Int, isChallenge: Boolean) {
-        // Challenge gyms always grant a rare key (incl. Morty/10 — no ultra on the challenge track).
+        // Challenge gyms always grant a rare key (incl. Grimm/10 — no ultra on the challenge track).
         val tier = if (!isChallenge && gymId in ULTRA_KEY_GYMS) "ultra" else "rare"
         val src = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
         val cmd = "gacha grant ${player.gameProfile.name} $tier 1"

@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Gardenia",
+  "name": "Gardenia",
   "identity": "Grass",
-  "textureResource": "rctmod:textures/trainers/single/gym_leader_gardenia_03d6.png",
+  "textureResource": "rctmod:textures/trainers/single/type_grass.png",
   "ai": {
     "type": "rb",
     "data": {}

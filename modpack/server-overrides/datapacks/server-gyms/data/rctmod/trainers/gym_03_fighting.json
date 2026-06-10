@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Korrina",
+  "name": "Lee Sin",
   "identity": "Fighting",
   "ai": {
     "type": "pe",
@@ -131,5 +131,5 @@
       ]
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_0308.png"
+  "textureResource": "rctmod:textures/trainers/single/type_fighting.png"
 }

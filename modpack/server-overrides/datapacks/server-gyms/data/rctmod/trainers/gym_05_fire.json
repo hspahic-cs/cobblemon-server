@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Blaine",
+  "name": "Zuko",
   "identity": "Fire",
-  "textureResource": "rctmod:textures/trainers/single/leader_blaine_01a3.png",
+  "textureResource": "rctmod:textures/trainers/single/type_fire.png",
   "ai": {
     "type": "pe",
     "data": {}

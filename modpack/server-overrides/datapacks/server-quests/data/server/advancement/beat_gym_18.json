@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Marnie"
+      "text": "Hobie"
     },
     "description": {
-      "text": "Defeat Marnie (Dark-type, Level 60)."
+      "text": "Defeat Hobie (Dark-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"

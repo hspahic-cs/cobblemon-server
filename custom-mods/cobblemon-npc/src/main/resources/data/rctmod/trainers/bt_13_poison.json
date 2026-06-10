@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Koga",
+  "name": "Koga",
   "identity": "Poison",
-  "textureResource": "rctmod:textures/trainers/single/leader_koga_01a2.png",
+  "textureResource": "rctmod:textures/trainers/single/type_poison.png",
   "ai": {
     "type": "rb",
     "data": {}

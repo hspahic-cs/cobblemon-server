@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Drayden",
+  "name": "Quinn",
   "identity": "Dragon",
   "ai": {
     "type": "pe",
@@ -191,5 +191,5 @@
       "heldItem": "cobblemon:life_orb"
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/dragon_tamer_drake_049a.png"
+  "textureResource": "rctmod:textures/trainers/single/type_dragon.png"
 }

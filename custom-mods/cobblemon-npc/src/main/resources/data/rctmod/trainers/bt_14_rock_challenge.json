@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Grant",
+  "name": "Caesar",
   "identity": "Rock",
   "ai": {
     "type": "pe",
@@ -191,5 +191,5 @@
       "heldItem": "cobblemon:choice_band"
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/veteran_grant_0392.png"
+  "textureResource": "rctmod:textures/trainers/single/type_rock.png"
 }

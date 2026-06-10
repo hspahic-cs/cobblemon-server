@@ -1,4 +1,4 @@
-# Spawn Gym 11: Viola — Bug at the function caller's position.
+# Spawn Gym 11: Flik — Bug at the function caller's position.
 # Trainer lives in the rctmod namespace (data/rctmod/trainers/gym_11_bug.json) — bare name
 # is enough for the summon command. TrainerId NBT is stored as just the path.
 
@@ -7,4 +7,4 @@ execute at @s run rctmod trainer summon_persistent gym_11_bug
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_11_bug"}] add cobblemon_bridge.gym_id.11
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_11_bug"}] add cobblemon_bridge.anchor
 execute at @s run data merge entity @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_11_bug"}] {Invulnerable:1b,PersistenceRequired:1b}
-tellraw @s [{"text":"§a✓ Spawned Gym 11: Viola — Bug","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_11"}]
+tellraw @s [{"text":"§a✓ Spawned Gym 11: Flik — Bug","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_11"}]

@@ -1,7 +1,7 @@
 {
   "name": "Ash",
   "identity": "Pok\u00e9mon Trainer",
-  "textureResource": "rctmod:textures/trainers/single/elite_four_agatha_0053.png",
+  "textureResource": "rctmod:textures/trainers/single/gym_22_ash.png",
   "ai": {
     "type": "pe",
     "data": {}

@@ -57,24 +57,24 @@ object TowerManager {
     /** The 18 battle-tower leaders — challenge-track trainer id (datapack filename) + display name.
      *  The normal-track id is this with the `_challenge` suffix dropped (`bt_NN_type`). */
     val POOL: List<Pair<String, String>> = listOf(
-        "bt_01_ground_challenge" to "Clay",
+        "bt_01_ground_challenge" to "Dusty",
         "bt_02_grass_challenge" to "Gardenia",
-        "bt_03_fighting_challenge" to "Korrina",
-        "bt_04_steel_challenge" to "Byron",
-        "bt_05_fire_challenge" to "Blaine",
-        "bt_06_electric_challenge" to "Volkner",
-        "bt_07_water_challenge" to "Crasher Wake",
-        "bt_08_psychic_challenge" to "Sabrina",
-        "bt_09_dragon_challenge" to "Drayden",
-        "bt_10_ghost_challenge" to "Morty",
-        "bt_11_bug_challenge" to "Viola",
-        "bt_12_normal_challenge" to "Cheren",
+        "bt_03_fighting_challenge" to "Lee Sin",
+        "bt_04_steel_challenge" to "Jarvis",
+        "bt_05_fire_challenge" to "Zuko",
+        "bt_06_electric_challenge" to "Stan",
+        "bt_07_water_challenge" to "Kai",
+        "bt_08_psychic_challenge" to "Juniper",
+        "bt_09_dragon_challenge" to "Quinn",
+        "bt_10_ghost_challenge" to "Grimm",
+        "bt_11_bug_challenge" to "Flik",
+        "bt_12_normal_challenge" to "Penny",
         "bt_13_poison_challenge" to "Koga",
-        "bt_14_rock_challenge" to "Grant",
-        "bt_15_flying_challenge" to "Skyla",
-        "bt_16_ice_challenge" to "Brycen",
-        "bt_17_fairy_challenge" to "Valerie",
-        "bt_18_dark_challenge" to "Marnie",
+        "bt_14_rock_challenge" to "Caesar",
+        "bt_15_flying_challenge" to "Amos",
+        "bt_16_ice_challenge" to "Tux",
+        "bt_17_fairy_challenge" to "Flora",
+        "bt_18_dark_challenge" to "Hobie",
     )
 
     /** Server-local timezone — midnight in this zone is the rotation + reward-reset boundary. */
@@ -95,7 +95,7 @@ object TowerManager {
 
     /** A floor's trainer in the rotation pipeline: summoned, then (after settling) tagged.
      *  [difficulty] is "hard" (challenge variant, flat-L50) or "normal" (regular variant, uncapped);
-     *  [displayName] is the shared leader name (e.g. "Brycen") used for the name tag. */
+     *  [displayName] is the shared leader name (e.g. "Tux") used for the name tag. */
     private data class PendingFloor(
         val pos: WarpPos, val floor: Int, val trainerId: String,
         val difficulty: String, val displayName: String,

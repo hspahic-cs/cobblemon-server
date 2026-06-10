@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Byron",
+  "name": "Jarvis",
   "identity": "Steel",
-  "textureResource": "rctmod:textures/trainers/single/gym_leader_byron_0399.png",
+  "textureResource": "rctmod:textures/trainers/single/type_steel.png",
   "ai": {
     "type": "pe",
     "data": {}

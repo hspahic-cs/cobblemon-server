@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Viola",
+  "name": "Flik",
   "identity": "Bug",
   "ai": {
     "type": "pe",
@@ -191,5 +191,5 @@
       "heldItem": "cobblemon:heavy_duty_boots"
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/cameraman_tevin_0400.png"
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png"
 }

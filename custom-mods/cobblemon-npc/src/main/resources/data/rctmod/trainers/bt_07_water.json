@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Crasher Wake",
+  "name": "Kai",
   "identity": "Water",
-  "textureResource": "rctmod:textures/trainers/single/gym_leader_wake_03d7.png",
+  "textureResource": "rctmod:textures/trainers/single/type_water.png",
   "ai": {
     "type": "rb",
     "data": {}

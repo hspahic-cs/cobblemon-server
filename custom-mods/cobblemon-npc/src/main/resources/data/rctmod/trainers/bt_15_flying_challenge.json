@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Skyla",
+  "name": "Amos",
   "identity": "Flying",
   "ai": {
     "type": "pe",
@@ -191,5 +191,5 @@
       "heldItem": "cobblemon:flame_plate"
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/bird_keeper_audrey_0493.png"
+  "textureResource": "rctmod:textures/trainers/single/type_flying.png"
 }

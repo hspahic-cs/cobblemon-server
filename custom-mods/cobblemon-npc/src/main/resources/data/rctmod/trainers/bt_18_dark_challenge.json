@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Marnie",
+  "name": "Hobie",
   "identity": "Dark",
   "ai": {
     "type": "pe",
@@ -194,5 +194,5 @@
       "heldItem": "cobblemon:chople_berry"
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/battle_girl_helen_04e1.png"
+  "textureResource": "rctmod:textures/trainers/single/type_dark.png"
 }

@@ -1,7 +1,7 @@
 {
   "name": "Alder",
   "identity": "Unova Champion",
-  "textureResource": "rctmod:textures/trainers/single/elite_four_lorelei_004d.png",
+  "textureResource": "rctmod:textures/trainers/single/gym_20_alder.png",
   "ai": {
     "type": "pe",
     "data": {}

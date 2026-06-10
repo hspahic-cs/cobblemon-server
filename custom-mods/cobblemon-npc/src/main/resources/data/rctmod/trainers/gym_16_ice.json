@@ -1,5 +1,5 @@
 {
-  "name": "Gym Leader Brycen",
+  "name": "Tux",
   "identity": "Ice",
   "ai": {
     "type": "pe",
@@ -191,5 +191,5 @@
       ]
     }
   ],
-  "textureResource": "rctmod:textures/trainers/single/skier_bjorn_0356.png"
+  "textureResource": "rctmod:textures/trainers/single/type_ice.png"
 }

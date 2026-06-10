@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Brycen"
+      "text": "Tux"
     },
     "description": {
-      "text": "Defeat Brycen (Ice-type, Level 60)."
+      "text": "Defeat Tux (Ice-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"

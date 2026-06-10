@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Morty",
+  "name": "Grimm",
   "identity": "Ghost",
-  "textureResource": "rctmod:textures/trainers/single/leader_morty_001c.png",
+  "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
   "ai": {
     "type": "rb",
     "data": {}

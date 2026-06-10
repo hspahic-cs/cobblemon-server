@@ -1,7 +1,7 @@
 {
-  "name": "Gym Leader Volkner",
+  "name": "Stan",
   "identity": "Electric",
-  "textureResource": "rctmod:textures/trainers/single/gym_leader_volkner_03db.png",
+  "textureResource": "rctmod:textures/trainers/single/type_electric.png",
   "ai": {
     "type": "pe",
     "data": {

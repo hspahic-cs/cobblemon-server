@@ -86,6 +86,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         WildBattleRewardHook.registerEvents()
         WildSpawnLevelCapHook.registerEvents()
         com.cobblemonbridge.battle.TrainerExpBoostHook.registerEvents()
+        com.cobblemonbridge.battle.PveLossExpHook.registerEvents()
         com.cobblemonbridge.quests.EvolutionHook.registerEvents()
         // AdvancementHook (0.7.29) handles gym + Elite Four bounty payment via
         // NeoForge AdvancementEarnEvent — replaces the broken /eco give in mcfunctions.

@@ -83,6 +83,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(HealQuestHook)
         PartyLevelHook.registerEvents()
         PokedexProgressHook.registerEvents()
+        com.cobblemonbridge.voice.TrainerVoiceHook.registerEvents()  // per-player trainer voice lines
         WildBattleRewardHook.registerEvents()
         WildSpawnLevelCapHook.registerEvents()
         com.cobblemonbridge.battle.TrainerExpBoostHook.registerEvents()

@@ -44,7 +44,47 @@ object KeyGrantHooks {
         // 10-second delay (200 ticks) so the daily key doesn't race the starter-kit grant.
         // Starter-kit fires on first-time players and rewrites slots 0–7 a few ticks after
         // login — without this delay the key lands in slot 0, then the kit overwrites it.
-        TickScheduler.later(200) { tryGrantLogin(player) }
+        TickScheduler.later(200) {
+            tryGrantWelcome(player)
+            tryGrantLogin(player)
+        }
+    }
+
+    /**
+     * One-time welcome grant: 1 Rare Key + 1 Pokémon Key, exactly once per player, ever.
+     *
+     * Idempotency — the part that caused double-grants before — is guaranteed by setting the
+     * `grantedWelcomeKeys` flag and PERSISTING it via save() BEFORE handing out any item:
+     *
+     *   1. Read the (persistent) flag; bail if already set.
+     *   2. Set the flag and `save()` it to disk.
+     *   3. Only then build + give the keys.
+     *
+     * So if the inventory is full, the server crashes mid-grant, or the login event somehow fires
+     * twice, the flag is already on disk and the keys are never granted again. This runs on the
+     * server thread (via TickScheduler), so the read->set->save sequence is atomic with respect to
+     * the daily/ranked grants — no check-then-act race. We deliberately err toward "never twice"
+     * over "always once": a save failure just means the player retries next login, never a double
+     * grant. The flag lives in `runtime/players.json`, which deploys never overwrite, so it also
+     * survives mod updates.
+     */
+    private fun tryGrantWelcome(player: ServerPlayer) {
+        if (!player.isAlive) return  // disconnected before the delay finished
+        val data = CobblemonGacha.playerStore.getOrCreate(player.uuid, player.name.string)
+        if (data.grantedWelcomeKeys) return  // already granted, ever — never repeat
+        data.grantedWelcomeKeys = true       // mark first…
+        CobblemonGacha.playerStore.save()    // …persist to disk BEFORE granting anything
+        giveKey(player, KeyTier.RARE)
+        giveKey(player, KeyTier.POKEMON)
+        player.sendSystemMessage(
+            Component.literal("§e[Gacha] Welcome bonus: §6+1 Rare Key §eand §a+1 Pokémon Key§e!"),
+        )
+        CobblemonGacha.logger.info("Granted one-time welcome keys (Rare + Pokémon) to {}", player.name.string)
+    }
+
+    private fun giveKey(player: ServerPlayer, tier: KeyTier) {
+        val stack = KeyItems.build(tier)
+        if (!player.inventory.add(stack)) player.drop(stack, false)
     }
 
     private fun tryGrantLogin(player: ServerPlayer) {

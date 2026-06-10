@@ -10,6 +10,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -58,6 +60,20 @@ object PokedexProgressHook {
             // players, so this lookup should always succeed.
             val player = currentServer()?.playerList?.getPlayer(event.playerUUID) ?: return@subscribe
             checkAndAward(player)
+        }
+    }
+
+    /**
+     * Carry the "PokéNav already granted" flag across a respawn. NeoForge does NOT copy a player's
+     * top-level [ServerPlayer.persistentData] when a new player entity is created on death, so
+     * without this the flag is wiped on every death and the next Pokédex update re-grants the
+     * PokéNav — the duplicate-item bug. (Registered on the NeoForge event bus in CobblemonBridge.)
+     */
+    @SubscribeEvent
+    fun onPlayerClone(event: PlayerEvent.Clone) {
+        val newPlayer = event.entity as? ServerPlayer ?: return
+        if (event.original.persistentData.getBoolean(POKENAV_AWARDED_KEY)) {
+            newPlayer.persistentData.putBoolean(POKENAV_AWARDED_KEY, true)
         }
     }
 

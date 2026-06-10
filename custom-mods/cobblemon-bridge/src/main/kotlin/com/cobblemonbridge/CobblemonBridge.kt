@@ -82,6 +82,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(HealQuestHook)
         PartyLevelHook.registerEvents()
         PokedexProgressHook.registerEvents()
+        NeoForge.EVENT_BUS.register(PokedexProgressHook)  // PlayerEvent.Clone — carry PokéNav flag across respawn
         WildBattleRewardHook.registerEvents()
         WildSpawnLevelCapHook.registerEvents()
         com.cobblemonbridge.battle.TrainerExpBoostHook.registerEvents()

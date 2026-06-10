@@ -30,6 +30,7 @@ data class GachaConfig(
         KeyTier.COMMON.key to null,
         KeyTier.RARE.key to null,
         KeyTier.ULTRA.key to null,
+        KeyTier.POKEMON.key to null,
     ),
     val animationTicks: List<Int> = listOf(2, 2, 3, 3, 4, 5, 7, 10, 15),
     val jackpotHoldTicks: Int = 20,

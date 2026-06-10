@@ -742,7 +742,7 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/s
 hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/single/gym_20_lorelei.json"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/single/gym_20_alder.json"
 hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
@@ -750,7 +750,7 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/s
 hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/single/gym_22_agatha.json"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/single/gym_22_ash.json"
 hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
@@ -758,7 +758,7 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/s
 hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/single/gym_24_champion.json"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/loot_table/trainers/single/gym_24_n.json"
 hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
@@ -982,7 +982,7 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/
 hash = "efcb3a10c6473bd47e4782669bac2590d0c1114b44250288c4c057a3860fc80b"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_20_lorelei.json"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_20_alder.json"
 hash = "efcb3a10c6473bd47e4782669bac2590d0c1114b44250288c4c057a3860fc80b"
 
 [[files]]
@@ -990,7 +990,7 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/
 hash = "efcb3a10c6473bd47e4782669bac2590d0c1114b44250288c4c057a3860fc80b"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_22_agatha.json"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_22_ash.json"
 hash = "efcb3a10c6473bd47e4782669bac2590d0c1114b44250288c4c057a3860fc80b"
 
 [[files]]
@@ -998,7 +998,7 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/
 hash = "efcb3a10c6473bd47e4782669bac2590d0c1114b44250288c4c057a3860fc80b"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_24_champion.json"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_24_n.json"
 hash = "efcb3a10c6473bd47e4782669bac2590d0c1114b44250288c4c057a3860fc80b"
 
 [[files]]
@@ -1286,24 +1286,24 @@ file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_19_oak.j
 hash = "af24857932bf586e1b4aa56bd76d45e0228a56ba49913865426146f4bce45d7a"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_20_lorelei.json"
-hash = "29af9a5176f0f3adcda4fd2f272da0df336bedd0879e0233e54828ef62f5d2e2"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_20_alder.json"
+hash = "803707a3fc2ffb7a6f233c93a544d2fcd1674e8cd8c2956c9201e052d974e435"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_21_cynthia.json"
 hash = "19dbeb47782445d353bc9015a8ae8fa9248c07a6ac8a48a85290ea00ab551562"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_22_agatha.json"
-hash = "7b733be4002713ac2b123ee2763b68f9a60844e75b9aad86937d71c7d276a7e3"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_22_ash.json"
+hash = "f28f642d7cff19f5f2056f4318ae1b091cc7ab15fcc1d4768e38e1f04e1f7d62"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_23_lance.json"
 hash = "34eee0b24fe39c88ad967e64cc4c05f9e588b365e53ec9f9306988f3a9fc35b1"
 
 [[files]]
-file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_24_champion.json"
-hash = "51d59c570ef0593bc486f7ac9c127a15eb0968fcb3382c3562874f58c53385a0"
+file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/gym_24_n.json"
+hash = "39c3817c4c99613ba498193d197de260c624104b7c8616cda5c74cdbc990ef9b"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/pack.mcmeta"
@@ -1659,7 +1659,7 @@ hash = "c2e96a678e5295c209257a786e25136cd91e7455ea3c9ac09e0a64e171584a1d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_20.json"
-hash = "651098546c78d4cad13ac0b1ba9a90cf46d0f47925cf10b0305dd8dcbb0e9537"
+hash = "21dccc86bf73341faaaaf2b79c998deb0bd2d0b71ad7b822f78f858b8cdd71f5"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_21.json"
@@ -1667,7 +1667,7 @@ hash = "e6000fc237828af989bdbdb4d77c1f7d52301f407ddfe5291ab3bf8191d7a7b5"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_22.json"
-hash = "90b7ce992383350b478c8e6445ed3d264e93dc35f1bb4514b2188e6d6a116839"
+hash = "7c73dd8b41038595da87cd319b31a7bcc2cde2315edc255eb611a7b42e36239d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_23.json"
@@ -1675,7 +1675,7 @@ hash = "1419f2bfbaa28b99cd04f89f9837605cb0c70d07914f984bae25236ad496f943"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_24.json"
-hash = "45c010b32e510357cfc44add736a2e237564749dede6f512606ea0bcbfd1327b"
+hash = "77fea3913b970eacbb6d93ed321ffa2513ea8532f825ff88d11a98c29fd743c9"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_2_challenge.json"
@@ -1883,7 +1883,7 @@ hash = "f603f23661097d8658f022a08b9f2f5a00f16d8bb64b652302d319ba86d40423"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_20.mcfunction"
-hash = "7b88e607ceb3e82a9f43c5fc31886acc3af36c0bc2dc3a9fabfac64d84a37865"
+hash = "075100da53f4065670c4ee3b4a6645923cfb74afac78213a94af239580a32de2"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_21.mcfunction"
@@ -1891,7 +1891,7 @@ hash = "42b89f0b5cbcac2ce8d34da9638e010d64e067383cd5851a9169a429f025d299"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_22.mcfunction"
-hash = "a0d34163da4fd84176e3085a06592e900c19939559f2beaf1fa01932f3fd2204"
+hash = "8590e13ed7c35e9def2d41c7dd8fff057daa45ae557ca0537f602dc9f2af3b8b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_23.mcfunction"
@@ -1899,7 +1899,7 @@ hash = "6bb5d112a0b7735b3983954f92c8d246e576b613dfd9456eab0a6bc4d7f93e59"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_24.mcfunction"
-hash = "8a8ae70af0f2afd2248ff1d131b4e04670022471238906066961ff04e8e22449"
+hash = "caaded0f2711cdb31cec4cc3d364766fed95cbb950cf5492f3835804480afd20"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_3.mcfunction"
@@ -1991,7 +1991,7 @@ hash = "fd095a7d04cc3bc030111415ff3c79f19ba4ec9990fedff43d5af3334e6fb3a2"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_20.mcfunction"
-hash = "1511cf98db6776133d055d6f043f23bc2073a6706105785c5177ac86ddeea171"
+hash = "e53d5d5372e3433c3247ebf94c8007f08e58f643b2f36bf9095405f974565d99"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_21.mcfunction"
@@ -1999,7 +1999,7 @@ hash = "c8130d92fb57bdc0585295f1b50a44dfe815592bf1e431cd50911eae340bd96b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_22.mcfunction"
-hash = "0929e51dae54dfacb3be41368b61bc274b566b5e2ccb40f80ad79d408703507d"
+hash = "03c470a3018788814b150026c95788d61da154ab2a7c8bc3f701eebbcc06d0b6"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_23.mcfunction"
@@ -2007,7 +2007,7 @@ hash = "c9ee6c2763df93da2de85745e9d6ea0fd23e838d8fcbb55e98936b5f6cf4656e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_24.mcfunction"
-hash = "4978c89d48db03e33891a64f95aabd66f0ce25a9584a2e44aa1c87d1c677f102"
+hash = "57a9875949a5741481acec3ee2e0beea486d16f6a255976c7cfadd4b7ac7bd84"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_3.mcfunction"
@@ -2079,7 +2079,7 @@ hash = "fe4a455c35b27919cc84b900c39d73d2a43e5ebe7e84e259fb00172d860080b7"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_gym_10_challenge.mcfunction"
-hash = "5c0e8935789b32ffa55399223050f471d026258ab0f83caa5adc031d3ad05cd5"
+hash = "d3657ae164d5fa1c08ba61873e16e394489012a3718f0011926bab6e8d6d6e29"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_gym_11.mcfunction"

@@ -237,20 +237,23 @@ object GachaCommands {
         requireHa: Boolean,
     ): Int {
         val pools = CobblemonGacha.eggPools
-        val species = pools.pick(tierStr, requireHiddenAbility = requireHa)
-        if (species == null) {
+        val picked = pools.pickSpecies(tierStr)
+        if (picked == null) {
             source.sendSystemMessage(Component.literal(
-                "§c[Gacha] Egg pool '$tierStr' has no species" +
-                    if (requireHa) " with Hidden Ability" else "" +
-                    ". Valid tiers: common, uncommon, rare, ultra_rare"
+                "§c[Gacha] Egg pool '$tierStr' has no species. " +
+                    "Valid tiers: common, uncommon, rare, ultra_rare"
             ))
             return 0
         }
+        val species = picked.id
+        // HA is granted if the rolled species is flagged as an HA mon, or if the admin forced it
+        // via the `ha` argument (override for testing / specific grants).
+        val grantHa = requireHa || picked.hasHiddenAbility
         val args = buildList {
             add(species)
             add("min_perfect_ivs=2")
             if (shiny) add("shiny=true")
-            if (requireHa) add("ha=yes")
+            if (grantHa) add("ha=yes")
         }.joinToString(" ")
         val cmd = "givepokemonegg ${target.gameProfile.name} $args"
         val src = target.server.createCommandSourceStack().withPermission(4).withSuppressedOutput()
@@ -260,11 +263,11 @@ object GachaCommands {
         RewardGranter.scheduleTagGrantedEgg(target, tierStr)
 
         val shinyTag = if (shiny) " §e✦ Shiny" else ""
-        val haTag = if (requireHa) " §d(HA)" else ""
+        val haTag = if (grantHa) " §d(HA)" else ""
         val display = "$shinyTag §f${species.replaceFirstChar { it.uppercase() }} Egg$haTag"
         target.sendSystemMessage(Component.literal("§a[Gacha] You received a$display §a(Cobbreeding will deliver it)"))
         source.sendSystemMessage(Component.literal(
-            "§a[Gacha] Gave ${target.name.string}: ${species} (tier=$tierStr, shiny=$shiny, ha=$requireHa)"
+            "§a[Gacha] Gave ${target.name.string}: ${species} (tier=$tierStr, shiny=$shiny, ha=$grantHa)"
         ))
         return 1
     }

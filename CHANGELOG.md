@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-06-10
+
+### Added
+- **One-time welcome key grant** — every player receives 1 Rare Key + 1 Pokémon Key
+  on their next login, exactly once ever. Idempotent by design: the grant flag is
+  persisted before any item is handed out, so a full inventory, crash, or duplicate
+  login can never cause a second grant.
+
+### Changed
+- **Paradox Pokémon now count as legendaries in ranked.** They count toward the
+  `maxLegendaries` team cap (Cobblemon's `isLegendary()` excludes them despite many
+  being Ubers-tier), and the team-select GUI tags them `[PARADOX]`.
+
 ## [0.12.0] - 2026-06-10
 
 ### Added

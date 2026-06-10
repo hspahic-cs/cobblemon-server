@@ -5,7 +5,7 @@
     {
       "lootTier": "Floor",
       "label": "1 Rare Candy",
-      "weightPct": 8.0,
+      "weightPct": 8.5,
       "items": [
         {
           "type": "vanilla",
@@ -17,47 +17,47 @@
     },
     {
       "lootTier": "Floor",
-      "label": "32 Quick balls",
-      "weightPct": 5.0,
+      "label": "64 Quick balls",
+      "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:quick_ball",
-          "count": 32
+          "count": 64
         }
       ],
       "notes": ""
     },
     {
       "lootTier": "Floor",
-      "label": "32 Ultra balls",
-      "weightPct": 5.0,
+      "label": "64 Ultra balls",
+      "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:ultra_ball",
-          "count": 32
+          "count": 644
         }
       ],
       "notes": ""
     },
     {
       "lootTier": "Floor",
-      "label": "2 Exp Candy M",
+      "label": "3 Exp Candy M",
       "weightPct": 8.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:exp_candy_m",
-          "count": 2
+          "count": 3
         }
       ],
-      "notes": "Nerfed from 5 (0.7.12)"
+      "notes": ""
     },
     {
       "lootTier": "Floor",
-      "label": "3 PP Up",
-      "weightPct": 3.0,
+      "label": "5 PP Up",
+      "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
@@ -70,7 +70,7 @@
     {
       "lootTier": "Floor",
       "label": "Leftovers",
-      "weightPct": 6.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -82,16 +82,16 @@
     },
     {
       "lootTier": "Mid",
-      "label": "1 EXP Candy L",
+      "label": "2 EXP Candy L",
       "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:exp_candy_l",
-          "count": 1
+          "count": 2
         }
       ],
-      "notes": "Nerfed from 3 (0.7.12)"
+      "notes": ""
     },
     {
       "lootTier": "Mid",
@@ -131,7 +131,7 @@
     {
       "lootTier": "Mid",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 18.0,
+      "weightPct": 20.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -145,7 +145,7 @@
     {
       "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 4.0,
+      "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
@@ -170,25 +170,28 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Choice Held Item",
+      "label": "Random Power Item",
       "weightPct": 4.0,
       "items": [
         {
           "type": "random_item",
           "ids": [
-            "cobblemon:muscle_band",
-            "cobblemon:choice_band",
-            "cobblemon:focus_band"
+            "cobblemon:power_anklet",
+            "cobblemon:power_band",
+            "cobblemon:power_belt",
+            "cobblemon:power_bracer",
+            "cobblemon:power_lens",
+            "cobblemon:power_weight"
           ],
           "count": 1
         }
       ],
-      "notes": "Random choice band, muscle band, or focus band (0.7.12)"
+      "notes": "Random power item"
     },
     {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 3.0,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -196,12 +199,12 @@
           "count": 1
         }
       ],
-      "notes": "Hidden ability — top PvP item"
+      "notes": "Hidden ability item"
     },
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 13.5,
+      "weightPct": 18.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -214,16 +217,16 @@
     },
     {
       "lootTier": "High",
-      "label": "1 EXP candy XL",
-      "weightPct": 2.0,
+      "label": "2 EXP candy XL",
+      "weightPct": 2.5,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:exp_candy_xl",
-          "count": 1
+          "count": 2
         }
       ],
-      "notes": "Nerfed from 2 (0.7.12)"
+      "notes": ""
     },
     {
       "lootTier": "High",
@@ -241,22 +244,8 @@
     },
     {
       "lootTier": "Jackpot",
-      "label": "1 Shiny Egg (random species, random IVs)",
-      "weightPct": 0.5,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "rare",
-          "shiny": true,
-          "requireHiddenAbility": false
-        }
-      ],
-      "notes": "The chase item — shiny weight preserved per design (0.7.12)"
-    },
-    {
-      "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 1.0,
+      "weightPct": 1.5,
       "items": [
         {
           "type": "vanilla",

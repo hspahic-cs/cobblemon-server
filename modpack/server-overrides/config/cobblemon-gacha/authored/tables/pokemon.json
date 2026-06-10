@@ -1,0 +1,76 @@
+{
+  "tier": "POKEMON",
+  "totalWeightPct": 100.0,
+  "entries": [
+    {
+      "lootTier": "Floor",
+      "label": "Uncommon Pokémon Egg",
+      "weightPct": 45.0,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "uncommon",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Pokémon crate — main pull"
+    },
+    {
+      "lootTier": "Floor",
+      "label": "Common Pokémon Egg",
+      "weightPct": 35.0,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "common",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Pokémon crate"
+    },
+    {
+      "lootTier": "High",
+      "label": "Rare Pokémon Egg",
+      "weightPct": 15.0,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "rare",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Pokémon crate"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Shiny Egg",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "rare",
+          "shiny": true,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Pokémon crate — shiny (rare pool)"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Ultra Rare Pokémon Egg",
+      "weightPct": 1.5,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "ultra_rare",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Pokémon crate — jackpot (pseudo-legends + Paradox)"
+    }
+  ]
+}

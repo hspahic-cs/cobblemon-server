@@ -1,6 +1,7 @@
 package com.cobblemongacha.config
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -62,5 +63,23 @@ class EggPoolLoaderTest {
         assertNull(pools.pick("rare", requireHiddenAbility = true))
         // common pool has pikachu (Yes HA) → pickable
         assertEquals("pikachu", pools.pick("common", requireHiddenAbility = true, random = Random(0)))
+    }
+
+    @Test
+    fun `pickSpecies returns full entry with HA flag from the whole pool`() {
+        val pools = EggPoolLoader.parseCsv(csv)
+        // common pool only has pikachu → returns it with its HA flag set (drives ha=yes on grant)
+        val common = pools.pickSpecies("common", random = Random(0))!!
+        assertEquals("pikachu", common.id)
+        assertTrue(common.hasHiddenAbility)
+        // rare pool only has jangmo-o (No HA) → picked without filtering, flag false (no ha=yes)
+        val rare = pools.pickSpecies("rare", random = Random(0))!!
+        assertEquals("jangmo-o", rare.id)
+        assertFalse(rare.hasHiddenAbility)
+    }
+
+    @Test
+    fun `pickSpecies returns null on unknown tier`() {
+        assertNull(EggPoolLoader.parseCsv(csv).pickSpecies("legendary"))
     }
 }

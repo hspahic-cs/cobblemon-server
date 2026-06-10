@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-06-10
+
+### Added
+- **Pokémon gacha crate** — a new egg-only crate tier: 35% common / 45% uncommon /
+  15% rare / 3.5% shiny / 1.5% ultra-rare egg. New Pokémon Key (Turtle Egg).
+  Place the crate with `/gacha admin setcrate pokemon`; the key is admin-granted.
+- **Paradox Pokémon** (all 20) added to the `ultra_rare` gacha egg pool, and
+  **charcadet** added to the `rare` pool.
+
+### Changed
+- **Gacha eggs grant the Hidden Ability automatically** when the rolled species is
+  flagged as an HA mon — no separate "HA-only" egg type.
+- **Ultra crate reworked** — LegendaryMonuments summon items (Azure Flute/Arceus
+  jackpot, golem keys, stones/bottles, whistles, Red Chain), legendary pedestals
+  (Mew/Raikou/Suicune/Entei/Lati), Griseous Orb, Proof of Conquest U/A/M.
+- **Common & rare crates rebalanced** — trimmed filler (balls/potions/revives),
+  boosted Pokémon eggs and useful items. Premium starters (Snivy, Litten,
+  Sprigatito, Grookey, Oshawott) moved from the uncommon to the rare egg pool.
+
+### Fixed
+- **EXP on lost PvE battles** — you now keep the EXP for the enemy Pokémon you
+  defeated even when you lose the battle (trainers, gyms, E4, and wild), matching
+  modern-gen behavior. Previously a loss granted nothing, even on KO'd mons.
+
 ## [0.11.0] - 2026-06-09
 
 ### Added

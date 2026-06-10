@@ -5,7 +5,8 @@ import kotlin.random.Random
 /**
  * One species entry in an egg pool. `id` is the lowercase Cobblemon species id passed to
  * `givepokemonegg` (e.g. "pikachu", "jangmo-o"). `hasHiddenAbility` is the flag from the
- * pool CSV — drives filtering when a loot entry requires Hidden Ability.
+ * pool CSV — when a species flagged `true` is rolled into an egg it is granted with its
+ * Hidden Ability (`ha=yes`). There is no separate "HA-only" egg type; the flag is per-species.
  *
  * `notes` carries any annotation from the CSV (e.g. "Own Tempo", "Yes (both forms)") so the
  * data isn't lost; the code doesn't act on it for v1.
@@ -32,6 +33,18 @@ data class EggPools(val byTier: Map<String, List<EggSpecies>>) {
         val candidates = if (requireHiddenAbility) pool.filter { it.hasHiddenAbility } else pool
         if (candidates.isEmpty()) return null
         return candidates.random(random).id
+    }
+
+    /**
+     * Pick a full species entry (id + its `hasHiddenAbility` flag) uniformly from the whole
+     * tier pool. Used by the egg-grant path: Hidden Ability is decided per-rolled-species from
+     * the returned [EggSpecies.hasHiddenAbility], so this does no filtering.
+     * Returns null if the pool is unknown or empty.
+     */
+    fun pickSpecies(tier: String, random: Random = Random.Default): EggSpecies? {
+        val pool = byTier[normaliseTier(tier)] ?: return null
+        if (pool.isEmpty()) return null
+        return pool.random(random)
     }
 
     companion object {

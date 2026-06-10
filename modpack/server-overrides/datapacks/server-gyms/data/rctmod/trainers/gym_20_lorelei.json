@@ -1,6 +1,6 @@
 {
-  "name": "Elite Four Lorelei",
-  "identity": "Weather Wars",
+  "name": "Alder",
+  "identity": "Unova Champion",
   "textureResource": "rctmod:textures/trainers/single/elite_four_lorelei_004d.png",
   "ai": {
     "type": "pe",
@@ -16,9 +16,9 @@
   "bag": [],
   "team": [
     {
-      "species": "tyranitar",
+      "species": "hooh",
       "level": 65,
-      "nature": "adamant",
+      "nature": "careful",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -29,23 +29,53 @@
       },
       "evs": {
         "hp": 252,
-        "atk": 252,
-        "def": 0,
+        "atk": 0,
+        "def": 4,
         "spa": 0,
-        "spd": 4,
+        "spd": 252,
         "spe": 0
       },
-      "ability": "sandstream",
-      "heldItem": "cobblemon:smooth_rock",
+      "ability": "regenerator",
+      "heldItem": "cobblemon:heavy_duty_boots",
       "moveset": [
-        "stealthrock",
-        "stoneedge",
-        "crunch",
-        "earthquake"
+        "sacredfire",
+        "bravebird",
+        "earthquake",
+        "recover"
       ]
     },
     {
-      "species": "excadrill",
+      "species": "slowking",
+      "level": 65,
+      "nature": "calm",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 4,
+        "spa": 0,
+        "spd": 252,
+        "spe": 0
+      },
+      "form": "galarian",
+      "ability": "regenerator",
+      "heldItem": "cobblemon:heavy_duty_boots",
+      "moveset": [
+        "futuresight",
+        "sludgebomb",
+        "chillyreception",
+        "slackoff"
+      ]
+    },
+    {
+      "species": "garchomp",
       "level": 65,
       "nature": "jolly",
       "ivs": {
@@ -64,18 +94,75 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "sandrush",
-      "heldItem": "cobblemon:life_orb",
+      "ability": "roughskin",
+      "heldItem": "cobblemon:rocky_helmet",
       "moveset": [
-        "swordsdance",
+        "stealthrock",
         "earthquake",
-        "ironhead",
-        "rockslide"
+        "scaleshot",
+        "firefang"
       ]
     },
     {
-      "species": "ninetales",
-      "aspects": ["alolan"],
+      "species": "kingambit",
+      "level": 65,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 252,
+        "def": 4,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      },
+      "ability": "supremeoverlord",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "swordsdance",
+        "kowtowcleave",
+        "ironhead",
+        "suckerpunch"
+      ]
+    },
+    {
+      "species": "cinderace",
+      "level": 65,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "libero",
+      "heldItem": "cobblemon:heavy_duty_boots",
+      "moveset": [
+        "pyroball",
+        "highjumpkick",
+        "uturn",
+        "courtchange"
+      ]
+    },
+    {
+      "species": "volcarona",
       "level": 65,
       "nature": "timid",
       "ivs": {
@@ -94,101 +181,13 @@
         "spd": 0,
         "spe": 252
       },
-      "form": "alolan",
-      "ability": "snowwarning",
-      "heldItem": "cobblemon:light_clay",
-      "moveset": [
-        "auroraveil",
-        "blizzard",
-        "freezedry",
-        "moonblast"
-      ]
-    },
-    {
-      "species": "arctozolt",
-      "level": 65,
-      "nature": "naive",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 0,
-        "atk": 4,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "slushrush",
-      "heldItem": "cobblemon:life_orb",
-      "moveset": [
-        "boltbeak",
-        "blizzard",
-        "lowkick",
-        "freezedry"
-      ]
-    },
-    {
-      "species": "hippowdon",
-      "level": 65,
-      "nature": "impish",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 0,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "sandstream",
-      "heldItem": "cobblemon:leftovers",
-      "moveset": [
-        "slackoff",
-        "earthquake",
-        "whirlwind",
-        "toxic"
-      ]
-    },
-    {
-      "species": "hooh",
-      "level": 65,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "regenerator",
+      "ability": "flamebody",
       "heldItem": "cobblemon:heavy_duty_boots",
       "moveset": [
-        "sacredfire",
-        "bravebird",
-        "recover",
-        "earthquake"
+        "quiverdance",
+        "fierydance",
+        "bugbuzz",
+        "gigadrain"
       ]
     }
   ]

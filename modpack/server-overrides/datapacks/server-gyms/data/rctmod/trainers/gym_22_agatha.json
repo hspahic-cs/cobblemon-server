@@ -1,6 +1,6 @@
 {
-  "name": "Elite Four Agatha",
-  "identity": "Stall",
+  "name": "Ash",
+  "identity": "Pok\u00e9mon Trainer",
   "textureResource": "rctmod:textures/trainers/single/elite_four_agatha_0053.png",
   "ai": {
     "type": "pe",
@@ -16,9 +16,9 @@
   "bag": [],
   "team": [
     {
-      "species": "toxapex",
+      "species": "pikachu",
       "level": 65,
-      "nature": "bold",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -28,78 +28,20 @@
         "spe": 31
       },
       "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
         "spa": 0,
-        "spd": 4,
-        "spe": 0
+        "spd": 0,
+        "spe": 252
       },
-      "ability": "regenerator",
-      "heldItem": "cobblemon:black_sludge",
+      "ability": "static",
+      "heldItem": "cobblemon:light_ball",
       "moveset": [
-        "scald",
-        "toxic",
-        "recover",
-        "haze"
-      ]
-    },
-    {
-      "species": "chansey",
-      "level": 65,
-      "nature": "bold",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 0,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "naturalcure",
-      "heldItem": "cobblemon:eviolite",
-      "moveset": [
-        "softboiled",
-        "seismictoss",
-        "thunderwave",
-        "healbell"
-      ]
-    },
-    {
-      "species": "clefable",
-      "level": 65,
-      "nature": "bold",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
-        "spa": 0,
-        "spd": 4,
-        "spe": 0
-      },
-      "ability": "unaware",
-      "heldItem": "cobblemon:leftovers",
-      "moveset": [
-        "moonblast",
-        "calmmind",
-        "softboiled",
-        "flamethrower"
+        "volttackle",
+        "knockoff",
+        "surf",
+        "fakeout"
       ]
     },
     {
@@ -122,19 +64,19 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "protean",
-      "heldItem": "cobblemon:focus_sash",
+      "ability": "battlebond",
+      "heldItem": "cobblemon:life_orb",
       "moveset": [
-        "spikes",
-        "toxicspikes",
+        "hydropump",
+        "watershuriken",
         "darkpulse",
-        "surf"
+        "icebeam"
       ]
     },
     {
-      "species": "blissey",
+      "species": "talonflame",
       "level": 65,
-      "nature": "bold",
+      "nature": "jolly",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -144,26 +86,84 @@
         "spe": 31
       },
       "evs": {
-        "hp": 252,
-        "atk": 0,
-        "def": 252,
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
         "spa": 0,
-        "spd": 4,
-        "spe": 0
+        "spd": 0,
+        "spe": 252
       },
-      "ability": "naturalcure",
+      "ability": "galewings",
       "heldItem": "cobblemon:heavy_duty_boots",
       "moveset": [
-        "softboiled",
-        "seismictoss",
-        "toxic",
-        "teleport"
+        "bravebird",
+        "flareblitz",
+        "uturn",
+        "roost"
       ]
     },
     {
-      "species": "corviknight",
+      "species": "hawlucha",
       "level": 65,
-      "nature": "impish",
+      "nature": "jolly",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "unburden",
+      "heldItem": "cobblemon:sitrus_berry",
+      "moveset": [
+        "swordsdance",
+        "closecombat",
+        "acrobatics",
+        "stoneedge"
+      ]
+    },
+    {
+      "species": "noivern",
+      "level": 65,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "infiltrator",
+      "heldItem": "cobblemon:choice_specs",
+      "moveset": [
+        "dracometeor",
+        "hurricane",
+        "flamethrower",
+        "uturn"
+      ]
+    },
+    {
+      "species": "goodra",
+      "level": 65,
+      "nature": "modest",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -175,18 +175,18 @@
       "evs": {
         "hp": 252,
         "atk": 0,
-        "def": 252,
-        "spa": 0,
-        "spd": 4,
+        "def": 4,
+        "spa": 252,
+        "spd": 0,
         "spe": 0
       },
-      "ability": "pressure",
-      "heldItem": "cobblemon:leftovers",
+      "ability": "sapsipper",
+      "heldItem": "cobblemon:assault_vest",
       "moveset": [
-        "bravebird",
-        "roost",
-        "defog",
-        "uturn"
+        "dracometeor",
+        "fireblast",
+        "thunderbolt",
+        "sludgewave"
       ]
     }
   ]

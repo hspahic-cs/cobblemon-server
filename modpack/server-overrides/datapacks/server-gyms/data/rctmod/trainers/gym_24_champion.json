@@ -1,6 +1,6 @@
 {
-  "name": "Pokémon Champion",
-  "identity": "Sky Conqueror",
+  "name": "N",
+  "identity": "Team Plasma King",
   "ai": {
     "type": "pe",
     "data": {}
@@ -15,7 +15,7 @@
   "bag": [],
   "team": [
     {
-      "species": "rayquaza",
+      "species": "zekrom",
       "level": 70,
       "nature": "adamant",
       "ivs": {
@@ -34,78 +34,19 @@
         "spd": 0,
         "spe": 252
       },
-      "form": "mega",
-      "ability": "airlock",
-      "moveset": [
-        "dragonascent",
-        "earthquake",
-        "dragondance",
-        "extremespeed"
-      ]
-    },
-    {
-      "species": "rayquaza",
-      "level": 70,
-      "nature": "modest",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "form": "mega",
-      "shiny": true,
-      "ability": "airlock",
-      "moveset": [
-        "dragonascent",
-        "dracometeor",
-        "surf",
-        "thunderbolt"
-      ]
-    },
-    {
-      "species": "garchomp",
-      "level": 70,
-      "nature": "jolly",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
-        "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "roughskin",
+      "ability": "teravolt",
       "heldItem": "cobblemon:life_orb",
       "moveset": [
-        "swordsdance",
-        "scaleshot",
-        "earthquake",
-        "stoneedge"
+        "dragondance",
+        "boltstrike",
+        "outrage",
+        "roost"
       ]
     },
     {
-      "species": "salamence",
+      "species": "heatran",
       "level": 70,
-      "nature": "adamant",
+      "nature": "calm",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -115,26 +56,56 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
+        "hp": 252,
+        "atk": 0,
+        "def": 4,
         "spa": 0,
-        "spd": 0,
-        "spe": 252
+        "spd": 252,
+        "spe": 0
       },
+      "ability": "flashfire",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "magmastorm",
+        "earthpower",
+        "stealthrock",
+        "taunt"
+      ]
+    },
+    {
+      "species": "landorus",
+      "level": 70,
+      "nature": "impish",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "form": "therian",
       "ability": "intimidate",
-      "heldItem": "cobblemon:life_orb",
+      "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "dragondance",
-        "dragonclaw",
         "earthquake",
-        "fireblast"
+        "uturn",
+        "stoneedge",
+        "defog"
       ]
     },
     {
-      "species": "latios",
+      "species": "tapukoko",
       "level": 70,
-      "nature": "modest",
+      "nature": "timid",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -151,17 +122,46 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "levitate",
+      "ability": "electricsurge",
+      "heldItem": "cobblemon:life_orb",
+      "moveset": [
+        "thunderbolt",
+        "dazzlinggleam",
+        "uturn",
+        "roost"
+      ]
+    },
+    {
+      "species": "zoroark",
+      "level": 70,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "illusion",
       "heldItem": "cobblemon:choice_specs",
       "moveset": [
-        "dracometeor",
-        "psychic",
-        "thunderbolt",
-        "mysticalfire"
+        "darkpulse",
+        "flamethrower",
+        "focusblast",
+        "sludgebomb"
       ]
     },
     {
-      "species": "dragonite",
+      "species": "rayquaza",
       "level": 70,
       "nature": "adamant",
       "ivs": {
@@ -180,13 +180,13 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "multiscale",
-      "heldItem": "cobblemon:heavy_duty_boots",
+      "form": "mega",
+      "ability": "airlock",
       "moveset": [
-        "extremespeed",
+        "dragonascent",
         "dragondance",
         "earthquake",
-        "outrage"
+        "extremespeed"
       ]
     }
   ],

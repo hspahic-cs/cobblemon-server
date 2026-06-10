@@ -5,7 +5,7 @@
     {
       "lootTier": "Floor",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 50.0,
+      "weightPct": 45.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -33,7 +33,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 13.0,
+      "weightPct": 15.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -46,8 +46,22 @@
     },
     {
       "lootTier": "Jackpot",
+      "label": "Shiny Egg",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "rare",
+          "shiny": true,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "Pokémon crate — shiny (rare pool)"
+    },
+    {
+      "lootTier": "Jackpot",
       "label": "Ultra Rare Pokémon Egg",
-      "weightPct": 2.0,
+      "weightPct": 1.5,
       "items": [
         {
           "type": "cobbreeding_egg",

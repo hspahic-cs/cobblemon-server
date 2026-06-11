@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.13.2] - 2026-06-11
+
+### Added
+- **Ultra Key for clearing all challenge gyms** — defeating the challenge variant of all ten
+  gym-type leaders (gyms 1-10, in any order) now awards an Ultra Key via the new "Hard Mode
+  Master" advancement. Retroactive: players who already cleared them get it on their next login.
+
+### Removed
+- **Disabled the custom `/trade` command** — the Pokémon+money trade GUI was too buggy. Players
+  use the native Cobblemon trade (look at a player, press **R** → Trade) and `/pay` for money.
+
 ## [0.13.1] - 2026-06-11
 
 ### Added

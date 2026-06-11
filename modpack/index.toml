@@ -350,6 +350,10 @@ file = "server-overrides/config/cobblemon-bridge/runtime/gym_caps.json"
 hash = "c66350b083ab4905429eddce0b5ca387acca57e730d86e13699a667420512082"
 
 [[files]]
+file = "server-overrides/config/cobblemon-bridge/runtime/test_teams.json"
+hash = "f0ae96d9f495dd769afaaee4b86f5bcc7ced598cb32cdc2e39c3aca61bc02f57"
+
+[[files]]
 file = "server-overrides/config/cobblemon-bridge/runtime/voicelines.json"
 hash = "e106163a032f6cf279a3c1d0049668470304258d15bd1edc1641480093b7a017"
 

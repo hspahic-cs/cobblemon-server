@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.2] - 2026-06-11
+
+### Added
+- **`/testteam` dev command** (op level 2+) — `/testteam <player> <tier> <level> [index]` stashes the
+  target's party into their PC, then gives a preset competitive team at the requested level. Tiers:
+  `uber` / `ou` (perfect IVs + competitive EVs/moves/items, legendaries in `uber`) and `normal`
+  (~22 IVs + partial EVs — a decent player-grade team). Teams are authored in
+  `config/cobblemon-bridge/runtime/test_teams.json` (same format as gym teams, editable without
+  recompiling) and picked at random per tier unless an index is given.
+
 ## [0.15.1] - 2026-06-11
 
 ### Changed

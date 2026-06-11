@@ -57,6 +57,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
     init {
         logger.info("Cobblemon Bridge initializing...")
 
+        com.cobblemonbridge.quests.GymCaps.init()  // authored gym/E4 level caps (config-driven, not number-derived)
         AdjustLevelHook.registerEvents()
         NeoForge.EVENT_BUS.register(AdjustLevelHook)
         NeoForge.EVENT_BUS.register(GivePartyExpHook)

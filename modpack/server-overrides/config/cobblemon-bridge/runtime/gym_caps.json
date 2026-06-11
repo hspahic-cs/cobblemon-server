@@ -1,0 +1,35 @@
+{
+  "_comment": "AUTHORED SOURCE OF TRUTH for gym + Elite Four level caps. 'cap' = the level the player's team is downleveled to when fighting that leader (null = no cap). Caps are explicit here and are NOT derived from the gym number. The key is the gym id (= progression order / floor). Battle-tower caps are separate (TowerManager: challenge=50, normal=uncapped).",
+  "overworld": {
+    "_comment": "Wild-catch cap = base + perMainlineGym * (mainline gyms beaten); removed entirely once 'uncapAfterGym' is beaten.",
+    "base": 20,
+    "perMainlineGym": 5,
+    "uncapAfterGym": 23
+  },
+  "gyms": {
+    "1":  { "slug": "ground",   "leader": "Dusty",         "mainline": true,  "cap": 20 },
+    "2":  { "slug": "grass",    "leader": "Gardenia",      "mainline": true,  "cap": 25 },
+    "3":  { "slug": "fighting", "leader": "Lee Sin",       "mainline": true,  "cap": 30 },
+    "4":  { "slug": "steel",    "leader": "Jarvis",        "mainline": true,  "cap": 35 },
+    "5":  { "slug": "fire",     "leader": "Zuko",          "mainline": true,  "cap": 40 },
+    "6":  { "slug": "electric", "leader": "Stan",          "mainline": true,  "cap": 45 },
+    "7":  { "slug": "water",    "leader": "Kai",           "mainline": true,  "cap": 50 },
+    "8":  { "slug": "psychic",  "leader": "Juniper",       "mainline": true,  "cap": 55 },
+    "9":  { "slug": "dragon",   "leader": "Quinn",         "mainline": true,  "cap": 60 },
+    "10": { "slug": "ghost",    "leader": "Grimm",         "mainline": true,  "cap": 65 },
+    "11": { "slug": "bug",      "leader": "Flik",          "mainline": false, "cap": null },
+    "12": { "slug": "normal",   "leader": "Penny",         "mainline": false, "cap": null },
+    "13": { "slug": "poison",   "leader": "Koga",          "mainline": false, "cap": null },
+    "14": { "slug": "rock",     "leader": "Caesar",        "mainline": false, "cap": null },
+    "15": { "slug": "flying",   "leader": "Amos",          "mainline": false, "cap": null },
+    "16": { "slug": "ice",      "leader": "Tux",           "mainline": false, "cap": null },
+    "17": { "slug": "fairy",    "leader": "Flora",         "mainline": false, "cap": null },
+    "18": { "slug": "dark",     "leader": "Hobie",         "mainline": false, "cap": null },
+    "19": { "slug": "oak",      "leader": "Professor Oak", "mainline": false, "cap": null },
+    "20": { "slug": "alder",    "leader": "Alder",         "mainline": false, "cap": 70 },
+    "21": { "slug": "cynthia",  "leader": "Cynthia",       "mainline": false, "cap": 70 },
+    "22": { "slug": "ash",      "leader": "Ash",           "mainline": false, "cap": 70 },
+    "23": { "slug": "lance",    "leader": "Lance",         "mainline": false, "cap": 70 },
+    "24": { "slug": "champion", "leader": "N",             "mainline": false, "cap": 70 }
+  }
+}

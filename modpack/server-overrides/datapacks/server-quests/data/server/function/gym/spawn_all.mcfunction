@@ -1,26 +1,3 @@
-# Spawn every gym at the executor's position (stacked — use only as a stress test).
-tellraw @s [{"text":"§7Spawning all 24 gym leaders at this position…"}]
-function server:gym/spawn_1
-function server:gym/spawn_2
-function server:gym/spawn_3
-function server:gym/spawn_4
-function server:gym/spawn_5
-function server:gym/spawn_6
-function server:gym/spawn_7
-function server:gym/spawn_8
-function server:gym/spawn_9
-function server:gym/spawn_10
-function server:gym/spawn_11
-function server:gym/spawn_12
-function server:gym/spawn_13
-function server:gym/spawn_14
-function server:gym/spawn_15
-function server:gym/spawn_16
-function server:gym/spawn_17
-function server:gym/spawn_18
-function server:gym/spawn_19
-function server:gym/spawn_20
-function server:gym/spawn_21
-function server:gym/spawn_22
-function server:gym/spawn_23
-function server:gym/spawn_24
+# Spawn every gym leader + Elite Four at the executor's position (stacked — stress test only).
+tellraw @s [{"text":"§7Spawning all gym leaders + Elite Four at this position…"}]
+function server:gym/spawn_gym_ground gym_grass gym_fighting gym_steel gym_fire gym_electric gym_water gym_psychic gym_dragon gym_ghost gym_bug gym_normal gym_poison gym_rock gym_flying gym_ice gym_fairy gym_dark gym_oak e4_alder e4_cynthia e4_ash e4_lance e4_champion

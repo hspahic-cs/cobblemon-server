@@ -1,0 +1,33 @@
+{
+  "parent": "server:beat_gym_24",
+  "display": {
+    "title": {
+      "text": "Demon King Slayer"
+    },
+    "description": {
+      "text": "Defeat Faker on Hard Mode — the Unkillable Demon King and his championship team."
+    },
+    "icon": {
+      "id": "cobblemon:master_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "bt_19_faker_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_faker"
+  }
+}

@@ -20,20 +20,20 @@
       "level": 65,
       "nature": "timid",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
         "atk": 0,
         "def": 0,
-        "spa": 252,
+        "spa": 180,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
       "ability": "infiltrator",
       "heldItem": "cobblemon:choice_specs",
@@ -49,20 +49,20 @@
       "level": 65,
       "nature": "adamant",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
-        "atk": 252,
+        "atk": 180,
         "def": 0,
         "spa": 0,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
       "ability": "multiscale",
       "heldItem": "cobblemon:weakness_policy",
@@ -74,32 +74,32 @@
       ]
     },
     {
-      "species": "garchomp",
+      "species": "salamence",
       "level": 65,
       "nature": "jolly",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
-        "atk": 252,
+        "atk": 180,
         "def": 0,
         "spa": 0,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
-      "ability": "roughskin",
-      "heldItem": "cobblemon:rocky_helmet",
+      "ability": "moxie",
+      "heldItem": "cobblemon:life_orb",
       "moveset": [
-        "swordsdance",
-        "scaleshot",
+        "dragondance",
+        "dragonclaw",
         "earthquake",
-        "stoneedge"
+        "roost"
       ]
     },
     {
@@ -107,20 +107,20 @@
       "level": 65,
       "nature": "modest",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
         "atk": 0,
         "def": 0,
-        "spa": 252,
+        "spa": 180,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
       "ability": "levitate",
       "heldItem": "cobblemon:life_orb",
@@ -136,20 +136,20 @@
       "level": 65,
       "nature": "adamant",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
-        "atk": 252,
+        "atk": 180,
         "def": 0,
         "spa": 0,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
       "ability": "moldbreaker",
       "heldItem": "cobblemon:choice_scarf",

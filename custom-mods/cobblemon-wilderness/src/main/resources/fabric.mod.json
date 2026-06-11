@@ -1,0 +1,21 @@
+{
+    "schemaVersion": 1,
+    "id": "cobblemon-wilderness",
+    "version": "${version}",
+    "name": "Cobblemon Wilderness Reset",
+    "description": "Resets wilderness chunks outside a persistent bounding box to cap world growth",
+    "environment": "server",
+    "entrypoints": {
+        "main": [
+            {
+                "adapter": "kotlin",
+                "value": "com.cobblemonwilderness.CobblemonWilderness"
+            }
+        ]
+    },
+    "depends": {
+        "fabricloader": ">=0.16.5",
+        "minecraft": "~1.21.1",
+        "fabric-language-kotlin": ">=1.12.3+kotlin.2.0.21"
+    }
+}

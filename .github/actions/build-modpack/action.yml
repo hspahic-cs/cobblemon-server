@@ -149,6 +149,13 @@ runs:
         path: custom-mods/cobblemon-ranked/build/libs
         key: jar-cobblemon-ranked-${{ hashFiles('custom-mods/cobblemon-ranked/src/**', 'custom-mods/cobblemon-ranked/build.gradle*', 'custom-mods/cobblemon-ranked/gradle.properties') }}
 
+    - name: Cache cobblemon-wilderness build
+      id: cache-wilderness
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-wilderness/build/libs
+        key: jar-cobblemon-wilderness-${{ hashFiles('custom-mods/cobblemon-wilderness/src/**', 'custom-mods/cobblemon-wilderness/build.gradle*', 'custom-mods/cobblemon-wilderness/gradle.properties') }}
+
     - name: Build only mods missing from cache
       shell: bash
       env:
@@ -167,6 +174,7 @@ runs:
           cobblemon-npc:${{ steps.cache-npc.outputs.cache-hit }}
           cobblemon-poke-ai:${{ steps.cache-poke-ai.outputs.cache-hit }}
           cobblemon-ranked:${{ steps.cache-ranked.outputs.cache-hit }}
+          cobblemon-wilderness:${{ steps.cache-wilderness.outputs.cache-hit }}
       run: |
         set -euo pipefail
 
@@ -246,7 +254,7 @@ runs:
         # not in the client's mods folder, the server's connect-time channel
         # check rejects every client (PR #51 → 0.7.4 had this bug; fixed in
         # 0.7.5 by moving feedback-client back to modpack/mods/).
-        SERVER_ONLY=(cobblemon-bridge cobblemon-carrots cobblemon-feedback cobblemon-gacha cobblemon-market cobblemon-poke-ai cobblemon-ranked)
+        SERVER_ONLY=(cobblemon-bridge cobblemon-carrots cobblemon-feedback cobblemon-gacha cobblemon-market cobblemon-poke-ai cobblemon-ranked cobblemon-wilderness)
         # Anything not in SERVER_ONLY ships via modpack/mods/ (both sides).
 
         mkdir -p modpack/mods modpack/server-overrides/mods

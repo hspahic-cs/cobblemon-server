@@ -69,10 +69,11 @@ nav:
       - Install the modpack: install.md
       - Connect: connect.md
   - Reference:
+      - Useful commands: commands.md
       - Gym trainers: gym-trainers.md
+      - Quests: quests.md
+      - Lootboxes & eggs: lootboxes.md
       - Pokémon spawn biomes: spawn-lookup.md
       - Cobbleworkers jobs: cobbleworkers.md
-      - Quests: quests.md
       - PvP rules: pvp.md
       - Finding legendaries: legendaries.md
-  # - Commands: commands.md   # TODO: add once we draft these

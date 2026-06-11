@@ -42,7 +42,10 @@ data class EggPools(val byTier: Map<String, List<EggSpecies>>) {
      * Returns null if the pool is unknown or empty.
      */
     fun pickSpecies(tier: String, random: Random = Random.Default): EggSpecies? {
-        val pool = byTier[normaliseTier(tier)] ?: return null
+        // A pool key may be a single tier ("rare") or a union of tiers ("rare|uncommon"),
+        // letting e.g. the shiny egg draw from both the rare and uncommon species pools.
+        val pool = tier.split('|', '+', ',')
+            .flatMap { byTier[normaliseTier(it)] ?: emptyList() }
         if (pool.isEmpty()) return null
         return pool.random(random)
     }

@@ -39,7 +39,7 @@
           "count": 1
         }
       ],
-      "notes": "Giratina Origin Forme item"
+      "notes": "Giratina summoning item — use at the Giratina Pedestal (Giratina Island, Distortion World); also yields the Antimatter Globe for the Arceus craft"
     },
     {
       "lootTier": "Jackpot",
@@ -395,7 +395,7 @@
       "notes": "Ash-Cap Pikachu cosmetic"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Jackpot",
       "label": "2 Ultra Keys",
       "weightPct": 4.0,
       "items": [

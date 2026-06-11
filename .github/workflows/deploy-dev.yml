@@ -129,6 +129,15 @@ jobs:
             echo "modpack/server-overrides/config/ doesn't exist yet; skipping authored-config rsync"
           fi
 
+      # Inert until the RESOURCEPACK_URL repo variable is set. Sets resource-pack / -sha1 /
+      # require-resource-pack=false in the VM's server.properties (the next restart picks it up).
+      - name: Apply server resource-pack to server.properties
+        if: steps.idempotency.outputs.skip != 'true' && vars.RESOURCEPACK_URL != ''
+        run: |
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+            "bash -s -- '${{ vars.RESOURCEPACK_URL }}' '${{ vars.RESOURCEPACK_SHA1 || '2d39d40991a2d3d85d07262bdeebbe3fc450b46b' }}' '${{ env.INSTALL_DIR }}/server.properties'" \
+            < ops/set-server-resourcepack.sh
+
       - name: Atomic swap and restart
         if: steps.idempotency.outputs.skip != 'true'
         # mods/ MUST be a real directory, not a symlink to mods.vX/. Sinytra

@@ -12,6 +12,28 @@ root README.
 
 ## [Unreleased]
 
+## [0.12.2] - 2026-06-10
+
+### Changed
+- **Gacha crate tuning pass.**
+  - **Ultra:** replaced the Truth/Ideals Bottles with **Lugia (Vortex Stone)**; the
+    five legendary **pedestals** (Mew/Lati/Raikou/Suicune/Entei) are **disabled
+    (weight 0) for now**.
+  - **Rare:** added the **Articuno/Zapdos/Moltres urns**, a Mega Showdown
+    **Keystone** + raw **Mega Stone**, and **5× random IV candy**; curated held
+    items into **Competitive / Breeding / EV-Training** random pools; moved junk
+    (Quick/Ultra Balls, PP Up) out to common; removed Exp Share/Leftovers from rare;
+    Rare Candy buffed to 2.
+  - **Common:** egg weight cut 38% → 25%; removed the useless Exp Candy S; added a
+    **Random Held Item** split into a **Type-Boost pool** (type-boost items + Muscle
+    Band/Wise Glasses/Leftovers/Black Sludge) and an **Evolution-Item pool**;
+    Quick Balls moved here.
+
+### Fixed
+- **"Random" Evolution Stone always gave a Fire Stone**, and **"Random" EV Vitamin
+  always gave HP Up** — both were stored as single items. They now roll genuinely at
+  random (10 stones / 6 vitamins).
+
 ## [0.12.1] - 2026-06-10
 
 ### Added

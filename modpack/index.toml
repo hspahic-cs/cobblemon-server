@@ -350,6 +350,10 @@ file = "server-overrides/config/cobblemon-bridge/runtime/gym_caps.json"
 hash = "c66350b083ab4905429eddce0b5ca387acca57e730d86e13699a667420512082"
 
 [[files]]
+file = "server-overrides/config/cobblemon-bridge/runtime/test_teams.json"
+hash = "f0ae96d9f495dd769afaaee4b86f5bcc7ced598cb32cdc2e39c3aca61bc02f57"
+
+[[files]]
 file = "server-overrides/config/cobblemon-bridge/runtime/voicelines.json"
 hash = "e106163a032f6cf279a3c1d0049668470304258d15bd1edc1641480093b7a017"
 
@@ -1630,6 +1634,10 @@ file = "server-overrides/datapacks/server-quests/data/minecraft/tags/function/ti
 hash = "8f190188a4e2af1801f750558ff6c9a7f8304eb61dcb379b7bf41cba2679f026"
 
 [[files]]
+file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_all_challenge_gyms.json"
+hash = "83ff5d8bab51cf4ae089bb5da701b3fce6262f84cd5f089d32c96aecd31ce0c0"
+
+[[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_faker.json"
 hash = "89ee9238b2c748f8d1df744d6ac3bd0a079d86a40977a5c2fc97fce3ca54ef0c"
 
@@ -1894,6 +1902,10 @@ file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_p
 hash = "ac4532a8ccf28afca411a42941f6dac8b48890ba3e6cda803d43817e961fc4ca"
 
 [[files]]
+file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_pokedex_300.json"
+hash = "aff8598e842383de81883bfafdfcbde13fd74611b5a07a0b390cdec66fab7eb0"
+
+[[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/root.json"
 hash = "7d72cdbdb7742ad15a992811fc1b1ef6e16bd5fe91dcc4ee07e60018ea907b75"
 
@@ -2131,7 +2143,7 @@ hash = "ed747c2ae37273affc78f3340cf1eceeef60300bbcc0fd31844eb6b0ddf3c41d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/hud/tick.mcfunction"
-hash = "8f4a31a72aba200cdd497108239bcade7337c35e7aa99f37195a0e3ff37cdb63"
+hash = "f1c1619191e60cd34a0e06498ff7dbe8d7cfae95da22205936a096fb72156418"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/hud/tick_player.mcfunction"
@@ -2144,6 +2156,10 @@ hash = "ce5d80b6abfd1248f49eb68a9193e4f8d9703cecd710e70225da3cbb654ad610"
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/_finalize.mcfunction"
 hash = "ea9943b8e3efdb8e707f6f3ae1db2c2421051a9abc05be6a4885393167c1afd8"
+
+[[files]]
+file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_all_challenge_gyms.mcfunction"
+hash = "da8a2edd0cf55f2464003fda24c1778226b3ccf71a9973029380f4ba2e739f4a"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_faker.mcfunction"
@@ -2400,6 +2416,10 @@ hash = "e7a080a4ee006a7c2e522f4dbc79b1bd37c729eaaec1c636f759a4b69e77f440"
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/reach_pokedex_100.mcfunction"
 hash = "4a59c031b02fffc84c0114ebcbb153d4a75d23c0ee48a83b2fa53d169c0a65e4"
+
+[[files]]
+file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/reach_pokedex_300.mcfunction"
+hash = "a46b2379dc17477c84bb26830916af042e4d355be44900db3a4602fac5bdb0ea"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/root.mcfunction"

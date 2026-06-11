@@ -37,9 +37,9 @@ class LootTableLoaderTest {
     @Test
     fun `propagates Tier column when blank`() {
         val table = LootTableLoader.parseCsv(KeyTier.COMMON, commonCsv)
-        assertEquals(LootTier.Floor, table.entries[0].lootTier)
-        assertEquals(LootTier.Floor, table.entries[1].lootTier)
-        assertEquals(LootTier.Floor, table.entries[2].lootTier)
+        assertEquals(LootTier.Standard, table.entries[0].lootTier)
+        assertEquals(LootTier.Standard, table.entries[1].lootTier)
+        assertEquals(LootTier.Standard, table.entries[2].lootTier)
         assertEquals(LootTier.Jackpot, table.entries[3].lootTier)
     }
 

@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.1] - 2026-06-11
+
+### Changed
+- **Trainer admin commands reorganized** into `gym/`, `e4/`, `bt/` namespaces with short names —
+  `/function server:gym/spawn_fire`, `server:e4/spawn_alder`, `server:bt/spawn_faker` (the folder
+  already names the category, so the redundant prefix is dropped). The dev/prod deploy now runs a
+  scoped `--delete` prune over just those three function folders, so renamed-away commands — like
+  the old numbered `spawn_N` — are removed instead of lingering on the server.
+
 ## [0.15.0] - 2026-06-11
 
 ### Added

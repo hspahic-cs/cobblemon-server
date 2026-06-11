@@ -4,78 +4,26 @@
   "entries": [
     {
       "lootTier": "Floor",
-      "label": "1 Rare Candy",
+      "label": "2 Rare Candy",
       "weightPct": 8.5,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:rare_candy",
-          "count": 1
+          "count": 2
         }
       ],
       "notes": "Common jackpot is rare floor"
     },
     {
       "lootTier": "Floor",
-      "label": "64 Quick balls",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:quick_ball",
-          "count": 64
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Floor",
-      "label": "64 Ultra balls",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:ultra_ball",
-          "count": 644
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Floor",
       "label": "3 Exp Candy M",
-      "weightPct": 8.0,
+      "weightPct": 6.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:exp_candy_m",
           "count": 3
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Floor",
-      "label": "5 PP Up",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:pp_up",
-          "count": 3
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Floor",
-      "label": "Leftovers",
-      "weightPct": 3.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:leftovers",
-          "count": 1
         }
       ],
       "notes": ""
@@ -95,43 +43,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "3 Nature mints",
-      "weightPct": 4.0,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:adamant_mint",
-            "cobblemon:bold_mint",
-            "cobblemon:brave_mint",
-            "cobblemon:calm_mint",
-            "cobblemon:careful_mint",
-            "cobblemon:gentle_mint",
-            "cobblemon:hasty_mint",
-            "cobblemon:impish_mint",
-            "cobblemon:jolly_mint",
-            "cobblemon:lax_mint",
-            "cobblemon:lonely_mint",
-            "cobblemon:mild_mint",
-            "cobblemon:modest_mint",
-            "cobblemon:naive_mint",
-            "cobblemon:naughty_mint",
-            "cobblemon:quiet_mint",
-            "cobblemon:rash_mint",
-            "cobblemon:relaxed_mint",
-            "cobblemon:sassy_mint",
-            "cobblemon:serious_mint",
-            "cobblemon:timid_mint"
-          ],
-          "count": 3
-        }
-      ],
-      "notes": "0.7.13: random pick across 21 typed mints (was broken cobblemon:nature_mint). All 3 are the same nature — RandomItem rolls once per entry, not per count."
-    },
-    {
-      "lootTier": "Mid",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 20.0,
+      "weightPct": 14.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -145,7 +58,7 @@
     {
       "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 5.0,
+      "weightPct": 5.5,
       "items": [
         {
           "type": "vanilla",
@@ -157,20 +70,7 @@
     },
     {
       "lootTier": "Mid",
-      "label": "EXP share",
-      "weightPct": 4.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_share",
-          "count": 1
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Random Power Item",
+      "label": "EV Training Item (random)",
       "weightPct": 4.0,
       "items": [
         {
@@ -186,12 +86,12 @@
           "count": 1
         }
       ],
-      "notes": "Random power item"
+      "notes": "Random EV-training Power item"
     },
     {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 4.0,
+      "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
@@ -204,7 +104,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 18.5,
+      "weightPct": 17.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -229,23 +129,9 @@
       "notes": ""
     },
     {
-      "lootTier": "High",
-      "label": "Silk Touch Book",
-      "weightPct": 3.0,
-      "items": [
-        {
-          "type": "enchanted_book",
-          "enchantment": "minecraft:silk_touch",
-          "level": 1,
-          "count": 1
-        }
-      ],
-      "notes": "Economy grind tool — now grants an actually-enchanted book (0.7.12)"
-    },
-    {
       "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 1.5,
+      "weightPct": 2.5,
       "items": [
         {
           "type": "vanilla",
@@ -280,6 +166,144 @@
         }
       ],
       "notes": "Double up"
+    },
+    {
+      "lootTier": "High",
+      "label": "Urn of Frost",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:urn_of_frost",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Articuno — charge by defeating Ice-types"
+    },
+    {
+      "lootTier": "High",
+      "label": "Urn of Storms",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:urn_of_storms",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Zapdos — charge by defeating Electric-types"
+    },
+    {
+      "lootTier": "High",
+      "label": "Urn of Embers",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:urn_of_embers",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Moltres — charge by defeating Fire-types"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Keystone",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:keystone",
+          "count": 1
+        }
+      ],
+      "notes": "Mega Evolution — trainer keystone"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Mega Stone",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:mega_stone",
+          "count": 1
+        }
+      ],
+      "notes": "Raw Mega Stone (becomes a species Mega Stone)"
+    },
+    {
+      "lootTier": "High",
+      "label": "Silk Touch Book",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "enchanted_book",
+          "enchantment": "minecraft:silk_touch",
+          "level": 1,
+          "count": 1
+        }
+      ],
+      "notes": "Economy grind tool"
+    },
+    {
+      "lootTier": "High",
+      "label": "Competitive Held Item (random)",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "random_item",
+          "ids": [
+            "cobblemon:choice_band",
+            "cobblemon:choice_specs",
+            "cobblemon:choice_scarf",
+            "cobblemon:assault_vest",
+            "cobblemon:heavy_duty_boots",
+            "cobblemon:life_orb",
+            "cobblemon:focus_sash",
+            "cobblemon:rocky_helmet",
+            "cobblemon:eviolite"
+          ],
+          "count": 1
+        }
+      ],
+      "notes": "Choice items, Assault Vest, Heavy-Duty Boots, Life Orb, Focus Sash, Rocky Helmet, Eviolite"
+    },
+    {
+      "lootTier": "Mid",
+      "label": "Breeding Item (random)",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "random_item",
+          "ids": [
+            "cobblemon:destiny_knot",
+            "cobblemon:everstone"
+          ],
+          "count": 1
+        }
+      ],
+      "notes": "Destiny Knot / Everstone"
+    },
+    {
+      "lootTier": "High",
+      "label": "5 IV Candy (random)",
+      "weightPct": 4.0,
+      "items": [
+        {
+          "type": "random_item",
+          "ids": [
+            "cobblemon:health_candy",
+            "cobblemon:mighty_candy",
+            "cobblemon:tough_candy",
+            "cobblemon:smart_candy",
+            "cobblemon:courage_candy",
+            "cobblemon:quick_candy"
+          ],
+          "count": 5
+        }
+      ],
+      "notes": "5x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) — raises one IV stat"
     }
   ]
 }

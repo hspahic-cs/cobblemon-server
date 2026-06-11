@@ -35,6 +35,9 @@ Every quest available on the server, grouped by chain.
 | 27 | **Elite Four #4** | Defeat Elite Four #4: Dragon Boss. | $3,450 + Ultra Key |
 | 28 | **Pokémon Champion** | Defeat the Champion and claim the title. | $5,000 + Ultra Key |
 
+!!! warning "The Elite Four is a gauntlet"
+    Quests 24–28 (Elite Four #1–4 **and the Champion**) must be cleared **back-to-back in one run**. Losing, fleeing, leaving the area, or changing your party at any point — **including against the Champion** — restarts you from Elite Four #1. See [Gym trainers → How gyms work](gym-trainers.md#how-gyms-work) for the full rules.
+
 ## Monetary milestones (optional)
 
 | # | Quest | Condition | Reward |
@@ -59,6 +62,7 @@ Every quest available on the server, grouped by chain.
 | # | Quest | Condition | Reward |
 |---:|---|---|---|
 | 1 | **Centurion** | Catch 100 different Pokémon species. | PokéNav |
+| 2 | **Master Collector** | Catch 300 different Pokémon species. | 1 Master Ball |
 
 ## Rotating gyms (optional)
 
@@ -88,4 +92,10 @@ Every quest available on the server, grouped by chain.
 | 8 | **Gym 8: Sabrina Challenge** | Defeat the challenge variant of Gym 8. | $1,200 + Rare Key |
 | 9 | **Gym 9: Drayden Challenge** | Defeat the challenge variant of Gym 9. | $1,350 + Rare Key |
 | 10 | **Gym 10: Morty Challenge** | Defeat the challenge variant of Gym 10. | $1,500 + Ultra Key |
+
+Challenge variants are fought at your team's true **Lv 50** (no downlevel cap). Beat the regular gym first to unlock its challenge.
+
+## Battle Tower (daily, optional)
+
+A daily three-floor gauntlet at spawn: three Hard-Mode leaders at **Lv 50**, fought in floor order (1 → 2 → 3) with **no healing between floors**. Clear all three in one run — losing, fleeing, or healing resets it (unlimited retries, and the lineup rotates every day). Unlocks after Gym 10. Full rules on the [Gym trainers](gym-trainers.md#how-gyms-work) page.
 

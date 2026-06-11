@@ -1,12 +1,12 @@
 {
-  "_comment": "0.7.64 \u2014 re-parented from defeat_elite_four (deleted in this release as a duplicate) back to beat_gym_23. The consecutive-E4 requirement is now enforced at runtime by cobblemon-bridge's E4GauntletHook (dimension leash + party stability, added in 0.7.63), not via advancement requirements, so beat_gym_23 being parent is enough \u2014 the player can only complete it by beating Lance after Lorelei/Cynthia/Agatha in sequence.",
+  "_comment": "The Champion (gym 24) is part of the Elite Four gauntlet, enforced at runtime by cobblemon-bridge's E4GauntletHook: the player must beat E4 #1-4 (gyms 20-23) and then the Champion consecutively in one run (dimension leash + party stability). Losing to the Champion resets the whole gauntlet back to E4 #1.",
   "parent": "server:beat_gym_23",
   "display": {
     "title": {
-      "text": "Pok\u00e9mon Champion"
+      "text": "Pokémon Champion"
     },
     "description": {
-      "text": "Defeat the Champion and claim the title."
+      "text": "Defeat the Champion to conquer the Elite Four gauntlet and claim the title. Lose to the Champion and you restart from Elite Four #1."
     },
     "icon": {
       "id": "cobblemon:master_ball"

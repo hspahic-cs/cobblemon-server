@@ -48,7 +48,8 @@ apt-get update -qq
 apt-get install -y --no-install-recommends \
   python3.12 python3.12-venv python3.12-dev \
   build-essential pkg-config rsync curl ca-certificates \
-  >/dev/null
+  git \
+  >/dev/null  # git: pip builds poke-engine from the git+https fork URL below
 
 echo "==> ensuring rustup toolchain (poke-engine builds via maturin)"
 RUSTUP_HOME=/opt/rustup

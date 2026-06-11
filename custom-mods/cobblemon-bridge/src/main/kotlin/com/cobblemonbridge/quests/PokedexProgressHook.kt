@@ -15,11 +15,12 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Awards [ADVANCEMENT_ID] once the player has marked [THRESHOLD] species as `CAUGHT` in their
- * Pokédex. Side quest — branches off `server:catch_pokemon` ("Gotta Catch One") but is NOT
- * in the linear quest chain, doesn't appear in the HUD ticker, and isn't blocking for any
- * downstream quest. The reward function's `tellraw` is prefixed with `[Side Quest Complete]`
- * so it visually separates from main-line completions.
+ * Awards [ADVANCEMENT_ID] (Centurion) once the player has marked [THRESHOLD] species as `CAUGHT`
+ * in their Pokédex, and [ADVANCEMENT_300_ID] (Master Collector — a Master Ball) at [THRESHOLD_300].
+ * Side quests — they branch off `server:catch_pokemon` ("Gotta Catch One") but are NOT in the
+ * linear quest chain, don't appear in the HUD ticker, and aren't blocking for any downstream
+ * quest. The reward functions' `tellraw` is prefixed with `[Side Quest Complete]` so it visually
+ * separates from main-line completions.
  *
  * Trigger: `CobblemonEvents.POKEDEX_DATA_CHANGED_POST` — fires on any update to the player's
  * dex (new species seen, captured, etc.). We re-count caught species via reflection into
@@ -39,6 +40,11 @@ object PokedexProgressHook {
 
     private const val THRESHOLD = 100
     private const val ADVANCEMENT_ID = "server:reach_pokedex_100"
+    /** Follow-up to Centurion: 300 caught species. Its Master Ball reward is granted by the
+     *  reward mcfunction (a vanilla `give` is reliable for a Cobblemon item, unlike the PokéNav),
+     *  so this hook only needs to award the advancement. */
+    private const val THRESHOLD_300 = 300
+    private const val ADVANCEMENT_300_ID = "server:reach_pokedex_300"
     /** Cobblenav registers ONLY colored variants as concrete items (no base `pokenav_item`).
      *  `pokenav_item_red` was confirmed by ops as a valid id that works with `/give`. Any
      *  other color would also work — red is the player-facing default. */
@@ -99,9 +105,10 @@ object PokedexProgressHook {
 
     private fun checkAndAward(player: ServerPlayer) {
         val count = caughtCount(player)
-        if (count < THRESHOLD) return
-        val awarded = QuestAdvancements.award(player, ADVANCEMENT_ID, criterion = "done")
-        if (awarded) {
+        if (count < THRESHOLD) return  // below the first milestone — nothing to do
+
+        // Centurion (100 caught species) — advancement + PokéNav.
+        if (QuestAdvancements.award(player, ADVANCEMENT_ID, criterion = "done")) {
             CobblemonBridge.logger.info(
                 "pokedex: awarded {} to {} at count={}",
                 ADVANCEMENT_ID, player.gameProfile.name, count,
@@ -115,6 +122,18 @@ object PokedexProgressHook {
         //   - retro completers: advancement is already done, this runs on next dex update
         // Idempotency via a per-player persistent NBT flag (see POKENAV_AWARDED_KEY).
         grantPokenavOnce(player)
+
+        // Master Collector (300 caught species) — follow-up to Centurion. We only award the
+        // advancement; its reward mcfunction gives the Master Ball, and the advancement system's
+        // own dedup makes the grant fire exactly once.
+        if (count >= THRESHOLD_300) {
+            if (QuestAdvancements.award(player, ADVANCEMENT_300_ID, criterion = "done")) {
+                CobblemonBridge.logger.info(
+                    "pokedex: awarded {} to {} at count={}",
+                    ADVANCEMENT_300_ID, player.gameProfile.name, count,
+                )
+            }
+        }
     }
 
     private fun grantPokenavOnce(player: ServerPlayer) {

@@ -1,4 +1,5 @@
 {
+  "textureResource": "rctmod:textures/trainers/single/gym_21_cynthia.png",
   "type": "leader",
   "spawnWeightFactor": 0.0,
   "battleCooldownTicks": 240,

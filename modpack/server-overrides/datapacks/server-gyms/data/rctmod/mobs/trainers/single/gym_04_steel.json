@@ -1,4 +1,5 @@
 {
+  "textureResource": "rctmod:textures/trainers/single/type_steel.png",
   "type": "leader",
   "spawnWeightFactor": 0.0,
   "battleCooldownTicks": 240,

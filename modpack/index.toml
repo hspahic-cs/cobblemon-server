@@ -346,6 +346,10 @@ file = "server-overrides/config/README.md"
 hash = "2f9e0d3d3d3c549855eb3178b5d8ef4bc23f7e0bd899b1a741fa24f8e3447f57"
 
 [[files]]
+file = "server-overrides/config/cobblemon-bridge/runtime/gym_caps.json"
+hash = "c66350b083ab4905429eddce0b5ca387acca57e730d86e13699a667420512082"
+
+[[files]]
 file = "server-overrides/config/cobblemon-bridge/runtime/voicelines.json"
 hash = "e106163a032f6cf279a3c1d0049668470304258d15bd1edc1641480093b7a017"
 
@@ -2003,23 +2007,23 @@ hash = "812c749b1ac644a0b6f6f53d3ed2c99c99a2c91a7710c47d0acd0529cf0141c3"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_e4_alder.mcfunction"
-hash = "fac50edd9202aaf4485c49e38a9e19501faab461ef29b1fc78908dab1cd75f56"
+hash = "e53d5d5372e3433c3247ebf94c8007f08e58f643b2f36bf9095405f974565d99"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_e4_ash.mcfunction"
-hash = "119f9b3755b25b87c77e23cbbcfd819027272464b65737023d6c83a3378ec8ec"
+hash = "03c470a3018788814b150026c95788d61da154ab2a7c8bc3f701eebbcc06d0b6"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_e4_champion.mcfunction"
-hash = "bccb466784c5fa015a6bd186375a3e690c43488f747ea76d7422e232a3b15466"
+hash = "57a9875949a5741481acec3ee2e0beea486d16f6a255976c7cfadd4b7ac7bd84"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_e4_cynthia.mcfunction"
-hash = "e3ccd610b8cbb4c5ea87824da1cd27dfb8ffe3736fc8e30b0760df270f9c7d42"
+hash = "c8130d92fb57bdc0585295f1b50a44dfe815592bf1e431cd50911eae340bd96b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_e4_lance.mcfunction"
-hash = "8db2eff543978ab6f7ca72cd15ce3b3f26f028d61e6303b625cc6f88e2f471b1"
+hash = "c9ee6c2763df93da2de85745e9d6ea0fd23e838d8fcbb55e98936b5f6cf4656e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/spawn_gym_bug.mcfunction"

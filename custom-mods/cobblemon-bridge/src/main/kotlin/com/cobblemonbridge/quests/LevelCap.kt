@@ -23,33 +23,27 @@ import net.minecraft.server.level.ServerPlayer
 object LevelCap {
 
     const val BASE: Int = 20
-    const val PER_MAINLINE_GYM: Int = 5
     /** Sentinel return value when the player has finished the Elite Four. */
     const val UNCAPPED: Int = Int.MAX_VALUE
 
-    private val MAINLINE_GYMS: List<ResourceLocation> = (1..10).map {
-        ResourceLocation.fromNamespaceAndPath("server", "beat_gym_$it")
-    }
-    private val E4_FINAL: ResourceLocation =
-        ResourceLocation.fromNamespaceAndPath("server", "beat_gym_23")  // last E4 trainer
-
     fun forPlayer(player: ServerPlayer): Int {
         val mgr = player.server.advancements
-        // E4-complete: full uncap.
-        val e4 = mgr.get(E4_FINAL)
-        if (e4 != null && player.advancements.getOrStartProgress(e4).isDone) return UNCAPPED
-        // Otherwise: BASE + (count of mainline gyms beaten) * 5.
+        // E4-complete (config 'uncapAfterGym'): full uncap.
+        val uncapId = ResourceLocation.fromNamespaceAndPath("server", "beat_gym_${GymCaps.uncapAfterGym()}")
+        val uncap = mgr.get(uncapId)
+        if (uncap != null && player.advancements.getOrStartProgress(uncap).isDone) return UNCAPPED
+        // Otherwise: overworld base + (mainline gyms beaten) * perMainlineGym — all authored in GymCaps.
         var beaten = 0
-        for (rl in MAINLINE_GYMS) {
-            val h = mgr.get(rl) ?: continue
+        for (gid in GymCaps.mainlineGymIds()) {
+            val h = mgr.get(ResourceLocation.fromNamespaceAndPath("server", "beat_gym_$gid")) ?: continue
             if (player.advancements.getOrStartProgress(h).isDone) beaten++
         }
-        return BASE + beaten * PER_MAINLINE_GYM
+        return GymCaps.overworldBase() + beaten * GymCaps.perMainlineGym()
     }
 
     /** Highest cap across a set of players. [UNCAPPED] from any one player short-circuits. */
     fun highestInRange(players: Iterable<ServerPlayer>): Int {
-        var best = BASE
+        var best = GymCaps.overworldBase()
         for (p in players) {
             val c = forPlayer(p)
             if (c == UNCAPPED) return UNCAPPED

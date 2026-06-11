@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.battles.BattleRegistry
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemon.mod.common.util.party
 import com.cobblemonbridge.CobblemonBridge
+import com.cobblemonbridge.quests.GymCaps
 import com.cobblemonbridge.tags.BridgeTags
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -68,7 +69,10 @@ object GymBattleAdjustHook {
      *  In-memory only — the persisted restore data lives in player NBT, not here. */
     private val pendingByPlayer: MutableMap<UUID, Pair<Int, Long>> = ConcurrentHashMap()
 
-    fun capForGym(gymId: Int): Int = 20 + 5 * (gymId - 1)
+    /** In-battle downlevel cap for gym [gymId], from the authored [GymCaps] config (NOT the old
+     *  number formula). A gym with no configured cap returns [Int.MAX_VALUE] — no mon is ever above
+     *  it, so the player is effectively uncapped for that fight. */
+    fun capForGym(gymId: Int): Int = GymCaps.battleCap(gymId) ?: Int.MAX_VALUE
 
     fun registerEvents() {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL) { event ->

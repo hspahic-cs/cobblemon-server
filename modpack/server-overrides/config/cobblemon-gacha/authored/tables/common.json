@@ -3,7 +3,7 @@
   "totalWeightPct": 100.0,
   "entries": [
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "40 Poké Balls",
       "weightPct": 4.0,
       "items": [
@@ -16,7 +16,7 @@
       "notes": "Bread and butter, always useful"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "20 Great Balls",
       "weightPct": 4.0,
       "items": [
@@ -29,7 +29,7 @@
       "notes": ""
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "3 Revives",
       "weightPct": 4.0,
       "items": [
@@ -42,7 +42,7 @@
       "notes": ""
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "5 Max Potions",
       "weightPct": 2.0,
       "items": [
@@ -65,7 +65,7 @@
           "count": 10
         }
       ],
-      "notes": "Solid upgrade over floor"
+      "notes": "A handy catching upgrade"
     },
     {
       "lootTier": "Mid",
@@ -98,7 +98,7 @@
           "count": 5
         }
       ],
-      "notes": "5x a random EV vitamin (was always HP Up — fixed)"
+      "notes": "5× a random EV-boosting vitamin"
     },
     {
       "lootTier": "Mid",
@@ -122,7 +122,7 @@
           "count": 1
         }
       ],
-      "notes": "Random evolution stone (was always Fire Stone — fixed)"
+      "notes": "A random evolution stone"
     },
     {
       "lootTier": "Mid",
@@ -148,7 +148,7 @@
           "count": 3
         }
       ],
-      "notes": "Modest but PvP-relevant"
+      "notes": "Boosts a move's max PP"
     },
     {
       "lootTier": "High",
@@ -162,7 +162,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Egg-tier rewards bumped to ~30% target (0.7.12)"
+      "notes": "A common-pool Pokémon egg"
     },
     {
       "lootTier": "High",
@@ -176,7 +176,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Sprinkle of uncommon-pool eggs for variety (0.7.12)"
+      "notes": "An uncommon-pool Pokémon egg"
     },
     {
       "lootTier": "High",
@@ -189,7 +189,7 @@
           "count": 1
         }
       ],
-      "notes": "The benchmark 1% item"
+      "notes": "Instantly raises a Pokémon's level"
     },
     {
       "lootTier": "High",
@@ -224,7 +224,7 @@
           "count": 1
         }
       ],
-      "notes": "PvP utility — 0.7.13: random pick across 21 typed mints (was broken cobblemon:nature_mint, which isn't a real item id)"
+      "notes": "A random Nature Mint — changes a Pokémon's nature"
     },
     {
       "lootTier": "Jackpot",
@@ -237,7 +237,7 @@
           "count": 2
         }
       ],
-      "notes": "Fun double-up"
+      "notes": "Two Common crate keys"
     },
     {
       "lootTier": "Jackpot",
@@ -250,7 +250,7 @@
           "count": 1
         }
       ],
-      "notes": "Upgrade"
+      "notes": "A Rare crate key"
     },
     {
       "lootTier": "Jackpot",
@@ -279,7 +279,7 @@
       "notes": ""
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "32 Quick Balls",
       "weightPct": 3.0,
       "items": [
@@ -292,7 +292,7 @@
       "notes": "Moved from rare crate"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Type-Boost Held Item (random)",
       "weightPct": 6.0,
       "items": [
@@ -323,10 +323,10 @@
           "count": 1
         }
       ],
-      "notes": "Subpar competitive held items (20): type-boost + Muscle Band/Wise Glasses + Leftovers + Black Sludge"
+      "notes": "A random type-boosting held item (Mystic Water, Miracle Seed, Black Sludge, …)"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Evolution Item (random)",
       "weightPct": 6.0,
       "items": [
@@ -367,7 +367,7 @@
           "count": 1
         }
       ],
-      "notes": "Held/applied items to evolve non-legendary Pokémon (30)"
+      "notes": "A random evolution item (Metal Coat, Kings Rock, Razor Claw, …)"
     }
   ]
 }

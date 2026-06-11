@@ -1,7 +1,7 @@
 package com.cobblemongacha.data
 
 /** Tier banner within a loot table: drives lore/announcements (e.g. "(HIGH)" tag). */
-enum class LootTier { Floor, Mid, High, Jackpot }
+enum class LootTier { Standard, Mid, High, Jackpot }
 
 /**
  * One materialisable item inside a `LootEntry`. Four forms (sealed):

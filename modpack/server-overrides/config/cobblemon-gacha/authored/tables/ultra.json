@@ -1,6 +1,6 @@
 {
   "tier": "ULTRA",
-  "totalWeightPct": 85.5,
+  "totalWeightPct": 100.0,
   "entries": [
     {
       "lootTier": "Jackpot",
@@ -26,7 +26,7 @@
           "count": 1
         }
       ],
-      "notes": "Zacian summon catalyst"
+      "notes": "Summons Zacian (with a Rusted Sword at the Sword Temple)"
     },
     {
       "lootTier": "Jackpot",
@@ -39,12 +39,12 @@
           "count": 1
         }
       ],
-      "notes": "Giratina summoning item — use at the Giratina Pedestal (Giratina Island, Distortion World); also yields the Antimatter Globe for the Arceus craft"
+      "notes": "Summons Giratina at the Giratina Pedestal (Distortion World); also yields an Antimatter Globe"
     },
     {
-      "lootTier": "Jackpot",
+      "lootTier": "High",
       "label": "Rainbow Feather",
-      "weightPct": 1.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -55,9 +55,9 @@
       "notes": "Summons Ho-Oh"
     },
     {
-      "lootTier": "Jackpot",
+      "lootTier": "High",
       "label": "Red Chain",
-      "weightPct": 1.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -65,26 +65,26 @@
           "count": 1
         }
       ],
-      "notes": "Creation-trio control item"
+      "notes": "Summons Dialga & Palkia at the Spear Pillar"
     },
     {
-      "lootTier": "Jackpot",
+      "lootTier": "High",
       "label": "Shiny Egg",
-      "weightPct": 2.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "cobbreeding_egg",
-          "pool": "rare",
+          "pool": "rare|uncommon",
           "shiny": true,
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Shiny cobbreeding egg (rare pool)"
+      "notes": "A guaranteed-shiny Pokémon egg"
     },
     {
-      "lootTier": "Jackpot",
+      "lootTier": "High",
       "label": "Light Stone",
-      "weightPct": 2.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -95,9 +95,9 @@
       "notes": "Summons Reshiram"
     },
     {
-      "lootTier": "Jackpot",
+      "lootTier": "High",
       "label": "Dark Stone",
-      "weightPct": 2.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -110,7 +110,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (U)",
-      "weightPct": 2.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -118,12 +118,12 @@
           "count": 1
         }
       ],
-      "notes": "Proof of Conquest U"
+      "notes": "Summons Uxie"
     },
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (A)",
-      "weightPct": 2.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -131,12 +131,12 @@
           "count": 1
         }
       ],
-      "notes": "Proof of Conquest A"
+      "notes": "Summons Azelf"
     },
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (M)",
-      "weightPct": 2.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -144,38 +144,12 @@
           "count": 1
         }
       ],
-      "notes": "Proof of Conquest M"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Mew Pedestal",
-      "weightPct": 0.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:mew_pedestal",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Mew [DISABLED — weight 0 for now]"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Lati Pedestal",
-      "weightPct": 0.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:latias_pedestal",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Latios / Latias (Eon duo, one pedestal) [DISABLED — weight 0 for now]"
+      "notes": "Summons Mesprit"
     },
     {
       "lootTier": "Mid",
       "label": "Fullmoon Whistle",
-      "weightPct": 3.0,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -188,7 +162,7 @@
     {
       "lootTier": "Mid",
       "label": "Newmoon Whistle",
-      "weightPct": 3.0,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -200,47 +174,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Raikou Pedestal",
-      "weightPct": 0.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:raikou_pedestal",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Raikou [DISABLED — weight 0 for now]"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Suicune Pedestal",
-      "weightPct": 0.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:suicune_pedestal",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Suicune [DISABLED — weight 0 for now]"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Entei Pedestal",
-      "weightPct": 0.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:entei_pedestal",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Entei [DISABLED — weight 0 for now]"
-    },
-    {
-      "lootTier": "Mid",
       "label": "Liberty Pass",
-      "weightPct": 3.5,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -253,7 +188,7 @@
     {
       "lootTier": "Mid",
       "label": "Curry of Justice",
-      "weightPct": 3.5,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -266,7 +201,7 @@
     {
       "lootTier": "Mid",
       "label": "Titan Key",
-      "weightPct": 3.5,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -274,25 +209,25 @@
           "count": 1
         }
       ],
-      "notes": "Titan summon"
+      "notes": "Summons Regigigas"
     },
     {
       "lootTier": "Mid",
-      "label": "Master Ball",
-      "weightPct": 3.5,
+      "label": "2 Master Balls",
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:master_ball",
-          "count": 1
+          "count": 2
         }
       ],
       "notes": "Guaranteed catch"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "2 Ability Patches",
-      "weightPct": 5.5,
+      "weightPct": 8.0,
       "items": [
         {
           "type": "vanilla",
@@ -300,25 +235,12 @@
           "count": 2
         }
       ],
-      "notes": "Hidden ability — top PvP item"
+      "notes": "Two Ability Patches — change a Pokémon to its Hidden Ability"
     },
     {
-      "lootTier": "Floor",
-      "label": "20 Eye of Ender",
-      "weightPct": 5.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "minecraft:ender_eye",
-          "count": 20
-        }
-      ],
-      "notes": "Stronghold / summon-altar utility"
-    },
-    {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Rock Golem Key",
-      "weightPct": 5.5,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -329,9 +251,9 @@
       "notes": "Summons Regirock"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Steel Golem Key",
-      "weightPct": 5.5,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -342,9 +264,9 @@
       "notes": "Summons Registeel"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Ice Golem Key",
-      "weightPct": 5.0,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -355,9 +277,9 @@
       "notes": "Summons Regice"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Ultra Egg",
-      "weightPct": 5.5,
+      "weightPct": 8.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -366,12 +288,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Cobbreeding egg — ultra-rare pool"
+      "notes": "An ultra-rare Pokémon egg"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Dragon Golem Key",
-      "weightPct": 4.0,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -382,7 +304,7 @@
       "notes": "Summons Regidrago"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "Ash Cap",
       "weightPct": 4.0,
       "items": [
@@ -397,7 +319,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Ultra Keys",
-      "weightPct": 4.0,
+      "weightPct": 0.5,
       "items": [
         {
           "type": "gacha_key",
@@ -408,9 +330,9 @@
       "notes": "Re-roll the ultra crate"
     },
     {
-      "lootTier": "Jackpot",
+      "lootTier": "High",
       "label": "Vortex Stone",
-      "weightPct": 2.0,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -418,7 +340,7 @@
           "count": 1
         }
       ],
-      "notes": "Summons Lugia (Lugia Temple) — finished stone, skips the bird trio"
+      "notes": "Summons Lugia at the Lugia Temple"
     }
   ]
 }

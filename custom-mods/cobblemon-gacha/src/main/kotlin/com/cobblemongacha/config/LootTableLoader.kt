@@ -69,7 +69,7 @@ object LootTableLoader {
         val dataLines = lines.drop(1)
 
         val entries = mutableListOf<LootEntry>()
-        var currentTier: LootTier = LootTier.Floor
+        var currentTier: LootTier = LootTier.Standard
         var totalWeight = 0.0
         var tbdCounter = 1
 
@@ -106,7 +106,7 @@ object LootTableLoader {
     }
 
     private fun parseTier(s: String): LootTier? = when (s.lowercase()) {
-        "floor" -> LootTier.Floor
+        "floor", "standard" -> LootTier.Standard
         "mid" -> LootTier.Mid
         "high" -> LootTier.High
         "jackpot" -> LootTier.Jackpot

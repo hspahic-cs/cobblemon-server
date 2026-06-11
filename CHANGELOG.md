@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.12.3] - 2026-06-10
+
+### Changed
+- **Gacha crate tuning, round 2.**
+  - **Ultra:** removed the legendary **pedestals** entirely and hand-reweighted to a
+    true 100%; **2 Ultra Keys → 0.5%**; **Master Ball → 2**; **20 Eye of Ender** moved
+    to the rare crate.
+  - **Rare:** **IV Candy 5 → 3**.
+  - **Loot tier "Floor" renamed "Standard"** (`LootTier` enum + announce flair; the
+    CSV parser still accepts the old "floor").
+  - **Jackpot tier** now contains only items at ≤1% weight.
+  - **Player-facing crate notes** cleaned up (removed version numbers / dev commentary).
+
+### Added
+- **Shiny eggs now draw from `rare` *and* `uncommon`** pools — `EggPools.pickSpecies`
+  accepts a union of tiers (`rare|uncommon`).
+
+
 ## [0.12.2] - 2026-06-10
 
 ### Changed

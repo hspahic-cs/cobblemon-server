@@ -3,7 +3,7 @@
   "totalWeightPct": 100.0,
   "entries": [
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "2 Rare Candy",
       "weightPct": 8.5,
       "items": [
@@ -13,10 +13,10 @@
           "count": 2
         }
       ],
-      "notes": "Common jackpot is rare floor"
+      "notes": "Two Rare Candies — instantly level up"
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "3 Exp Candy M",
       "weightPct": 6.0,
       "items": [
@@ -44,7 +44,7 @@
     {
       "lootTier": "Mid",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 14.0,
+      "weightPct": 11.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -53,7 +53,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Egg-tier rewards bumped to 30% target (0.7.12)"
+      "notes": "An uncommon-pool Pokémon egg"
     },
     {
       "lootTier": "Mid",
@@ -99,12 +99,12 @@
           "count": 1
         }
       ],
-      "notes": "Hidden ability item"
+      "notes": "Changes a Pokémon to its Hidden Ability"
     },
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 17.5,
+      "weightPct": 15.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -113,7 +113,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Egg-tier rewards bumped to 30% target (0.7.12)"
+      "notes": "A rare-pool Pokémon egg"
     },
     {
       "lootTier": "High",
@@ -152,7 +152,7 @@
           "count": 1
         }
       ],
-      "notes": "Mega upgrade"
+      "notes": "An Ultra crate key"
     },
     {
       "lootTier": "Jackpot",
@@ -165,7 +165,7 @@
           "count": 2
         }
       ],
-      "notes": "Double up"
+      "notes": "Two Rare crate keys"
     },
     {
       "lootTier": "High",
@@ -244,7 +244,7 @@
           "count": 1
         }
       ],
-      "notes": "Economy grind tool"
+      "notes": "A Silk Touch enchanted book"
     },
     {
       "lootTier": "High",
@@ -287,7 +287,7 @@
     },
     {
       "lootTier": "High",
-      "label": "5 IV Candy (random)",
+      "label": "3 IV Candy (random)",
       "weightPct": 4.0,
       "items": [
         {
@@ -300,10 +300,23 @@
             "cobblemon:courage_candy",
             "cobblemon:quick_candy"
           ],
-          "count": 5
+          "count": 3
         }
       ],
-      "notes": "5x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) — raises one IV stat"
+      "notes": "3x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) — raises one IV stat"
+    },
+    {
+      "lootTier": "High",
+      "label": "20 Eye of Ender",
+      "weightPct": 5.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "minecraft:ender_eye",
+          "count": 20
+        }
+      ],
+      "notes": "Useful for strongholds and legendary summon altars"
     }
   ]
 }

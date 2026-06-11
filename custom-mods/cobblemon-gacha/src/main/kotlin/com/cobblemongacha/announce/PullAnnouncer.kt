@@ -38,7 +38,7 @@ object PullAnnouncer {
         // of the generic CSV label ("Shiny Egg" → "Shiny Pikachu Egg §d(Hidden Ability)").
         val label = labelOverride ?: entry.label
         val message = when (entry.lootTier) {
-            LootTier.Floor, LootTier.Mid -> Component.literal(
+            LootTier.Standard, LootTier.Mid -> Component.literal(
                 "§7[Gacha] §a$playerName§7 opened a §f${tier.displayName} Box §7and got §f$label"
             )
             LootTier.High -> Component.literal(
@@ -81,7 +81,7 @@ object PullAnnouncer {
             KeyTier.POKEMON -> 0x55FF55  // green
         }
         val (shape, hasTrail, hasTwinkle, fadeColors) = when (lootTier) {
-            LootTier.Floor -> Quad(FireworkExplosion.Shape.SMALL_BALL, false, false, IntList.of())
+            LootTier.Standard -> Quad(FireworkExplosion.Shape.SMALL_BALL, false, false, IntList.of())
             LootTier.Mid -> Quad(FireworkExplosion.Shape.SMALL_BALL, false, true, IntList.of())
             LootTier.High -> Quad(FireworkExplosion.Shape.LARGE_BALL, true, false, IntList.of())
             LootTier.Jackpot -> Quad(FireworkExplosion.Shape.LARGE_BALL, true, true, IntList.of(0xFFD700))

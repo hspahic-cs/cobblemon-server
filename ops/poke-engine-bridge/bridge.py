@@ -18,6 +18,7 @@ import logging
 import os
 import random
 import re
+import threading
 import time
 import traceback
 from concurrent.futures import ProcessPoolExecutor
@@ -40,6 +41,15 @@ from poke_engine import (
 )
 
 logger = logging.getLogger(__name__)
+
+# foul-play's dataset cache (SmogonSets/TeamDatasets) is module-level and NOT
+# thread-safe — the getters return cached lists by reference and _do_check /
+# initialize mutate them in place. FastAPI serves the sync /pick endpoint from a
+# threadpool, so concurrent gym battles race on that cache (sporadic IndexError /
+# KeyError). This serializes the cache-touching battle build per worker PROCESS;
+# the expensive MCTS search runs outside it, so parallelism across uvicorn
+# workers (separate processes, separate caches) is unaffected.
+_CACHE_LOCK = threading.Lock()
 
 # Consolidated, replayable record of picks foul-play couldn't process. Every
 # failure (whether we recovered with a degraded pick or it propagated) appends
@@ -131,6 +141,12 @@ def pick_move(battle_id: str, req: PickRequest) -> str:
 
 
 def _build_battle(battle_id: str, req: PickRequest) -> Battle:
+    # Serialize the foul-play cache-touching build (see _CACHE_LOCK above).
+    with _CACHE_LOCK:
+        return _build_battle_unlocked(battle_id, req)
+
+
+def _build_battle_unlocked(battle_id: str, req: PickRequest) -> Battle:
     battle = Battle(battle_tag=battle_id)
     battle.battle_type = BattleType.STANDARD_BATTLE
     battle.pokemon_format = req.pokemon_format

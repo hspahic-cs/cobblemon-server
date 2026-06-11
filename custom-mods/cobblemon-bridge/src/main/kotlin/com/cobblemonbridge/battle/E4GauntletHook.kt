@@ -54,6 +54,17 @@ object E4GauntletHook {
     private const val E4_FIRST: Int = 20
     private const val E4_LAST: Int = 24
 
+    /** Display name + the in-world statue each Elite Four member (and the Champion) stands under,
+     *  keyed by gym id. Used to tell the player exactly who to fight next and where to find them. */
+    private data class E4Member(val name: String, val statue: String)
+    private val E4_MEMBERS: Map<Int, E4Member> = mapOf(
+        20 to E4Member("Alder", "Ho-Oh"),
+        21 to E4Member("Cynthia", "Lucario"),
+        22 to E4Member("Ash", "Greninja"),
+        23 to E4Member("Lance", "Eternatus"),
+        24 to E4Member("N", "Rayquaza"),
+    )
+
     /** Next allowed gym in the gauntlet. Null = not in gauntlet (only gym 20 is fightable). */
     private val unlocked: MutableMap<UUID, Int> = ConcurrentHashMap()
     /** Gym currently being fought — set on [EntityInteract], cleared on battle end. */
@@ -159,18 +170,32 @@ object E4GauntletHook {
                 // Player walks to the next trainer manually and right-clicks them to continue;
                 // the gating ([canChallenge]) still enforces order, and a loss/flee still resets
                 // the gauntlet. The leashes (dimension + party) stay engaged through the Champion.
-                val label = if (next == E4_LAST) "the §6§lChampion§e (Gym $next)"
-                            else "E4 ${next - E4_FIRST + 1} (Gym $next)"
-                player.sendSystemMessage(Component.literal(
-                    "§6[Elite Four] §fNext: §e$label§f — challenge them next. " +
-                    "§7Don't leave the area or change your party, or you restart from E4 1."
-                ))
+                val beaten = E4_MEMBERS[gym]?.name ?: "Elite Four ${gym - E4_FIRST + 1}"
+                val nextMember = E4_MEMBERS[next]
+                if (next == E4_LAST) {
+                    // Cleared all four Elite Four — hand off to the Champion with some fanfare.
+                    player.sendSystemMessage(Component.literal(
+                        "§6§l[Elite Four] §r§aYou beat §e$beaten§a — that's all four Elite Four down! " +
+                        "§r§6§l⚔ It's time to face the Champion. §r§e${nextMember?.name ?: "The Champion"} " +
+                        "§fawaits beneath the §b${nextMember?.statue ?: "Champion"} statue§f. " +
+                        "§7This is the final battle — keep your party intact and don't leave the area."
+                    ))
+                } else {
+                    val nextLabel = nextMember?.name ?: "Elite Four ${next - E4_FIRST + 1}"
+                    val statue = nextMember?.statue ?: "their"
+                    player.sendSystemMessage(Component.literal(
+                        "§6[Elite Four] §r§aYou beat §e$beaten§a! §fGo challenge §e$nextLabel §7(E4 " +
+                        "${next - E4_FIRST + 1})§f next — you'll find them under the §b$statue statue§f. " +
+                        "§7Don't leave the area or change your party, or you restart from E4 1."
+                    ))
+                }
             } else {
                 // Beat the Champion (gym 24) — the gauntlet is truly complete. Clear all state.
                 cleanupGauntletState(player.uuid)
                 player.sendSystemMessage(Component.literal(
-                    "§6§l[Champion] §fYou beat the Champion and conquered the Elite Four gauntlet — " +
-                    "§eyou are the Champion!"
+                    "§6§l✦ CHAMPION ✦ §r§fYou stormed through §eAlder§f, §eCynthia§f, §eAsh§f, and " +
+                    "§eLance§f, then toppled §eN§f at the summit. §6§lYou are the new Champion of the " +
+                    "Elite Four! §r§7Glory is yours."
                 ))
             }
         }

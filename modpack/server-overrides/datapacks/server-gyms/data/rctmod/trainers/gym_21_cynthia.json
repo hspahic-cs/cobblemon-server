@@ -122,7 +122,9 @@
         "spd": 0,
         "spe": 252
       },
-      "form": "mega",
+      "aspects": [
+        "mega"
+      ],
       "ability": "adaptability",
       "moveset": [
         "swordsdance",

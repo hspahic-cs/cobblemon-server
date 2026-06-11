@@ -18,10 +18,13 @@ import logging
 import os
 import random
 import re
+import threading
+import time
+import traceback
 from concurrent.futures import ProcessPoolExecutor
 from concurrent.futures.process import BrokenProcessPool
 from copy import deepcopy
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 import constants
 from constants import BattleType
@@ -38,6 +41,51 @@ from poke_engine import (
 )
 
 logger = logging.getLogger(__name__)
+
+# foul-play's dataset cache (SmogonSets/TeamDatasets) is module-level and NOT
+# thread-safe — the getters return cached lists by reference and _do_check /
+# initialize mutate them in place. FastAPI serves the sync /pick endpoint from a
+# threadpool, so concurrent gym battles race on that cache (sporadic IndexError /
+# KeyError). This serializes the cache-touching battle build per worker PROCESS;
+# the expensive MCTS search runs outside it, so parallelism across uvicorn
+# workers (separate processes, separate caches) is unaffected.
+_CACHE_LOCK = threading.Lock()
+
+# Consolidated, replayable record of picks foul-play couldn't process. Every
+# failure (whether we recovered with a degraded pick or it propagated) appends
+# one JSON line — the verbatim request plus the error + traceback — to
+# <dir>/pick_failures.jsonl. Each line is a complete replayable turn (same
+# shape replay.py consumes), so the whole backlog can be reviewed and fixed in
+# one place. Defaults to the battle-log dir so it's on wherever battle logging
+# is; override with BRIDGE_FAILURE_LOG_DIR.
+FAILURE_LOG_DIR = os.environ.get("BRIDGE_FAILURE_LOG_DIR") or os.environ.get(
+    "BRIDGE_BATTLE_LOG_DIR", ""
+)
+
+
+def record_pick_failure(battle_id: str, request: dict, error: str, degraded: bool) -> None:
+    """Append one replayable JSONL line for a pick foul-play couldn't handle.
+
+    `request` must be the serialized PickRequest/PickRequestBody (it carries
+    `request_json` + `log_lines`, which replay.py reads). Call from inside an
+    `except` block so `traceback.format_exc()` captures the live trace.
+    """
+    if not FAILURE_LOG_DIR:
+        return
+    try:
+        os.makedirs(FAILURE_LOG_DIR, exist_ok=True)
+        record = {
+            "ts": time.time(),
+            "battle_id": battle_id,
+            "degraded": degraded,
+            "error": error,
+            "traceback": traceback.format_exc(),
+        }
+        record.update(request)
+        with open(os.path.join(FAILURE_LOG_DIR, "pick_failures.jsonl"), "a") as f:
+            f.write(json.dumps(record) + "\n")
+    except (OSError, TypeError) as e:
+        logger.warning("pick-failure log write failed: %s", e)
 
 # Perfect-info search knobs (env, read at import — restart the service to change):
 #   BRIDGE_SEARCH_ALGORITHM  "mcts" (default) | "expectiminimax"
@@ -93,6 +141,12 @@ def pick_move(battle_id: str, req: PickRequest) -> str:
 
 
 def _build_battle(battle_id: str, req: PickRequest) -> Battle:
+    # Serialize the foul-play cache-touching build (see _CACHE_LOCK above).
+    with _CACHE_LOCK:
+        return _build_battle_unlocked(battle_id, req)
+
+
+def _build_battle_unlocked(battle_id: str, req: PickRequest) -> Battle:
     battle = Battle(battle_tag=battle_id)
     battle.battle_type = BattleType.STANDARD_BATTLE
     battle.pokemon_format = req.pokemon_format
@@ -136,9 +190,11 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
             f"|switch|{req.gym_side}a",
             f"|drag|{req.gym_side}a",
         )
+        demoted_active = None
         if battle.user.active is not None and any(
             line.startswith(gym_switch_prefixes) for line in battle.msg_list
         ):
+            demoted_active = battle.user.active
             battle.user.reserve.append(battle.user.active)
             battle.user.active = None
         if LOG_STATE:
@@ -152,7 +208,34 @@ def _build_battle(battle_id: str, req: PickRequest) -> Battle:
                 "audit switch lines: %s",
                 [l for l in battle.msg_list if "switch|" in l][:12],
             )
-        process_battle_updates(battle)
+        try:
+            process_battle_updates(battle)
+        except Exception as exc:
+            # foul-play occasionally raises mid-replay (observed: IndexError in
+            # update_dataset_possibilities/_do_check on certain turns). That must
+            # NOT 500 the pick: a 500 sends Cobblemon into its StrongBattleAI
+            # fallback, which can't parse switch choices and degenerates into
+            # perma-switching (the dragon-gym symptom). Degrade to the current
+            # request snapshot — no historical replay/enrichment — so we still
+            # return a legal, reasonable move. The full request + trace is also
+            # appended to pick_failures.jsonl so the underlying foul-play bug
+            # can be reproduced and fixed upstream.
+            logger.warning(
+                "process_battle_updates failed for battle=%s; "
+                "using request snapshot without log replay",
+                battle_id,
+                exc_info=True,
+            )
+            record_pick_failure(
+                battle_id, asdict(req), f"{type(exc).__name__}: {exc}", degraded=True
+            )
+            # The demote trick above set active=None expecting the replay to
+            # re-promote it. If the replay died first, restore the request's
+            # active so the battle isn't left headless.
+            if battle.user.active is None and demoted_active is not None:
+                if demoted_active in battle.user.reserve:
+                    battle.user.reserve.remove(demoted_active)
+                battle.user.active = demoted_active
 
     return battle
 

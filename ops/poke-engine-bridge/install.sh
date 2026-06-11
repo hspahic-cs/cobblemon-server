@@ -48,7 +48,8 @@ apt-get update -qq
 apt-get install -y --no-install-recommends \
   python3.12 python3.12-venv python3.12-dev \
   build-essential pkg-config rsync curl ca-certificates \
-  >/dev/null
+  git \
+  >/dev/null  # git: pip builds poke-engine from the git+https fork URL below
 
 echo "==> ensuring rustup toolchain (poke-engine builds via maturin)"
 RUSTUP_HOME=/opt/rustup
@@ -65,8 +66,13 @@ fi
 
 echo "==> bootstrapping venv at $INSTALL_DIR/venv"
 sudo -u "$SVC_USER" python3.12 -m venv "$INSTALL_DIR/venv"
-# poke-engine builds with these features at install time — match the foul-play recipe.
-POKE_ENGINE_PIN='poke-engine==0.0.46 --config-settings=build-args=--features poke-engine/terastallization --no-default-features'
+# poke-engine is our fork (hspahic-cs/poke-engine), which adds the
+# opponent-fallibility temperature param to monte_carlo_tree_search — the gym
+# difficulty dial. Stock PyPI poke-engine lacks it and 500s every temperature>0
+# (challenge/E4) battle with "monte_carlo_tree_search() takes 1-2 positional
+# args but 4 given". Built gen9 + tera-free (the fork's root crate has no default
+# generation; poke-engine-py defaults to gen4). Bump POKE_ENGINE_REF to track it.
+POKE_ENGINE_REF=38fca549475c0fac3f9941bd0ddcf0bc228b19a0
 
 echo "==> installing bridge runtime deps into venv"
 sudo -u "$SVC_USER" \
@@ -90,13 +96,15 @@ sudo -u "$SVC_USER" \
   "$INSTALL_DIR/venv/bin/pip" install \
     requests==2.33.0 'python-dateutil==2.8.0' websockets==14.1
 
-echo "==> installing poke-engine 0.0.46 (Rust build via maturin — slow first time)"
+echo "==> installing patched poke-engine from fork @ ${POKE_ENGINE_REF} (Rust build via maturin — slow first time)"
+# --force-reinstall --no-deps: foul-play's deps may pull stock poke-engine from
+# PyPI first; force our fork build to win and don't re-resolve its deps.
 sudo -u "$SVC_USER" \
   RUSTUP_HOME="$RUSTUP_HOME" CARGO_HOME="$CARGO_HOME" \
   PATH="$CARGO_HOME/bin:$PATH" \
-  "$INSTALL_DIR/venv/bin/pip" install \
-    'poke-engine==0.0.46' \
-    --config-settings='build-args=--features poke-engine/terastallization --no-default-features' \
+  "$INSTALL_DIR/venv/bin/pip" install --force-reinstall --no-deps \
+    "poke-engine @ git+https://github.com/hspahic-cs/poke-engine.git@${POKE_ENGINE_REF}#subdirectory=poke-engine-py" \
+    --config-settings='build-args=--features poke-engine/gen9 --no-default-features' \
     --no-binary poke-engine
 
 echo "==> installing systemd unit"

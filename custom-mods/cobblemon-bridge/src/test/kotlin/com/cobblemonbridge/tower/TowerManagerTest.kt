@@ -39,9 +39,9 @@ class TowerManagerTest {
     }
 
     @Test
-    fun `pool is the 18 challenge leaders with unique ids`() {
-        assertEquals(18, TowerManager.POOL.size)
-        assertEquals(18, TowerManager.POOL.map { it.first }.toSet().size)
+    fun `pool is the 20 challenge leaders with unique ids`() {
+        assertEquals(20, TowerManager.POOL.size)
+        assertEquals(20, TowerManager.POOL.map { it.first }.toSet().size)
         assertTrue(TowerManager.POOL.all { it.first.startsWith("bt_") && it.first.endsWith("_challenge") })
     }
 

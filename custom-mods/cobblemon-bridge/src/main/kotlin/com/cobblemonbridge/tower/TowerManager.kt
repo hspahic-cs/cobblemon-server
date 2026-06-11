@@ -75,6 +75,8 @@ object TowerManager {
         "bt_16_ice_challenge" to "Tux",
         "bt_17_fairy_challenge" to "Flora",
         "bt_18_dark_challenge" to "Hobie",
+        "bt_19_faker_challenge" to "Faker",
+        "bt_20_oak_challenge" to "Professor Oak",
     )
 
     /** Server-local timezone — midnight in this zone is the rotation + reward-reset boundary. */

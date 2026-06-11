@@ -1,0 +1,202 @@
+{
+  "name": "Faker",
+  "identity": "Unkillable Demon King",
+  "textureResource": "rctmod:textures/trainers/single/bt_19_faker.png",
+  "ai": {
+    "type": "pe",
+    "data": {
+      "temperature": 0.5
+    }
+  },
+  "battleFormat": "GEN_9_SINGLES",
+  "battleRules": {
+    "maxItemUses": 999,
+    "adjustPlayerLevels": true,
+    "adjustNPCLevels": false,
+    "healPlayers": false
+  },
+  "bag": [],
+  "team": [
+    {
+      "species": "garganacl",
+      "nickname": "Galio",
+      "level": 50,
+      "nature": "impish",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 252,
+        "spa": 0,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "purifyingsalt",
+      "moveset": [
+        "stealthrock",
+        "saltcure",
+        "bodypress",
+        "recover"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    },
+    {
+      "species": "ninetales",
+      "nickname": "Ahri",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "drought",
+      "moveset": [
+        "nastyplot",
+        "fireblast",
+        "solarbeam",
+        "willowisp"
+      ],
+      "heldItem": "cobblemon:heat_rock"
+    },
+    {
+      "species": "ceruledge",
+      "nickname": "Zed",
+      "level": 50,
+      "nature": "adamant",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 252,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "flashfire",
+      "moveset": [
+        "swordsdance",
+        "bitterblade",
+        "shadowsneak",
+        "closecombat"
+      ],
+      "heldItem": "cobblemon:heavy_duty_boots"
+    },
+    {
+      "species": "greninja",
+      "nickname": "Akali",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 4,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "shiny": true,
+      "ability": "battlebond",
+      "moveset": [
+        "darkpulse",
+        "icebeam",
+        "uturn",
+        "watershuriken"
+      ],
+      "heldItem": "cobblemon:choice_specs"
+    },
+    {
+      "species": "mismagius",
+      "nickname": "LeBlanc",
+      "level": 50,
+      "nature": "timid",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 0,
+        "atk": 0,
+        "def": 4,
+        "spa": 252,
+        "spd": 0,
+        "spe": 252
+      },
+      "ability": "levitate",
+      "moveset": [
+        "nastyplot",
+        "shadowball",
+        "dazzlinggleam",
+        "mysticalfire"
+      ],
+      "heldItem": "cobblemon:life_orb"
+    },
+    {
+      "species": "magearna",
+      "nickname": "Orianna",
+      "level": 50,
+      "nature": "modest",
+      "ivs": {
+        "hp": 31,
+        "atk": 31,
+        "def": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "evs": {
+        "hp": 252,
+        "atk": 0,
+        "def": 0,
+        "spa": 252,
+        "spd": 4,
+        "spe": 0
+      },
+      "ability": "soulheart",
+      "moveset": [
+        "calmmind",
+        "storedpower",
+        "aurasphere",
+        "flashcannon"
+      ],
+      "heldItem": "cobblemon:leftovers"
+    }
+  ]
+}

@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.4] - 2026-06-11
+
+### Changed
+- **Updated AllTheMons R3.5 → 3.5.1.** 3.5.1 ships the official fix for the Mewtwo blink crash
+  (`Unknown animation group: _atm`), so it supersedes the one-character hand-patch from 0.15.3 (now
+  running the upstream pack unmodified again), plus the latest models/animations/hitboxes. The
+  resourcepack + datapack copies and `options.txt` were bumped to `[R3.5.1]`; the old `[R3.5]`
+  datapack is auto-removed on the server by the 0.15.1 stale-AllTheMons prune step (filename change).
+  Note: 3.5.1 still ships `geometry.hooh` (shared with base Cobblemon), so it does not specifically
+  address the Ho-Oh remodel render quirk.
+
 ## [0.15.3] - 2026-06-11
 
 ### Fixed

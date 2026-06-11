@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.14.2] - 2026-06-11
+
+### Fixed
+- **Gym leader skins (the actual fix).** rctmod's `TrainerRenderer` resolves a
+  trainer's skin purely by **trainer id** (`findResource(trainerId, "textures")`)
+  and ignores the `textureResource` data field entirely — so 0.14.1's
+  `textureResource` change had no effect and gyms 1–18 still rendered the Steve
+  fallback. Added id-named textures (`gym_01_ground.png`, `bt_01_ground.png`, …)
+  for all 54 type-skinned gym/battle-tower trainers, copied from the `type_*`
+  textures. E4 (19–24) already worked because their textures were id-named.
+
 ## [0.14.1] - 2026-06-11
 
 ### Fixed

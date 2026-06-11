@@ -12,7 +12,7 @@ root README.
 
 ## [Unreleased]
 
-## [0.12.0] - 2026-06-10
+## [0.14.0] - 2026-06-10
 
 ### Added
 - **Battle Tower system.** New `bt_01`–`bt_18` trainer scheme (plus `_challenge`
@@ -36,6 +36,97 @@ root README.
 ### Fixed
 - **Gym-AI temperature fallback.** The poke-engine bridge now falls back to plain
   MCTS when the configured temperature is unsupported, instead of erroring.
+
+## [0.13.0] - 2026-06-10
+
+### Changed
+- **Elite Four gauntlet now includes the Champion (gym 24)**, mainline-style: the gauntlet
+  is gyms 20-24 (E4 #1-4 + Champion), beaten consecutively in one run. Beating E4 #4 no
+  longer ends it — the dimension + party leashes stay engaged through the Champion, and
+  losing/fleeing/leaving (including against the Champion) restarts from E4 #1. E4 #4 and the
+  Champion still each award an Ultra Key. Quest descriptions updated to match.
+
+### Added
+- **Gym battle cooldown** — a 2-minute per-gym cooldown after starting a battle (announced in
+  chat when blocked), to stop gym battles being spam-farmed for EXP. Mainline/challenge/rotating
+  gyms only; the Elite Four gauntlet (gyms 20-24) is exempt.
+
+## [0.12.3] - 2026-06-10
+
+### Changed
+- **Gacha crate tuning, round 2.**
+  - **Ultra:** removed the legendary **pedestals** entirely and hand-reweighted to a
+    true 100%; **2 Ultra Keys → 0.5%**; **Master Ball → 2**; **20 Eye of Ender** moved
+    to the rare crate.
+  - **Rare:** **IV Candy 5 → 3**.
+  - **Loot tier "Floor" renamed "Standard"** (`LootTier` enum + announce flair; the
+    CSV parser still accepts the old "floor").
+  - **Jackpot tier** now contains only items at ≤1% weight.
+  - **Player-facing crate notes** cleaned up (removed version numbers / dev commentary).
+
+### Added
+- **Shiny eggs now draw from `rare` *and* `uncommon`** pools — `EggPools.pickSpecies`
+  accepts a union of tiers (`rare|uncommon`).
+
+
+## [0.12.2] - 2026-06-10
+
+### Changed
+- **Gacha crate tuning pass.**
+  - **Ultra:** replaced the Truth/Ideals Bottles with **Lugia (Vortex Stone)**; the
+    five legendary **pedestals** (Mew/Lati/Raikou/Suicune/Entei) are **disabled
+    (weight 0) for now**.
+  - **Rare:** added the **Articuno/Zapdos/Moltres urns**, a Mega Showdown
+    **Keystone** + raw **Mega Stone**, and **5× random IV candy**; curated held
+    items into **Competitive / Breeding / EV-Training** random pools; moved junk
+    (Quick/Ultra Balls, PP Up) out to common; removed Exp Share/Leftovers from rare;
+    Rare Candy buffed to 2.
+  - **Common:** egg weight cut 38% → 25%; removed the useless Exp Candy S; added a
+    **Random Held Item** split into a **Type-Boost pool** (type-boost items + Muscle
+    Band/Wise Glasses/Leftovers/Black Sludge) and an **Evolution-Item pool**;
+    Quick Balls moved here.
+
+### Fixed
+- **"Random" Evolution Stone always gave a Fire Stone**, and **"Random" EV Vitamin
+  always gave HP Up** — both were stored as single items. They now roll genuinely at
+  random (10 stones / 6 vitamins).
+
+## [0.12.1] - 2026-06-10
+
+### Added
+- **One-time welcome key grant** — every player receives 1 Rare Key + 1 Pokémon Key
+  on their next login, exactly once ever. Idempotent by design: the grant flag is
+  persisted before any item is handed out, so a full inventory, crash, or duplicate
+  login can never cause a second grant.
+
+### Changed
+- **Paradox Pokémon now count as legendaries in ranked.** They count toward the
+  `maxLegendaries` team cap (Cobblemon's `isLegendary()` excludes them despite many
+  being Ubers-tier), and the team-select GUI tags them `[PARADOX]`.
+
+## [0.12.0] - 2026-06-10
+
+### Added
+- **Pokémon gacha crate** — a new egg-only crate tier: 35% common / 45% uncommon /
+  15% rare / 3.5% shiny / 1.5% ultra-rare egg. New Pokémon Key (Turtle Egg).
+  Place the crate with `/gacha admin setcrate pokemon`; the key is admin-granted.
+- **Paradox Pokémon** (all 20) added to the `ultra_rare` gacha egg pool, and
+  **charcadet** added to the `rare` pool.
+
+### Changed
+- **Gacha eggs grant the Hidden Ability automatically** when the rolled species is
+  flagged as an HA mon — no separate "HA-only" egg type.
+- **Ultra crate reworked** — LegendaryMonuments summon items (Azure Flute/Arceus
+  jackpot, golem keys, stones/bottles, whistles, Red Chain), legendary pedestals
+  (Mew/Raikou/Suicune/Entei/Lati), Griseous Orb, Proof of Conquest U/A/M.
+- **Common & rare crates rebalanced** — trimmed filler (balls/potions/revives),
+  boosted Pokémon eggs and useful items. Premium starters (Snivy, Litten,
+  Sprigatito, Grookey, Oshawott) moved from the uncommon to the rare egg pool.
+
+### Fixed
+- **EXP on lost PvE battles** — you now keep the EXP for the enemy Pokémon you
+  defeated even when you lose the battle (trainers, gyms, E4, and wild), matching
+  modern-gen behavior. Previously a loss granted nothing, even on KO'd mons.
 
 ## [0.11.0] - 2026-06-09
 

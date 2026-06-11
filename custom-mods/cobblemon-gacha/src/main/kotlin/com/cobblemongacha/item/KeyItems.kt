@@ -25,6 +25,7 @@ object KeyItems {
             KeyTier.COMMON -> Items.TRIAL_KEY to Component.literal("§e§lCommon Key")
             KeyTier.RARE -> Items.OMINOUS_TRIAL_KEY to Component.literal("§5§lRare Key")
             KeyTier.ULTRA -> Items.NETHER_STAR to Component.literal("§6§lUltra Key")
+            KeyTier.POKEMON -> Items.TURTLE_EGG to Component.literal("§a§lPokémon Key")
         }
         val stack = ItemStack(item, count)
         stack.set(DataComponents.CUSTOM_NAME, displayName)

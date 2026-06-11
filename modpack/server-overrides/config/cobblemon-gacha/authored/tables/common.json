@@ -3,35 +3,35 @@
   "totalWeightPct": 100.0,
   "entries": [
     {
-      "lootTier": "Floor",
-      "label": "20 Poké Balls",
-      "weightPct": 13.0,
+      "lootTier": "Standard",
+      "label": "40 Poké Balls",
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:poke_ball",
-          "count": 20
+          "count": 40
         }
       ],
       "notes": "Bread and butter, always useful"
     },
     {
-      "lootTier": "Floor",
-      "label": "10 Great Balls",
-      "weightPct": 10.0,
+      "lootTier": "Standard",
+      "label": "20 Great Balls",
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:great_ball",
-          "count": 10
+          "count": 20
         }
       ],
       "notes": ""
     },
     {
-      "lootTier": "Floor",
+      "lootTier": "Standard",
       "label": "3 Revives",
-      "weightPct": 9.0,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",
@@ -42,53 +42,40 @@
       "notes": ""
     },
     {
-      "lootTier": "Floor",
-      "label": "3 Max Potions",
-      "weightPct": 7.0,
+      "lootTier": "Standard",
+      "label": "5 Max Potions",
+      "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:max_potion",
-          "count": 3
+          "count": 5
         }
       ],
       "notes": ""
     },
     {
-      "lootTier": "Floor",
-      "label": "2 Exp Candy S",
-      "weightPct": 5.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_s",
-          "count": 2
-        }
-      ],
-      "notes": "Small XP boost — nerfed from 5 (0.7.12)"
-    },
-    {
       "lootTier": "Mid",
-      "label": "5 Ultra Balls",
-      "weightPct": 4.0,
+      "label": "10 Ultra Balls",
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:ultra_ball",
-          "count": 5
+          "count": 10
         }
       ],
-      "notes": "Solid upgrade over floor"
+      "notes": "A handy catching upgrade"
     },
     {
       "lootTier": "Mid",
-      "label": "1 Max Revive",
-      "weightPct": 3.5,
+      "label": "2 Max Revives",
+      "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:max_revive",
-          "count": 1
+          "count": 2
         }
       ],
       "notes": ""
@@ -96,33 +83,51 @@
     {
       "lootTier": "Mid",
       "label": "5 EV Vitamin (random)",
-      "weightPct": 3.5,
+      "weightPct": 7.0,
       "items": [
         {
-          "type": "vanilla",
-          "id": "cobblemon:hp_up",
+          "type": "random_item",
+          "ids": [
+            "cobblemon:hp_up",
+            "cobblemon:protein",
+            "cobblemon:iron",
+            "cobblemon:calcium",
+            "cobblemon:zinc",
+            "cobblemon:carbos"
+          ],
           "count": 5
         }
       ],
-      "notes": "HP Up, Protein, etc."
+      "notes": "5× a random EV-boosting vitamin"
     },
     {
       "lootTier": "Mid",
       "label": "1 Evolution Stone (random)",
-      "weightPct": 3.5,
+      "weightPct": 7.0,
       "items": [
         {
-          "type": "vanilla",
-          "id": "cobblemon:fire_stone",
+          "type": "random_item",
+          "ids": [
+            "cobblemon:fire_stone",
+            "cobblemon:water_stone",
+            "cobblemon:thunder_stone",
+            "cobblemon:leaf_stone",
+            "cobblemon:moon_stone",
+            "cobblemon:sun_stone",
+            "cobblemon:shiny_stone",
+            "cobblemon:dusk_stone",
+            "cobblemon:dawn_stone",
+            "cobblemon:ice_stone"
+          ],
           "count": 1
         }
       ],
-      "notes": "Fire/Water/Thunder/Leaf/etc."
+      "notes": "A random evolution stone"
     },
     {
       "lootTier": "Mid",
       "label": "1 Exp Candy M",
-      "weightPct": 3.5,
+      "weightPct": 9.0,
       "items": [
         {
           "type": "vanilla",
@@ -130,12 +135,12 @@
           "count": 1
         }
       ],
-      "notes": "Nerfed from 3 (0.7.12)"
+      "notes": ""
     },
     {
       "lootTier": "Mid",
       "label": "3 PP Up",
-      "weightPct": 2.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -143,12 +148,12 @@
           "count": 3
         }
       ],
-      "notes": "Modest but PvP-relevant"
+      "notes": "Boosts a move's max PP"
     },
     {
       "lootTier": "High",
       "label": "Common Pokémon Egg",
-      "weightPct": 25.0,
+      "weightPct": 18.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -157,12 +162,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Egg-tier rewards bumped to ~30% target (0.7.12)"
+      "notes": "A common-pool Pokémon egg"
     },
     {
       "lootTier": "High",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 5.5,
+      "weightPct": 7.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -171,12 +176,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "Sprinkle of uncommon-pool eggs for variety (0.7.12)"
+      "notes": "An uncommon-pool Pokémon egg"
     },
     {
       "lootTier": "High",
       "label": "1 Rare Candy",
-      "weightPct": 1.0,
+      "weightPct": 5.0,
       "items": [
         {
           "type": "vanilla",
@@ -184,12 +189,12 @@
           "count": 1
         }
       ],
-      "notes": "The benchmark 1% item"
+      "notes": "Instantly raises a Pokémon's level"
     },
     {
       "lootTier": "High",
       "label": "1 Nature Mint (random)",
-      "weightPct": 1.0,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "random_item",
@@ -219,20 +224,7 @@
           "count": 1
         }
       ],
-      "notes": "PvP utility — 0.7.13: random pick across 21 typed mints (was broken cobblemon:nature_mint, which isn't a real item id)"
-    },
-    {
-      "lootTier": "High",
-      "label": "Leftovers",
-      "weightPct": 1.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:leftovers",
-          "count": 1
-        }
-      ],
-      "notes": ""
+      "notes": "A random Nature Mint — changes a Pokémon's nature"
     },
     {
       "lootTier": "Jackpot",
@@ -245,7 +237,7 @@
           "count": 2
         }
       ],
-      "notes": "Fun double-up"
+      "notes": "Two Common crate keys"
     },
     {
       "lootTier": "Jackpot",
@@ -258,12 +250,12 @@
           "count": 1
         }
       ],
-      "notes": "Upgrade"
+      "notes": "A Rare crate key"
     },
     {
       "lootTier": "Jackpot",
       "label": "1 Lucky Egg",
-      "weightPct": 0.5,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
@@ -276,7 +268,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Exp Share",
-      "weightPct": 0.5,
+      "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
@@ -285,6 +277,97 @@
         }
       ],
       "notes": ""
+    },
+    {
+      "lootTier": "Standard",
+      "label": "32 Quick Balls",
+      "weightPct": 3.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:quick_ball",
+          "count": 32
+        }
+      ],
+      "notes": "Moved from rare crate"
+    },
+    {
+      "lootTier": "Standard",
+      "label": "Type-Boost Held Item (random)",
+      "weightPct": 6.0,
+      "items": [
+        {
+          "type": "random_item",
+          "ids": [
+            "cobblemon:silk_scarf",
+            "cobblemon:mystic_water",
+            "cobblemon:miracle_seed",
+            "cobblemon:magnet",
+            "cobblemon:twisted_spoon",
+            "cobblemon:black_belt",
+            "cobblemon:sharp_beak",
+            "cobblemon:poison_barb",
+            "cobblemon:soft_sand",
+            "cobblemon:hard_stone",
+            "cobblemon:silver_powder",
+            "cobblemon:spell_tag",
+            "cobblemon:dragon_fang",
+            "cobblemon:black_glasses",
+            "cobblemon:metal_coat",
+            "cobblemon:never_melt_ice",
+            "cobblemon:leftovers",
+            "cobblemon:black_sludge",
+            "cobblemon:muscle_band",
+            "cobblemon:wise_glasses"
+          ],
+          "count": 1
+        }
+      ],
+      "notes": "A random type-boosting held item (Mystic Water, Miracle Seed, Black Sludge, …)"
+    },
+    {
+      "lootTier": "Standard",
+      "label": "Evolution Item (random)",
+      "weightPct": 6.0,
+      "items": [
+        {
+          "type": "random_item",
+          "ids": [
+            "cobblemon:kings_rock",
+            "cobblemon:dragon_scale",
+            "cobblemon:upgrade",
+            "cobblemon:dubious_disc",
+            "cobblemon:protector",
+            "cobblemon:electirizer",
+            "cobblemon:magmarizer",
+            "cobblemon:reaper_cloth",
+            "cobblemon:razor_claw",
+            "cobblemon:razor_fang",
+            "cobblemon:prism_scale",
+            "cobblemon:deep_sea_tooth",
+            "cobblemon:deep_sea_scale",
+            "cobblemon:oval_stone",
+            "cobblemon:sachet",
+            "cobblemon:whipped_dream",
+            "cobblemon:black_augurite",
+            "cobblemon:peat_block",
+            "cobblemon:galarica_cuff",
+            "cobblemon:galarica_wreath",
+            "cobblemon:chipped_pot",
+            "cobblemon:cracked_pot",
+            "cobblemon:auspicious_armor",
+            "cobblemon:malicious_armor",
+            "cobblemon:syrupy_apple",
+            "cobblemon:tart_apple",
+            "cobblemon:sweet_apple",
+            "cobblemon:unremarkable_teacup",
+            "cobblemon:masterpiece_teacup",
+            "cobblemon:metal_alloy"
+          ],
+          "count": 1
+        }
+      ],
+      "notes": "A random evolution item (Metal Coat, Kings Rock, Razor Claw, …)"
     }
   ]
 }

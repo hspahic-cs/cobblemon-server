@@ -129,6 +129,7 @@ object RollMenu {
             KeyTier.COMMON -> Items.WHITE_STAINED_GLASS_PANE
             KeyTier.RARE -> Items.RED_STAINED_GLASS_PANE
             KeyTier.ULTRA -> Items.BLACK_STAINED_GLASS_PANE
+            KeyTier.POKEMON -> Items.LIME_STAINED_GLASS_PANE
         }
         val stack = ItemStack(item)
         stack.set(DataComponents.CUSTOM_NAME, Component.literal("§7${tier.displayName} Box"))

@@ -12,7 +12,7 @@ import kotlin.random.Random
 
 class RewardRollerTest {
 
-    private fun mkEntry(label: String, weight: Double, tier: LootTier = LootTier.Floor) =
+    private fun mkEntry(label: String, weight: Double, tier: LootTier = LootTier.Standard) =
         LootEntry(tier, label, weight, listOf(ItemSpec.Vanilla("minecraft:stone", 1)))
 
     @Test

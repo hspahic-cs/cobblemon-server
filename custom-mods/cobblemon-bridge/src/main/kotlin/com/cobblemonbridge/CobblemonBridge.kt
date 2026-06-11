@@ -84,9 +84,11 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         PartyLevelHook.registerEvents()
         PokedexProgressHook.registerEvents()
         com.cobblemonbridge.voice.TrainerVoiceHook.registerEvents()  // per-player trainer voice lines
+        NeoForge.EVENT_BUS.register(PokedexProgressHook)  // PlayerEvent.Clone — carry PokéNav flag across respawn
         WildBattleRewardHook.registerEvents()
         WildSpawnLevelCapHook.registerEvents()
         com.cobblemonbridge.battle.TrainerExpBoostHook.registerEvents()
+        com.cobblemonbridge.battle.PveLossExpHook.registerEvents()
         com.cobblemonbridge.quests.EvolutionHook.registerEvents()
         // AdvancementHook (0.7.29) handles gym + Elite Four bounty payment via
         // NeoForge AdvancementEarnEvent — replaces the broken /eco give in mcfunctions.

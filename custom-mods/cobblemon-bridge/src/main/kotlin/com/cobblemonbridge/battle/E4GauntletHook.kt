@@ -20,13 +20,15 @@ import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Elite Four gauntlet — gyms 20-23 must be beaten consecutively in one session. Losing,
- * fleeing, disconnecting, leaving the E4 dimension, or swapping Pokémon mid-gauntlet all reset
- * progress; the player has to restart from E4-1 (gym 20).
+ * Elite Four gauntlet — gyms 20-24 (Elite Four #1-4 + the Champion at gym 24) must be beaten
+ * consecutively in one session, just like the mainline games. Losing, fleeing, disconnecting,
+ * leaving the E4 dimension, or swapping Pokémon mid-gauntlet all reset progress; the player has
+ * to restart from E4-1 (gym 20). Beating E4 #4 (gym 23) does NOT end the run — the Champion is
+ * the final battle, and losing to the Champion restarts the whole gauntlet.
  *
  * State:
  *   - [unlocked] — the next E4 gym the player is allowed to challenge. Set to N+1 after winning
- *     gym N (for N in 20..22). Cleared on loss / flee / disconnect / completion (after gym 23).
+ *     gym N (for N in 20..23). Cleared on loss / flee / disconnect / completion (after gym 24).
  *   - [active] — the gym the player is currently fighting. Stashed at [EntityInteract] for the
  *     gym leader and consumed on the battle's end event so we know which gym just ended.
  *   - [gauntletDimension] — the dimension the player was in when they entered the gauntlet.
@@ -35,23 +37,22 @@ import java.util.concurrent.ConcurrentHashMap
  *     E4 battle start re-checks; any mismatch (PC swap, deposit, release) fails the gauntlet.
  *     Items and healing are unaffected — only the party roster is locked.
  *
- * Gating contract (used by [GymPrereqHook] for gyms 20-23):
+ * Gating contract (used by [GymPrereqHook] / [GymBattleGate] for gyms 20-24):
  *   - gym 20: always allowed if base prereq met (beat_gym_10 done). [GymPrereqHook] checks that;
  *     this hook accepts every gym 20 attempt without further check.
- *   - gym 21-23: allowed only if [unlocked][uuid] == gymId. Otherwise the interact is cancelled
- *     with a chat message.
+ *   - gym 21-24: allowed only if [unlocked][uuid] == gymId. Otherwise the interact is cancelled
+ *     with a chat message. Gym 24 (Champion) is part of the gauntlet, so it's gated here too —
+ *     a player can only reach it by beating E4 #1-4 consecutively in the same run.
  *
- * Auto-chain (currently disabled):
- *   - On winning gym N (20..22), the player is told to challenge gym N+1 manually. The
- *     teleport-and-auto-start chain that used to fire here is parked until we revisit the
- *     gauntlet design.
- *   - On winning gym 23: clear gauntlet state and chat congrats (Champion at gym 24 is gated
- *     elsewhere on beat_gym_23, so the player walks to that one normally).
+ * Progression:
+ *   - On winning gym N (20..23), the player is told to challenge gym N+1 manually; the leashes
+ *     (dimension + party) stay engaged all the way through the Champion.
+ *   - On winning gym 24 (the Champion): clear gauntlet state and chat congrats.
  */
 object E4GauntletHook {
 
     private const val E4_FIRST: Int = 20
-    private const val E4_LAST: Int = 23
+    private const val E4_LAST: Int = 24
 
     /** Next allowed gym in the gauntlet. Null = not in gauntlet (only gym 20 is fightable). */
     private val unlocked: MutableMap<UUID, Int> = ConcurrentHashMap()
@@ -68,7 +69,10 @@ object E4GauntletHook {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.HIGH) { event -> onBattleStarted(event) }
     }
 
-    /** Called by [GymPrereqHook] for gyms 20-23. Returns true if the player may challenge. */
+    /** True if [gymId] is part of the Elite Four gauntlet (E4 #1-4 + Champion). */
+    fun isE4Gym(gymId: Int): Boolean = gymId in E4_FIRST..E4_LAST
+
+    /** Called by [GymPrereqHook] for gyms 20-24. Returns true if the player may challenge. */
     fun canChallenge(player: ServerPlayer, gymId: Int): Boolean {
         if (gymId !in E4_FIRST..E4_LAST) return true
         if (gymId == E4_FIRST) return true  // entry into the gauntlet
@@ -109,8 +113,9 @@ object E4GauntletHook {
         gauntletDimension[uuid] = player.level().dimension().location()
         partySnapshot[uuid] = snapshotPartyUuids(player)
         player.sendSystemMessage(Component.literal(
-            "§6§l[Elite Four] §fGauntlet started. §7Your party is locked for the duration. " +
-            "Leaving the dimension, losing, or fleeing resets your progress to E4 1."
+            "§6§l[Elite Four] §fGauntlet started. §7Beat all four Elite Four §7and the §6Champion§7 " +
+            "in one run — your party is locked for the duration. Leaving the dimension, losing, or " +
+            "fleeing at any point (including the Champion) resets your progress to E4 1."
         ))
         CobblemonBridge.logger.info(
             "E4 gauntlet started for {} (dim={}, party size={})",
@@ -151,18 +156,21 @@ object E4GauntletHook {
             if (gym < E4_LAST) {
                 val next = gym + 1
                 unlocked[player.uuid] = next
-                // Auto-teleport + auto-battle disabled. Player walks to the next trainer manually
-                // and right-clicks them to continue; the gating ([canChallenge]) still enforces
-                // order, and a loss/flee still resets the gauntlet.
+                // Player walks to the next trainer manually and right-clicks them to continue;
+                // the gating ([canChallenge]) still enforces order, and a loss/flee still resets
+                // the gauntlet. The leashes (dimension + party) stay engaged through the Champion.
+                val label = if (next == E4_LAST) "the §6§lChampion§e (Gym $next)"
+                            else "E4 ${next - E4_FIRST + 1} (Gym $next)"
                 player.sendSystemMessage(Component.literal(
-                    "§6[Elite Four] §fNext: §eE4 ${next - E4_FIRST + 1} (Gym $next)§f — challenge them next."
+                    "§6[Elite Four] §fNext: §e$label§f — challenge them next. " +
+                    "§7Don't leave the area or change your party, or you restart from E4 1."
                 ))
             } else {
-                // Won gym 23 — gauntlet complete. Clear dimension/party leashes too so the
-                // player can leave the area and re-shape their party for the Champion fight.
+                // Beat the Champion (gym 24) — the gauntlet is truly complete. Clear all state.
                 cleanupGauntletState(player.uuid)
                 player.sendSystemMessage(Component.literal(
-                    "§6§l[Elite Four] §fGauntlet complete! §7The Champion (Gym 24) is now open."
+                    "§6§l[Champion] §fYou beat the Champion and conquered the Elite Four gauntlet — " +
+                    "§eyou are the Champion!"
                 ))
             }
         }

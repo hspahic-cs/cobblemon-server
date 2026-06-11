@@ -37,9 +37,9 @@ class LootTableLoaderTest {
     @Test
     fun `propagates Tier column when blank`() {
         val table = LootTableLoader.parseCsv(KeyTier.COMMON, commonCsv)
-        assertEquals(LootTier.Floor, table.entries[0].lootTier)
-        assertEquals(LootTier.Floor, table.entries[1].lootTier)
-        assertEquals(LootTier.Floor, table.entries[2].lootTier)
+        assertEquals(LootTier.Standard, table.entries[0].lootTier)
+        assertEquals(LootTier.Standard, table.entries[1].lootTier)
+        assertEquals(LootTier.Standard, table.entries[2].lootTier)
         assertEquals(LootTier.Jackpot, table.entries[3].lootTier)
     }
 
@@ -97,6 +97,26 @@ class LootTableLoaderTest {
         val table = LootTableLoader.parseCsv(KeyTier.ULTRA, csv)
         val egg = table.entries[0].items[0] as ItemSpec.CobbreedingEgg
         assertEquals("ultra_rare", egg.pool)
+    }
+
+    @Test
+    fun `Pokemon crate seed parses four egg pools with correct weights`() {
+        val csv = """
+            Tier,Item,Chance %,Notes,
+            Floor,Uncommon Pokémon Egg,50.0%,,
+            ,Common Pokémon Egg,35.0%,,
+            High,Rare Pokémon Egg,13.0%,,
+            Jackpot,Ultra Rare Pokémon Egg,2.0%,,
+        """.trimIndent()
+        val table = LootTableLoader.parseCsv(KeyTier.POKEMON, csv)
+        val byPool = table.entries.associate {
+            (it.items[0] as ItemSpec.CobbreedingEgg).pool to it.weightPct
+        }
+        assertEquals(50.0, byPool["uncommon"])
+        assertEquals(35.0, byPool["common"])
+        assertEquals(13.0, byPool["rare"])
+        assertEquals(2.0, byPool["ultra_rare"])
+        assertEquals(100.0, table.entries.sumOf { it.weightPct })
     }
 
     @Test

@@ -64,6 +64,106 @@
       "id": "scorbunny",
       "hasHiddenAbility": true,
       "notes": "Yes"
+    },
+    {
+      "id": "greattusk",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "screamtail",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "brutebonnet",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "fluttermane",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "slitherwing",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "sandyshocks",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "roaringmoon",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "walkingwake",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "gougingfire",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ragingbolt",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "irontreads",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironbundle",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironhands",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironjugulis",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironmoth",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironthorns",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironvaliant",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironleaves",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironboulder",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
+    },
+    {
+      "id": "ironcrown",
+      "hasHiddenAbility": false,
+      "notes": "Paradox"
     }
   ],
   "rare": [
@@ -166,6 +266,36 @@
       "id": "salandit",
       "hasHiddenAbility": false,
       "notes": "No"
+    },
+    {
+      "id": "snivy",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "oshawott",
+      "hasHiddenAbility": false,
+      "notes": "No"
+    },
+    {
+      "id": "litten",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "grookey",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "sprigatito",
+      "hasHiddenAbility": true,
+      "notes": "Yes"
+    },
+    {
+      "id": "charcadet",
+      "hasHiddenAbility": false,
+      "notes": "Armarouge/Ceruledge"
     }
   ],
   "uncommon": [
@@ -195,32 +325,7 @@
       "notes": "Yes"
     },
     {
-      "id": "snivy",
-      "hasHiddenAbility": true,
-      "notes": "Yes"
-    },
-    {
-      "id": "oshawott",
-      "hasHiddenAbility": false,
-      "notes": "No"
-    },
-    {
-      "id": "litten",
-      "hasHiddenAbility": true,
-      "notes": "Yes"
-    },
-    {
       "id": "popplio",
-      "hasHiddenAbility": true,
-      "notes": "Yes"
-    },
-    {
-      "id": "grookey",
-      "hasHiddenAbility": true,
-      "notes": "Yes"
-    },
-    {
-      "id": "sprigatito",
       "hasHiddenAbility": true,
       "notes": "Yes"
     },

@@ -1,6 +1,6 @@
 {
   "tier": "ULTRA",
-  "totalWeightPct": 100.0,
+  "totalWeightPct": 85.5,
   "entries": [
     {
       "lootTier": "Jackpot",
@@ -70,7 +70,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Shiny Egg",
-      "weightPct": 1.5,
+      "weightPct": 2.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -106,32 +106,6 @@
         }
       ],
       "notes": "Summons Zekrom"
-    },
-    {
-      "lootTier": "Jackpot",
-      "label": "Truth Bottle",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:truthbottle",
-          "count": 1
-        }
-      ],
-      "notes": "Reshiram / Kyurem line"
-    },
-    {
-      "lootTier": "Jackpot",
-      "label": "Ideals Bottle",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:idealsbottle",
-          "count": 1
-        }
-      ],
-      "notes": "Zekrom / Kyurem line"
     },
     {
       "lootTier": "Mid",
@@ -175,7 +149,7 @@
     {
       "lootTier": "Mid",
       "label": "Mew Pedestal",
-      "weightPct": 2.5,
+      "weightPct": 0.0,
       "items": [
         {
           "type": "vanilla",
@@ -183,12 +157,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Mew"
+      "notes": "Summons Mew [DISABLED — weight 0 for now]"
     },
     {
       "lootTier": "Mid",
       "label": "Lati Pedestal",
-      "weightPct": 3.0,
+      "weightPct": 0.0,
       "items": [
         {
           "type": "vanilla",
@@ -196,7 +170,7 @@
           "count": 1
         }
       ],
-      "notes": "Summons Latios / Latias (Eon duo, one pedestal)"
+      "notes": "Summons Latios / Latias (Eon duo, one pedestal) [DISABLED — weight 0 for now]"
     },
     {
       "lootTier": "Mid",
@@ -227,7 +201,7 @@
     {
       "lootTier": "Mid",
       "label": "Raikou Pedestal",
-      "weightPct": 3.0,
+      "weightPct": 0.0,
       "items": [
         {
           "type": "vanilla",
@@ -235,12 +209,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Raikou"
+      "notes": "Summons Raikou [DISABLED — weight 0 for now]"
     },
     {
       "lootTier": "Mid",
       "label": "Suicune Pedestal",
-      "weightPct": 3.0,
+      "weightPct": 0.0,
       "items": [
         {
           "type": "vanilla",
@@ -248,12 +222,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Suicune"
+      "notes": "Summons Suicune [DISABLED — weight 0 for now]"
     },
     {
       "lootTier": "Mid",
       "label": "Entei Pedestal",
-      "weightPct": 3.0,
+      "weightPct": 0.0,
       "items": [
         {
           "type": "vanilla",
@@ -261,7 +235,7 @@
           "count": 1
         }
       ],
-      "notes": "Summons Entei"
+      "notes": "Summons Entei [DISABLED — weight 0 for now]"
     },
     {
       "lootTier": "Mid",
@@ -318,7 +292,7 @@
     {
       "lootTier": "Floor",
       "label": "2 Ability Patches",
-      "weightPct": 5.0,
+      "weightPct": 5.5,
       "items": [
         {
           "type": "vanilla",
@@ -331,7 +305,7 @@
     {
       "lootTier": "Floor",
       "label": "20 Eye of Ender",
-      "weightPct": 5.0,
+      "weightPct": 5.5,
       "items": [
         {
           "type": "vanilla",
@@ -383,7 +357,7 @@
     {
       "lootTier": "Floor",
       "label": "Ultra Egg",
-      "weightPct": 5.0,
+      "weightPct": 5.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -432,6 +406,19 @@
         }
       ],
       "notes": "Re-roll the ultra crate"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Vortex Stone",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:vortex_stone",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Lugia (Lugia Temple) — finished stone, skips the bird trio"
     }
   ]
 }

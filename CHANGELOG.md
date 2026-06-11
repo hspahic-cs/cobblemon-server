@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.14.1] - 2026-06-11
+
+### Fixed
+- **Gym leader skins now render.** `textureResource` was set on the `trainers/`
+  team file (rctmod `TrainerData`, which ignores it) instead of the `mobs/` file
+  (`TrainerMobData`, the only reader), so every gym/E4/tower leader fell back to
+  the default skin. Added it to all 60 custom-skinned `mobs/` files.
+- **Gym AI reliability (poke-engine bridge).** Serialized foul-play's
+  thread-unsafe dataset cache (concurrent `/pick` calls raced into
+  `IndexError`/`KeyError` 500s → StrongBattleAI fallback → perma-switch); built
+  the patched poke-engine fork on the bare-metal install path so the per-gym
+  temperature dial stops 500ing challenge/E4 battles; and added a replayable
+  `pick_failures.jsonl` for triage.
+
 ## [0.14.0] - 2026-06-10
 
 ### Added

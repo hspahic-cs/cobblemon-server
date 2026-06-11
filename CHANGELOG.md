@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.13.1] - 2026-06-11
+
+### Added
+- **"Master Collector" side quest** — a follow-up to Centurion that grants a **Master Ball**
+  once you've caught **300 different Pokémon species**. Branches off Centurion (100 species →
+  PokéNav); the bridge's `PokedexProgressHook` awards it at the 300 threshold, and the reward
+  function gives the Master Ball.
+
 ## [0.14.2] - 2026-06-11
 
 ### Fixed

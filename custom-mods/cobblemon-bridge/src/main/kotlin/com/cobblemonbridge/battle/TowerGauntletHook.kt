@@ -11,6 +11,9 @@ import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.tags.BridgeTags
 import com.cobblemonbridge.tower.TowerManager
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
+import net.minecraft.nbt.StringTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -53,6 +56,11 @@ object TowerGauntletHook {
     private const val LAST_FLOOR = 3
     private const val PREFIX = "§d§l[Battle Tower] §f"
     private val HEALING_MACHINE_ID = ResourceLocation.fromNamespaceAndPath("cobblemon", "healing_machine")
+
+    /** Player-NBT key holding a resumable snapshot of an in-flight tower run (next floor +
+     *  difficulty + party + the epoch-day it started on), so a disconnect mid-run resumes on
+     *  reconnect — unless the daily rotation has elapsed, which voids it. */
+    private const val RUN_NBT_KEY = "cobblemon_bridge_tower_run"
 
     /** The tower is gated on beating mainline gym 10 (same advancement that unlocks gyms 11-23
      *  in [GymPrereqHook]). Checked both here (floor-1 interact, defence-in-depth) and at the
@@ -205,6 +213,7 @@ object TowerGauntletHook {
             return
         }
         activeFloor[player.uuid] = floor
+        persist(player)
     }
 
     /** Arm a fresh tower run: lock the party and set the next floor to 1. Idempotent re-arm is
@@ -221,6 +230,7 @@ object TowerGauntletHook {
             "tower: run started for {} (party size={})",
             player.gameProfile.name, partySnapshot[player.uuid]?.size,
         )
+        persist(player)
     }
 
     // ─── Healing machine resets the run ────────────────────────────────────
@@ -259,6 +269,7 @@ object TowerGauntletHook {
             val floor = activeFloor.remove(player.uuid) ?: continue
             if (floor < LAST_FLOOR) {
                 nextFloor[player.uuid] = floor + 1
+                persist(player)
                 teleportToFloor(player, floor + 1, runDifficulty[player.uuid])
                 player.sendSystemMessage(Component.literal(
                     "${PREFIX}Floor $floor cleared! Taking you up to §efloor ${floor + 1}§f…"
@@ -312,6 +323,7 @@ object TowerGauntletHook {
         // Capture the run difficulty BEFORE clearing it — it picks the key tier.
         val hard = runDifficulty[player.uuid] != BridgeTags.DIFFICULTY_NORMAL
         clearRun(player.uuid)
+        player.persistentData.remove(RUN_NBT_KEY)
         teleportOut(player)
         if (clearedToday(player.uuid)) return  // belt-and-braces; interact gate already blocks
         TowerManager.store().markCleared(player.uuid, TowerManager.todayEpochDay())
@@ -331,6 +343,7 @@ object TowerGauntletHook {
     private fun failRun(player: ServerPlayer, reason: String) {
         val hadRun = nextFloor.containsKey(player.uuid)
         clearRun(player.uuid)
+        player.persistentData.remove(RUN_NBT_KEY)
         if (hadRun) {
             teleportToEntry(player)
             player.sendSystemMessage(Component.literal(
@@ -342,6 +355,69 @@ object TowerGauntletHook {
 
     @SubscribeEvent
     fun onPlayerLoggedOut(event: PlayerEvent.PlayerLoggedOutEvent) {
+        // Drop the in-memory live state only — the resumable snapshot stays in player NBT (written
+        // at every checkpoint by [persist]) so the run resumes on reconnect, not restarts. The
+        // epoch-day stamp in the snapshot voids it if the daily rotation passes while offline.
+        if (nextFloor.containsKey(event.entity.uuid)) {
+            CobblemonBridge.logger.info(
+                "tower: run suspended for {} on disconnect — will resume on reconnect (same day)",
+                event.entity.gameProfile.name,
+            )
+        }
         clearRun(event.entity.uuid)
+    }
+
+    /** Resume a suspended tower run on reconnect (or server restart). Restores the snapshot written
+     *  by [persist], UNLESS the daily rotation has elapsed since the run started (epoch-day moved)
+     *  or the player already cleared today — either of which forces a fresh start from floor 1. */
+    @SubscribeEvent
+    fun onPlayerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
+        val player = event.entity as? ServerPlayer ?: return
+        val data = player.persistentData
+        if (!data.contains(RUN_NBT_KEY)) return
+        val tag = data.getCompound(RUN_NBT_KEY)
+        val floor = tag.getInt("nextFloor")
+        val epochDay = tag.getLong("epochDay")
+        if (floor !in 1..LAST_FLOOR || clearedToday(player.uuid)) {
+            data.remove(RUN_NBT_KEY)
+            return
+        }
+        if (epochDay != TowerManager.todayEpochDay()) {
+            // Leaders rotated while the player was away — the run is void; restart from floor 1.
+            data.remove(RUN_NBT_KEY)
+            player.sendSystemMessage(Component.literal(
+                "${PREFIX}The tower's leaders rotated while you were away — your run was reset. " +
+                "Start again from §efloor 1§f before midnight."
+            ))
+            return
+        }
+        val party = tag.getList("party", 8 /* TAG_STRING */)
+            .mapNotNull { runCatching { UUID.fromString(it.asString) }.getOrNull() }.toSet()
+        nextFloor[player.uuid] = floor
+        partySnapshot[player.uuid] = party
+        if (tag.contains("difficulty")) runDifficulty[player.uuid] = tag.getString("difficulty")
+        player.sendSystemMessage(Component.literal(
+            "${PREFIX}Welcome back — your run continues at §efloor $floor§f. " +
+            "§7Head to the floor-$floor leader to keep going (party still locked)."
+        ))
+        CobblemonBridge.logger.info(
+            "tower: run resumed for {} at floor {}", player.gameProfile.name, floor,
+        )
+    }
+
+    /** Write a resumable snapshot (next floor + difficulty + party + the run's epoch-day) of the
+     *  current run to player NBT. Called at every progression checkpoint; player NBT is saved on the
+     *  regular tick and on logout, so the snapshot survives disconnect, clean restart, and crash. */
+    private fun persist(player: ServerPlayer) {
+        val uuid = player.uuid
+        val floor = nextFloor[uuid] ?: return
+        val tag = CompoundTag()
+        tag.putInt("nextFloor", floor)
+        tag.putLong("epochDay", TowerManager.todayEpochDay())
+        runDifficulty[uuid]?.let { tag.putString("difficulty", it) }
+        val list = ListTag()
+        partySnapshot[uuid]?.forEach { list.add(StringTag.valueOf(it.toString())) }
+        tag.put("party", list)
+        player.persistentData.put(RUN_NBT_KEY, tag)
     }
 }

@@ -21,7 +21,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_24_champion"
+          "gym_24_n"
         ],
         "trainer_type": null
       }

@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_2",
   "display": {
     "title": {
-      "text": "Gym 3: Korrina"
+      "text": "Gym 3: Lee Sin"
     },
     "description": {
       "text": "Defeat the Fighting-type gym leader."
@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_03_fighting"
+          "gym_03_fighting",
+          "bt_03_fighting"
         ],
         "trainer_type": null
       }

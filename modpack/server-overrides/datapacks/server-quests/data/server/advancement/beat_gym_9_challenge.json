@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_9",
   "display": {
     "title": {
-      "text": "Gym 9: Drayden \u2014 Challenge"
+      "text": "Gym 9: Quinn \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 9."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_09_dragon_challenge"
+          "bt_09_dragon_challenge"
         ],
         "trainer_type": null
       }

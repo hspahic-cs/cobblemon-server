@@ -40,24 +40,24 @@ biome tags, signature items) and only flip `spawnWeightFactor` from `0.25` to `0
 
 | Gym | Leader | Type | Source |
 |---|---|---|---|
-| 1 | Clay | Ground | wiki Ground team |
+| 1 | Dusty | Ground | wiki Ground team |
 | 2 | Gardenia | Grass | wiki Grass team |
-| 3 | Korrina | Fighting | wiki Fighting team |
-| 4 | Byron | Steel | wiki Steel team |
-| 5 | Blaine | Fire | wiki Fire team |
-| 6 | Volkner | Electric | swapped from Roxie (Poison) — see 0.7.6 release notes |
-| 7 | Crasher Wake | Water | wiki Water team |
-| 8 | Sabrina | Psychic | wiki Psychic Battle #1 (singles) |
-| 9 | Drayden | Dragon | wiki Dragon team |
-| 10 | Morty | Ghost | wiki Ghost team |
-| 11 | Viola | Bug | wiki Bug team |
-| 12 | Cheren | Normal | wiki Normal team |
+| 3 | Lee Sin | Fighting | wiki Fighting team |
+| 4 | Jarvis | Steel | wiki Steel team |
+| 5 | Zuko | Fire | wiki Fire team |
+| 6 | Stan | Electric | swapped from Roxie (Poison) — see 0.7.6 release notes |
+| 7 | Kai | Water | wiki Water team |
+| 8 | Juniper | Psychic | wiki Psychic Battle #1 (singles) |
+| 9 | Quinn | Dragon | wiki Dragon team |
+| 10 | Grimm | Ghost | wiki Ghost team |
+| 11 | Flik | Bug | wiki Bug team |
+| 12 | Penny | Normal | wiki Normal team |
 | 13 | Koga | Poison | wiki Poison team (restored Poison type; was Lt. Surge/Electric) |
-| 14 | Grant | Rock | wiki Rock team |
-| 15 | Skyla | Flying | wiki Flying Team #2 (Pom-Pom Oricorio variant) |
-| 16 | Brycen | Ice | wiki Ice team |
-| 17 | Valerie | Fairy | wiki Fairy team |
-| 18 | Marnie | Dark | wiki Dark team (trimmed to 6 of 7) |
+| 14 | Caesar | Rock | wiki Rock team |
+| 15 | Amos | Flying | wiki Flying Team #2 (Pom-Pom Oricorio variant) |
+| 16 | Tux | Ice | wiki Ice team |
+| 17 | Flora | Fairy | wiki Fairy team |
+| 18 | Hobie | Dark | wiki Dark team (trimmed to 6 of 7) |
 
 ## Custom-designed trainers (5 — Elite Four + Champion)
 
@@ -75,7 +75,7 @@ These are not in the ShepskyDad wiki; teams were designed per user spec and slot
 ## Gym 19 — Professor Oak (Kanto-only, very difficult)
 
 Re-enabled with a custom team built per user spec. All six Pokémon are dex #1–151 (Kanto), and
-the team is built around competitive top-tier picks rather than the Cheren clone we'd
+the team is built around competitive top-tier picks rather than the Penny clone we'd
 considered:
 
 | Pokemon | Ability | Item | Role |
@@ -103,7 +103,7 @@ The generator applies these defaults to every imported Pokémon:
 - `ivs: { hp/atk/def/spa/spd/spe: 31 }` (max across the board)
 - `evs: { hp: 4, atk: 252, spe: 252 }` (fast + offensive default — tune per Pokémon role later)
 
-To rebalance a specific Pokémon (e.g. give Skyla's Corviknight a defensive spread), edit its
+To rebalance a specific Pokémon (e.g. give Amos's Corviknight a defensive spread), edit its
 entry in `trainers/gym_15_flying.json` directly. The generator (`/tmp/gen_trainers.py`) is a
 one-shot bootstrap, not a recurring build step — once you've tuned a JSON, regenerating would
 clobber the tuning.

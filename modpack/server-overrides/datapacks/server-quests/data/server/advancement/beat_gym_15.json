@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Skyla"
+      "text": "Amos"
     },
     "description": {
-      "text": "Defeat Skyla (Flying-type, Level 60)."
+      "text": "Defeat Amos (Flying-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"
@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_15_flying"
+          "gym_15_flying",
+          "bt_15_flying"
         ],
         "trainer_type": null
       }

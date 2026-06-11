@@ -1,7 +1,7 @@
 {
   "name": "Elite Four Cynthia",
   "identity": "Hyper Offense",
-  "textureResource": "rctmod:textures/trainers/single/champion_cynthia_03a5.png",
+  "textureResource": "rctmod:textures/trainers/single/gym_21_cynthia.png",
   "ai": {
     "type": "pe",
     "data": {}

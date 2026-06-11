@@ -12,6 +12,31 @@ root README.
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-06-10
+
+### Added
+- **Battle Tower system.** New `bt_01`–`bt_18` trainer scheme (plus `_challenge`
+  variants) in cobblemon-bridge, with per-floor progression, force-battle-proof
+  floor ordering, and BT-win achievements. Replaces the standalone challenge-gym
+  trainers, which are dropped in favour of the tower roster.
+- **Custom Elite Four / Champion cast.** Gyms 19–24 get a rethemed, hand-built
+  lineup — Oak, Alder, Cynthia, Ash, Lance, and N — each with a bespoke L65 team,
+  a dedicated NPC battle skin, and per-player Elite-Four-style voice lines.
+
+### Changed
+- **E4 trainer ids renamed to character names.** `gym_20_lorelei` → `gym_20_alder`,
+  `gym_22_agatha` → `gym_22_ash`, `gym_24_champion` → `gym_24_n` across the server
+  datapack and the cobblemon-npc skin jar, with every reference updated (spawn /
+  delete functions, advancements, defeat loot tables). Gyms 19/21/23 keep their
+  names.
+- **Reward tuning.** Normal gym cash is capped past gym 10; challenge wins pay a
+  flat reward and always grant a rare key; foul-play (pe) AI NPC fights pay 1.5×
+  per-fight money.
+
+### Fixed
+- **Gym-AI temperature fallback.** The poke-engine bridge now falls back to plain
+  MCTS when the configured temperature is unsupported, instead of erroring.
+
 ## [0.13.0] - 2026-06-10
 
 ### Changed

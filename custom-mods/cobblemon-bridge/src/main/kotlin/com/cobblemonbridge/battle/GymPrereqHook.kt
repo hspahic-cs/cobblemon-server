@@ -46,24 +46,10 @@ object GymPrereqHook {
         val gymId = BridgeTags.findGymId(event.target.tags) ?: return
         val isChallenge = BridgeTags.isGymChallenge(event.target.tags)
 
-        // Challenge variant: must have beaten the mainline gym first. Skips the rest of the
-        // gauntlet/linear logic — challenges are a per-gym side path.
-        if (isChallenge) {
-            val mainId = ResourceLocation.fromNamespaceAndPath("server", "beat_gym_$gymId")
-            val main = player.server.advancements.get(mainId)
-            if (main != null && !player.advancements.getOrStartProgress(main).isDone) {
-                event.isCanceled = true
-                event.cancellationResult = InteractionResult.FAIL
-                player.sendSystemMessage(Component.literal(
-                    "§c[Challenge Gym ${gymId}] §fLocked. Beat the regular §eGym ${gymId}§f first."
-                ))
-                CobblemonBridge.logger.debug(
-                    "Blocked {} from challenge gym {} — missing {}",
-                    player.gameProfile.name, gymId, mainId,
-                )
-            }
-            return
-        }
+        // Challenge gyms are OPEN — no requirement to beat the regular gym first; the flat-L50
+        // difficulty is itself the gate. (Beating all 10 mainline gyms gates the BATTLE TOWER,
+        // not the individual challenge gyms — see TowerEntryHook / TowerGauntletHook.)
+        if (isChallenge) return
 
         // E4 gauntlet (gyms 21-23): handed off to E4GauntletHook, which enforces the
         // win-without-resetting requirement. Gym 20 still goes through the linear prereq below.

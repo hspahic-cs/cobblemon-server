@@ -1,7 +1,7 @@
 {
   "name": "Elite Four Lance",
   "identity": "Dragon Boss",
-  "textureResource": "rctmod:textures/trainers/single/champion_lance_0027.png",
+  "textureResource": "rctmod:textures/trainers/single/gym_23_lance.png",
   "ai": {
     "type": "pe",
     "data": {}

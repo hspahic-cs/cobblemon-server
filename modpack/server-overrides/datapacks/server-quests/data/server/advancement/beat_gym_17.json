@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Valerie"
+      "text": "Flora"
     },
     "description": {
-      "text": "Defeat Valerie (Fairy-type, Level 60)."
+      "text": "Defeat Flora (Fairy-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"
@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_17_fairy"
+          "gym_17_fairy",
+          "bt_17_fairy"
         ],
         "trainer_type": null
       }

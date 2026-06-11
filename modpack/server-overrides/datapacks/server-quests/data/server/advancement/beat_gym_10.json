@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_9",
   "display": {
     "title": {
-      "text": "Gym 10: Morty"
+      "text": "Gym 10: Grimm"
     },
     "description": {
       "text": "Defeat the Ghost-type gym leader."
@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_10_ghost"
+          "gym_10_ghost",
+          "bt_10_ghost"
         ],
         "trainer_type": null
       }

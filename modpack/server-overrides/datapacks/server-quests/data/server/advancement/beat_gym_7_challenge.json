@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_7",
   "display": {
     "title": {
-      "text": "Gym 7: Crasher Wake \u2014 Challenge"
+      "text": "Gym 7: Kai \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 7."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_07_water_challenge"
+          "bt_07_water_challenge"
         ],
         "trainer_type": null
       }

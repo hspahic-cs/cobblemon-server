@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_8",
   "display": {
     "title": {
-      "text": "Gym 8: Sabrina \u2014 Challenge"
+      "text": "Gym 8: Juniper \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 8."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_08_psychic_challenge"
+          "bt_08_psychic_challenge"
         ],
         "trainer_type": null
       }

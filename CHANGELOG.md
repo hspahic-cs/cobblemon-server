@@ -12,7 +12,7 @@ root README.
 
 ## [Unreleased]
 
-## [0.15.6] - 2026-06-11
+## [0.16.1] - 2026-06-11
 
 ### Fixed
 - **Elite Four megas spawned as base forms.** Cynthia's Mega Lucario (gym 21) and N's Mega Rayquaza
@@ -35,6 +35,26 @@ root README.
   ("…It's time to face the Champion. N awaits beneath the Rayquaza statue."), and beating N gives a
   full Champion victory message. Statues map to each team's perfect-IV ace (Ho-Oh, Lucario, Greninja,
   Eternatus, Rayquaza), defined in `E4GauntletHook.kt`.
+
+## [0.16.0] - 2026-06-11
+
+### Added
+- **Wilderness reset mod** (`custom-mods/cobblemon-wilderness`, server-side, ships **disabled**).
+  Caps unbounded overworld growth by regenerating chunks that lie wholly outside a persistent,
+  region-aligned keep-box. A region file is deleted only if it does not touch the box; `snapToRegions`
+  (default on) expands the box out to whole-region boundaries so the enforced zone equals the box with
+  no rounding slop. All deletion runs once per boot (`ServerAboutToStartEvent`, before levels load —
+  chunks guaranteed unloaded), and clears `region/`, `entities/`, and `poi/` together.
+  - Two default-safe gates: `enabled=false` (master) and `dryRun=true` (log-only). First boot with
+    `enabled=true` records a baseline and skips, to avoid a surprise wipe.
+  - **Circuit breaker** (`maxDeleteFraction`, default 0.9) aborts a run that would delete too large a
+    fraction — a net against a mis-typed box.
+  - **Player warnings** (server→client chat): on crossing the boundary outward and again on login if
+    already outside, naming the safe build zone and the reset date. Gated on `enabled`.
+  - Commands `/wildreset status|preview|now|cancel` (op level 4); `preview` is read-only and safe on a
+    live world, `now` only arms the next boot's pass. See the mod README for the rollout procedure.
+  - Default keep-box `-20480..20479` (regions −40..39). Offline preview of the live overworld: keep
+    ~1,550 regions / reclaim ~615 (~2.3 GB) now, growing weekly.
 
 ## [0.15.5] - 2026-06-11
 

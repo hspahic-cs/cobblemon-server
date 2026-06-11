@@ -131,6 +131,33 @@ jobs:
             modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/
 
+      # Scoped --delete for the trainer-admin function folders ONLY (gym/e4/bt) — we own 100% of
+      # these, so pruning stale files here can't touch other datapacks. Clears renamed-away
+      # commands (e.g. the old numbered spawn_N) that the non-destructive rsync above leaves behind.
+      - name: Prune stale trainer-admin functions (gym/e4/bt)
+        run: |
+          base=modpack/server-overrides/datapacks/server-quests/data/server/function
+          dest=${{ env.INSTALL_DIR }}/world/datapacks/server-quests/data/server/function
+          for d in gym e4 bt; do
+            rsync -rltzO --delete \
+              -e "ssh -o StrictHostKeyChecking=yes" \
+              "$base/$d/" \
+              "${{ env.VM_USER }}@${{ env.VM_HOST }}:$dest/$d/"
+          done
+
+      # AllTheMons ships as a single version-named .zip datapack. The non-destructive datapack
+      # rsync above never deletes, so a version bump (R3.4 -> R3.5) leaves the old zip behind →
+      # two AllTheMons → duplicate Cobblemon species/animations → client crash. Prune any
+      # AllTheMons*.zip on the server that isn't the version we currently ship.
+      - name: Prune stale AllTheMons datapack zips
+        run: |
+          current=$(cd modpack/server-overrides/datapacks && ls AllTheMons*.zip 2>/dev/null | head -1)
+          if [ -n "$current" ]; then
+            ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+              "bash -s -- '${{ env.INSTALL_DIR }}/world/datapacks' '$current'" \
+              < ops/prune-stale-allthemons.sh
+          fi
+
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         run: |
           if [[ -d modpack/server-overrides/config ]]; then
@@ -148,7 +175,7 @@ jobs:
         if: vars.RESOURCEPACK_URL != ''
         run: |
           ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
-            "bash -s -- '${{ vars.RESOURCEPACK_URL }}' '${{ vars.RESOURCEPACK_SHA1 || '2d39d40991a2d3d85d07262bdeebbe3fc450b46b' }}' '${{ env.INSTALL_DIR }}/server.properties'" \
+            "bash -s -- '${{ vars.RESOURCEPACK_URL }}' '${{ vars.RESOURCEPACK_SHA1 || '24cad3bdd37e658213d6186581e1533b4f1fe96a' }}' '${{ env.INSTALL_DIR }}/server.properties'" \
             < ops/set-server-resourcepack.sh
 
       - name: Atomic swap and restart

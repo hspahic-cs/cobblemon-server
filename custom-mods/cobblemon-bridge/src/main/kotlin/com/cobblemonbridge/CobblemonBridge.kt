@@ -58,6 +58,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         logger.info("Cobblemon Bridge initializing...")
 
         com.cobblemonbridge.quests.GymCaps.init()  // authored gym/E4 level caps (config-driven, not number-derived)
+        com.cobblemonbridge.commands.TestTeams.init()  // dev /testteam preset competitive teams
         AdjustLevelHook.registerEvents()
         NeoForge.EVENT_BUS.register(AdjustLevelHook)
         NeoForge.EVENT_BUS.register(GivePartyExpHook)
@@ -130,6 +131,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         HomeAliases.register(event.dispatcher)
         CommandAliases.register(event.dispatcher)
         WildCommand.register(event.dispatcher)
+        com.cobblemonbridge.commands.TestTeamCommand.register(event.dispatcher)  // dev: give a preset competitive team
         GymTpCommands.register(event.dispatcher)
         SpawnCommands.register(event.dispatcher)
         TowerCommands.register(event.dispatcher)

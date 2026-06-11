@@ -1,0 +1,69 @@
+{
+  "_comment": "Teams for the dev `/testteam <player> <tier> <level> [#]` command. Tiers: uber, ou, normal. One team is picked at random (or by index). Level is set by the command. 'ivs' at team level fills all six IVs (per-mon evs object holds only non-zero stats). Format mirrors the gym trainer team JSON. Edit freely.",
+  "uber": [
+    {
+      "name": "Sun Offense",
+      "ivs": 31,
+      "mons": [
+        { "species": "koraidon", "nature": "adamant", "ability": "orichalcumpulse", "item": "cobblemon:clear_amulet", "evs": { "atk": 252, "spe": 252, "hp": 4 }, "moves": ["collisioncourse", "flareblitz", "drainpunch", "swordsdance"] },
+        { "species": "kyogre", "nature": "modest", "ability": "drizzle", "item": "cobblemon:choice_scarf", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["waterspout", "originpulse", "icebeam", "thunder"] },
+        { "species": "eternatus", "nature": "timid", "ability": "pressure", "item": "cobblemon:heavy_duty_boots", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["dynamaxcannon", "fireblast", "sludgewave", "recover"] },
+        { "species": "mewtwo", "nature": "timid", "ability": "pressure", "item": "cobblemon:life_orb", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["psystrike", "aurasphere", "icebeam", "nastyplot"] },
+        { "species": "hooh", "nature": "adamant", "ability": "regenerator", "item": "cobblemon:heavy_duty_boots", "evs": { "atk": 252, "hp": 252, "def": 4 }, "moves": ["sacredfire", "bravebird", "earthquake", "recover"] },
+        { "species": "zekrom", "nature": "adamant", "ability": "teravolt", "item": "cobblemon:life_orb", "evs": { "atk": 252, "spe": 252, "hp": 4 }, "moves": ["boltstrike", "dragondance", "outrage", "roost"] }
+      ]
+    },
+    {
+      "name": "Electric Terrain",
+      "ivs": 31,
+      "mons": [
+        { "species": "miraidon", "nature": "modest", "ability": "hadronengine", "item": "cobblemon:choice_specs", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["electrodrift", "dracometeor", "voltswitch", "dazzlinggleam"] },
+        { "species": "groudon", "nature": "adamant", "ability": "drought", "item": "cobblemon:life_orb", "evs": { "atk": 252, "spe": 252, "hp": 4 }, "moves": ["precipiceblades", "firepunch", "swordsdance", "stoneedge"] },
+        { "species": "giratina", "nature": "bold", "ability": "pressure", "item": "cobblemon:leftovers", "evs": { "hp": 252, "def": 252, "spd": 4 }, "moves": ["shadowball", "dragontail", "willowisp", "recover"] },
+        { "species": "lugia", "nature": "bold", "ability": "multiscale", "item": "cobblemon:heavy_duty_boots", "evs": { "hp": 252, "def": 252, "spe": 4 }, "moves": ["aeroblast", "icebeam", "toxic", "roost"] },
+        { "species": "dialga", "nature": "modest", "ability": "pressure", "item": "cobblemon:leftovers", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["dracometeor", "flashcannon", "fireblast", "thunder"] },
+        { "species": "reshiram", "nature": "modest", "ability": "turboblaze", "item": "cobblemon:life_orb", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["blueflare", "dracometeor", "earthpower", "roost"] }
+      ]
+    }
+  ],
+  "ou": [
+    {
+      "name": "Balance",
+      "ivs": 31,
+      "mons": [
+        { "species": "greattusk", "nature": "jolly", "ability": "protosynthesis", "item": "cobblemon:booster_energy", "evs": { "atk": 252, "spe": 252, "hp": 4 }, "moves": ["headlongrush", "closecombat", "rapidspin", "stealthrock"] },
+        { "species": "kingambit", "nature": "adamant", "ability": "supremeoverlord", "item": "cobblemon:leftovers", "evs": { "atk": 252, "hp": 252, "def": 4 }, "moves": ["kowtowcleave", "suckerpunch", "ironhead", "swordsdance"] },
+        { "species": "gholdengo", "nature": "timid", "ability": "goodasgold", "item": "cobblemon:air_balloon", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["makeitrain", "shadowball", "nastyplot", "recover"] },
+        { "species": "dragapult", "nature": "timid", "ability": "infiltrator", "item": "cobblemon:choice_specs", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["shadowball", "dracometeor", "uturn", "flamethrower"] },
+        { "species": "slowking", "form": "galarian", "nature": "calm", "ability": "regenerator", "item": "cobblemon:heavy_duty_boots", "evs": { "hp": 252, "spd": 252, "def": 4 }, "moves": ["futuresight", "sludgebomb", "flamethrower", "slackoff"] },
+        { "species": "garganacl", "nature": "careful", "ability": "purifyingsalt", "item": "cobblemon:leftovers", "evs": { "hp": 252, "spd": 252, "def": 4 }, "moves": ["saltcure", "recover", "earthquake", "bodypress"] }
+      ]
+    },
+    {
+      "name": "Bulky Offense",
+      "ivs": 31,
+      "mons": [
+        { "species": "zamazenta", "nature": "jolly", "ability": "dauntlessshield", "item": "cobblemon:leftovers", "evs": { "def": 252, "spe": 252, "hp": 4 }, "moves": ["bodypress", "irondefense", "crunch", "roost"] },
+        { "species": "ironvaliant", "nature": "naive", "ability": "quarkdrive", "item": "cobblemon:booster_energy", "evs": { "spa": 252, "spe": 252, "atk": 4 }, "moves": ["moonblast", "closecombat", "knockoff", "encore"] },
+        { "species": "toxapex", "nature": "bold", "ability": "regenerator", "item": "cobblemon:black_sludge", "evs": { "hp": 252, "def": 252, "spd": 4 }, "moves": ["surf", "toxic", "recover", "haze"] },
+        { "species": "dragapult", "nature": "jolly", "ability": "infiltrator", "item": "cobblemon:choice_band", "evs": { "atk": 252, "spe": 252, "hp": 4 }, "moves": ["dragondarts", "uturn", "suckerpunch", "terablast"] },
+        { "species": "greattusk", "nature": "jolly", "ability": "protosynthesis", "item": "cobblemon:heavy_duty_boots", "evs": { "atk": 252, "spe": 252, "hp": 4 }, "moves": ["headlongrush", "closecombat", "icespinner", "rapidspin"] },
+        { "species": "gholdengo", "nature": "timid", "ability": "goodasgold", "item": "cobblemon:choice_scarf", "evs": { "spa": 252, "spe": 252, "hp": 4 }, "moves": ["makeitrain", "shadowball", "trick", "thunderbolt"] }
+      ]
+    }
+  ],
+  "normal": [
+    {
+      "name": "Player Team A",
+      "ivs": 22,
+      "mons": [
+        { "species": "garchomp", "nature": "jolly", "ability": "roughskin", "item": "cobblemon:life_orb", "evs": { "atk": 200, "spe": 200 }, "moves": ["earthquake", "dragonclaw", "stealthrock", "firefang"] },
+        { "species": "gyarados", "nature": "jolly", "ability": "intimidate", "item": "cobblemon:leftovers", "evs": { "atk": 200, "spe": 200 }, "moves": ["waterfall", "crunch", "dragondance", "icefang"] },
+        { "species": "togekiss", "nature": "modest", "ability": "serenegrace", "item": "cobblemon:leftovers", "evs": { "spa": 200, "hp": 150 }, "moves": ["airslash", "moonblast", "flamethrower", "roost"] },
+        { "species": "lucario", "nature": "jolly", "ability": "justified", "item": "cobblemon:life_orb", "evs": { "atk": 200, "spe": 200 }, "moves": ["closecombat", "meteormash", "extremespeed", "swordsdance"] },
+        { "species": "rotom", "aspects": ["wash-appliance"], "nature": "bold", "ability": "levitate", "item": "cobblemon:leftovers", "evs": { "hp": 200, "def": 150 }, "moves": ["hydropump", "voltswitch", "willowisp", "painsplit"] },
+        { "species": "snorlax", "nature": "careful", "ability": "thickfat", "item": "cobblemon:leftovers", "evs": { "hp": 200, "spd": 150 }, "moves": ["bodyslam", "earthquake", "curse", "rest"] }
+      ]
+    }
+  ]
+}

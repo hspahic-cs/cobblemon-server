@@ -12,6 +12,45 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.4] - 2026-06-11
+
+### Changed
+- **Updated AllTheMons R3.5 → 3.5.1.** 3.5.1 ships the official fix for the Mewtwo blink crash
+  (`Unknown animation group: _atm`), so it supersedes the one-character hand-patch from 0.15.3 (now
+  running the upstream pack unmodified again), plus the latest models/animations/hitboxes. The
+  resourcepack + datapack copies and `options.txt` were bumped to `[R3.5.1]`; the old `[R3.5]`
+  datapack is auto-removed on the server by the 0.15.1 stale-AllTheMons prune step (filename change).
+  Note: 3.5.1 still ships `geometry.hooh` (shared with base Cobblemon), so it does not specifically
+  address the Ho-Oh remodel render quirk.
+
+## [0.15.3] - 2026-06-11
+
+### Fixed
+- **Client crash rendering Mewtwo** (`Unknown animation group: _atm`). AllTheMons R3.5's Mewtwo
+  poser has a typo — one blink quirk referenced the animation group `_atm` instead of `mewtwo_atm`,
+  and `_atm` is defined nowhere in the pack, so *any* Mewtwo (wild, gym, `/testteam`) crashed the
+  client on render. Patched the poser inside the bundled `AllTheMons [R3.5].zip` (both the
+  resourcepack and datapack copies). A full scan confirmed it was the only broken poser in the pack.
+
+## [0.15.2] - 2026-06-11
+
+### Added
+- **`/testteam` dev command** (op level 2+) — `/testteam <player> <tier> <level> [index]` stashes the
+  target's party into their PC, then gives a preset competitive team at the requested level. Tiers:
+  `uber` / `ou` (perfect IVs + competitive EVs/moves/items, legendaries in `uber`) and `normal`
+  (~22 IVs + partial EVs — a decent player-grade team). Teams are authored in
+  `config/cobblemon-bridge/runtime/test_teams.json` (same format as gym teams, editable without
+  recompiling) and picked at random per tier unless an index is given.
+
+## [0.15.1] - 2026-06-11
+
+### Changed
+- **Trainer admin commands reorganized** into `gym/`, `e4/`, `bt/` namespaces with short names —
+  `/function server:gym/spawn_fire`, `server:e4/spawn_alder`, `server:bt/spawn_faker` (the folder
+  already names the category, so the redundant prefix is dropped). The dev/prod deploy now runs a
+  scoped `--delete` prune over just those three function folders, so renamed-away commands — like
+  the old numbered `spawn_N` — are removed instead of lingering on the server.
+
 ## [0.15.0] - 2026-06-11
 
 ### Added

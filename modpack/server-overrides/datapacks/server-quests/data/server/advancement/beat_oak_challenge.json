@@ -1,0 +1,33 @@
+{
+  "parent": "server:beat_gym_24",
+  "display": {
+    "title": {
+      "text": "Out-Professored"
+    },
+    "description": {
+      "text": "Defeat Professor Oak on Hard Mode — the Kanto Master and his legendary team."
+    },
+    "icon": {
+      "id": "cobblemon:master_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "defeated": {
+      "trigger": "rctmod:defeat_count",
+      "conditions": {
+        "count": 1,
+        "trainer_ids": [
+          "bt_20_oak_challenge"
+        ],
+        "trainer_type": null
+      }
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_oak"
+  }
+}

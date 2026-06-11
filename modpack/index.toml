@@ -1630,6 +1630,14 @@ file = "server-overrides/datapacks/server-quests/data/minecraft/tags/function/ti
 hash = "8f190188a4e2af1801f750558ff6c9a7f8304eb61dcb379b7bf41cba2679f026"
 
 [[files]]
+file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_faker.json"
+hash = "ae0f65671447d763130f120ba44eb6fec4f13e434e172012e7bcae03a6e6fe46"
+
+[[files]]
+file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_faker_challenge.json"
+hash = "55186374d93a8edfb7b17d4c03e40c49e479d8e13aa3cfc1b94d0f16ab4f8eca"
+
+[[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_1.json"
 hash = "5563fdcc718fd9fe1b4d7870be729a85f0984a14ee391e347023433f65acb419"
 
@@ -1796,6 +1804,14 @@ hash = "996cf59267612f97cb2b1773ead085d7d81fbdb2ff0625a4bf1edef1f0027878"
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_9_challenge.json"
 hash = "30c59e4b83ba956de0b624797999b0e8404ed59114be850876247e081f5378c4"
+
+[[files]]
+file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_oak.json"
+hash = "939173638d90a30eff0edb867a307214d8a421598c65bd9d88ab274889c43718"
+
+[[files]]
+file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_oak_challenge.json"
+hash = "ae451e85f5653eda14555930090118e4f3ce4e62ebad4a710345a082a1b4f332"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_wild_trainer.json"
@@ -2130,6 +2146,10 @@ file = "server-overrides/datapacks/server-quests/data/server/function/quests/rew
 hash = "ea9943b8e3efdb8e707f6f3ae1db2c2421051a9abc05be6a4885393167c1afd8"
 
 [[files]]
+file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_faker.mcfunction"
+hash = "d3cbc4f4500bb88a5d8fd4a59699d05b4b935a7b1f02d85571f19416159b0f2f"
+
+[[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_gym_1.mcfunction"
 hash = "873cd2cc6715bf5c1e1ddf55f83993ea8de42657b5d4fd5a2b9f0cefe70d1da0"
 
@@ -2296,6 +2316,10 @@ hash = "b70ce94430435f3f7eb9461862d3cb06cfae4e99465324046df0683be072d80c"
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_gym_9_challenge.mcfunction"
 hash = "63b4376b416d0574f76333eb533d14782a63df9b43022af5af8b134509ed8304"
+
+[[files]]
+file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_oak.mcfunction"
+hash = "5ef8a85739cf7bae06c6a68cf0587e704df7969c73e5f29581ef58f7c47aeb20"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/quests/rewards/beat_wild_trainer.mcfunction"

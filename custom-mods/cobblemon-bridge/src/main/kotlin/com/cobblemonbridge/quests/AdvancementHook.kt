@@ -61,6 +61,21 @@ object AdvancementHook {
     /** Normal gyms here grant an ultra key; everything else (incl. ALL challenge gyms) is rare. */
     private val ULTRA_KEY_GYMS: Set<Int> = setOf(10, 19, 23, 24)
 
+    /** Hidden battle-tower boss advancements (Faker, Professor Oak) → (key tier, cash bounty).
+     *  Mirrors the gym normal/hard split: hard pays big, normal pays less; both grant a rare key. */
+    private val BOSS_REWARDS: Map<String, Pair<String, Int>> = mapOf(
+        "server:beat_oak" to Pair("rare", 2_250),
+        "server:beat_oak_challenge" to Pair("rare", 5_000),
+        "server:beat_faker" to Pair("rare", 2_250),
+        "server:beat_faker_challenge" to Pair("rare", 5_000),
+    )
+    private val BOSS_REASON: Map<String, String> = mapOf(
+        "server:beat_oak" to "defeating Professor Oak",
+        "server:beat_oak_challenge" to "defeating Professor Oak (Hard Mode)",
+        "server:beat_faker" to "defeating Faker",
+        "server:beat_faker_challenge" to "defeating Faker (Hard Mode)",
+    )
+
     @SubscribeEvent
     fun onAdvancementEarn(event: AdvancementEvent.AdvancementEarnEvent) {
         val player = event.entity as? ServerPlayer ?: return
@@ -90,6 +105,12 @@ object AdvancementHook {
             grantGymKey(player, gymId, isChallenge)
             return
         }
+
+        // Hidden battle-tower boss advancements (Faker, Professor Oak).
+        BOSS_REWARDS[id]?.let { (tier, cash) ->
+            payBounty(player, cash, BOSS_REASON[id] ?: "defeating a secret boss")
+            grantKey(player, tier)
+        }
     }
 
     private fun payBounty(player: ServerPlayer, amount: Int, reason: String) {
@@ -117,5 +138,12 @@ object AdvancementHook {
             "advancement-key: granted {} key to {} for gym {}",
             tier, player.gameProfile.name, gymId,
         )
+    }
+
+    /** Grant one gacha key of [tier] (boss path — no gymId). Same elevated, suppressed dispatch. */
+    private fun grantKey(player: ServerPlayer, tier: String) {
+        val src = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
+        player.server.commands.performPrefixedCommand(src, "gacha grant ${player.gameProfile.name} $tier 1")
+        CobblemonBridge.logger.info("advancement-key: granted {} key to {}", tier, player.gameProfile.name)
     }
 }

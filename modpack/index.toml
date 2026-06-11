@@ -339,7 +339,7 @@ hash = "2f23dffa324aefa21be3782439e6e5e2c66648ba07f7a00685cb967291d2fcff"
 
 [[files]]
 file = "resourcepacks/AllTheMons [R3.5].zip"
-hash = "0c6086b17c5f4a4ed5809ad21215ce60b5d2b023f57fde214c2209d4be6de1f3"
+hash = "c325f291e3318115f3631bb3cab0232cf98cbec423cdba1f0610b37e2222ae1a"
 
 [[files]]
 file = "server-overrides/config/README.md"
@@ -435,7 +435,7 @@ hash = "d8395dae433bc099ba84f0244e27d70c91487c3428b39a0475bc5f07ffcbe092"
 
 [[files]]
 file = "server-overrides/datapacks/AllTheMons [R3.5].zip"
-hash = "0c6086b17c5f4a4ed5809ad21215ce60b5d2b023f57fde214c2209d4be6de1f3"
+hash = "c325f291e3318115f3631bb3cab0232cf98cbec423cdba1f0610b37e2222ae1a"
 
 [[files]]
 file = "server-overrides/datapacks/server-cobbleworkers-allowlists/data/cobbleworkers/jobs/amethyst_harvester.json"

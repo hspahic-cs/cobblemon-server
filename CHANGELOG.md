@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.3] - 2026-06-11
+
+### Fixed
+- **Client crash rendering Mewtwo** (`Unknown animation group: _atm`). AllTheMons R3.5's Mewtwo
+  poser has a typo — one blink quirk referenced the animation group `_atm` instead of `mewtwo_atm`,
+  and `_atm` is defined nowhere in the pack, so *any* Mewtwo (wild, gym, `/testteam`) crashed the
+  client on render. Patched the poser inside the bundled `AllTheMons [R3.5].zip` (both the
+  resourcepack and datapack copies). A full scan confirmed it was the only broken poser in the pack.
+
 ## [0.15.2] - 2026-06-11
 
 ### Added

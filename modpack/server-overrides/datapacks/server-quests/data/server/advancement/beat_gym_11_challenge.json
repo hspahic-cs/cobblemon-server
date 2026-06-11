@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_11",
   "display": {
     "title": {
-      "text": "Gym 11: Viola \u2014 Challenge"
+      "text": "Gym 11: Flik \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 11."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_11_bug_challenge"
+          "bt_11_bug_challenge"
         ],
         "trainer_type": null
       }

@@ -53,7 +53,12 @@ object AdvancementHook {
 
     private val GYM_ID_REGEX = Regex("""^server:beat_gym_(\d+)(_challenge)?$""")
     private const val CHAMPION_BOUNTY = 5_000
+    /** Normal gyms past gym 10 are capped here (not scaled by gym number). 1500 = 150 × 10. */
+    private const val NORMAL_CAP = 1_500
+    /** Every challenge gym (1-18) pays a flat NORMAL_CAP × 1.5, regardless of gym number. */
+    private const val CHALLENGE_BOUNTY = 2_250
 
+    /** Normal gyms here grant an ultra key; everything else (incl. ALL challenge gyms) is rare. */
     private val ULTRA_KEY_GYMS: Set<Int> = setOf(10, 19, 23, 24)
 
     @SubscribeEvent
@@ -65,16 +70,24 @@ object AdvancementHook {
         if (gymMatch != null) {
             val gymId = gymMatch.groupValues[1].toIntOrNull() ?: return
             val isChallenge = gymMatch.groupValues[2] == "_challenge"
-            // Champion (gym 24) gets the flat $5,000 that used to live on the now-deleted
-            // defeat_elite_four advancement. Every other gym follows the $150 × N curve.
-            val cash = if (gymId == 24) CHAMPION_BOUNTY else 150 * gymId
+            // Cash (one-time, first beat):
+            //   - Champion (24): flat $5,000.
+            //   - Challenge gym (1-18): flat $2,250 (NORMAL_CAP × 1.5).
+            //   - Normal gym 11-18: capped $1,500 (not scaled).
+            //   - Normal gym 1-10 (and E4 19-23): $150 × gym number.
+            val cash = when {
+                gymId == 24 -> CHAMPION_BOUNTY
+                isChallenge -> CHALLENGE_BOUNTY
+                gymId in 11..18 -> NORMAL_CAP
+                else -> 150 * gymId
+            }
             val reason = if (gymId == 24) {
                 "defeating the Champion"
             } else {
                 "defeating gym $gymId" + if (isChallenge) " (Hard Mode)" else ""
             }
             payBounty(player, cash, reason)
-            grantGymKey(player, gymId)
+            grantGymKey(player, gymId, isChallenge)
             return
         }
     }
@@ -94,8 +107,9 @@ object AdvancementHook {
     /** Run `/gacha grant <player> <tier> 1` with elevated source so the gacha mod's
      *  op-2 perm gate is satisfied and output is suppressed (the player already got a
      *  tellraw from `beat_gym_N.mcfunction` — no need for a second chat line). */
-    private fun grantGymKey(player: ServerPlayer, gymId: Int) {
-        val tier = if (gymId in ULTRA_KEY_GYMS) "ultra" else "rare"
+    private fun grantGymKey(player: ServerPlayer, gymId: Int, isChallenge: Boolean) {
+        // Challenge gyms always grant a rare key (incl. Grimm/10 — no ultra on the challenge track).
+        val tier = if (!isChallenge && gymId in ULTRA_KEY_GYMS) "ultra" else "rare"
         val src = player.createCommandSourceStack().withPermission(4).withSuppressedOutput()
         val cmd = "gacha grant ${player.gameProfile.name} $tier 1"
         player.server.commands.performPrefixedCommand(src, cmd)

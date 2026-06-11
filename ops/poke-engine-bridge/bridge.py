@@ -557,12 +557,25 @@ def _run_mcts(state_string: str, search_time_ms: int, temperature: float):
 
     Backward-compatible: the `temperature` arg only exists on our patched
     poke-engine. When temperature is 0 (the default until gyms are calibrated)
-    we call the stock 3-arg signature, so this bridge runs unchanged on an
-    unpatched image. A non-zero temperature requires the patched engine.
+    we call the stock 2-arg signature, so this bridge runs unchanged on an
+    unpatched image. A non-zero temperature requires the patched engine — and
+    if that engine ISN'T installed, the 4-arg call raises TypeError; rather than
+    failing the whole pick (→ 500 → the mod falls back to a move-spamming AI) we
+    degrade to the stock 2-arg MCTS (still a strong perfect-info search, just
+    without the opponent-fallibility dial). Install the patched poke-engine to
+    actually honour temperature.
     """
     state = PokeEngineState.from_string(state_string)
     if temperature:
-        return monte_carlo_tree_search(state, search_time_ms, 1, temperature)
+        try:
+            return monte_carlo_tree_search(state, search_time_ms, 1, temperature)
+        except TypeError:
+            logging.getLogger("poke-engine-bridge").warning(
+                "poke-engine has no temperature arg — ignoring temperature=%s; "
+                "install the patched engine to enable the difficulty dial",
+                temperature,
+            )
+            return monte_carlo_tree_search(state, search_time_ms)
     return monte_carlo_tree_search(state, search_time_ms)
 
 

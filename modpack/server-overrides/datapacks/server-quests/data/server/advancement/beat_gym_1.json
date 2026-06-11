@@ -2,7 +2,7 @@
   "parent": "server:reach_party_level_20",
   "display": {
     "title": {
-      "text": "Gym 1: Clay"
+      "text": "Gym 1: Dusty"
     },
     "description": {
       "text": "Defeat the Ground-type gym leader."
@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_01_ground"
+          "gym_01_ground",
+          "bt_01_ground"
         ],
         "trainer_type": null
       }

@@ -163,4 +163,30 @@ object BridgeTags {
 
     fun findTowerFloor(tags: Iterable<String>): Int? =
         tags.firstNotNullOfOrNull { parseTowerFloor(it) }
+
+    /** Tag prefix marking a tower leader's difficulty track: `cobblemon_bridge.tower_difficulty.hard`
+     *  (the flat-L50 competitive challenge leader) or `.normal` (the regular gym leader, uncapped).
+     *  A run is locked to whichever track the player engages on floor 1. */
+    const val TOWER_DIFFICULTY: String = "$NAMESPACE.tower_difficulty"
+    const val DIFFICULTY_HARD: String = "hard"
+    const val DIFFICULTY_NORMAL: String = "normal"
+
+    fun findTowerDifficulty(tags: Iterable<String>): String? {
+        val prefix = "$TOWER_DIFFICULTY."
+        return tags.firstNotNullOfOrNull { tag ->
+            if (!tag.startsWith(prefix)) null
+            else tag.removePrefix(prefix).takeIf { it == DIFFICULTY_HARD || it == DIFFICULTY_NORMAL }
+        }
+    }
+
+    /**
+     * Tag marking a vanilla villager as the battle-tower entry NPC. Right-clicking it (when the
+     * player has cleared the `beat_gym_10` gate) warps them to floor 1 and arms a run — see
+     * [com.cobblemonbridge.battle.TowerEntryHook]. Stamped by `/tower setentry`. Mirrors
+     * [GYM_TP_NPC]; carried on the greeter at the bottom of the tower, not on any leader.
+     */
+    const val TOWER_ENTRY: String = "$NAMESPACE.tower_entry"
+
+    fun isTowerEntry(tags: Iterable<String>): Boolean =
+        tags.any { it == TOWER_ENTRY }
 }

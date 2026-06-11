@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Grant"
+      "text": "Caesar"
     },
     "description": {
-      "text": "Defeat Grant (Rock-type, Level 60)."
+      "text": "Defeat Caesar (Rock-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"
@@ -20,7 +20,8 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_14_rock"
+          "gym_14_rock",
+          "bt_14_rock"
         ],
         "trainer_type": null
       }

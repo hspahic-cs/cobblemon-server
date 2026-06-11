@@ -41,7 +41,7 @@ execute if entity @s[tag=!cq_hud_done,advancements={server:reach_party_level_20=
 execute if entity @s[tag=!cq_hud_done,advancements={server:reach_party_level_20=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_1 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_1=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 1: Clay","color":"white","bold":false},{"text":" §7— find him at §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_1=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 1: Dusty","color":"white","bold":false},{"text":" §7— find him at §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_1=false}] run tag @s add cq_hud_done
 
 # --- reach_income_250 ---
@@ -57,35 +57,35 @@ execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_2=false}] ru
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_2=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_3 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_3=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 3: Korrina","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_3=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 3: Lee Sin","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_3=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_4 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_4=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 4: Byron","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_4=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 4: Jarvis","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_4=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_5 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_5=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 5: Blaine","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_5=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 5: Zuko","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_5=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_6 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_6=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 6: Volkner","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_6=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 6: Stan","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_6=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_7 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_7=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 7: Crasher Wake","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_7=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 7: Kai","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_7=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_8 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_8=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 8: Sabrina","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_8=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 8: Juniper","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_8=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_9 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_9=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 9: Drayden","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_9=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 9: Quinn","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_9=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_10 ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_10=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 10: Morty","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_10=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Gym 10: Grimm","color":"white","bold":false},{"text":" §7— §f/warp gyms"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_10=false}] run tag @s add cq_hud_done
 
 # Gyms 11-19 (rotating, optional) intentionally NOT on the HUD — they're branch
@@ -93,7 +93,7 @@ execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_10=false}] r
 # /quests list under "Rotating Gyms".
 
 # --- beat_gym_20 (E4 1) ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_20=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Elite Four 1: Lorelei","color":"white","bold":false},{"text":" §7— §f/warp elite4"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_20=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Defeat Elite Four 1: Alder","color":"white","bold":false},{"text":" §7— §f/warp elite4"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_20=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_21 (E4 2 — consecutive after E4 1) ---
@@ -101,7 +101,7 @@ execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_21=false}] r
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_21=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_22 (E4 3 — consecutive after E4 1-2) ---
-execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_22=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Beat E4 3: Agatha","color":"white","bold":false},{"text":" §7— fighting E4 1-3 consecutively §f(/warp elite4)"}]
+execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_22=false}] run title @s actionbar [{"text":"§e★ Quest: ","bold":true},{"text":"Beat E4 3: Ash","color":"white","bold":false},{"text":" §7— fighting E4 1-3 consecutively §f(/warp elite4)"}]
 execute if entity @s[tag=!cq_hud_done,advancements={server:beat_gym_22=false}] run tag @s add cq_hud_done
 
 # --- beat_gym_23 (E4 4 — consecutive after E4 1-3) ---

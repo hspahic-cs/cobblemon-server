@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Gym 10: Morty \u2014 Challenge"
+      "text": "Gym 10: Grimm \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 10."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_10_ghost_challenge"
+          "bt_10_ghost_challenge"
         ],
         "trainer_type": null
       }

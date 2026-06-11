@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Asymmetric downlevel for gym battles. RCT's `adjustPlayerLevels: true` is dead config — the
  * field is read from JSON into `BattleRules` but never consumed at runtime. Cobblemon's
  * `BattleFormat.adjustLevel` is the real scaling primitive but operates symmetrically — the
- * mainline gym leader's intentionally weaker team (Clay at L15) should stay weak even if the
+ * mainline gym leader's intentionally weaker team (Dusty at L15) should stay weak even if the
  * player is at the gym's L20 cap.
  *
  * **The unavoidable mutation.** Cobblemon's `BattlePokemon` for player-side mons uses
@@ -53,8 +53,8 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * Both variants carry the same `gym_id.<N>` tag, but the challenge variant ALSO carries a flat
  * `level_cap.50` tag which takes precedence ([BridgeTags.findLevelCap] before the formula). So
- * mainline Clay downlevels the player to the gym-1 formula cap (L20) against his L15 team, while
- * Challenge Clay downlevels to a flat L50 against his L50 team — a true L50-vs-L50 fight.
+ * mainline Dusty downlevels the player to the gym-1 formula cap (L20) against his L15 team, while
+ * Challenge Dusty downlevels to a flat L50 against his L50 team — a true L50-vs-L50 fight.
  */
 object GymBattleAdjustHook {
 

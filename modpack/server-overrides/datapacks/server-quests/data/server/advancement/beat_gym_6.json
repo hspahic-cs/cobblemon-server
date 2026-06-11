@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_5",
   "display": {
     "title": {
-      "text": "Gym 6: Volkner"
+      "text": "Gym 6: Stan"
     },
     "description": {
       "text": "Defeat the Electric-type gym leader."
@@ -21,7 +21,8 @@
         "count": 1,
         "trainer_ids": [
           "gym_06_roxie",
-          "gym_06_electric"
+          "gym_06_electric",
+          "bt_06_electric"
         ],
         "trainer_type": null
       }

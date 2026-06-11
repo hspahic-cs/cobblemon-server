@@ -1,4 +1,4 @@
-# Spawn Gym 1: Clay — Ground at the function caller's position.
+# Spawn Gym 1: Dusty — Ground at the function caller's position.
 # Trainer lives in the rctmod namespace (data/rctmod/trainers/gym_01_ground.json) — bare name
 # is enough for the summon command. TrainerId NBT is stored as just the path.
 
@@ -7,4 +7,4 @@ execute at @s run rctmod trainer summon_persistent gym_01_ground
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_01_ground"}] add cobblemon_bridge.gym_id.1
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_01_ground"}] add cobblemon_bridge.anchor
 execute at @s run data merge entity @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_01_ground"}] {Invulnerable:1b,PersistenceRequired:1b}
-tellraw @s [{"text":"§a✓ Spawned Gym 1: Clay — Ground","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_1"}]
+tellraw @s [{"text":"§a✓ Spawned Gym 1: Dusty — Ground","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_1"}]

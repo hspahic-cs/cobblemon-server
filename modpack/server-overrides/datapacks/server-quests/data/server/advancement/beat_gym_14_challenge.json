@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_14",
   "display": {
     "title": {
-      "text": "Gym 14: Grant \u2014 Challenge"
+      "text": "Gym 14: Caesar \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 14."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_14_rock_challenge"
+          "bt_14_rock_challenge"
         ],
         "trainer_type": null
       }

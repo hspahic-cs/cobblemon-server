@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_1",
   "display": {
     "title": {
-      "text": "Gym 1: Clay \u2014 Challenge"
+      "text": "Gym 1: Dusty \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 1."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_01_ground_challenge"
+          "bt_01_ground_challenge"
         ],
         "trainer_type": null
       }

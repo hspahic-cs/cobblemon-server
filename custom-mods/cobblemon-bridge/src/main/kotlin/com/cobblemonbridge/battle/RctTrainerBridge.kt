@@ -22,6 +22,7 @@ object RctTrainerBridge {
     @Volatile private var unavailable: Boolean = false
     private var trainerMobClass: Class<*>? = null
     private var startBattleWith: Method? = null
+    private var getTrainerIdM: Method? = null
     private val warnedOnce = AtomicBoolean(false)
 
     private fun resolve(): Boolean {
@@ -31,6 +32,7 @@ object RctTrainerBridge {
             try {
                 trainerMobClass = Class.forName(TRAINER_MOB_CLASS)
                 startBattleWith = trainerMobClass!!.getMethod("startBattleWith", Player::class.java)
+                getTrainerIdM = trainerMobClass!!.getMethod("getTrainerId")
                 resolved = true
                 unavailable = false
                 log.info("RCTmod bridge resolved — TrainerMob.startBattleWith ready")
@@ -51,6 +53,16 @@ object RctTrainerBridge {
     fun isTrainerMob(entity: Entity): Boolean {
         if (!resolve()) return false
         return trainerMobClass!!.isInstance(entity)
+    }
+
+    /** The entity's RCTmod TrainerId (datapack path), or null if it isn't a TrainerMob. */
+    fun trainerIdOf(entity: Entity): String? {
+        if (!resolve() || !trainerMobClass!!.isInstance(entity)) return null
+        return try {
+            getTrainerIdM!!.invoke(entity) as? String
+        } catch (e: Throwable) {
+            null
+        }
     }
 
     fun startBattleWith(trainer: Entity, player: Player): Boolean {

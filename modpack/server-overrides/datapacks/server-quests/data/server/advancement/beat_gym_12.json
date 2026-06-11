@@ -2,10 +2,10 @@
   "parent": "server:beat_gym_10",
   "display": {
     "title": {
-      "text": "Cheren"
+      "text": "Penny"
     },
     "description": {
-      "text": "Defeat Cheren (Normal-type, Level 60)."
+      "text": "Defeat Penny (Normal-type, Level 60)."
     },
     "icon": {
       "id": "cobblemon:ultra_ball"

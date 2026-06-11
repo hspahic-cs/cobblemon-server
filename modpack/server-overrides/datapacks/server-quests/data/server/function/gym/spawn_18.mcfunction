@@ -1,4 +1,4 @@
-# Spawn Gym 18: Marnie — Dark at the function caller's position.
+# Spawn Gym 18: Hobie — Dark at the function caller's position.
 # Trainer lives in the rctmod namespace (data/rctmod/trainers/gym_18_dark.json) — bare name
 # is enough for the summon command. TrainerId NBT is stored as just the path.
 
@@ -7,4 +7,4 @@ execute at @s run rctmod trainer summon_persistent gym_18_dark
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_18_dark"}] add cobblemon_bridge.gym_id.18
 execute at @s run tag @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_18_dark"}] add cobblemon_bridge.anchor
 execute at @s run data merge entity @e[type=rctmod:trainer,distance=..10,limit=1,sort=nearest,nbt={TrainerId:"gym_18_dark"}] {Invulnerable:1b,PersistenceRequired:1b}
-tellraw @s [{"text":"§a✓ Spawned Gym 18: Marnie — Dark","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_18"}]
+tellraw @s [{"text":"§a✓ Spawned Gym 18: Hobie — Dark","bold":true},{"text":"\n§7Delete: §f/function server:gym/delete_18"}]

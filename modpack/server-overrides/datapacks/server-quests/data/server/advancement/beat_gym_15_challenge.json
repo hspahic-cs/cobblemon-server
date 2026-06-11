@@ -2,7 +2,7 @@
   "parent": "server:beat_gym_15",
   "display": {
     "title": {
-      "text": "Gym 15: Skyla \u2014 Challenge"
+      "text": "Gym 15: Amos \u2014 Challenge"
     },
     "description": {
       "text": "Defeat the challenge variant of Gym 15."
@@ -20,7 +20,7 @@
       "conditions": {
         "count": 1,
         "trainer_ids": [
-          "gym_15_flying_challenge"
+          "bt_15_flying_challenge"
         ],
         "trainer_type": null
       }

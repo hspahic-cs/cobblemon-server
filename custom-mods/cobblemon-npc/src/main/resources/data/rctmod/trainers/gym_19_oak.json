@@ -1,7 +1,7 @@
 {
   "name": "Professor Oak",
   "identity": "Kanto Master",
-  "textureResource": "rctmod:textures/trainers/single/prof_prof_oak_01ff.png",
+  "textureResource": "rctmod:textures/trainers/single/gym_19_oak.png",
   "ai": {
     "type": "pe",
     "data": {}

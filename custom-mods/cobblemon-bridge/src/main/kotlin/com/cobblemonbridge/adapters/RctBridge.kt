@@ -79,8 +79,9 @@ object RctBridge {
     }
 
     /**
-     * Parses an RCT trainer id (`gym_<N>_<name>[_challenge]`) into (gymId, isChallenge).
-     * Returns null for ids that don't match the gym shape.
+     * Parses an RCT gym/battle-tower trainer id (`gym_<N>_<name>[_challenge]` or the
+     * `bt_<N>_<name>[_challenge]` battle-tower variants) into (gymId, isChallenge). Returns null for
+     * ids that don't match the gym shape.
      */
     fun parseGymTrainerId(trainerId: String): Pair<Int, Boolean>? {
         val m = GYM_ID_REGEX.matchEntire(trainerId) ?: return null
@@ -89,10 +90,10 @@ object RctBridge {
         return gymId to isChallenge
     }
 
-    /** `gym_06_electric` → (6, false); `gym_03_fighting_challenge` → (3, true). The body
-     *  segment is non-greedy + anchored so trailing `_challenge` is detected reliably even
-     *  for multi-word trainer names like `gym_07_water`. */
-    private val GYM_ID_REGEX = Regex("""^gym_(\d+)_.+?(_challenge)?$""")
+    /** `gym_06_electric` → (6, false); `gym_03_fighting_challenge` → (3, true); `bt_16_ice` and
+     *  `bt_16_ice_challenge` likewise. The body segment is non-greedy + anchored so trailing
+     *  `_challenge` is detected reliably even for multi-word names like `gym_07_water`. */
+    private val GYM_ID_REGEX = Regex("""^(?:gym|bt)_(\d+)_.+?(_challenge)?$""")
 
     private fun ensureResolved(): Boolean {
         if (resolved) return getInstanceM != null

@@ -67,7 +67,7 @@ object GymPrereqHook {
 
         // E4 gauntlet (gyms 21-23): handed off to E4GauntletHook, which enforces the
         // win-without-resetting requirement. Gym 20 still goes through the linear prereq below.
-        if (gymId in 21..23) {
+        if (gymId in 21..24) {
             if (!E4GauntletHook.canChallenge(player, gymId)) {
                 event.isCanceled = true
                 event.cancellationResult = InteractionResult.FAIL

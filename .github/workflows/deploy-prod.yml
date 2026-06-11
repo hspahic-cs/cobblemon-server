@@ -131,6 +131,20 @@ jobs:
             modpack/server-overrides/datapacks/ \
             ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/world/datapacks/
 
+      # Scoped --delete for the trainer-admin function folders ONLY (gym/e4/bt) — we own 100% of
+      # these, so pruning stale files here can't touch other datapacks. Clears renamed-away
+      # commands (e.g. the old numbered spawn_N) that the non-destructive rsync above leaves behind.
+      - name: Prune stale trainer-admin functions (gym/e4/bt)
+        run: |
+          base=modpack/server-overrides/datapacks/server-quests/data/server/function
+          dest=${{ env.INSTALL_DIR }}/world/datapacks/server-quests/data/server/function
+          for d in gym e4 bt; do
+            rsync -rltzO --delete \
+              -e "ssh -o StrictHostKeyChecking=yes" \
+              "$base/$d/" \
+              "${{ env.VM_USER }}@${{ env.VM_HOST }}:$dest/$d/"
+          done
+
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         run: |
           if [[ -d modpack/server-overrides/config ]]; then

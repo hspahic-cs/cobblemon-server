@@ -1,0 +1,25 @@
+{
+  "parent": "server:reach_pokedex_100",
+  "display": {
+    "title": {
+      "text": "Master Collector"
+    },
+    "description": {
+      "text": "Catch 300 different Pokémon species."
+    },
+    "icon": {
+      "id": "cobblemon:master_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/reach_pokedex_300"
+  }
+}

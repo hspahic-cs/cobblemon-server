@@ -1,6 +1,6 @@
 {
   "name": "Elite Four Cynthia",
-  "identity": "Hyper Offense",
+  "identity": "Sinnoh Champion",
   "textureResource": "rctmod:textures/trainers/single/gym_21_cynthia.png",
   "ai": {
     "type": "pe",
@@ -16,61 +16,90 @@
   "bag": [],
   "team": [
     {
-      "species": "grimmsnarl",
+      "species": "spiritomb",
       "level": 65,
-      "nature": "careful",
+      "nature": "calm",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
-        "hp": 252,
+        "hp": 180,
         "atk": 0,
         "def": 4,
         "spa": 0,
-        "spd": 252,
+        "spd": 180,
         "spe": 0
       },
-      "ability": "prankster",
-      "heldItem": "cobblemon:light_clay",
+      "ability": "infiltrator",
+      "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "reflect",
-        "lightscreen",
-        "thunderwave",
-        "spiritbreak"
+        "darkpulse",
+        "shadowball",
+        "willowisp",
+        "painsplit"
       ]
     },
     {
-      "species": "gyarados",
+      "species": "roserade",
       "level": 65,
-      "nature": "jolly",
+      "nature": "timid",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
-        "atk": 252,
+        "atk": 0,
         "def": 0,
-        "spa": 0,
+        "spa": 180,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
-      "ability": "moxie",
-      "heldItem": "cobblemon:lum_berry",
+      "ability": "naturalcure",
+      "heldItem": "cobblemon:black_sludge",
       "moveset": [
-        "dragondance",
-        "waterfall",
-        "bounce",
-        "earthquake"
+        "sludgebomb",
+        "gigadrain",
+        "sleeppowder",
+        "leafstorm"
+      ]
+    },
+    {
+      "species": "togekiss",
+      "level": 65,
+      "nature": "modest",
+      "ivs": {
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "evs": {
+        "hp": 180,
+        "atk": 0,
+        "def": 4,
+        "spa": 180,
+        "spd": 0,
+        "spe": 0
+      },
+      "ability": "serenegrace",
+      "heldItem": "cobblemon:leftovers",
+      "moveset": [
+        "airslash",
+        "moonblast",
+        "flamethrower",
+        "roost"
       ]
     },
     {
@@ -93,100 +122,71 @@
         "spd": 0,
         "spe": 252
       },
-      "ability": "justified",
-      "heldItem": "cobblemon:life_orb",
+      "form": "mega",
+      "ability": "adaptability",
       "moveset": [
         "swordsdance",
         "closecombat",
-        "extremespeed",
-        "bulletpunch"
+        "meteormash",
+        "extremespeed"
       ]
     },
     {
-      "species": "volcarona",
+      "species": "milotic",
       "level": 65,
-      "nature": "timid",
+      "nature": "bold",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
-        "hp": 4,
+        "hp": 180,
         "atk": 0,
-        "def": 0,
-        "spa": 252,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "flamebody",
-      "heldItem": "cobblemon:heavy_duty_boots",
-      "moveset": [
-        "quiverdance",
-        "bugbuzz",
-        "fireblast",
-        "gigadrain"
-      ]
-    },
-    {
-      "species": "tyranitar",
-      "level": 65,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 4,
-        "atk": 252,
-        "def": 0,
+        "def": 180,
         "spa": 0,
-        "spd": 0,
-        "spe": 252
-      },
-      "ability": "sandstream",
-      "heldItem": "cobblemon:focus_sash",
-      "moveset": [
-        "stoneedge",
-        "crunch",
-        "earthquake",
-        "dragondance"
-      ]
-    },
-    {
-      "species": "conkeldurr",
-      "level": 65,
-      "nature": "adamant",
-      "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
-      },
-      "evs": {
-        "hp": 252,
-        "atk": 252,
-        "def": 4,
-        "spa": 0,
-        "spd": 0,
+        "spd": 4,
         "spe": 0
       },
-      "ability": "guts",
-      "heldItem": "cobblemon:flame_orb",
+      "ability": "marvelscale",
+      "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "drainpunch",
-        "machpunch",
-        "knockoff",
-        "bulkup"
+        "scald",
+        "recover",
+        "icebeam",
+        "haze"
+      ]
+    },
+    {
+      "species": "garchomp",
+      "level": 65,
+      "nature": "jolly",
+      "ivs": {
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
+      },
+      "evs": {
+        "hp": 4,
+        "atk": 180,
+        "def": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 180
+      },
+      "ability": "roughskin",
+      "heldItem": "cobblemon:rocky_helmet",
+      "moveset": [
+        "swordsdance",
+        "earthquake",
+        "scaleshot",
+        "firefang"
       ]
     }
   ]

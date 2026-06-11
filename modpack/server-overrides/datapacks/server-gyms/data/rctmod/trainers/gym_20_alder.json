@@ -49,19 +49,19 @@
       "level": 65,
       "nature": "calm",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
-        "hp": 252,
+        "hp": 180,
         "atk": 0,
         "def": 4,
         "spa": 0,
-        "spd": 252,
+        "spd": 180,
         "spe": 0
       },
       "form": "galarian",
@@ -75,32 +75,32 @@
       ]
     },
     {
-      "species": "garchomp",
+      "species": "excadrill",
       "level": 65,
       "nature": "jolly",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
-        "atk": 252,
+        "atk": 180,
         "def": 0,
         "spa": 0,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
-      "ability": "roughskin",
-      "heldItem": "cobblemon:rocky_helmet",
+      "ability": "moldbreaker",
+      "heldItem": "cobblemon:leftovers",
       "moveset": [
         "stealthrock",
         "earthquake",
-        "scaleshot",
-        "firefang"
+        "ironhead",
+        "rockslide"
       ]
     },
     {
@@ -108,16 +108,16 @@
       "level": 65,
       "nature": "adamant",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
-        "hp": 252,
-        "atk": 252,
+        "hp": 180,
+        "atk": 180,
         "def": 4,
         "spa": 0,
         "spd": 0,
@@ -137,20 +137,20 @@
       "level": 65,
       "nature": "jolly",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
-        "atk": 252,
+        "atk": 180,
         "def": 0,
         "spa": 0,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
       "ability": "libero",
       "heldItem": "cobblemon:heavy_duty_boots",
@@ -166,20 +166,20 @@
       "level": 65,
       "nature": "timid",
       "ivs": {
-        "hp": 31,
-        "atk": 31,
-        "def": 31,
-        "spa": 31,
-        "spd": 31,
-        "spe": 31
+        "hp": 25,
+        "atk": 25,
+        "def": 25,
+        "spa": 25,
+        "spd": 25,
+        "spe": 25
       },
       "evs": {
         "hp": 4,
         "atk": 0,
         "def": 0,
-        "spa": 252,
+        "spa": 180,
         "spd": 0,
-        "spe": 252
+        "spe": 180
       },
       "ability": "flamebody",
       "heldItem": "cobblemon:heavy_duty_boots",

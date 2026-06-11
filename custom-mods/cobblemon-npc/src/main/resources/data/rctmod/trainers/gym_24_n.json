@@ -44,9 +44,9 @@
       ]
     },
     {
-      "species": "heatran",
+      "species": "ferrothorn",
       "level": 70,
-      "nature": "calm",
+      "nature": "sassy",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -63,17 +63,17 @@
         "spd": 252,
         "spe": 0
       },
-      "ability": "flashfire",
+      "ability": "ironbarbs",
       "heldItem": "cobblemon:leftovers",
       "moveset": [
-        "magmastorm",
-        "earthpower",
         "stealthrock",
-        "taunt"
+        "leechseed",
+        "powerwhip",
+        "gyroball"
       ]
     },
     {
-      "species": "landorus",
+      "species": "gliscor",
       "level": 70,
       "nature": "impish",
       "ivs": {
@@ -92,20 +92,22 @@
         "spd": 4,
         "spe": 0
       },
-      "form": "therian",
-      "ability": "intimidate",
-      "heldItem": "cobblemon:leftovers",
+      "ability": "poisonheal",
+      "heldItem": "cobblemon:toxic_orb",
       "moveset": [
         "earthquake",
-        "uturn",
-        "stoneedge",
-        "defog"
+        "knockoff",
+        "toxic",
+        "roost"
       ]
     },
     {
-      "species": "tapukoko",
+      "species": "rotom",
+      "aspects": [
+        "wash-appliance"
+      ],
       "level": 70,
-      "nature": "timid",
+      "nature": "modest",
       "ivs": {
         "hp": 31,
         "atk": 31,
@@ -115,20 +117,20 @@
         "spe": 31
       },
       "evs": {
-        "hp": 4,
+        "hp": 252,
         "atk": 0,
         "def": 0,
         "spa": 252,
-        "spd": 0,
-        "spe": 252
+        "spd": 4,
+        "spe": 0
       },
-      "ability": "electricsurge",
-      "heldItem": "cobblemon:life_orb",
+      "ability": "levitate",
+      "heldItem": "cobblemon:leftovers",
       "moveset": [
+        "voltswitch",
+        "hydropump",
         "thunderbolt",
-        "dazzlinggleam",
-        "uturn",
-        "roost"
+        "willowisp"
       ]
     },
     {

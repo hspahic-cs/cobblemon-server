@@ -9,6 +9,9 @@ import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.tags.BridgeTags
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
+import net.minecraft.nbt.StringTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
@@ -53,6 +56,21 @@ object E4GauntletHook {
 
     private const val E4_FIRST: Int = 20
     private const val E4_LAST: Int = 24
+
+    /** Player-NBT key holding a resumable snapshot of an in-flight gauntlet (next gym + dimension +
+     *  party), so a disconnect mid-gauntlet resumes on reconnect instead of restarting. */
+    private const val RUN_NBT_KEY = "cobblemon_bridge_e4_run"
+
+    /** Display name + the in-world statue each Elite Four member (and the Champion) stands under,
+     *  keyed by gym id. Used to tell the player exactly who to fight next and where to find them. */
+    private data class E4Member(val name: String, val statue: String)
+    private val E4_MEMBERS: Map<Int, E4Member> = mapOf(
+        20 to E4Member("Alder", "Ho-Oh"),
+        21 to E4Member("Cynthia", "Lucario"),
+        22 to E4Member("Ash", "Greninja"),
+        23 to E4Member("Lance", "Eternatus"),
+        24 to E4Member("N", "Rayquaza"),
+    )
 
     /** Next allowed gym in the gauntlet. Null = not in gauntlet (only gym 20 is fightable). */
     private val unlocked: MutableMap<UUID, Int> = ConcurrentHashMap()
@@ -123,6 +141,7 @@ object E4GauntletHook {
             gauntletDimension[uuid],
             partySnapshot[uuid]?.size,
         )
+        persist(player)
     }
 
     private fun cleanupGauntletState(uuid: UUID) {
@@ -156,21 +175,37 @@ object E4GauntletHook {
             if (gym < E4_LAST) {
                 val next = gym + 1
                 unlocked[player.uuid] = next
+                persist(player)
                 // Player walks to the next trainer manually and right-clicks them to continue;
                 // the gating ([canChallenge]) still enforces order, and a loss/flee still resets
                 // the gauntlet. The leashes (dimension + party) stay engaged through the Champion.
-                val label = if (next == E4_LAST) "the §6§lChampion§e (Gym $next)"
-                            else "E4 ${next - E4_FIRST + 1} (Gym $next)"
-                player.sendSystemMessage(Component.literal(
-                    "§6[Elite Four] §fNext: §e$label§f — challenge them next. " +
-                    "§7Don't leave the area or change your party, or you restart from E4 1."
-                ))
+                val beaten = E4_MEMBERS[gym]?.name ?: "Elite Four ${gym - E4_FIRST + 1}"
+                val nextMember = E4_MEMBERS[next]
+                if (next == E4_LAST) {
+                    // Cleared all four Elite Four — hand off to the Champion with some fanfare.
+                    player.sendSystemMessage(Component.literal(
+                        "§6§l[Elite Four] §r§aYou beat §e$beaten§a — that's all four Elite Four down! " +
+                        "§r§6§l⚔ It's time to face the Champion. §r§e${nextMember?.name ?: "The Champion"} " +
+                        "§fawaits beneath the §b${nextMember?.statue ?: "Champion"} statue§f. " +
+                        "§7This is the final battle — keep your party intact and don't leave the area."
+                    ))
+                } else {
+                    val nextLabel = nextMember?.name ?: "Elite Four ${next - E4_FIRST + 1}"
+                    val statue = nextMember?.statue ?: "their"
+                    player.sendSystemMessage(Component.literal(
+                        "§6[Elite Four] §r§aYou beat §e$beaten§a! §fGo challenge §e$nextLabel §7(E4 " +
+                        "${next - E4_FIRST + 1})§f next — you'll find them under the §b$statue statue§f. " +
+                        "§7Don't leave the area or change your party, or you restart from E4 1."
+                    ))
+                }
             } else {
                 // Beat the Champion (gym 24) — the gauntlet is truly complete. Clear all state.
                 cleanupGauntletState(player.uuid)
+                player.persistentData.remove(RUN_NBT_KEY)
                 player.sendSystemMessage(Component.literal(
-                    "§6§l[Champion] §fYou beat the Champion and conquered the Elite Four gauntlet — " +
-                    "§eyou are the Champion!"
+                    "§6§l✦ CHAMPION ✦ §r§fYou stormed through §eAlder§f, §eCynthia§f, §eAsh§f, and " +
+                    "§eLance§f, then toppled §eN§f at the summit. §6§lYou are the new Champion of the " +
+                    "Elite Four! §r§7Glory is yours."
                 ))
             }
         }
@@ -193,6 +228,7 @@ object E4GauntletHook {
     private fun failGauntlet(player: ServerPlayer, reason: String) {
         val hadState = unlocked.containsKey(player.uuid)
         cleanupGauntletState(player.uuid)
+        player.persistentData.remove(RUN_NBT_KEY)
         if (hadState) {
             player.sendSystemMessage(Component.literal(
                 "§c[Elite Four] §fGauntlet failed ($reason). Restart from §eE4 1 (Gym ${E4_FIRST})§f."
@@ -236,12 +272,66 @@ object E4GauntletHook {
     fun onPlayerLoggedOut(event: PlayerEvent.PlayerLoggedOutEvent) {
         val uuid = event.entity.uuid
         val hadUnlocked = unlocked.containsKey(uuid)
+        // Drop the in-memory live state only — the resumable snapshot stays in player NBT (written
+        // at every checkpoint by [persist]) so the gauntlet resumes on reconnect, not restarts.
         cleanupGauntletState(uuid)
         if (hadUnlocked) {
             CobblemonBridge.logger.info(
-                "E4 gauntlet cleared for {} on disconnect", event.entity.gameProfile.name,
+                "E4 gauntlet suspended for {} on disconnect — will resume on reconnect",
+                event.entity.gameProfile.name,
             )
         }
+    }
+
+    /** Resume a suspended gauntlet on reconnect (or server restart). Restores the snapshot written
+     *  by [persist] unless the player is no longer in the gauntlet dimension. No expiry — the Elite
+     *  Four has no daily rotation, so a run resumes whenever the player returns. */
+    @SubscribeEvent
+    fun onPlayerLoggedIn(event: PlayerEvent.PlayerLoggedInEvent) {
+        val player = event.entity as? ServerPlayer ?: return
+        val data = player.persistentData
+        if (!data.contains(RUN_NBT_KEY)) return
+        val tag = data.getCompound(RUN_NBT_KEY)
+        val gym = tag.getInt("nextGym")
+        val savedDim = ResourceLocation.tryParse(tag.getString("dimension"))
+        if (gym !in E4_FIRST..E4_LAST || savedDim == null ||
+            player.level().dimension().location() != savedDim) {
+            // Bad data, or the player isn't in the E4 area anymore — not resumable.
+            data.remove(RUN_NBT_KEY)
+            return
+        }
+        val party = tag.getList("party", 8 /* TAG_STRING */)
+            .mapNotNull { runCatching { UUID.fromString(it.asString) }.getOrNull() }.toSet()
+        unlocked[player.uuid] = gym
+        gauntletDimension[player.uuid] = savedDim
+        partySnapshot[player.uuid] = party
+        val member = E4_MEMBERS[gym]
+        val where = if (gym == E4_LAST)
+            "§r§6§lthe Champion §r§e${member?.name ?: "N"}§f beneath the §b${member?.statue ?: "Champion"} statue"
+        else
+            "§e${member?.name ?: "Elite Four ${gym - E4_FIRST + 1}"}§f (E4 ${gym - E4_FIRST + 1}) under the §b${member?.statue ?: "their"} statue"
+        player.sendSystemMessage(Component.literal(
+            "§6§l[Elite Four] §r§fWelcome back — your gauntlet is still live. Next: $where§f. " +
+            "§7Don't leave the area or change your party, or you restart from E4 1."
+        ))
+        CobblemonBridge.logger.info(
+            "E4 gauntlet resumed for {} at gym {}", player.gameProfile.name, gym,
+        )
+    }
+
+    /** Write a resumable snapshot (next gym + dimension + party) of the current run to player NBT.
+     *  Called at every progression checkpoint; player NBT is saved on the regular tick and on
+     *  logout, so the snapshot survives disconnect, clean restart, and crash. */
+    private fun persist(player: ServerPlayer) {
+        val uuid = player.uuid
+        val gym = unlocked[uuid] ?: return
+        val tag = CompoundTag()
+        tag.putInt("nextGym", gym)
+        gauntletDimension[uuid]?.let { tag.putString("dimension", it.toString()) }
+        val list = ListTag()
+        partySnapshot[uuid]?.forEach { list.add(StringTag.valueOf(it.toString())) }
+        tag.put("party", list)
+        player.persistentData.put(RUN_NBT_KEY, tag)
     }
 
 }

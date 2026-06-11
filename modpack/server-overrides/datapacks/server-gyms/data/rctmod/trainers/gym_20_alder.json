@@ -64,13 +64,15 @@
         "spd": 180,
         "spe": 0
       },
-      "form": "galarian",
+      "aspects": [
+        "galarian"
+      ],
       "ability": "regenerator",
       "heldItem": "cobblemon:heavy_duty_boots",
       "moveset": [
         "futuresight",
         "sludgebomb",
-        "chillyreception",
+        "sunnyday",
         "slackoff"
       ]
     },

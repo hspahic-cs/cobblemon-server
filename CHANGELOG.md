@@ -12,6 +12,51 @@ root README.
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-06-11
+
+### Added
+- **Disconnect-tolerant Elite Four & Battle Tower runs.** Previously a disconnect (or server
+  restart) mid-run wiped all progress, forcing a restart from E4 1 / tower floor 1 — punishing for
+  anyone who simply dropped connection mid-gauntlet. Both gauntlets now write a resumable snapshot
+  (next gym/floor + the locked party + dimension/epoch-day) to the player's NBT at each progression
+  checkpoint and restore it on reconnect, using the same crash-safe `persistentData` mechanism the
+  gym down-level recovery already relies on. A run now survives disconnect, a clean restart, and a
+  crash. (Cobblemon ends a battle on disconnect via `battle.stop()`, which fires no victory/flee
+  event — so the only thing that used to fail these runs on disconnect was the logout handler, which
+  now suspends rather than clears.)
+  - **Elite Four:** resumes wherever you left off, with no expiry (the gauntlet has no daily
+    rotation). Discarded only if you're no longer in the Elite Four dimension when you return.
+  - **Battle Tower:** resumes the same day, but if the **daily leader rotation** elapsed while you
+    were away (the run's stored epoch-day no longer matches today's), the run is voided and you're
+    told to restart from floor 1 — the tower's lineup changed underneath you. Clearing the tower
+    already-today still blocks a second key.
+  - The party lock, the E4 dimension leash, and every existing fail condition (loss / flee / healing
+    machine / party swap) are unchanged — only a disconnect no longer counts as a failure.
+
+## [0.16.1] - 2026-06-11
+
+### Fixed
+- **Elite Four megas spawned as base forms.** Cynthia's Mega Lucario (gym 21) and N's Mega Rayquaza
+  (gym 24) were authored with `"form":"mega"`, but rctmod's team parser silently ignores `form` — its
+  `PokemonModel` only reads `aspects` (`PokemonModelConverter` calls `setForcedAspects`), so both
+  fielded base-form stat blocks. Switched to `"aspects":["mega"]` (no held stone — the in-battle mega
+  transform is gen6/7-only and never fires in our `GEN_9_SINGLES` gyms; the aspect spawns the mega
+  pre-formed). Also corrected N's Rayquaza ability to its mega ability `deltastream` (was the base
+  `airlock`). The same ignored-`form` bug left Alder's "Galarian" Slowking (gym 20) as a base
+  Kantonian Slowking — fixed to `"aspects":["galarian"]`.
+- **Alder's Slowking summoned snow.** Its Chilly Reception set snow weather, which clashed with
+  Alder's fire core (Ho-Oh, Cinderace, Volcarona). Swapped Chilly Reception → Sunny Day so the
+  Slowking now sets sun to back the team. All four team edits were applied to both synced copies (the
+  `server-gyms` datapack and the `cobblemon-npc` skin jar).
+
+### Changed
+- **Elite Four progression messages now name the trainer and their statue.** Beating an E4 member
+  previously read only "Next: E4 2 (Gym 21)". It now reads e.g. "You beat Cynthia! Go challenge Ash
+  (E4 3) next — you'll find them under the Greninja statue." Clearing E4 #4 gives a Champion hand-off
+  ("…It's time to face the Champion. N awaits beneath the Rayquaza statue."), and beating N gives a
+  full Champion victory message. Statues map to each team's perfect-IV ace (Ho-Oh, Lucario, Greninja,
+  Eternatus, Rayquaza), defined in `E4GauntletHook.kt`.
+
 ## [0.16.0] - 2026-06-11
 
 ### Added

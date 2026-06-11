@@ -182,9 +182,11 @@
         "spd": 0,
         "spe": 252
       },
-      "form": "mega",
+      "aspects": [
+        "mega"
+      ],
       "shiny": true,
-      "ability": "airlock",
+      "ability": "deltastream",
       "moveset": [
         "dragonascent",
         "dragondance",

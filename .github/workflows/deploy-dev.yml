@@ -164,7 +164,7 @@ jobs:
         if: steps.idempotency.outputs.skip != 'true' && vars.RESOURCEPACK_URL != ''
         run: |
           ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
-            "bash -s -- '${{ vars.RESOURCEPACK_URL }}' '${{ vars.RESOURCEPACK_SHA1 || 'a28141b53d2e5f4a1f65396a28b4d6e98b2e205d' }}' '${{ env.INSTALL_DIR }}/server.properties'" \
+            "bash -s -- '${{ vars.RESOURCEPACK_URL }}' '${{ vars.RESOURCEPACK_SHA1 || '24cad3bdd37e658213d6186581e1533b4f1fe96a' }}' '${{ env.INSTALL_DIR }}/server.properties'" \
             < ops/set-server-resourcepack.sh
 
       - name: Atomic swap and restart

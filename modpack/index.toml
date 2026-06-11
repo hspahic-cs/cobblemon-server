@@ -335,11 +335,11 @@ metafile = true
 
 [[files]]
 file = "options.txt"
-hash = "2f23dffa324aefa21be3782439e6e5e2c66648ba07f7a00685cb967291d2fcff"
+hash = "29c313b2cffb39903b0936163f490b6fb8fd8ba224c1d83688f649317e01cfaa"
 
 [[files]]
-file = "resourcepacks/AllTheMons [R3.5].zip"
-hash = "c325f291e3318115f3631bb3cab0232cf98cbec423cdba1f0610b37e2222ae1a"
+file = "resourcepacks/AllTheMons [R3.5.1].zip"
+hash = "b455f15fa475c77463d6be6160fa4857bd19698837085d991be4a0c8af2fda2e"
 
 [[files]]
 file = "server-overrides/config/README.md"
@@ -434,8 +434,8 @@ file = "server-overrides/config/starterkit/kits/Default.txt"
 hash = "d8395dae433bc099ba84f0244e27d70c91487c3428b39a0475bc5f07ffcbe092"
 
 [[files]]
-file = "server-overrides/datapacks/AllTheMons [R3.5].zip"
-hash = "c325f291e3318115f3631bb3cab0232cf98cbec423cdba1f0610b37e2222ae1a"
+file = "server-overrides/datapacks/AllTheMons [R3.5.1].zip"
+hash = "b455f15fa475c77463d6be6160fa4857bd19698837085d991be4a0c8af2fda2e"
 
 [[files]]
 file = "server-overrides/datapacks/server-cobbleworkers-allowlists/data/cobbleworkers/jobs/amethyst_harvester.json"

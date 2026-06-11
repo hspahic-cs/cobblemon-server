@@ -136,7 +136,9 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         GymReturnCommands.register(event.dispatcher)
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
-        TradeCommand.register(event.dispatcher)
+        // /trade disabled — the custom Pokémon+money trade GUI was too buggy. Players use the
+        // native Cobblemon trade (look at a player, press R → Trade) and /pay for money instead.
+        // TradeCommand.register(event.dispatcher)
         MonumentCommand.register(event.dispatcher)
     }
 

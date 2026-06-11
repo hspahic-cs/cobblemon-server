@@ -1,0 +1,26 @@
+{
+  "_comment": "Granted by the per-tick check in quests/hud/tick once the player has all ten beat_gym_N_challenge advancements (the gym-type leaders, gyms 1-10) — any order. minecraft:impossible so only that check grants it; the reward function gives an Ultra Key.",
+  "parent": "server:beat_gym_10_challenge",
+  "display": {
+    "title": {
+      "text": "Hard Mode Master"
+    },
+    "description": {
+      "text": "Defeat the challenge variant of all ten gym-type leaders."
+    },
+    "icon": {
+      "id": "cobblemon:master_ball"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "rewards": {
+    "function": "server:quests/rewards/beat_all_challenge_gyms"
+  }
+}

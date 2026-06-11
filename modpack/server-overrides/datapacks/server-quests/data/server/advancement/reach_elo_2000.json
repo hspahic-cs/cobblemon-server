@@ -6,7 +6,7 @@
     "icon": { "id": "cobblemon:master_ball" },
     "frame": "challenge",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": false
   },
   "criteria": {
     "done": { "trigger": "minecraft:impossible" }

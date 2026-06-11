@@ -1631,227 +1631,227 @@ hash = "8f190188a4e2af1801f750558ff6c9a7f8304eb61dcb379b7bf41cba2679f026"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_faker.json"
-hash = "ae0f65671447d763130f120ba44eb6fec4f13e434e172012e7bcae03a6e6fe46"
+hash = "89ee9238b2c748f8d1df744d6ac3bd0a079d86a40977a5c2fc97fce3ca54ef0c"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_faker_challenge.json"
-hash = "55186374d93a8edfb7b17d4c03e40c49e479d8e13aa3cfc1b94d0f16ab4f8eca"
+hash = "3d405ebd6c732962820bc03eeef190b1ecb2c8de86a344644886722b1fa3475c"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_1.json"
-hash = "5563fdcc718fd9fe1b4d7870be729a85f0984a14ee391e347023433f65acb419"
+hash = "37564358eb237d63857f3ecca9d22f2353b5e3c70d6f3dddc15a2a361e5c99f4"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_10.json"
-hash = "5b2cca27f208d6d6d6ff015c4d4a1767aac17ff1fba956710419160dc5ce7939"
+hash = "a743ff44f6d9fa3bf32184152fc407d24082289eafed4a24be4d4132bd25a04a"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_10_challenge.json"
-hash = "430ec6b84c9c83d19fa351d03355c3a4c2d6a3dc4784f7f88a0d12ff473da588"
+hash = "131cf00c8074f9db06820d4638f2a9ad4b24b282db23ccbc11192fe5063a0e9b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_11.json"
-hash = "ceaf5fd33dc24ad6e511dcebd16234750e868a1848ae262f7483c695f5f077f4"
+hash = "cc21c8b233ed0bc8910f5e89e4a0a7bafa5587729d7c860fc91a1c1033323704"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_11_challenge.json"
-hash = "59d1cd543bc006950abf883e75877492b50b22da211f564a3f1ebd9cfd6117b4"
+hash = "96e873aeec35786157cba20367750701268ef78b929ed8696f12d346e3eff19d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_12.json"
-hash = "14d5fc7ef051e6a36a6cae0592718f8366b11d2a0b68a7a7fb3c8b8ea099b64e"
+hash = "6c6da9751fe10caafd1e462d3c70a1162208d2e794fb1790e549c4f873ec9334"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_12_challenge.json"
-hash = "92015c6ea4c5bde1e8d864239bcb57f2371d5fd23b25712afd0b750f3d3acd8f"
+hash = "128a330526cdcc7d587ada6da96cb924c6300a2684533b1db44525fde68c664f"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_13.json"
-hash = "e9e5b4a0dc17c41706cc401c45c8ab4030f234888559019e0419ecdad6316983"
+hash = "99f31c2d0579e7e06e1d42901423c90675f480a633468e6692ca27b37440a233"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_13_challenge.json"
-hash = "a0d63bed1410d795ad3a751bc0b4b6d27537c1237f8d34a19ee974a5da5b1b7a"
+hash = "702f68f376f0e87481e32f76aaacc117944e5f0d07760a86b6229c452b929725"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_14.json"
-hash = "75365915f74d3311211a9edd640621c02612f4504d98b7626fe1ec76bfedf7aa"
+hash = "872039d88db477c8597e2933cee23db82c43b40af50982440ce41425d5c2d608"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_14_challenge.json"
-hash = "85d3f93f01de8965400ca8b36c70e9effe6a5c5203ec7513b5458dee34c06f35"
+hash = "c448ff449053413ebcb6011fafc0db0d918d7e90d34253bc333ee4a7b06e0165"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_15.json"
-hash = "4e6459c2f43813851c19f2a59e2da18136563d1667a18066739a8f7b9a6a6167"
+hash = "261edbb1b4ed5480616ffa549fac33fc1a90be898fa327ce394e0306f6cf3c6f"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_15_challenge.json"
-hash = "e9049d2a512e4bb6691a95ed9f02168291faf407d2f0e61ea222cb09db4c7e62"
+hash = "8bab0ebe6f77fe26f30be3f9868252865a4d150ed7de976cddfd27dc9da8681d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_16.json"
-hash = "23988967377a5c3d19ade5065e1467d84342a4c28f156a72de58b0c22e15ee7a"
+hash = "05517864474af15f52e49eb1398e6dd8aa34f6889d585dc4ca26772a6d61f6ee"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_16_challenge.json"
-hash = "a8493708334fdf41492a8482134e74bf1c7dc1f36ec2a1479dd872f0ba56edf2"
+hash = "2ace3721dca6192634c0e04af18d54e82a52da57ea8e51b7c6034b3433a9a7ff"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_17.json"
-hash = "08752c7a1999a952c7a1f540ba33fccfab8cbd60f33a3d0ba7dc0d1d2a3b7287"
+hash = "d1e0c9c105fb0b1456d656a6e2ade9b9f000ba0f01b8198b419912444648e589"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_17_challenge.json"
-hash = "827cfabade890eaf85cf21cd5c42604c9932b8cc80e5ce3c7d2f223ababf8d61"
+hash = "9f90b6aec9a714ed041600a399b0655170de7d3660cce7c7da8f406b82b60ee3"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_18.json"
-hash = "6b63482af3b0fde5ed485478ab12e201bde4f8485829e5c1a671a4d71922258d"
+hash = "cf7c881e355f88426745a160f803c008f2800224c7aa8df4b92c0279191c2dd0"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_18_challenge.json"
-hash = "97d079ec4628aab3b2666fa848aa5434a39cedf5dfd80375e164080f4f31932b"
+hash = "4faca7945d247d5ba1bf931df5b01570b09e7a5d8a9bab56439c25c6bb3e610f"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_19.json"
-hash = "5205b09e7aa5db0b7d105ddbd68dc5c7fe2a9c377cfddf2fa7531ac9fa2e840e"
+hash = "45f3d74cf37c507cfe309260de51cf0de2c30517b76e093eb5c478d342dfea57"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_1_challenge.json"
-hash = "806aff1f7707cba2ea8d66e4143d28f2ab34b605e4f00646b8b156750c785ac7"
+hash = "d5d4ba8d647c8729fec1f60375979f05c8e726eee03ec594b3a592f182a7bd04"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_2.json"
-hash = "c2e96a678e5295c209257a786e25136cd91e7455ea3c9ac09e0a64e171584a1d"
+hash = "036fe5ee3af3e8ab1d8490de80e31c300e15c465352a20564fd9593caa2cb7c9"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_20.json"
-hash = "8076c3fb075ade3c9168ecc0ec6c5d404157cfc8b8a8a3e6ed43337724b6b08f"
+hash = "97d6b2d0def319d4f2ed51f256a8f16d578bf640574f9080e57bb338ff39fa2b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_21.json"
-hash = "6b0829012a946661fefe44b346acc11bd21137ae277608b6efba339a0e77a6d4"
+hash = "3267bf6600f2be3bbf792452c1a9cc81ec645b5149e147f74426318afc1f119e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_22.json"
-hash = "ef42cd057b13cc7113edf02816a14901689107cc8d9397f0f2e11249d2e79f09"
+hash = "5eee5a62c03956935de7da24e12ed7f42093216af94b971b9707ce75d4a4dfda"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_23.json"
-hash = "1b197e9227bae28e167ebb1902a21a7b748578b6f71f8aadbd86352fc834095f"
+hash = "5ff306486ae2a23589debd709b40fcca44dfee59c2a2fa2da3bff3211854568e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_24.json"
-hash = "b759df45b7262250b7e751e77c2420ff60e3360bd1da4b0e5360ec831162d487"
+hash = "9ded56e09aec039ce83f97c1e7fef609a2120d1a61635d311376f303ff12c827"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_2_challenge.json"
-hash = "94414038a9953c9c27b91f637850c96b2bd7f5e7de5936144d1ddf95dd245b75"
+hash = "46b5b8d8182a30363a6094d859b3faeb81980aae2b6dae8c46ca12c1d9054b0d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_3.json"
-hash = "f856659f68a539369bd80ca238cbf3a7735d30b66adb7732e67d3f2e446978dc"
+hash = "9c71c61001fa8f6e3eb0097dd6544b87cacdf57e851cf8042d34165cf797443a"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_3_challenge.json"
-hash = "c18bed17b10899bbddbb8c2cbd3ae112f6a8852017bc6d3c34bf629da2417281"
+hash = "41c91898ebe6423d94bdba1785358fdb2dca481ce6db63e310a848949322655e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_4.json"
-hash = "bad4ac28ec140819130c212f4c281ec655a3a6302aba187c1e459489ba03faad"
+hash = "d125d6e48215cb9e6efa0ac0d88f09e2609ae2fe9a10f89b6f0490ed1a933f45"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_4_challenge.json"
-hash = "aac693dbdbe89d25be215909b6b2efd0f9f56dc41c3a99ef44394a2a41aa4cac"
+hash = "b5f709b476fa5b05c5fbb64d19e5f83035914850b31c7ac1121c232bbc8a5b0c"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_5.json"
-hash = "23acdfa25c77450ab73e5d9e328b4f22533b493a77b598535df399101a38e729"
+hash = "6fb5a5cb652b61bb1cb5b5f6b300f202fbe4d1cb5ff20b023d3fabc45742abcb"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_5_challenge.json"
-hash = "32277c3fddaeecf2bff7c0eaee4e49043cc021624d1668bb55508b5ebff5b096"
+hash = "3aa8c6e47ecc5a87075ae85c51ffda593e2ca709a11d1782b1a2936b2a105623"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_6.json"
-hash = "0ef7ff1d8fc3fe3dd597f60e3365f596e1cbacd9b3e1b414db69a4ff33b13b41"
+hash = "c597638fa83fcbc6f6eca3db46304256dcdf44eb384da4ce75410dda4f28d814"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_6_challenge.json"
-hash = "c5c07fc7fc25fef3ceda2ab8afba7687bcdb98e9c1fa91923fab9f237da4925f"
+hash = "8161bfd3d389c7fe5784eac93d49010a295704964cdb7fc57dbb99e905dad50f"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_7.json"
-hash = "9f91dd2306f3b4f5b2dee4279a877f9c44921942e0c7fb0c43a68c0e5bbc72f1"
+hash = "476ea4c2730a574534acfa04af8aee5ea329c224308daf43056f8066832551ab"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_7_challenge.json"
-hash = "ebf9d06db144a63d3c4ac72f8f1bdd05df0440568577d2e814a6fa7ca13eb72d"
+hash = "a2dd8505e2deb668dda6b21c34f482c234c6f9a7d26af61a3e1a1d916ca5e04e"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_8.json"
-hash = "4aa0d0c6ff25af6cc808bc4d6bd61b4e52c9bd7e0c906fd2719b5522f8db4131"
+hash = "79dc551b5e1ab0370dfb27ff099e2c21748c24daccbf9f32d285dbdb76db7e14"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_8_challenge.json"
-hash = "3bf440707756171325a3e77e2f1c2847a62990f2a45e2f3fd1d9b45c0c965d8e"
+hash = "033a8216593f9a1a65f52a09ff634807774b3754f3d1533dc72e3d50b3818c0f"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_9.json"
-hash = "996cf59267612f97cb2b1773ead085d7d81fbdb2ff0625a4bf1edef1f0027878"
+hash = "ebae264c88dff8aa188989d9ce7a222f74f3a29320639668fae852624f9d0a43"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_gym_9_challenge.json"
-hash = "30c59e4b83ba956de0b624797999b0e8404ed59114be850876247e081f5378c4"
+hash = "0ebcd83d6377188b736dc8c687d9c71bef87e3c74cd5cbe34d82bd9e7425b8c2"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_oak.json"
-hash = "939173638d90a30eff0edb867a307214d8a421598c65bd9d88ab274889c43718"
+hash = "79c8c55897766c7bbd501741f48da24ce4cde67f27cecd9b8f028b35457da2ba"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_oak_challenge.json"
-hash = "ae451e85f5653eda14555930090118e4f3ce4e62ebad4a710345a082a1b4f332"
+hash = "18e7a7b9d390e102ad46835d411d7bfce15bfbc620fdf690f65f3dcff94893ac"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/beat_wild_trainer.json"
-hash = "7838505f7588966e92c57875ea06f46f45bcf1f38cb8c0755a20e569a699b254"
+hash = "16fbcf95a270b68e081eee8b60cbc155bd1baafafbcce38283863b6be7018949"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/catch_pokemon.json"
-hash = "315ec520d65791aa68ab8625fb7c57e3de57f37eea2d3830ab57fb0ecabd40ee"
+hash = "1cbe09d9ef3cad47a10f6973b1ad9dc65df05249a472d753c3059bf03f7be18d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/craft_pokeball.json"
-hash = "4f648b6295c3addeabba73c2eada0cccf408948797c62a20030b051863479bc9"
+hash = "0d7910e7412cfd38bbdd9a27ea2339d3795f85820391ad3f3f78a0b769d6dae0"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/evolve_exeggutor.json"
-hash = "f0cd75e4c2a7a476d6ce3e231811e024a93a7ed9e430c50273dc190769d9b61b"
+hash = "3a412df6c6d863e6c88a5d771246c298df375913704f39622d2b78ef995ccf45"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/farm_carrots.json"
-hash = "9c4a8d2e4b4195f5a35cb0cc35a57f39b0b0671f5ffab17e341498a50668ba56"
+hash = "ebe842140ea90b43d2407854d4473df97031b3829225b0f6a8e53c3300f9eeb5"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/first_pvp_win.json"
-hash = "20d1d9a0e98c8318883c6370d2b3c2d48832f82e928bdbfb6a76720f896e55c4"
+hash = "14cdf2d4812e7f5d9850b3ee811902e33f1938b7dbcfcaac81226125542255f9"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/heal_pokemon.json"
-hash = "e1295f9f458d0015932f01c81c1afb8144fbc9b970857dee05ca097d2c54de87"
+hash = "e8007e6b0c6c1151b4bf08442dd8046a83c2395c9de351ce98f87402e3a18ca6"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/join_colony.json"
-hash = "0c3e60aaca07e587bca094b08b8551364f09cef5b295b8315a46e03e93706e13"
+hash = "afab70b5a2dff260ada1b8d1f4d637f1c14e07b3af1b5923bc07255526697d4d"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/ranch_carrot_farm.json"
-hash = "06c925657d010ca84a6d2a812951f436b0c2c84939cf60a0c702eaddaf896b0b"
+hash = "7e9d288786b026df5d7c88f87bc8a267339016e7af900c13cb3623034d1815f2"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_elo_1100.json"
-hash = "26060125906f6aa9532b35a54fd1a04d9f672918cee2ac52c65708b10dea2376"
+hash = "d5d1d52f09b4ff6771fcb4d8fba3aadb81a17c9893896d446262f17222831af8"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_elo_1200.json"
@@ -1863,15 +1863,15 @@ hash = "f171783e824b1b5b1b9059d5fd510aa4733607967320d9b2a093192374f48c0f"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_elo_1500.json"
-hash = "fec1504bad29e32c7f53223d4d7b9cd34f152730f0a89c25d1dc2ecaed912c69"
+hash = "f688ebe6b7678dd76872be8acbf7cf5eb0bd115d2d334fdd6a10f3b405b4e127"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_elo_2000.json"
-hash = "57fbd7aadb07528743a8dd36f15b85d993c1a2c486b115b1b9c432a2dfa5e61d"
+hash = "2b964de450e9128b9b5d0b1b5bcff27fdd02363015147aa87dc3878ee22f7888"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_income_1000.json"
-hash = "dae7f037713a1f4c5ff55bae57d491d1c39991d31f753e8dec0811710aeaac44"
+hash = "f8ea84c98cef9df3afbb6419638a1f1dbc21b9596739c2040823df0669a8090b"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_income_10000.json"
@@ -1879,15 +1879,15 @@ hash = "4d2b9f4bb1c7eddacd7bb611a959a1eb1132ab4ff381a301c3439909c4b55558"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_income_100000.json"
-hash = "01be6552607c489f363ffe7ee1a22a1cb0a916490dc71ae1bf2af8e41d57d7f9"
+hash = "006fed5fe1f620a44882f3ec8a3fb984676408dd46883c2f326f2c3b683440b2"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_income_250.json"
-hash = "b981af72843e7e56fa72cfcce258e9671f9c684dfcaf763cf6b642427ec818b7"
+hash = "98af8b517052b58f1e5891d72d3fb1bc74377f9b6669a6b697f6deb0e8ec744a"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_party_level_20.json"
-hash = "64f46a9c5ab76415093c2e978bfe68d03cf60d34d9e3fbeca6acba3dc9e83cd8"
+hash = "5331889d94f1e84184ad06ebba777f0ee096c19c82541dca1a0be294b1578a60"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/reach_pokedex_100.json"
@@ -1903,11 +1903,11 @@ hash = "b290cb7b7de07055c73665625d35082092f5c7ed22e48ccf5107460e0ab4ae11"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/set_home.json"
-hash = "253937303180f890049caf2a5cc308bdd15457ca41f06f9978793995c8c33fff"
+hash = "07b6d01e565f697809d8f7016da20b3060f6d433395d502a03066de37447bd28"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/advancement/use_wild.json"
-hash = "a06544f9458c30b643fa3b075f13f2a413f9f0102eb68415de449614bab532c8"
+hash = "ed7c1831aa0f3c47ae97b346e02dfde4d1690718eb281e844a5051d4e9988102"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/data/server/function/gym/delete_all.mcfunction"

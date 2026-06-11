@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 
 from config import FoulPlayConfig
 
-from bridge import PickRequest, pick_move
+from bridge import PickRequest, pick_move, record_pick_failure
 
 logger = logging.getLogger("poke_engine_bridge")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -111,7 +111,11 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
     try:
         choice = pick_move(battle_id, req)
     except Exception as e:
-        _log_battle_turn(battle_id, body, {"error": f"{type(e).__name__}: {e}"})
+        err = f"{type(e).__name__}: {e}"
+        _log_battle_turn(battle_id, body, {"error": err})
+        # Also append to the consolidated, replayable pick_failures.jsonl so
+        # hard failures sit alongside the degraded ones for batch triage.
+        record_pick_failure(battle_id, body.model_dump(), err, degraded=False)
         raise
     elapsed_ms = int((time.monotonic() - started) * 1000)
     logger.info("battle=%s pick=%s elapsed_ms=%d", battle_id, choice, elapsed_ms)

@@ -1,4 +1,5 @@
 {
+  "textureResource": "rctmod:textures/trainers/single/type_dark.png",
   "type": "leader",
   "spawnWeightFactor": 0.0,
   "battleCooldownTicks": 240,

@@ -16,6 +16,8 @@ data class ResetReport(
     val regionsDeleted: Int,
     val bytesFreed: Long,
     val dryRun: Boolean,
+    /** True if the circuit breaker tripped: nothing was deleted because the run was too broad. */
+    val aborted: Boolean = false,
 )
 
 /**
@@ -50,6 +52,18 @@ object RegionResetter {
         return !overlaps
     }
 
+    /**
+     * Circuit breaker: true if deleting [deletable] of [total] regions exceeds [maxFraction].
+     * Guards against a fat-fingered box (e.g. collapsed to a point → ~100% deletable) wiping
+     * the world. A maxFraction >= 1.0 disables the check.
+     *
+     * Pure function: unit-tested alongside the geometry.
+     */
+    fun exceedsLimit(deletable: Int, total: Int, maxFraction: Double): Boolean {
+        if (maxFraction >= 1.0 || total <= 0) return false
+        return deletable.toDouble() / total.toDouble() > maxFraction
+    }
+
     /** Parses region coords from an `r.X.Z.mca` filename, or null if it doesn't match. */
     fun parseRegionCoords(fileName: String): Pair<Int, Int>? {
         val parts = fileName.split('.')
@@ -62,12 +76,16 @@ object RegionResetter {
     /**
      * Scans [dimensionFolder]'s region/ folder and deletes (or, when [dryRun], merely
      * tallies) every fully-outside region across all three chunk-data subfolders.
+     *
+     * Two passes: first classify every region (so we know the delete fraction), then — only
+     * if the [maxDeleteFraction] circuit breaker is satisfied — perform the deletions.
      */
     fun run(
         dimensionId: String,
         dimensionFolder: Path,
         box: BoundingBox,
         dryRun: Boolean,
+        maxDeleteFraction: Double,
         log: Logger,
     ): ResetReport {
         val regionDir = dimensionFolder.resolve("region")
@@ -76,33 +94,42 @@ object RegionResetter {
             return ResetReport(dimensionId, 0, 0, 0, dryRun)
         }
 
+        // Pass 1 — classify. Collect the names of fully-outside regions; count the rest.
+        val toDelete = ArrayList<String>()
         var kept = 0
-        var deleted = 0
-        var bytesFreed = 0L
-
         Files.list(regionDir).use { stream ->
             for (regionFile in stream) {
-                val coords = parseRegionCoords(regionFile.name) ?: continue
-                val (rx, rz) = coords
-                if (!isRegionFullyOutside(box, rx, rz)) {
-                    kept++
-                    continue
-                }
-                deleted++
-                // Delete the matching r.X.Z.mca in region/, entities/, poi/.
-                for (sub in MCA_SUBFOLDERS) {
-                    val target = dimensionFolder.resolve(sub).resolve(regionFile.name)
-                    if (!target.exists()) continue
-                    val size = runCatching { target.fileSize() }.getOrDefault(0L)
-                    if (dryRun) {
+                val (rx, rz) = parseRegionCoords(regionFile.name) ?: continue
+                if (isRegionFullyOutside(box, rx, rz)) toDelete.add(regionFile.name) else kept++
+            }
+        }
+
+        val total = kept + toDelete.size
+        if (exceedsLimit(toDelete.size, total, maxDeleteFraction)) {
+            val pct = if (total > 0) toDelete.size * 100 / total else 0
+            log.error(
+                "[{}] CIRCUIT BREAKER: would delete {} of {} region(s) ({}%) > limit {}%. " +
+                    "Aborting — check the box config. Nothing was deleted.",
+                dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
+            )
+            return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true)
+        }
+
+        // Pass 2 — delete (or tally) the matching r.X.Z.mca in region/, entities/, poi/.
+        var bytesFreed = 0L
+        for (name in toDelete) {
+            for (sub in MCA_SUBFOLDERS) {
+                val target = dimensionFolder.resolve(sub).resolve(name)
+                if (!target.exists()) continue
+                val size = runCatching { target.fileSize() }.getOrDefault(0L)
+                if (dryRun) {
+                    bytesFreed += size
+                } else {
+                    try {
+                        target.deleteIfExists()
                         bytesFreed += size
-                    } else {
-                        try {
-                            target.deleteIfExists()
-                            bytesFreed += size
-                        } catch (e: Exception) {
-                            log.warn("[{}] failed to delete {}: {}", dimensionId, target, e.message)
-                        }
+                    } catch (e: Exception) {
+                        log.warn("[{}] failed to delete {}: {}", dimensionId, target, e.message)
                     }
                 }
             }
@@ -111,8 +138,8 @@ object RegionResetter {
         val verb = if (dryRun) "would delete" else "deleted"
         log.info(
             "[{}] {} {} region(s), kept {}, {} {} MB ({})",
-            dimensionId, verb, deleted, kept, verb, bytesFreed / (1024 * 1024), regionDir,
+            dimensionId, verb, toDelete.size, kept, verb, bytesFreed / (1024 * 1024), regionDir,
         )
-        return ResetReport(dimensionId, kept, deleted, bytesFreed, dryRun)
+        return ResetReport(dimensionId, kept, toDelete.size, bytesFreed, dryRun)
     }
 }

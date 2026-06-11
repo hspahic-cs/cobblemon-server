@@ -90,6 +90,20 @@ class RegionResetterTest {
     }
 
     @Test
+    fun `circuit breaker trips only above the fraction`() {
+        // 95 of 100 deletable, limit 0.9 → trips.
+        assertTrue(RegionResetter.exceedsLimit(95, 100, 0.9))
+        // exactly at the limit → does not trip (strictly greater).
+        assertFalse(RegionResetter.exceedsLimit(90, 100, 0.9))
+        // well under → fine.
+        assertFalse(RegionResetter.exceedsLimit(50, 100, 0.9))
+        // disabled (>= 1.0) → never trips even at 100%.
+        assertFalse(RegionResetter.exceedsLimit(100, 100, 1.0))
+        // empty world → nothing to trip on.
+        assertFalse(RegionResetter.exceedsLimit(0, 0, 0.9))
+    }
+
+    @Test
     fun `parseRegionCoords reads valid names and rejects junk`() {
         assertEquals(39 to -40, RegionResetter.parseRegionCoords("r.39.-40.mca"))
         assertEquals(0 to 0, RegionResetter.parseRegionCoords("r.0.0.mca"))

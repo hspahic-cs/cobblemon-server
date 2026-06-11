@@ -69,11 +69,19 @@ object WildernessCommands {
                 src.sendSuccess({ Component.literal("  §c$dimId: unresolved dimension id") }, false)
                 continue
             }
-            val report = RegionResetter.run(dimId, folder, box, dryRun = true, log = CobblemonWilderness.logger)
+            val report = RegionResetter.run(
+                dimId, folder, box, dryRun = true, maxDeleteFraction = cfg.maxDeleteFraction, log = CobblemonWilderness.logger,
+            )
             val mb = report.bytesFreed / (1024 * 1024)
-            src.sendSuccess({
-                Component.literal("  $dimId: would delete ${report.regionsDeleted} region(s) (~${mb} MB), keep ${report.regionsKept}")
-            }, false)
+            if (report.aborted) {
+                src.sendSuccess({
+                    Component.literal("  §c$dimId: would delete ${report.regionsDeleted}/${report.regionsKept + report.regionsDeleted} regions — exceeds maxDeleteFraction (${cfg.maxDeleteFraction}); a real run would ABORT. Check the box.")
+                }, false)
+            } else {
+                src.sendSuccess({
+                    Component.literal("  $dimId: would delete ${report.regionsDeleted} region(s) (~${mb} MB), keep ${report.regionsKept}")
+                }, false)
+            }
         }
         return 1
     }

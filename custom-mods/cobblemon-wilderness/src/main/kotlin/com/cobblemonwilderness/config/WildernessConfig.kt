@@ -93,6 +93,12 @@ data class WildernessConfig(
     val warnPlayersOutsideBox: Boolean = true,
     /** IANA timezone used to render the reset date in player warnings. */
     val displayTimeZone: String = "America/New_York",
+    /**
+     * Circuit breaker. If a run would delete more than this fraction of a dimension's region
+     * files, it aborts and deletes nothing — a safety net against a mis-typed box (e.g. one
+     * collapsed to a point). Set to 1.0 to disable.
+     */
+    val maxDeleteFraction: Double = 0.9,
 ) {
     /** The box actually enforced — region-aligned when [snapToRegions] is on. */
     fun effectiveBox(): BoundingBox = if (snapToRegions) box.snappedToRegions() else box.normalized()

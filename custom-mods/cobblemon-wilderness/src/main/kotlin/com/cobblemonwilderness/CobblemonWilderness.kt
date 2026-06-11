@@ -99,7 +99,7 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
 
             val reason = if (forced) "manually armed" else "interval elapsed"
             logger.info("[{}] running reset ({}, dryRun={})...", dimId, reason, config.dryRun)
-            RegionResetter.run(dimId, folder, box, config.dryRun, logger)
+            RegionResetter.run(dimId, folder, box, config.dryRun, config.maxDeleteFraction, logger)
 
             if (!config.dryRun) {
                 state.lastResetEpochMillis[dimId] = now

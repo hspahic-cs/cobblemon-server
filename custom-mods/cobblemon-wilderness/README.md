@@ -9,6 +9,10 @@ deliberately turn it on.
 - A region file (`r.X.Z.mca`, 512×512 blocks) is deleted only if it does **not touch**
   the keep-box. Regions straddling an edge are always kept, so we never delete a chunk that
   touches the box.
+- A **circuit breaker** (`maxDeleteFraction`, default 0.9) aborts a run that would delete more
+  than that fraction of a dimension's regions and deletes nothing — a safety net against a
+  mis-typed box (e.g. collapsed to a point). `/wildreset preview` flags this too. Set to 1.0
+  to disable.
 - By default (`snapToRegions: true`) the box is expanded outward to whole-region boundaries
   before use, so the enforced keep-zone is exactly region-aligned — **what you configure is
   what gets kept, no hidden rounding.** `/wildreset status` shows both the configured and
@@ -32,7 +36,8 @@ deliberately turn it on.
   "box": { "minX": -20480, "minZ": -20480, "maxX": 20479, "maxZ": 20479 },
   "snapToRegions": true,
   "warnPlayersOutsideBox": true,
-  "displayTimeZone": "America/New_York"
+  "displayTimeZone": "America/New_York",
+  "maxDeleteFraction": 0.9
 }
 ```
 

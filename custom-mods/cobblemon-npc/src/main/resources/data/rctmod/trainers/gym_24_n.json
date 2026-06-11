@@ -183,6 +183,7 @@
         "spe": 252
       },
       "form": "mega",
+      "shiny": true,
       "ability": "airlock",
       "moveset": [
         "dragonascent",

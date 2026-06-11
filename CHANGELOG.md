@@ -12,6 +12,33 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-06-11
+
+### Added
+- **Faker & Professor Oak — secret battle-tower bosses.** Two master-tier challengers join the daily
+  tower rotation, each with a normal (`rb`) and hard (`pe`) track. Faker ("Unkillable Demon King")
+  fields a League-of-Legends-themed team of custom-nicknamed Pokémon; Professor Oak ("Kanto Master")
+  brings his legendary squad. Test-spawn via `/function server:tower/spawn_faker | spawn_oak`.
+- **Hidden boss achievements.** Four `hidden` advancements for beating Faker/Oak (normal & hard) —
+  invisible in the advancement tree until earned, each awarding a Rare Key (with a larger cash
+  bounty on Hard Mode).
+- **Authored gym level caps.** `config/cobblemon-bridge/runtime/gym_caps.json` is now the single
+  source of truth for per-gym in-battle caps and the overworld progression, replacing the old
+  number-derived formula. The Elite Four now enforce an L70 cap (previously unbounded).
+
+### Changed
+- **Elite Four rebalance.** Non-ace Pokémon softened (lower IVs/EVs) while each trainer's ace keeps
+  perfect stats. Re-themes: Alder's Garchomp → **Excadrill**, Lance's Garchomp → **Salamence**,
+  Cynthia now runs her full **Sinnoh (Platinum)** team with a Mega Lucario ace. Champion N
+  de-legendaried (Heatran/Landorus/Tapu Koko → Ferrothorn/Gliscor/Rotom-Wash), keeping Zekrom,
+  Zoroark, and a now-**shiny** Mega Rayquaza so Zoroark's Illusion shows a shiny disguise.
+- **Gym admin functions renamed** by type/name — e.g. `/function server:gym/spawn_gym_fire`,
+  `spawn_e4_alder` (was `spawn_5`, `spawn_20`).
+- **Achievements no longer broadcast to chat** — unlocks show a personal toast only.
+
+### Removed
+- 48 orphaned `aitest_*` trainer files (leftovers from the removed AI-test experiment).
+
 ## [0.13.2] - 2026-06-11
 
 ### Added

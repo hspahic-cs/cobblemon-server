@@ -131,6 +131,20 @@ jobs:
               "${{ env.VM_USER }}@${{ env.VM_HOST }}:$dest/$d/"
           done
 
+      # AllTheMons ships as a single version-named .zip datapack. The non-destructive datapack
+      # rsync above never deletes, so a version bump (R3.4 -> R3.5) leaves the old zip behind →
+      # two AllTheMons → duplicate Cobblemon species/animations → client crash. Prune any
+      # AllTheMons*.zip on the server that isn't the version we currently ship.
+      - name: Prune stale AllTheMons datapack zips
+        if: steps.idempotency.outputs.skip != 'true'
+        run: |
+          current=$(cd modpack/server-overrides/datapacks && ls AllTheMons*.zip 2>/dev/null | head -1)
+          if [ -n "$current" ]; then
+            ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+              "bash -s -- '${{ env.INSTALL_DIR }}/world/datapacks' '$current'" \
+              < ops/prune-stale-allthemons.sh
+          fi
+
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         if: steps.idempotency.outputs.skip != 'true'
         run: |

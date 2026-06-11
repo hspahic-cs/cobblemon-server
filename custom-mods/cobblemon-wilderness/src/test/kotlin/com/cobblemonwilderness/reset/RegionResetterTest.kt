@@ -79,6 +79,17 @@ class RegionResetterTest {
     }
 
     @Test
+    fun `contains is inclusive of both edges and rejects just past them`() {
+        val b = box.snappedToRegions() // X/Z [-20480..20479]
+        assertTrue(b.contains(0, 0))
+        assertTrue(b.contains(-20480, -20480)) // min corner, inclusive
+        assertTrue(b.contains(20479, 20479))   // max corner, inclusive
+        assertFalse(b.contains(20480, 0))      // one block past +X
+        assertFalse(b.contains(-20481, 0))     // one block past -X
+        assertFalse(b.contains(0, 20480))      // one block past +Z
+    }
+
+    @Test
     fun `parseRegionCoords reads valid names and rejects junk`() {
         assertEquals(39 to -40, RegionResetter.parseRegionCoords("r.39.-40.mca"))
         assertEquals(0 to 0, RegionResetter.parseRegionCoords("r.0.0.mca"))

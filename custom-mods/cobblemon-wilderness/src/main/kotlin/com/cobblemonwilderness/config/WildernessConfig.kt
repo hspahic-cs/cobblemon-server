@@ -49,6 +49,12 @@ data class BoundingBox(
         )
     }
 
+    /** True if block (x, z) lies inside the box (inclusive of both edges). */
+    fun contains(x: Int, z: Int): Boolean {
+        val n = normalized()
+        return x >= n.minX && x <= n.maxX && z >= n.minZ && z <= n.maxZ
+    }
+
     companion object {
         /** Side length of a region file in blocks (32 chunks). */
         const val REGION_SIZE = 512
@@ -79,6 +85,14 @@ data class WildernessConfig(
      * (boundary-straddling regions are still kept either way).
      */
     val snapToRegions: Boolean = true,
+    /**
+     * When true (default), warn players who are outside the keep-box — on boundary crossing
+     * and again on login — that anything they build/store out there will be reset. Only takes
+     * effect while [enabled] is true, so players aren't alarmed during the confirm-bases phase.
+     */
+    val warnPlayersOutsideBox: Boolean = true,
+    /** IANA timezone used to render the reset date in player warnings. */
+    val displayTimeZone: String = "America/New_York",
 ) {
     /** The box actually enforced — region-aligned when [snapToRegions] is on. */
     fun effectiveBox(): BoundingBox = if (snapToRegions) box.snappedToRegions() else box.normalized()

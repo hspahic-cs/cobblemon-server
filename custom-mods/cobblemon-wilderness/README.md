@@ -30,13 +30,23 @@ deliberately turn it on.
   "intervalDays": 14,
   "dimensions": ["minecraft:overworld"],
   "box": { "minX": -20480, "minZ": -20480, "maxX": 20479, "maxZ": 20479 },
-  "snapToRegions": true
+  "snapToRegions": true,
+  "warnPlayersOutsideBox": true,
+  "displayTimeZone": "America/New_York"
 }
 ```
 
 Two independent safety gates, both default-safe:
 - `enabled` — master switch. `false` = the mod is inert.
 - `dryRun` — when `true`, runs only **log** what they would delete (no deletion).
+
+## Player warnings
+
+While `enabled` is true and `warnPlayersOutsideBox` is on, players who stray outside the
+keep-box get a chat warning — once when they cross the boundary outward, and again on login
+if they're already outside — naming the safe build zone and when the area resets. A short
+"back inside, builds are safe" message fires when they return. Warnings are suppressed while
+`enabled` is false, so nobody is alarmed during the confirm-bases phase.
 
 ## Commands (`/wildreset`, op level 4)
 

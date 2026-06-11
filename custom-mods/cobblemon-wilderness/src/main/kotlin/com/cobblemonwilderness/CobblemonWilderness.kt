@@ -5,6 +5,7 @@ import com.cobblemonwilderness.config.ResetState
 import com.cobblemonwilderness.config.WildernessConfig
 import com.cobblemonwilderness.reset.DimensionFolders
 import com.cobblemonwilderness.reset.RegionResetter
+import com.cobblemonwilderness.warn.BoundaryWarden
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.storage.LevelResource
 import net.neoforged.api.distmarker.Dist
@@ -37,6 +38,9 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
 
         NeoForge.EVENT_BUS.addListener(::onServerAboutToStart)
         NeoForge.EVENT_BUS.addListener(::onRegisterCommands)
+        NeoForge.EVENT_BUS.addListener(BoundaryWarden::onServerTick)
+        NeoForge.EVENT_BUS.addListener(BoundaryWarden::onLogin)
+        NeoForge.EVENT_BUS.addListener(BoundaryWarden::onLogout)
 
         logger.info(
             "Cobblemon Wilderness Reset initialized (enabled={}, dryRun={}, intervalDays={}, box={})",

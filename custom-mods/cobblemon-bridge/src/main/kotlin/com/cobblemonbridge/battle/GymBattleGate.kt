@@ -64,11 +64,12 @@ object GymBattleGate {
                 )
                 return false
             }
+            if (!passCooldown(player, gymId)) return false
             GymBattleAdjustHook.stashCap(player.uuid, cap)
             return true
         }
 
-        if (gymId in 21..23) {
+        if (gymId in 21..24) {
             if (!E4GauntletHook.canChallenge(player, gymId)) {
                 player.sendSystemMessage(Component.literal(E4GauntletHook.lockedReason(gymId)))
                 CobblemonBridge.logger.debug(
@@ -97,7 +98,25 @@ object GymBattleGate {
                 return false
             }
         }
+        if (!passCooldown(player, gymId)) return false
         GymBattleAdjustHook.stashCap(player.uuid, cap)
+        return true
+    }
+
+    /** Gym battle anti-spam: blocks a gym re-challenge within [GymCooldown.COOLDOWN_TICKS] of the
+     *  last attempt. E4 gauntlet gyms are exempt (paced by [E4GauntletHook]). Records on pass. */
+    private fun passCooldown(player: ServerPlayer, gymId: Int): Boolean {
+        if (E4GauntletHook.isE4Gym(gymId)) return true
+        val now = player.serverLevel().gameTime
+        val rem = GymCooldown.remainingTicks(player.uuid, gymId, now)
+        if (rem > 0) {
+            player.sendSystemMessage(Component.literal(
+                "§c[Gym $gymId] §fOn cooldown — wait §e${(rem + 19) / 20}s§f before challenging this " +
+                "gym again. §7(2-minute anti-EXP-farm cooldown.)"
+            ))
+            return false
+        }
+        GymCooldown.record(player.uuid, gymId, now)
         return true
     }
 

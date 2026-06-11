@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-06-10
+
+### Changed
+- **Elite Four gauntlet now includes the Champion (gym 24)**, mainline-style: the gauntlet
+  is gyms 20-24 (E4 #1-4 + Champion), beaten consecutively in one run. Beating E4 #4 no
+  longer ends it — the dimension + party leashes stay engaged through the Champion, and
+  losing/fleeing/leaving (including against the Champion) restarts from E4 #1. E4 #4 and the
+  Champion still each award an Ultra Key. Quest descriptions updated to match.
+
+### Added
+- **Gym battle cooldown** — a 2-minute per-gym cooldown after starting a battle (announced in
+  chat when blocked), to stop gym battles being spam-farmed for EXP. Mainline/challenge/rotating
+  gyms only; the Elite Four gauntlet (gyms 20-24) is exempt.
+
 ## [0.12.3] - 2026-06-10
 
 ### Changed

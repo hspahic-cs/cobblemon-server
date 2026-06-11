@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.15.5] - 2026-06-11
+
+### Fixed
+- **Ho-Oh rendered garbled in battle** ("overlapping skins"). AllTheMons' Ho-Oh remodel declares the
+  generic geometry id `geometry.hooh` (the same id base Cobblemon uses); on its heavy 140-bone winged
+  model that id clash mispairs the animation onto the wrong model. Disabled just that remodel (via
+  `ops/disable-atm-remodels.sh`, which strips the resolver/model/poser/animation/texture from the
+  resourcepack copy) so Ho-Oh falls back to base Cobblemon's model. Species data, spawns, and the
+  server datapack copy are untouched. Other heavy-legendary remodels (Reshiram, Zekrom, Kyurem,
+  Giratina, Palkia, Lugia, Zacian, …) share the same id pattern and can be added to the same script
+  if they turn out to garble too.
+
 ## [0.15.4] - 2026-06-11
 
 ### Changed

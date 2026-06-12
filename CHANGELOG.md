@@ -12,6 +12,31 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.1] - 2026-06-11
+
+### Added
+- **Multiworld showcase worlds are now always sunny.** `WorldRulesHook` keeps weather permanently
+  clear in the `multiworld:*` dimensions (spawn, Elite Four, arenas) via a slow server-tick poll.
+  Multiworld gives each world independent weather, so this only affects the showcase worlds — the
+  survival overworld (the wilderness) keeps its normal weather cycle.
+
+### Changed
+- **No random trainers in the Elite Four or arenas.** Added `multiworld:elite4` / `multiworld:arena1`
+  / `multiworld:arena2` to rctmod's `dimensionBlacklist` so wandering trainers no longer spawn there.
+  (rctmod spawns trainers through its own system, bypassing the vanilla spawn event `WorldRulesHook`
+  already guards.) Placed gym / Elite Four trainers are command-summoned and unaffected.
+
+### Fixed
+- **Gym and Battle Tower battles now play the gym battle music.** In 0.18.0 the theme was stamped on
+  `EntityInteract`, which misses the force-battle/on-sight start path (how gym fights usually begin),
+  and Battle Tower trainers carry no `gym_id` tag at all — so neither was themed. Moved theme
+  stamping into `GymBattleGate`, the universal gate at the head of `TrainerMob.startBattleWith` that
+  covers both right-click and force-battle. Regular gyms, Battle Tower fights (shared gym pool), and
+  the Elite Four (per member) are now all themed reliably.
+- **Arena worlds were silent.** The arena exploration pool (`music.arena`) had no tracks — the arena
+  audio is the battle pool. `music.arena` now aliases the `battle.arena` pool (no duplicate audio),
+  so the arena world plays the arena music as ambient and PvP fights use the same pool.
+
 ## [0.18.0] - 2026-06-11
 
 ### Added
@@ -31,17 +56,6 @@ root README.
   - 77 tracks ship inside the mod jar as 128 kbps OGG Vorbis (~176 MB jar); the `.mrpack` delivers it
     to clients and the server skips it (`dist=[Dist.CLIENT]`). The source audio and conversion
     pipeline live under `ops/soundtracks/` (`build-soundtracks.py`, ffmpeg + oggenc).
-
-### Changed
-- **Multiworld showcase worlds are now always sunny.** `WorldRulesHook` keeps weather permanently
-  clear in the `multiworld:*` dimensions (spawn, Elite Four, arenas) via a slow server-tick poll.
-  Multiworld gives each world independent weather, so this only affects the showcase worlds — the
-  survival overworld (wilderness) keeps its normal weather cycle.
-- **No random trainers in the Elite Four or arenas.** Added `multiworld:elite4` / `multiworld:arena1`
-  / `multiworld:arena2` to rctmod's `dimensionBlacklist` so wandering trainers no longer spawn there.
-  (rctmod spawns trainers through its own system, bypassing the vanilla spawn event `WorldRulesHook`
-  already guards — so this needed the config knob.) Placed gym leaders / Elite Four trainers are
-  command-summoned and unaffected.
 
 ## [0.17.2] - 2026-06-11
 

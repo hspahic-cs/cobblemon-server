@@ -35,7 +35,9 @@ object GymBattleGate {
         // teleport to a higher floor, or an on-sight force-battle, can't skip floor 1. Their L50
         // scaling rides a separate adjust_level.50 tag, so no cap is stashed here.
         BridgeTags.findTowerFloor(trainer.tags)?.let { floor ->
-            return TowerGauntletHook.mayFightFloor(player.uuid, floor)
+            val ok = TowerGauntletHook.mayFightFloor(player.uuid, floor)
+            if (ok) BattleThemeHook.stashGymTheme(player.uuid)  // tower fights use the gym battle pool
+            return ok
         }
         val flatCap = BridgeTags.findLevelCap(trainer.tags)
         val gymId = BridgeTags.findGymId(trainer.tags)
@@ -43,7 +45,10 @@ object GymBattleGate {
             // Standalone flat-cap gym (pe AI-test) with no progression id — just cap and allow.
             // (Right-click also stashes via GymBattleAdjustHook.onEntityInteract; this covers any
             // force-battle path. Idempotent — same player, same cap.)
-            flatCap?.let { GymBattleAdjustHook.stashCap(player.uuid, it) }
+            flatCap?.let {
+                GymBattleAdjustHook.stashCap(player.uuid, it)
+                BattleThemeHook.stashGymTheme(player.uuid)  // flat-cap test gym → gym battle pool
+            }
             return true
         }
         // A flat level_cap tag overrides the gym_id formula (challenge gyms carry level_cap.50 so
@@ -66,6 +71,7 @@ object GymBattleGate {
             }
             if (!passCooldown(player, gymId)) return false
             GymBattleAdjustHook.stashCap(player.uuid, cap)
+            BattleThemeHook.stashTrainerTheme(player.uuid, gymId)
             return true
         }
 
@@ -80,6 +86,7 @@ object GymBattleGate {
             }
             E4GauntletHook.stashActive(player.uuid, gymId)
             GymBattleAdjustHook.stashCap(player.uuid, cap)
+            BattleThemeHook.stashTrainerTheme(player.uuid, gymId)  // per-member E4 theme
             return true
         }
 
@@ -100,6 +107,7 @@ object GymBattleGate {
         }
         if (!passCooldown(player, gymId)) return false
         GymBattleAdjustHook.stashCap(player.uuid, cap)
+        BattleThemeHook.stashTrainerTheme(player.uuid, gymId)
         return true
     }
 

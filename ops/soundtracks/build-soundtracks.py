@@ -69,7 +69,6 @@ EVENTS = [
     # event id            source subdir             dest subdir
     ("music.spawn",       "spawn",                  "music/spawn"),
     ("music.elite4",      "elite4",                 "music/elite4"),
-    ("music.arena",       "arena",                  "music/arena"),
     # Regular gym battles (gym 1–19) — one shared rotating pool, random per battle.
     ("battle.gym",        "gym-battle",             "battle/gym"),
     # Elite Four battle themes — one per member (gym 20–24), see BattleThemeHook.
@@ -81,6 +80,15 @@ EVENTS = [
     # Arena PvP battle theme (shared — no per-opponent split for PvP).
     ("battle.arena",      "arena-battle",           "battle/arena"),
 ]
+
+# Alias events reuse another event's already-converted tracks (no extra .ogg, no
+# source folder). Used so the arena WORLD plays the same pool as arena battles:
+# walking the arena uses `music.arena` (exploration) and a PvP fight uses
+# `battle.arena`, both pointing at the same files.
+#   alias event id -> source event id
+ALIASES = {
+    "music.arena": "battle.arena",
+}
 
 AUDIO_EXTS = {".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg", ".opus", ".wma"}
 
@@ -208,6 +216,12 @@ def main() -> None:
             print(f"  [{event}] (no source audio yet — empty)")
         grand_total += len(entries)
         sounds_json[event] = {"category": "music", "sounds": entries}
+
+    # Alias events reuse a built event's track list (no extra .ogg).
+    for alias_event, src_event in ALIASES.items():
+        src = sounds_json.get(src_event, {}).get("sounds", [])
+        sounds_json[alias_event] = {"category": "music", "sounds": [dict(s) for s in src]}
+        print(f"  [{alias_event}] -> alias of [{src_event}] ({len(src)} track(s))")
 
     SOUNDS_JSON.write_text(json.dumps(sounds_json, indent=2) + "\n")
     print(f"\nWrote {SOUNDS_JSON.relative_to(REPO_ROOT)} ({grand_total} track(s) total).")

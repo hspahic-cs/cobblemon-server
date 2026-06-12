@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **`/e4 skip` — op-only Elite Four test bypass.** Admins (op level 2) can toggle a per-player
+  bypass that lets them right-click and challenge any Elite Four member (gyms 20-24) out of order,
+  instead of grinding the full gauntlet in sequence — handy for testing a single E4 fight. With the
+  bypass on, `E4GauntletHook.canChallenge` accepts any E4 gym and the party-lock + dimension leashes
+  are disengaged for that player. In-memory per-UUID only (clears on restart) and affects no other
+  player, so live gauntlet runs are untouched. `/e4 skip` shows current state; `/e4 skip on|off`
+  toggles it.
+
 ## [0.17.1] - 2026-06-11
 
 ### Fixed

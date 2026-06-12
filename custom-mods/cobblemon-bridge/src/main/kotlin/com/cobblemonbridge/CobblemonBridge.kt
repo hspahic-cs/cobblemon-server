@@ -136,6 +136,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         SpawnCommands.register(event.dispatcher)
         TowerCommands.register(event.dispatcher)
         GymReturnCommands.register(event.dispatcher)
+        com.cobblemonbridge.commands.E4Command.register(event.dispatcher)  // op-only E4 test bypass
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
         // /trade disabled — the custom Pokémon+money trade GUI was too buggy. Players use the

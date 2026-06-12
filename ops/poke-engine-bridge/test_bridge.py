@@ -6,13 +6,20 @@ Run from this directory with foul-play on PYTHONPATH:
         ../../reference/foul-play/.venv/bin/python -m pytest test_bridge.py -q
 """
 
+import os
+
 import constants
 from fp.battle import Battle, Pokemon
 
 from bridge import (
+    FAILURE_LOG_NAME,
     PackedPokemon,
     PickRequest,
+    _Health,
+    _failure_fingerprint,
     _normalize_log_lines,
+    _rollover_if_large,
+    enforce_battle_log_budget,
     legal_fallback_move,
     overlay_opponent_team,
     parse_packed_team,
@@ -412,3 +419,86 @@ def test_overlay_adds_unrevealed_mon_to_reserve():
     assert pika.status == "brn"
     assert pika.item == "lightball"
     assert {m.name for m in pika.moves} == {"thunderbolt", "surf"}
+
+
+# --- health signal -----------------------------------------------------------
+
+
+def test_health_pool_breaks_trip_liveness_and_recover():
+    h = _Health()
+    assert h.is_live()
+    h.record_pool_break()
+    h.record_pool_break()
+    assert h.is_live()  # still under the default limit of 3
+    h.record_pool_break()
+    assert not h.is_live()  # 3 consecutive unrecovered breaks
+    h.record_ok()  # a good pick clears the streak
+    assert h.is_live()
+
+
+def test_health_degrades_never_flip_liveness():
+    h = _Health()
+    for _ in range(50):
+        h.record_degrade("ValueError: bad set")
+    snap = h.snapshot()
+    assert snap["live"] is True  # content bugs must not take the pod down
+    assert snap["degrades"] == 50
+    assert snap["recent_degrade_rate"] == 1.0
+    assert snap["last_error"] == "ValueError: bad set"
+
+
+# --- failure fingerprinting --------------------------------------------------
+
+
+def test_fingerprint_groups_same_type_and_deepest_frame():
+    tb1 = '  File "/foul-play/fp/x.py", line 10, in f\n  File "/app/bridge.py", line 99, in g\n'
+    tb2 = '  File "/other/path.py", line 3, in h\n  File "/app/bridge.py", line 99, in g\n'
+    # Same exception type + same deepest frame -> same bucket, regardless of the
+    # error message text or shallower frames.
+    assert _failure_fingerprint("IndexError: boom", tb1) == _failure_fingerprint(
+        "IndexError: totally different message", tb2
+    )
+
+
+def test_fingerprint_differs_on_frame_and_type():
+    tb_a = '  File "/app/bridge.py", line 99, in g\n'
+    tb_b = '  File "/app/bridge.py", line 42, in g\n'
+    assert _failure_fingerprint("IndexError: x", tb_a) != _failure_fingerprint(
+        "IndexError: x", tb_b
+    )
+    assert _failure_fingerprint("IndexError: x", tb_a) != _failure_fingerprint(
+        "KeyError: x", tb_a
+    )
+
+
+# --- log rotation ------------------------------------------------------------
+
+
+def test_battle_log_budget_evicts_oldest_and_spares_failures(tmp_path):
+    for i in range(3):
+        p = tmp_path / f"battle{i}.jsonl"
+        p.write_text("x" * 1000)
+        os.utime(p, (1000 + i, 1000 + i))  # battle0 oldest, battle2 newest
+    failures = tmp_path / FAILURE_LOG_NAME
+    failures.write_text("y" * 5000)  # large, but exempt — must survive
+
+    enforce_battle_log_budget(str(tmp_path), max_bytes=1500)
+
+    assert failures.exists() and failures.stat().st_size == 5000
+    remaining = {p.name for p in tmp_path.glob("battle*.jsonl")}
+    assert "battle2.jsonl" in remaining  # newest kept
+    assert "battle0.jsonl" not in remaining  # oldest evicted first
+    battle_bytes = sum(p.stat().st_size for p in tmp_path.glob("battle*.jsonl"))
+    assert battle_bytes <= 1500
+
+
+def test_rollover_rotates_past_cap_only(tmp_path):
+    p = tmp_path / FAILURE_LOG_NAME
+    p.write_text("z" * 2000)
+    _rollover_if_large(str(p), cap=1000)
+    assert not p.exists()  # rolled to .1, append re-creates a fresh file
+    assert (tmp_path / (FAILURE_LOG_NAME + ".1")).exists()
+
+    p.write_text("z" * 500)  # under cap -> left alone
+    _rollover_if_large(str(p), cap=1000)
+    assert p.exists()

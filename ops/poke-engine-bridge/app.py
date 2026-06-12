@@ -22,11 +22,20 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from config import FoulPlayConfig
 
-from bridge import PickRequest, pick_move, record_pick_failure, legal_fallback_move
+from bridge import (
+    PickRequest,
+    pick_move,
+    record_pick_failure,
+    legal_fallback_move,
+    enforce_battle_log_budget,
+    health,
+    LOG_DIR_MAX_BYTES,
+)
 
 logger = logging.getLogger("poke_engine_bridge")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -53,6 +62,9 @@ def _log_battle_turn(battle_id: str, body: PickRequestBody, outcome: dict) -> No
     try:
         path = Path(BATTLE_LOG_DIR)
         path.mkdir(parents=True, exist_ok=True)
+        # Keep the per-pod PVC under budget by evicting old battle logs first;
+        # pick_failures.jsonl is exempt so the backlog survives a full disk.
+        enforce_battle_log_budget(BATTLE_LOG_DIR, LOG_DIR_MAX_BYTES)
         record = {"ts": time.time(), "battle_id": battle_id}
         record.update(body.model_dump())
         record.update(outcome)
@@ -88,8 +100,16 @@ class PickResponse(BaseModel):
 
 
 @app.get("/healthz")
-def healthz() -> dict[str, str]:
-    return {"status": "ok"}
+def healthz() -> JSONResponse:
+    # Liveness/readiness target. Returns 503 only on pod-local corruption a
+    # restart fixes (the MCTS pool persistently broken) — see bridge._Health.
+    # Content/data bugs degrade picks but keep the status 200 on purpose: they're
+    # deterministic, so recycling pods wouldn't help and would drop live battles
+    # (and could mark BOTH replicas unhealthy → outage). The body always carries
+    # the counters for observability.
+    snap = health.snapshot()
+    snap["status"] = "ok" if snap["live"] else "degraded"
+    return JSONResponse(snap, status_code=200 if snap["live"] else 503)
 
 
 @app.post("/battles/{battle_id}/pick", response_model=PickResponse)
@@ -123,8 +143,15 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
             err,
             exc_info=True,
         )
-        record_pick_failure(battle_id, body.model_dump(), err, degraded=True)
         choice = legal_fallback_move(body.request_json, req.force_switch)
+        # One consolidated, replayable record per failure (battle + traceback +
+        # the fallback move the player got + a grouping fingerprint), then keep
+        # serving: this battle limps on with a legal move, every other battle on
+        # the worker is untouched, and the backlog accumulates for a batch fix.
+        record_pick_failure(
+            battle_id, body.model_dump(), err, degraded=True, degraded_move=choice
+        )
+        health.record_degrade(err)
         elapsed_ms = int((time.monotonic() - started) * 1000)
         _log_battle_turn(
             battle_id,
@@ -133,6 +160,7 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
         )
         return PickResponse(move_choice=choice, search_ms=elapsed_ms)
     elapsed_ms = int((time.monotonic() - started) * 1000)
+    health.record_ok()
     logger.info("battle=%s pick=%s elapsed_ms=%d", battle_id, choice, elapsed_ms)
     _log_battle_turn(battle_id, body, {"pick": choice, "search_ms": elapsed_ms})
     return PickResponse(move_choice=choice, search_ms=elapsed_ms)

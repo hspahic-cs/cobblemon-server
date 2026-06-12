@@ -1,0 +1,28 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "cobblemon_soundtracks"
+version = "${version}"
+displayName = "Cobblemon Soundtracks"
+description = "Client-only. Plays a per-world looping soundtrack in the custom Multiworld dimensions (spawn, Elite Four, arenas). Hooks NeoForge's SelectMusicEvent and overrides the situational music with a per-dimension playlist; the survival overworld (wilderness) is left untouched so it keeps vanilla music. Audio ships inside this jar."
+authors = "harris"
+# Client-only mod. The server doesn't load it (dist=[Dist.CLIENT]); it carries
+# no payload channels, so vanilla / non-client-mod players can still connect.
+# IGNORE_ALL_VERSION lets clients connect to servers without a matching mod.
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.cobblemon_soundtracks]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.cobblemon_soundtracks]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "[5,)"
+ordering = "NONE"
+side = "CLIENT"

@@ -156,6 +156,13 @@ runs:
         path: custom-mods/cobblemon-wilderness/build/libs
         key: jar-cobblemon-wilderness-${{ hashFiles('custom-mods/cobblemon-wilderness/src/**', 'custom-mods/cobblemon-wilderness/build.gradle*', 'custom-mods/cobblemon-wilderness/gradle.properties') }}
 
+    - name: Cache cobblemon-soundtracks build
+      id: cache-soundtracks
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-soundtracks/build/libs
+        key: jar-cobblemon-soundtracks-${{ hashFiles('custom-mods/cobblemon-soundtracks/src/**', 'custom-mods/cobblemon-soundtracks/build.gradle*', 'custom-mods/cobblemon-soundtracks/gradle.properties') }}
+
     - name: Build only mods missing from cache
       shell: bash
       env:
@@ -175,6 +182,7 @@ runs:
           cobblemon-poke-ai:${{ steps.cache-poke-ai.outputs.cache-hit }}
           cobblemon-ranked:${{ steps.cache-ranked.outputs.cache-hit }}
           cobblemon-wilderness:${{ steps.cache-wilderness.outputs.cache-hit }}
+          cobblemon-soundtracks:${{ steps.cache-soundtracks.outputs.cache-hit }}
       run: |
         set -euo pipefail
 
@@ -261,7 +269,7 @@ runs:
 
         # Remove prior versions of in-house mods from every staging location.
         # Keep .pw.toml manifests for the third-party mods packwiz resolves.
-        for mod in "${SERVER_ONLY[@]}" cobblemon-feedback-client cobblemon-npc; do
+        for mod in "${SERVER_ONLY[@]}" cobblemon-feedback-client cobblemon-npc cobblemon-soundtracks; do
           rm -f "modpack/mods/${mod}-"*.jar
           rm -f "modpack/server-overrides/mods/${mod}-"*.jar
         done

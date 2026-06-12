@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.0] - 2026-06-11
+
+### Added
+- **Per-world soundtracks.** A new client-only mod (`cobblemon-soundtracks`) plus a server-side hook
+  give the custom Multiworld dimensions their own music, while the survival overworld (the wilderness)
+  is left untouched on vanilla music.
+  - **Exploration music** is chosen by dimension via NeoForge's `SelectMusicEvent`: the spawn hub
+    (`multiworld:spawn`) and the Elite Four world (`multiworld:elite4`) each play their own pool of
+    tracks; every other dimension keeps vanilla music.
+  - **Battle music** is driven by Cobblemon's per-actor `battleTheme` (`cobblemon-bridge`'s new
+    `BattleThemeHook`): the Elite Four play a theme **per member** (Alder / Cynthia / Ash / Lance / N,
+    keyed on gym id 20–24), all regular gym fights (1–19) share one rotating pool, and the PvP arenas
+    share a pool. Cobblemon auto-pauses the exploration track for the battle's duration and resumes it
+    after. Music is per-player (only the battlers — and any spectators — hear a battle theme).
+  - Track selection is the engine's random pick (per music cycle / per battle) for now; a strict
+    no-repeat shuffle was deferred.
+  - 77 tracks ship inside the mod jar as 128 kbps OGG Vorbis (~176 MB jar); the `.mrpack` delivers it
+    to clients and the server skips it (`dist=[Dist.CLIENT]`). The source audio and conversion
+    pipeline live under `ops/soundtracks/` (`build-soundtracks.py`, ffmpeg + oggenc).
+
 ## [0.17.2] - 2026-06-11
 
 ### Added

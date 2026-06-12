@@ -1,0 +1,359 @@
+{
+  "music.spawn": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:music/spawn/celadon",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/mistralton",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/routes101",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/rustboro",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/southprovince",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/vermilion",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/virbank_city",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/spawn/viridian",
+        "stream": true
+      }
+    ]
+  },
+  "music.elite4": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen1_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen1_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen1_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen2_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen2_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen2_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen3_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen3_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen4_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen4_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen5_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen6_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:music/elite4/gen7_1",
+        "stream": true
+      }
+    ]
+  },
+  "music.arena": {
+    "category": "music",
+    "sounds": []
+  },
+  "battle.gym": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/gym/hoenn_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/hoenn_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/hoenn_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/johto_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/johto_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/johto_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/kanto_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/kanto_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/kanto_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/kanto_4",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/kanto_5",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/kanto_6",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/sinnoh_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/sinnoh_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/sinnoh_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/unova_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/unova_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/unova_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/gym/unova_4",
+        "stream": true
+      }
+    ]
+  },
+  "battle.e4_alder": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/e4/alder/alder",
+        "stream": true
+      }
+    ]
+  },
+  "battle.e4_cynthia": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/e4/cynthia/cynthia",
+        "stream": true
+      }
+    ]
+  },
+  "battle.e4_ash": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/e4/ash/ash",
+        "stream": true
+      }
+    ]
+  },
+  "battle.e4_lance": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/e4/lance/lance",
+        "stream": true
+      }
+    ]
+  },
+  "battle.e4_n": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/e4/n/n",
+        "stream": true
+      }
+    ]
+  },
+  "battle.arena": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen1_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen1_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen1_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen2_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen2_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen2_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen3_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen3_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen4_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen4_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen5_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen6_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen7_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/hoenn_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/hoenn_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/hoenn_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/johto_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/johto_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/johto_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_4",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_5",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_6",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/sinnoh_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/sinnoh_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/sinnoh_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_4",
+        "stream": true
+      }
+    ]
+  }
+}

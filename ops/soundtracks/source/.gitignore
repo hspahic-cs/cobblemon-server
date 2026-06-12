@@ -1,0 +1,11 @@
+# Source audio is the input, not the artifact: it can be large and is often
+# copyrighted. Only the converted .ogg that ship inside the mod jar are
+# committed (under custom-mods/cobblemon-soundtracks/.../sounds/music/).
+*.mp3
+*.wav
+*.flac
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.wma

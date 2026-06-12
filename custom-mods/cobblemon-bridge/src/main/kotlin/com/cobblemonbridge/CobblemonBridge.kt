@@ -3,6 +3,7 @@ package com.cobblemonbridge
 import com.cobblemonbridge.adapters.CobbleloootsAdapter
 import com.cobblemonbridge.adapters.LegendaryMonumentsTerraBlenderShim
 import com.cobblemonbridge.battle.AdjustLevelHook
+import com.cobblemonbridge.battle.BattleThemeHook
 import com.cobblemonbridge.battle.E4GauntletHook
 import com.cobblemonbridge.battle.GivePartyExpHook
 import com.cobblemonbridge.battle.GymBattleAdjustHook
@@ -73,6 +74,11 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.register(GymBattleAdjustHook)
         E4GauntletHook.registerEvents()
         NeoForge.EVENT_BUS.register(E4GauntletHook)
+        // Custom battle music: per-member Elite Four, a shared rotating pool for
+        // regular gyms, and a shared pool for PvP arenas. CobblemonEvents drives
+        // battle start; the game-bus registration is for the gym EntityInteract stamp.
+        BattleThemeHook.registerEvents()
+        NeoForge.EVENT_BUS.register(BattleThemeHook)
         com.cobblemonbridge.battle.TowerGauntletHook.registerEvents()
         NeoForge.EVENT_BUS.register(com.cobblemonbridge.battle.TowerGauntletHook)
         NeoForge.EVENT_BUS.register(com.cobblemonbridge.battle.TowerEntryHook)

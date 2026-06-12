@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.17.2] - 2026-06-11
+
 ### Added
 - **`/e4 skip` — op-only Elite Four test bypass.** Admins (op level 2) can toggle a per-player
   bypass that lets them right-click and challenge any Elite Four member (gyms 20-24) out of order,

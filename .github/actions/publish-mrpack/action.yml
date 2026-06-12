@@ -20,6 +20,13 @@ inputs:
     description: "Pass 'true' to leave as draft. Currently unused."
     required: false
     default: 'false'
+  make-latest:
+    description: |
+      'true' to mark this release as the repo's "Latest" release. Default 'false'
+      so the rolling dev-latest pre-release never claims the badge; deploy-prod
+      passes 'true' for per-tag releases.
+    required: false
+    default: 'false'
   body:
     description: Markdown body for the release
     required: false
@@ -74,7 +81,7 @@ runs:
         name: ${{ inputs.release-name }}
         prerelease: ${{ inputs.prerelease }}
         draft: ${{ inputs.draft }}
-        make_latest: false
+        make_latest: ${{ inputs.make-latest }}
         body: ${{ inputs.body }}
         files: |
           modpack/*.mrpack

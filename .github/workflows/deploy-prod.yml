@@ -257,6 +257,7 @@ jobs:
           release-name: ${{ steps.ref.outputs.tag }}
           prerelease: 'false'
           draft: 'false'
+          make-latest: 'true'
           rolling: 'false'
           extra-files: custom-mods/*/build/libs/cobblemon-*-${{ steps.ref.outputs.version }}.jar
           github-token: ${{ secrets.GITHUB_TOKEN }}

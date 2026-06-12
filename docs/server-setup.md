@@ -62,6 +62,39 @@ can rsync into `staging/`, create new `mods.vX.Y.Z/` directories, and swap
 the `mods/` directory without sudo. World data is owned by `sysadmin` and
 not touched by deploys.
 
+### Service `UMask` (group-writable runtime config)
+
+The deploy overlays authored config (`modpack/server-overrides/config/`) onto
+`/opt/cobblemon-{env}/config/` as `deployer`. Some of those files live under
+dirs the **running service creates** at runtime (e.g.
+`config/cobblemon-bridge/runtime/`, which holds both authored files like
+`gym_caps.json` and service-written state like `favorites.json`). The service
+runs as `sysadmin`, so it owns those dirs — and unless they're group-writable,
+`deployer` (a member of the `sysadmin` group) can't write the authored files
+into them and the deploy fails with `mkstemp ... Permission denied`.
+
+To keep service-created dirs group-writable, both units carry a drop-in:
+
+```
+# /etc/systemd/system/cobblemon-{prod,dev}.service.d/umask.conf
+[Service]
+UMask=0002
+```
+
+Apply it (and reload) with:
+
+```
+for e in prod dev; do
+  D=/etc/systemd/system/cobblemon-$e.service.d
+  sudo install -d "$D"
+  printf '[Service]\nUMask=0002\n' | sudo tee "$D/umask.conf" >/dev/null
+done
+sudo systemctl daemon-reload   # takes effect on the next service (re)start
+```
+
+`UMask` only affects **newly created** dirs, so fix any pre-existing ones once
+with `sudo find /opt/cobblemon-{env}/config -type d -exec chmod g+ws {} \;`.
+
 ## Deploy model (how CI uses this layout)
 
 1. Runner builds the modpack, computes the new `mods/` tree.

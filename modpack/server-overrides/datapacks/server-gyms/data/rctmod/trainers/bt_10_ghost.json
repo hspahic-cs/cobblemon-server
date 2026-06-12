@@ -1,5 +1,5 @@
 {
-  "name": "Grimm",
+  "name": "Grimm [Normal]",
   "identity": "Ghost",
   "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
   "ai": {

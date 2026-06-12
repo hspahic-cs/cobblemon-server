@@ -9,6 +9,12 @@ NORMAL-track trainer from each:
   - `bt_NN_type` — same team as `bt_NN_type_challenge` but `ai → rb` (Run & Bun) and no cap (the
     tower applies the cap only to the challenge track). Easier: weaker AI + the player can out-level.
 
+Both tracks share a leader name (e.g. "Penny"), which is also the name shown in the battle UI — so
+without a marker, players can't tell a HARD floor from a NORMAL one mid-battle. This script stamps a
+mode suffix onto each track's `name`: `Penny [HARD]` / `Penny [Normal]` (matching the over-head
+nameplate convention in TowerManager). The suffix is stripped-then-reapplied, so re-runs are
+idempotent even though the HARD track is hand-maintained source.
+
 For each it writes the trainer to the server-gyms datapack + cobblemon-npc resources (skin), and
 copies the challenge's mob config + loot table. Run from anywhere; idempotent:
 
@@ -18,11 +24,18 @@ from __future__ import annotations
 import glob
 import json
 import os
+import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GYMS = os.path.join(ROOT, "modpack/server-overrides/datapacks/server-gyms/data/rctmod")
 NPC = os.path.join(ROOT, "custom-mods/cobblemon-npc/src/main/resources/data/rctmod")
 RB_AI = {"type": "rb", "data": {}}
+# Trailing mode marker we stamp onto `name`; stripped before re-stamping so re-runs don't stack it.
+MODE_SUFFIX_RE = re.compile(r"\s*\[(?:HARD|Normal)\]\s*$")
+
+
+def base_name(name: str) -> str:
+    return MODE_SUFFIX_RE.sub("", name).strip()
 
 
 def write_json(path: str, obj: dict) -> None:
@@ -43,10 +56,19 @@ def main() -> None:
         bt_challenge = os.path.basename(trainer_path)[: -len(".json")]    # bt_16_ice_challenge
         bt_normal = bt_challenge[: -len("_challenge")]                    # bt_16_ice
 
-        normal = json.load(open(trainer_path))
-        normal["ai"] = dict(RB_AI)                                        # pe -> rb; team/texture kept
+        challenge = json.load(open(trainer_path))
+        leader = base_name(challenge.get("name", bt_normal))
 
-        # trainer (datapack + npc/skins)
+        # HARD track: re-stamp the name (idempotent) and write the hand-maintained challenge files
+        # back to both locations so the battle UI shows the mode. Team / AI / texture untouched.
+        challenge["name"] = f"{leader} [HARD]"
+        for d in (GYMS, NPC):
+            write_json(os.path.join(d, "trainers", f"{bt_challenge}.json"), challenge)
+
+        # NORMAL track: same team, weaker AI (pe -> rb), no cap, [Normal]-marked name.
+        normal = dict(challenge)
+        normal["ai"] = dict(RB_AI)
+        normal["name"] = f"{leader} [Normal]"
         for d in (GYMS, NPC):
             write_json(os.path.join(d, "trainers", f"{bt_normal}.json"), normal)
 
@@ -56,8 +78,8 @@ def main() -> None:
             copy_json(src, os.path.join(GYMS, sub, f"{bt_normal}.json"))
 
         count += 1
-        print(f"  {bt_normal} (rb)  <- {bt_challenge}")
-    print(f"generated {count} battle-tower normal trainers")
+        print(f"  {leader}: {bt_challenge} [HARD] + {bt_normal} [Normal]")
+    print(f"stamped + generated {count} battle-tower trainer pairs")
 
 
 if __name__ == "__main__":

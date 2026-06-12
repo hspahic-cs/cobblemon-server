@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.2] - 2026-06-11
+
+### Fixed
+- **Battle Tower trainer titles now show the difficulty.** A floor's HARD and NORMAL tracks shared
+  one leader name (e.g. "Penny"), and since that `name` is what the battle UI displays, players
+  couldn't tell mid-battle whether they were on the hard or normal track — only the over-head
+  nameplate distinguished them. Both tracks' `name` now carries a mode marker (`Penny [HARD]` /
+  `Penny [Normal]`), matching the nameplate convention in `TowerManager`. Stamped by
+  `ops/gen_battle_tower_teams.py` (idempotent strip-then-reapply) across all 20 leader pairs in both
+  the `server-gyms` datapack and the `cobblemon-npc` skin jar.
+
 ## [0.18.1] - 2026-06-11
 
 ### Added

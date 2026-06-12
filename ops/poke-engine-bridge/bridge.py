@@ -13,6 +13,8 @@ See memory/reference_foul_play_api_mapping.md for the foul-play surface notes.
 
 from __future__ import annotations
 
+import collections
+import hashlib
 import json
 import logging
 import os
@@ -61,28 +63,136 @@ _CACHE_LOCK = threading.Lock()
 FAILURE_LOG_DIR = os.environ.get("BRIDGE_FAILURE_LOG_DIR") or os.environ.get(
     "BRIDGE_BATTLE_LOG_DIR", ""
 )
+FAILURE_LOG_NAME = "pick_failures.jsonl"
+
+# Disk hygiene on the small per-pod PVC: the verbose per-battle <id>.jsonl logs
+# are bulky and disposable; pick_failures.jsonl is small and the batch-fix
+# backlog we must never lose. So battle logs are evicted oldest-first to stay
+# under LOG_DIR_MAX_BYTES (pick_failures* is always exempt), and the failure log
+# itself rolls over to .1 past FAILURE_LOG_MAX_BYTES — bounded, but never
+# evictable by battle-log churn. 0 disables either guard.
+LOG_DIR_MAX_BYTES = int(os.environ.get("BRIDGE_LOG_MAX_BYTES", str(768 * 1024 * 1024)))
+FAILURE_LOG_MAX_BYTES = int(
+    os.environ.get("BRIDGE_FAILURE_LOG_MAX_BYTES", str(64 * 1024 * 1024))
+)
 
 
-def record_pick_failure(battle_id: str, request: dict, error: str, degraded: bool) -> None:
+def _rollover_if_large(path: str, cap: int) -> None:
+    """Roll `path` to `path.1` once it reaches `cap` bytes (keeps 2 generations).
+
+    Bounds an append-only log without ever deleting it via battle-log eviction.
+    """
+    if cap <= 0:
+        return
+    try:
+        if os.path.getsize(path) >= cap:
+            os.replace(path, path + ".1")  # atomic; clobbers any prior .1
+    except OSError:
+        pass  # missing file (first write) or transient fs error — just append
+
+
+def enforce_battle_log_budget(log_dir: str, max_bytes: int) -> None:
+    """Evict oldest per-battle *.jsonl until the dir is under budget.
+
+    pick_failures.jsonl (and its .1 rollover) are exempt — the failure backlog
+    is the whole point of the logs and must survive a full disk.
+    """
+    if not log_dir or max_bytes <= 0:
+        return
+    try:
+        entries = []
+        total = 0
+        with os.scandir(log_dir) as it:
+            for e in it:
+                if not e.name.endswith(".jsonl") or e.name.startswith("pick_failures"):
+                    continue
+                try:
+                    st = e.stat()
+                except OSError:
+                    continue
+                entries.append((st.st_mtime, st.st_size, e.path))
+                total += st.st_size
+        if total <= max_bytes:
+            return
+        for _mtime, size, fpath in sorted(entries):  # oldest first
+            try:
+                os.remove(fpath)
+            except OSError:
+                continue
+            total -= size
+            if total <= max_bytes:
+                break
+    except OSError as e:
+        logger.warning("battle-log budget sweep failed: %s", e)
+
+
+
+def _failure_phase(tb: str) -> str:
+    """Coarse stage the pick died in — for grouping the batch-fix backlog.
+
+    "build" = parsing/replaying the log into a foul-play Battle; "search" = the
+    poke-engine MCTS/expectiminimax; "other" = anything else (e.g. fallback).
+    """
+    if "process_battle_updates" in tb or "_build_battle" in tb:
+        return "build"
+    if "monte_carlo_tree_search" in tb or "_search_mcts" in tb or "find_best_move" in tb:
+        return "search"
+    return "other"
+
+
+def _failure_fingerprint(error: str, tb: str) -> str:
+    """Stable short id for "the same bug" so failures group for batch-fixing.
+
+    Hash of the exception type plus the deepest frame's file:line — picks
+    accumulated over weeks collapse to a handful of fingerprints
+    (`jq -r .fingerprint pick_failures.jsonl | sort | uniq -c`). The full battle
+    is still in the record for replay; this is just the grouping key.
+    """
+    exc_type = error.split(":", 1)[0].strip()
+    frames = re.findall(r'File "([^"]+)", line (\d+)', tb)
+    deepest = f"{frames[-1][0].split('/')[-1]}:{frames[-1][1]}" if frames else ""
+    return hashlib.sha1(f"{exc_type}|{deepest}".encode()).hexdigest()[:12]
+
+
+def record_pick_failure(
+    battle_id: str,
+    request: dict,
+    error: str,
+    degraded: bool,
+    degraded_move: str | None = None,
+) -> None:
     """Append one replayable JSONL line for a pick foul-play couldn't handle.
 
     `request` must be the serialized PickRequest/PickRequestBody (it carries
     `request_json` + `log_lines`, which replay.py reads). Call from inside an
     `except` block so `traceback.format_exc()` captures the live trace.
+
+    The record self-bundles everything needed to triage and replay one failure
+    in one place: the verbatim battle (request + full Showdown log), the live
+    traceback, the fallback move the player actually got, a coarse `phase`, the
+    engine build `meta`, and a `fingerprint` that groups identical bugs for a
+    batched fix.
     """
     if not FAILURE_LOG_DIR:
         return
     try:
         os.makedirs(FAILURE_LOG_DIR, exist_ok=True)
+        tb = traceback.format_exc()
         record = {
             "ts": time.time(),
             "battle_id": battle_id,
             "degraded": degraded,
+            "degraded_move": degraded_move,
+            "fingerprint": _failure_fingerprint(error, tb),
+            "phase": _failure_phase(tb),
             "error": error,
-            "traceback": traceback.format_exc(),
+            "traceback": tb,
+            "meta": _ENGINE_META,
         }
         record.update(request)
-        with open(os.path.join(FAILURE_LOG_DIR, "pick_failures.jsonl"), "a") as f:
+        failures_path = os.path.join(FAILURE_LOG_DIR, FAILURE_LOG_NAME)
+        _rollover_if_large(failures_path, FAILURE_LOG_MAX_BYTES)
+        with open(failures_path, "a") as f:
             f.write(json.dumps(record) + "\n")
     except (OSError, TypeError) as e:
         logger.warning("pick-failure log write failed: %s", e)
@@ -103,6 +213,81 @@ LOG_STATE = os.environ.get("BRIDGE_LOG_STATE", "0").lower() not in ("0", "", "fa
 # we drop them before selection. Proper fix: build poke-engine without the
 # `terastallization` cargo feature (planned for the cluster image).
 ALLOW_TERA = os.environ.get("BRIDGE_ALLOW_TERA", "0").lower() not in ("0", "", "false")
+
+# Stamped onto every failure record so a weeks-old backlog can be replayed
+# against the build that produced it. The engine/foul-play refs are baked at
+# image-build time (Dockerfile ARGs); surface them at runtime via env when set.
+_ENGINE_META = {
+    "search_algorithm": SEARCH_ALGORITHM,
+    "mcts_batches": MCTS_BATCHES,
+    "allow_tera": ALLOW_TERA,
+    "poke_engine_ref": os.environ.get("POKE_ENGINE_REF", ""),
+    "foul_play_commit": os.environ.get("FOUL_PLAY_COMMIT", ""),
+}
+
+# Per-worker-process health, read by /healthz. The distinction that matters:
+# a *content* bug (foul-play can't parse some set) is deterministic — restarting
+# the pod won't fix it and would needlessly drop every other live battle on it,
+# so it only degrades+logs. *Pod-local corruption* (the MCTS ProcessPool dying
+# and not recovering) IS restart-fixable, so a run of unrecovered pool breaks is
+# the one thing that fails liveness and lets k8s recycle just this pod. A single
+# transient break (e.g. a deploy killed the children mid-search) recovers on the
+# next successful pick and never trips it. Counters are exposed for observability
+# only — they never change the liveness verdict.
+_HEALTH_POOL_BREAK_LIMIT = int(os.environ.get("BRIDGE_HEALTH_POOL_BREAK_LIMIT", "3"))
+
+
+class _Health:
+    def __init__(self) -> None:
+        self._lock = threading.Lock()
+        self.picks = 0
+        self.degrades = 0
+        self.consecutive_pool_breaks = 0
+        self.last_error = ""
+        # Rolling window of recent outcomes (True=ok) for a degrade-rate gauge.
+        self._window: collections.deque[bool] = collections.deque(maxlen=100)
+
+    def record_ok(self) -> None:
+        with self._lock:
+            self.picks += 1
+            self.consecutive_pool_breaks = 0  # a good pick clears the streak
+            self._window.append(True)
+
+    def record_degrade(self, error: str = "") -> None:
+        # A degraded pick (content bug or recovered-from failure). Counts toward
+        # the degrade gauge but is neutral to liveness — only pool breaks decide
+        # that, so a recurring data bug can't take the pod (or the fleet) down.
+        with self._lock:
+            self.picks += 1
+            self.degrades += 1
+            self.last_error = error
+            self._window.append(False)
+
+    def record_pool_break(self) -> None:
+        # The MCTS pool broke AND the one-shot recreate+retry broke again:
+        # genuine pod-local corruption a restart clears.
+        with self._lock:
+            self.consecutive_pool_breaks += 1
+
+    def is_live(self) -> bool:
+        return self.consecutive_pool_breaks < _HEALTH_POOL_BREAK_LIMIT
+
+    def snapshot(self) -> dict:
+        with self._lock:
+            n = len(self._window)
+            degrade_rate = (sum(1 for ok in self._window if not ok) / n) if n else 0.0
+            return {
+                "live": self.consecutive_pool_breaks < _HEALTH_POOL_BREAK_LIMIT,
+                "picks": self.picks,
+                "degrades": self.degrades,
+                "consecutive_pool_breaks": self.consecutive_pool_breaks,
+                "recent_degrade_rate": round(degrade_rate, 3),
+                "recent_window": n,
+                "last_error": self.last_error,
+            }
+
+
+health = _Health()
 
 
 @dataclass
@@ -650,7 +835,14 @@ def _search_mcts(state_string: str, search_time_ms: int, temperature: float = 0.
                 )
                 for i in range(MCTS_BATCHES)
             ]
-            results = [f.result() for f in futures]
+            try:
+                results = [f.result() for f in futures]
+            except BrokenProcessPool:
+                # Recreate+retry also died — pod-local corruption a restart
+                # clears. Flag it for /healthz (liveness recycles this pod after
+                # a few in a row) and let the pick degrade like any other failure.
+                health.record_pool_break()
+                raise
     else:
         results = [_run_mcts(state_string, search_time_ms, temperature)]
 

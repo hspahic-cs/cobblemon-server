@@ -2,7 +2,9 @@ package com.cobblemonserver.pokeai.ai
 
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.api.battles.model.ai.BattleAI
+import com.cobblemon.mod.common.api.moves.Moves
 import com.cobblemon.mod.common.battles.ActiveBattlePokemon
+import com.cobblemon.mod.common.battles.ai.strongBattleAI.AIUtility
 import com.cobblemon.mod.common.battles.BattleRegistry.packTeam
 import com.cobblemon.mod.common.battles.BattleSide
 import com.cobblemon.mod.common.battles.MoveActionResponse
@@ -113,18 +115,26 @@ class PokeEngineAI(
                 "fallback StrongBattleAI threw for battle={} (fallback reason={}): {} — using safe default",
                 battle.battleId, reason, e.toString(),
             )
-            safeDefault(activeBattlePokemon, moveset, forceSwitch)
+            safeDefault(activeBattlePokemon, aiSide, moveset, forceSwitch)
         }
     }
 
     /**
      * Last-resort legal action when both the bridge and the StrongBattleAI
-     * fallback are unusable. Prefers a real move; on a force-switch (or when no
-     * move is usable) sends out the first available reserve; passes only if
-     * nothing else is legal. Keeps the battle alive rather than crashing it.
+     * fallback are unusable. The can't-fail floor: it reads only Cobblemon's own
+     * type chart and live battle state — no log parsing, no set prediction — so
+     * it can't hit the data/modelling failures that broke the layers above.
+     *
+     * Picks the most type-effective damaging move against the opposing active
+     * (reusing [AIUtility.getDamageMultiplier]), tie-broken by base power; status
+     * moves are skipped so a degraded turn deals damage instead of gambling on
+     * setup. Switches ONLY on a forced switch — a forced switch must be honored
+     * or the sim softlocks, while voluntary switching by a degraded AI is the
+     * "perma-switching" symptom we explicitly avoid. Passes only as a last resort.
      */
     private fun safeDefault(
         activeBattlePokemon: ActiveBattlePokemon,
+        aiSide: BattleSide,
         moveset: ShowdownMoveset?,
         forceSwitch: Boolean,
     ): ShowdownActionResponse {
@@ -136,16 +146,37 @@ class PokeEngineAI(
 
         if (forceSwitch) return firstSwitch() ?: PassActionResponse
 
-        val move = moveset?.moves?.firstOrNull { it.canBeUsed() }
-        if (move != null) {
-            val targets = if (move.mustBeUsed()) null
-                else move.target.targetList(activeBattlePokemon)?.takeIf { it.isNotEmpty() }
-            if (targets == null) return MoveActionResponse(move.id, null)
-            val chosenTarget = targets.filter { !it.isAllied(activeBattlePokemon) }.randomOrNull()
-                ?: targets.random()
-            return MoveActionResponse(move.id, (chosenTarget as ActiveBattlePokemon).getPNX())
-        }
-        return firstSwitch() ?: PassActionResponse
+        val usable = moveset?.moves?.filter { it.canBeUsed() }.orEmpty()
+        if (usable.isEmpty()) return firstSwitch() ?: PassActionResponse
+
+        val ourPokemon = activeBattlePokemon.battlePokemon?.effectedPokemon
+        val opponentTypes = aiSide.getOppositeSide().activePokemon
+            .firstNotNullOfOrNull { it.battlePokemon?.effectedPokemon?.types?.toList() }
+            .orEmpty()
+
+        // (move, typeEffectiveness, basePower) for usable damaging moves; rank by
+        // effectiveness then power. No opponent typing (firstNotNullOf found none)
+        // -> every multiplier is 1.0, so it degrades to "hit hardest".
+        val move = usable
+            .mapNotNull { m ->
+                val template = Moves.getByName(m.id) ?: return@mapNotNull null
+                if (template.power <= 0.0) return@mapNotNull null  // skip status moves
+                val moveType = template.getEffectiveElementalType(ourPokemon)
+                val mult = opponentTypes.fold(1.0) { acc, t ->
+                    acc * AIUtility.getDamageMultiplier(moveType, t)
+                }
+                Triple(m, mult, template.power)
+            }
+            .maxWithOrNull(compareBy({ it.second }, { it.third }))
+            ?.first
+            ?: usable.first()  // all status/unknown -> still act with a legal move
+
+        val targets = if (move.mustBeUsed()) null
+            else move.target.targetList(activeBattlePokemon)?.takeIf { it.isNotEmpty() }
+        if (targets == null) return MoveActionResponse(move.id, null)
+        val chosenTarget = targets.filter { !it.isAllied(activeBattlePokemon) }.randomOrNull()
+            ?: targets.random()
+        return MoveActionResponse(move.id, (chosenTarget as ActiveBattlePokemon).getPNX())
     }
 
     private fun latestRequestJson(battle: PokemonBattle): JsonObject? {

@@ -56,3 +56,39 @@ Response:
 ```
 
 ### `GET /healthz`
+
+Liveness/readiness target for the k8s probes. Returns the per-worker health
+snapshot; HTTP **503** (status `"degraded"`) only when the worker is in a
+restart-fixable poisoned state — specifically `BRIDGE_HEALTH_POOL_BREAK_LIMIT`
+(default 3) *consecutive unrecovered* MCTS `ProcessPool` breaks. Content/data
+bugs degrade individual picks and are counted (`degrades`, `recent_degrade_rate`)
+but never flip the status: they're deterministic, so recycling pods wouldn't help
+and marking both replicas unhealthy would cause an outage.
+
+```json
+{ "status": "ok", "live": true, "picks": 1234, "degrades": 3,
+  "consecutive_pool_breaks": 0, "recent_degrade_rate": 0.0,
+  "recent_window": 100, "last_error": "" }
+```
+
+## Failure logs & batch-fixing
+
+Every pick foul-play can't process appends one replayable JSON line to
+`pick_failures.jsonl` (in `BRIDGE_BATTLE_LOG_DIR`): the verbatim battle (request +
+full Showdown log), the live traceback, the `degraded_move` the player got, a
+coarse `phase` (build/search), the engine `meta`, and a **`fingerprint`** (exc
+type + deepest frame) that groups identical bugs.
+
+This file is never evicted by battle-log rotation and rolls over to
+`pick_failures.jsonl.1` past `BRIDGE_FAILURE_LOG_MAX_BYTES` (64Mi); bulky
+per-battle `<id>.jsonl` logs are evicted oldest-first to keep the PVC under
+`BRIDGE_LOG_MAX_BYTES` (768Mi).
+
+Each pod has its own PVC, so collect the backlog across replicas and triage by
+fingerprint with:
+
+```sh
+./collect_failures.sh            # merges both pods -> pick_failures.merged.jsonl + histogram
+# replay a single failing turn (foul-play side) to reproduce:
+python replay.py pick_failures.merged.jsonl
+```

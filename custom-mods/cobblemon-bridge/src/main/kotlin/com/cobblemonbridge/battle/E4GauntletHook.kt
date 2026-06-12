@@ -80,6 +80,10 @@ object E4GauntletHook {
     private val gauntletDimension: MutableMap<UUID, ResourceLocation> = ConcurrentHashMap()
     /** Pokémon UUIDs in the player's party at gauntlet entry. Mismatch at battle start = fail. */
     private val partySnapshot: MutableMap<UUID, Set<UUID>> = ConcurrentHashMap()
+    /** Op-only test bypass — players in this set may challenge any E4 member out of order, and the
+     *  party/dimension leashes never trip for them. Set via `/e4 skip on|off`; in-memory only (not
+     *  persisted), so it clears on restart. */
+    private val bypass: MutableSet<UUID> = java.util.Collections.newSetFromMap(ConcurrentHashMap())
 
     fun registerEvents() {
         CobblemonEvents.BATTLE_VICTORY.subscribe(Priority.NORMAL) { event -> onVictory(event) }
@@ -93,9 +97,19 @@ object E4GauntletHook {
     /** Called by [GymPrereqHook] for gyms 20-24. Returns true if the player may challenge. */
     fun canChallenge(player: ServerPlayer, gymId: Int): Boolean {
         if (gymId !in E4_FIRST..E4_LAST) return true
+        if (bypass.contains(player.uuid)) return true  // op test bypass — any E4 member, any order
         if (gymId == E4_FIRST) return true  // entry into the gauntlet
         return unlocked[player.uuid] == gymId
     }
+
+    /** Toggle the op-only test bypass for [uuid]. Returns the new state. */
+    fun setBypass(uuid: UUID, on: Boolean): Boolean {
+        if (on) bypass.add(uuid) else bypass.remove(uuid)
+        return on
+    }
+
+    /** True if [uuid] currently has the test bypass enabled. */
+    fun isBypassed(uuid: UUID): Boolean = bypass.contains(uuid)
 
     /** Reason text shown to the player when [canChallenge] returns false. */
     fun lockedReason(gymId: Int): String = when {
@@ -244,6 +258,7 @@ object E4GauntletHook {
     @SubscribeEvent
     fun onChangeDimension(event: PlayerEvent.PlayerChangedDimensionEvent) {
         val player = event.entity as? ServerPlayer ?: return
+        if (bypass.contains(player.uuid)) return  // op test bypass — leash disengaged
         val expected = gauntletDimension[player.uuid] ?: return
         if (event.to.location() == expected) return
         failGauntlet(player, "left the Elite Four area")
@@ -255,6 +270,7 @@ object E4GauntletHook {
     private fun onBattleStarted(event: BattleStartedEvent.Pre) {
         for (actor in event.battle.actors) {
             val player = (actor as? PlayerBattleActor)?.entity as? ServerPlayer ?: continue
+            if (bypass.contains(player.uuid)) continue  // op test bypass — party not locked
             val snapshot = partySnapshot[player.uuid] ?: continue
             val current = snapshotPartyUuids(player)
             if (current != snapshot) {

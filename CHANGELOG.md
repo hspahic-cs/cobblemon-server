@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.4] - 2026-06-12
+
+### Changed
+- **All gym leaders and the Elite Four now run the poke-engine AI at temperature 0.5.** Previously all
+  24 gym/E4 trainers (`gym_01`–`gym_24`, including the Oak/Alder/Cynthia/Ash/Lance/N champion cast) ran
+  `pe` at the default temperature 0.0 (perfect maximin). They now carry `ai.data.temperature = 0.5` —
+  the same opponent-fallibility setting the HARD Battle Tower challengers already use — applied in both
+  the `server-gyms` datapack and the `cobblemon-npc` skin jar. Takes effect at runtime only on the
+  patched poke-engine bridge (which honors the temperature arg; otherwise it degrades to 0.0 MCTS).
+
 ## [0.18.3] - 2026-06-11
 
 ### Changed

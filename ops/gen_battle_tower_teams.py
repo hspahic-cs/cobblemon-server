@@ -11,8 +11,9 @@ NORMAL-track trainer from each:
 
 Both tracks share a leader name (e.g. "Penny"), which is also the name shown in the battle UI — so
 without a marker, players can't tell a HARD floor from a NORMAL one mid-battle. This script stamps a
-mode suffix onto each track's `name`: `Penny [HARD]` / `Penny [Normal]` (matching the over-head
-nameplate convention in TowerManager). The suffix is stripped-then-reapplied, so re-runs are
+mode marker onto each track's `name`: HARD becomes bold red with a skull (`§c§l☠ Penny [HARD]`,
+matching the over-head nameplate convention in TowerManager) to emphasize the harder track, and
+NORMAL stays plain (`Penny [Normal]`). The marker is stripped-then-reapplied, so re-runs are
 idempotent even though the HARD track is hand-maintained source.
 
 For each it writes the trainer to the server-gyms datapack + cobblemon-npc resources (skin), and
@@ -30,12 +31,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GYMS = os.path.join(ROOT, "modpack/server-overrides/datapacks/server-gyms/data/rctmod")
 NPC = os.path.join(ROOT, "custom-mods/cobblemon-npc/src/main/resources/data/rctmod")
 RB_AI = {"type": "rb", "data": {}}
-# Trailing mode marker we stamp onto `name`; stripped before re-stamping so re-runs don't stack it.
-MODE_SUFFIX_RE = re.compile(r"\s*\[(?:HARD|Normal)\]\s*$")
+# Mode markers stamped onto `name`. HARD is bold red with a skull (§-formatted, matching the
+# over-head nameplate in TowerManager) to emphasize the harder track; NORMAL stays plain.
+HARD_NAME = "§c§l☠ {leader} [HARD]§r"
+NORMAL_NAME = "{leader} [Normal]"
+# Stripped before re-stamping so re-runs don't stack the prefix/suffix. Leading §-codes + the skull
+# glyph + spaces come off the front; the bracketed mode tag comes off the back.
+MODE_PREFIX_RE = re.compile(r"^(?:§.|[☠\s])+")
+MODE_SUFFIX_RE = re.compile(r"(?:§.|\s)*\[(?:HARD|Normal)\](?:§.|\s)*$")
 
 
 def base_name(name: str) -> str:
-    return MODE_SUFFIX_RE.sub("", name).strip()
+    return MODE_PREFIX_RE.sub("", MODE_SUFFIX_RE.sub("", name)).strip()
 
 
 def write_json(path: str, obj: dict) -> None:
@@ -61,14 +68,14 @@ def main() -> None:
 
         # HARD track: re-stamp the name (idempotent) and write the hand-maintained challenge files
         # back to both locations so the battle UI shows the mode. Team / AI / texture untouched.
-        challenge["name"] = f"{leader} [HARD]"
+        challenge["name"] = HARD_NAME.format(leader=leader)
         for d in (GYMS, NPC):
             write_json(os.path.join(d, "trainers", f"{bt_challenge}.json"), challenge)
 
         # NORMAL track: same team, weaker AI (pe -> rb), no cap, [Normal]-marked name.
         normal = dict(challenge)
         normal["ai"] = dict(RB_AI)
-        normal["name"] = f"{leader} [Normal]"
+        normal["name"] = NORMAL_NAME.format(leader=leader)
         for d in (GYMS, NPC):
             write_json(os.path.join(d, "trainers", f"{bt_normal}.json"), normal)
 

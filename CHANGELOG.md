@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.3] - 2026-06-11
+
+### Changed
+- **Battle Tower HARD titles are now bold red with a skull.** Following 0.18.2's mode markers, the
+  HARD track's `name` is stamped `§c§l☠ <leader> [HARD]` (bold red + skull) to visually emphasize
+  the harder track; NORMAL stays plain `<leader> [Normal]`. Restyled by `gen_battle_tower_teams.py`
+  across all 20 HARD trainers in both the `server-gyms` datapack and the `cobblemon-npc` skin jar;
+  the idempotency strip now also peels the leading §-codes + skull so re-runs don't stack.
+
 ## [0.18.2] - 2026-06-11
 
 ### Fixed

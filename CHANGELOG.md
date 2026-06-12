@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.17.1] - 2026-06-11
+
+### Fixed
+- **Gym AI 500-crashed when N's Mega Rayquaza entered the field (Champion fight).** 0.16.1 set Mega
+  Rayquaza's ability to its canonical `deltastream` (Delta Stream), but poke-engine/foul-play's
+  weather enum doesn't know the `deltastream` (strong winds) weather it sets — so the bridge raised
+  `ValueError: Unknown weather deltastream` and returned **500 on every `/pick`**, dropping the gym
+  AI into its StrongBattleAI fallback (which mishandles switch choices — the perma-switch "bug-out"
+  symptom). Reverted Rayquaza to the engine-safe `airlock` (its base ability). The mega still fields
+  correctly (stats/render are datapack-side); only the ability changed. Fielding true Delta Stream
+  would require teaching poke-engine the `deltastream` weather first. Diagnosed from the dev bridge
+  journal (`journalctl -u poke-engine-bridge`); the 500 path doesn't write `pick_failures.jsonl`,
+  which is why that log looked empty.
+
 ## [0.17.0] - 2026-06-11
 
 ### Added

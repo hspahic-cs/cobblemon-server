@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.5] - 2026-06-12
+
+### Changed
+- **Gym-AI fallback now plays smarter, and the poke-engine bridge self-heals and logs breaking battles.**
+  When the bridge can't produce a move and Cobblemon's `StrongBattleAI` fallback is also unusable, the
+  `cobblemon-poke-ai` last-resort floor now picks the most type-effective damaging move (reusing
+  Cobblemon's own type chart) and switches only when forced — instead of grabbing the first usable move —
+  so a degraded turn still hits hard and never voluntarily switches. On the bridge side, `/healthz` is now
+  health-aware (only a genuinely poisoned worker is recycled, never on deterministic data bugs that would
+  otherwise take every replica down), and pick failures are recorded with a grouping fingerprint and
+  rotated so the batch-fix backlog survives a full disk. Server-side only — no client reinstall.
+
 ## [0.18.4] - 2026-06-12
 
 ### Changed

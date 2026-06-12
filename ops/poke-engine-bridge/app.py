@@ -26,7 +26,7 @@ from pydantic import BaseModel, Field
 
 from config import FoulPlayConfig
 
-from bridge import PickRequest, pick_move, record_pick_failure
+from bridge import PickRequest, pick_move, record_pick_failure, legal_fallback_move
 
 logger = logging.getLogger("poke_engine_bridge")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -111,12 +111,27 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
     try:
         choice = pick_move(battle_id, req)
     except Exception as e:
+        # Never 500 a pick. A 500 drops Cobblemon into its StrongBattleAI
+        # fallback, which mishandles switch choices and bugs the whole battle
+        # out. Log the failure (replayable, in pick_failures.jsonl) and degrade
+        # to a legal move parsed from the request so the battle continues with a
+        # sane, parseable action instead.
         err = f"{type(e).__name__}: {e}"
-        _log_battle_turn(battle_id, body, {"error": err})
-        # Also append to the consolidated, replayable pick_failures.jsonl so
-        # hard failures sit alongside the degraded ones for batch triage.
-        record_pick_failure(battle_id, body.model_dump(), err, degraded=False)
-        raise
+        logger.warning(
+            "pick failed for battle=%s (%s) — degrading to a legal request move",
+            battle_id,
+            err,
+            exc_info=True,
+        )
+        record_pick_failure(battle_id, body.model_dump(), err, degraded=True)
+        choice = legal_fallback_move(body.request_json, req.force_switch)
+        elapsed_ms = int((time.monotonic() - started) * 1000)
+        _log_battle_turn(
+            battle_id,
+            body,
+            {"error": err, "degraded_pick": choice, "search_ms": elapsed_ms},
+        )
+        return PickResponse(move_choice=choice, search_ms=elapsed_ms)
     elapsed_ms = int((time.monotonic() - started) * 1000)
     logger.info("battle=%s pick=%s elapsed_ms=%d", battle_id, choice, elapsed_ms)
     _log_battle_turn(battle_id, body, {"pick": choice, "search_ms": elapsed_ms})

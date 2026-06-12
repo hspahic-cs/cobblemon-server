@@ -140,6 +140,49 @@ def pick_move(battle_id: str, req: PickRequest) -> str:
     return find_best_move(battle)
 
 
+def legal_fallback_move(request_json: dict, force_switch: bool = False) -> str:
+    """A guaranteed-legal action parsed straight from the Showdown |request|.
+
+    Used when the engine search raises (unknown weather, empty set weights, …) so
+    the pick degrades to a sane move instead of 500ing — a 500 drops Cobblemon
+    into its StrongBattleAI fallback, which mishandles switch choices and bugs
+    the whole battle out. Returns the bridge's normal move-choice shape: a bare
+    move id, "switch <id>", or "pass". Prefers a usable move; on a forced switch
+    (or when no move is usable) sends the first healthy reserve; passes only if
+    nothing legal remains.
+    """
+    rj = request_json or {}
+    must_switch = force_switch or bool(rj.get("forceSwitch"))
+
+    if not must_switch:
+        active = rj.get("active") or []
+        if active and isinstance(active[0], dict):
+            for mv in active[0].get("moves", []):
+                if mv.get("disabled"):
+                    continue
+                pp = mv.get("pp")
+                if pp is not None and pp <= 0:
+                    continue
+                move_id = mv.get("id")
+                if move_id:
+                    return move_id
+
+    for mon in (rj.get("side") or {}).get("pokemon", []):
+        if mon.get("active"):
+            continue
+        if str(mon.get("condition", "")).endswith("fnt"):
+            continue
+        ident = str(mon.get("ident", ""))
+        species = ident.split(":", 1)[1] if ":" in ident else ident
+        if not species.strip():
+            species = str(mon.get("details", "")).split(",", 1)[0]
+        species_id = re.sub(r"[^a-z0-9]", "", species.lower())
+        if species_id:
+            return f"switch {species_id}"
+
+    return "pass"
+
+
 def _build_battle(battle_id: str, req: PickRequest) -> Battle:
     # Serialize the foul-play cache-touching build (see _CACHE_LOCK above).
     with _CACHE_LOCK:

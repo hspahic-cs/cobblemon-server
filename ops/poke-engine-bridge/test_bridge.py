@@ -13,12 +13,49 @@ from bridge import (
     PackedPokemon,
     PickRequest,
     _normalize_log_lines,
+    legal_fallback_move,
     overlay_opponent_team,
     parse_packed_team,
     safest_move,
     select_choice,
     strip_cobblemon_uuids,
 )
+
+
+def test_legal_fallback_move_prefers_usable_move():
+    # Skips a 0-pp move and a disabled move; returns the first usable id.
+    req = {
+        "active": [{"moves": [
+            {"id": "willowisp", "pp": 0, "disabled": False},
+            {"id": "closecombat", "pp": 8, "disabled": True},
+            {"id": "meteormash", "pp": 10, "disabled": False},
+        ]}],
+        "side": {"pokemon": [{"ident": "p2: Lucario", "active": True, "condition": "100/100"}]},
+    }
+    assert legal_fallback_move(req) == "meteormash"
+
+
+def test_legal_fallback_move_forced_switch_skips_fainted_and_active():
+    # Forced switch: skip the active+fainted lead, pick the first healthy reserve,
+    # form-qualified to the id the mod matches on (rotom-wash -> rotomwash).
+    req = {
+        "forceSwitch": [True],
+        "side": {"pokemon": [
+            {"ident": "p2: Garchomp", "active": True, "condition": "0 fnt"},
+            {"ident": "p2: Rotom-Wash", "active": False, "condition": "55/100 brn"},
+            {"ident": "p2: Eternatus", "active": False, "condition": "300/300"},
+        ]},
+    }
+    assert legal_fallback_move(req, force_switch=True) == "switch rotomwash"
+
+
+def test_legal_fallback_move_passes_when_nothing_legal():
+    # Trapped, only a 0-pp move, no switchable reserve -> pass (keeps battle alive).
+    req = {
+        "active": [{"trapped": True, "moves": [{"id": "tackle", "pp": 0, "disabled": False}]}],
+        "side": {"pokemon": [{"ident": "p2: Ditto", "active": True, "condition": "10/10"}]},
+    }
+    assert legal_fallback_move(req) == "pass"
 
 
 def test_normalize_translates_snow_weather():

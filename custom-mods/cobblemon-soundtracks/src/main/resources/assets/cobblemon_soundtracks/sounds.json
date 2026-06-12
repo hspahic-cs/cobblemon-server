@@ -93,10 +93,6 @@
       }
     ]
   },
-  "music.arena": {
-    "category": "music",
-    "sounds": []
-  },
   "battle.gym": {
     "category": "music",
     "sounds": [
@@ -224,6 +220,139 @@
     ]
   },
   "battle.arena": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen1_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen1_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen1_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen2_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen2_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen2_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen3_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen3_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen4_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen4_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen5_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen6_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/gen7_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/hoenn_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/hoenn_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/hoenn_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/johto_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/johto_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/johto_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_4",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_5",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/kanto_6",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/sinnoh_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/sinnoh_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/sinnoh_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_1",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_2",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_3",
+        "stream": true
+      },
+      {
+        "name": "cobblemon_soundtracks:battle/arena/unova_4",
+        "stream": true
+      }
+    ]
+  },
+  "music.arena": {
     "category": "music",
     "sounds": [
       {

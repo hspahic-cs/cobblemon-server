@@ -94,11 +94,6 @@ object E4GauntletHook {
     /** True if [gymId] is part of the Elite Four gauntlet (E4 #1-4 + Champion). */
     fun isE4Gym(gymId: Int): Boolean = gymId in E4_FIRST..E4_LAST
 
-    /** The E4 gym (20–24) the player is currently fighting, or null if not in an E4 battle.
-     *  Stashed at trainer interaction / force-battle entry, cleared at battle end. Read by
-     *  [BattleThemeHook] to pick a per-member battle theme. */
-    fun activeGym(uuid: UUID): Int? = active[uuid]
-
     /** Called by [GymPrereqHook] for gyms 20-24. Returns true if the player may challenge. */
     fun canChallenge(player: ServerPlayer, gymId: Int): Boolean {
         if (gymId !in E4_FIRST..E4_LAST) return true

@@ -14,6 +14,7 @@ import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.level.BlockEvent
+import net.neoforged.neoforge.event.tick.ServerTickEvent
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -62,6 +63,11 @@ object WorldRulesHook {
 
     /** Saved pre-entry gamemode per player. Cleared when restored. */
     private val savedGameType: ConcurrentHashMap<UUID, GameType> = ConcurrentHashMap()
+
+    /** Always-sunny weather poll (see [onServerTickPost]). */
+    private const val WEATHER_INTERVAL_TICKS: Int = 200      // ~10s
+    private const val CLEAR_TICKS: Int = 1_000_000           // ~13.8h of clear per assertion
+    private var weatherTickCounter: Int = 0
 
     private fun isLocked(level: Level): Boolean =
         level.dimension().location().toString() !in ALLOWED_DIMS
@@ -214,6 +220,33 @@ object WorldRulesHook {
         if (entity.type.category == net.minecraft.world.entity.MobCategory.MONSTER &&
             entity.type != EntityType.WARDEN) {
             event.isSpawnCancelled = true
+        }
+    }
+
+    // ─── Always-clear weather in showcase worlds ─────────────────────────────
+
+    /**
+     * Keep the Multiworld showcase worlds (spawn, Elite Four, arenas — the
+     * [NO_MOB_NAMESPACES] dims) permanently sunny. Multiworld gives each world
+     * its own independent weather, so forcing clear weather here only affects
+     * the showcase world, never the survival overworld (the wilderness keeps its
+     * normal weather cycle).
+     *
+     * We poll on a slow tick rather than reacting to a weather-change event
+     * (there isn't a per-level one). [setWeatherParameters] with a long clear
+     * window means one clear keeps a world sunny for hours, so this rarely does
+     * anything after the first pass — the guard skips levels that are already
+     * clear so we don't re-send weather packets every cycle.
+     */
+    @SubscribeEvent
+    fun onServerTickPost(event: ServerTickEvent.Post) {
+        if (++weatherTickCounter < WEATHER_INTERVAL_TICKS) return
+        weatherTickCounter = 0
+        for (level in event.server.allLevels) {
+            if (level.dimension().location().namespace !in NO_MOB_NAMESPACES) continue
+            if (level.isRaining || level.isThundering) {
+                level.setWeatherParameters(CLEAR_TICKS, 0, false, false)
+            }
         }
     }
 

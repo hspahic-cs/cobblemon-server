@@ -58,6 +58,14 @@ def test_legal_fallback_move_passes_when_nothing_legal():
     assert legal_fallback_move(req) == "pass"
 
 
+def test_select_choice_handles_zero_visits():
+    # A degenerate/too-short search can return all-zero visit counts; weighting by
+    # them would raise "Total of weights must be greater than zero". Must instead
+    # return a legal option without crashing.
+    options = [("closecombat", 0, 0.5), ("switch garchomp", 0, 0.4)]
+    assert select_choice(options) in {"closecombat", "switch garchomp"}
+
+
 def test_normalize_translates_snow_weather():
     # Cobblemon's fork emits the pre-gen9 name; foul-play knows "snowscape"
     out = _normalize_log_lines(["|-weather|Snow", "|-weather|Snow|[upkeep]"], "p2")

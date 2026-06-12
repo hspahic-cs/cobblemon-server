@@ -548,7 +548,13 @@ def select_choice(options: list[tuple[str, int, float]]) -> str:
             return attacks[0][0]
 
     near_best = [o for o in options if o[1] >= NEAR_BEST_VISITS_RATIO * best_visits]
-    return random.choices(near_best, weights=[o[1] for o in near_best])[0][0]
+    weights = [o[1] for o in near_best]
+    if sum(weights) <= 0:
+        # No visits recorded (degenerate or too-short search) — weighting by visit
+        # count would raise "Total of weights must be greater than zero". Fall back
+        # to the top-sorted option instead of crashing the whole pick.
+        return best_choice
+    return random.choices(near_best, weights=weights)[0][0]
 
 
 def _find_best_move_perfect_info(

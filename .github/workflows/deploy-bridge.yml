@@ -18,10 +18,12 @@ on:
       - '.github/workflows/deploy-bridge.yml'
   workflow_dispatch:
 
-# foul-play source is pinned to the commit we developed against locally.
-# Bump when we want to track upstream changes.
+# foul-play source is our fork (hspahic-cs/foul-play), pinned to a commit. The
+# fork carries Cobblemon-server patches on top of upstream pmariglia — e.g.
+# deltastream weather -> none so Mega Rayquaza doesn't 500 the pick. Bump to
+# track our fork / pull new upstream.
 env:
-  FOUL_PLAY_COMMIT: 13db2786b4fdbc742d627e21dd4ee1de6bf963b0
+  FOUL_PLAY_COMMIT: fceea38fb32b60ea62a43175b2350f92e2ba9941
 
 jobs:
   deploy:
@@ -57,7 +59,7 @@ jobs:
       - name: Clone foul-play source at pinned commit
         run: |
           mkdir -p _foul_play
-          git clone --depth 1 https://github.com/pmariglia/foul-play.git _foul_play
+          git clone --depth 1 https://github.com/hspahic-cs/foul-play.git _foul_play
           (cd _foul_play && git fetch --depth 1 origin "$FOUL_PLAY_COMMIT" && git checkout "$FOUL_PLAY_COMMIT")
 
       # rsync flags chosen for deployer-can-write-but-doesn't-own destination:

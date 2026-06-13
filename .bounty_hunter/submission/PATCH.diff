@@ -1,0 +1,26 @@
+diff --git a/ops/gen_battle_tower_teams.py b/ops/gen_battle_tower_teams.py
+index 0c706fa..3f1e2b8 100644
+--- a/ops/gen_battle_tower_teams.py
++++ b/ops/gen_battle_tower_teams.py
+@@ -47,7 +47,7 @@ def base_name(name: str) -> str:
+ 
+ def write_json(path: str, obj: dict) -> None:
+     os.makedirs(os.path.dirname(path), exist_ok=True)
+-    with open(path, "w") as f:
++    with open(path, "w", encoding='utf-8') as f:
+         json.dump(obj, f, indent=2)
+         f.write("\n")
+ 
+diff --git a/ops/poke-engine-bridge/app.py b/ops/poke-engine-bridge/app.py
+index 35cdac1..812a0a4 100644
+--- a/ops/poke-engine-bridge/app.py
++++ b/ops/poke-engine-bridge/app.py
+@@ -69,7 +69,7 @@ def _log_battle_turn(battle_id: str, body: PickRequestBody, outcome: dict) -> No
+         record.update(body.model_dump())
+         record.update(outcome)
+         safe_id = "".join(c for c in battle_id if c.isalnum() or c == "-")
+-        with open(path / f"{safe_id}.jsonl", "a") as f:
++        with open(path / f"{safe_id}.jsonl", "a", encoding='utf-8') as f:
+             f.write(json.dumps(record) + "\n")
+     except OSError as e:
+         logger.warning("battle log write failed: %s", e)

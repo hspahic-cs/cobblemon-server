@@ -47,7 +47,7 @@ def base_name(name: str) -> str:
 
 def write_json(path: str, obj: dict) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding='utf-8') as f:
+    with open(path, "w") as f:
         json.dump(obj, f, indent=2)
         f.write("\n")
 

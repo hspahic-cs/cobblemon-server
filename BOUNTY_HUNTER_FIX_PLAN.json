@@ -1,0 +1,44 @@
+{
+  "status": "fix plan drafted",
+  "objective": "[bug] 10k wallet quest doesn't reward key \u2014 by anon-e29f1c89",
+  "issue_url": "https://github.com/hspahic-cs/cobblemon-server/issues/200",
+  "repo": "hspahic-cs/cobblemon-server",
+  "likely_work_type": "bug fix / investigation",
+  "recommended_next_action": "Run Fix Executor v2 after human approval gate is added.",
+  "likely_files_to_inspect": [
+    "docs/server-setup.md",
+    "docs/spawn-lookup.md",
+    "docs/working-with-mods.md",
+    "scripts/bump-version.sh",
+    "ops/set-server-resourcepack.sh",
+    "ops/gen_spawn_nerfs.py",
+    "ops/soundtracks/source/spawn/README.md",
+    "modpack/server-overrides/config/README.md",
+    "modpack/server-overrides/config/rctmod-server.toml",
+    "modpack/server-overrides/config/cobblemon-bridge/runtime/test_teams.json",
+    "modpack/server-overrides/config/cobblemon-bridge/runtime/voicelines.json",
+    "modpack/server-overrides/config/cobblemon-bridge/runtime/gym_caps.json",
+    "modpack/server-overrides/config/cobblemon-gacha/authored/egg_pools.json",
+    "modpack/server-overrides/config/cobblemon-gacha/authored/tables/pokemon.json",
+    "modpack/server-overrides/config/cobblemon-gacha/authored/tables/ultra.json",
+    "modpack/server-overrides/config/cobblemon-gacha/authored/tables/common.json",
+    "modpack/server-overrides/config/cobblemon-gacha/authored/tables/rare.json",
+    "modpack/server-overrides/config/cobbleworkers/cobbleworkers.json",
+    "modpack/server-overrides/config/neoessentials/config.json",
+    "modpack/server-overrides/config/neoessentials/economy.json"
+  ],
+  "test_commands_to_try": [
+    "Manual test command detection needed"
+  ],
+  "safety_gate": "No external PR, bounty claim, wallet action, or payout connection will run without explicit approval.",
+  "steps": [
+    "Read the issue requirements and comments.",
+    "Inspect likely source files.",
+    "Identify the smallest safe fix.",
+    "Create a local patch.",
+    "Run detected test commands.",
+    "Prepare a PR/claim package.",
+    "Ask for approval before external submission."
+  ],
+  "created_at": "2026-06-13T00:04:54.090110+00:00"
+}

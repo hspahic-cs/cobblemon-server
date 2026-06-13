@@ -69,7 +69,7 @@ def _log_battle_turn(battle_id: str, body: PickRequestBody, outcome: dict) -> No
         record.update(body.model_dump())
         record.update(outcome)
         safe_id = "".join(c for c in battle_id if c.isalnum() or c == "-")
-        with open(path / f"{safe_id}.jsonl", "a", encoding='utf-8') as f:
+        with open(path / f"{safe_id}.jsonl", "a") as f:
             f.write(json.dumps(record) + "\n")
     except OSError as e:
         logger.warning("battle log write failed: %s", e)

@@ -56,13 +56,13 @@
     },
     {
       "lootTier": "Mid",
-      "label": "10 Ultra Balls",
+      "label": "20 Ultra Balls",
       "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:ultra_ball",
-          "count": 10
+          "count": 20
         }
       ],
       "notes": "A handy catching upgrade"
@@ -280,16 +280,16 @@
     },
     {
       "lootTier": "Standard",
-      "label": "32 Quick Balls",
+      "label": "20 Quick Balls",
       "weightPct": 3.0,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:quick_ball",
-          "count": 32
+          "count": 20
         }
       ],
-      "notes": "Moved from rare crate"
+      "notes": ""
     },
     {
       "lootTier": "Standard",

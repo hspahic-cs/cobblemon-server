@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+### Changed
+- **Gacha crate rebalance.** Common crate: Ultra Balls 10 → 20 and Quick Balls 32 → 20 per pull
+  (round, consistent ball counts). Rare crate jackpot odds cut — Master Ball 2.5% → 0.5%, Ultra Key
+  1.0% → 0.5%, "2 Rare keys" 2.0% → 1.0%, "20 Eye of Ender" 5.0% → 2.0%; the freed weight is
+  redistributed proportionally across the other entries so the table still sums to exactly 100% (the
+  odds menu shows true chances).
+- **Beldum line is now ultra-rare in the End.** Beldum / Metang / Metagross spawned in the End
+  (`#cobblemon:is_end`) at the `rare` bucket (~100× more common than the legendaries and Ultra Beasts
+  that the ATM spawn-nerf pipeline pins to `ultra-rare`). New `server-end-spawn-nerfs` datapack moves
+  only the End-biome entry to the `ultra-rare` bucket; every other biome (Aether, dripstone, peak,
+  howling constructs) is unchanged, so the line is still obtainable normally elsewhere.
+
+### Fixed
+- **Legendary Monuments chests can no longer drop Large or XL EXP candy.** Eight monument chest loot
+  tables (bell tower, dragoeleki, liberty island, regice/rock/steel/gigas, turnback cave) handed out
+  `exp_candy_l` / `exp_candy_xl` as free max-level fuel. `ops/strip_exp_candy_from_chest_loot.py` now
+  strips just those two sizes from the monument chests (small/medium stay) via the
+  `server-no-exp-candy-chests` datapack.
+
 ## [0.18.6] - 2026-06-13
 
 ### Fixed

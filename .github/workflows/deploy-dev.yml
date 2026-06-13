@@ -145,6 +145,18 @@ jobs:
               < ops/prune-stale-allthemons.sh
           fi
 
+      # The non-destructive datapack rsync never removes a pack we DELETE from the repo, so retired
+      # server-* packs linger on the live world forever (e.g. server-spawn-nerfs and its orphaned
+      # server_spawn_filler namespace). Prune any server-* datapack on the server that we no longer
+      # ship. Scoped to the server-* prefix, so AllTheMons / world-only packs are never touched.
+      - name: Prune retired server-* datapacks
+        if: steps.idempotency.outputs.skip != 'true'
+        run: |
+          keep=$(cd modpack/server-overrides/datapacks && ls -d server-* 2>/dev/null | tr '\n' ' ')
+          ssh -o StrictHostKeyChecking=yes ${{ env.VM_USER }}@${{ env.VM_HOST }} \
+            "bash -s -- '${{ env.INSTALL_DIR }}/world/datapacks' '$keep'" \
+            < ops/prune-removed-server-datapacks.sh
+
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         if: steps.idempotency.outputs.skip != 'true'
         run: |

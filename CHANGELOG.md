@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+## [0.18.6] - 2026-06-13
+
+### Fixed
+- **Ultra-rare spawns (legendaries, Ultra Beasts, Paradox, mythicals) were spawning ~90–100× too
+  often.** The `server-spawn-nerfs` datapack re-declared AllTheMons' spawn files at the same resource
+  paths, relying on out-prioritising AllTheMons in the enabled-pack order — but AllTheMons ships as a
+  version-named zip that Minecraft auto-enables *last* (highest priority) on every bump, silently
+  clobbering all our nerfs. End Ultra Beasts sat in the `rare` bucket at weight 5.0 (~1 in 1,200)
+  instead of ultra-rare at tier weights (~1 in 100k). Tier weights are now baked **directly into the
+  AllTheMons zip** by `ops/gen_spawn_nerfs.py`, so load order can no longer override them, and the
+  `server-spawn-nerfs` datapack is retired. Also corrects two leaks the old generator silently skipped:
+  Virizion (spawned wild at weight 4 despite being LegendaryMonuments questline-only → suppressed to 0,
+  matching Cobalion/Terrakion) and Meloetta (weight 2.0 → floored to 0.1 like other mythicals).
+- **Retired datapacks lingered on the live world.** The non-destructive deploy rsync never removed a
+  pack deleted from the repo, so retired `server-*` packs stayed active forever — including the
+  0.7.38-era `server_spawn_filler` namespace (retired at 0.7.43) that kept diluting the ultra-rare
+  bucket. A new prune step (`ops/prune-removed-server-datapacks.sh`, wired into dev + prod deploys)
+  removes any `server-*` datapack on the server we no longer ship.
+
 ## [0.18.5] - 2026-06-12
 
 ### Changed

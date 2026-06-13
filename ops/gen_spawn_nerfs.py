@@ -1,50 +1,73 @@
 #!/usr/bin/env python3
-"""Regenerate the server-spawn-nerfs datapack from AllTheMons.
+"""Bake tier-based spawn rates directly into the AllTheMons datapack zip.
 
-The AllTheMons [R3.5] zip ships spawn pools for legendaries, mythicals,
-paradoxes, and ultra beasts under
+AllTheMons ships spawn pools for legendaries, mythicals, paradoxes, and
+ultra beasts under
 `data/special_spawns/spawn_pool_world/<category>/<species>.json`.
 
-This script overrides every entry at the same path with:
+Historically we shipped a SEPARATE `server-spawn-nerfs` datapack that
+re-declared each of these files at the same resource path with nerfed
+weights. That only worked if our pack out-prioritised AllTheMons in
+`level.dat`'s enabled list — and it silently DIDN'T, because every
+AllTheMons version bump produces a new zip filename that Minecraft
+auto-enables LAST (= highest priority), clobbering all our overrides.
+Net effect: ultra-rares spawned ~100x too often. See
+memory/reference_datapack_priority_allthemons.md.
 
-  1. weight     ← effective_weight(species, category):
-                    - LM species (covered by LegendaryMonuments mod) get
-                      weight 0 — they should ONLY be obtainable via the
-                      LM questline, never via random wild spawn.
-                    - otherwise: base = TIER_WEIGHTS[SPECIES_TIERS[species]]
-                    - mythicals additionally floored at the Ubers weight
-                      (so OU/UU+ mythicals like Mew, Jirachi, Phione
-                      can never be more common than a box legend)
-                  (replaces upstream weight entirely — does NOT scale)
-  2. bucket     ← always set to "ultra-rare" (legendaries/most mythicals
-                  already are; paradoxes + most UBs get promoted from
-                  "rare" — the whole point is to put them all in the
-                  same shared ultra-rare bucket roll)
+This script removes that whole class of bug by editing AllTheMons'
+OWN files in place instead of shipping a competing copy. There is then
+exactly one `xurkitree.json`, so load order is irrelevant.
+
+For each in-scope spawn file it rewrites every spawn entry with:
+
+  1. weight  ← effective_weight(species, category):
+                 - LM species (covered by the LegendaryMonuments mod) get
+                   weight 0 — obtainable ONLY via the LM questline, never
+                   a random wild spawn.
+                 - otherwise: base = TIER_WEIGHTS[SPECIES_TIERS[species]]
+                 - mythicals additionally floored at the Ubers weight (so
+                   OU/UU+ mythicals like Mew, Jirachi, Phione can never be
+                   more common than a box legend)
+               (replaces upstream weight entirely — does NOT scale)
+  2. bucket  ← always "ultra-rare" (legendaries/most mythicals already
+               are; paradoxes + most UBs get promoted from "rare" — the
+               whole point is to put them all in the shared ultra-rare
+               bucket roll, which best-spawner-config.json weights at
+               0.001).
 
 The flat per-tier weighting normalises rates within a tier — Suicune
-(upstream weight 0.5) and Articuno (upstream 2.0) both become 1.0 under
-the UU+ tier — so upstream's per-species inconsistencies don't leak
-through. The curve is intentionally steep: top-tier (AG) species are
-20× rarer than UU+ ones, mirroring the intent that game-defining
-legendaries should feel like once-a-server events.
+(upstream 0.5) and Articuno (upstream 2.0) both become 1.0 under UU+ — so
+upstream's per-species inconsistencies don't leak through. The curve is
+steep (20x AG->UU+) so game-defining legendaries feel like once-a-server
+events.
 
-Re-run after bumping AllTheMons to pick up new species, or to retune:
+USAGE / when AllTheMons version-bumps:
+    1. Drop the fresh upstream AllTheMons*.zip into
+       modpack/server-overrides/datapacks/ (replacing the old one).
+    2. python3 ops/gen_spawn_nerfs.py
+    3. Commit the patched zip + the regenerated manifest.
 
-    python3 ops/gen_spawn_nerfs.py
+The script is idempotent: weights are derived from SPECIES_TIERS (by
+filename), not from the current weight, so re-running on an
+already-patched zip yields identical output.
 
-If a species in the AllTheMons zip isn't in SPECIES_TIERS, the script
-emits a WARNING and skips that file — add a tier and re-run.
+A human-readable summary of every change is written to
+`ops/spawn-nerf-manifest.txt` so PRs stay reviewable even though the zip
+diff itself is an opaque binary blob.
+
+If a species in the zip isn't in SPECIES_TIERS, the script emits a
+WARNING and leaves that file UNTOUCHED — add a tier and re-run.
 """
 from __future__ import annotations
 
 import json
-import shutil
+import os
 import zipfile
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-ATM_ZIP_PATH = REPO / "modpack/server-overrides/datapacks/AllTheMons [R3.5].zip"
-OUT_BASE = REPO / "modpack/server-overrides/datapacks/server-spawn-nerfs"
+DATAPACK_DIR = REPO / "modpack/server-overrides/datapacks"
+MANIFEST_PATH = REPO / "ops/spawn-nerf-manifest.txt"
 
 # Categories we process from ATM's data/special_spawns/spawn_pool_world/.
 # Pseudo-legendaries intentionally NOT in scope — those spawn from
@@ -52,9 +75,10 @@ OUT_BASE = REPO / "modpack/server-overrides/datapacks/server-spawn-nerfs"
 # and are a separate balance question from "how rare should this
 # legendary be".
 CATEGORIES = ("legendary", "mythical", "paradox", "ultra_beast")
+PATH_PREFIX = "data/special_spawns/spawn_pool_world/"
 
 # Steep tier curve — AG (rarest) < Ubers < OU < UU+ (most common).
-# 20× spread top to bottom: game-defining legendaries are once-per-server
+# 20x spread top to bottom: game-defining legendaries are once-per-server
 # events; competitively-weak legendaries (Articuno trio, Beasts trio,
 # Regis) are still rare but findable.
 TIER_WEIGHTS: dict[str, float] = {
@@ -107,7 +131,7 @@ LM_SPECIES: set[str] = {
 # species' FINAL evolved form (Cosmog → Solgaleo's tier, Poipole →
 # Naganadel's tier, etc.). Borderline calls noted in CHANGELOG.
 SPECIES_TIERS: dict[str, str] = {
-    # ─── Legendaries (62) ─────────────────────────────────────────────
+    # ─── Legendaries (63) ─────────────────────────────────────────────
     # AG (3)
     "miraidon": "AG", "koraidon": "AG", "eternatus": "AG",
     # Ubers (24)
@@ -117,20 +141,20 @@ SPECIES_TIERS: dict[str, str] = {
     "yveltal": "Ubers", "zygarde": "Ubers", "necrozma": "Ubers", "zacian": "Ubers",
     "zamazenta": "Ubers", "spectrier": "Ubers", "chiyu": "Ubers", "terapagos": "Ubers",
     "calyrex": "Ubers", "cosmog": "Ubers", "kubfu": "Ubers", "chienpao": "Ubers",
-    # OU (21)
+    # OU (22)
     "tapukoko": "OU", "tapulele": "OU", "tapubulu": "OU", "tapufini": "OU",
     "heatran": "OU", "latios": "OU", "latias": "OU", "cresselia": "OU",
     "tornadus": "OU", "thundurus": "OU", "landorus": "OU", "regieleki": "OU",
     "regidrago": "OU", "wochien": "OU", "fezandipiti": "OU", "okidogi": "OU",
     "munkidori": "OU", "ogerpon": "OU", "enamorus": "OU", "terrakion": "OU",
-    "cobalion": "OU",
+    "cobalion": "OU", "virizion": "OU",
     # UU+ (14)
     "articuno": "UU+", "zapdos": "UU+", "moltres": "UU+", "entei": "UU+",
     "raikou": "UU+", "suicune": "UU+", "regice": "UU+", "regirock": "UU+",
     "registeel": "UU+", "regigigas": "UU+", "mesprit": "UU+", "uxie": "UU+",
     "azelf": "UU+", "glastrier": "UU+",
 
-    # ─── Mythicals (20) ──────────────────────────────────────────────
+    # ─── Mythicals (21) ──────────────────────────────────────────────
     # AG (2): banned-everywhere mythicals
     "arceus": "AG", "deoxys": "AG",
     # Ubers (6)
@@ -140,8 +164,8 @@ SPECIES_TIERS: dict[str, str] = {
     "celebi": "OU", "diancie": "OU", "jirachi": "OU", "keldeo": "OU",
     "manaphy": "OU", "mew": "OU", "meltan": "OU", "pecharunt": "OU",
     "volcanion": "OU",
-    # UU+ (3)
-    "phione": "UU+", "zarude": "UU+", "zeraora": "UU+",
+    # UU+ (4)
+    "phione": "UU+", "zarude": "UU+", "zeraora": "UU+", "meloetta": "UU+",
 
     # ─── Paradoxes (17) ──────────────────────────────────────────────
     # Ubers (7)
@@ -165,87 +189,110 @@ SPECIES_TIERS: dict[str, str] = {
     "guzzlord": "UU+",
 }
 
-PACK_MCMETA = {
-    "pack": {
-        "pack_format": 48,
-        "description": (
-            "Tier-based spawn rates for legendaries, mythicals, paradoxes, and "
-            "ultra beasts (overrides AllTheMons spawn pools)."
-        ),
-    }
-}
+
+def find_atm_zip() -> Path:
+    """Locate the AllTheMons zip without hardcoding a version string."""
+    matches = sorted(DATAPACK_DIR.glob("AllTheMons*.zip"))
+    if not matches:
+        raise SystemExit(f"No AllTheMons*.zip found in {DATAPACK_DIR}")
+    if len(matches) > 1:
+        raise SystemExit(
+            f"Multiple AllTheMons*.zip found (expected one): "
+            f"{[m.name for m in matches]}"
+        )
+    return matches[0]
+
+
+def effective(species: str, category: str) -> tuple[float, str]:
+    """Return (weight, tier_note) for an in-scope species."""
+    tier = SPECIES_TIERS[species]
+    if species in LM_SPECIES:
+        return 0.0, f"{tier}->LM-suppressed"
+    base = TIER_WEIGHTS[tier]
+    if category == "mythical" and base > TIER_WEIGHTS[MYTHICAL_FLOOR_TIER]:
+        return TIER_WEIGHTS[MYTHICAL_FLOOR_TIER], f"{tier}->{MYTHICAL_FLOOR_TIER}-floor"
+    return base, tier
+
+
+def category_of(name: str) -> str | None:
+    """Return the in-scope category for an archive path, or None."""
+    if not name.startswith(PATH_PREFIX) or not name.endswith(".json"):
+        return None
+    rel = name[len(PATH_PREFIX):]
+    cat = rel.split("/", 1)[0]
+    return cat if cat in CATEGORIES else None
 
 
 def main() -> None:
-    if not ATM_ZIP_PATH.exists():
-        raise SystemExit(f"AllTheMons zip not found: {ATM_ZIP_PATH}")
+    atm = find_atm_zip()
+    tmp = atm.with_suffix(".zip.tmp")
 
-    data_dir = OUT_BASE / "data/special_spawns/spawn_pool_world"
-    if data_dir.exists():
-        shutil.rmtree(data_dir)
-    for cat in CATEGORIES:
-        (data_dir / cat).mkdir(parents=True, exist_ok=True)
-
-    (OUT_BASE / "pack.mcmeta").write_text(json.dumps(PACK_MCMETA, indent=2) + "\n")
-
-    file_count = 0
-    entry_count = 0
+    manifest: list[tuple[str, str, str, float, str]] = []  # cat, species, tier_note, weight, lm
     unmapped: list[str] = []
+    seen_species: set[str] = set()
     by_tier: dict[str, int] = {t: 0 for t in TIER_WEIGHTS}
-    suppressed_count = 0
+    suppressed = 0
+    patched = 0
 
-    with zipfile.ZipFile(ATM_ZIP_PATH) as z:
-        for cat in CATEGORIES:
-            prefix = f"data/special_spawns/spawn_pool_world/{cat}/"
-            for name in z.namelist():
-                if not name.startswith(prefix) or not name.endswith(".json"):
-                    continue
-                species = Path(name).stem
-                tier = SPECIES_TIERS.get(species)
-                if tier is None:
+    with zipfile.ZipFile(atm) as zin, \
+         zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+        for item in zin.infolist():
+            data = zin.read(item.filename)
+            if item.filename.endswith(".json"):
+                seen_species.add(Path(item.filename).stem)
+            cat = category_of(item.filename)
+            if cat is not None:
+                species = Path(item.filename).stem
+                if species not in SPECIES_TIERS:
                     unmapped.append(f"{cat}/{species}")
+                    # leave the file byte-identical — do NOT silently nerf
+                    zout.writestr(item, data)
                     continue
-                is_lm = species in LM_SPECIES
-                if is_lm:
-                    weight = 0.0
-                    tier_note = f"{tier}→LM-suppressed"
-                else:
-                    base_weight = TIER_WEIGHTS[tier]
-                    floored = (
-                        cat == "mythical"
-                        and base_weight > TIER_WEIGHTS[MYTHICAL_FLOOR_TIER]
-                    )
-                    weight = TIER_WEIGHTS[MYTHICAL_FLOOR_TIER] if floored else base_weight
-                    tier_note = f"{tier}→{MYTHICAL_FLOOR_TIER}-floor" if floored else tier
-                d = json.loads(z.read(name).decode("utf-8"))
-                for entry in d.get("spawns", []):
+                weight, tier_note = effective(species, cat)
+                doc = json.loads(data.decode("utf-8"))
+                for entry in doc.get("spawns", []):
                     entry["weight"] = weight
                     entry["bucket"] = "ultra-rare"
-                d["_comment"] = (
-                    f"Override of AllTheMons {cat} spawn pool — "
+                doc["_comment"] = (
+                    f"Spawn rate baked by ops/gen_spawn_nerfs.py — "
                     f"tier={tier_note} weight={weight} bucket=ultra-rare"
                 )
-                out_name = Path(name).name
-                (data_dir / cat / out_name).write_text(json.dumps(d, indent=2) + "\n")
-                file_count += 1
-                entry_count += len(d.get("spawns", []))
-                by_tier[tier] += 1
-                if is_lm:
-                    suppressed_count += 1
+                out = (json.dumps(doc, indent=2) + "\n").encode("utf-8")
+                zout.writestr(item, out)
+                patched += 1
+                by_tier[SPECIES_TIERS[species]] += 1
+                is_lm = species in LM_SPECIES
+                suppressed += is_lm
+                manifest.append((cat, species, tier_note, weight, "LM" if is_lm else ""))
+            else:
+                zout.writestr(item, data)
 
-    print(f"Wrote {file_count} files / {entry_count} spawn entries to {OUT_BASE}")
-    print(f"By tier (all entries): {by_tier}")
-    print(f"LM-suppressed (weight=0): {suppressed_count} species "
-          f"({file_count - suppressed_count} species spawn at tier weights)")
-    # Sanity check: any LM species we declared but don't see in ATM?
-    seen_species = {Path(n).stem for n in z.namelist() if n.endswith(".json")}
+    os.replace(tmp, atm)
+
+    # ── Manifest (reviewable diff surface for the opaque zip) ──────────
+    lines = [
+        f"# Spawn-nerf manifest — generated by ops/gen_spawn_nerfs.py",
+        f"# Source zip: {atm.name}",
+        f"# {patched} files patched, bucket=ultra-rare, {suppressed} LM-suppressed (weight=0)",
+        f"# Tier weights: {TIER_WEIGHTS}",
+        "",
+        f"{'CATEGORY':<12}{'SPECIES':<16}{'TIER':<22}{'WEIGHT':>8}  LM",
+    ]
+    for cat, species, tier_note, weight, lm in sorted(manifest):
+        lines.append(f"{cat:<12}{species:<16}{tier_note:<22}{weight:>8}  {lm}")
+    MANIFEST_PATH.write_text("\n".join(lines) + "\n")
+
+    print(f"Patched {patched} files in {atm.name}; manifest -> {MANIFEST_PATH.name}")
+    print(f"By tier: {by_tier}  |  LM-suppressed: {suppressed}")
+
     lm_unused = sorted(LM_SPECIES - seen_species)
     if lm_unused:
         print(f"\nNote: {len(lm_unused)} LM species have no ATM spawn pool "
-              f"(no override needed): {lm_unused}")
+              f"(no patch needed): {lm_unused}")
     if unmapped:
-        print(f"\nWARNING: {len(unmapped)} species in ATM not in SPECIES_TIERS — add and re-run:")
-        for u in unmapped:
+        print(f"\nWARNING: {len(unmapped)} species in ATM not in SPECIES_TIERS "
+              f"— left UNTOUCHED (still upstream weight). Add a tier and re-run:")
+        for u in sorted(unmapped):
             print(f"  {u}")
 
 

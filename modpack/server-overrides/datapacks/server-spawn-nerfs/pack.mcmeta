@@ -1,6 +1,0 @@
-{
-  "pack": {
-    "pack_format": 48,
-    "description": "Tier-based spawn rates for legendaries, mythicals, paradoxes, and ultra beasts (overrides AllTheMons spawn pools)."
-  }
-}

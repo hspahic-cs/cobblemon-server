@@ -106,6 +106,8 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
         BredTagHook.registerEvents()
+        // Rule 1: only the Original Trainer may breed a Pokémon (Dittos exempt) — cancels the egg.
+        com.cobblemonbridge.breeding.BreedingOTHook.registerEvents()
         NeoForge.EVENT_BUS.register(LegendaryMonumentLock)
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)

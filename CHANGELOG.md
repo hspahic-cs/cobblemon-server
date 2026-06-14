@@ -23,6 +23,14 @@ root README.
   that the ATM spawn-nerf pipeline pins to `ultra-rare`). New `server-end-spawn-nerfs` datapack moves
   only the End-biome entry to the `ultra-rare` bucket; every other biome (Aether, dripstone, peak,
   howling constructs) is unchanged, so the line is still obtainable normally elsewhere.
+- **Doubles PvP battles now stay unranked.** The ranked system intercepted *every* player-vs-player
+  battle and forced it into ranked 1v1-singles team-select. The `BATTLE_STARTED_PRE` veto now only
+  claims 1v1 **singles** matches; a Doubles (or any non-singles / multi) battle started from the
+  Cobblemon battle menu runs as a normal, casual battle with no ELO and no arena teleport.
+- **The 2-minute gym cooldown now covers the Elite Four (gyms 20–24).** Previously the E4 gauntlet was
+  exempt. The cooldown is per-(player, gym), so it never blocks normal gauntlet progression
+  (each member is fought once per run) — only re-fighting the *same* member within 2 minutes, closing
+  the E4 EXP-farm loop. Trade-off: retrying a member you just lost to waits out the cooldown.
 
 ### Fixed
 - **Legendary Monuments chests can no longer drop Large or XL EXP candy.** Eight monument chest loot

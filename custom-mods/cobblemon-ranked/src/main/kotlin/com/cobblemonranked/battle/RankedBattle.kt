@@ -430,6 +430,12 @@ object RankedBattleManager {
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.HIGHEST) { event ->
             val playerActors = event.battle.actors.filterIsInstance<PlayerBattleActor>()
             if (playerActors.size < 2) return@subscribe
+            // Ranked is strictly 1v1 singles. Anything else — a Doubles (or Triples/Multi) PvP
+            // battle, or a >2-player multi battle — is left to run as a normal, UNRANKED Cobblemon
+            // battle. Players who pick Doubles in the battle-request menu get a casual doubles match;
+            // we neither cancel it nor touch ELO. Only the 1v1-singles path routes to ranked below.
+            val isSingles = event.battle.format.battleType.pokemonPerSide == 1
+            if (!isSingles || playerActors.size > 2) return@subscribe
             val a = playerActors[0].entity ?: return@subscribe
             val b = playerActors[1].entity ?: return@subscribe
             if (expectedRankedMatch[a.uuid] == b.uuid) return@subscribe  // it's our ranked match

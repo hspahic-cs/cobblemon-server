@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Overrides the Legendary Monuments outskirt_stand structure so its Entrepreneur villager no longer offers the mega_showdown:zygarde_cell trade (Zygarde is no longer buyable). Only affects monuments generated after this is deployed; already-generated Entrepreneurs keep their baked trades."
+  }
+}

@@ -12,6 +12,12 @@ root README.
 
 ## [Unreleased]
 
+## [0.19.1] - 2026-06-14
+
+### Changed
+- **Rare crate: Eye of Ender payout cut 20 → 16.** Quantity-only nerf (the 2.0% drop odds from
+  0.19.0 are unchanged); the rare table still sums to exactly 100%.
+
 ## [0.19.0] - 2026-06-14
 
 ### Changed

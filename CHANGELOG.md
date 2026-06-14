@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.19.1] - 2026-06-14
+
+### Added
+- **Breeding Rule 1 — you can only breed Pokémon you're the Original Trainer of (Dittos exempt).**
+  `BreedingOTHook` cancels the egg at collection (Cobblemon's cancelable `CollectEggEvent`) when a
+  non-Ditto parent's Original Trainer isn't the breeding player, with a chat warning + audit log.
+  (First of a larger breeding-restrictions set; pasture-access, no-bred-Cobbleworkers, and
+  bred-egg audit logging are still in progress.)
+
+### Changed
+- **Rare crate: Eye of Ender payout cut 20 → 16.** Quantity-only nerf (the 2.0% drop odds from
+  0.19.0 are unchanged); the rare table still sums to exactly 100%.
+
 ## [0.19.0] - 2026-06-14
 
 ### Changed

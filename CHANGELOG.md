@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.19.0] - 2026-06-14
+
 ### Changed
 - **Gacha crate rebalance.** Common crate: Ultra Balls 10 → 20 and Quick Balls 32 → 20 per pull
   (round, consistent ball counts). Rare crate jackpot odds cut — Master Ball 2.5% → 0.5%, Ultra Key

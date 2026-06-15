@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.19.3] - 2026-06-15
+
+### Changed
+- **Ultra-rare spawn bucket dropped 10× (`0.001 → 0.0001`).** Starters share the `ultra-rare` bucket
+  with legendaries/UB/paradox and dominate it (weight 6.0 vs 0.05–1.0), so they read as too common in
+  their biomes; this cuts every ultra-rare *wild* spawn 10×. Wild legendary/UB encounters get rarer too,
+  but those are primarily obtained via monuments/shrines + gacha, so wild spawns are a minor source.
+  `common` absorbs the 0.0009 so the bucket table still sums to 100.
+
 ## [0.19.2] - 2026-06-14
 
 ### Changed

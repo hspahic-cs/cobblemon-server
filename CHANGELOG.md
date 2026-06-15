@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.19.2] - 2026-06-14
+
+### Changed
+- **Legendary Monuments Entrepreneur no longer sells Light/Dark Stone Shards.** The Entrepreneur
+  villager's code-registered Tier-4 trades (`legendarymonuments:lightstone_shard` /
+  `darkstone_shard` → Reshiram / Zekrom) are stripped via a NeoForge `VillagerTradesEvent` hook
+  (`EntrepreneurTradeFilter`), since they're baked into the mod and can't be removed by a datapack.
+  Reshiram / Zekrom remain obtainable through the Ultra gacha crate (which sells the full Light/Dark
+  Stone). All other Entrepreneur wares — the Treasure-of-Ruin Seals, Silver Wing (Lugia), and
+  Celestica Flute (Arceus) — are intentionally left in place.
+
 ## [0.19.1] - 2026-06-14
 
 ### Added

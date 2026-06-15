@@ -307,13 +307,13 @@
     },
     {
       "lootTier": "High",
-      "label": "20 Eye of Ender",
+      "label": "16 Eye of Ender",
       "weightPct": 2.0,
       "items": [
         {
           "type": "vanilla",
           "id": "minecraft:ender_eye",
-          "count": 20
+          "count": 16
         }
       ],
       "notes": "Useful for strongholds and legendary summon altars"

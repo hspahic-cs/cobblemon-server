@@ -35,15 +35,16 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent
 object EggDefeatHook {
 
     private val TIER_SECONDS = mapOf(
-        "common" to 3600,        // 1h
-        "uncommon" to 7200,      // 2h
-        "rare" to 14400,         // 4h
-        "ultra" to 28800,        // 8h
-        "ultra_rare" to 28800,   // 8h
+        "common" to 600,         // 10m
+        "uncommon" to 1200,      // 20m
+        "rare" to 1800,          // 30m
+        "ultra" to 3600,         // 1h
+        "ultra_rare" to 3600,    // 1h
+        "shiny" to 3600,         // 1h — any shiny gacha egg (tagged "shiny" regardless of pool)
         "beginner" to 600,       // 10m — quest-chain starter (Exeggcute)
     )
     /** Default duration for eggs without a gacha tier tag — i.e. Cobreeding daycare bred eggs. */
-    private const val BRED_DEFAULT_SECONDS = 1800  // 30m
+    private const val BRED_DEFAULT_SECONDS = 3600  // 60m
     private const val BRED_LABEL = "bred"
     private const val TICKS_PER_SECOND = 20
 

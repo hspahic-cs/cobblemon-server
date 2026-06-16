@@ -1,8 +1,5 @@
 # Breeding
 
-You can breed Pokémon to hatch eggs — but on this server breeding is deliberately a slow, personal
-project, not a factory. Read the restrictions before you start, especially the trading rules.
-
 ## How to breed
 
 1. **Place a Pasture Block** (you get your first from the *Sunny Side Up* quest, or craft more).

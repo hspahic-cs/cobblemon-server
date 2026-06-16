@@ -167,7 +167,9 @@ object RewardGranter {
         // Cobreeding's /givepokemonegg places the egg via inventory operations that may not be
         // synchronously visible to ItemStack.get(...). Use TickScheduler so the tag-pass runs on
         // a *later* server tick (server.execute(...) runs on the same tick — too eager).
-        TickScheduler.later(2) { tagGrantedEggWithTier(player, spec.pool) }
+        // Shiny eggs hatch on the dedicated "shiny" timer (1h) regardless of pool; non-shiny eggs
+        // use their pool tier. cobblemon-bridge's EggDefeatHook maps the tag -> hatch duration.
+        TickScheduler.later(2) { tagGrantedEggWithTier(player, if (spec.shiny) "shiny" else spec.pool) }
         return EggOutcome(eggDisplayStack(spec, species, grantHa), announceLabel(spec, species, grantHa))
     }
 

@@ -5,7 +5,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Azure Flute",
-      "weightPct": 0.5,
+      "weightPct": 0.7,
       "items": [
         {
           "type": "vanilla",
@@ -18,7 +18,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Totem of Undying (Zacian)",
-      "weightPct": 1.0,
+      "weightPct": 1.4,
       "items": [
         {
           "type": "vanilla",
@@ -31,7 +31,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Griseous Orb",
-      "weightPct": 1.0,
+      "weightPct": 1.4,
       "items": [
         {
           "type": "vanilla",
@@ -44,7 +44,7 @@
     {
       "lootTier": "High",
       "label": "Rainbow Feather",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -57,7 +57,7 @@
     {
       "lootTier": "High",
       "label": "Red Chain",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -70,7 +70,7 @@
     {
       "lootTier": "High",
       "label": "Shiny Egg",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -84,7 +84,7 @@
     {
       "lootTier": "High",
       "label": "Light Stone",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -97,7 +97,7 @@
     {
       "lootTier": "High",
       "label": "Dark Stone",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -110,7 +110,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (U)",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -123,7 +123,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (A)",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -136,7 +136,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (M)",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",
@@ -149,7 +149,7 @@
     {
       "lootTier": "Mid",
       "label": "Fullmoon Whistle",
-      "weightPct": 4.0,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "vanilla",
@@ -162,7 +162,7 @@
     {
       "lootTier": "Mid",
       "label": "Newmoon Whistle",
-      "weightPct": 4.0,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "vanilla",
@@ -175,7 +175,7 @@
     {
       "lootTier": "Mid",
       "label": "Liberty Pass",
-      "weightPct": 4.0,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "vanilla",
@@ -188,7 +188,7 @@
     {
       "lootTier": "Mid",
       "label": "Curry of Justice",
-      "weightPct": 4.0,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "vanilla",
@@ -200,21 +200,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Titan Key",
-      "weightPct": 4.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:titan_key",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Regigigas"
-    },
-    {
-      "lootTier": "Mid",
       "label": "2 Master Balls",
-      "weightPct": 4.0,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "vanilla",
@@ -227,7 +214,7 @@
     {
       "lootTier": "Standard",
       "label": "2 Ability Patches",
-      "weightPct": 8.0,
+      "weightPct": 11.5,
       "items": [
         {
           "type": "vanilla",
@@ -239,47 +226,8 @@
     },
     {
       "lootTier": "Standard",
-      "label": "Rock Golem Key",
-      "weightPct": 6.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:rock_golem_key",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Regirock"
-    },
-    {
-      "lootTier": "Standard",
-      "label": "Steel Golem Key",
-      "weightPct": 6.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:steel_golem_key",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Registeel"
-    },
-    {
-      "lootTier": "Standard",
-      "label": "Ice Golem Key",
-      "weightPct": 6.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:ice_golem_key",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Regice"
-    },
-    {
-      "lootTier": "Standard",
       "label": "Ultra Egg",
-      "weightPct": 8.0,
+      "weightPct": 11.4,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -292,21 +240,8 @@
     },
     {
       "lootTier": "Standard",
-      "label": "Dragon Golem Key",
-      "weightPct": 6.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "legendarymonuments:dragon_golem_key",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Regidrago"
-    },
-    {
-      "lootTier": "Standard",
       "label": "Ash Cap",
-      "weightPct": 4.0,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "vanilla",
@@ -319,7 +254,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Ultra Keys",
-      "weightPct": 0.5,
+      "weightPct": 0.7,
       "items": [
         {
           "type": "gacha_key",
@@ -332,7 +267,7 @@
     {
       "lootTier": "High",
       "label": "Vortex Stone",
-      "weightPct": 3.0,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "vanilla",

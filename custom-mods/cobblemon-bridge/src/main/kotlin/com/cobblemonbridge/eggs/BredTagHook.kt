@@ -28,6 +28,10 @@ object BredTagHook {
 
     const val TAG_KEY = "cobblemon_bridge:bred"
 
+    /** Set on a Pokémon when it is used as a breeding parent (see [BreedingTradeLockHook]).
+     *  Like [TAG_KEY], it makes the Pokémon non-tradeable — "parents and children can't be traded." */
+    const val PARENT_TAG_KEY = "cobblemon_bridge:bred_parent"
+
     /**
      * Player UUID → server tick on which the mixin observed a gacha-tier marker on the egg
      * being hatched. The HATCH_EGG_POST subscriber removes the entry; entries older than
@@ -64,4 +68,16 @@ object BredTagHook {
 
     fun isBred(pokemon: Pokemon): Boolean =
         pokemon.persistentData.getBoolean(TAG_KEY)
+
+    /** Mark a Pokémon as a breeding parent (called for both parents when an egg is collected). */
+    fun markBreedingParent(pokemon: Pokemon) =
+        pokemon.persistentData.putBoolean(PARENT_TAG_KEY, true)
+
+    fun isBreedingParent(pokemon: Pokemon): Boolean =
+        pokemon.persistentData.getBoolean(PARENT_TAG_KEY)
+
+    /** True if the Pokémon may not be traded due to breeding — either it was bred (a child) or it
+     *  has been used as a breeding parent. The single check used by the trade gates. */
+    fun isTradeLocked(pokemon: Pokemon): Boolean =
+        isBred(pokemon) || isBreedingParent(pokemon)
 }

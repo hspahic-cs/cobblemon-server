@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:lugia_temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 721135,
+    "spread_type": "triangular",
+    "spacing": 144,
+    "separation": 108
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:kyuremcave",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 50015,
+    "spread_type": "triangular",
+    "spacing": 189,
+    "separation": 147
+  }
+}

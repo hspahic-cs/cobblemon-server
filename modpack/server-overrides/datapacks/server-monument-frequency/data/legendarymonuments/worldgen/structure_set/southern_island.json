@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:southern_island",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 190135,
+    "spread_type": "triangular",
+    "spacing": 214,
+    "separation": 144
+  }
+}

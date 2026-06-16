@@ -1,8 +1,8 @@
 {
-  "navigationTimeout": 30,
+  "navigationTimeout": 60,
   "depositTimeout": 65,
-  "areaScanCooldown": 45,
-  "areaScanRadius": 2,
+  "areaScanCooldown": 15,
+  "areaScanRadius": 3,
   "areaScanHeight": 5,
-  "scannedBlocksPerTick": 50
+  "scannedBlocksPerTick": 128
 }

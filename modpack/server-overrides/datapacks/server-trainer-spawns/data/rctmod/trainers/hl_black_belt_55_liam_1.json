@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Black Belt Liam",
+  "textureResource": "rctmod:textures/trainers/single/type_fighting.png",
+  "team": [
+    {
+      "species": "throh",
+      "level": 54,
+      "gender": "RANDOM",
+      "nature": "hardy",
+      "ability": "guts",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "conkeldurr",
+      "level": 54,
+      "gender": "RANDOM",
+      "nature": "hardy",
+      "ability": "guts",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

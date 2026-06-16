@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hiker Zane",
+  "textureResource": "rctmod:textures/trainers/single/type_rock.png",
+  "team": [
+    {
+      "species": "rhyperior",
+      "level": 78,
+      "gender": "RANDOM",
+      "nature": "timid",
+      "ability": "lightningrod",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "sudowoodo",
+      "level": 74,
+      "gender": "RANDOM",
+      "nature": "naive",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gliscor",
+      "level": 74,
+      "gender": "RANDOM",
+      "nature": "careful",
+      "ability": "hypercutter",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

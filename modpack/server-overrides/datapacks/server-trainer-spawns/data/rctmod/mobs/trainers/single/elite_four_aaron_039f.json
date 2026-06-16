@@ -1,0 +1,29 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_nether",
+    "is_end"
+  ],
+  "biomeTagWhitelist": [
+    "is_forest",
+    "is_swamp"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "pokemon_trainer_cedric_044e",
+      "pokemon_trainer_cedric_044f",
+      "pokemon_trainer_cedric_0450"
+    ]
+  ],
+  "series": [
+    "bdsp"
+  ],
+  "signatureItem": "cobblemon:silver_powder",
+  "spawnWeightFactor": 0.0,
+  "type": "e4",
+  "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
+}

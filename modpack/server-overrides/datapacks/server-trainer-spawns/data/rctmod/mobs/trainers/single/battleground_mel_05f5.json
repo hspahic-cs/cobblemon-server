@@ -1,0 +1,41 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void"
+  ],
+  "biomeTagWhitelist": [
+    "has_structure/end_city",
+    "is_rare"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": true,
+  "requiredDefeats": [
+    [
+      "title_defense_jax_05ee"
+    ],
+    [
+      "title_defense_marlon_05eb"
+    ],
+    [
+      "title_defense_milo_05ed"
+    ],
+    [
+      "title_defense_rival_player_chose_beldum_05f0",
+      "title_defense_rival_player_chose_gible_05ef",
+      "title_defense_rival_player_chose_larvitar_05f1"
+    ],
+    [
+      "title_defense_solenk_05ec"
+    ],
+    [
+      "title_defense_zeph_05ea"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was battleground) \u2014 server-trainer-spawns"
+}

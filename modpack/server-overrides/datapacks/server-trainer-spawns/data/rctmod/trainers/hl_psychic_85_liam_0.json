@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Psychic Liam",
+  "textureResource": "rctmod:textures/trainers/single/type_psychic.png",
+  "team": [
+    {
+      "species": "exeggutor",
+      "level": 86,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "chlorophyll",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gardevoir",
+      "level": 85,
+      "gender": "RANDOM",
+      "nature": "docile",
+      "ability": "synchronize",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "hypno",
+      "level": 85,
+      "gender": "RANDOM",
+      "nature": "brave",
+      "ability": "insomnia",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "musharna",
+      "level": 86,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "forewarn",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

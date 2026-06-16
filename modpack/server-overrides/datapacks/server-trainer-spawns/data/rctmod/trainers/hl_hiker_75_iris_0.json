@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hiker Iris",
+  "textureResource": "rctmod:textures/trainers/single/type_rock.png",
+  "team": [
+    {
+      "species": "steelix",
+      "level": 72,
+      "gender": "RANDOM",
+      "nature": "mild",
+      "ability": "rockhead",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "sudowoodo",
+      "level": 78,
+      "gender": "RANDOM",
+      "nature": "sassy",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "golem",
+      "level": 76,
+      "gender": "RANDOM",
+      "nature": "relaxed",
+      "ability": "rockhead",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

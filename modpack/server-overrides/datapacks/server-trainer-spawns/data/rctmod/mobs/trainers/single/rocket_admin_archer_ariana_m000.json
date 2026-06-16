@@ -1,0 +1,30 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_end"
+  ],
+  "biomeTagWhitelist": [
+    "is_nether",
+    "is_badlands",
+    "is_wasteland",
+    "is_savanna"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "rival_terry_01b0",
+      "rival_terry_01b1",
+      "rival_terry_01b2"
+    ]
+  ],
+  "series": [
+    "radicalred"
+  ],
+  "signatureItem": "cobblemon:black_sludge",
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was team_rocket) \u2014 server-trainer-spawns"
+}

@@ -1,0 +1,27 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void"
+  ],
+  "biomeTagWhitelist": [
+    "is_plains",
+    "is_sparse_vegetation",
+    "is_rare",
+    "has_structure/end_city"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "gym_leader_wake_03d7"
+    ]
+  ],
+  "series": [
+    "bdsp"
+  ],
+  "signatureItem": "cobblemon:eviolite",
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was rival) \u2014 server-trainer-spawns"
+}

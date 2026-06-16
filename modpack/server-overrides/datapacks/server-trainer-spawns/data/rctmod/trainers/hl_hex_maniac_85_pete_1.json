@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hex Maniac Pete",
+  "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
+  "team": [
+    {
+      "species": "dhelmise",
+      "level": 82,
+      "gender": "RANDOM",
+      "nature": "timid",
+      "ability": "steelworker",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "spiritomb",
+      "level": 83,
+      "gender": "RANDOM",
+      "nature": "hardy",
+      "ability": "pressure",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

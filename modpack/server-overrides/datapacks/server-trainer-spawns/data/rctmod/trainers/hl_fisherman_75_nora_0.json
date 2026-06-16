@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Fisherman Nora",
+  "textureResource": "rctmod:textures/trainers/single/type_water.png",
+  "team": [
+    {
+      "species": "starmie",
+      "level": 75,
+      "gender": "RANDOM",
+      "nature": "relaxed",
+      "ability": "illuminate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "poliwrath",
+      "level": 74,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "waterabsorb",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "qwilfish",
+      "level": 72,
+      "gender": "RANDOM",
+      "nature": "gentle",
+      "ability": "poisonpoint",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "lapras",
+      "level": 72,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "waterabsorb",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

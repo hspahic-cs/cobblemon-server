@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Cooltrainer Quinn",
+  "textureResource": "rctmod:textures/trainers/single/type_normal.png",
+  "team": [
+    {
+      "species": "electivire",
+      "level": 93,
+      "gender": "RANDOM",
+      "nature": "serious",
+      "ability": "motordrive",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gyarados",
+      "level": 96,
+      "gender": "RANDOM",
+      "nature": "gentle",
+      "ability": "intimidate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "aggron",
+      "level": 94,
+      "gender": "RANDOM",
+      "nature": "brave",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

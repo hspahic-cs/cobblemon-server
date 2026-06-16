@@ -6,6 +6,8 @@ import com.cobblemon.mod.common.api.events.pokemon.ExperienceGainedEvent
 import com.cobblemon.mod.common.api.pokemon.experience.BattleExperienceSource
 import com.cobblemon.mod.common.battles.actor.TrainerBattleActor
 import com.cobblemonbridge.CobblemonBridge
+import com.cobblemonbridge.adapters.RctBridge
+import net.minecraft.resources.ResourceLocation
 
 /**
  * Doubles the EXP gain from any battle whose losing side included a `TrainerBattleActor`
@@ -42,6 +44,11 @@ object TrainerExpBoostHook {
         val src = event.source as? BattleExperienceSource ?: return
         val facedATrainer = src.facedPokemon.any { it.actor is TrainerBattleActor }
         if (!facedATrainer) return
+        // No 2x bonus for re-clearing a gym/E4 you've already beaten — only the first clear gets it.
+        // (The rctmod:defeat_count advancement is granted at BATTLE_VICTORY, which fires AFTER this
+        // exp event, so on the very first win the advancement isn't done yet and the boost still
+        // applies; every subsequent win sees the advancement as done and falls back to 1x.)
+        if (isAlreadyBeatenGym(src)) return
         val before = event.experience
         val boosted = (before * EXP_BOOST_MULTIPLIER).toInt()
         event.experience = boosted
@@ -49,5 +56,19 @@ object TrainerExpBoostHook {
             "trainer-exp-boost: {} L{} {} -> {} (x{})",
             event.pokemon.species.name, event.pokemon.level, before, boosted, EXP_BOOST_MULTIPLIER,
         )
+    }
+
+    /** True if this exp grant comes from defeating a gym/E4 trainer the owning player has ALREADY
+     *  beaten (so the 2x bonus should be suppressed). False for non-gym trainers, first-ever clears,
+     *  or when the trainer/player can't be resolved (fail-open: keep the boost). */
+    private fun isAlreadyBeatenGym(src: BattleExperienceSource): Boolean {
+        val trainerId = RctBridge.trainerIdForBattle(src.battle.battleId) ?: return false
+        val (gymId, isChallenge) = RctBridge.parseGymTrainerId(trainerId) ?: return false
+        val player = src.battle.actors
+            .filterIsInstance<com.cobblemon.mod.common.battles.actor.PlayerBattleActor>()
+            .firstOrNull()?.entity ?: return false
+        val advId = if (isChallenge) "server:beat_gym_${gymId}_challenge" else "server:beat_gym_$gymId"
+        val adv = player.server.advancements.get(ResourceLocation.parse(advId)) ?: return false
+        return player.advancements.getOrStartProgress(adv).isDone
     }
 }

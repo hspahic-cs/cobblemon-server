@@ -1,0 +1,34 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void"
+  ],
+  "biomeTagWhitelist": [
+    "has_structure/end_city",
+    "is_rare"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "elite_four_moleman_05b3"
+    ],
+    [
+      "elite_four_elias_05b4"
+    ],
+    [
+      "elite_four_arabella_05b5"
+    ],
+    [
+      "elite_four_penny_05b6"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "signatureItem": "minecraft:totem_of_undying",
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was champ) \u2014 server-trainer-spawns"
+}

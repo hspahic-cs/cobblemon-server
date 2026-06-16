@@ -1,0 +1,29 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_nether",
+    "is_end"
+  ],
+  "biomeTagWhitelist": [
+    "is_plains",
+    "is_sparse_vegetation",
+    "is_rare",
+    "is_forest"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "leader_koga_01a2"
+    ]
+  ],
+  "series": [
+    "radicalred"
+  ],
+  "signatureItem": "cobblemon:vivichoke",
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was rival) \u2014 server-trainer-spawns"
+}

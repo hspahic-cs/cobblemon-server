@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Cooltrainer Faye",
+  "textureResource": "rctmod:textures/trainers/single/type_normal.png",
+  "team": [
+    {
+      "species": "snorlax",
+      "level": 78,
+      "gender": "RANDOM",
+      "nature": "serious",
+      "ability": "immunity",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "hydreigon",
+      "level": 74,
+      "gender": "RANDOM",
+      "nature": "modest",
+      "ability": "levitate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

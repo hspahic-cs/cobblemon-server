@@ -1,0 +1,30 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_nether",
+    "is_end"
+  ],
+  "biomeTagWhitelist": [
+    "is_forest",
+    "is_dense_vegetation",
+    "is_swamp"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "rival_2_player_chose_beldum_060a",
+      "rival_2_player_chose_gible_0609",
+      "rival_2_player_chose_larvitar_060b"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "signatureItem": "cobblemon:medicinal_leek",
+  "spawnWeightFactor": 0.0,
+  "type": "leader",
+  "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
+}

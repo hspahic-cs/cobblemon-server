@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Cooltrainer Alex",
+  "textureResource": "rctmod:textures/trainers/single/type_normal.png",
+  "team": [
+    {
+      "species": "snorlax",
+      "level": 63,
+      "gender": "RANDOM",
+      "nature": "docile",
+      "ability": "immunity",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gardevoir",
+      "level": 62,
+      "gender": "RANDOM",
+      "nature": "bold",
+      "ability": "synchronize",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "flygon",
+      "level": 68,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "levitate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

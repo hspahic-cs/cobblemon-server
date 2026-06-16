@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Psychic Mira",
+  "textureResource": "rctmod:textures/trainers/single/type_psychic.png",
+  "team": [
+    {
+      "species": "bronzong",
+      "level": 94,
+      "gender": "RANDOM",
+      "nature": "bold",
+      "ability": "levitate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "exeggutor",
+      "level": 97,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "chlorophyll",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gardevoir",
+      "level": 94,
+      "gender": "RANDOM",
+      "nature": "jolly",
+      "ability": "synchronize",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Black Belt Faye",
+  "textureResource": "rctmod:textures/trainers/single/type_fighting.png",
+  "team": [
+    {
+      "species": "primeape",
+      "level": 64,
+      "gender": "RANDOM",
+      "nature": "quiet",
+      "ability": "vitalspirit",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "medicham",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "purepower",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

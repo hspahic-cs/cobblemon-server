@@ -1,0 +1,30 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_underground",
+    "is_nether",
+    "is_end"
+  ],
+  "biomeTagWhitelist": [
+    "is_plains",
+    "is_sparse_vegetation"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "rival_4_player_chose_beldum_05fe",
+      "rival_4_player_chose_gible_05fd",
+      "rival_4_player_chose_larvitar_05ff"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "signatureItem": "cobblemon:electric_gem",
+  "spawnWeightFactor": 0.0,
+  "type": "leader",
+  "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
+}

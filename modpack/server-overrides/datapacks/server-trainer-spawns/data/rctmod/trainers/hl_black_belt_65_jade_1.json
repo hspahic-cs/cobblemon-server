@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Black Belt Jade",
+  "textureResource": "rctmod:textures/trainers/single/type_fighting.png",
+  "team": [
+    {
+      "species": "hariyama",
+      "level": 67,
+      "gender": "RANDOM",
+      "nature": "gentle",
+      "ability": "thickfat",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gallade",
+      "level": 62,
+      "gender": "RANDOM",
+      "nature": "brave",
+      "ability": "steadfast",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "hitmonlee",
+      "level": 62,
+      "gender": "RANDOM",
+      "nature": "naughty",
+      "ability": "limber",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

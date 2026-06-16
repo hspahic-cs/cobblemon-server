@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Fisherman Seth",
+  "textureResource": "rctmod:textures/trainers/single/type_water.png",
+  "team": [
+    {
+      "species": "lapras",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "waterabsorb",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "qwilfish",
+      "level": 63,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "poisonpoint",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "starmie",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "calm",
+      "ability": "illuminate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

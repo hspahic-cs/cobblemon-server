@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.21.0] - 2026-06-16
+
+### Fixed
+- **High-level wild trainers are reasonable again.** Above party level ~60 the RCTmod wild pool used
+  to collapse to over-leveled competitive bosses (gym leaders, Elite Four, champions, rivals). New
+  `server-trainer-spawns` datapack (gen: `ops/gen_highlevel_trainers.py`): (a) removes gym leaders +
+  Elite Four from wild spawning (`spawnWeightFactor: 0`), (b) level-gates the remaining bosses
+  (champion/rival/battleground/team-admin → retyped `normal` so they respect level-scaling, weight
+  cut to 0.08 so they're drowned out), and (c) adds ~80 themed mid-tier trainers at L55–100 (Bird
+  Keeper, Bug Catcher, Hiker, Fisherman, Black Belt, Psychic, Hex Maniac, Cooltrainer) with 2–4
+  fully-evolved Pokémon, natural auto-assigned movesets, empty EVs — non-competitive, level-matched.
+- **Loss-EXP now honors Lucky Egg and EXP Share.** The "keep per-defeat EXP even on a loss to a
+  trainer" hook (`PveLossExpHook`) was paying flat base EXP to participants only; it now mirrors
+  Cobblemon's normal distribution — Lucky Egg ×1.5 on the holder, and benched EXP-Share holders get
+  their `experienceShareMultiplier` (0.5×) share.
+
+### Changed
+- **No more 2× EXP for re-clearing a gym you've already beaten.** `TrainerExpBoostHook` still doubles
+  trainer-battle EXP, but the bonus is now suppressed for gym/E4 trainers the player already holds the
+  `beat_gym_N` advancement for — repeat clears pay the regular 1×. First-ever clears still get 2×.
+
 ## [0.20.0] - 2026-06-16
 
 ### Changed

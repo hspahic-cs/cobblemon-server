@@ -1,0 +1,26 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void"
+  ],
+  "biomeTagWhitelist": [
+    "is_peak",
+    "has_structure/end_city",
+    "is_mountain"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "leader_benjamin_05b2"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "signatureItem": "cobblemon:quick_claw",
+  "spawnWeightFactor": 0.0,
+  "type": "e4",
+  "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
+}

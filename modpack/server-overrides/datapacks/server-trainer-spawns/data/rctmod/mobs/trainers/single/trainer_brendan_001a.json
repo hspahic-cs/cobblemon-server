@@ -1,0 +1,30 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_end"
+  ],
+  "biomeTagWhitelist": [
+    "is_plains",
+    "is_sparse_vegetation",
+    "is_rare",
+    "is_underground"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "rival_terry_01b3",
+      "rival_terry_01b4",
+      "rival_terry_01b5"
+    ]
+  ],
+  "series": [
+    "radicalred"
+  ],
+  "signatureItem": "cobblemon:choice_scarf",
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was rival) \u2014 server-trainer-spawns"
+}

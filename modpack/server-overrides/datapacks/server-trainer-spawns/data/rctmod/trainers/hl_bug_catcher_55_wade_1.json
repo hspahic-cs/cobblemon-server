@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bug Catcher Wade",
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png",
+  "team": [
+    {
+      "species": "galvantula",
+      "level": 54,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "compoundeyes",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "volcarona",
+      "level": 55,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "flamebody",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "yanmega",
+      "level": 55,
+      "gender": "RANDOM",
+      "nature": "mild",
+      "ability": "speedboost",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Fisherman Rosa",
+  "textureResource": "rctmod:textures/trainers/single/type_water.png",
+  "team": [
+    {
+      "species": "poliwrath",
+      "level": 52,
+      "gender": "RANDOM",
+      "nature": "timid",
+      "ability": "waterabsorb",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "milotic",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "adamant",
+      "ability": "marvelscale",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "whiscash",
+      "level": 54,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "oblivious",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

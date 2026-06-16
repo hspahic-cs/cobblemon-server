@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Psychic Wade",
+  "textureResource": "rctmod:textures/trainers/single/type_psychic.png",
+  "team": [
+    {
+      "species": "hypno",
+      "level": 78,
+      "gender": "RANDOM",
+      "nature": "lonely",
+      "ability": "insomnia",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "slowbro",
+      "level": 73,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "oblivious",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gothitelle",
+      "level": 75,
+      "gender": "RANDOM",
+      "nature": "bold",
+      "ability": "frisk",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

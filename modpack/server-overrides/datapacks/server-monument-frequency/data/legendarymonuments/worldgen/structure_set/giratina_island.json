@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:giratina_island",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 759231,
+    "spacing": 140,
+    "separation": 70
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:eternatus_cocoon",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 15915,
+    "spread_type": "triangular",
+    "spacing": 196,
+    "separation": 147
+  }
+}

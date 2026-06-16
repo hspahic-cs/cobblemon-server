@@ -91,3 +91,8 @@ Put your Pokémon to work. Park one on a Pasture Block and it'll auto-harvest, m
 1. Place a **Pasture Block** (you get your first from the *Sunny Side Up* quest).
 2. Put a **chest right next to it**, that's where everything gets dropped off.
 3. Right-click the pasture and add a Pokémon. The job it does depends on the species.
+
+!!! warning "Fence in the work area — strongly recommended"
+    Cobbleworkers **stop working when they wander away** from the pasture's area. **Enclose it** — a
+    fence, walls, or a pen they can't path out of — so your workers stay inside and keep working. An
+    open pasture will leave you with idle Pokémon that have walked off and stopped doing their job.

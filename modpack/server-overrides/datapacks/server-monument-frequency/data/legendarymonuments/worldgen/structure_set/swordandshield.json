@@ -1,0 +1,19 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:sword",
+      "weight": 1
+    },
+    {
+      "structure": "legendarymonuments:shield",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 15158,
+    "spread_type": "triangular",
+    "spacing": 128,
+    "separation": 86
+  }
+}

@@ -2,6 +2,12 @@
 
 The commands you'll reach for most often. Open chat (`T` or `/`), type the command, and hit enter.
 
+## Your trainer
+
+| Command | What it does |
+|---|---|
+| `/profile` | View your trainer profile — your level cap, Pokédex progress, Ranked ELO, income (balance), and favorite Pokémon. |
+
 ## Homes & travel
 
 | Command | What it does |

@@ -106,7 +106,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
 
 ## Egg species pools
 
-Pokémon eggs hatch into a random species from their tier's pool. When the rolled species has a **Hidden Ability** (marked **HA**), the hatched Pokémon gets it automatically.
+**Crate** eggs hatch into a random species from their tier's pool. When the rolled species has a **Hidden Ability** (marked **HA**), the hatched Pokémon gets it automatically. (This is for *crate* eggs — Pokémon you breed yourself follow the [breeding rules](breeding.md), which are stricter.)
 
 ??? note "Common egg pool — 30 species"
 

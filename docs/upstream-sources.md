@@ -2,7 +2,7 @@
 
 This repo does **not** vendor source code from upstream mods. Packwiz pulls
 release jars by URL into the modpack, and the cobblemon-npc gradle build pulls
-its compileOnly dependencies from public Maven repositories — no local clones
+its compileOnly dependencies from public Maven repositories, no local clones
 required to build.
 
 | Mod | Upstream | How we depend on it |
@@ -18,13 +18,13 @@ required to build.
 
 If you want to read upstream source while working on cobblemon-npc, clone the
 repos into `mods/` (gitignored). None of them need to be cloned for the build
-to succeed — the build resolves everything from public Maven.
+to succeed, the build resolves everything from public Maven.
 
 ```
 cobblemon-server/
 ├── custom-mods/
 │   └── cobblemon-npc/        # this repo builds and ships this
-└── mods/                      # gitignored — optional reference clones
+└── mods/                      # gitignored, optional reference clones
     ├── cobblemon/
     ├── minecolonies/
     ├── minecraft-comes-alive/

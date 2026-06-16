@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.20.0] - 2026-06-16
+
+### Changed
+- **Regi summon keys demoted from Ultra → Rare crate.** All five (Rock/Steel/Ice/Dragon Golem Keys
+  + Titan Key/Regigigas) now drop from the Rare crate at 2.0% each instead of the Ultra crate. Both
+  tables renormalized to 100%.
+- **Breeding restriction reworked: parents *and* children can't be traded** (replaces the old
+  "must be the Original Trainer to breed" rule). Breeding no longer cancels the egg; instead both
+  parents are tagged non-tradeable at egg collection (children were already non-tradeable via the
+  bred tag). Closes the breed-rare-mons-and-sell loop. (`BreedingTradeLockHook` replaces
+  `BreedingOTHook`; the trade gates now use `BredTagHook.isTradeLocked`.) Note: a Ditto used as a
+  parent is tagged too.
+- **Legendary Monuments ~2× more common.** New `server-monument-frequency` datapack scales the 15
+  rare monuments' worldgen `spacing`/`separation` by 0.7 (density ≈ ×2) — compensating for the
+  banned Arc Phone locator. Already-common monuments and villages are unchanged.
+- **Blue Moon shiny boost cut.** New `server-lunar-shiny-nerf` datapack lowers the Cobblemon
+  Integrations Blue Moon shiny multiplier 64× → 8× (Super Blue Moon 128× → 16×).
+- **Cobbleworkers buffed.** `areaScanRadius` 2→3, `areaScanCooldown` 45→15, `scannedBlocksPerTick`
+  50→128, `navigationTimeout` 30→60 — workers find work far more often, path more patiently, and
+  cover a wider area.
+
 ## [0.19.3] - 2026-06-15
 
 ### Changed

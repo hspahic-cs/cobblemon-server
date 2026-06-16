@@ -286,10 +286,10 @@ object TradeManager {
 
         // 1. Bred Pokémon are non-tradeable. Mirror of TradeCapHook for the custom /trade flow.
         val bredBlockers = mutableListOf<String>()
-        for (mon in session.offer1.pokemon) if (BredTagHook.isBred(mon)) {
+        for (mon in session.offer1.pokemon) if (BredTagHook.isTradeLocked(mon)) {
             bredBlockers += "${p1.gameProfile.name} offered ${mon.species.name} (bred)"
         }
-        for (mon in session.offer2.pokemon) if (BredTagHook.isBred(mon)) {
+        for (mon in session.offer2.pokemon) if (BredTagHook.isTradeLocked(mon)) {
             bredBlockers += "${p2.gameProfile.name} offered ${mon.species.name} (bred)"
         }
         if (bredBlockers.isNotEmpty()) {

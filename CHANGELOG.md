@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.0] - 2026-06-16
+
+### Changed
+- **Breeding nerfs.**
+  - **Shiny breeding disabled** — a bred (non-gacha) Pokémon never hatches shiny (`BredTagHook`).
+  - **Hidden-ability breeding halved** — a bred Pokémon that inherited its hidden ability keeps it
+    only ~50% of the time; otherwise it's rerolled to a normal ability.
+  - **Bred-egg hatch time 30m → 1h** (`BRED_DEFAULT_SECONDS`).
+  - **Pasture capacity 5 → 2** mons and **max active pastures per player ∞ → 4**
+    (`server-overrides/config/cobbreeding/main.json`).
+- **Gacha crate-egg hatch timers shortened.** common 10m, uncommon 20m, rare 30m, ultra/ultra-rare 1h,
+  and **shiny eggs 1h** (any pool). Shiny gacha eggs are now tagged with a dedicated `shiny` tier
+  (`RewardGranter`) so they use the 1h timer regardless of which pool they rolled from.
+
 ## [0.21.0] - 2026-06-16
 
 ### Fixed

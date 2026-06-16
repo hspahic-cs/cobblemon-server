@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "legendarymonuments:liberty_island",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1558135,
+    "spread_type": "triangular",
+    "spacing": 178,
+    "separation": 130
+  }
+}

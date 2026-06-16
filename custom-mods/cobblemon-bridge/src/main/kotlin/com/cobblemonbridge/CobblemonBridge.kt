@@ -106,8 +106,9 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
         BredTagHook.registerEvents()
-        // Rule 1: only the Original Trainer may breed a Pokémon (Dittos exempt) — cancels the egg.
-        com.cobblemonbridge.breeding.BreedingOTHook.registerEvents()
+        // Breeding restriction: parents + children of a breeding can't be traded (child via
+        // BredTagHook on hatch; both parents tagged here at egg-collection).
+        com.cobblemonbridge.breeding.BreedingTradeLockHook.registerEvents()
         NeoForge.EVENT_BUS.register(LegendaryMonumentLock)
         // Strip the LM Entrepreneur's Light/Dark Stone Shard (Reshiram/Zekrom) trades — they're
         // code-registered by the mod, so a datapack can't touch them.

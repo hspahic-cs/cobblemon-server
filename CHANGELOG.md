@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.1] - 2026-06-16
+
+### Fixed
+- **Breeding parents are now actually untradeable.** The parent-side trade lock (0.20.0) never fired:
+  it listened for Cobblemon's `COLLECT_EGG` event, which only fires for Cobblemon's *native* daycare —
+  this server breeds via Cobreeding, which has its own egg system and never emits it. So parents could
+  still be traded through the normal Cobblemon trade menu. Replaced the dead event hook with a
+  server-tick monitor (`BreedingParentTagHook`) that watches Cobreeding's per-pasture egg state
+  (`PastureBreedingData.registry`): when a pasture lays an egg, every Pokémon tethered to it is tagged
+  `bred_parent` (and the owning store is flagged dirty so the tag survives a restart). The bred-*child*
+  lock was unaffected — Cobreeding does fire `HATCH_EGG_POST`, so `BredTagHook` already tagged offspring.
+
 ## [0.22.0] - 2026-06-16
 
 ### Changed

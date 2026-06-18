@@ -151,6 +151,9 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         com.cobblemonbridge.commands.E4Command.register(event.dispatcher)  // op-only E4 test bypass
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
+        // /pay — our own money-transfer command. NeoEssentials' /pay is disabled via
+        // config/neoessentials/commands.json ("pay": false); this one uses the same economy.
+        com.cobblemonbridge.commands.PayCommand.register(event.dispatcher)
         // /trade disabled — the custom Pokémon+money trade GUI was too buggy. Players use the
         // native Cobblemon trade (look at a player, press R → Trade) and /pay for money instead.
         // TradeCommand.register(event.dispatcher)

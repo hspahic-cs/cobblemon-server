@@ -36,7 +36,7 @@ Every quest available on the server, grouped by chain.
 | 28 | **Pokémon Champion** | Defeat the Champion and claim the title. | $5,000 + Ultra Key |
 
 !!! warning "The Elite Four is a gauntlet"
-    Quests 24–28 (Elite Four #1–4 **and the Champion**) must be cleared **back-to-back in one run**. Losing, fleeing, leaving the area, or changing your party at any point — **including against the Champion** — restarts you from Elite Four #1. See [Gym trainers → How gyms work](gym-trainers.md#how-gyms-work) for the full rules.
+    Quests 24–28 (Elite Four #1–4 **and the Champion**) must be cleared **back-to-back in one run**. Losing, fleeing, leaving the area, or changing your party at any point (**including against the Champion**) restarts you from Elite Four #1. See [Gym trainers → How gyms work](gym-trainers.md#how-gyms-work) for the full rules.
 
 ## Monetary milestones (optional)
 
@@ -97,5 +97,5 @@ Challenge variants are fought at your team's true **Lv 50** (no downlevel cap). 
 
 ## Battle Tower (daily, optional)
 
-A daily three-floor gauntlet at spawn: three Hard-Mode leaders at **Lv 50**, fought in floor order (1 → 2 → 3) with **no healing between floors**. Clear all three in one run — losing, fleeing, or healing resets it (unlimited retries, and the lineup rotates every day). Unlocks after Gym 10. Full rules on the [Gym trainers](gym-trainers.md#how-gyms-work) page.
+A daily three-floor gauntlet at spawn: three Hard-Mode leaders at **Lv 50**, fought in floor order (1 → 2 → 3) with **no healing between floors**. Clear all three in one run. Losing, fleeing, or healing resets it (unlimited retries, and the lineup rotates every day). Unlocks after Gym 10. Full rules on the [Gym trainers](gym-trainers.md#how-gyms-work) page.
 

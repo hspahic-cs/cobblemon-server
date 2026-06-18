@@ -2,15 +2,15 @@
 
 Crate **keys** are opened at the gacha machine. Each key tier rolls one reward from its own table, weighted by the chances below. You earn keys from quests, milestones, and other crates.
 
-- **Common / Rare / Ultra keys** — the three main crate tiers (worst → best odds of big prizes).
-- **Pokémon key** — an egg-only crate (see the Pokémon crate below).
+- **Common / Rare / Ultra keys:** the three main crate tiers (worst → best odds of big prizes).
+- **Pokémon key:** an egg-only crate (see the Pokémon crate below).
 
 !!! note "Reading the tables"
     The **Chance** column is the drop rate within that crate. *"(random)"* rewards roll one item from a pool (e.g. a random evolution stone). Eggs hatch into a species from the matching [egg pool](#egg-species-pools).
 
 ## Crate drop tables
 
-??? note "Common crate — 21 possible rewards"
+??? note "Common crate: 21 possible rewards"
 
     | Chance | Reward |
     |---:|---|
@@ -36,7 +36,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 0.5% | 2 Common Keys |
     | 0.5% | 1 Rare Key |
 
-??? note "Rare crate — 22 possible rewards"
+??? note "Rare crate: 22 possible rewards"
 
     | Chance | Reward |
     |---:|---|
@@ -63,7 +63,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 2.0% | Mega Stone |
     | 1.0% | 1 Ultra Key |
 
-??? note "Ultra crate — 26 possible rewards"
+??? note "Ultra crate: 26 possible rewards"
 
     | Chance | Reward |
     |---:|---|
@@ -94,7 +94,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 0.5% | Azure Flute |
     | 0.5% | 2 Ultra Keys |
 
-??? note "Pokémon crate — 5 possible rewards"
+??? note "Pokémon crate: 5 possible rewards"
 
     | Chance | Reward |
     |---:|---|
@@ -106,21 +106,21 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
 
 ## Egg species pools
 
-Pokémon eggs hatch into a random species from their tier's pool. When the rolled species has a **Hidden Ability** (marked **HA**), the hatched Pokémon gets it automatically.
+**Crate** eggs hatch into a random species from their tier's pool. When the rolled species has a **Hidden Ability** (marked **HA**), the hatched Pokémon gets it automatically. (This is for *crate* eggs. Pokémon you breed yourself follow the [breeding rules](breeding.md), which are stricter.)
 
-??? note "Common egg pool — 30 species"
+??? note "Common egg pool: 30 species"
 
     Bulbasaur, Charmander, Squirtle, Mudkip, Rowlet, Fuecoco, Chikorita, Tepig, Fennekin, Chespin, Eevee, Pichu, Gastly, Magikarp, Growlithe, Shinx, Riolu, Ralts, Abra, Munchlax, Cubone, Foongus **(HA)**, Ferroseed, Hippopotas, Torkoal, Mareanie **(HA)**, Hatenna **(HA)**, Wooper, Shellos, Wingull
 
-??? note "Uncommon egg pool — 19 species"
+??? note "Uncommon egg pool: 19 species"
 
     Cyndaquil **(HA)**, Totodile **(HA)**, Treecko **(HA)**, Chimchar **(HA)**, Piplup **(HA)**, Popplio **(HA)**, Quaxly **(HA)**, Turtwig, Sobble **(HA)**, Zorua, Absol, Scyther, Marill, Drilbur, Rotom, Rockruff **(HA)**, Sandile **(HA)**, Vulpix **(HA)**, Rookidee **(HA)**
 
-??? note "Rare egg pool — 26 species"
+??? note "Rare egg pool: 26 species"
 
     Pawniard, Gligar **(HA)**, Togepi, Mimikyu, Honedge, Cleffa, Sneasel, Larvesta, Fletchling **(HA)**, Magnemite, Chansey, Axew, Ditto **(HA)**, Lapras, Litwick, Shellder, Tyrunt, Spiritomb, Toxel, Salandit, Snivy **(HA)**, Oshawott, Litten **(HA)**, Grookey **(HA)**, Sprigatito **(HA)**, Charcadet
 
-??? note "Ultra Rare egg pool — 33 species — pseudo-legendaries, gen starters, and all 20 Paradox Pokémon"
+??? note "Ultra Rare egg pool: 33 species (pseudo-legendaries, gen starters, and all 20 Paradox Pokémon)"
 
     Dratini **(HA)**, Larvitar, Beldum, Bagon **(HA)**, Gible **(HA)**, Deino, Goomy, Jangmo-O, Dreepy, Frigibax, Torchic **(HA)**, Froakie **(HA)**, Scorbunny **(HA)**, Greattusk, Screamtail, Brutebonnet, Fluttermane, Slitherwing, Sandyshocks, Roaringmoon, Walkingwake, Gougingfire, Ragingbolt, Irontreads, Ironbundle, Ironhands, Ironjugulis, Ironmoth, Ironthorns, Ironvaliant, Ironleaves, Ironboulder, Ironcrown
 

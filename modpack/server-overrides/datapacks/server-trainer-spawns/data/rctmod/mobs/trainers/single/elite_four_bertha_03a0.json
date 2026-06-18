@@ -1,0 +1,30 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_nether",
+    "is_end",
+    "is_spooky"
+  ],
+  "biomeTagWhitelist": [
+    "is_cave",
+    "is_plateau",
+    "is_mountain",
+    "is_hill"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "elite_four_aaron_039f"
+    ]
+  ],
+  "series": [
+    "bdsp"
+  ],
+  "signatureItem": "cobblemon:soft_sand",
+  "spawnWeightFactor": 0.0,
+  "type": "e4",
+  "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
+}

@@ -2,6 +2,12 @@
 
 The commands you'll reach for most often. Open chat (`T` or `/`), type the command, and hit enter.
 
+## Your trainer
+
+| Command | What it does |
+|---|---|
+| `/profile` | View your trainer profile: your level cap, Pokédex progress, Ranked ELO, income (balance), and favorite Pokémon. |
+
 ## Homes & travel
 
 | Command | What it does |
@@ -11,7 +17,7 @@ The commands you'll reach for most often. Open chat (`T` or `/`), type the comma
 | `/delhome <name>` | Delete a home to free up a slot. |
 | `/spawn` | Teleport back to the server spawn. |
 | `/warp <name>` | Travel to a public warp point (shops, the Elite Four, etc.). Run `/warp` on its own to see the list. |
-| `/tpa <player>` | Request to teleport to another player — they have to accept first. |
+| `/tpa <player>` | Request to teleport to another player (they have to accept first). |
 
 !!! tip "Five home slots"
     Homes are capped at **5**. If `/sethome <name>` says you're full, free a slot with `/delhome <name>` and try again.
@@ -40,4 +46,4 @@ See the [PvP rules](pvp.md) for the Ranked format and team restrictions.
 
 ### Trading Pokémon
 
-To trade Pokémon, **look at the other player and press `R`**, then click **Trade**. Each of you adds the Pokémon you want to offer and confirms — the swap only happens once both sides accept.
+To trade Pokémon, **look at the other player and press `R`**, then click **Trade**. Each of you adds the Pokémon you want to offer and confirms. The swap only happens once both sides accept.

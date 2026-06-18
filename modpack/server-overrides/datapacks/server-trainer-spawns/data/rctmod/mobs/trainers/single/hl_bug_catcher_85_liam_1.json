@@ -1,0 +1,17 @@
+{
+  "type": "normal",
+  "spawnWeightFactor": 0.35,
+  "battleCooldownTicks": 240,
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": true,
+  "series": [
+    "bdsp",
+    "radicalred",
+    "unbound"
+  ],
+  "requiredDefeats": [],
+  "biomeTagWhitelist": [],
+  "biomeTagBlacklist": [],
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png"
+}

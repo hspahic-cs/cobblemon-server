@@ -5,7 +5,7 @@
     {
       "lootTier": "Standard",
       "label": "2 Rare Candy",
-      "weightPct": 8.5,
+      "weightPct": 8.2,
       "items": [
         {
           "type": "vanilla",
@@ -18,7 +18,7 @@
     {
       "lootTier": "Standard",
       "label": "3 Exp Candy M",
-      "weightPct": 6.0,
+      "weightPct": 5.8,
       "items": [
         {
           "type": "vanilla",
@@ -31,7 +31,7 @@
     {
       "lootTier": "Mid",
       "label": "2 EXP Candy L",
-      "weightPct": 5.0,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -44,7 +44,7 @@
     {
       "lootTier": "Mid",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 11.0,
+      "weightPct": 10.6,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -58,7 +58,7 @@
     {
       "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 5.5,
+      "weightPct": 5.3,
       "items": [
         {
           "type": "vanilla",
@@ -71,7 +71,7 @@
     {
       "lootTier": "Mid",
       "label": "EV Training Item (random)",
-      "weightPct": 4.0,
+      "weightPct": 3.9,
       "items": [
         {
           "type": "random_item",
@@ -91,7 +91,7 @@
     {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 5.0,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -104,7 +104,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 15.5,
+      "weightPct": 14.7,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -118,7 +118,7 @@
     {
       "lootTier": "High",
       "label": "2 EXP candy XL",
-      "weightPct": 2.5,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -131,7 +131,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 2.5,
+      "weightPct": 0.5,
       "items": [
         {
           "type": "vanilla",
@@ -144,7 +144,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Ultra Key",
-      "weightPct": 1.0,
+      "weightPct": 0.5,
       "items": [
         {
           "type": "gacha_key",
@@ -157,7 +157,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Rare keys",
-      "weightPct": 2.0,
+      "weightPct": 0.9,
       "items": [
         {
           "type": "gacha_key",
@@ -170,7 +170,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Frost",
-      "weightPct": 2.5,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -183,7 +183,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Storms",
-      "weightPct": 2.5,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -196,7 +196,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Embers",
-      "weightPct": 2.5,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -209,7 +209,7 @@
     {
       "lootTier": "Mid",
       "label": "Keystone",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -222,7 +222,7 @@
     {
       "lootTier": "Mid",
       "label": "Mega Stone",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -235,7 +235,7 @@
     {
       "lootTier": "High",
       "label": "Silk Touch Book",
-      "weightPct": 3.0,
+      "weightPct": 2.9,
       "items": [
         {
           "type": "enchanted_book",
@@ -249,7 +249,7 @@
     {
       "lootTier": "High",
       "label": "Competitive Held Item (random)",
-      "weightPct": 5.0,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "random_item",
@@ -272,7 +272,7 @@
     {
       "lootTier": "Mid",
       "label": "Breeding Item (random)",
-      "weightPct": 3.0,
+      "weightPct": 2.9,
       "items": [
         {
           "type": "random_item",
@@ -288,7 +288,7 @@
     {
       "lootTier": "High",
       "label": "3 IV Candy (random)",
-      "weightPct": 4.0,
+      "weightPct": 3.9,
       "items": [
         {
           "type": "random_item",
@@ -307,16 +307,81 @@
     },
     {
       "lootTier": "High",
-      "label": "20 Eye of Ender",
-      "weightPct": 5.0,
+      "label": "16 Eye of Ender",
+      "weightPct": 1.8,
       "items": [
         {
           "type": "vanilla",
           "id": "minecraft:ender_eye",
-          "count": 20
+          "count": 16
         }
       ],
       "notes": "Useful for strongholds and legendary summon altars"
+    },
+    {
+      "lootTier": "High",
+      "label": "Titan Key",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:titan_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regigigas"
+    },
+    {
+      "lootTier": "High",
+      "label": "Rock Golem Key",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:rock_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regirock"
+    },
+    {
+      "lootTier": "High",
+      "label": "Steel Golem Key",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:steel_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Registeel"
+    },
+    {
+      "lootTier": "High",
+      "label": "Ice Golem Key",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:ice_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regice"
+    },
+    {
+      "lootTier": "High",
+      "label": "Dragon Golem Key",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "legendarymonuments:dragon_golem_key",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Regidrago"
     }
   ]
 }

@@ -5,7 +5,10 @@ import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.battles.BattleVictoryEvent
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
+import com.cobblemon.mod.common.battles.pokemon.BattlePokemon
 import com.cobblemonbridge.CobblemonBridge
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceLocation
 
 /**
  * Grants the EXP a losing player *would* have earned for the enemy Pokémon they actually defeated.
@@ -50,16 +53,28 @@ object PveLossExpHook {
 
         val calc = Cobblemon.experienceCalculator
 
+        // Mirror Cobblemon end()'s per-mon multiplier so Lucky Egg + EXP Share apply to loss-exp too.
+        // calculate()'s 3rd arg folds in those item multipliers (NOT the global experienceMultiplier,
+        // which calculate applies itself); awardExperience then fires the exp event so TrainerExpBoost
+        // still stacks. Without this, loss-exp ignored both held items.
+        val shareMult = Cobblemon.config.experienceShareMultiplier.toDouble()
+        val luckyMult = Cobblemon.config.luckyEggMultiplier.toDouble()
+
         for (player in losingPlayers) {
             var totalGranted = 0
             for (enemy in defeatedEnemies) {
                 val faced = enemy.facedOpponents  // the player mons that battled this enemy
                 for (mon in player.pokemonList) {
-                    if (mon !in faced) continue          // participants only (incl. fainted ones)
-                    val exp = calc.calculate(enemy, mon, 1.0)
+                    val held = heldItemId(mon)
+                    // Participants get full EXP; benched mons get EXP only if they hold an EXP Share.
+                    val shareFactor = when {
+                        mon in faced -> 1.0                          // participant (incl. fainted)
+                        held == EXP_SHARE -> shareMult               // benched share-holder
+                        else -> continue                             // benched, no share -> nothing
+                    }
+                    val luckyFactor = if (held == LUCKY_EGG) luckyMult else 1.0
+                    val exp = calc.calculate(enemy, mon, shareFactor * luckyFactor)
                     if (exp <= 0) continue
-                    // awardExperience builds a BattleExperienceSource + addExperienceWithPlayer,
-                    // so TrainerExpBoostHook (2x), Lucky Egg, etc. all fire on this grant too.
                     player.awardExperience(mon, exp)
                     totalGranted += exp
                 }
@@ -73,5 +88,14 @@ object PveLossExpHook {
                 )
             }
         }
+    }
+
+    private val LUCKY_EGG = ResourceLocation.fromNamespaceAndPath("cobblemon", "lucky_egg")
+    private val EXP_SHARE = ResourceLocation.fromNamespaceAndPath("cobblemon", "exp_share")
+
+    /** Registry id of the Pokémon's held item, or null if it isn't holding anything. */
+    private fun heldItemId(mon: BattlePokemon): ResourceLocation? {
+        val stack = mon.effectedPokemon.heldItem()
+        return if (stack.isEmpty) null else BuiltInRegistries.ITEM.getKey(stack.item)
     }
 }

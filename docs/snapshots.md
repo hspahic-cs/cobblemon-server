@@ -8,8 +8,8 @@ to a prod-like state on demand.
 
 From `/opt/cobblemon-prod/`:
 
-- `world/` — all dimensions, player .dat files, Cobblemon party + PC store
-- `config/cobblemon-*` and `config/cobblemon_*` — bridge / gacha / market /
+- `world/`, all dimensions, player .dat files, Cobblemon party + PC store
+- `config/cobblemon-*` and `config/cobblemon_*`, bridge / gacha / market /
   ranked / npc state directories
 
 NOT snapshotted: `server.properties`, `ops.json`, `whitelist.json`, mods, jvm
@@ -76,7 +76,7 @@ sudo systemctl start cobblemon-dev
 
 ## Notes
 
-- Snapshots include the prod RCON password indirectly — the script reads it
+- Snapshots include the prod RCON password indirectly, the script reads it
   from `server.properties` to pause/resume saves, but doesn't store it. Files
   are owned `sysadmin:sysadmin 0644`, accessible only to operators.
 - Reset clears `/opt/cobblemon-dev/.deployed_version` so the next CI deploy is

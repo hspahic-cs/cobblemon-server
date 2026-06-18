@@ -10,7 +10,7 @@ a `screen` session so you can attach a console.
 ```
 /opt/cobblemon-prod/        Production server (port 25565, RCON 25575)
 /opt/cobblemon-dev/         Dev server         (port 25566, RCON 25576)
-  mods/                     Live mod dir — must be a real directory, NOT a symlink
+  mods/                     Live mod dir, must be a real directory, NOT a symlink
                             (Sinytra Connector's services break under symlinks)
   mods.vX.Y.Z/              Per-release archives at install root; deploy hardlink-
                             copies one of these into mods/ (cp -al → no extra disk)
@@ -69,7 +69,7 @@ The deploy overlays authored config (`modpack/server-overrides/config/`) onto
 dirs the **running service creates** at runtime (e.g.
 `config/cobblemon-bridge/runtime/`, which holds both authored files like
 `gym_caps.json` and service-written state like `favorites.json`). The service
-runs as `sysadmin`, so it owns those dirs — and unless they're group-writable,
+runs as `sysadmin`, so it owns those dirs, and unless they're group-writable,
 `deployer` (a member of the `sysadmin` group) can't write the authored files
 into them and the deploy fails with `mkstemp ... Permission denied`.
 
@@ -101,11 +101,11 @@ with `sudo find /opt/cobblemon-{env}/config -type d -exec chmod g+ws {} \;`.
 2. `rsync` it into `/opt/cobblemon-{env}/staging/mods.vX.Y.Z/`.
 3. `mv staging/mods.vX.Y.Z ..` to seat the new version archive at install
    root.
-4. `cp -al mods.vX.Y.Z mods.swap-new` — hardlink copy, costs no jar bytes
-   but produces a *real directory* (NOT a symlink — Sinytra Connector's
+4. `cp -al mods.vX.Y.Z mods.swap-new`, hardlink copy, costs no jar bytes
+   but produces a *real directory* (NOT a symlink, Sinytra Connector's
    `IModFileCandidateLocator` services don't get picked up via NeoForge's
    `ServiceLoader` when `mods/` is a symlink).
-5. `mv mods mods.swap-old && mv mods.swap-new mods` — atomic swap, then
+5. `mv mods mods.swap-old && mv mods.swap-new mods`, atomic swap, then
    `rm -rf mods.swap-old`.
 6. `sudo systemctl restart cobblemon-{env}`.
 7. Old `mods.vX.Y.Z` archives prune to the most recent N (e.g. 5).

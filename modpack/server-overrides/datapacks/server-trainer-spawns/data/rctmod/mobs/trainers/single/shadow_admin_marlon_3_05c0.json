@@ -1,0 +1,28 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void"
+  ],
+  "biomeTagWhitelist": [
+    "has_structure/ancient_city",
+    "has_structure/desert_pyramid",
+    "has_structure/end_city",
+    "has_structure/jungle_temple",
+    "has_structure/nether_fortress"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "light_of_ruin_aklove_2_05c4"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "signatureItem": "cobblemon:dusk_stone",
+  "spawnWeightFactor": 0.08,
+  "type": "normal",
+  "_comment": "boss retyped normal + thinned (was ligh_of_ruin) \u2014 server-trainer-spawns"
+}

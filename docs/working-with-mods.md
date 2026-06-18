@@ -1,4 +1,4 @@
-# Working with mods — end-to-end guide
+# Working with mods, end-to-end guide
 
 The complete workflow for editing custom mods, shipping them to dev, and
 promoting to prod. Read this first if you've never deployed before.
@@ -91,7 +91,7 @@ cd custom-mods/<mod>
 ```
 
 A successful build produces `build/libs/<mod>-1.0.0.jar`. If the build
-fails locally, CI will too — fix before pushing.
+fails locally, CI will too, fix before pushing.
 
 If you don't have JDK 21 locally, just push and let CI build. PR validation
 will compile all 6 mods on every PR.
@@ -122,7 +122,7 @@ This updates:
 - `modpack/pack.toml` version
 - `custom-mods/cobblemon-npc/gradle.properties` mod_version
 
-Then edit `CHANGELOG.md` — move items from the `[Unreleased]` section into a
+Then edit `CHANGELOG.md`, move items from the `[Unreleased]` section into a
 new `## [0.4.2] - YYYY-MM-DD` heading describing what's new. Format:
 
 ```markdown
@@ -199,7 +199,7 @@ The workflow:
    `skip_dev_check` only if you know what you're doing).
 2. Deploys prod and waits for the service to come up healthy.
 3. **On green health-check**, auto-creates tag `v0.4.2` from `main` (if it
-   doesn't already exist) and publishes the official GitHub Release —
+   doesn't already exist) and publishes the official GitHub Release -
    .mrpack + all six custom-mod jars attached, marked as Latest.
 
 Friends now have a downloadable URL:
@@ -224,11 +224,11 @@ rm -rf build .gradle  # clear any local build state
 ```
 
 Now edit:
-- `gradle.properties` — change `mod_version` and `mod_id` if needed
-- `settings.gradle` — change `rootProject.name`
-- `src/main/resources/META-INF/neoforge.mods.toml` — change `modId`,
+- `gradle.properties`, change `mod_version` and `mod_id` if needed
+- `settings.gradle`, change `rootProject.name`
+- `src/main/resources/META-INF/neoforge.mods.toml`, change `modId`,
   `displayName`, `description`
-- `src/main/kotlin/...` — your new mod's package + code
+- `src/main/kotlin/...`, your new mod's package + code
 
 Verify it builds:
 
@@ -237,7 +237,7 @@ Verify it builds:
 ```
 
 Then push a PR as in step 4 above. CI will pick up the new module
-automatically — no workflow edits needed.
+automatically, no workflow edits needed.
 
 ## Step-by-step: adding a third-party mod
 
@@ -253,10 +253,10 @@ cd modpack
 
 This creates `modpack/mods/<mod>.pw.toml`. Commit it.
 
-For Fabric mods running through Sinytra Connector (rare — needed for things
+For Fabric mods running through Sinytra Connector (rare, needed for things
 like `cobblemon-economy`), packwiz refuses because the loader doesn't match.
 Hand-write the `.pw.toml` instead. Use `modpack/mods/cobblemon-economy.pw.toml`
-as a template — fields: `name`, `filename`, `side`, `[download]`/`url`,
+as a template, fields: `name`, `filename`, `side`, `[download]`/`url`,
 `hash`, `[update.modrinth]/mod-id`, `version`. Fetch `version` and `hash`
 via the Modrinth API.
 
@@ -293,7 +293,7 @@ swap the live `mods/` directory to a previous version:
 ssh sysadmin@192.168.1.20
 cd /opt/cobblemon-dev    # or /opt/cobblemon-prod
 ls mods.v*               # see available versions
-# mods/ MUST stay a real directory, not a symlink — Sinytra Connector breaks
+# mods/ MUST stay a real directory, not a symlink, Sinytra Connector breaks
 # under symlinks. Use cp -al for a hardlink copy (no extra disk, real dir).
 rm -rf mods.swap-new && cp -al mods.v0.4.0 mods.swap-new
 mv mods mods.swap-old
@@ -385,7 +385,7 @@ it for Fabric-via-Connector mods. Bump CHANGELOG and re-deploy.
 | `modpack/mods/<mod>.pw.toml` | Adding/updating a third-party mod |
 | `modpack/server-overrides/datapacks/` | Editing server-side datapacks |
 | `modpack/overrides/` | Editing client-side files (options.txt) bundled in mrpack |
-| `CHANGELOG.md` | THE deploy signal — bump this to ship |
+| `CHANGELOG.md` | THE deploy signal, bump this to ship |
 | `scripts/bump-version.sh` | Sync version across pack.toml + cobblemon-npc/gradle.properties |
 | `.github/workflows/deploy-dev.yml` | Edit dev deploy flow itself |
 | `.github/workflows/deploy-prod.yml` | Edit prod deploy flow (also creates tag + publishes GitHub Release) |

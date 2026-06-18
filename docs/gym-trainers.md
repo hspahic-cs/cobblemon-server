@@ -4,16 +4,16 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
 
 ## How gyms work
 
-- **Mainline (Gyms 1–10)** — the core progression, beaten in order. Each gym **downlevels your team to a level cap** so you can't steamroll it with overleveled Pokémon: the cap starts at **Lv 20** (Gym 1) and rises by 5 per gym up to **Lv 65** (Gym 10). Beating Gym 10 unlocks everything below.
-- **Rotating gyms (Gyms 11–19)** — optional set-piece leaders (eight rotating types plus Professor Oak) that all unlock once you've beaten Gym 10. Their teams are **Lv 60** (Oak is **Lv 70**).
-- **Challenge variants (Hard Mode)** — a tougher version of each mainline gym, available once you've beaten the regular one. Fought at your team's true **Lv 50** — no downlevel safety net.
-- **Elite Four + Champion (Gyms 20–24)** — the endgame gauntlet; see below.
+- **Mainline (Gyms 1–10):** the core progression, beaten in order. Each gym **downlevels your team to a level cap** so you can't steamroll it with overleveled Pokémon: the cap starts at **Lv 20** (Gym 1) and rises by 5 per gym up to **Lv 65** (Gym 10). Beating Gym 10 unlocks everything below.
+- **Rotating gyms (Gyms 11–19):** optional set-piece leaders (eight rotating types plus Professor Oak) that all unlock once you've beaten Gym 10. Their teams are **Lv 60** (Oak is **Lv 70**).
+- **Challenge variants (Hard Mode):** a tougher version of each mainline gym, available once you've beaten the regular one. Fought at your team's true **Lv 50**, with no downlevel safety net.
+- **Elite Four + Champion (Gyms 20–24):** the endgame gauntlet; see below.
 
 !!! warning "The Elite Four is a gauntlet"
-    Gyms 20–24 — **Elite Four #1–4 and the Champion** — must be beaten **consecutively in one run**, just like the mainline games. Beating Elite Four #4 does **not** end it: the Champion is the final battle. **Losing, fleeing, leaving the area, or changing your party at any point — including against the Champion — sends you all the way back to Elite Four #1.** Elite Four #4 and the Champion each award an Ultra Key.
+    Gyms 20–24 (**Elite Four #1–4 and the Champion**) must be beaten **consecutively in one run**, just like the mainline games. Beating Elite Four #4 does **not** end it: the Champion is the final battle. **Losing, fleeing, leaving the area, or changing your party at any point (including against the Champion) sends you all the way back to Elite Four #1.** Elite Four #4 and the Champion each award an Ultra Key.
 
 !!! info "Battle Tower"
-    A separate **daily** challenge at spawn: three Hard-Mode leaders fought in floor order (1 → 2 → 3) at **Lv 50**, with **no healing between floors**. Losing, fleeing, or healing resets the run — unlimited retries until you clear it, and the lineup rotates every day. Unlocks after Gym 10.
+    A separate **daily** challenge at spawn: three Hard-Mode leaders fought in floor order (1 → 2 → 3) at **Lv 50**, with **no healing between floors**. Losing, fleeing, or healing resets the run, with unlimited retries until you clear it, and the lineup rotates every day. Unlocks after Gym 10.
 
 !!! tip "Gym cooldown"
     After you start a gym battle, that gym goes on a **2-minute cooldown** before you can challenge it again (the Elite Four gauntlet is exempt). Stops gyms being spam-farmed for EXP.

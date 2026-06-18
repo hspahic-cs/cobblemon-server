@@ -12,6 +12,162 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.3] - 2026-06-18
+
+### Changed
+- **Replaced `/pay` with our own implementation.** NeoEssentials' `/pay` was unreliable on this
+  server, so it's disabled (`config/neoessentials/commands.json` → `"pay": false`) and reimplemented
+  in the bridge (`PayCommand`). `/pay <player> <amount>` transfers coins between online players using
+  the same NeoEssentials economy balances (`/balance`, `/baltop`, income all stay consistent). The
+  transfer is debit-then-credit with a refund if the recipient can't be credited, so coins can't
+  vanish. NeoEssentials' `/balance`, `/baltop`, `/eco` etc. are untouched.
+
+## [0.22.2] - 2026-06-17
+
+### Changed
+- **Pasture size reverted 2 → 5.** The 0.22.0 nerf to `pastureInventorySize` also shrank the egg
+  storage (Cobreeding ties Pokémon slots and egg slots to the same value), which was too tight.
+  Back to 5 (`server-overrides/config/cobbreeding/main.json`). Max active pastures per player stays 4.
+- **Cobblemon Unchained breeding streaks disabled.** The shiny/IV/hidden-ability "egg" streak boosters
+  (which ramp up odds as you hatch more bred eggs) are now `enabled: false`
+  (`server-overrides/config/unchained/egg/{shiny,iv,hidden}EggBooster.json`). Spawn/capture/fish
+  streak boosters are untouched. Combined with shiny breeding already being off, breeding gives no
+  streak-based shiny/IV/HA advantage.
+
+## [0.22.1] - 2026-06-16
+
+### Fixed
+- **Breeding parents are now actually untradeable.** The parent-side trade lock (0.20.0) never fired:
+  it listened for Cobblemon's `COLLECT_EGG` event, which only fires for Cobblemon's *native* daycare —
+  this server breeds via Cobreeding, which has its own egg system and never emits it. So parents could
+  still be traded through the normal Cobblemon trade menu. Replaced the dead event hook with a
+  server-tick monitor (`BreedingParentTagHook`) that watches Cobreeding's per-pasture egg state
+  (`PastureBreedingData.registry`): when a pasture lays an egg, every Pokémon tethered to it is tagged
+  `bred_parent` (and the owning store is flagged dirty so the tag survives a restart). The bred-*child*
+  lock was unaffected — Cobreeding does fire `HATCH_EGG_POST`, so `BredTagHook` already tagged offspring.
+
+## [0.22.0] - 2026-06-16
+
+### Changed
+- **Breeding nerfs.**
+  - **Shiny breeding disabled** — a bred (non-gacha) Pokémon never hatches shiny (`BredTagHook`).
+  - **Hidden-ability breeding halved** — a bred Pokémon that inherited its hidden ability keeps it
+    only ~50% of the time; otherwise it's rerolled to a normal ability.
+  - **Bred-egg hatch time 30m → 1h** (`BRED_DEFAULT_SECONDS`).
+  - **Pasture capacity 5 → 2** mons and **max active pastures per player ∞ → 4**
+    (`server-overrides/config/cobbreeding/main.json`).
+- **Gacha crate-egg hatch timers shortened.** common 10m, uncommon 20m, rare 30m, ultra/ultra-rare 1h,
+  and **shiny eggs 1h** (any pool). Shiny gacha eggs are now tagged with a dedicated `shiny` tier
+  (`RewardGranter`) so they use the 1h timer regardless of which pool they rolled from.
+
+## [0.21.0] - 2026-06-16
+
+### Fixed
+- **High-level wild trainers are reasonable again.** Above party level ~60 the RCTmod wild pool used
+  to collapse to over-leveled competitive bosses (gym leaders, Elite Four, champions, rivals). New
+  `server-trainer-spawns` datapack (gen: `ops/gen_highlevel_trainers.py`): (a) removes gym leaders +
+  Elite Four from wild spawning (`spawnWeightFactor: 0`), (b) level-gates the remaining bosses
+  (champion/rival/battleground/team-admin → retyped `normal` so they respect level-scaling, weight
+  cut to 0.08 so they're drowned out), and (c) adds ~80 themed mid-tier trainers at L55–100 (Bird
+  Keeper, Bug Catcher, Hiker, Fisherman, Black Belt, Psychic, Hex Maniac, Cooltrainer) with 2–4
+  fully-evolved Pokémon, natural auto-assigned movesets, empty EVs — non-competitive, level-matched.
+- **Loss-EXP now honors Lucky Egg and EXP Share.** The "keep per-defeat EXP even on a loss to a
+  trainer" hook (`PveLossExpHook`) was paying flat base EXP to participants only; it now mirrors
+  Cobblemon's normal distribution — Lucky Egg ×1.5 on the holder, and benched EXP-Share holders get
+  their `experienceShareMultiplier` (0.5×) share.
+
+### Changed
+- **No more 2× EXP for re-clearing a gym you've already beaten.** `TrainerExpBoostHook` still doubles
+  trainer-battle EXP, but the bonus is now suppressed for gym/E4 trainers the player already holds the
+  `beat_gym_N` advancement for — repeat clears pay the regular 1×. First-ever clears still get 2×.
+
+## [0.20.0] - 2026-06-16
+
+### Changed
+- **Regi summon keys demoted from Ultra → Rare crate.** All five (Rock/Steel/Ice/Dragon Golem Keys
+  + Titan Key/Regigigas) now drop from the Rare crate at 2.0% each instead of the Ultra crate. Both
+  tables renormalized to 100%.
+- **Breeding restriction reworked: parents *and* children can't be traded** (replaces the old
+  "must be the Original Trainer to breed" rule). Breeding no longer cancels the egg; instead both
+  parents are tagged non-tradeable at egg collection (children were already non-tradeable via the
+  bred tag). Closes the breed-rare-mons-and-sell loop. (`BreedingTradeLockHook` replaces
+  `BreedingOTHook`; the trade gates now use `BredTagHook.isTradeLocked`.) Note: a Ditto used as a
+  parent is tagged too.
+- **Legendary Monuments ~2× more common.** New `server-monument-frequency` datapack scales the 15
+  rare monuments' worldgen `spacing`/`separation` by 0.7 (density ≈ ×2) — compensating for the
+  banned Arc Phone locator. Already-common monuments and villages are unchanged.
+- **Blue Moon shiny boost cut.** New `server-lunar-shiny-nerf` datapack lowers the Cobblemon
+  Integrations Blue Moon shiny multiplier 64× → 8× (Super Blue Moon 128× → 16×).
+- **Cobbleworkers buffed.** `areaScanRadius` 2→3, `areaScanCooldown` 45→15, `scannedBlocksPerTick`
+  50→128, `navigationTimeout` 30→60 — workers find work far more often, path more patiently, and
+  cover a wider area.
+
+## [0.19.3] - 2026-06-15
+
+### Changed
+- **Ultra-rare spawn bucket dropped 10× (`0.001 → 0.0001`).** Starters share the `ultra-rare` bucket
+  with legendaries/UB/paradox and dominate it (weight 6.0 vs 0.05–1.0), so they read as too common in
+  their biomes; this cuts every ultra-rare *wild* spawn 10×. Wild legendary/UB encounters get rarer too,
+  but those are primarily obtained via monuments/shrines + gacha, so wild spawns are a minor source.
+  `common` absorbs the 0.0009 so the bucket table still sums to 100.
+
+## [0.19.2] - 2026-06-14
+
+### Changed
+- **Legendary Monuments Entrepreneur no longer sells Light/Dark Stone Shards.** The Entrepreneur
+  villager's code-registered Tier-4 trades (`legendarymonuments:lightstone_shard` /
+  `darkstone_shard` → Reshiram / Zekrom) are stripped via a NeoForge `VillagerTradesEvent` hook
+  (`EntrepreneurTradeFilter`), since they're baked into the mod and can't be removed by a datapack.
+  Reshiram / Zekrom remain obtainable through the Ultra gacha crate (which sells the full Light/Dark
+  Stone). All other Entrepreneur wares — the Treasure-of-Ruin Seals, Silver Wing (Lugia), and
+  Celestica Flute (Arceus) — are intentionally left in place.
+
+## [0.19.1] - 2026-06-14
+
+### Added
+- **Breeding Rule 1 — you can only breed Pokémon you're the Original Trainer of (Dittos exempt).**
+  `BreedingOTHook` cancels the egg at collection (Cobblemon's cancelable `CollectEggEvent`) when a
+  non-Ditto parent's Original Trainer isn't the breeding player, with a chat warning + audit log.
+  (First of a larger breeding-restrictions set; pasture-access, no-bred-Cobbleworkers, and
+  bred-egg audit logging are still in progress.)
+
+### Changed
+- **Rare crate: Eye of Ender payout cut 20 → 16.** Quantity-only nerf (the 2.0% drop odds from
+  0.19.0 are unchanged); the rare table still sums to exactly 100%.
+
+## [0.19.0] - 2026-06-14
+
+### Changed
+- **Gacha crate rebalance.** Common crate: Ultra Balls 10 → 20 and Quick Balls 32 → 20 per pull
+  (round, consistent ball counts). Rare crate jackpot odds cut — Master Ball 2.5% → 0.5%, Ultra Key
+  1.0% → 0.5%, "2 Rare keys" 2.0% → 1.0%, "20 Eye of Ender" 5.0% → 2.0%; the freed weight is
+  redistributed proportionally across the other entries so the table still sums to exactly 100% (the
+  odds menu shows true chances).
+- **Beldum line is now ultra-rare in the End.** Beldum / Metang / Metagross spawned in the End
+  (`#cobblemon:is_end`) at the `rare` bucket (~100× more common than the legendaries and Ultra Beasts
+  that the ATM spawn-nerf pipeline pins to `ultra-rare`). New `server-end-spawn-nerfs` datapack moves
+  only the End-biome entry to the `ultra-rare` bucket; every other biome (Aether, dripstone, peak,
+  howling constructs) is unchanged, so the line is still obtainable normally elsewhere.
+- **Doubles PvP battles now stay unranked.** The ranked system intercepted *every* player-vs-player
+  battle and forced it into ranked 1v1-singles team-select. The `BATTLE_STARTED_PRE` veto now only
+  claims 1v1 **singles** matches; a Doubles (or any non-singles / multi) battle started from the
+  Cobblemon battle menu runs as a normal, casual battle with no ELO and no arena teleport.
+- **The 2-minute gym cooldown now covers the Elite Four (gyms 20–24).** Previously the E4 gauntlet was
+  exempt. The cooldown is per-(player, gym), so it never blocks normal gauntlet progression
+  (each member is fought once per run) — only re-fighting the *same* member within 2 minutes, closing
+  the E4 EXP-farm loop. Trade-off: retrying a member you just lost to waits out the cooldown.
+- **Zygarde is no longer buyable from the Legendary Monuments Entrepreneur.** The Entrepreneur villager's
+  `20 emerald + 40 relic_coin → zygarde_cell` trade is removed via the new
+  `server-monument-villager-trades` datapack (an edited `outskirt_stand.nbt` structure template). Applies
+  to monuments generated after deploy; the emerald → relic-coin trade is unchanged.
+
+### Fixed
+- **Legendary Monuments chests can no longer drop Large or XL EXP candy.** Eight monument chest loot
+  tables (bell tower, dragoeleki, liberty island, regice/rock/steel/gigas, turnback cave) handed out
+  `exp_candy_l` / `exp_candy_xl` as free max-level fuel. `ops/strip_exp_candy_from_chest_loot.py` now
+  strips just those two sizes from the monument chests (small/medium stay) via the
+  `server-no-exp-candy-chests` datapack.
+
 ## [0.18.6] - 2026-06-13
 
 ### Fixed

@@ -106,7 +106,14 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
         BredTagHook.registerEvents()
+        // Breeding restriction: parents + children of a breeding can't be traded. Child side is
+        // BredTagHook (HATCH_EGG_POST, which Cobreeding fires). Parent side is the tick monitor
+        // below — Cobblemon's COLLECT_EGG never fires for Cobreeding, so we watch its egg registry.
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.breeding.BreedingParentTagHook)
         NeoForge.EVENT_BUS.register(LegendaryMonumentLock)
+        // Strip the LM Entrepreneur's Light/Dark Stone Shard (Reshiram/Zekrom) trades — they're
+        // code-registered by the mod, so a datapack can't touch them.
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.villager.EntrepreneurTradeFilter)
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)
 
@@ -144,6 +151,9 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         com.cobblemonbridge.commands.E4Command.register(event.dispatcher)  // op-only E4 test bypass
         HologramCommands.register(event.dispatcher)
         ProfileCommand.register(event.dispatcher)
+        // /pay — our own money-transfer command. NeoEssentials' /pay is disabled via
+        // config/neoessentials/commands.json ("pay": false); this one uses the same economy.
+        com.cobblemonbridge.commands.PayCommand.register(event.dispatcher)
         // /trade disabled — the custom Pokémon+money trade GUI was too buggy. Players use the
         // native Cobblemon trade (look at a player, press R → Trade) and /pay for money instead.
         // TradeCommand.register(event.dispatcher)

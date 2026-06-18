@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Makes the rare Legendary Monuments ~2x more common (worldgen structure_set spacing/separation x0.7). Compensates for the banned Arc Phone locator. Already-common monuments (outskirt stand, shrines, lakes) and non-legendary villages are unchanged."
+  }
+}

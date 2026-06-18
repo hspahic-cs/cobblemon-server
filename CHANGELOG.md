@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.2] - 2026-06-17
+
+### Changed
+- **Pasture size reverted 2 → 5.** The 0.22.0 nerf to `pastureInventorySize` also shrank the egg
+  storage (Cobreeding ties Pokémon slots and egg slots to the same value), which was too tight.
+  Back to 5 (`server-overrides/config/cobbreeding/main.json`). Max active pastures per player stays 4.
+- **Cobblemon Unchained breeding streaks disabled.** The shiny/IV/hidden-ability "egg" streak boosters
+  (which ramp up odds as you hatch more bred eggs) are now `enabled: false`
+  (`server-overrides/config/unchained/egg/{shiny,iv,hidden}EggBooster.json`). Spawn/capture/fish
+  streak boosters are untouched. Combined with shiny breeding already being off, breeding gives no
+  streak-based shiny/IV/HA advantage.
+
 ## [0.22.1] - 2026-06-16
 
 ### Fixed

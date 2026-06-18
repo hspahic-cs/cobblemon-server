@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.4] - 2026-06-18
+
+### Fixed
+- **Spawn bucket weights now actually apply.** Cobblemon only reads the external
+  `config/cobblemon/spawning/best-spawner-config.json` when `exportSpawnConfig: true`; it had been
+  `false`, so `BestSpawnerConfig.load()` used the jar-bundled default (ultra-rare `0.2`) and every
+  bucket-weight nerf we'd shipped was inert. Set `exportSpawnConfig: true` (`config/cobblemon/main.json`)
+  so the external file is read.
+
+### Changed
+- **Rare/ultra-rare spawn rates retuned now that they take effect.** Bucket weights set to
+  common `94.88` / uncommon `5` / rare `0.1` / ultra-rare `0.02` (sum 100, so each weight is its
+  per-roll %). Ultra-rare drops from the de-facto `0.2` (jar default) to `0.02` (10× rarer), rare
+  from `0.5` to `0.1`.
+
 ## [0.22.3] - 2026-06-18
 
 ### Changed

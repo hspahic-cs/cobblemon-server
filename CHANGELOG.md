@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.3] - 2026-06-18
+
+### Changed
+- **Replaced `/pay` with our own implementation.** NeoEssentials' `/pay` was unreliable on this
+  server, so it's disabled (`config/neoessentials/commands.json` → `"pay": false`) and reimplemented
+  in the bridge (`PayCommand`). `/pay <player> <amount>` transfers coins between online players using
+  the same NeoEssentials economy balances (`/balance`, `/baltop`, income all stay consistent). The
+  transfer is debit-then-credit with a refund if the recipient can't be credited, so coins can't
+  vanish. NeoEssentials' `/balance`, `/baltop`, `/eco` etc. are untouched.
+
 ## [0.22.2] - 2026-06-17
 
 ### Changed

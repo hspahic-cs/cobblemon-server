@@ -48,13 +48,16 @@ object EconomyBridge {
         log.error("getBalance failed", e); 0
     }
 
-    fun deposit(uuid: UUID, amount: Int) {
-        if (amount <= 0) return
-        try {
-            val mgr = manager() ?: return
-            addBalanceMethod!!.invoke(mgr, uuid, BigDecimal(amount))
+    /** Credits [amount] to the account. Returns true if the underlying economy accepted the credit
+     *  (NeoEssentials' addBalance returns false e.g. when it would exceed maxBalance). Existing
+     *  callers can ignore the result. */
+    fun deposit(uuid: UUID, amount: Int): Boolean {
+        if (amount <= 0) return true
+        return try {
+            val mgr = manager() ?: return false
+            addBalanceMethod!!.invoke(mgr, uuid, BigDecimal(amount)) as? Boolean ?: false
         } catch (e: Throwable) {
-            log.error("deposit failed", e)
+            log.error("deposit failed", e); false
         }
     }
 

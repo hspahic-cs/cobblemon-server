@@ -172,7 +172,12 @@ jobs:
       - name: Rsync authored configs (overlay onto live config/, non-destructive)
         run: |
           if [[ -d modpack/server-overrides/config ]]; then
-            rsync -rltzO \
+            # --chmod: deployer writes these files but the service runs as
+            # sysadmin (group sysadmin via the config dirs' setgid bit). Without
+            # group-write, any mod that rewrites its config in-place on boot
+            # (e.g. Unchained's egg JSONs) hits "Permission denied" and crashes
+            # the whole server. Force group-rw so the service can rewrite them.
+            rsync -rltzO --chmod=Dg+rwxs,Fg+rw \
               -e "ssh -o StrictHostKeyChecking=yes" \
               modpack/server-overrides/config/ \
               ${{ env.VM_USER }}@${{ env.VM_HOST }}:${{ env.INSTALL_DIR }}/config/

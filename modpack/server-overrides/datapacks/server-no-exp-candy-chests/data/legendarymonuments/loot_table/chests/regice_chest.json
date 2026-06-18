@@ -1,0 +1,130 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 9,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:ice_tera_shard",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 6
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:ice_gem",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:azure_ball",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 7
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:relic_coin",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 14
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:exp_candy_s",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 10
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:ice_stone",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:never_melt_ice",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:zygarde_cell",
+          "weight": 30
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:relic_coin_pouch",
+          "weight": 30,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:zinc",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Nerfs the Beldum line's End-dimension spawn. Overrides Cobblemon's base beldum/metang/metagross spawn pools to move only the #cobblemon:is_end entry from the rare bucket to ultra-rare (0.1 -> 0.001 bucket roll, ~100x rarer). All other biomes (Aether, dripstone, peak, howling constructs) are left untouched."
+  }
+}

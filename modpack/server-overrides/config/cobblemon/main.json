@@ -26,7 +26,7 @@
   "minimumSpawningZoneDistanceFromPlayer": 16.0,
   "maximumSpawningZoneDistanceFromPlayer": 64.0,
   "maximumSpawnsPerPass": 8,
-  "exportSpawnConfig": false,
+  "exportSpawnConfig": true,
   "savePokemonToWorld": true,
   "exportStarterConfig": false,
   "autoUpdateShowdown": true,

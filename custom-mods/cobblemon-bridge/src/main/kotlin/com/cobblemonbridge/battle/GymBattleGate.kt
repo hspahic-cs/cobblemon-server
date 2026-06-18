@@ -84,6 +84,7 @@ object GymBattleGate {
                 )
                 return false
             }
+            if (!passCooldown(player, gymId)) return false
             E4GauntletHook.stashActive(player.uuid, gymId)
             GymBattleAdjustHook.stashCap(player.uuid, cap)
             BattleThemeHook.stashTrainerTheme(player.uuid, gymId)  // per-member E4 theme
@@ -112,9 +113,12 @@ object GymBattleGate {
     }
 
     /** Gym battle anti-spam: blocks a gym re-challenge within [GymCooldown.COOLDOWN_TICKS] of the
-     *  last attempt. E4 gauntlet gyms are exempt (paced by [E4GauntletHook]). Records on pass. */
+     *  last attempt. Applies to every gym including the E4 gauntlet members (20-24) — the cooldown
+     *  is per-(player, gym), so it never blocks normal gauntlet progression (20→21→…, each a
+     *  different gym fought once), only re-fighting the *same* member within 2 minutes. The
+     *  trade-off: after losing to an E4 member you wait out the cooldown before retrying them.
+     *  Records on pass. */
     private fun passCooldown(player: ServerPlayer, gymId: Int): Boolean {
-        if (E4GauntletHook.isE4Gym(gymId)) return true
         val now = player.serverLevel().gameTime
         val rem = GymCooldown.remainingTicks(player.uuid, gymId, now)
         if (rem > 0) {

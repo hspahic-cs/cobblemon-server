@@ -1,8 +1,10 @@
 package com.cobblemonbridge.eggs
 
+import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.item.ItemStack
 import org.slf4j.LoggerFactory
+import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -28,6 +30,14 @@ object CobreedingBridge {
     private var pokemonPropertiesComponent: DataComponentType<String>? = null
     private var eggClass: Class<*>? = null
     private val warnedOnce = AtomicBoolean(false)
+
+    // --- Breeding registry (PastureBreedingData.registry: Map<BlockPos, PastureBreedingData>) ---
+    private const val BREEDING_DATA_CLASS = "ludichat.cobbreeding.PastureBreedingData"
+    @Volatile private var breedingResolved: Boolean = false
+    @Volatile private var breedingUnavailable: Boolean = false
+    private var registryField: Field? = null
+    private var getEggsMethod: Method? = null
+    private val breedingWarnedOnce = AtomicBoolean(false)
 
     private fun resolve(): Boolean {
         if (resolved) return !unavailable
@@ -83,5 +93,48 @@ object CobreedingBridge {
 
     private fun warnOnce(msg: String) {
         if (warnedOnce.compareAndSet(false, true)) log.warn(msg)
+    }
+
+    private fun resolveBreeding(): Boolean {
+        if (breedingResolved) return !breedingUnavailable
+        synchronized(this) {
+            if (breedingResolved) return !breedingUnavailable
+            try {
+                val cls = Class.forName(BREEDING_DATA_CLASS)
+                registryField = cls.getField("registry")
+                getEggsMethod = cls.getMethod("getEggs")
+                breedingResolved = true
+                breedingUnavailable = false
+                log.info("Cobreeding breeding registry resolved — parent trade-lock active")
+                return true
+            } catch (e: Throwable) {
+                if (breedingWarnedOnce.compareAndSet(false, true)) {
+                    log.warn("Cobreeding breeding registry unavailable — breeding-parent trade-lock disabled: {}", e.message)
+                }
+                breedingResolved = true
+                breedingUnavailable = true
+                return false
+            }
+        }
+    }
+
+    /**
+     * Snapshot of every active breeding pasture's egg count, keyed by block position. Returns the
+     * number of **non-empty** egg stacks currently sitting in each pasture's breeding data (the
+     * `eggs` list is a fixed-size NonNullList pre-filled with EMPTY, so size != count). Null when
+     * Cobreeding isn't loaded. Called once per second on the server thread, so reading the registry
+     * directly is safe (Cobreeding mutates it on the same thread during the pasture tick).
+     */
+    fun pastureEggCounts(): Map<BlockPos, Int>? {
+        if (!resolveBreeding()) return null
+        val raw = registryField!!.get(null) as? Map<*, *> ?: return null
+        val out = HashMap<BlockPos, Int>(raw.size)
+        for ((key, value) in raw) {
+            val pos = key as? BlockPos ?: continue
+            if (value == null) continue
+            val eggs = getEggsMethod!!.invoke(value) as? List<*> ?: continue
+            out[pos] = eggs.count { it is ItemStack && !it.isEmpty }
+        }
+        return out
     }
 }

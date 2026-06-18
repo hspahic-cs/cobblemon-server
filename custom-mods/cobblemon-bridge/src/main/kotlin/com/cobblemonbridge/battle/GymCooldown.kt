@@ -11,8 +11,10 @@ import java.util.concurrent.ConcurrentHashMap
  * so each gym tracks its own timer. Cooldowns live in memory only — a server restart clears
  * them, which is fine for a 2-minute anti-spam timer.
  *
- * Elite Four gyms (20-24) are exempt: they're already gated by [E4GauntletHook] (consecutive,
- * resets on loss), so a cooldown there would only get in the way of legitimate gauntlet restarts.
+ * Elite Four gyms (20-24) are included too. Because the timer is per-(player, gym), normal gauntlet
+ * progression (20→21→…, each member fought once per run) is never blocked — only re-fighting the
+ * same member within the window is. The trade-off is that retrying a member you just lost to waits
+ * out the cooldown; the gauntlet's own consecutive-or-restart pacing lives in [E4GauntletHook].
  */
 object GymCooldown {
 

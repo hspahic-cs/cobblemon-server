@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bug Catcher Finn",
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png",
+  "team": [
+    {
+      "species": "accelgor",
+      "level": 75,
+      "gender": "RANDOM",
+      "nature": "bold",
+      "ability": "hydration",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "durant",
+      "level": 76,
+      "gender": "RANDOM",
+      "nature": "brave",
+      "ability": "swarm",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hex Maniac Uma",
+  "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
+  "team": [
+    {
+      "species": "chandelure",
+      "level": 56,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "flashfire",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "drifblim",
+      "level": 56,
+      "gender": "RANDOM",
+      "nature": "quiet",
+      "ability": "aftermath",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "cofagrigus",
+      "level": 56,
+      "gender": "RANDOM",
+      "nature": "calm",
+      "ability": "mummy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

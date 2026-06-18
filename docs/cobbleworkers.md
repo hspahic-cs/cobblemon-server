@@ -28,32 +28,56 @@ Put your Pokémon to work. Park one on a Pasture Block and it'll auto-harvest, m
 ## Layout
 
 <div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;margin:8px 0;">
-<div style="display:grid;grid-template-columns:repeat(5,48px);gap:3px;">
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#b388ff;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#a0795c;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
-<div style="width:48px;height:48px;background:#7cb342;border-radius:2px;"></div>
+<div style="display:grid;grid-template-columns:repeat(7,40px);gap:3px;">
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#b388ff;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#a0795c;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
+<div style="width:40px;height:40px;background:#7cb342;border-radius:2px;"></div>
 </div>
 <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;">
 <span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:18px;height:18px;background:#7cb342;border-radius:2px;"></span>Farmable</span>
@@ -67,3 +91,8 @@ Put your Pokémon to work. Park one on a Pasture Block and it'll auto-harvest, m
 1. Place a **Pasture Block** (you get your first from the *Sunny Side Up* quest).
 2. Put a **chest right next to it**, that's where everything gets dropped off.
 3. Right-click the pasture and add a Pokémon. The job it does depends on the species.
+
+!!! warning "Fence in the work area (strongly recommended)"
+    Cobbleworkers **stop working when they wander away** from the pasture's area. **Enclose it** (a
+    fence, walls, or a pen they can't path out of) so your workers stay inside and keep working. An
+    open pasture will leave you with idle Pokémon that have walked off and stopped doing their job.

@@ -1,4 +1,4 @@
-# Gym AI Beta Test — Tester Guide
+# Gym AI Beta Test: Tester Guide
 
 You're testing the new gym-leader AI. Every gym leader now plays with a real
 search engine instead of scripted moves. Your job: **fight all 24 leaders and
@@ -12,8 +12,8 @@ exact moment something went weird.
    **dev-latest** release: <https://github.com/hspahic-cs/cobblemon-server/releases/tag/dev-latest>
 2. PrismLauncher → **Add Instance → Import** → pick the `.mrpack`
 3. Connect to the dev server: `<DEV SERVER ADDRESS>`
-4. Make sure you have op (ask Harris) — the spawn commands need it
-5. Bring whatever team you like — the AI adapts to any team
+4. Make sure you have op (ask Harris), since the spawn commands need it
+5. Bring whatever team you like; the AI adapts to any team
 
 ## How to test
 
@@ -50,9 +50,9 @@ chunk gives you a fresh copy of the leader.
 
 ## What's NORMAL (don't report these)
 
-- **Turns take ~2–3 seconds** — the AI is thinking, that's expected
+- **Turns take ~2–3 seconds**, the AI is thinking, that's expected
 - Smart switching (pivoting to a counter after seeing your move)
-- The AI knowing your team — it plays "open team sheet" by design
+- The AI knowing your team; it plays "open team sheet" by design
 - Losing. They're supposed to be hard now.
 
 ## What to REPORT
@@ -60,9 +60,9 @@ chunk gives you a fresh copy of the leader.
 - A Pokémon **stands there doing nothing** (turn skipped)
 - The AI **only switches, never attacks** for many turns in a row
 - Same move spammed into something it can't hurt (e.g. Normal move into a Ghost)
-- The battle **freezes/softlocks** — your move buttons never come back
+- The battle **freezes/softlocks**, and your move buttons never come back
 - Turns suddenly taking 10+ seconds
-- Anything that just feels dumb or broken — when in doubt, write it down
+- Anything that just feels dumb or broken; when in doubt, write it down
 
 ---
 
@@ -104,7 +104,7 @@ chunk gives you a fresh copy of the leader.
 ## Issues
 
 > One block per issue. Approximate time helps but the gym name is the
-> important part — we can find the battle from the logs.
+> important part, so we can find the battle from the logs.
 
 ### Issue 1
 - **Gym:**

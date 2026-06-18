@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bug Catcher Rosa",
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png",
+  "team": [
+    {
+      "species": "escavalier",
+      "level": 93,
+      "gender": "RANDOM",
+      "nature": "careful",
+      "ability": "swarm",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "butterfree",
+      "level": 93,
+      "gender": "RANDOM",
+      "nature": "timid",
+      "ability": "compoundeyes",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

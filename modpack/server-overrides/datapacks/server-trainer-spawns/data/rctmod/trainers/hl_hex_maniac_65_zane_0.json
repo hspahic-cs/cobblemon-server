@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hex Maniac Zane",
+  "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
+  "team": [
+    {
+      "species": "dhelmise",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "naughty",
+      "ability": "steelworker",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "drifblim",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "serious",
+      "ability": "aftermath",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gengar",
+      "level": 64,
+      "gender": "RANDOM",
+      "nature": "calm",
+      "ability": "cursedbody",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

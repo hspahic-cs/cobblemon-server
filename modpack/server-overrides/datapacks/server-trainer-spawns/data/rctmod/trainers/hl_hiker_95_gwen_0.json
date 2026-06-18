@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hiker Gwen",
+  "textureResource": "rctmod:textures/trainers/single/type_rock.png",
+  "team": [
+    {
+      "species": "crustle",
+      "level": 93,
+      "gender": "RANDOM",
+      "nature": "sassy",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "rhyperior",
+      "level": 96,
+      "gender": "RANDOM",
+      "nature": "impish",
+      "ability": "lightningrod",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "carbink",
+      "level": 96,
+      "gender": "RANDOM",
+      "nature": "sassy",
+      "ability": "clearbody",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "steelix",
+      "level": 98,
+      "gender": "RANDOM",
+      "nature": "hardy",
+      "ability": "rockhead",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

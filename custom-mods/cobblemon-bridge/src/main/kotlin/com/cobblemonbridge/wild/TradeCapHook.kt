@@ -32,20 +32,20 @@ object TradeCapHook {
             // Bred Pokémon are non-tradeable (both directions). Applies to vanilla Cobblemon
             // trade GUI; the custom /trade flow does its own check in TradeManager.execute.
             val bredBlockers = mutableListOf<String>()
-            if (BredTagHook.isBred(incoming1)) {
+            if (BredTagHook.isTradeLocked(incoming1)) {
                 bredBlockers += "${incoming1.species.name} (offered by ${p2?.gameProfile?.name ?: "?"})"
             }
-            if (BredTagHook.isBred(incoming2)) {
+            if (BredTagHook.isTradeLocked(incoming2)) {
                 bredBlockers += "${incoming2.species.name} (offered by ${p1?.gameProfile?.name ?: "?"})"
             }
             if (bredBlockers.isNotEmpty()) {
                 event.cancel()
                 val msg = Component.literal(
-                    "§c[Trade Blocked] Bred Pokémon cannot be traded.\n§7" + bredBlockers.joinToString("; "),
+                    "§c[Trade Blocked] Bred Pokémon and breeding parents cannot be traded.\n§7" + bredBlockers.joinToString("; "),
                 )
                 p1?.sendSystemMessage(msg)
                 p2?.sendSystemMessage(msg)
-                CobblemonBridge.logger.info("Trade cancelled — bred: {}", bredBlockers.joinToString("; "))
+                CobblemonBridge.logger.info("Trade cancelled — breeding-locked: {}", bredBlockers.joinToString("; "))
                 return@subscribe
             }
 

@@ -1,0 +1,27 @@
+{
+  "battleCooldownTicks": 240,
+  "biomeTagBlacklist": [
+    "is_void",
+    "is_nether"
+  ],
+  "biomeTagWhitelist": [
+    "is_plains",
+    "is_sparse_vegetation",
+    "is_river"
+  ],
+  "maxTrainerDefeats": 1,
+  "maxTrainerWins": -1,
+  "optional": false,
+  "requiredDefeats": [
+    [
+      "leader_benjamin_05b2"
+    ]
+  ],
+  "series": [
+    "unbound"
+  ],
+  "signatureItem": "cobblemon:fairy_feather",
+  "spawnWeightFactor": 0.0,
+  "type": "e4",
+  "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
+}

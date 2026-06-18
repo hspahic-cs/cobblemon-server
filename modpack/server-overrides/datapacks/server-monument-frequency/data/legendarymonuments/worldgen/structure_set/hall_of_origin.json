@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 10387312,
+    "separation": 52,
+    "spacing": 105
+  },
+  "structures": [
+    {
+      "structure": "legendarymonuments:hall_of_origin",
+      "weight": 1
+    }
+  ]
+}

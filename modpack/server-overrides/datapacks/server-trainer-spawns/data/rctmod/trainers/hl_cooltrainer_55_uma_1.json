@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Cooltrainer Uma",
+  "textureResource": "rctmod:textures/trainers/single/type_normal.png",
+  "team": [
+    {
+      "species": "magmortar",
+      "level": 56,
+      "gender": "RANDOM",
+      "nature": "impish",
+      "ability": "flamebody",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "snorlax",
+      "level": 55,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "immunity",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "aggron",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "naughty",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "flygon",
+      "level": 52,
+      "gender": "RANDOM",
+      "nature": "relaxed",
+      "ability": "levitate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

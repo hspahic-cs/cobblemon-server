@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hex Maniac Pete",
+  "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
+  "team": [
+    {
+      "species": "drifblim",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "mild",
+      "ability": "aftermath",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "trevenant",
+      "level": 57,
+      "gender": "RANDOM",
+      "nature": "quirky",
+      "ability": "naturalcure",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "dusknoir",
+      "level": 56,
+      "gender": "RANDOM",
+      "nature": "quiet",
+      "ability": "pressure",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

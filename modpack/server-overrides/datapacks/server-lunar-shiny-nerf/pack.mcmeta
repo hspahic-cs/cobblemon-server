@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Reduces the Cobblemon Integrations Blue Moon shiny multiplier (64 -> 8) and Super Blue Moon (128 -> 16). Overrides cobblemonintegrations' default pokemon_lunar_event entries."
+  }
+}

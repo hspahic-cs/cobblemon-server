@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bird Keeper Vera",
+  "textureResource": "rctmod:textures/trainers/single/type_flying.png",
+  "team": [
+    {
+      "species": "honchkrow",
+      "level": 55,
+      "gender": "RANDOM",
+      "nature": "timid",
+      "ability": "insomnia",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "altaria",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "naturalcure",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "unfezant",
+      "level": 56,
+      "gender": "RANDOM",
+      "nature": "serious",
+      "ability": "bigpecks",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "dodrio",
+      "level": 52,
+      "gender": "RANDOM",
+      "nature": "hardy",
+      "ability": "runaway",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

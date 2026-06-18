@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Black Belt Owen",
+  "textureResource": "rctmod:textures/trainers/single/type_fighting.png",
+  "team": [
+    {
+      "species": "mienshao",
+      "level": 78,
+      "gender": "RANDOM",
+      "nature": "careful",
+      "ability": "innerfocus",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "hitmonlee",
+      "level": 73,
+      "gender": "RANDOM",
+      "nature": "adamant",
+      "ability": "limber",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "sawk",
+      "level": 76,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

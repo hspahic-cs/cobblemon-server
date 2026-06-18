@@ -2,7 +2,7 @@
 
 The reliable way to get a legendary on this server is via **Legendary Monuments**, structures that generate in specific biomes and spawn a fixed legendary when fed the right offering item.
 
-📖 **[Legendary Monuments wiki →](https://legendary-monuments.gitbook.io/legendary-monuments-wiki)**, full list of monuments, biomes they spawn in, and which item summons which Pokémon.
+📖 **[Legendary Monuments wiki →](https://legendarymonuments.com/)**, full list of monuments, biomes they spawn in, and which item summons which Pokémon.
 
 ## Server-specific rules
 

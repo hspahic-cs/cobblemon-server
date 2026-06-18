@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Cooltrainer Wren",
+  "textureResource": "rctmod:textures/trainers/single/type_normal.png",
+  "team": [
+    {
+      "species": "ampharos",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "mild",
+      "ability": "static",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "lapras",
+      "level": 65,
+      "gender": "RANDOM",
+      "nature": "naughty",
+      "ability": "waterabsorb",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "tyranitar",
+      "level": 64,
+      "gender": "RANDOM",
+      "nature": "sassy",
+      "ability": "sandstream",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "flygon",
+      "level": 64,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "levitate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

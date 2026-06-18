@@ -12,8 +12,8 @@
    play**. (AFK time doesn't count.)
 
 !!! tip "Pasture limits"
-    A Pasture Block holds **2 Pokémon** (one pair), and you can have **up to 4 active pastures** at a
-    time. Plan around breeding one pair per pasture.
+    A Pasture Block holds **up to 5 Pokémon**, and you can have **up to 4 active pastures** at a time.
+    Breeding still works a pair at a time (a compatible male/female, or a Ditto plus another Pokémon).
 
 ## Restrictions
 
@@ -24,7 +24,7 @@ mass-producing them:
 |---|---|
 | **Hatch time** | Bred eggs take **~1 hour** of active play to hatch. |
 | **No shiny breeding** | Bred Pokémon are **never shiny**. (Shinies come from the wild and crates.) |
-| **Pasture size** | **2 Pokémon** per pasture, **4 active pastures** per player. |
+| **Pasture size** | **5 Pokémon** per pasture, **4 active pastures** per player. |
 | **Ditto × Ditto** | Two Dittos can't produce Legendary, Paradox, Ultra Beast, or undiscovered eggs. |
 
 ## Important trading rules

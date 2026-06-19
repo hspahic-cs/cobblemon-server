@@ -1,7 +1,9 @@
 package com.cobblemonbridge.mixin;
 
 import com.cobblemonbridge.eggs.BredTagHook;
+import com.cobblemonbridge.eggs.HatchAnnounceHook;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -47,10 +49,19 @@ public class PokemonEggMixin {
     ) {
         if (level.isClientSide() || level.getServer() == null) return;
         if (!(entity instanceof ServerPlayer player)) return;
+        int tick = level.getServer().getTickCount();
+
+        // Read the egg's gacha tier off the stack now (it's gone by HATCH_EGG_POST). Empty for
+        // daycare-bred eggs. Drives both the gacha bred-tag skip and HatchAnnounceHook's name colour.
+        String tier = "";
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
-        if (cd == null) return;
-        if (cd.copyTag().contains("cobblemongacha_tier")) {
-            BredTagHook.markGachaHatch(player.getUUID(), level.getServer().getTickCount());
+        if (cd != null) {
+            CompoundTag tag = cd.copyTag();
+            if (tag.contains("cobblemongacha_tier")) {
+                tier = tag.getString("cobblemongacha_tier");
+                BredTagHook.markGachaHatch(player.getUUID(), tick);
+            }
         }
+        HatchAnnounceHook.markHatchTier(player.getUUID(), tick, tier);
     }
 }

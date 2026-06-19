@@ -12,7 +12,41 @@ root README.
 
 ## [Unreleased]
 
-## [0.22.4] - 2026-06-18
+## [0.22.5] - 2026-06-18
+
+Chat de-bloat pass: streak/counter spam trimmed, breeding-streak wording removed.
+
+### Changed
+- **IV streak chat throttled to one message per 5 catches.** Cobblemon Unchained fires its
+  "…with perfect IVs!" line on *every* boosted catch once a per-species IV streak is up, which
+  spams chat for any dedicated hunter. The mod has no cadence setting (`notifyPlayer` is on/off),
+  so `cobblemon-bridge` now gates Unchained's `notifyPlayer()` (`UnchainedIvNotifyThrottleMixin` +
+  `IvNotifyThrottle`): only every 5th boosted IV message per (player, species) is shown — the 5th,
+  10th, 15th, … The IV boost itself is unchanged (applied earlier in the booster run), and **shiny
+  and hidden-ability notifications are untouched** (only `iv*` booster keys are throttled). Breeding/
+  egg streaks remain fully disabled (0.22.2).
+- **Cobbled Counter broadcasts moved out of chat.** The separate Cobbled Counter mod broadcast
+  `Captured/Knocked out/Fished/Snacked/Resurrected a … (Count N/Streak M)` to chat on every action.
+  New `config/cobbled_counter.json` override sets `broadcastLocation: ACTION_BAR` (KO/snack counts
+  now show above the actor's hotbar, off global chat) and `noBroadcastFor: ["HATCH", "CAPTURE",
+  "FISH", "RESURRECTION"]` — those four are replaced by our own rarity-coloured lines (below).
+- **Hatch line cleaned up + rarity-coloured.** Replaced Cobbled Counter's
+  `Hatched a … (Count/Streak)` — whose "Streak" suffix implied breeding streaks still exist — with a
+  plain `Hatched a <Pokémon>` line sent only to the hatching player, the species name coloured by the
+  egg's gacha tier (common=gray, uncommon=green, rare=blue, ultra=purple, ultra-rare/shiny=gold;
+  bred/daycare eggs = white). `HatchAnnounceHook` + `PokemonEggMixin` (captures the egg tier at hatch).
+- **Catch/fish/resurrect lines rarity-coloured on the action bar.** `CaptureAnnounceHook` replaces
+  Cobbled Counter's suppressed capture/fish/resurrection broadcasts with a `Captured a <Pokémon>` /
+  `Resurrected a <Pokémon>` line on the actor's action bar (off chat — you catch far more than you
+  hatch). Name colour reflects the species tier: shiny=gold (✨ prefix), legendary=gold,
+  mythical=light-purple, paradox=red, ultra-beast=aqua, everything else=white. Covers wild and fished
+  catches (both fire `POKEMON_CAPTURED`) plus fossil revives (`FOSSIL_REVIVED`). KO counts stay on
+  Cobbled Counter's action bar — they're useful for shiny/HA chaining (KO streaks feed the spawn
+  shiny/hidden boosters).
+
+### Removed
+- **"Your <tier> egg is ready to hatch!" chat ping.** Dropped from `EggDefeatHook` — the egg's
+  tooltip/timer already surfaces readiness, so the per-egg line was pure noise (server log kept).
 
 ### Fixed
 - **Spawn bucket weights now actually apply.** Cobblemon only reads the external

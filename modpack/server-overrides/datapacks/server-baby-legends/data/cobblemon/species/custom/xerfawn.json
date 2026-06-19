@@ -1,0 +1,116 @@
+{
+  "implemented": true,
+  "name": "xerfawn",
+  "nationalPokedexNumber": 6752,
+  "primaryType": "fairy",
+  "abilities": [
+    "fairyaura"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "depth": "normal",
+      "light": "0-4",
+      "willSleepOnBed": true,
+      "times": "night"
+    },
+    "moving": {
+      "canLook": true,
+      "walk": {
+        "canWalk": true,
+        "avoidsLand": false
+      },
+      "swim": {
+        "swimSpeed": 0.3,
+        "canSwimInWater": false,
+        "canBreatheUnderwater": false
+      },
+      "fly": {
+        "canFly": false,
+        "flySpeedHorizontal": 0.3
+      },
+      "wanderChance": 1
+    }
+  },
+  "catchRate": 10,
+  "maleRatio": -1,
+  "shoulderMountable": false,
+  "baseExperienceYield": 100,
+  "experienceGroup": "medium_slow",
+  "eggCycles": 80,
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "drops": {
+    "amount": 1,
+    "entries": [
+      {
+        "item": "minecraft:torchflower",
+        "quantityRange": "1-2",
+        "percentage": 50
+      }
+    ]
+  },
+  "moves": [
+    "1:charm",
+    "1:tackle",
+    "1:luckychant",
+    "5:quickattack",
+    "5:doubleteam",
+    "12:flash",
+    "16:round",
+    "20:fairywind",
+    "25:naturepower",
+    "30:drainingkiss",
+    "35:psyshock",
+    "40:moonblast",
+    "45:reflect",
+    "45:lightscreen",
+    "50:outrage",
+    "57:hypervoice",
+    "68:closecombat",
+    "tm:hyperbeam",
+    "tm:gigaimpact",
+    "tm:solarbeam",
+    "tm:thunderwave",
+    "tm:lightscreen",
+    "tm:reflect",
+    "tm:safeguard",
+    "tm:rest",
+    "tm:protect",
+    "tm:charm",
+    "tm:swift",
+    "tm:closecombat",
+    "tm:flashcannon",
+    "100:lightofruin"
+  ],
+  "labels": [
+    "custom",
+    "legendary"
+  ],
+  "pokedex": [
+    "cobblemon.species.xerfawn.desc1",
+    "cobblemon.species.xerfawn.desc2"
+  ],
+  "baseScale": 1,
+  "hitbox": {
+    "width": 1.5,
+    "height": 1,
+    "fixed": false
+  },
+  "baseFriendship": 50,
+  "evYield": {
+    "special_attack": 2
+  },
+  "height": 2,
+  "weight": 60,
+  "evolutions": []
+}

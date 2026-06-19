@@ -1,4 +1,116 @@
 {
+  "baby_legend": [
+    {
+      "id": "articoo",
+      "hasHiddenAbility": false,
+      "notes": "baby of articuno"
+    },
+    {
+      "id": "beta",
+      "hasHiddenAbility": false,
+      "notes": "baby of arceus"
+    },
+    {
+      "id": "courpup",
+      "hasHiddenAbility": false,
+      "notes": "baby of zacian/zamazenta"
+    },
+    {
+      "id": "creslume",
+      "hasHiddenAbility": false,
+      "notes": "baby of cresselia"
+    },
+    {
+      "id": "delcalf",
+      "hasHiddenAbility": false,
+      "notes": "baby of kyogre"
+    },
+    {
+      "id": "giragrub",
+      "hasHiddenAbility": false,
+      "notes": "baby of giratina"
+    },
+    {
+      "id": "haidon",
+      "hasHiddenAbility": false,
+      "notes": "baby of koraidon"
+    },
+    {
+      "id": "kaidon",
+      "hasHiddenAbility": false,
+      "notes": "baby of miraidon"
+    },
+    {
+      "id": "karfoal",
+      "hasHiddenAbility": false,
+      "notes": "baby of keldeo"
+    },
+    {
+      "id": "latot",
+      "hasHiddenAbility": false,
+      "notes": "baby of latios/latias"
+    },
+    {
+      "id": "neonite",
+      "hasHiddenAbility": false,
+      "notes": "baby of necrozma"
+    },
+    {
+      "id": "ohho",
+      "hasHiddenAbility": false,
+      "notes": "baby of ho-oh"
+    },
+    {
+      "id": "raygul",
+      "hasHiddenAbility": false,
+      "notes": "baby of rayquaza"
+    },
+    {
+      "id": "regiclay",
+      "hasHiddenAbility": false,
+      "notes": "baby of regirock/regice/registeel/regigigas"
+    },
+    {
+      "id": "rotisikree",
+      "hasHiddenAbility": false,
+      "notes": "baby of moltres"
+    },
+    {
+      "id": "saladune",
+      "hasHiddenAbility": false,
+      "notes": "baby of groudon"
+    },
+    {
+      "id": "statchic",
+      "hasHiddenAbility": false,
+      "notes": "baby of zapdos"
+    },
+    {
+      "id": "temga",
+      "hasHiddenAbility": false,
+      "notes": "baby of dialga"
+    },
+    {
+      "id": "xerfawn",
+      "hasHiddenAbility": false,
+      "notes": "baby of xerneas"
+    },
+    {
+      "id": "yangram",
+      "hasHiddenAbility": false,
+      "notes": "baby of zekrom/reshiram/kyurem"
+    },
+    {
+      "id": "yivpip",
+      "hasHiddenAbility": false,
+      "notes": "baby of yveltal"
+    },
+    {
+      "id": "zerpint",
+      "hasHiddenAbility": false,
+      "notes": "baby of zygarde"
+    }
+  ],
   "ultra_rare": [
     {
       "id": "dratini",

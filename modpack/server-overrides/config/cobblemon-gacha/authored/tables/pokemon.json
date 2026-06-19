@@ -5,7 +5,7 @@
     {
       "lootTier": "Standard",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 45.0,
+      "weightPct": 44.775,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -19,7 +19,7 @@
     {
       "lootTier": "Standard",
       "label": "Common Pokémon Egg",
-      "weightPct": 35.0,
+      "weightPct": 34.825,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -33,7 +33,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 15.0,
+      "weightPct": 14.925,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -47,7 +47,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Shiny Egg",
-      "weightPct": 3.5,
+      "weightPct": 3.4825,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -61,7 +61,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Ultra Rare Pokémon Egg",
-      "weightPct": 1.5,
+      "weightPct": 1.4925,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -71,6 +71,20 @@
         }
       ],
       "notes": "An ultra-rare Pokémon egg (pseudo-legends & Paradox)"
+    },
+    {
+      "lootTier": "Jackpot",
+      "label": "Legendary Pokémon Egg",
+      "weightPct": 0.5,
+      "items": [
+        {
+          "type": "cobbreeding_egg",
+          "pool": "baby_legend",
+          "shiny": false,
+          "requireHiddenAbility": false
+        }
+      ],
+      "notes": "A baby-legend egg (Baby Legends mod). Hatches a collectible baby legendary — does NOT evolve into the real legendary and has baby-tier stats (BST 220), per server-baby-legends datapack. Crate-only; wild spawns disabled there too."
     }
   ]
 }

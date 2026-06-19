@@ -1,0 +1,13 @@
+name = "Baby Legends (Cobblemon)"
+filename = "baby-legends-cobblemon-2.3.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/88hsodcW/versions/z8KI8Mom/baby-legends-cobblemon-2.3.jar"
+hash-format = "sha512"
+hash = "105361f34344b65c93e0440e6c6821d42278dd75f55d9783fa39d954394270015b5b7a07b9447238c80ae78e91f32c5bb477296d2ddb21680ae1424a9980dd35"
+
+[update]
+[update.modrinth]
+mod-id = "88hsodcW"
+version = "z8KI8Mom"

@@ -1,0 +1,123 @@
+{
+  "implemented": true,
+  "name": "latot",
+  "labels": [
+    "custom",
+    "legendary"
+  ],
+  "nationalPokedexNumber": 6760,
+  "pokedex": [
+    "cobblemon.species.latot.desc1",
+    "cobblemon.species.latot.desc2"
+  ],
+  "height": 40,
+  "weight": 1003,
+  "primaryType": "psychic",
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "catchRate": 20,
+  "maleRatio": 0.5,
+  "baseExperienceYield": 270,
+  "experienceGroup": "slow",
+  "eggCycles": 120,
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseFriendship": 20,
+  "evYield": {
+    "attack": 2,
+    "special_attack": 1
+  },
+  "moves": [
+    "1:charm",
+    "1:tackle",
+    "1:helpinghand",
+    "1:scaryface",
+    "5:confusion",
+    "5:gust",
+    "20:psywave",
+    "25:tailwind",
+    "30:fly",
+    "35:psyshock",
+    "45:reflect",
+    "45:lightscreen",
+    "50:calmmind",
+    "100:moonblast",
+    "tm:fly",
+    "tm:hyperbeam",
+    "tm:gigaimpact",
+    "tm:solarbeam",
+    "tm:thunderwave",
+    "tm:lightscreen",
+    "tm:reflect",
+    "tm:safeguard",
+    "tm:rest",
+    "tm:snore",
+    "tm:protect",
+    "tm:icywind",
+    "tm:charm",
+    "tm:steelwing",
+    "tm:attract",
+    "tm:sandstorm",
+    "tm:raindance",
+    "tm:sunnyday",
+    "tm:whirlpool",
+    "tm:facade",
+    "tm:swift",
+    "tm:helpinghand",
+    "tm:dive",
+    "tm:shadowclaw",
+    "tm:psychocut",
+    "tm:magicroom",
+    "tm:round",
+    "tm:retaliate",
+    "tm:bulldoze",
+    "tm:mysticalfire",
+    "tm:airslash",
+    "tm:breakingswipe"
+  ],
+  "abilities": [
+    "levitate"
+  ],
+  "evolutions": [],
+  "baseScale": 1,
+  "hitbox": {
+    "width": 0.9,
+    "height": 1.4,
+    "fixed": false
+  },
+  "drops": {
+    "amount": 2,
+    "entries": [
+      {
+        "item": "minecraft:diamond",
+        "quantityRange": "1-2",
+        "percentage": 10
+      }
+    ]
+  },
+  "behaviour": {
+    "moving": {
+      "canLook": true,
+      "fly": {
+        "canFly": true,
+        "flySpeedHorizontal": 0.5
+      },
+      "walk": {
+        "canWalk": true,
+        "walkSpeed": 0.5
+      },
+      "swim": {
+        "swimSpeed": 0.2,
+        "canSwimInWater": false,
+        "canBreatheUnderwater": false
+      }
+    }
+  }
+}

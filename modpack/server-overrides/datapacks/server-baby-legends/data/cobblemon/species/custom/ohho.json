@@ -1,0 +1,84 @@
+{
+  "nationalPokedexNumber": 6757,
+  "name": "Oh-ho",
+  "primaryType": "fire",
+  "maleRatio": -1,
+  "height": 35,
+  "weight": 9500,
+  "pokedex": [
+    "cobblemon.species.ohho.desc"
+  ],
+  "labels": [
+    "gen2",
+    "legendary",
+    "restricted"
+  ],
+  "aspects": [
+    "standard"
+  ],
+  "abilities": [
+    "pressure"
+  ],
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "evYield": {
+    "attack": 3
+  },
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "willSleepOnBed": true,
+      "depth": "normal",
+      "light": "0-4"
+    }
+  },
+  "baseExperienceYield": 335,
+  "experienceGroup": "slow",
+  "catchRate": 3,
+  "eggCycles": 120,
+  "baseFriendship": 0,
+  "baseScale": 1.5,
+  "hitbox": {
+    "width": 1,
+    "height": 1,
+    "fixed": false
+  },
+  "drops": {
+    "amount": 1,
+    "entries": [
+      {
+        "item": "cobblemon:fire_gem"
+      }
+    ]
+  },
+  "moves": [
+    "1:charm",
+    "1:tackle",
+    "1:sandattack",
+    "5:ember",
+    "5:whirlwind",
+    "12:wingattack",
+    "16:flamecharge",
+    "20:sunnyday",
+    "25:willowisp",
+    "30:airslash",
+    "35:calmmind",
+    "40:flamethrower",
+    "45:hurricane",
+    "48:solarbeam",
+    "50:dualwingbeat",
+    "57:tailwind",
+    "68:overheat",
+    "100:burnup"
+  ],
+  "evolutions": []
+}

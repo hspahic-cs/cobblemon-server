@@ -12,6 +12,33 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.8] - 2026-06-19
+
+Baby Legends added as **rare collectible novelties**, obtainable only from the
+poke-egg gacha crate.
+
+### Added
+- **Baby Legends (Cobblemon)** mod (`baby-legends-cobblemon` 2.3, side=both) —
+  adds 23 baby pre-evolutions of legendaries (Raygul, Giragrub, Beta, …) with
+  models, textures and Pokédex entries.
+- **`Legendary Pokémon Egg`** in the Pokémon (poke-egg) gacha crate at **0.5%**
+  per pull (rarest egg; the other five egg weights were scaled down ×0.995 so
+  the table still sums to 100%). Draws from a new `baby_legend` egg pool of the
+  22 standalone baby species.
+
+### Changed (server-side balance — `server-baby-legends` datapack)
+- **No wild spawns.** All 23 baby-legend `spawn_pool_world` entries are disabled
+  (`enabled:false`); they never appear in the wild. The crate is the only source.
+- **No legendary evolution.** Stripped each baby's level-50 evolution into its
+  legendary (e.g. Raygul → Rayquaza). Baby legends are a terminal form.
+- **Nerfed stats.** Flattened every baby legend's base stats to a baby-tier line
+  (HP 45 / Atk 35 / Def 35 / SpA 35 / SpD 35 / Spe 35 = BST 220; several were
+  450–480 upstream). They are collectibles, not competitively viable.
+
+Overrides ship as a datapack so the mod jar stays pristine (packwiz modrinth
+auto-update intact). `royal_carbink` (a Carbink aspect, not a standalone
+species) has no crate path and, with its wild spawn disabled, is unobtainable.
+
 ## [0.22.7] - 2026-06-19
 
 ### Changed

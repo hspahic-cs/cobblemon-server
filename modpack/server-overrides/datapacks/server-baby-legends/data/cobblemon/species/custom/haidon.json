@@ -1,0 +1,84 @@
+{
+  "nationalPokedexNumber": 6756,
+  "name": "Haidon",
+  "primaryType": "fighting",
+  "maleRatio": -1,
+  "height": 35,
+  "weight": 9500,
+  "pokedex": [
+    "cobblemon.species.haidon.desc"
+  ],
+  "labels": [
+    "gen9",
+    "legendary",
+    "restricted"
+  ],
+  "aspects": [
+    "standard"
+  ],
+  "abilities": [
+    "flashfire"
+  ],
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "evYield": {
+    "attack": 3
+  },
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "willSleepOnBed": true,
+      "depth": "normal",
+      "light": "0-4"
+    }
+  },
+  "baseExperienceYield": 335,
+  "experienceGroup": "slow",
+  "catchRate": 3,
+  "eggCycles": 120,
+  "baseFriendship": 0,
+  "baseScale": 1,
+  "hitbox": {
+    "width": 1,
+    "height": 1,
+    "fixed": false
+  },
+  "drops": {
+    "amount": 1,
+    "entries": [
+      {
+        "item": "minecraft:nether_star"
+      }
+    ]
+  },
+  "moves": [
+    "1:mudshot",
+    "1:scaryface",
+    "1:ember",
+    "9:flamecharge",
+    "13:rocksmash",
+    "18:agility",
+    "27:mudshot",
+    "31:dragonbreath",
+    "36:sunnyday",
+    "40:crunch",
+    "45:shadowclaw",
+    "49:roar",
+    "54:taunt",
+    "66:swordsdance",
+    "72:snarl",
+    "81:solarbeam",
+    "90:closecombat",
+    "100:dracometeor"
+  ],
+  "evolutions": []
+}

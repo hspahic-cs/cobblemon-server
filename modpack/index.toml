@@ -20,6 +20,11 @@ hash = "8d7b54614f4aa33c4d89e11ed0ec434095e66c80c9557b4e91311ee684227ade"
 metafile = true
 
 [[files]]
+file = "mods/baby-legends-cobblemon.pw.toml"
+hash = "13a7af76c1edc4c51d67ec6a4fd9f1bd230e8f142fbf5fa493f600d08169451a"
+metafile = true
+
+[[files]]
 file = "mods/balm.pw.toml"
 hash = "9121b274bd87552ae976983d9bdd56061274c126a4a1b7b2e13605b1a1ec0599"
 metafile = true
@@ -377,7 +382,7 @@ hash = "c3eb9ba34d8c2ff9d4e20f0011eb2f0df4e1a7098d0f2331bae2bc6edf3dae81"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/egg_pools.json"
-hash = "7ea58296556db2b0f405c8bf73fed75c1e7a1ba1dd28e664cec4e888c029791f"
+hash = "c36534077d70b86f517791d438bf0078c9fe320de1d568f29781c4e0fbe2839a"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/common.json"
@@ -385,7 +390,7 @@ hash = "b889ee035b99f0c3f475c1a58b913948840e1255a1707838ef9214a78b91fe47"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/pokemon.json"
-hash = "bd4e0396f9e47fb4ff77ae4810c8d45a09cae59c135069049c4a9aa135d86b48"
+hash = "f8dbee7bee3a7e198f2f0591fd60a375a7e20792818bed9a4a2e08f11bb94c87"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/rare.json"
@@ -470,6 +475,194 @@ hash = "7e5c328f860bf7d5e9890b7c8a307cf6da7ea4ed37f8b5dd8eeebd7341105787"
 [[files]]
 file = "server-overrides/datapacks/AllTheMons [R3.5.1].zip"
 hash = "27e317734d6b91d2ea3ea2067ea63a977f66d8b96d2bc252284d4a4e87c71a34"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/README.md"
+hash = "9fdf12b3720fa18bffcab58049284ed2364c2d2a74152730d2ec7e74b1cae3b4"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/articoo.json"
+hash = "37002956a2376326d5ad64794841aff9c0ae062133b93e7cb41e955ae920d3cd"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/beta.json"
+hash = "01e906f6774b0bfaef90d3e8acf951cf2662f88964b086707608880d164f6518"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/courpup.json"
+hash = "eb7abc29d83f10b77d00d4284172627c8223741a4cc7c6deaff1dec13a8f990b"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/creslume.json"
+hash = "34ab123308de7347f3ec9e42efa66bd9c07a61043e0ecd82facb371a61b4d2f1"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/delcalf.json"
+hash = "4dd99f369966f27f1bcfb1174a3637ec038cf1db4f7f3dafacb3135697f463a5"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/giragrub.json"
+hash = "d811ac8c32120ecdf0fe67bf3d50d54058508a9c7d84390d3d86e3bcfca7096e"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/haidon.json"
+hash = "1a7f5b7f125488d155fa42912f13bfc843fc6871cd4fb2a7b39ba95176cd1096"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/kaidon.json"
+hash = "74cbb1416037a0a1a801f36010c7809610417e1cbbbafe8e5c7c7cfa0d63a8d8"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/karfoal.json"
+hash = "ac6d140a2d8bdcd317fc8c6af07f472252d6103a301998c886b6069c4382aeb4"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/latot.json"
+hash = "688efb84eb99469ece73096e716b4001f404f5d8c8309bee47acdff3dfbbb6db"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/neonite.json"
+hash = "c14e7c5e90c6de6eb528a1b75c39c81dbbc0a550a951129bd701a438a08ed886"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/ohho.json"
+hash = "0b73ca88500b3c209b74e19596d0d1b1b43dccbe144da7059b3e1c2e94bfbaa2"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/raygul.json"
+hash = "6e5b5e284a90b25229c59e515ea4a17b27be542cb6de83ed1e6ca2b6f623196e"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/regiclay.json"
+hash = "bd8991d0c474a9a9115e893adf576d5ea63210b4cfd2b612a801604f092a6f81"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/rotisikree.json"
+hash = "b468b42c13a75da2d7a2d881fed481f127570b70ea7c9a0ef99987528942381a"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/royal_carbink.json"
+hash = "ec8c3904ee3cdb5095a4575b35c8f47317f6eecc75377477c8ba6446b3b8c3dc"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/saladune.json"
+hash = "a80fd2e9fbf9e43fe1a026c78d7707738b81d1747a9b74b67bbcdb695b5445ab"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/statchic.json"
+hash = "1581c08cf916c0c7f280d89ec87f90f62da824449b443a01ff3513788f68b7c2"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/temga.json"
+hash = "c226edd4c00e8ce62299965043e9500ec33e58db34a30b3e684dd6687db3551f"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/xerfawn.json"
+hash = "bd4997e06667010515bfe3e05877bb274ec6fc79e008d679076640abe30cc30c"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/yangram.json"
+hash = "5ae7281a6d1fbf405b4e2ee934066458ee55f3f41f0b1d99e735e1aab8157629"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/yivpip.json"
+hash = "806f2a83641f552f761489466a87f9470da5652b7acc1b8427bd8df7259e68b0"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/spawn_pool_world/zerpint.json"
+hash = "82b94e6e90be6efcbd03fbab86554c6d2e50977054ff02f55c536f9abeb1513b"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/articoo.json"
+hash = "7e290155dbc1060c96c9be0a1f0ec39ba62d33720084a9de35e4fbbc2b9eca17"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/beta.json"
+hash = "67e03ba3683cf853967825b5f1aafe5892d158b4dfcf5849aa163a56718b19ae"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/courpup.json"
+hash = "77618beb441be550bdd37701fb1b9dec5b9927c7358d866f16a9bb25a74ebd98"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/creslume.json"
+hash = "e8e64b1f1c8dcf7d836a52d5e87cee410ee83abb76b2471be8aae487f94ef925"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/delcalf.json"
+hash = "d254ad7a450781d65fd6c04ec7b9521318d8b80e776cd1abe5e0a34508bf1ab6"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/giragrub.json"
+hash = "b3dd7ff3a4dfe069b1c2501dd2fdb97cac9452c7a8da602a28ab1c9773888826"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/haidon.json"
+hash = "d5e1c82db77c2fe66df50f4527387fead7d93c11873700e231e802bfbfcea941"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/kaidon.json"
+hash = "f6e32e580212a1d9372b05afa27e77e3d3aff27ee4c5a381de1aaf2255b8a383"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/karfoal.json"
+hash = "9a06d57a442f8855c66074b263510502fba1f857dab1a4dc715dcfa13a1b95e1"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/latot.json"
+hash = "0702305104c904081e67acde671d8015a95af5e346e1bc1d2210c37d349580f8"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/neonite.json"
+hash = "f907fc25c1d7bae193d1bb7fb28a0b2e3b0500bbe23306cb8fafc9033c9e834c"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/ohho.json"
+hash = "1cdce389b32ba3c864926a438aa2a3968df71d3c26fee828471076682e21c1a9"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/raygul.json"
+hash = "8ca756357339a95b351bd78ea0eefa0c34f5ed00819609773798f10b4a565ba3"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/regiclay.json"
+hash = "c54c1f6b806ce0b71f126edf04ec0ab7a9c6ba42f37c7163c96e84b9c8ebf094"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/rotisikree.json"
+hash = "1abb7f2e853078db17744e547167ff8996cf6072ca03c2cff6f45eab4d8b091b"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/saladune.json"
+hash = "64e5997ff97ddb3bcd901c122a4e2df8cc58088dbc0a6f2a5cbf19f66ed16ffe"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/statchic.json"
+hash = "047571d4b936985a40b7c431863b017c8c61b9f2dc501085950fc685cc9d9301"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/temga.json"
+hash = "bd8738fa7a77cc94d02581f1d79f3c7aa6812901b71f3a9e0e05641e391999ed"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/xerfawn.json"
+hash = "acbbe874d3df1349a3b0c75aac6e7ee3596a35e229c6cb04f583b8ed9f8c9635"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/yangram.json"
+hash = "573b1d7ece59748f81bb8a38e225da41e28cc522edf361792e23f867eec77dab"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/yivpip.json"
+hash = "a7f0159bf56991457761dd9794a456a4290067c47e95f721a850c055f828e841"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/data/cobblemon/species/custom/zerpint.json"
+hash = "b7c7b150732ef061dee79beee18d87a72129d9163e64ad0d6ed3a74fc0b39daf"
+
+[[files]]
+file = "server-overrides/datapacks/server-baby-legends/pack.mcmeta"
+hash = "c498e0d3f4496364a2048f4ddfaf743d9326dc391b09842ab84f247cca75be63"
 
 [[files]]
 file = "server-overrides/datapacks/server-cobbleworkers-allowlists/data/cobbleworkers/jobs/amethyst_harvester.json"

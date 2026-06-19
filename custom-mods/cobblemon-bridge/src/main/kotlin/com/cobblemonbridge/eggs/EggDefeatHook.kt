@@ -185,9 +185,8 @@ object EggDefeatHook {
             if (next == 0) {
                 tag.putBoolean(NBT_HATCH_READY, true)
                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag))
-                player.sendSystemMessage(Component.literal(
-                    "§e✦ §fYour §a${label.replaceFirstChar { it.uppercase() }}§f egg is ready to hatch!"
-                ))
+                // No chat ping on ready — the egg's own tooltip/timer surfaces readiness, and a
+                // per-egg "ready to hatch!" line just adds chat noise. Keep the server-log line.
                 CobblemonBridge.logger.info(
                     "Egg ready to hatch for {}: slot {} label {}",
                     player.gameProfile.name, i, label,

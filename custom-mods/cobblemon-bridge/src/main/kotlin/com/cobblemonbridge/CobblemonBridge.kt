@@ -106,6 +106,9 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // is parsed from JSON but never consumed).
         TradeCapHook.registerEvents()
         BredTagHook.registerEvents()
+        // Clean "Hatched a <Pokémon>" line (rarity-coloured by egg tier); replaces Cobbled Counter's
+        // suppressed hatch broadcast. Reads the tier captured by PokemonEggMixin.
+        com.cobblemonbridge.eggs.HatchAnnounceHook.registerEvents()
         // Breeding restriction: parents + children of a breeding can't be traded. Child side is
         // BredTagHook (HATCH_EGG_POST, which Cobreeding fires). Parent side is the tick monitor
         // below — Cobblemon's COLLECT_EGG never fires for Cobreeding, so we watch its egg registry.

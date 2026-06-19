@@ -1,0 +1,7 @@
+{
+  "ignoreFormFor": [],
+  "noBroadcastFor": ["HATCH"],
+  "minimumStreakForBroadcast": 1,
+  "broadcastLocation": "ACTION_BAR",
+  "debug": false
+}

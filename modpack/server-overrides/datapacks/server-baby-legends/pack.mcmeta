@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Server balance overrides for the Baby Legends (Cobblemon) mod: (1) disables every baby-legend wild spawn so they are crate-only, (2) removes their evolution into the real legendary, and (3) nerfs their base stats to a baby-tier statline (BST 220) so they are collectible novelties, not competitively viable. Datapack data outranks mod-jar data, so these win without editing the mod jar."
+  }
+}

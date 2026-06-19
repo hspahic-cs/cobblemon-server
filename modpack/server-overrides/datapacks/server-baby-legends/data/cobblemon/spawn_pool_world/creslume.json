@@ -1,0 +1,7 @@
+{
+  "enabled": false,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [],
+  "_comment": "server-baby-legends: baby legends are crate-only (poke-egg). Overrides baby-legends-cobblemon jar's wild spawn for creslume."
+}

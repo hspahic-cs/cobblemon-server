@@ -1,0 +1,93 @@
+{
+  "implemented": true,
+  "name": "courpup",
+  "nationalPokedexNumber": 9999,
+  "primaryType": "steel",
+  "abilities": [
+    "justified",
+    "h:guarddog"
+  ],
+  "pokedex": [
+    "cobblemon.species.courpup.desc1",
+    "cobblemon.species.courpup.desc2"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "evYield": {
+    "hp": 1
+  },
+  "moves": [
+    "1:charm",
+    "1:tackle",
+    "1:sandattack",
+    "5:quickattack",
+    "8:doubleteam",
+    "12:snarl",
+    "16:bite",
+    "20:metalclaw",
+    "25:dig",
+    "30:trailblaze",
+    "35:crunch",
+    "40:flashcannon",
+    "45:reflect",
+    "45:playrough",
+    "50:wildcharge",
+    "68:closecombat",
+    "100:kingsshield"
+  ],
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "depth": "normal",
+      "light": "0-4",
+      "willSleepOnBed": true,
+      "times": "night"
+    },
+    "moving": {
+      "canLook": true,
+      "walk": {
+        "canWalk": true,
+        "avoidsLand": false
+      },
+      "wanderChance": 1
+    }
+  },
+  "combat": {
+    "willDefendSelf": true,
+    "willDefendOwner": true,
+    "willFlee": false
+  },
+  "catchRate": 17,
+  "maleRatio": 0.5,
+  "shoulderMountable": false,
+  "baseExperienceYield": 200,
+  "experienceGroup": "erratic",
+  "eggCycles": 81,
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "drops": {
+    "amount": 1,
+    "entries": []
+  },
+  "labels": [
+    "custom",
+    "legendary"
+  ],
+  "baseScale": 0.7,
+  "hitbox": {
+    "width": 1,
+    "height": 1,
+    "fixed": false
+  },
+  "baseFriendship": 50,
+  "height": 2,
+  "weight": 130,
+  "evolutions": []
+}

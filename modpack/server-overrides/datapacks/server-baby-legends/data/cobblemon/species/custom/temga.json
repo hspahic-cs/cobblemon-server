@@ -1,0 +1,90 @@
+{
+  "implemented": true,
+  "name": "Temga",
+  "nationalPokedexNumber": 6762,
+  "labels": [
+    "custom"
+  ],
+  "pokedex": [
+    "cobblemon.species.temga.desc1"
+  ],
+  "height": 4,
+  "weight": 200,
+  "primaryType": "steel",
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "catchRate": 20,
+  "maleRatio": -1,
+  "baseExperienceYield": 270,
+  "experienceGroup": "slow",
+  "eggCycles": 120,
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseFriendship": 20,
+  "evYield": {
+    "special_attack": 1
+  },
+  "moves": [
+    "1:flash",
+    "1:swift",
+    "6:takedown",
+    "12:metalclaw",
+    "18:dragonbreath",
+    "24:thunderwave",
+    "30:ironhead",
+    "36:trick",
+    "42:flashcannon",
+    "48:focusblast",
+    "54:powergem",
+    "60:rest",
+    "66:earthpower",
+    "72:metalburst",
+    "78:calmmind"
+  ],
+  "abilities": [
+    "sturdy"
+  ],
+  "evolutions": [],
+  "baseScale": 1.5,
+  "hitbox": {
+    "width": 0.9,
+    "height": 1.4,
+    "fixed": false
+  },
+  "drops": {
+    "amount": "2",
+    "entries": [
+      {
+        "item": "minecraft:iron_nugget",
+        "quantityRange": "1-2",
+        "percentage": 10
+      }
+    ]
+  },
+  "behaviour": {
+    "moving": {
+      "canLook": true,
+      "fly": {
+        "canFly": false
+      },
+      "swim": {
+        "swimSpeed": 0.2,
+        "canSwimInWater": false,
+        "canBreatheUnderwater": false
+      },
+      "resting": {
+        "canSleep": true,
+        "willSleepOnBed": true,
+        "depth": "normal",
+        "light": "0-4"
+      }
+    }
+  }
+}

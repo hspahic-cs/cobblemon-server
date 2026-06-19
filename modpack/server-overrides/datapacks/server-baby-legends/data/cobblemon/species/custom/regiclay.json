@@ -1,0 +1,81 @@
+{
+  "implemented": true,
+  "nationalPokedexNumber": 6758,
+  "name": "Regiclay",
+  "primaryType": "normal",
+  "maleRatio": -1,
+  "height": 17,
+  "weight": 2300,
+  "pokedex": [
+    "cobblemon.species.regiclay.desc"
+  ],
+  "labels": [
+    "gen3",
+    "legendary"
+  ],
+  "aspects": [],
+  "abilities": [
+    "clearbody",
+    "h:sturdy"
+  ],
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "evYield": {
+    "defence": 3
+  },
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "willSleepOnBed": true,
+      "depth": "normal",
+      "light": "0-4"
+    }
+  },
+  "baseExperienceYield": 290,
+  "experienceGroup": "slow",
+  "catchRate": 3,
+  "eggCycles": 80,
+  "baseFriendship": 35,
+  "baseScale": 1,
+  "hitbox": {
+    "width": 1,
+    "height": 1,
+    "fixed": false
+  },
+  "drops": {
+    "amount": 1,
+    "entries": [
+      {
+        "item": "cobblemon:hard_stone"
+      }
+    ]
+  },
+  "moves": [
+    "1:explosion",
+    "1:sandattack",
+    "6:mudslap",
+    "12:ancientpower",
+    "18:stomp",
+    "24:rockthrow",
+    "30:curse",
+    "36:irondefense",
+    "42:hammerarm",
+    "48:stoneedge",
+    "54:superpower",
+    "60:lockon",
+    "66:zapcannon",
+    "72:hyperbeam",
+    "78:explosion",
+    "100:skillswap"
+  ],
+  "evolutions": []
+}

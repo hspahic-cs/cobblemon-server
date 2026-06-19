@@ -1,0 +1,79 @@
+{
+  "nationalPokedexNumber": 6756,
+  "name": "Kaidon",
+  "primaryType": "electric",
+  "maleRatio": -1,
+  "height": 35,
+  "weight": 9500,
+  "pokedex": [
+    "cobblemon.species.kaidon.desc"
+  ],
+  "labels": [
+    "gen9",
+    "legendary",
+    "restricted"
+  ],
+  "aspects": [
+    "standard"
+  ],
+  "abilities": [
+    "voltabsorb"
+  ],
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "evYield": {
+    "special_attack": 3
+  },
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "willSleepOnBed": true,
+      "depth": "normal",
+      "light": "0-4"
+    }
+  },
+  "baseExperienceYield": 335,
+  "experienceGroup": "slow",
+  "catchRate": 3,
+  "eggCycles": 120,
+  "baseFriendship": 0,
+  "baseScale": 1,
+  "hitbox": {
+    "width": 1,
+    "height": 1,
+    "fixed": false
+  },
+  "drops": {
+    "amount": 1,
+    "entries": [
+      {
+        "item": "minecraft:nether_star"
+      }
+    ]
+  },
+  "moves": [
+    "1:scaryface",
+    "1:spark",
+    "5:charge",
+    "9:helpinghand",
+    "18:dragonbreath",
+    "27:paraboliccharge",
+    "36:acrobatics",
+    "45:chargebeam",
+    "54:dragonpulse",
+    "72:thunder",
+    "81:solarbeam",
+    "90:dracometeor",
+    "100:overheat"
+  ],
+  "evolutions": []
+}

@@ -1,0 +1,84 @@
+{
+  "nationalPokedexNumber": 6762,
+  "name": "Beta",
+  "primaryType": "normal",
+  "maleRatio": -1,
+  "height": 35,
+  "weight": 9500,
+  "pokedex": [
+    "cobblemon.species.beta.desc"
+  ],
+  "labels": [
+    "gen3",
+    "legendary",
+    "restricted"
+  ],
+  "aspects": [
+    "standard"
+  ],
+  "abilities": [
+    "adaptability"
+  ],
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseStats": {
+    "hp": 45,
+    "attack": 35,
+    "defence": 35,
+    "special_attack": 35,
+    "special_defence": 35,
+    "speed": 35
+  },
+  "evYield": {
+    "attack": 3
+  },
+  "behaviour": {
+    "resting": {
+      "canSleep": true,
+      "willSleepOnBed": true,
+      "depth": "normal",
+      "light": "0-4"
+    }
+  },
+  "baseExperienceYield": 335,
+  "experienceGroup": "slow",
+  "catchRate": 3,
+  "eggCycles": 120,
+  "baseFriendship": 0,
+  "baseScale": 1,
+  "hitbox": {
+    "width": 1,
+    "height": 2,
+    "fixed": false
+  },
+  "drops": {
+    "amount": 1,
+    "entries": [
+      {
+        "item": "minecraft:nether_star"
+      }
+    ]
+  },
+  "moves": [
+    "1:charm",
+    "1:tackle",
+    "1:luckychant",
+    "5:quickattack",
+    "5:doubleteam",
+    "12:magicalleaf",
+    "16:round",
+    "20:thunderwave",
+    "25:naturepower",
+    "30:hypervoice",
+    "35:foulplay",
+    "40:shadowclaw",
+    "45:reflect",
+    "45:extremespeed",
+    "50:dragondance",
+    "57:hypervoice",
+    "68:closecombat",
+    "100:judgment"
+  ],
+  "evolutions": []
+}

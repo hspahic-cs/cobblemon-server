@@ -94,15 +94,16 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 0.5% | Azure Flute |
     | 0.5% | 2 Ultra Keys |
 
-??? note "Pokémon crate: 5 possible rewards"
+??? note "Pokémon crate: 6 possible rewards"
 
     | Chance | Reward |
     |---:|---|
-    | 45.0% | Uncommon Pokémon Egg |
-    | 35.0% | Common Pokémon Egg |
-    | 15.0% | Rare Pokémon Egg |
+    | 44.8% | Uncommon Pokémon Egg |
+    | 34.8% | Common Pokémon Egg |
+    | 14.9% | Rare Pokémon Egg |
     | 3.5% | Shiny Egg |
     | 1.5% | Ultra Rare Pokémon Egg |
+    | 0.5% | Legendary Pokémon Egg |
 
 ## Egg species pools
 
@@ -123,4 +124,10 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
 ??? note "Ultra Rare egg pool: 33 species (pseudo-legendaries, gen starters, and all 20 Paradox Pokémon)"
 
     Dratini **(HA)**, Larvitar, Beldum, Bagon **(HA)**, Gible **(HA)**, Deino, Goomy, Jangmo-O, Dreepy, Frigibax, Torchic **(HA)**, Froakie **(HA)**, Scorbunny **(HA)**, Greattusk, Screamtail, Brutebonnet, Fluttermane, Slitherwing, Sandyshocks, Roaringmoon, Walkingwake, Gougingfire, Ragingbolt, Irontreads, Ironbundle, Ironhands, Ironjugulis, Ironmoth, Ironthorns, Ironvaliant, Ironleaves, Ironboulder, Ironcrown
+
+??? note "Baby Legend egg pool: 22 species (collectible novelties)"
+
+    Baby pre-evolutions of legendaries from the Baby Legends mod. They **do not** evolve into the real legendary and have baby-tier stats (BST 220) — collectibles, not battle-viable. Never spawn in the wild; the Legendary Egg is the only source.
+
+    Articoo *(Articuno)*, Beta *(Arceus)*, Courpup *(Zacian/Zamazenta)*, Creslume *(Cresselia)*, Delcalf *(Kyogre)*, Giragrub *(Giratina)*, Haidon *(Koraidon)*, Kaidon *(Miraidon)*, Karfoal *(Keldeo)*, Latot *(Latios/Latias)*, Neonite *(Necrozma)*, Oh-ho *(Ho-Oh)*, Raygul *(Rayquaza)*, Regiclay *(Regi line)*, Rotisikree *(Moltres)*, Saladune *(Groudon)*, Statchic *(Zapdos)*, Temga *(Dialga)*, Xerfawn *(Xerneas)*, Yangram *(Zekrom/Reshiram/Kyurem)*, Yivpip *(Yveltal)*, Zerpint *(Zygarde)*
 

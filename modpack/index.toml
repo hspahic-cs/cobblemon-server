@@ -89,6 +89,11 @@ hash = "7d29e2d070b4d5e87af1607796389018c23af8fe84723b472bda2e03b0454f14"
 metafile = true
 
 [[files]]
+file = "mods/cobblemon-smartphone.pw.toml"
+hash = "9cb9b171078bd598f0f67c4b3fe1f3b1bc93724e19d16767012cf3b9f5574dab"
+metafile = true
+
+[[files]]
 file = "mods/cobblemon-tim-core.pw.toml"
 hash = "4211dd9eed65d9599cb1df61f5db373772ed090aa837a17f2fb7dc9c46a8aa2b"
 metafile = true
@@ -226,6 +231,11 @@ metafile = true
 [[files]]
 file = "mods/multiworld.pw.toml"
 hash = "7b329b1c605a86df77d5bc601fac60f84b269145ccbbc01c0907215eaec6f54f"
+metafile = true
+
+[[files]]
+file = "mods/natures-compass.pw.toml"
+hash = "35acdf433fe8f8599f59975e848efdb717663c2c471d3a5dc18743799795a736"
 metafile = true
 
 [[files]]

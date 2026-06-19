@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.6] - 2026-06-19
+
+Two quality-of-life mods added to the pack.
+
+### Added
+- **Nature's Compass** — handheld biome locator. Reads the live biome registry,
+  so all Terralith (and other modded) biomes are searchable out of the box, no
+  config needed.
+- **Cobblemon Smartphone** — in-field access to heal, PC, Ender Chest, Pokédex,
+  and the Pokédex scanner. CobbleDollars is intentionally **not** bundled, so the
+  phone's shop app stays inert; every other feature works. Native NeoForge build.
+
 ## [0.22.5] - 2026-06-18
 
 Chat de-bloat pass: streak/counter spam trimmed, breeding-streak wording removed.

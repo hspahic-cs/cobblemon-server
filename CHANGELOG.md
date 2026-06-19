@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.22.7] - 2026-06-19
+
+### Changed
+- **packwiz index realignment (no gameplay change).** `modpack/index.toml` hashes
+  had drifted from the committed `server-overrides` datapack/config files (configs
+  were committed without a `packwiz refresh`). A standalone `packwiz refresh`
+  realigns all hashes so future mod PRs carry a minimal diff instead of ~1400 lines
+  of unrelated churn. No mod added/removed. Closes #232.
+
 ## [0.22.6] - 2026-06-19
 
 Two quality-of-life mods added to the pack.

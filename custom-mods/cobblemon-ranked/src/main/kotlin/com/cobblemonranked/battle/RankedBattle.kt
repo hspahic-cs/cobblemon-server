@@ -97,14 +97,25 @@ object RankedBattleManager {
     private val expectedRankedMatch: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
 
     /**
+     * Admin (host) who forced a pending match, keyed by each participant's UUID — so a cancel
+     * during team-select also notifies them. Absent for player-initiated challenges/queue.
+     */
+    private val matchHost: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
+
+    /**
      * Begin the team-select phase of a ranked match. [wagerPerSide] is the cobble-dollar
      * amount each player will be charged when both confirm their teams. Escrow happens at
-     * startBattle time, not here, so a cancelled team-select doesn't touch money.
+     * startBattle time, not here, so a cancelled team-select doesn't touch money. [hostUuid] is
+     * the admin who forced the match (if any), notified if the team-select is cancelled.
      */
-    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer, wagerPerSide: Int = 0) {
+    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer, wagerPerSide: Int = 0, hostUuid: UUID? = null) {
         val config = CobblemonRanked.config
         pendingMatches[player1.uuid] = player2.uuid
         pendingMatches[player2.uuid] = player1.uuid
+        if (hostUuid != null) {
+            matchHost[player1.uuid] = hostUuid
+            matchHost[player2.uuid] = hostUuid
+        }
         if (wagerPerSide > 0) {
             pendingWager[player1.uuid] = wagerPerSide
             pendingWager[player2.uuid] = wagerPerSide
@@ -112,6 +123,49 @@ object RankedBattleManager {
 
         openSelectionGui(player1, config.maxLegendaries)
         openSelectionGui(player2, config.maxLegendaries)
+    }
+
+    /**
+     * Begin a tournament match between two entered players. Each picks a subset of 6 (max 1
+     * Legendary/Paradox/Ultra-Beast) from their locked 9-roster; on both confirm the normal ranked
+     * [startBattle] runs (ELO applies, arena teleport, etc.). [hostUuid] is the admin who ran the
+     * command, notified on cancel. Returns an error string if either player isn't a valid entrant,
+     * or null on success.
+     */
+    fun startTournamentMatch(player1: ServerPlayer, player2: ServerPlayer, hostUuid: UUID?): String? {
+        val tm = com.cobblemonranked.tournament.TournamentManager
+        val roster1 = tm.resolveRoster(player1) ?: return "${player1.name.string} hasn't entered the tournament."
+        val roster2 = tm.resolveRoster(player2) ?: return "${player2.name.string} hasn't entered the tournament."
+        if (roster1.isEmpty()) return "${player1.name.string}'s roster Pokémon couldn't be found (released/traded?)."
+        if (roster2.isEmpty()) return "${player2.name.string}'s roster Pokémon couldn't be found (released/traded?)."
+        if (pendingMatches.containsKey(player1.uuid) || pendingMatches.containsKey(player2.uuid) ||
+            findActiveMatchByPlayer(player1.uuid) != null || findActiveMatchByPlayer(player2.uuid) != null) {
+            return "One of them is already in a match or team-selecting."
+        }
+
+        pendingMatches[player1.uuid] = player2.uuid
+        pendingMatches[player2.uuid] = player1.uuid
+        if (hostUuid != null) {
+            matchHost[player1.uuid] = hostUuid
+            matchHost[player2.uuid] = hostUuid
+        }
+        openTournamentSelectionGui(player1, roster1, roster2)
+        openTournamentSelectionGui(player2, roster2, roster1)
+        return null
+    }
+
+    private fun openTournamentSelectionGui(player: ServerPlayer, pool: List<Pokemon>, opponentRoster: List<Pokemon>) {
+        player.openMenu(com.cobblemonranked.gui.TournamentBattleMenuProvider(
+            player = player,
+            pool = pool,
+            opponentRoster = opponentRoster,
+            onConfirm = { team ->
+                pendingTeams[player.uuid] = team.map { it.clone() }
+                player.sendSystemMessage(Component.literal("§a[Tournament] Team locked in! Waiting for opponent..."))
+                checkBothReady(player)
+            },
+            onCancel = { cancelMatch(player) },
+        ))
     }
 
     /** Wager per side for the next-starting match, keyed by either player's UUID. */
@@ -636,6 +690,14 @@ object RankedBattleManager {
     private fun offlineUuid(name: String): UUID =
         UUID.nameUUIDFromBytes("OfflinePlayer:$name".toByteArray(Charsets.UTF_8))
 
+    /**
+     * Cancel a pending (team-select phase) match. Sends a uniform "Match cancelled." to BOTH
+     * players and the admin host (if any), and closes the OTHER player's still-open selection
+     * menu. Deliberately does nothing else — no ELO change, no auto-rematch (manual rerun).
+     *
+     * State is cleared before closing the opponent's container, so the re-entrant cancel that
+     * fires from their menu's `removed()` hook finds no pending match and no-ops.
+     */
     private fun cancelMatch(player: ServerPlayer) {
         // If a real battle is already in flight for this player, treat the cancel as a forfeit
         // — the team-select menu shouldn't have been re-openable past startBattle, but cover it.
@@ -643,11 +705,20 @@ object RankedBattleManager {
             forfeitMatch(player, reason = "cancelled the match")
             return
         }
-        val opponentUuid = pendingMatches[player.uuid] ?: return
-        val opponent = player.server.playerList.getPlayer(opponentUuid)
-        opponent?.sendSystemMessage(Component.literal("[Ranked] ${player.name.string} cancelled the match."))
-        player.sendSystemMessage(Component.literal("[Ranked] Match cancelled."))
+        val opponentUuid = pendingMatches[player.uuid] ?: return  // already cancelled → no-op
+        val hostUuid = matchHost[player.uuid]
         cleanup(player.uuid, opponentUuid)
+
+        val server = player.server
+        val opponent = server.playerList.getPlayer(opponentUuid)
+        val msg = Component.literal("§c[Ranked] Match cancelled.")
+        player.sendSystemMessage(msg)
+        opponent?.sendSystemMessage(msg)
+        hostUuid?.let { server.playerList.getPlayer(it) }
+            ?.takeIf { it.uuid != player.uuid && it.uuid != opponentUuid }
+            ?.sendSystemMessage(msg)
+        // Close the opponent's still-open selection menu (the canceller's is already closing).
+        opponent?.closeContainer()
     }
 
     /**
@@ -729,6 +800,8 @@ object RankedBattleManager {
         pendingTeams.remove(uuid2)
         pendingMatches.remove(uuid1)
         pendingMatches.remove(uuid2)
+        matchHost.remove(uuid1)
+        matchHost.remove(uuid2)
     }
 
     private fun broadcast(server: MinecraftServer, message: String) {

@@ -30,13 +30,18 @@ import java.util.UUID
  * Tournament roster picker: choose exactly [TournamentManager.ROSTER_SIZE] (9) Pokémon from PC +
  * party, with at most [TournamentManager.MAX_SPECIALS_ROSTER] (4) Legendary/Paradox/Ultra-Beast.
  *
- * Same vanilla `GENERIC_9x6` approach as [TeamSelectionMenu] (server-side, no client jar/packets).
- * Layout:
- *  rows 0-1 (0-17)  — current PC box (18 shown); box navigation wraps (box 1 ← → last box)
- *  row  2   (18-26) — PC nav: prev arrow, box label, next arrow
- *  row  3   (27-32) — party (6); 33 divider; 34 "Selected N/9"; 35 "Specials X/4"
- *  row  4   (36-44) — selected roster (9 slots; click to remove)
- *  row  5   (45-51 filler, 52 confirm, 53 cancel)
+ * Vanilla `GENERIC_9x6` double chest (54 slots, server-side, no client jar/packets). The current PC
+ * box is shown IN FULL — all 30 slots — as a 6×5 block in the left six columns (matching Cobblemon's
+ * own PC box shape). The right three columns + bottom row carry navigation, the selected roster,
+ * counters, the party, and the confirm/cancel buttons.
+ *
+ * Slot map (row r, col c → r*9+c):
+ *  - Box (30):     cols 0-5 of rows 0-4  → [BOX_SLOTS], in box-index order
+ *  - Nav (3):      6 prev, 7 label, 8 next   (box navigation wraps: box 1 ↔ last)
+ *  - Selected (9): 15,16,17 / 24,25,26 / 33,34,35  → [SELECTED_SLOTS] (click to remove)
+ *  - Counters:     42 roster count, 43 specials, 44 "party ↓" label
+ *  - Party (6):    45-50  → [PARTY_SLOTS]
+ *  - Buttons:      52 confirm, 53 cancel  (51 filler)
  */
 class TournamentJoinMenu private constructor(
     containerId: Int,
@@ -67,7 +72,6 @@ class TournamentJoinMenu private constructor(
         repaint()
     }
 
-    /** Pre-load the player's previously-locked roster (if re-opening via /join) by UUID. */
     private fun prefillSelection() {
         if (initialUuids.isEmpty() || player == null) return
         val owned = TournamentManager.collectOwnedPokemon(player)
@@ -81,34 +85,37 @@ class TournamentJoinMenu private constructor(
 
     private fun repaint() {
         for (i in 0 until SLOT_COUNT) display.setItem(i, ItemStack.EMPTY)
-
         val boxes = pc?.boxes
         val box = boxes?.getOrNull(currentBox)
-        for (i in 0 until 18) {
-            val pokemon: Pokemon? = try { box?.get(i) } catch (e: Exception) { null }
-            display.setItem(i, if (pokemon != null) pokemonStack(pokemon, pokemon in selected)
-                                else filler(Items.LIGHT_GRAY_STAINED_GLASS_PANE))
+
+        // Box — full 30 slots in box-index order.
+        for (idx in 0 until BOX_CAPACITY) {
+            val slot = BOX_SLOTS[idx]
+            val pokemon: Pokemon? = try { box?.get(idx) } catch (e: Exception) { null }
+            display.setItem(slot, if (pokemon != null) pokemonStack(pokemon, pokemon in selected)
+                                   else filler(Items.LIGHT_GRAY_STAINED_GLASS_PANE))
         }
 
-        display.setItem(18, named(Items.ARROW, "§7← Previous Box"))
-        for (i in listOf(19, 20, 21, 23, 24, 25)) display.setItem(i, filler(Items.BLACK_STAINED_GLASS_PANE))
-        display.setItem(22, named(Items.NAME_TAG, "Box ${currentBox + 1} / ${(boxes?.size ?: 1).coerceAtLeast(1)}"))
-        display.setItem(26, named(Items.ARROW, "§7Next Box →"))
+        // Nav (top-right corner)
+        display.setItem(6, named(Items.ARROW, "§7← Previous Box"))
+        display.setItem(7, named(Items.NAME_TAG, "§eBox ${currentBox + 1} §7/ ${(boxes?.size ?: 1).coerceAtLeast(1)}"))
+        display.setItem(8, named(Items.ARROW, "§7Next Box →"))
 
-        for (i in 0 until 6) {
-            val pokemon = party?.get(i)
-            display.setItem(27 + i, if (pokemon != null) pokemonStack(pokemon, pokemon in selected)
-                                     else filler(Items.LIGHT_GRAY_STAINED_GLASS_PANE))
+        // Selected roster (right panel)
+        for (i in 0 until TournamentManager.ROSTER_SIZE) {
+            val slot = SELECTED_SLOTS[i]
+            display.setItem(slot, if (i < selected.size) pokemonStack(selected[i], true)
+                                   else named(Items.GRAY_STAINED_GLASS_PANE, "§8Roster Slot ${i + 1}"))
         }
-        display.setItem(33, named(Items.CHEST, "§7^ PC | Party ^"))
 
+        // Counters
         val count = ItemStack(Items.PAPER)
         count.set(DataComponents.CUSTOM_NAME, Component.literal("§eRoster: ${selected.size}/${TournamentManager.ROSTER_SIZE}"))
         count.set(DataComponents.LORE, ItemLore(listOf(
-            Component.literal("§7Pick exactly §f${TournamentManager.ROSTER_SIZE}§7 Pokémon."),
-            Component.literal("§7Confirm to enter / update your roster."),
+            Component.literal("§7Pick exactly §f${TournamentManager.ROSTER_SIZE}§7 Pokémon, then Confirm."),
+            Component.literal("§7Click a roster slot to remove it."),
         )))
-        display.setItem(34, count)
+        display.setItem(42, count)
 
         val specials = specialsCount()
         val specialColor = if (specials >= TournamentManager.MAX_SPECIALS_ROSTER) "§c" else "§a"
@@ -118,17 +125,20 @@ class TournamentJoinMenu private constructor(
         specialStack.set(DataComponents.LORE, ItemLore(listOf(
             Component.literal("§7Legendary / Paradox / Ultra-Beast."),
             Component.literal("§7Max §c${TournamentManager.MAX_SPECIALS_ROSTER}§7 in your roster"),
-            Component.literal("§7(so a 6-mon battle subset can have §c1§7)."),
+            Component.literal("§7(a 6-mon battle subset may bring §c1§7)."),
         )))
-        display.setItem(35, specialStack)
+        display.setItem(43, specialStack)
+        display.setItem(44, named(Items.CHEST, "§7Your party §8↓"))
 
-        // Row 4: selected roster (9 slots)
-        for (i in 0 until TournamentManager.ROSTER_SIZE) {
-            display.setItem(36 + i, if (i < selected.size) pokemonStack(selected[i], true)
-                                     else named(Items.GRAY_STAINED_GLASS_PANE, "§8Empty Slot"))
+        // Party (bottom-left)
+        for (i in 0 until 6) {
+            val slot = PARTY_SLOTS[i]
+            val pokemon = party?.get(i)
+            display.setItem(slot, if (pokemon != null) pokemonStack(pokemon, pokemon in selected)
+                                   else filler(Items.LIGHT_GRAY_STAINED_GLASS_PANE))
         }
 
-        for (i in 45..51) display.setItem(i, filler(Items.BLACK_STAINED_GLASS_PANE))
+        display.setItem(51, filler(Items.BLACK_STAINED_GLASS_PANE))
         val ready = selected.size == TournamentManager.ROSTER_SIZE
         display.setItem(52, named(if (ready) Items.LIME_CONCRETE else Items.GRAY_CONCRETE,
             Component.literal(if (ready) "§aConfirm Roster" else "§7Pick ${TournamentManager.ROSTER_SIZE - selected.size} more")
@@ -166,24 +176,25 @@ class TournamentJoinMenu private constructor(
     override fun clicked(slotId: Int, button: Int, type: ClickType, player: Player) {
         val sp = this.player ?: return
         val boxes = pc?.boxes ?: return
-        when (slotId) {
-            in 0 until 18 -> {
+        when {
+            slotId in BOX_SLOT_TO_INDEX -> {
                 val box = boxes.getOrNull(currentBox) ?: return
-                val pokemon = try { box.get(slotId) } catch (e: Exception) { null } ?: return
+                val idx = BOX_SLOT_TO_INDEX.getValue(slotId)
+                val pokemon = try { box.get(idx) } catch (e: Exception) { null } ?: return
                 togglePokemon(pokemon, sp); repaint()
             }
-            in 27 until 33 -> {
-                val pokemon = party?.get(slotId - 27) ?: return
+            slotId in PARTY_SLOT_TO_INDEX -> {
+                val pokemon = party?.get(PARTY_SLOT_TO_INDEX.getValue(slotId)) ?: return
                 togglePokemon(pokemon, sp); repaint()
             }
-            in 36 until 45 -> {
-                val idx = slotId - 36
+            slotId in SELECTED_SLOT_TO_INDEX -> {
+                val idx = SELECTED_SLOT_TO_INDEX.getValue(slotId)
                 if (idx < selected.size) { selected.removeAt(idx); repaint() }
             }
             // Wrap-around navigation so "previous" from box 1 goes to the last box, and vice versa.
-            18 -> { if (boxes.isNotEmpty()) { currentBox = (currentBox - 1 + boxes.size) % boxes.size; repaint() } }
-            26 -> { if (boxes.isNotEmpty()) { currentBox = (currentBox + 1) % boxes.size; repaint() } }
-            52 -> {
+            slotId == 6 -> { if (boxes.isNotEmpty()) { currentBox = (currentBox - 1 + boxes.size) % boxes.size; repaint() } }
+            slotId == 8 -> { if (boxes.isNotEmpty()) { currentBox = (currentBox + 1) % boxes.size; repaint() } }
+            slotId == 52 -> {
                 if (selected.size != TournamentManager.ROSTER_SIZE) {
                     sp.sendSystemMessage(Component.literal(
                         "§c[Tournament] Pick exactly ${TournamentManager.ROSTER_SIZE} Pokémon (you have ${selected.size})."))
@@ -193,15 +204,12 @@ class TournamentJoinMenu private constructor(
                 sp.closeContainer()
                 onConfirm?.invoke(selected.toList())
             }
-            53 -> { cancelled = true; sp.closeContainer(); onCancel?.invoke() }
+            slotId == 53 -> { cancelled = true; sp.closeContainer(); onCancel?.invoke() }
         }
     }
 
     private fun togglePokemon(pokemon: Pokemon, sp: ServerPlayer) {
-        if (pokemon in selected) {
-            selected.remove(pokemon)
-            return
-        }
+        if (pokemon in selected) { selected.remove(pokemon); return }
         if (selected.size >= TournamentManager.ROSTER_SIZE) {
             sp.sendSystemMessage(Component.literal("§c[Tournament] Roster is full (${TournamentManager.ROSTER_SIZE}). Remove one first."))
             return
@@ -234,6 +242,19 @@ class TournamentJoinMenu private constructor(
         const val ROWS = 6
         const val COLS = 9
         const val SLOT_COUNT = ROWS * COLS
+        const val BOX_CAPACITY = 30
+
+        /** Container slots holding the 30 box cells, in box-index order (6×5 block, cols 0-5, rows 0-4). */
+        private val BOX_SLOTS: IntArray = IntArray(BOX_CAPACITY) { idx ->
+            val r = idx / 6; val c = idx % 6; r * COLS + c
+        }
+        private val BOX_SLOT_TO_INDEX: Map<Int, Int> = BOX_SLOTS.withIndex().associate { (idx, slot) -> slot to idx }
+
+        private val SELECTED_SLOTS = intArrayOf(15, 16, 17, 24, 25, 26, 33, 34, 35)
+        private val SELECTED_SLOT_TO_INDEX: Map<Int, Int> = SELECTED_SLOTS.withIndex().associate { (idx, slot) -> slot to idx }
+
+        private val PARTY_SLOTS = intArrayOf(45, 46, 47, 48, 49, 50)
+        private val PARTY_SLOT_TO_INDEX: Map<Int, Int> = PARTY_SLOTS.withIndex().associate { (idx, slot) -> slot to idx }
 
         internal fun forServer(
             containerId: Int, inv: Inventory, player: ServerPlayer, initialUuids: Set<UUID>,

@@ -31,6 +31,10 @@ root README.
 - **Uniform match cancellation.** Cancelling a team-select (tournament, `/ranked admin force`, or
   `/ranked challenge`) now sends "Match cancelled." to both players **and** the forcing admin, and
   closes the other player's open menu — nothing else (rerun manually).
+- **Ranked team picker shows the full PC box.** Both the normal `/ranked` team-select and the new
+  tournament roster picker now render all **30** box slots (a 6×5 block in the left columns of the
+  double chest) instead of the old 18 — so every Pokémon in a box is selectable, not just the first
+  18. Box navigation wraps (box 1 ↔ last).
 
 Baby Legends added as **rare collectible novelties**, obtainable only from the
 poke-egg gacha crate.

@@ -227,6 +227,32 @@ object RankedCommands {
                         .executes { ctx -> adminShowArena(ctx.source); 1 }
                     )
                 )
+                .then(Commands.literal("tournament")
+                    .requires { it.hasPermission(4) }
+                    .then(Commands.literal("open")
+                        .executes { ctx -> tournamentOpen(ctx.source); 1 })
+                    .then(Commands.literal("close")
+                        .executes { ctx -> tournamentClose(ctx.source); 1 })
+                    .then(Commands.literal("play")
+                        .then(Commands.argument("player1", EntityArgument.player())
+                            .then(Commands.argument("player2", EntityArgument.player())
+                                .executes { ctx ->
+                                    tournamentPlay(
+                                        ctx.source,
+                                        EntityArgument.getPlayer(ctx, "player1"),
+                                        EntityArgument.getPlayer(ctx, "player2"),
+                                    )
+                                    1
+                                }
+                            )
+                        )
+                    )
+                )
+        )
+
+        // Top-level /join — players enter the open tournament (opens the roster picker).
+        dispatcher.register(
+            Commands.literal("join").executes { ctx -> tournamentJoin(ctx.source.playerOrException); 1 }
         )
 
         // Top-level /challenge and /accept aliases. Same handlers as /ranked challenge|accept.
@@ -322,10 +348,14 @@ object RankedCommands {
             "§7  /queue auto §f— rejoin queue automatically after each match",
             "§7  /queue cancel §f— leave the queue",
             "§7  /queue list §f— who's currently queued",
+            "§7  /join §f— enter the active tournament (pick a 9-Pokémon roster)",
         )
         if (includeAdmin) {
             lines += listOf(
                 "§e[Ranked] §fAdmin (op level 4):",
+                "§7  /ranked tournament open §f— open tournament registration (announces /join)",
+                "§7  /ranked tournament close §f— close registration + print ELO seeding to admins",
+                "§7  /ranked tournament play <p1> <p2> §f— run a tournament match (each picks 6 of their 9)",
                 "§7  /ranked admin setelo <player> <value> §f— override a player's ELO",
                 "§7  /ranked admin decay §f— manually trigger daily decay",
                 "§7  /ranked admin force <player1> <player2> §f— force a match (bypasses daily limit)",
@@ -494,7 +524,50 @@ object RankedCommands {
         source.sendSystemMessage(Component.literal(
             "[Ranked] Forcing match: ${p1.name.string} vs ${p2.name.string}"
         ))
-        RankedBattleManager.startTeamSelection(p1, p2)
+        RankedBattleManager.startTeamSelection(p1, p2, hostUuid = source.player?.uuid)
+    }
+
+    // ── Tournament ────────────────────────────────────────────────────────────────────────────
+
+    private fun tournamentOpen(source: CommandSourceStack) {
+        com.cobblemonranked.tournament.TournamentManager.openRegistration(source.server)
+        source.sendSystemMessage(Component.literal("§a[Tournament] Registration opened — players can /join."))
+    }
+
+    private fun tournamentClose(source: CommandSourceStack) {
+        com.cobblemonranked.tournament.TournamentManager.closeRegistration(source.server)
+    }
+
+    private fun tournamentPlay(source: CommandSourceStack, p1: ServerPlayer, p2: ServerPlayer) {
+        if (p1.uuid == p2.uuid) {
+            source.sendSystemMessage(Component.literal("§c[Tournament] Pick two different players."))
+            return
+        }
+        val err = RankedBattleManager.startTournamentMatch(p1, p2, source.player?.uuid)
+        if (err != null) {
+            source.sendSystemMessage(Component.literal("§c[Tournament] $err"))
+            return
+        }
+        source.sendSystemMessage(Component.literal(
+            "§a[Tournament] Match started: ${p1.name.string} vs ${p2.name.string} — both picking their 6."))
+    }
+
+    private fun tournamentJoin(player: ServerPlayer) {
+        val tm = com.cobblemonranked.tournament.TournamentManager
+        if (!tm.isOpen()) {
+            player.sendSystemMessage(Component.literal("§c[Tournament] No tournament is open for registration right now."))
+            return
+        }
+        val initial = tm.getEntry(player.uuid)?.pokemonUuids?.toSet() ?: emptySet()
+        player.openMenu(com.cobblemonranked.gui.TournamentJoinMenuProvider(
+            player = player,
+            initialUuids = initial,
+            onConfirm = { roster -> tm.lockIn(player, roster) },
+            onCancel = {
+                player.sendSystemMessage(Component.literal(
+                    "§7[Tournament] Roster selection cancelled. Type §f/join§7 again to pick and enter."))
+            },
+        ))
     }
 
     /**

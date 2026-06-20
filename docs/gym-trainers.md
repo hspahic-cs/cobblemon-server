@@ -18,7 +18,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
 !!! tip "Gym cooldown"
     After you start a gym battle, that gym goes on a **2-minute cooldown** before you can challenge it again (the Elite Four gauntlet is exempt). Stops gyms being spam-farmed for EXP.
 
-??? abstract "Gym 1: Clay, Ground-type"
+??? abstract "Gym 1: Dusty, Ground-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -34,7 +34,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 20 | Servine | Contrary |  | Leafstorm, Glare, Gigadrain, Hiddenpower |
     | 20 | Shroomish | Effectspore |  | Spore, Bulletseed, Drainpunch, Rocktomb |
 
-??? abstract "Gym 3: Korrina, Fighting-type"
+??? abstract "Gym 3: Lee Sin, Fighting-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -43,7 +43,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 25 | Croagunk | Dryskin |  | Drainpunch, Suckerpunch, Poisonjab, Fakeout |
     | 25 | Timburr | Ironfist |  | Drainpunch, Machpunch, Rockslide, Bulkup |
 
-??? abstract "Gym 4: Byron, Steel-type"
+??? abstract "Gym 4: Jarvis, Steel-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -53,7 +53,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 30 | Metang | Clearbody |  | Meteormash, Zenheadbutt, Bulletpunch, Icepunch |
     | 30 | Lairon | Rockhead |  | Ironhead, Rockslide, Earthquake, Stealthrock |
 
-??? abstract "Gym 5: Blaine, Fire-type"
+??? abstract "Gym 5: Zuko, Fire-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -64,7 +64,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 35 | Centiskorch | Flashfire |  | Firelash, Leechlife, Coil, Powerwhip |
     | 35 | Torkoal | Drought |  | Rapidspin, Lavaplume, Yawn, Stealthrock |
 
-??? abstract "Gym 6: Volkner, Electric-type"
+??? abstract "Gym 6: Stan, Electric-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -75,7 +75,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 40 | Electivire | Motordrive | Life Orb | Wildcharge, Earthquake, Icepunch, Firepunch |
     | 40 | Luxray | Intimidate | Quick Claw | Wildcharge, Crunch, Voltswitch, Icefang |
 
-??? abstract "Gym 7: Crasher Wake, Water-type"
+??? abstract "Gym 7: Kai, Water-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -86,7 +86,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 45 | Swampert | Torrent |  | Stealthrock, Earthquake, Icepunch, Flipturn |
     | 45 | Gastrodon | Stormdrain |  | Scald, Earthpower, Recover, Toxic |
 
-??? abstract "Gym 8: Sabrina, Psychic-type"
+??? abstract "Gym 8: Juniper, Psychic-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -97,7 +97,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 50 | Bronzong | Levitate |  | Stealthrock, Trickroom, Gyroball, Toxic |
     | 50 | Medicham | Purepower |  | Highjumpkick, Zenheadbutt, Icepunch, Bulletpunch |
 
-??? abstract "Gym 9: Drayden, Dragon-type"
+??? abstract "Gym 9: Quinn, Dragon-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -108,7 +108,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 55 | Goodra | Sapsipper |  | Dracometeor, Sludgebomb, Flamethrower, Thunderbolt |
     | 55 | Kingdra | Sniper |  | Focusenergy, Dracometeor, Hydropump, Icebeam |
 
-??? abstract "Gym 10: Morty, Ghost-type"
+??? abstract "Gym 10: Grimm, Ghost-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -119,7 +119,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 60 | Mimikyu | Disguise |  | Swordsdance, Shadowsneak, Playrough, Shadowclaw |
     | 60 | Annihilape | Defiant |  | Bulkup, Drainpunch, Ragefist, Shadowclaw |
 
-??? abstract "Gym 11 (optional rotating): Viola, Bug-type"
+??? abstract "Gym 11 (optional rotating): Flik, Bug-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -130,7 +130,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 60 | Heracross | Guts | Flame Orb | Megahorn, Closecombat, Rockslide, Earthquake |
     | 60 | Volcarona | Flamebody | Heavy Duty Boots | Quiverdance, Bugbuzz, Fierydance, Psychic |
 
-??? abstract "Gym 12 (optional rotating): Cheren, Normal-type"
+??? abstract "Gym 12 (optional rotating): Penny, Normal-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -145,14 +145,14 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 60 | Galvantula | Compoundeyes | Focus Sash | Stickyweb, Thunder, Bugbuzz, Energyball |
-    | 60 | Electrode | Static | Life Orb | Voltswitch, Gigadrain, Leafstorm, Electroball |
-    | 60 | Rotom | Levitate | Leftovers | Hydropump, Voltswitch, Thunderwave, Painsplit |
-    | 60 | Eelektross | Levitate | Leftovers | Coil, Supercellslam, Drainpunch, Dragonclaw |
-    | 60 | Magnezone | Analytic | Assault Vest | Thunderbolt, Flashcannon, Voltswitch, Bodypress |
-    | 60 | Pikachu | Lightningrod | Light Ball | Thunderbolt, Surf, Alluringvoice, Volttackle |
+    | 60 | Scolipede | Speedboost | Payapa Berry | Toxicspikes, Megahorn, Aquatail, Earthquake |
+    | 60 | Crobat | Innerfocus | Black Sludge | Roost, Superfang, Fly, Uturn |
+    | 60 | Salazzle | Corrosion | Air Balloon | Flamethrower, Encore, Substitute, Toxic |
+    | 60 | Slowking | Regenerator | Assault Vest | Sludgewave, Psychic, Flamethrower, Icebeam |
+    | 60 | Revavroom | Filter | Lum Berry | Shiftgear, Gunkshot, Ironhead, Highhorsepower |
+    | 60 | Overqwil | Intimidate | Life Orb | Barbbarrage, Crunch, Liquidation, Swordsdance |
 
-??? abstract "Gym 14 (optional rotating): Grant, Rock-type"
+??? abstract "Gym 14 (optional rotating): Caesar, Rock-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -163,7 +163,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 60 | Tyranitar | Sandstream | Assault Vest | Stoneedge, Crunch, Earthquake, Icepunch |
     | 60 | Lycanroc | Sandrush | Choice Band | Stoneedge, Closecombat, Playrough, Accelerock |
 
-??? abstract "Gym 15 (optional rotating): Skyla, Flying-type"
+??? abstract "Gym 15 (optional rotating): Amos, Flying-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -174,7 +174,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 60 | Braviary | Tintedlens | Heavy Duty Boots | Esperwing, Airslash, Shadowball, Calmmind |
     | 60 | Oricorio | Dancer |  | Revelationdance, Airslash, Quiverdance, Roost |
 
-??? abstract "Gym 16 (optional rotating): Brycen, Ice-type"
+??? abstract "Gym 16 (optional rotating): Tux, Ice-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -185,7 +185,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 60 | Froslass | Snowcloak | Icy Rock | Snowscape, Thunderwave, Hex, Icebeam |
     | 60 | Cetitan | Slushrush | Sitrus Berry | Bellydrum, Icespinner, Earthquake, Playrough |
 
-??? abstract "Gym 17 (optional rotating): Valerie, Fairy-type"
+??? abstract "Gym 17 (optional rotating): Flora, Fairy-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -196,7 +196,7 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 60 | Azumarill | Hugepower | Choice Band | Playrough, Liquidation, Aquajet, Icespinner |
     | 60 | Clefable | Magicguard | Life Orb | Moonblast, Flamethrower, Thunderbolt, Moonlight |
 
-??? abstract "Gym 18 (optional rotating): Marnie, Dark-type"
+??? abstract "Gym 18 (optional rotating): Hobie, Dark-type"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
@@ -218,38 +218,38 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     | 70 | Chansey | Naturalcure | Eviolite | Softboiled, Seismictoss, Thunderwave, Healbell |
     | 70 | Gyarados | Intimidate | Life Orb | Dragondance, Waterfall, Earthquake, Icefang |
 
-??? abstract "Elite Four 1: Lorelei"
+??? abstract "Elite Four 1: Alder"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 65 | Tyranitar | Sandstream | Smooth Rock | Stealthrock, Stoneedge, Crunch, Earthquake |
-    | 65 | Excadrill | Sandrush | Life Orb | Swordsdance, Earthquake, Ironhead, Rockslide |
-    | 65 | Ninetales | Snowwarning | Light Clay | Auroraveil, Blizzard, Freezedry, Moonblast |
-    | 65 | Arctozolt | Slushrush | Life Orb | Boltbeak, Blizzard, Lowkick, Freezedry |
-    | 65 | Hippowdon | Sandstream | Leftovers | Slackoff, Earthquake, Whirlwind, Toxic |
-    | 65 | Hooh | Regenerator | Heavy Duty Boots | Sacredfire, Bravebird, Recover, Earthquake |
+    | 65 | Hooh | Regenerator | Heavy Duty Boots | Sacredfire, Bravebird, Earthquake, Recover |
+    | 65 | Slowking | Regenerator | Heavy Duty Boots | Futuresight, Sludgebomb, Sunnyday, Slackoff |
+    | 65 | Excadrill | Moldbreaker | Leftovers | Stealthrock, Earthquake, Ironhead, Rockslide |
+    | 65 | Kingambit | Supremeoverlord | Leftovers | Swordsdance, Kowtowcleave, Ironhead, Suckerpunch |
+    | 65 | Cinderace | Libero | Heavy Duty Boots | Pyroball, Highjumpkick, Uturn, Courtchange |
+    | 65 | Volcarona | Flamebody | Heavy Duty Boots | Quiverdance, Fierydance, Bugbuzz, Gigadrain |
 
 ??? abstract "Elite Four 2: Cynthia"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 65 | Grimmsnarl | Prankster | Light Clay | Reflect, Lightscreen, Thunderwave, Spiritbreak |
-    | 65 | Gyarados | Moxie | Lum Berry | Dragondance, Waterfall, Bounce, Earthquake |
-    | 65 | Lucario | Justified | Life Orb | Swordsdance, Closecombat, Extremespeed, Bulletpunch |
-    | 65 | Volcarona | Flamebody | Heavy Duty Boots | Quiverdance, Bugbuzz, Fireblast, Gigadrain |
-    | 65 | Tyranitar | Sandstream | Focus Sash | Stoneedge, Crunch, Earthquake, Dragondance |
-    | 65 | Conkeldurr | Guts | Flame Orb | Drainpunch, Machpunch, Knockoff, Bulkup |
+    | 65 | Spiritomb | Infiltrator | Leftovers | Darkpulse, Shadowball, Willowisp, Painsplit |
+    | 65 | Roserade | Naturalcure | Black Sludge | Sludgebomb, Gigadrain, Sleeppowder, Leafstorm |
+    | 65 | Togekiss | Serenegrace | Leftovers | Airslash, Moonblast, Flamethrower, Roost |
+    | 65 | Lucario | Adaptability |  | Swordsdance, Closecombat, Meteormash, Extremespeed |
+    | 65 | Milotic | Marvelscale | Leftovers | Scald, Recover, Icebeam, Haze |
+    | 65 | Garchomp | Roughskin | Rocky Helmet | Swordsdance, Earthquake, Scaleshot, Firefang |
 
-??? abstract "Elite Four 3: Agatha"
+??? abstract "Elite Four 3: Ash"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 65 | Toxapex | Regenerator | Black Sludge | Scald, Toxic, Recover, Haze |
-    | 65 | Chansey | Naturalcure | Eviolite | Softboiled, Seismictoss, Thunderwave, Healbell |
-    | 65 | Clefable | Unaware | Leftovers | Moonblast, Calmmind, Softboiled, Flamethrower |
-    | 65 | Greninja | Protean | Focus Sash | Spikes, Toxicspikes, Darkpulse, Surf |
-    | 65 | Blissey | Naturalcure | Heavy Duty Boots | Softboiled, Seismictoss, Toxic, Teleport |
-    | 65 | Corviknight | Pressure | Leftovers | Bravebird, Roost, Defog, Uturn |
+    | 65 | Pikachu | Static | Light Ball | Volttackle, Knockoff, Surf, Fakeout |
+    | 65 | Greninja | Battlebond | Life Orb | Hydropump, Watershuriken, Darkpulse, Icebeam |
+    | 65 | Talonflame | Galewings | Heavy Duty Boots | Bravebird, Flareblitz, Uturn, Roost |
+    | 65 | Hawlucha | Unburden | Sitrus Berry | Swordsdance, Closecombat, Acrobatics, Stoneedge |
+    | 65 | Noivern | Infiltrator | Choice Specs | Dracometeor, Hurricane, Flamethrower, Uturn |
+    | 65 | Goodra | Sapsipper | Assault Vest | Dracometeor, Fireblast, Thunderbolt, Sludgewave |
 
 ??? abstract "Elite Four 4: Lance"
 
@@ -257,19 +257,19 @@ Every gym leader's team: levels, abilities, held items, moves. Click a gym to ex
     |---:|---|---|---|---|
     | 65 | Dragapult | Infiltrator | Choice Specs | Shadowball, Dracometeor, Fireblast, Uturn |
     | 65 | Dragonite | Multiscale | Weakness Policy | Dragondance, Extremespeed, Earthquake, Outrage |
-    | 65 | Garchomp | Roughskin | Rocky Helmet | Swordsdance, Scaleshot, Earthquake, Stoneedge |
+    | 65 | Salamence | Moxie | Life Orb | Dragondance, Dragonclaw, Earthquake, Roost |
     | 65 | Hydreigon | Levitate | Life Orb | Nastyplot, Darkpulse, Dracometeor, Fireblast |
     | 65 | Haxorus | Moldbreaker | Choice Scarf | Outrage, Closecombat, Earthquake, Firstimpression |
     | 65 | Eternatus | Pressure | Life Orb | Dragonpulse, Flamethrower, Sludgebomb, Recover |
 
-??? abstract "Champion"
+??? abstract "Champion: N"
 
     | Lv | Pokémon | Ability | Item | Moves |
     |---:|---|---|---|---|
-    | 70 | Rayquaza | Airlock |  | Dragonascent, Earthquake, Dragondance, Extremespeed |
-    | 70 | Rayquaza | Airlock |  | Dragonascent, Dracometeor, Surf, Thunderbolt |
-    | 70 | Garchomp | Roughskin | Life Orb | Swordsdance, Scaleshot, Earthquake, Stoneedge |
-    | 70 | Salamence | Intimidate | Life Orb | Dragondance, Dragonclaw, Earthquake, Fireblast |
-    | 70 | Latios | Levitate | Choice Specs | Dracometeor, Psychic, Thunderbolt, Mysticalfire |
-    | 70 | Dragonite | Multiscale | Heavy Duty Boots | Extremespeed, Dragondance, Earthquake, Outrage |
+    | 70 | Zekrom | Teravolt | Life Orb | Dragondance, Boltstrike, Outrage, Roost |
+    | 70 | Ferrothorn | Ironbarbs | Leftovers | Stealthrock, Leechseed, Powerwhip, Gyroball |
+    | 70 | Gliscor | Poisonheal | Toxic Orb | Earthquake, Knockoff, Toxic, Roost |
+    | 70 | Rotom | Levitate | Leftovers | Voltswitch, Hydropump, Thunderbolt, Willowisp |
+    | 70 | Zoroark | Illusion | Choice Specs | Darkpulse, Flamethrower, Focusblast, Sludgebomb |
+    | 70 | Rayquaza | Airlock |  | Dragonascent, Dragondance, Earthquake, Extremespeed |
 

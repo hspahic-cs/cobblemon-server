@@ -233,7 +233,11 @@ object RewardGranter {
      */
     private fun eggDisplayStack(spec: ItemSpec.CobbreedingEgg, species: String? = null, ha: Boolean = false): ItemStack {
         val stack = ItemStack(Items.TURTLE_EGG)
-        val tierLabel = spec.pool.replace('_', ' ').replaceFirstChar { it.uppercase() }
+        // Baby-legend eggs surface to players as "Cosmetic" (matching the crate label) rather than
+        // leaking the internal "baby_legend" pool name in the reveal item's name/lore. Every other
+        // pool uses its humanised id.
+        val tierLabel = if (spec.pool == "baby_legend") "Cosmetic"
+            else spec.pool.replace('_', ' ').replaceFirstChar { it.uppercase() }
         val shinyPrefix = if (spec.shiny) "§e✦ Shiny " else "§a"
         val base = if (species != null) {
             "$shinyPrefix${species.replaceFirstChar { it.uppercase() }} Egg"

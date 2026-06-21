@@ -61,7 +61,13 @@ object HealerHandler {
         event.isCanceled = true
     }
 
-    private fun promptCost(player: ServerPlayer) {
+    /**
+     * Public so the Smartphone heal-app interceptor ([com.cobblemoncarrots.mixin.SmartphoneHealMixin])
+     * can route the phone's "Heal" button through the same carrot+money quote flow as the healer
+     * block. Safe to call from anywhere on the server thread; no-ops with a chat line when the party
+     * is full or empty.
+     */
+    fun promptCost(player: ServerPlayer) {
         val party = Cobblemon.storage.getParty(player)
         val members = party.iterator().asSequence().toList()
         if (members.isEmpty()) {

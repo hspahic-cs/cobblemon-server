@@ -390,7 +390,7 @@ hash = "b889ee035b99f0c3f475c1a58b913948840e1255a1707838ef9214a78b91fe47"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/pokemon.json"
-hash = "f8dbee7bee3a7e198f2f0591fd60a375a7e20792818bed9a4a2e08f11bb94c87"
+hash = "0de9fba5d56ddb65c307876a7053b5706ba8149f25418561f348b31996380ff1"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/rare.json"
@@ -431,6 +431,10 @@ hash = "027899c66e58cae3d3da839462baec96558819520a5326bc683670fc5c4dcfc3"
 [[files]]
 file = "server-overrides/config/cobbreeding/main.json"
 hash = "dcb4d55a3a22dfbd95f87a75dd064c6d766b27a1e22b786feb90e93b903b16de"
+
+[[files]]
+file = "server-overrides/config/naturescompass-common.toml"
+hash = "335be6545058d0b63130d1c880c379e8054d93fecac0d8ed71fb0dda22aee995"
 
 [[files]]
 file = "server-overrides/config/neoessentials/chat.json"

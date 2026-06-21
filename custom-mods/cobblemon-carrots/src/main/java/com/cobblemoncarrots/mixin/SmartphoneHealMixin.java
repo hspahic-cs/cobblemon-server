@@ -5,6 +5,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -25,9 +26,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *
  * <p>{@code remap = false} because Smartphone is a NeoForge mod (Mojmap names at runtime) and its
  * classes aren't on our compile classpath — the target and packet type are referenced by string
- * descriptor only. {@code required = true}: Smartphone is a fixed part of the pack, so a target
- * that ever stops resolving should surface loudly on boot rather than silently re-opening the
- * free-heal hole. Bump/verify this mixin whenever the Smartphone mod version changes.
+ * descriptor only. The packet param is {@code @Coerce Object} because {@code HealPokemonPacket}
+ * isn't referenceable at compile time and Mixin requires the exact target descriptor otherwise.
+ *
+ * <p>The mixin config is fail-open (non-required, {@code defaultRequire: 0}): if a future Smartphone
+ * version renames/moves this handler the injection silently no-ops (heal reverts to free) instead of
+ * crashing the whole server on boot — a balance bug is recoverable, a crash-loop is not. Verify the
+ * phone heal still prompts (the in-game test) whenever the Smartphone mod version changes.
  */
 @Mixin(targets = "com.nbp.cobblemon_smartphone.network.handler.HealPokemonHandler", remap = false)
 public class SmartphoneHealMixin {
@@ -38,7 +43,7 @@ public class SmartphoneHealMixin {
         cancellable = true,
         remap = false
     )
-    private void cobblemoncarrots$gatePhoneHeal(Object packet, MinecraftServer server, ServerPlayer player, CallbackInfo ci) {
+    private void cobblemoncarrots$gatePhoneHeal(@Coerce Object packet, MinecraftServer server, ServerPlayer player, CallbackInfo ci) {
         server.execute(() -> HealerHandler.INSTANCE.promptCost(player));
         ci.cancel();
     }

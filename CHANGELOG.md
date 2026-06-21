@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.2] - 2026-06-21
+
+Hotfix for 0.23.1: the new `SmartphoneHealMixin` crash-looped the server on boot.
+
+### Fixed
+- **Server boot crash from the Smartphone heal mixin.** The 0.23.1 mixin declared its `@Inject`
+  packet parameter as `Object`, but Mixin requires the *exact* target descriptor
+  (`HealPokemonPacket`), so application failed — and because the mixin config was `required: true`
+  the failure was fatal, crash-looping `cobblemon-dev` on startup. Fixed by marking the parameter
+  `@Coerce` (the supported way to accept a target type that isn't on our compile classpath) and
+  making the mixin **fail-open** (`required: false`, `defaultRequire: 0`): if this injection ever
+  fails to apply again, the phone heal silently reverts to free rather than taking the whole server
+  down. The heal-economy behaviour from 0.23.1 is unchanged when the mixin applies.
+
 ## [0.23.1] - 2026-06-21
 
 Post-0.23.0 fixes from the first dev test pass: phone healing now respects the carrot economy, the

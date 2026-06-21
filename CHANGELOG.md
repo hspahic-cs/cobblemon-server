@@ -25,6 +25,11 @@ root README.
   hiding the perfect-IV feedback players wanted to see. A proper, less heavy-handed chat-noise pass
   will be redone from scratch in a separate future PR.
 
+### Changed
+- **Cosmetic Pokémon Egg flavour text.** Crate lore changed from the flat "A purely cosmetic
+  Pokémon egg." to **"Whatever's inside, it's no ordinary Pokémon."** — teases that the reward is
+  special without revealing it's a (stat-nerfed) baby legendary.
+
 ## [0.23.4] - 2026-06-21
 
 ### Added

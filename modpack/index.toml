@@ -361,10 +361,6 @@ file = "server-overrides/config/README.md"
 hash = "2f9e0d3d3d3c549855eb3178b5d8ef4bc23f7e0bd899b1a741fa24f8e3447f57"
 
 [[files]]
-file = "server-overrides/config/cobbled_counter.json"
-hash = "bca7258defd7c919b6de538271c68ed1cce66d1e89d46f02d57334a17f1cc07d"
-
-[[files]]
 file = "server-overrides/config/cobblemon-bridge/runtime/gym_caps.json"
 hash = "c66350b083ab4905429eddce0b5ca387acca57e730d86e13699a667420512082"
 
@@ -390,7 +386,7 @@ hash = "b889ee035b99f0c3f475c1a58b913948840e1255a1707838ef9214a78b91fe47"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/pokemon.json"
-hash = "0de9fba5d56ddb65c307876a7053b5706ba8149f25418561f348b31996380ff1"
+hash = "0bbda5dff08cb0a7b2da50f2f62df3845eb546f2d472c76bdff611c1081a7fc6"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/rare.json"
@@ -430,7 +426,7 @@ hash = "027899c66e58cae3d3da839462baec96558819520a5326bc683670fc5c4dcfc3"
 
 [[files]]
 file = "server-overrides/config/cobbreeding/main.json"
-hash = "dcb4d55a3a22dfbd95f87a75dd064c6d766b27a1e22b786feb90e93b903b16de"
+hash = "839a8de04f7b867749aec74fee1e56223749eb7117ddba66545f98c8cd5d9e4a"
 
 [[files]]
 file = "server-overrides/config/naturescompass-common.toml"

@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.5] - 2026-06-22
+
+### Reverted
+- **Backed out the 0.22.5 chat de-bloat pass.** Reverts #230: the IV-notify throttle
+  (`UnchainedIvNotifyThrottleMixin` + `IvNotifyThrottle`), the action-bar capture/fish/resurrect
+  line (`CaptureAnnounceHook`), the rarity-coloured hatch line (`HatchAnnounceHook` +
+  `PokemonEggMixin` tier capture), the Cobbled Counter `ACTION_BAR` / `noBroadcastFor` override
+  (`config/cobbled_counter.json`), and the dropped "egg ready to hatch" ping (`EggDefeatHook`).
+  Chat returns to its pre-0.22.5 (verbose) behaviour — Unchained's "…with perfect IVs!" line now
+  fires on every boosted catch again, and Cobbled Counter broadcasts to chat. The throttle was
+  hiding the perfect-IV feedback players wanted to see. A proper, less heavy-handed chat-noise pass
+  will be redone from scratch in a separate future PR.
+
 ## [0.23.4] - 2026-06-21
 
 ### Added

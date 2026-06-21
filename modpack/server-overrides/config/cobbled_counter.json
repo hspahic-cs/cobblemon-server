@@ -1,7 +1,0 @@
-{
-  "ignoreFormFor": [],
-  "noBroadcastFor": ["HATCH", "CAPTURE", "FISH", "RESURRECTION"],
-  "minimumStreakForBroadcast": 1,
-  "broadcastLocation": "ACTION_BAR",
-  "debug": false
-}

@@ -1,7 +1,6 @@
 package com.cobblemonbridge.mixin;
 
 import com.cobblemonbridge.eggs.BredTagHook;
-import com.cobblemonbridge.eggs.HatchAnnounceHook;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,21 +50,17 @@ public class PokemonEggMixin {
         if (!(entity instanceof ServerPlayer player)) return;
         int tick = level.getServer().getTickCount();
 
-        // Read the egg's gacha tier + breeder stamp off the stack now (both gone by
-        // HATCH_EGG_POST). Tier is empty for daycare-bred eggs; the breeder stamp is present only
-        // on bred eggs (set at lay-time by BreedingParentTagHook).
-        String tier = "";
+        // Read the gacha-source + breeder stamp off the stack now (both gone by HATCH_EGG_POST).
+        // The breeder stamp is present only on bred eggs (set at lay-time by BreedingParentTagHook).
         CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
         if (cd != null) {
             CompoundTag tag = cd.copyTag();
             if (tag.contains("cobblemongacha_tier")) {
-                tier = tag.getString("cobblemongacha_tier");
                 BredTagHook.markGachaHatch(player.getUUID(), tick);
             }
             if (tag.contains(BredTagHook.EGG_BREEDER_KEY)) {
                 BredTagHook.markBreederHatch(player.getUUID(), tick, tag.getString(BredTagHook.EGG_BREEDER_KEY));
             }
         }
-        HatchAnnounceHook.markHatchTier(player.getUUID(), tick, tier);
     }
 }

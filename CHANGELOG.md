@@ -12,7 +12,29 @@ root README.
 
 ## [Unreleased]
 
-## [0.22.8] - 2026-06-19
+## [0.23.0] - 2026-06-19
+
+### Added
+- **Ranked tournament mode** (`cobblemon-ranked`). Admin-run bracket support on top of the ranked
+  ELO system:
+  - `/ranked tournament open` (admin) — opens registration and announces a clickable `/join`.
+  - `/join` (player) — opens a roster picker (vanilla chest GUI, like ranked team-select) to choose
+    **9** Pokémon from party + PC, max **4** Legendary/Paradox/Ultra-Beast. PC box navigation wraps
+    (box 1 ↔ last). Players are entered only on lock-in and can re-`/join` to change their roster
+    until registration closes.
+  - `/ranked tournament close` (admin) — closes registration and prints the **ELO seeding** (all
+    entrants ordered by ELO) to admins only.
+  - `/ranked tournament play <p1> <p2>` (admin) — like `admin force`, but each player picks a subset
+    of **6** (max **1** special) from their locked 9-roster, can see the opponent's roster (species
+    only), and over-limit selections are flagged "Too Many <Category> (Limit 1)" and can't submit.
+  - New restriction helpers (`isUltraBeast`, `countsAsSpecial`, `specialCategory`).
+- **Uniform match cancellation.** Cancelling a team-select (tournament, `/ranked admin force`, or
+  `/ranked challenge`) now sends "Match cancelled." to both players **and** the forcing admin, and
+  closes the other player's open menu — nothing else (rerun manually).
+- **Ranked team picker shows the full PC box.** Both the normal `/ranked` team-select and the new
+  tournament roster picker now render all **30** box slots (a 6×5 block in the left columns of the
+  double chest) instead of the old 18 — so every Pokémon in a box is selectable, not just the first
+  18. Box navigation wraps (box 1 ↔ last).
 
 Baby Legends added as **rare collectible novelties**, obtainable only from the
 poke-egg gacha crate.

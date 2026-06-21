@@ -74,7 +74,7 @@
     },
     {
       "lootTier": "Jackpot",
-      "label": "Legendary Pokémon Egg",
+      "label": "Cosmetic Pokémon Egg",
       "weightPct": 0.5,
       "items": [
         {
@@ -84,7 +84,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "A baby-legend egg (Baby Legends mod). Hatches a collectible baby legendary — does NOT evolve into the real legendary and has baby-tier stats (BST 220), per server-baby-legends datapack. Crate-only; wild spawns disabled there too."
+      "notes": "A purely cosmetic Pokémon egg."
     }
   ]
 }

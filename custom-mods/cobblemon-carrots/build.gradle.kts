@@ -34,6 +34,12 @@ dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:${project.property("kotlin_for_forge_version")}")
     implementation("com.cobblemon:neoforge:${project.property("cobblemon_version")}")
 
+    // Mixin annotation API — runtime is provided by NeoForge. SmartphoneHealMixin targets a class
+    // from Cobblemon Smartphone (not on our compile classpath); with remap=false the Mixin applies
+    // directly at runtime against Mojmap names, so no AP/refmap is needed. Mirrors the bridge's
+    // cross-mod mixin setup (UnchainedIvNotifyThrottleMixin).
+    compileOnly("org.spongepowered:mixin:0.8.7")
+
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testImplementation("org.slf4j:slf4j-api:2.0.9")

@@ -12,6 +12,11 @@ authors = "almutwakel"
 # the version handshake so vanilla clients pass registry sync.
 displayTest = "IGNORE_ALL_VERSION"
 
+# Mixin config — SmartphoneHealMixin reroutes the Cobblemon Smartphone "Heal" app through the
+# carrot+money quote flow instead of healing for free. See SmartphoneHealMixin.
+[[mixins]]
+config = "cobblemon_carrots.mixins.json"
+
 [[dependencies.cobblemon_carrots]]
 modId = "neoforge"
 type = "required"

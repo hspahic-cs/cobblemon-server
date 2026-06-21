@@ -12,6 +12,36 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.1] - 2026-06-21
+
+Post-0.23.0 fixes from the first dev test pass: phone healing now respects the carrot economy, the
+Nature's Compass stops pointing at unreachable biomes, and the baby-legend crate egg reads as a
+plain cosmetic.
+
+### Fixed
+- **Cobblemon Smartphone heal now costs carrots + money.** The phone's "Heal" app
+  (`HealPokemonHandler`) called Cobblemon's party heal directly, bypassing cobblemon-carrots
+  entirely — free, unlimited, anywhere healing that undercut the carrot/money sink the Poké Healer
+  block exists to be. A new `SmartphoneHealMixin` in cobblemon-carrots intercepts the heal at HEAD,
+  cancels the free heal, and routes the press through the same `HealerHandler.promptCost` quote flow
+  as the healer block (clickable `[CONFIRM]`/`[CANCEL]`, carrots consumed + money charged for the
+  shortfall, market stock check, refund safety). Net effect: the phone becomes paid mobile healing.
+  Targets the Smartphone class by string with `remap = false` (no compile-time dependency), mirroring
+  the bridge's cross-mod mixin pattern.
+- **Nature's Compass no longer lists unreachable dimension biomes.** `legendarymonuments:distortion_world_biome`
+  and `hall_of_origin_world_biome` live in their own dimensions and never generate in the overworld,
+  so the compass could never actually find them — it just pointed a direction and sent players walking
+  forever. Both are now in the compass `biomeBlacklist` (`config/naturescompass-common.toml`).
+  `cherry_plains` (a real overworld biome) stays searchable, and the legendary *structures* are placed
+  by structure-set spacing across common biomes (not biome-locked), so no biome-locate exploit exists.
+
+### Changed
+- **Baby-legend crate egg reads as a cosmetic, not a "Legendary".** Renamed the crate entry from
+  `Legendary Pokémon Egg` to **`Cosmetic Pokémon Egg`** with the lore "A purely cosmetic Pokémon egg"
+  (`config/cobblemon-gacha/authored/tables/pokemon.json`), and stopped the roll-reveal item from
+  leaking the internal `baby_legend` pool name (`RewardGranter.eggDisplayStack` now shows "Cosmetic").
+  Players no longer see the BST/evolution details — it just looks like a novelty egg.
+
 ## [0.23.0] - 2026-06-19
 
 ### Added

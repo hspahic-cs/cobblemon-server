@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "com.cobblemoncarrots.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8.5",
+  "mixins": [
+    "SmartphoneHealMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

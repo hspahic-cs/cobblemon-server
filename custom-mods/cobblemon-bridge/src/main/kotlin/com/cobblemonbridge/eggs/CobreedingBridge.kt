@@ -91,6 +91,60 @@ object CobreedingBridge {
         return stack.get(pokemonPropertiesComponent!!)
     }
 
+    // ── Egg species (decrypted) ────────────────────────────────────────────
+    private const val EGG_UTILS_CLASS = "ludichat.cobbreeding.EggUtilities"
+    @Volatile private var eggUtilsResolved = false
+    private var extractPropertiesMethod: Method? = null
+    private var getSpeciesMethod: Method? = null
+    private val eggUtilsWarned = AtomicBoolean(false)
+
+    /**
+     * The species this egg will hatch into, lowercased (e.g. "dratini"), or null if Cobreeding /
+     * the egg's encrypted properties can't be read. Uses `EggUtilities.extractProperties(stack)`
+     * (handles the egg-encryption setting) → `PokemonProperties.getSpecies()`.
+     */
+    fun getEggSpecies(stack: ItemStack): String? {
+        if (!resolveEggUtils() || stack.isEmpty) return null
+        return try {
+            val props = extractPropertiesMethod!!.invoke(null, stack) ?: return null
+            (getSpeciesMethod!!.invoke(props) as? String)?.lowercase()
+        } catch (e: Throwable) {
+            log.debug("getEggSpecies failed: {}", e.message); null
+        }
+    }
+
+    private fun resolveEggUtils(): Boolean {
+        if (eggUtilsResolved) return extractPropertiesMethod != null
+        synchronized(this) {
+            if (eggUtilsResolved) return extractPropertiesMethod != null
+            try {
+                val utils = Class.forName(EGG_UTILS_CLASS)
+                extractPropertiesMethod = utils.getMethod("extractProperties", ItemStack::class.java)
+                val propsClass = Class.forName("com.cobblemon.mod.common.api.pokemon.PokemonProperties")
+                getSpeciesMethod = propsClass.getMethod("getSpecies")
+            } catch (e: Throwable) {
+                if (eggUtilsWarned.compareAndSet(false, true)) {
+                    log.warn("Cobreeding EggUtilities unavailable — per-rarity bred timers disabled: {}", e.message)
+                }
+            }
+            eggUtilsResolved = true
+            return extractPropertiesMethod != null
+        }
+    }
+
+    /**
+     * The non-empty egg [ItemStack]s currently in the breeding pasture at [pos], or null when
+     * Cobreeding isn't loaded / there's no pasture data there. Used to stamp the breeder's UUID onto
+     * a freshly-laid egg. Same thread-safety note as [pastureEggCounts].
+     */
+    fun pastureEggsAt(pos: BlockPos): List<ItemStack>? {
+        if (!resolveBreeding()) return null
+        val raw = registryField!!.get(null) as? Map<*, *> ?: return null
+        val data = raw[pos] ?: return null
+        val eggs = getEggsMethod!!.invoke(data) as? List<*> ?: return null
+        return eggs.filterIsInstance<ItemStack>().filter { !it.isEmpty }
+    }
+
     private fun warnOnce(msg: String) {
         if (warnedOnce.compareAndSet(false, true)) log.warn(msg)
     }

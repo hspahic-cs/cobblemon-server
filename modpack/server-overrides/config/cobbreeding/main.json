@@ -36,7 +36,7 @@
     "wolf_form"
   ],
   "maxNumberOfActivatedPasturePerPlayer": 4,
-  "pastureInventorySize": 5,
+  "pastureInventorySize": 6,
   "eggEncryptionEnabled": true,
   "cobblemonSizeVariationsCompatEnabled": true
 }

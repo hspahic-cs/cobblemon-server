@@ -5,9 +5,12 @@ import com.cobblemonbridge.CobblemonBridge
 import com.cobblemonbridge.eggs.BredTagHook
 import com.cobblemonbridge.eggs.CobreedingBridge
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.server.MinecraftServer
+import net.minecraft.world.item.component.CustomData
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
+import java.util.UUID
 
 /**
  * Breeding restriction (parent side): **a Pokémon used as a breeding parent can't be traded.**
@@ -52,12 +55,16 @@ object BreedingParentTagHook {
         lastEggCount.putAll(counts)
     }
 
-    /** Tag the parents tethered to the pasture at [pos]. The registry is keyed by BlockPos only, so
-     *  we scan loaded levels for the matching pasture block entity (pastures are few; this only runs
-     *  on the tick an egg is laid). */
+    /** Tag the parents tethered to the pasture at [pos], and stamp the newly-laid egg(s) with the
+     *  breeder's UUID so the hatched mon can be routed to the breeder's PC. The registry is keyed by
+     *  BlockPos only, so we scan loaded levels for the matching pasture block entity (pastures are
+     *  few; this only runs on the tick an egg is laid). */
     private fun tagParentsAt(server: MinecraftServer, pos: BlockPos) {
         for (level in server.allLevels) {
             val pasture = level.getBlockEntity(pos) as? PokemonPastureBlockEntity ?: continue
+            // The breeder = the pasture owner. Every tethered mon in a pasture belongs to one
+            // player, so any tethering's playerId is the owner.
+            val breeder: UUID? = pasture.tetheredPokemon.firstOrNull()?.playerId
             var tagged = 0
             for (tethering in pasture.tetheredPokemon) {
                 val pokemon = tethering.getPokemon() ?: continue
@@ -69,6 +76,7 @@ object BreedingParentTagHook {
                     tagged++
                 }
             }
+            if (breeder != null) stampEggsWithBreeder(pos, breeder)
             if (tagged > 0) {
                 CobblemonBridge.logger.info(
                     "breeding-trade-lock: tagged {} breeding parent(s) at {} as non-tradeable (egg laid)",
@@ -76,6 +84,19 @@ object BreedingParentTagHook {
                 )
             }
             return
+        }
+    }
+
+    /** Stamp every not-yet-stamped egg in the pasture's egg inventory with the breeder UUID, so the
+     *  baby is routed to the breeder's PC on hatch (regardless of who incubates it). */
+    private fun stampEggsWithBreeder(pos: BlockPos, breeder: UUID) {
+        val eggs = CobreedingBridge.pastureEggsAt(pos) ?: return
+        for (egg in eggs) {
+            val existing = egg.get(DataComponents.CUSTOM_DATA)
+            val tag = existing?.copyTag() ?: net.minecraft.nbt.CompoundTag()
+            if (tag.contains(BredTagHook.EGG_BREEDER_KEY)) continue  // already stamped
+            tag.putString(BredTagHook.EGG_BREEDER_KEY, breeder.toString())
+            egg.set(DataComponents.CUSTOM_DATA, CustomData.of(tag))
         }
     }
 }

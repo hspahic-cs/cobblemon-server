@@ -757,6 +757,14 @@ file = "server-overrides/datapacks/server-cobbleworkers-allowlists/pack.mcmeta"
 hash = "76713f4f7fc5b42c7b0a91b6ef8f7aea9a81cebae8f3ca3aaf19847a9772044c"
 
 [[files]]
+file = "server-overrides/datapacks/server-craft-bans/data/mega_showdown/recipe/ash_cap.json"
+hash = "bf47dd2dfbdcb95a16e61d5097386ab06c2d96944f356a5be88f46ff3a93a9b8"
+
+[[files]]
+file = "server-overrides/datapacks/server-craft-bans/pack.mcmeta"
+hash = "0cf4991d15e2cca59a5699dbbe128afd95316d45204f482093025f2c071e50ae"
+
+[[files]]
 file = "server-overrides/datapacks/server-crop-fertility/data/sereneseasons/tags/block/year_round_crops.json"
 hash = "36bbffab141c2f776adb1485084e3b6d9838dbd71fc3075a156e4159fac990bc"
 

@@ -87,8 +87,11 @@ object EggDefeatHook {
                 val seconds = TIER_SECONDS[gachaTier] ?: continue
                 gachaTier to seconds
             } else {
-                // Cobreeding daycare-bred (or any other untagged source) — 30-min default.
-                BRED_LABEL to BRED_DEFAULT_SECONDS
+                // Cobreeding daycare-bred egg: timer scales with the offspring's wild rarity
+                // (common 10m → ultra-rare 30m); see BredEggRarity. Falls back to a default when
+                // the species can't be read / doesn't spawn in the wild.
+                val species = CobreedingBridge.getEggSpecies(stack)
+                BRED_LABEL to BredEggRarity.secondsFor(species)
             }
 
             // Sync Cobreeding TIMER to our duration (in cobreeding ticks, 20/sec). The per-second

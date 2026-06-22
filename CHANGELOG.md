@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.3] - 2026-06-21
+
+### Changed
+- **Pasture egg storage 5 → 6** (`cobbreeding/main.json` `pastureInventorySize`).
+- **Bred egg hatch timers now scale with the offspring's rarity** instead of a flat 60 min. The timer
+  is keyed off the species' *rarest* wild spawn bucket (read live from Cobblemon's world spawn pool,
+  so it tracks our spawn-nerf datapacks): common 10m / uncommon 15m / rare 20m / ultra-rare 30m
+  (`BredEggRarity`). All pseudo-legendary lines and every gen starter line are force-mapped to
+  ultra-rare (30m); the override list is easy to edit. Gacha-crate egg timers are unchanged.
+
+### Added
+- **Bred eggs are owned by the breeder and hatch to the breeder's PC.** When an egg is laid, the
+  pasture owner's UUID is stamped on it (`BreedingParentTagHook`); on hatch the offspring's OT is set
+  to the breeder and it's deposited into the **breeder's PC** (offline-safe; PC full → breeder's
+  party), **regardless of who incubated it**. This closes the egg-handoff loophole (giving someone a
+  bred egg no longer launders a bred Pokémon to them) and makes the existing "don't trade bred eggs"
+  rule self-enforcing.
+
 ## [0.23.2] - 2026-06-21
 
 Hotfix for 0.23.1: the new `SmartphoneHealMixin` crash-looped the server on boot.

@@ -8,8 +8,7 @@
     "PathingStuckHandlerMixin",
     "PokemonEggMixin",
     "TrainerMobMixin",
-    "TrainerMobBattleMixin",
-    "UnchainedIvNotifyThrottleMixin"
+    "TrainerMobBattleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

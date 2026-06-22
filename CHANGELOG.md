@@ -21,6 +21,13 @@ root README.
   table, recipe book, and JEI. Existing Ash Caps, crate drops, and `/give` are unaffected. The
   datapack is the home for future "crate/loot-only, not craftable" recipe disables.
 
+## [0.23.7] - 2026-06-22
+
+### Changed
+- **World-soundtrack volume lowered −16 → −18 LUFS.** The 0.23.6 standardization landed a bit hot as
+  a background bed in-game, so `TARGET_I` in `build-soundtracks.py` is now −18 LUFS (true-peak still
+  −1.5 dBTP). All 77 tracks rebuilt (verified −17.9 to −18.0 LUFS), still uniform — just 2 dB quieter.
+
 ## [0.23.6] - 2026-06-22
 
 ### Changed

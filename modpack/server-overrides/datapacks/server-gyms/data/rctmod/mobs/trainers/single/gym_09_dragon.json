@@ -7,5 +7,13 @@
   "maxTrainerWins": -1,
   "optional": false,
   "biomeTagWhitelist": [],
-  "biomeTagBlacklist": []
+  "biomeTagBlacklist": [],
+  "series": [
+    "server_bosses"
+  ],
+  "requiredDefeats": [
+    [
+      "gym_08_psychic"
+    ]
+  ]
 }

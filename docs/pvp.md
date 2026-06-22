@@ -8,7 +8,7 @@
 
 | Banned | Notes |
 |---|---|
-| **Mega legendaries** | Any Legendary/Mythical holding a Mega Stone (e.g. Mega Mewtwo X/Y, Mega Latios/Latias, Mega Diancie). |
+| **Mega legendaries** | Any Legendary/Mythical holding a Mega Stone (e.g. Mega Mewtwo X/Y, Mega Diancie). **Mega Latios and Mega Latias are allowed.** |
 | **Mega Rayquaza** | Rayquaza that knows Dragon Ascent. |
 | **Primal Kyogre** | Kyogre holding the Blue Orb. |
 | **Primal Groudon** | Groudon holding the Red Orb. |

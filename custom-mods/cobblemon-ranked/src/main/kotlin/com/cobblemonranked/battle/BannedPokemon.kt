@@ -34,6 +34,10 @@ object BannedPokemon {
 
     private const val MS = "mega_showdown"
 
+    /** Legendaries explicitly ALLOWED to Mega Evolve despite [MEGA_LEGENDARY] (they're balanced
+     *  enough to permit). Mega Latios + Mega Latias. */
+    private val MEGA_LEGENDARY_ALLOWED = setOf("latios", "latias")
+
     /**
      * Human-readable ban reason if [pokemon] is illegal under the active [enabled] keys, else null.
      * Detection is at team-select time, when the form-enabling held item is already attached.
@@ -46,7 +50,8 @@ object BannedPokemon {
         if (MIRAIDON in enabled && species == "miraidon") return "Miraidon"
         if (MEGA_RAYQUAZA in enabled && species == "rayquaza" && knowsMove(pokemon, "dragonascent"))
             return "Mega Rayquaza"
-        if (MEGA_LEGENDARY in enabled && (pokemon.isLegendary() || pokemon.isMythical()) && isMegaStone(held))
+        if (MEGA_LEGENDARY in enabled && species !in MEGA_LEGENDARY_ALLOWED &&
+            (pokemon.isLegendary() || pokemon.isMythical()) && isMegaStone(held))
             return "Mega ${pokemon.species.name}"
         if (PRIMAL_KYOGRE in enabled && species == "kyogre" && isItem(held, "blue_orb")) return "Primal Kyogre"
         if (PRIMAL_GROUDON in enabled && species == "groudon" && isItem(held, "red_orb")) return "Primal Groudon"

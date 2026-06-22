@@ -120,11 +120,11 @@ BITRATE_K = 128
 # levels (measured -12 to -17 LUFS), so without this the soundtrack jumps in
 # volume from song to song. Every track is normalized to a single integrated
 # loudness via ffmpeg's two-pass `loudnorm` so they all sound equally loud.
-#   TARGET_I   integrated loudness, LUFS. -16 is a common music/streaming level;
-#              drop to ~-18/-20 for a gentler background bed under gameplay.
+#   TARGET_I   integrated loudness, LUFS. -16 (streaming level) read too hot in
+#              game; -18 is a gentler background bed. Go to ~-20 for quieter still.
 #   TARGET_TP  max true peak, dBTP (headroom so lossy encode can't clip).
 #   TARGET_LRA target loudness range (dynamics); 11 keeps music lively.
-TARGET_I = -16.0
+TARGET_I = -18.0
 TARGET_TP = -1.5
 TARGET_LRA = 11.0
 

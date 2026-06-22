@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.6] - 2026-06-22
+
+### Changed
+- **World-soundtrack volume standardized.** Source tracks arrived at inconsistent levels (-12 to
+  -17 LUFS — an audible jump from song to song), so `ops/soundtracks/build-soundtracks.py` now runs
+  every track through a two-pass EBU R128 `loudnorm` (target **-16 LUFS**, true-peak -1.5 dBTP)
+  during the `.ogg` conversion. All 77 tracks rebuilt to a uniform loudness (verified -15.9 to
+  -16.0 LUFS). Target is the tunable `TARGET_I` constant — drop to ~-18/-20 for a gentler bed.
+
 ## [0.23.5] - 2026-06-22
 
 ### Reverted

@@ -116,6 +116,18 @@ def ensure_ffmpeg() -> None:
 # shipped soundtrack a reasonable download.
 BITRATE_K = 128
 
+# Loudness normalization (EBU R128). Source tracks arrive at wildly different
+# levels (measured -12 to -17 LUFS), so without this the soundtrack jumps in
+# volume from song to song. Every track is normalized to a single integrated
+# loudness via ffmpeg's two-pass `loudnorm` so they all sound equally loud.
+#   TARGET_I   integrated loudness, LUFS. -16 is a common music/streaming level;
+#              drop to ~-18/-20 for a gentler background bed under gameplay.
+#   TARGET_TP  max true peak, dBTP (headroom so lossy encode can't clip).
+#   TARGET_LRA target loudness range (dynamics); 11 keeps music lively.
+TARGET_I = -16.0
+TARGET_TP = -1.5
+TARGET_LRA = 11.0
+
 # Encoder strategy, resolved once per run. Minecraft only plays OGG Vorbis.
 #   "libvorbis"    — ffmpeg -c:a libvorbis (precise bitrate, best). Rare on
 #                    modern Homebrew, which dropped libvorbis from ffmpeg.
@@ -143,11 +155,38 @@ def pick_encoder() -> str:
     return "experimental"
 
 
+def loudnorm_filter(src: Path) -> str:
+    """Build the ffmpeg `loudnorm` filter for [src], normalized to TARGET_I LUFS.
+
+    Two-pass: an analysis pass measures the source's real loudness, then those
+    measured values are fed back so the second (encoding) pass does an accurate,
+    mostly-linear normalization (preserves dynamics, hits the target). Falls back
+    to single-pass loudnorm if the measure pass can't be parsed.
+    """
+    base = f"loudnorm=I={TARGET_I}:TP={TARGET_TP}:LRA={TARGET_LRA}"
+    try:
+        proc = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-nostats", "-i", str(src),
+             "-af", base + ":print_format=json", "-f", "null", "-"],
+            capture_output=True, text=True, check=True,
+        )
+        blob = proc.stderr[proc.stderr.rindex("{"):proc.stderr.rindex("}") + 1]
+        m = json.loads(blob)
+        return (f"{base}:measured_I={m['input_i']}:measured_TP={m['input_tp']}"
+                f":measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}"
+                f":offset={m['target_offset']}:linear=true")
+    except Exception as e:
+        print(f"  note: loudnorm measure pass failed for {src.name} "
+              f"({e}); using single-pass.")
+        return base
+
+
 def convert(src: Path, dst: Path) -> None:
     dst.parent.mkdir(parents=True, exist_ok=True)
-    # -vn drop cover art, force 44.1k stereo.
+    # -vn drop cover art, loudness-normalize to TARGET_I, force 44.1k stereo.
     decode = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
-              "-i", str(src), "-vn", "-map_metadata", "-1", "-ac", "2", "-ar", "44100"]
+              "-i", str(src), "-vn", "-map_metadata", "-1",
+              "-af", loudnorm_filter(src), "-ac", "2", "-ar", "44100"]
     if _ENCODER == "libvorbis":
         subprocess.run([*decode, "-c:a", "libvorbis", "-b:a", f"{BITRATE_K}k", str(dst)], check=True)
     elif _ENCODER == "oggenc":

@@ -12,7 +12,18 @@ root README.
 
 ## [Unreleased]
 
-## [0.23.4] - 2026-06-21
+## [0.23.5] - 2026-06-22
+
+### Added
+- **Ranked PvP banlist** (`cobblemon-ranked`). Banned forms are rejected at team-confirm (swap and
+  re-confirm; no auto-loss): **Mega legendaries** (any Legendary/Mythical holding a Mega Stone),
+  **Mega Rayquaza** (knows Dragon Ascent), **Primal Kyogre** (Blue Orb), **Primal Groudon** (Red
+  Orb), **Ultra Necrozma** (Ultranecrozium Z), **Zacian-Crowned** (Rusted Sword), **Zamazenta-
+  Crowned** (Rusted Shield), **Calyrex-Shadow** (Shadow Rider forme), and **Miraidon** (outright).
+  Detection keys off the form-enabling held item / aspect / move at team-select, so the base Pokémon
+  stays legal. Configurable via `config.json` `bannedForms` (list of `BannedPokemon` keys; empty =
+  no bans). Covers all ranked entry points (challenge, queue, admin force, tournament). Docs:
+  `pvp.md` banlist table.
 
 ### Added
 - **Ranked/tournament PvP banlist.** A set of power-forms is now blocked from ranked and tournament

@@ -160,9 +160,15 @@ object RankedBattleManager {
             pool = pool,
             opponentRoster = opponentRoster,
             onConfirm = { team ->
-                pendingTeams[player.uuid] = team.map { it.clone() }
-                player.sendSystemMessage(Component.literal("§a[Tournament] Team locked in! Waiting for opponent..."))
-                checkBothReady(player)
+                val banned = bannedReason(team)
+                if (banned != null) {
+                    rejectBannedTeam(player, banned)
+                    openTournamentSelectionGui(player, pool, opponentRoster)  // re-open to swap it out
+                } else {
+                    pendingTeams[player.uuid] = team.map { it.clone() }
+                    player.sendSystemMessage(Component.literal("§a[Tournament] Team locked in! Waiting for opponent..."))
+                    checkBothReady(player)
+                }
             },
             onCancel = { cancelMatch(player) },
         ))
@@ -176,14 +182,29 @@ object RankedBattleManager {
             player = player,
             maxLegendaries = maxLegendaries,
             onConfirm = { team ->
-                pendingTeams[player.uuid] = team.map { it.clone() }
-                player.sendSystemMessage(Component.literal("[Ranked] Team locked in! Waiting for opponent..."))
-                checkBothReady(player)
+                val banned = bannedReason(team)
+                if (banned != null) {
+                    rejectBannedTeam(player, banned)
+                    openSelectionGui(player, maxLegendaries)  // re-open so they can swap it out
+                } else {
+                    pendingTeams[player.uuid] = team.map { it.clone() }
+                    player.sendSystemMessage(Component.literal("[Ranked] Team locked in! Waiting for opponent..."))
+                    checkBothReady(player)
+                }
             },
             onCancel = {
                 cancelMatch(player)
             }
         ).open()
+    }
+
+    /** First ban reason in [team] under the active config banlist, or null if legal. */
+    private fun bannedReason(team: List<Pokemon>): String? =
+        com.cobblemonranked.battle.BannedPokemon.firstBanned(team, CobblemonRanked.config.bannedForms.toSet())
+
+    private fun rejectBannedTeam(player: ServerPlayer, reason: String) {
+        player.sendSystemMessage(Component.literal(
+            "§c[Ranked] §f$reason§c is banned in ranked PvP. Swap it out and confirm again."))
     }
 
     private fun checkBothReady(player: ServerPlayer) {

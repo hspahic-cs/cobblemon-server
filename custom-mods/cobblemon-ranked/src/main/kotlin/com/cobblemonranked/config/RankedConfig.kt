@@ -38,6 +38,13 @@ data class RankedConfig(
     val kFactor: Int = 32,
     val levelCap: Int = 50,
     val maxLegendaries: Int = 1,
+    /**
+     * PvP banlist — keys from [com.cobblemonranked.battle.BannedPokemon] for forms/items that are
+     * illegal in ranked (Mega legendaries, Primal Kyogre/Groudon, Ultra Necrozma, Zacian/Zamazenta-
+     * Crowned, Mega Rayquaza, Calyrex-Shadow, Miraidon). A team containing a banned mon is rejected
+     * at team-confirm so the player can swap it out. Empty list = no bans.
+     */
+    val bannedForms: List<String> = com.cobblemonranked.battle.BannedPokemon.DEFAULT,
     val forcesPerDayPerPair: Int = 1,
     /** Off by default in 0.7.8. Decay is paused while we tune; flip to `true` (and ensure
      *  [minimumElo] is the desired decay floor) to re-enable. */

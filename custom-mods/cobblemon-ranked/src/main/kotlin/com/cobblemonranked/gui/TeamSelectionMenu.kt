@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.item.PokemonItem
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.battle.countsAsLegendary
 import com.cobblemonranked.battle.isParadox
+import com.cobblemonranked.battle.rankedBanReason
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
@@ -134,19 +135,22 @@ class TeamSelectionMenu private constructor(
 
     private fun pokemonStack(pokemon: Pokemon, isSelected: Boolean): ItemStack {
         val stack = PokemonItem.from(pokemon)
-        val legendary = when {
+        val banReason = pokemon.rankedBanReason()
+        val tag = when {
+            banReason != null -> " §c[BANNED]"
             pokemon.isLegendary() -> " §c[LEGENDARY]"
             pokemon.isParadox() -> " §c[PARADOX]"
             else -> ""
         }
         val statePrefix = if (isSelected) "§a✓ " else ""
         stack.set(DataComponents.CUSTOM_NAME,
-            Component.literal("$statePrefix${pokemon.species.name} Lv.${pokemon.level}$legendary"))
+            Component.literal("$statePrefix${pokemon.species.name} Lv.${pokemon.level}$tag"))
         stack.set(DataComponents.LORE, ItemLore(listOf(
             Component.literal("§7Type: ${pokemon.primaryType.name}" + (pokemon.secondaryType?.let { "/${it.name}" } ?: "")),
             Component.literal("§7Ability: ${pokemon.ability.name}"),
             Component.literal("§7HP: ${pokemon.currentHealth}/${pokemon.maxHealth}"),
-            Component.literal(if (isSelected) "§eClick to deselect" else "§aClick to select"),
+            if (banReason != null) Component.literal("§c✖ Banned in ranked PvP ($banReason)")
+            else Component.literal(if (isSelected) "§eClick to deselect" else "§aClick to select"),
         )))
         return stack
     }
@@ -197,7 +201,13 @@ class TeamSelectionMenu private constructor(
     private fun togglePokemon(pokemon: Pokemon, sp: ServerPlayer) {
         if (pokemon in selected) {
             selected.remove(pokemon)
-        } else if (selected.size < TEAM_SIZE) {
+            return
+        }
+        pokemon.rankedBanReason()?.let { reason ->
+            sp.sendSystemMessage(Component.literal("§c[Ranked] $reason is banned in ranked PvP — can't add it."))
+            return
+        }
+        if (selected.size < TEAM_SIZE) {
             selected.add(pokemon)
         } else {
             sp.sendSystemMessage(Component.literal("§c[Ranked] Team is full! Remove a Pokemon first."))

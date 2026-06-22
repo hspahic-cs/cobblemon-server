@@ -3,6 +3,7 @@ package com.cobblemonranked.gui
 import com.cobblemon.mod.common.item.PokemonItem
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.battle.countsAsSpecial
+import com.cobblemonranked.battle.rankedBanReason
 import com.cobblemonranked.battle.specialCategory
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -142,12 +143,17 @@ class TournamentBattleMenu private constructor(
 
     private fun optionStack(pokemon: Pokemon, isSelected: Boolean): ItemStack {
         val stack = PokemonItem.from(pokemon)
-        val tag = pokemon.specialCategory()?.let { " §c[${it.uppercase()}]" } ?: ""
+        val banReason = pokemon.rankedBanReason()
+        val tag = when {
+            banReason != null -> " §c[BANNED]"
+            else -> pokemon.specialCategory()?.let { " §c[${it.uppercase()}]" } ?: ""
+        }
         val prefix = if (isSelected) "§a✓ " else ""
         stack.set(DataComponents.CUSTOM_NAME, Component.literal("$prefix${pokemon.species.name} Lv.${pokemon.level}$tag"))
         stack.set(DataComponents.LORE, ItemLore(listOf(
             Component.literal("§7Type: ${pokemon.primaryType.name}" + (pokemon.secondaryType?.let { "/${it.name}" } ?: "")),
-            Component.literal(if (isSelected) "§eClick to remove from team" else "§aClick to add to team"),
+            if (banReason != null) Component.literal("§c✖ Banned in PvP ($banReason)")
+            else Component.literal(if (isSelected) "§eClick to remove from team" else "§aClick to add to team"),
         )))
         return stack
     }
@@ -224,6 +230,10 @@ class TournamentBattleMenu private constructor(
 
     private fun togglePokemon(pokemon: Pokemon, sp: ServerPlayer) {
         if (pokemon in selected) { selected.remove(pokemon); return }
+        pokemon.rankedBanReason()?.let { reason ->
+            sp.sendSystemMessage(Component.literal("§c[Tournament] $reason is banned in PvP — can't add it."))
+            return
+        }
         if (selected.size >= requiredSize) {
             sp.sendSystemMessage(Component.literal("§c[Tournament] Team is full ($requiredSize). Remove one first."))
             return

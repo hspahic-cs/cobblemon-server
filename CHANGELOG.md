@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.4] - 2026-06-21
+
+### Added
+- **Ranked/tournament PvP banlist.** A set of power-forms is now blocked from ranked and tournament
+  battles: **Mega Mewtwo (X/Y), Mega Rayquaza, Primal Kyogre/Groudon, Ultra Necrozma,
+  Crowned Zacian/Zamazenta, Calyrex Shadow Rider, and Miraidon**. Enforcement is at **team
+  selection** — a banned Pokémon shows `§c[BANNED]` and can't be locked in — with a `startBattle`
+  backstop that cancels (no ELO/escrow) if one slips through any other path. The bans target the
+  **form trigger** (held Mega Stone / orb / Z-crystal / Rusted item, Dragon Ascent, or the
+  Shadow-Rider form), so the **base Pokémon stay legal** (base Kyogre, Dusk-Mane Necrozma,
+  Hero-form Zacian, Calyrex Ice Rider, etc.). Other Mega legendaries (Latias/Latios/Diancie) and
+  Koraidon are intentionally allowed. New `Pokemon.rankedBanReason()` in `PokemonRestrictions`;
+  edit the `when` there to adjust the list.
+
 ## [0.23.3] - 2026-06-21
 
 ### Changed

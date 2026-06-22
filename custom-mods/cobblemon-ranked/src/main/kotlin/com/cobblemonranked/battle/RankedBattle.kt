@@ -233,6 +233,21 @@ object RankedBattleManager {
             return
         }
 
+        // PvP banlist backstop. The selection GUIs already block banned power-forms (Mega Mewtwo,
+        // Mega Rayquaza, Primal Kyogre/Groudon, Ultra Necrozma, Crowned Zacian/Zamazenta, Calyrex
+        // Shadow, Miraidon), so this only catches a team that reaches here some other way. Cancel
+        // (no ELO, no escrow) rather than auto-lose — it's a legality issue, not cheating.
+        val p1Ban = team1.firstNotNullOfOrNull { p -> p.rankedBanReason()?.let { "${p.species.name} ($it)" } }
+        val p2Ban = team2.firstNotNullOfOrNull { p -> p.rankedBanReason()?.let { "${p.species.name} ($it)" } }
+        if (p1Ban != null || p2Ban != null) {
+            val msg = Component.literal(
+                "[Ranked] Match cancelled — PvP-banned Pokémon: ${listOfNotNull(p1Ban, p2Ban).joinToString(", ")}.")
+            player1.sendSystemMessage(msg)
+            player2.sendSystemMessage(msg)
+            cleanup(player1.uuid, player2.uuid)
+            return
+        }
+
         // Escrow wager: withdraw from BOTH players. Re-cap to the per-player limits in case
         // balances changed between challenge and accept. If either withdraw fails, refund
         // any partial deduction and void the match.

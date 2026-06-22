@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Disables crafting recipes for items that should be obtained only via crates/loot (or not at all). Each recipe is overridden with a neoforge:false condition so it never loads (gone from the crafting table, recipe book, and JEI). Existing items, crate/loot drops, and /give are unaffected. Currently disables: mega_showdown:ash_cap (Ash Cap — it's a crate-only collectible in the ultra crate)."
+  }
+}

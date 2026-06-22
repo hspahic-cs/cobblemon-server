@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.8] - 2026-06-22
+
+### Changed
+- **Ash Cap is no longer craftable.** It's a crate-only collectible (ultra crate), so the Mega
+  Showdown crafting recipe (`mega_showdown:ash_cap` — the wool pattern) is overridden with a
+  `neoforge:false` condition via a new `server-craft-bans` datapack — it vanishes from the crafting
+  table, recipe book, and JEI. Existing Ash Caps, crate drops, and `/give` are unaffected. The
+  datapack is the home for future "crate/loot-only, not craftable" recipe disables.
+
 ## [0.23.6] - 2026-06-22
 
 ### Changed

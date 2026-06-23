@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.13] - 2026-06-23
+
+### Fixed
+- **RCT trainers spawn scaled to your actual team level again, not the level cap.** 0.23.12 lowered
+  `initialLevelCap` to 15 (so the progress graph shows real trainer levels), but that same value
+  also clamps the spawn-weighting target — `TrainerSpawner` centers eligible trainers on
+  `min(levelCap, partyLevel)` — so trainers started spawning scaled to quest progress instead of
+  your party. New `TrainerSpawnLevelMixin` rewrites the `getLevelCap()` return inside
+  `computeWeight`/`computeChance` to `Integer.MAX_VALUE`, collapsing the `min` to your real team
+  level. The graph display is untouched (it reads `initialLevelCap` separately), so we keep real
+  levels on the card *and* party-level spawns.
+
 ## [0.23.12] - 2026-06-22
 
 ### Fixed

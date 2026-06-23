@@ -27,7 +27,7 @@ You'll need a few things before you can connect:
 | Java       | 21       |
 | Cobblemon  | 1.7.3    |
 
-The pack ships Cobblemon and ~35 supporting mods (Minecolonies, Terralith,
+The pack ships Cobblemon and ~70 supporting mods (Minecolonies, Terralith,
 performance mods, QoL like Xaero's Minimap, JEI). Full list is in the
 repo's [README](https://github.com/hspahic-cs/cobblemon-server#readme).
 

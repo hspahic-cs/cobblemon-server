@@ -5,8 +5,6 @@
   "battleCooldownTicks": 240,
   "maxTrainerDefeats": 1,
   "maxTrainerWins": -1,
-  "optional": false,
   "biomeTagWhitelist": [],
-  "biomeTagBlacklist": [],
-  "requiredDefeats": []
+  "biomeTagBlacklist": []
 }

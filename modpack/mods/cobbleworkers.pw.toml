@@ -1,6 +1,7 @@
 name = "Cobbleworkers"
 filename = "cobbleworkers-neoforge-2.0.4+1.7.0.jar"
 side = "both"
+pin = true
 
 [download]
 url = "https://cdn.modrinth.com/data/i3XVG2gn/versions/HEhFpSDA/cobbleworkers-neoforge-2.0.4%2B1.7.0.jar"

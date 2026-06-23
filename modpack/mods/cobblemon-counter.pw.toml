@@ -1,6 +1,7 @@
 name = "Cobblemon Counter"
 filename = "counter-neoforge-1.7.3-1.9.0.jar"
 side = "both"
+pin = true
 
 [download]
 url = "https://cdn.modrinth.com/data/rj8uLYP4/versions/aJArPPZ7/counter-neoforge-1.7.3-1.9.0.jar"

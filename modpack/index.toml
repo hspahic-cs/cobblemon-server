@@ -16,7 +16,7 @@ metafile = true
 
 [[files]]
 file = "mods/athena-ctm.pw.toml"
-hash = "8d7b54614f4aa33c4d89e11ed0ec434095e66c80c9557b4e91311ee684227ade"
+hash = "f54cf71372645810ce22b0ba68e706139565437150e4cfd22bde4c14606099c4"
 metafile = true
 
 [[files]]
@@ -26,7 +26,7 @@ metafile = true
 
 [[files]]
 file = "mods/balm.pw.toml"
-hash = "9121b274bd87552ae976983d9bdd56061274c126a4a1b7b2e13605b1a1ec0599"
+hash = "76122ac2bb341daceebb19cd69e1f3bf19efea88fa59010865c1b8f02ea1d759"
 metafile = true
 
 [[files]]
@@ -36,7 +36,7 @@ metafile = true
 
 [[files]]
 file = "mods/chatbubbles.pw.toml"
-hash = "ba8af07fffdda61ad4c1a51000d84b50579eb1c3a9d1835bcc29077e6ee05a50"
+hash = "815ce1d1487877b661ed6b8e01b91f9ce6707fccd9e5cf78cbd0a093e69ce731"
 metafile = true
 
 [[files]]
@@ -51,12 +51,12 @@ metafile = true
 
 [[files]]
 file = "mods/cobblefurnies.pw.toml"
-hash = "bd1f2508c571574e76ae32614a353eb900063c0e2bf54bb29ac98e7d6ab36eb6"
+hash = "9a882acc1902d51c177362abbfb5fe51dd06ee3de40297cd6d4ab58d971045ed"
 metafile = true
 
 [[files]]
 file = "mods/cobblemon-counter.pw.toml"
-hash = "5298e216aa91dc3463ddd92d31b3b9fd43ee47d2b1ffce486ae4c725bfeec9ce"
+hash = "ef8ab8134320f9bcac2c0cb3b0b3c922d2bbb17de4116a684a5185c32803a996"
 metafile = true
 
 [[files]]
@@ -71,12 +71,12 @@ metafile = true
 
 [[files]]
 file = "mods/cobblemon-linkie.pw.toml"
-hash = "baf51d46b419e0dd8f5ce3a4faa38df48cb8137ddc21d9eab4915808d9e15e2a"
+hash = "84f26634fc3477e5b52828881c4b6b3422d6bc7a2f9acf06f723498d9ac7b997"
 metafile = true
 
 [[files]]
 file = "mods/cobblemon-mega-showdown.pw.toml"
-hash = "3efa711e77a99008f28b7831ab8696263bccaab984cd1e62e44b7220e69a6a3c"
+hash = "6583da6da5f22cf540ec1eabc3606200d636a46257483c94e2c8302d91139b05"
 metafile = true
 
 [[files]]
@@ -100,22 +100,22 @@ metafile = true
 
 [[files]]
 file = "mods/cobblemon-tim-core.pw.toml"
-hash = "4211dd9eed65d9599cb1df61f5db373772ed090aa837a17f2fb7dc9c46a8aa2b"
+hash = "ee61e805cc0e6560fd782d8ab08ef3be5916ac492c607ffd460b502b482f86f4"
 metafile = true
 
 [[files]]
 file = "mods/cobblemon-unchained.pw.toml"
-hash = "ce3d77e626d315fae2c0c7347348a7d57c038b209a4a91fa62ccc77de3d8c742"
+hash = "dfbf7a5560620874b76256d3ee98adacb8ec701d11d98d4528496e35fc6b9b11"
 metafile = true
 
 [[files]]
 file = "mods/cobblemon.pw.toml"
-hash = "bd0dd7ceb00c37cfaa945dfba23b5b2406e12be20709df8d9f82ba12a5a3a2be"
+hash = "f1676551c2930d5397f52f5d7a5795463a127db79f868a0b5c656f797dc04979"
 metafile = true
 
 [[files]]
 file = "mods/cobbleworkers.pw.toml"
-hash = "0f7e1eb1847fbe7b1c2c8c876f020c13f991c850628b27548fc036b2041ea53d"
+hash = "9f52fa75b097c843703b3cbb173fea0cdf13043e2409d30fdb75a2f4b75054b2"
 metafile = true
 
 [[files]]
@@ -125,7 +125,7 @@ metafile = true
 
 [[files]]
 file = "mods/collective.pw.toml"
-hash = "34cb9102708e368a116c6b11e98728e0c4b471a6afdf7ce9602f93cb75174509"
+hash = "5bd6815fb48b4aa3985e2a07bf00b7a66da24d9b289d58c9492da19d902b2e2a"
 metafile = true
 
 [[files]]
@@ -160,7 +160,7 @@ metafile = true
 
 [[files]]
 file = "mods/entityculling.pw.toml"
-hash = "1610d7be42535a16971fe825983ee45af77dcbba37b37e75d5fa7f4d96cb3801"
+hash = "4fbe037c1ec3570be84f68e075c3e8293b15f64dda22bca4735924705fb38236"
 metafile = true
 
 [[files]]
@@ -190,7 +190,7 @@ metafile = true
 
 [[files]]
 file = "mods/glitchcore.pw.toml"
-hash = "dbd756dd9bb17e6ecebcf2d7052a67a2da1c7dd378bc2089bc154916080fe031"
+hash = "e53646f88aeb6bd54c38db50da972abdac91e83c145a8f974107b0ca103b15bc"
 metafile = true
 
 [[files]]
@@ -200,7 +200,7 @@ metafile = true
 
 [[files]]
 file = "mods/jei.pw.toml"
-hash = "5367193d3f87b7bc5a81bcd64a5b96a843e76d4df7a83c8bb7e1911aa82dd52e"
+hash = "e7b3c08c8b168d15e3997d41d0480d1d35cba0bdda94094f123d1eef65d0b0c4"
 metafile = true
 
 [[files]]
@@ -210,7 +210,7 @@ metafile = true
 
 [[files]]
 file = "mods/legendary-monuments.pw.toml"
-hash = "e1f8a888c24fa3af21d18428471a72ee867321adfda329e31dc3ba555fc0209f"
+hash = "77bdf3f9cdd517d1765bc714aded12e5cc1ae9930af41045b442c4eb30a765b4"
 metafile = true
 
 [[files]]
@@ -225,7 +225,7 @@ metafile = true
 
 [[files]]
 file = "mods/modernfix.pw.toml"
-hash = "e152bb9ae171e9f34c406bbc29dc36c8d8def9d8f913e1a1bbf82bd63d4e8da9"
+hash = "983d6ab9d9a7d40031f1789f5ae018cccb889832ac8ce741df60a9d8e5f42817"
 metafile = true
 
 [[files]]
@@ -280,17 +280,17 @@ metafile = true
 
 [[files]]
 file = "mods/sodium.pw.toml"
-hash = "0281ed9713f3141bdac363056a791845510e14761ea65b4b2813cf96d664b20a"
+hash = "7a0545b3c17ba1e0856e271ab483f53a4376e8af76c1e36ba09b8805ca3a64b6"
 metafile = true
 
 [[files]]
 file = "mods/sophisticated-backpacks.pw.toml"
-hash = "b656cd4d01f562e4222b9e872770f9517d123d752019aa37946f3264163a6bcc"
+hash = "ffb55dc7c35521b4e3fe36716321b9cf3ca11673bb6e511c63de8e5ec7d29541"
 metafile = true
 
 [[files]]
 file = "mods/sophisticated-core.pw.toml"
-hash = "57ca1699559cc3e23320e27b1cca02b5c3687bc7c6d4506cd663570971e60dfc"
+hash = "82e9a1a3374847c0cda6bd0cef3718df19983226742f988f80a04cee0e94a45f"
 metafile = true
 
 [[files]]
@@ -300,7 +300,7 @@ metafile = true
 
 [[files]]
 file = "mods/starter-kit.pw.toml"
-hash = "184c63d81d401e2e8b1e63d446afeaa577e4836cd29c147edff387a57f08f9e4"
+hash = "e2dcaa6ddb7112eed2cd97fa1e7084108d7095fe2fea04fa45d9ff305312c655"
 metafile = true
 
 [[files]]
@@ -325,7 +325,7 @@ metafile = true
 
 [[files]]
 file = "mods/waystones.pw.toml"
-hash = "e2978597c04f24e2e0536a6aa666ef5cc0b1d515c09af1f763c65587faa73333"
+hash = "6469e09b6d02aa3f1aeb653c9e33ec948e2bd9d09cabc60a834552783120c018"
 metafile = true
 
 [[files]]
@@ -340,12 +340,12 @@ metafile = true
 
 [[files]]
 file = "mods/xaeros-minimap.pw.toml"
-hash = "d609fad21021c5578750019bbe247515af55b0d1284ef838e42ef4ad0d5fbff4"
+hash = "3f9e51bfceabca41c537e58b8767bdb4273fdafe9f08bc472ebc255554617ad2"
 metafile = true
 
 [[files]]
 file = "mods/xaeros-world-map.pw.toml"
-hash = "ac287f392613eddfa285620dcecb3fea25ee6232a201009cde5c5511b6a39fb9"
+hash = "67121835339ff35bc213b2ede0375d10de4c1fc9f40c7579a47ebc1a3d050648"
 metafile = true
 
 [[files]]
@@ -378,7 +378,7 @@ hash = "c3eb9ba34d8c2ff9d4e20f0011eb2f0df4e1a7098d0f2331bae2bc6edf3dae81"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/egg_pools.json"
-hash = "c36534077d70b86f517791d438bf0078c9fe320de1d568f29781c4e0fbe2839a"
+hash = "a6b04e1c78387f8a98b88df4af04fafa65f25a67668530de30cc175c6380d437"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/common.json"
@@ -394,7 +394,7 @@ hash = "4e50fdd2afd31af8ae4e6eac8fb96300c0c1800272a4c1f2157ff809f5145fef"
 
 [[files]]
 file = "server-overrides/config/cobblemon-gacha/authored/tables/ultra.json"
-hash = "aaaea06121e5f60b2b8e85cf2657b15ae2e681cefb14f27824fb75d541b4186f"
+hash = "bcbf0e0bca69d9b775cec53e9d1a20b771e95057f63399a4a488c9ef02e1b77e"
 
 [[files]]
 file = "server-overrides/config/cobblemon-market/authored/config.json"
@@ -450,7 +450,7 @@ hash = "e151a5f2f2d7f3bd80947e6f9ddabbbbcd1a72b76cc18f585cbc9b5903a1af64"
 
 [[files]]
 file = "server-overrides/config/rctmod-server.toml"
-hash = "e0bcb5a4edd3b57a8620d388a5564642be8a7ec58e7882abc25ac2ea314e3fa5"
+hash = "f6a9ff8e7c4c1786a057ffb10f2d39209378d8753ca00dcd1c6352cc58fb988c"
 
 [[files]]
 file = "server-overrides/config/simpletms/main.json"
@@ -1050,203 +1050,203 @@ hash = "d19c6266c7122cab9c5a4715d2e1a993bc925db7661ae0939b35a5f40df6ea5a"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_01_ground.json"
-hash = "260cb4cb2a5c7d817c106891a8258af6df7bea78cdb99b7e9892cfc1188b2cd5"
+hash = "a6289f5b7cfcb1eac5d6263f486c4fe0ef71eb8fb8af8f5317a51b2e677122de"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_01_ground_challenge.json"
-hash = "260cb4cb2a5c7d817c106891a8258af6df7bea78cdb99b7e9892cfc1188b2cd5"
+hash = "a6289f5b7cfcb1eac5d6263f486c4fe0ef71eb8fb8af8f5317a51b2e677122de"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_02_grass.json"
-hash = "08899182c2a7638643f20e72d406e18e44625c4d3d80d0873a92d4a3a6916a7b"
+hash = "c2fafb45d792de5449b377e6f9dcfc327250b0446b78e694b9b5e90e47310d30"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_02_grass_challenge.json"
-hash = "08899182c2a7638643f20e72d406e18e44625c4d3d80d0873a92d4a3a6916a7b"
+hash = "c2fafb45d792de5449b377e6f9dcfc327250b0446b78e694b9b5e90e47310d30"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_03_fighting.json"
-hash = "85dbe88c157668a00c2452e41bf8ff764df79130b626e8ae83e90757469681e5"
+hash = "c754b61c5ade1680c9d2b5ec8b08c66ddd99df9b2360396665a11326a29fd0d8"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_03_fighting_challenge.json"
-hash = "85dbe88c157668a00c2452e41bf8ff764df79130b626e8ae83e90757469681e5"
+hash = "c754b61c5ade1680c9d2b5ec8b08c66ddd99df9b2360396665a11326a29fd0d8"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_04_steel.json"
-hash = "2d2078d2bc10a75a20b117701c1e8772739467d99edba5e735b0d57d144db92b"
+hash = "56b0b1f58bad7621e2b0b12b91cfcbddbd9010f30ce22745a8728a20636a6d6d"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_04_steel_challenge.json"
-hash = "2d2078d2bc10a75a20b117701c1e8772739467d99edba5e735b0d57d144db92b"
+hash = "56b0b1f58bad7621e2b0b12b91cfcbddbd9010f30ce22745a8728a20636a6d6d"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_05_fire.json"
-hash = "fc846439dbeba874254463989fb0915f06fdbe469f9dcbf1f9adfd76f551b0f4"
+hash = "28ef3bc5e81100f8dc1bc0030b9d7ac867d78cac74a9765f19305c8183f9d1da"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_05_fire_challenge.json"
-hash = "fc846439dbeba874254463989fb0915f06fdbe469f9dcbf1f9adfd76f551b0f4"
+hash = "28ef3bc5e81100f8dc1bc0030b9d7ac867d78cac74a9765f19305c8183f9d1da"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_06_electric.json"
-hash = "c02793ac69ab26e3d321b2beb0b7d8462bd954cd21f9b13330bbbf11e8e33f51"
+hash = "e597e400fe67ddd051c030fcb7dacf04ea51a100bd7d33f41ce0c5427caaa023"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_06_electric_challenge.json"
-hash = "c02793ac69ab26e3d321b2beb0b7d8462bd954cd21f9b13330bbbf11e8e33f51"
+hash = "e597e400fe67ddd051c030fcb7dacf04ea51a100bd7d33f41ce0c5427caaa023"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_07_water.json"
-hash = "168fc7475eb5f789f0368a8befb156b9be537cb3f719cf0ab3d734311ecc345e"
+hash = "f3c49100b1df67329838a0c3e72d14cba74117e256fad7d56cefd4ab9457e862"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_07_water_challenge.json"
-hash = "168fc7475eb5f789f0368a8befb156b9be537cb3f719cf0ab3d734311ecc345e"
+hash = "f3c49100b1df67329838a0c3e72d14cba74117e256fad7d56cefd4ab9457e862"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_08_psychic.json"
-hash = "516940af1a15b0815fe320e240eba171d45d6a11a3abb83d13f9069e57286da0"
+hash = "c18cbf5605484d5be730da71b2b472e0182bcaf7bba3c59eddc07e07040adcf1"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_08_psychic_challenge.json"
-hash = "516940af1a15b0815fe320e240eba171d45d6a11a3abb83d13f9069e57286da0"
+hash = "c18cbf5605484d5be730da71b2b472e0182bcaf7bba3c59eddc07e07040adcf1"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_09_dragon.json"
-hash = "bbc4949181ea33fb56519cd4e72c7625a068229ef81e6f10a0cc42198b9f5b6c"
+hash = "bf11b50c7202deb85704e8bb4f98ed8fde6d6175faa311d1ba30ed3fdfc19ab7"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_09_dragon_challenge.json"
-hash = "bbc4949181ea33fb56519cd4e72c7625a068229ef81e6f10a0cc42198b9f5b6c"
+hash = "bf11b50c7202deb85704e8bb4f98ed8fde6d6175faa311d1ba30ed3fdfc19ab7"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_10_ghost.json"
-hash = "d2046b58a45a46670f45975b1f57fec11fccb374344b2cea8b54b330ad14332a"
+hash = "af1e8fd11986ed0f1e2924152cad293abc9ecd1c845cf1c924e89499efdb93ea"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_10_ghost_challenge.json"
-hash = "d2046b58a45a46670f45975b1f57fec11fccb374344b2cea8b54b330ad14332a"
+hash = "af1e8fd11986ed0f1e2924152cad293abc9ecd1c845cf1c924e89499efdb93ea"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_11_bug.json"
-hash = "c56ff44280cb68271943517fae0f101ac9168bfa46e089824f426aab7db648ab"
+hash = "881704128d3e0a4fcf0e186195fc47c3e7583bced66dc6aeb1beb7a0ad8bb5af"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_11_bug_challenge.json"
-hash = "c56ff44280cb68271943517fae0f101ac9168bfa46e089824f426aab7db648ab"
+hash = "881704128d3e0a4fcf0e186195fc47c3e7583bced66dc6aeb1beb7a0ad8bb5af"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_12_normal.json"
-hash = "22c6b66a137b7713d6bae659a34a238bd53f83760b5fba7bd56f87c8ada35be4"
+hash = "c9f1b9f3542e3ca17b8c58fd80392575c200be29fdf5322aacc18b73a1b8cd26"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_12_normal_challenge.json"
-hash = "22c6b66a137b7713d6bae659a34a238bd53f83760b5fba7bd56f87c8ada35be4"
+hash = "c9f1b9f3542e3ca17b8c58fd80392575c200be29fdf5322aacc18b73a1b8cd26"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_13_poison.json"
-hash = "9941165fb02cd3156516303536c2d32854546ba18d1c139952dfe608f18cbad7"
+hash = "5f2a71999bcbaef6fdaaca0bb41c7ec5b5e42e844aa3eccb60483902179242db"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_13_poison_challenge.json"
-hash = "9941165fb02cd3156516303536c2d32854546ba18d1c139952dfe608f18cbad7"
+hash = "5f2a71999bcbaef6fdaaca0bb41c7ec5b5e42e844aa3eccb60483902179242db"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_14_rock.json"
-hash = "b5baeb656188e01e2fe78dfe878f4c0b84fb3e51f3230bd44c35532cbb05dd29"
+hash = "4121664c4c4ef198502d26b1cc82fd7cf1e9cc9cf820227ca3a536e8a3c349fa"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_14_rock_challenge.json"
-hash = "b5baeb656188e01e2fe78dfe878f4c0b84fb3e51f3230bd44c35532cbb05dd29"
+hash = "4121664c4c4ef198502d26b1cc82fd7cf1e9cc9cf820227ca3a536e8a3c349fa"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_15_flying.json"
-hash = "18dd2039952766b61e3dc8b615190ef744c3bd0d6893ff4db21458d3cc54794d"
+hash = "f0414dc18e5f3d03dc6c2142bb21afd7d08756d2dbd123bf14e4a7bf52eabd04"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_15_flying_challenge.json"
-hash = "18dd2039952766b61e3dc8b615190ef744c3bd0d6893ff4db21458d3cc54794d"
+hash = "f0414dc18e5f3d03dc6c2142bb21afd7d08756d2dbd123bf14e4a7bf52eabd04"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_16_ice.json"
-hash = "36b9e1a202d97575d6737d6b21166769ed2874ed6ec6cc92106c3dcffa35d393"
+hash = "6a272df2a5ad63f7fd0e029b97d600456750d0e25941c8e70ebdd305900b8b8d"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_16_ice_challenge.json"
-hash = "36b9e1a202d97575d6737d6b21166769ed2874ed6ec6cc92106c3dcffa35d393"
+hash = "6a272df2a5ad63f7fd0e029b97d600456750d0e25941c8e70ebdd305900b8b8d"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_17_fairy.json"
-hash = "ff750f1a63ab45e7484d2e977145e687da536f19097c1dce841f4ad3738d1baa"
+hash = "bff2cab772ef377c2212a51a8c577a01bdf0fbd05bf2e4a141a5234e5b08c74e"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_17_fairy_challenge.json"
-hash = "ff750f1a63ab45e7484d2e977145e687da536f19097c1dce841f4ad3738d1baa"
+hash = "bff2cab772ef377c2212a51a8c577a01bdf0fbd05bf2e4a141a5234e5b08c74e"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_18_dark.json"
-hash = "7b770374de3c273fa44dbf4b5b061ea549bce60da563400dc715c8fb01037bc8"
+hash = "8d97820df040c42aeef57ac81d7296d6e5e8508bd23a4fc38b0a67cae2abe04e"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_18_dark_challenge.json"
-hash = "7b770374de3c273fa44dbf4b5b061ea549bce60da563400dc715c8fb01037bc8"
+hash = "8d97820df040c42aeef57ac81d7296d6e5e8508bd23a4fc38b0a67cae2abe04e"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_19_faker.json"
-hash = "0220bba93ad2fb3b8a5fc4ebff1ae299ab396b4299886bc9e4fa0939abae9bbe"
+hash = "749a51f2e7b4e1619a2c10730669c183e04fe9ac7292cb7a5cc0da573c84d1c3"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_19_faker_challenge.json"
-hash = "0220bba93ad2fb3b8a5fc4ebff1ae299ab396b4299886bc9e4fa0939abae9bbe"
+hash = "749a51f2e7b4e1619a2c10730669c183e04fe9ac7292cb7a5cc0da573c84d1c3"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_20_oak.json"
-hash = "3c78541ad54070dd45f10cd085ec0932ce9a077c11bb1f08a2283d9e62011f20"
+hash = "53213d421d8465f6ce65a0afa969c0642ff5bb3b821a029cc2fa719b85bb78fc"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/bt_20_oak_challenge.json"
-hash = "3c78541ad54070dd45f10cd085ec0932ce9a077c11bb1f08a2283d9e62011f20"
+hash = "53213d421d8465f6ce65a0afa969c0642ff5bb3b821a029cc2fa719b85bb78fc"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_01_ground.json"
-hash = "260cb4cb2a5c7d817c106891a8258af6df7bea78cdb99b7e9892cfc1188b2cd5"
+hash = "a6289f5b7cfcb1eac5d6263f486c4fe0ef71eb8fb8af8f5317a51b2e677122de"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_02_grass.json"
-hash = "08899182c2a7638643f20e72d406e18e44625c4d3d80d0873a92d4a3a6916a7b"
+hash = "c2fafb45d792de5449b377e6f9dcfc327250b0446b78e694b9b5e90e47310d30"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_03_fighting.json"
-hash = "85dbe88c157668a00c2452e41bf8ff764df79130b626e8ae83e90757469681e5"
+hash = "c754b61c5ade1680c9d2b5ec8b08c66ddd99df9b2360396665a11326a29fd0d8"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_04_steel.json"
-hash = "2d2078d2bc10a75a20b117701c1e8772739467d99edba5e735b0d57d144db92b"
+hash = "56b0b1f58bad7621e2b0b12b91cfcbddbd9010f30ce22745a8728a20636a6d6d"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_05_fire.json"
-hash = "fc846439dbeba874254463989fb0915f06fdbe469f9dcbf1f9adfd76f551b0f4"
+hash = "28ef3bc5e81100f8dc1bc0030b9d7ac867d78cac74a9765f19305c8183f9d1da"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_06_electric.json"
-hash = "c02793ac69ab26e3d321b2beb0b7d8462bd954cd21f9b13330bbbf11e8e33f51"
+hash = "e597e400fe67ddd051c030fcb7dacf04ea51a100bd7d33f41ce0c5427caaa023"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_07_water.json"
-hash = "168fc7475eb5f789f0368a8befb156b9be537cb3f719cf0ab3d734311ecc345e"
+hash = "f3c49100b1df67329838a0c3e72d14cba74117e256fad7d56cefd4ab9457e862"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_08_psychic.json"
-hash = "516940af1a15b0815fe320e240eba171d45d6a11a3abb83d13f9069e57286da0"
+hash = "c18cbf5605484d5be730da71b2b472e0182bcaf7bba3c59eddc07e07040adcf1"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_09_dragon.json"
-hash = "bbc4949181ea33fb56519cd4e72c7625a068229ef81e6f10a0cc42198b9f5b6c"
+hash = "bf11b50c7202deb85704e8bb4f98ed8fde6d6175faa311d1ba30ed3fdfc19ab7"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_10_ghost.json"
-hash = "d2046b58a45a46670f45975b1f57fec11fccb374344b2cea8b54b330ad14332a"
+hash = "af1e8fd11986ed0f1e2924152cad293abc9ecd1c845cf1c924e89499efdb93ea"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_11_bug.json"
@@ -1286,87 +1286,87 @@ hash = "0f75fd8d3ee27dae2681742d0d17a839d5f4e4706d46706cf6deea91926de0ba"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_20_alder.json"
-hash = "551723b625188eb1218ff3748044e32b6a181f65dc88114fe62a233f4dc6365e"
+hash = "7cb5739f228b5b58b87be1225356df5bab98dcae90748582daf3b01a38c5b333"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_21_cynthia.json"
-hash = "2632924bf440e57677bb3e8cdfaf5d38e1cc5e244ad6aa1d231e4207dba119da"
+hash = "8e0db30454fcb3e36b8dbcdc534cb45c888e65f611805764911778712f34ea35"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_22_ash.json"
-hash = "12753f35efc81a1a5cf6def60f06c42c6d8396b35fdefb7cebffaf4e10954f74"
+hash = "3a1a6522ca7084b02cf1e19a617411ec59d2c8eefa2bf6b22248394288b34a8d"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_23_lance.json"
-hash = "407d3c34a324442167af6c1ad9705be8a540bb56c0d6fc55cb651fb2ac9af569"
+hash = "5efd037a47e37adf5285065df9041b78c8afc8364bbbb1838e168d3a50d57141"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_24_n.json"
-hash = "4e3b1da9f0c3eacc535402d26d6fc3a98fa77e04ccbaa481bb690453249912a2"
+hash = "b83726fd77dd9785427bf547bdc0d1c6ed7b61a90a2ab9f4b79e4b009c508a78"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_byron_0399.json"
-hash = "2d283c8c93b90e70d3994950d3d37066e27cf0a55e25cfb3d27347896473d641"
+hash = "bbd437e227d298d33f456d2d96cdefdfac1aadaf64ebedc3727545c5f9509f50"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_byron_0590.json"
-hash = "40773e460f4d7af43e32017b505a845e9cc57a3f42489330de371bfa34ce545d"
+hash = "65e7db282973f599c276d90b854b48e33f09f99fe587e0d2ee7a619269865e05"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_candice_03da.json"
-hash = "8d21b22ccfd3ab3a652f903564ef4ddca8d0648b17c546145522368ba940dff5"
+hash = "95c7bdeec0bfeb4bb782e7327efdff99f086dd68b691265b9d170a1e63e1e2bd"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_candice_058f.json"
-hash = "0717b1a40c376ccefec7341ca09e82cbec5fece81b4c38b9ff72bf765a66865c"
+hash = "23075d02cf18c2ca6529146eeec00ffbed845b7a6ca19701e6626f1bfd9e9a2a"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_fantina_03d9.json"
-hash = "dedb8f4109121f44f02700a0e4127e086f06f907925d6f4aac5f9ec1c9426eda"
+hash = "78a24333eb0797c0b3446cab8613978e4954540eb476330f07b621c2c913574e"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_fantina_058e.json"
-hash = "2b940b8c63c5be94ad1ae2d4233a28df26de66ac5665d410a4f629fe6dc66605"
+hash = "e339c84334072a1dcc44a0175a8a5c4c636bdd4c3d664d2391580cb981686a61"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_gardenia_03d6.json"
-hash = "6ca078a921978365b91214f4a12226900a3caa4156cb53ba9c357749b8f38d7a"
+hash = "8a4a41f5a98ffcb6f54a5cf159950a85e015d83db0588593a5b2a49103b96f79"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_gardenia_058b.json"
-hash = "9b4129a0ec5c603015dc3415eac2769bd1646524bbc4fb8dd6b5fff816b41b8c"
+hash = "f27fa4f5641feb559cd67aa92cbd07d8c473baddd732f36bb848c7596355bf85"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_maylene_03d8.json"
-hash = "7d3d14d5d52732db78c71fed0f8a2774f1f289f0ed6d772f1594ed59187e31d2"
+hash = "24acdda8757f8dc19ddeba00f10eeef5c83400a52fb1524d9d8d05dc9e631760"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_maylene_058d.json"
-hash = "13bbcac9906f02d7006032323d4c3ca6fff548c365e9222558fadc8f5c9acb89"
+hash = "cf2c6c8b3b1f9d764b11525848646ff0e54853e2c0174b5ad9ef733afbbe93f6"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_roark_0395.json"
-hash = "3b991cd849dfcf4db1ae3a93377af87a71e231e10636d610893930ef73d3bb47"
+hash = "9e5cc9b4ed6cde0cd29ea116b215462858e2c38fff66bc1f2732ede5ddaebd1f"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_roark_058a.json"
-hash = "d997d0dd992f6c274d19fed9a4fba65a21fcae5a330fb242e9913bf14574b86c"
+hash = "b9f9f3add53a6cc6d7d89c828536530ad9815c1bbde6a01eaab8965943e1ce95"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_volkner_03db.json"
-hash = "4531744e7ae9ee473c2da4baed84114202f740d40e99d3bf4afaedec899b5547"
+hash = "895daa3bb749c59245922a3354b1c72e85bafc20eec43cdcc25afdeac6186bce"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_volkner_0591.json"
-hash = "15f8db642e0e6e7909a8db954700dad2b515fd560c43bd1618b82c8bda3337ea"
+hash = "3db8152674a1700bafb6b1c5421af7a226f87a64a2507770daf9284c64163c96"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_wake_03d7.json"
-hash = "aad63735ae9c83245ad9532b1aadcf34b2dd561788471430cb7a3e38388ac3f0"
+hash = "40a2928a9ab93ea4176074ce02916b6ce4d3bb332f3d26d4ebc2ca6b8ebd78a5"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/mobs/trainers/single/gym_leader_wake_058c.json"
-hash = "972c1f0988096a4ca1d2046648e4caf7b18fe9d3f50f82bc600923d82f1b83df"
+hash = "6c162b7b45c8ebe1a666fee86c720af23aebf397faa256466cf0bdd809192ca0"
 
 [[files]]
 file = "server-overrides/datapacks/server-gyms/data/rctmod/trainers/bt_01_ground.json"
@@ -1659,6 +1659,58 @@ hash = "d2e9220e3cfa3977096f994914d4333fef12a096a82b2eae2a0660677738ee8d"
 [[files]]
 file = "server-overrides/datapacks/server-hide-advancements/pack.mcmeta"
 hash = "885ec7f676e54490ce0923746e90858141e58feee784abc52f90c43da8af00be"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/epic/diverse.json"
+hash = "a9575f02c462fda90a03458ae3edc8c496cb5b0cf9fdf937bd49c0aa34491b11"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/epic/medicine.json"
+hash = "f10d3ea077ceddbfdb2e7e213fa1d83795c055ad10b90ad1740783c299f6d7f2"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/epic/nature.json"
+hash = "8708797fad10502837caf70e290636c9d7e8456afc2aed1e826a2740ece222fe"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/legendary/archeology.json"
+hash = "9b575b82869cf898db30d573360afd840a01bbe92d4845c2362ec27ac18411d5"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/legendary/battle.json"
+hash = "ea27a5738d3566a7deae7b7920b4852773d63aa2dc0d9eb6a7d30cb32bf24f95"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/legendary/diverse.json"
+hash = "00a9a0fa254de4a67eceb5f383ac3a1983160cc2273ad6845a4a013156e053ea"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/legendary/masterball.json"
+hash = "728816213723391d4c776465a168d4bf788ad7c9d56c0cd87ee71011193a6da3"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/legendary/medicine.json"
+hash = "a9c58fc33a4e4d73311bfecbd12398e28e7b0cbb5a39cad30e4b4f3c6f1a5bbd"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/legendary/pokeballs.json"
+hash = "a61c4c70346c09cce66e5af46c1a90c2c0638ad5d4970f6cc8860864ccd5a20a"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/rare/battle.json"
+hash = "3a85725f705d89c52a0cd570674110d2f1e5fe2964e2042fa0941934b45fe410"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/uncommon/battle.json"
+hash = "eacb24fbe8f7ede581f0d3d5703fc93b3ea187332a008f74fb2a783c9b9870f3"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/data/rctmod/loot_table/generic/uncommon/nature.json"
+hash = "555032b33b2b19997605c3b62e030015ad1fa5f3012dbcc8de33594e5ef48564"
+
+[[files]]
+file = "server-overrides/datapacks/server-loot-nerf/pack.mcmeta"
+hash = "45a9e4e2600fe04ea66404e6f35e93a0914fd40a0affea2ee340a90ebc5e6a94"
 
 [[files]]
 file = "server-overrides/datapacks/server-lootballs/data/server/loot_table/empty.json"
@@ -2003,6 +2055,202 @@ hash = "3e92eaba33a8c7fb36b9b4fecac1bc205c3d761e6f1798a90a3cb30ded3d9e83"
 [[files]]
 file = "server-overrides/datapacks/server-no-tm-loot/pack.mcmeta"
 hash = "e68af87e2b0f67c9c8551ab58eff7e127b1065f3ef14e4e7cacaa4f432092c65"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_aaron_039f.json"
+hash = "3e2aaaad76ebc13e9764a61ae5bcc5e063bee6c26a6f97d2f50f8a18b2a95fb8"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_agatha_0053.json"
+hash = "67c50cae242bee9bf867b110c92d25b87ad7c13e164d56e531630c9c4791a19f"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_agatha_0054.json"
+hash = "32eaaedc2cb9d27fbc682cc2e3707fce1fd73c7312072fb82c1a9aa2dcd71450"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_arabella_05b5.json"
+hash = "268bcb54e41707600301cbedb2d300addb26772779cee017e02d08c5cf089aa4"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_bertha_03a0.json"
+hash = "cfabef0eb416aeff415c79b684d98f008ad7eaf46e77f0637f4213f43b338fab"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_bruno_0050.json"
+hash = "6fcb2b60046d3cd135eeee5cf2c0d4ad23cdd5b26351491359f6470abc039496"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_bruno_0051.json"
+hash = "b52ee31f3e8758ed1531e0bcc4bf78b292ea4df22f27717bd85da91952ae6c76"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_elias_05b4.json"
+hash = "338860cc4c3b84997130796818e6c5b59ae8639dafc1df9d61c29f48fd5727db"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_flint_03a1.json"
+hash = "5a44051e85985b91212dcb9c7afebbb055866741123f581427bf9c0875db5b56"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_lance_0056.json"
+hash = "caac0e14542a9225630ceb25cd99fe91a9f0b431b4168fdad1a0a8f65e5f6b1a"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_lance_0057.json"
+hash = "d25716f53f735f03e2d4abf254b6d724fd5998e46e56f0f6b69335ec31eafa45"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_lorelei_004d.json"
+hash = "9753ddbd2cea502c3bd1d7c34b51f78de3bbdb436e74ba6103a37c6e4837e803"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_lorelei_004e.json"
+hash = "b02e79b18c98063a5a1909b238eaae4bd62f92e9c0aeb0eaef9f259fee662bc9"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_lucian_03a2.json"
+hash = "d774123c858104636c6fd83d8c77ce4c7e695acc7cf531308b38046be19c6155"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_moleman_05b3.json"
+hash = "f21ea6ab6fe3d939dffacfad369c5e15a94adfd41ab42d3a151b6b2492a81b44"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/elite_four_penny_05b6.json"
+hash = "44b8c1e81185aa7a384f880b900784112a9e706545336e38d2b14c857fd70cf1"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_byron_0399.json"
+hash = "702f07a38fb23db05aaaa990dd20ef5e5becbb8bc605420a853c7169b9abd0bc"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_byron_0590.json"
+hash = "34f72510b0946eafdab587e6d2f6bfbf91830b31a4de20471174184dfcd83c6e"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_candice_03da.json"
+hash = "3177771a0e9fb93386f9117fd504feae6d62a221234d201257b1493abbb995c0"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_candice_058f.json"
+hash = "5c2055ec2a584e3109f3eb5898e9ac7f2f641e09f5d08fd723ecfa294931ebb7"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_fantina_03d9.json"
+hash = "1136c20a2a65528a4a1dc402b64d96da52819b3e7f2de15033e7100ad07bf2a4"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_fantina_058e.json"
+hash = "0bbae0e84bdd8a5374856274285dafefd871bec1bfb2106726aea08e2562cabd"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_gardenia_03d6.json"
+hash = "3cea49ef5ba78a68ee6015d037ef1af03cf611fd055f8bf95a10dce32d5e493c"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_gardenia_058b.json"
+hash = "395a57e4d3ef4a4aa728404f42637f04d183bdc2b7ffc32a3c7eb88c2e0d7f49"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_maylene_03d8.json"
+hash = "7fad07fa682fd96319280d439f1ae1bc4ea1efec3ca7e2bfc1ab40cd497b7433"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_maylene_058d.json"
+hash = "8cc171964e27f0699dd3f55b204a5d6868c667554cc20af14475ebfc073c867e"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_roark_0395.json"
+hash = "2c2deced1b95b9ef3fb305dc8b15c4c5d890eb31a8f2abd3b26579202c740291"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_roark_058a.json"
+hash = "512640572190c2423b5da29413855bf40fd3459eec8bbfc152cb068e637c0661"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_volkner_03db.json"
+hash = "4681060c3d04178c7bfd1211af17300120294e20c829918ca114ef4f9afdfd7d"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_volkner_0591.json"
+hash = "52fb951b61997ca3179546fc7aac6a94cd82b3f9437711bb86ea953aef3a27a4"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_wake_03d7.json"
+hash = "23b09b29d3c235120374d6b80d3cdf2c8524bec0be0b36d9b9391a69a02e0c81"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/gym_leader_wake_058c.json"
+hash = "1b2c2f330977e9d9c1094854fb1fb22044d9a009abea839f209018ad1ed7c4ba"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_alice_05ac.json"
+hash = "6f2cc26873f9066f8ca44fb33deff2c6f07bdf4822389a592c75129b60e3b37b"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_benjamin_05b2.json"
+hash = "2b2519c5eaf0687b5897854e5a82fa511d207591857617d6119d0ea45959da12"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_big_mo_05b0.json"
+hash = "7269c7ee4918e4cb13214653153cc899cfe578f0f90d027af4995fddb0680a0b"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_blaine_01a3.json"
+hash = "7e00272a3c6c455a59d80f280ad4a4121172846925f3dbfb1b17a26e9c85ce10"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_brock_019e.json"
+hash = "c206a7d12c5216d9fe8a59feb7ed25c569ee653d83cf988b183204a5be17e0ef"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_clair_004a.json"
+hash = "202cd7b68fa79fa64f02b1affb6154563d4ce29b1c82da67e6511022c14dee29"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_erika_01a1.json"
+hash = "19c29b30ad6e937187e7c8cd74c6899f034c76dc6b077faa4fdd0a14854cb617"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_galavan_05af.json"
+hash = "799c20739027884abd05399785e04dc1ac9e4f581889b0218613ea5625c2d3ca"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_koga_01a2.json"
+hash = "5f02589c9c74031e4a7fdaf7f84e5917218f6d521b07539ed2999e2a27aebb12"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_lt_surge_01a0.json"
+hash = "33e033f731872ac7904cc511fd4d399918c3fd1f535e59c9f46e63f2cd0d8d78"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_mel_05ad.json"
+hash = "608127b701cd9aa95a2a1046e7eec55943d78cd9cff2652fb79c1652ccb46eff"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_mirskle_05aa.json"
+hash = "ca61d8d73a19b87128dafe336c8cbda342808a6d9484a393d5f675cd360fc355"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_misty_019f.json"
+hash = "acae6bdf58f09ee81dc58a194e99f78eee39b1cdbf9831d30be65dc3c35b3ea8"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_sabrina_01a4.json"
+hash = "8ee35cbd0b73c8a57bbadd20648d84d70fd3d9d590e3b58a216ad395f37bea08"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_tessy_05b1.json"
+hash = "9e0379e854d24315358dcfdc741aba2607e6d8d62d5a8fb9e5836f4b6daf113e"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/data/rctmod/trainers/leader_vega_05ab.json"
+hash = "51f3b540acf8c0212e248fba9872055cbc3516222ff071fd4753ed3cab871acd"
+
+[[files]]
+file = "server-overrides/datapacks/server-pack-leader-ai/pack.mcmeta"
+hash = "9d1c24713d815daa22ec1d25019c688815e6ae03505359b1f2ff107918cea840"
 
 [[files]]
 file = "server-overrides/datapacks/server-quests/README.md"
@@ -7818,99 +8066,99 @@ hash = "7c32912c92ad7ccbd2aa4330cf5b58596a96cb96bca48a97f574bc157932e186"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_aaron_039f.json"
-hash = "f32fb6308cbb32e1ace7b3183b8f899336b2746f7f432557a7cf968634ea8191"
+hash = "9aa525abbe6825d221aae7e4303ea7131a929104b9841c24889483f1e3a7e6c9"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_agatha_0053.json"
-hash = "2f0f9c184d742355957a176ad597d1b3056e0390a8b131aebfbf3b19026d1e77"
+hash = "b5eed9760595a5ba2d6f379bb131f8a1c62cb1a21ed0f6e06dc69334c931eb6f"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_agatha_0054.json"
-hash = "2f0f9c184d742355957a176ad597d1b3056e0390a8b131aebfbf3b19026d1e77"
+hash = "b5eed9760595a5ba2d6f379bb131f8a1c62cb1a21ed0f6e06dc69334c931eb6f"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_arabella_05b5.json"
-hash = "e5617ca0cccaebedb523e8a3b4088cc19af1927b8614e2975bcb2959d093c1af"
+hash = "b15d60068ba39c5e686a757017ed3321dd6ea38bd28bb348c8309d14b20648da"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_bertha_03a0.json"
-hash = "3fceb9c3380a493aa744faf5bd8ce18219649739b13cdcf1a90b45eaf2fa05e7"
+hash = "5f46cd5b429f0bef8491753b7c25a7955f9fa971135ed8b41085d97b28774460"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_bruno_0050.json"
-hash = "cfe3a07e08f00a0f257b0027d218fb89c1695400aa3e8c331a4581b09a8fdfa9"
+hash = "93542837ac0d7f9d13a65c1fc40db14551355879b6fe0d5b5019d6e5ca9c804c"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_bruno_0051.json"
-hash = "cfe3a07e08f00a0f257b0027d218fb89c1695400aa3e8c331a4581b09a8fdfa9"
+hash = "93542837ac0d7f9d13a65c1fc40db14551355879b6fe0d5b5019d6e5ca9c804c"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_elias_05b4.json"
-hash = "1e17088fef4c0e4ad37ea6cc974ddcbb6727a4fd32da37474bbfefab7adc8583"
+hash = "831a858d3278e5303e94fd3cba754337a1eabe41f6b412b97f7f3271e4f7862d"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_flint_03a1.json"
-hash = "36456fe451a6bba02bc4fd48ce0a43cf4419040bcabf88ffce9554bd870367ab"
+hash = "96b2cd18e352ce58fef8ec258111475b8955dc394638e0b58a23718766057461"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_lance_0056.json"
-hash = "2563361493473ade51dd98e0befcf2324fa5adc6e77cfe13b166ed09f1db58fd"
+hash = "e2a8ce8d05adacf7f56d863789305325a496416f497f645937965f4bd75ca2fe"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_lance_0057.json"
-hash = "2563361493473ade51dd98e0befcf2324fa5adc6e77cfe13b166ed09f1db58fd"
+hash = "e2a8ce8d05adacf7f56d863789305325a496416f497f645937965f4bd75ca2fe"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_lorelei_004d.json"
-hash = "433a665e0442e24e98ae2395cb690005a2b4213ff0d2e50830415cc19c56e514"
+hash = "9e1f58fe490e7407f324fb05c71c8be04c2b4d8186b88eeb8949429e1abccf80"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_lorelei_004e.json"
-hash = "433a665e0442e24e98ae2395cb690005a2b4213ff0d2e50830415cc19c56e514"
+hash = "9e1f58fe490e7407f324fb05c71c8be04c2b4d8186b88eeb8949429e1abccf80"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_lucian_03a2.json"
-hash = "f6308d6e26c55c0942ec25e427416e8650b72baa41065c98e0a5635e61d33674"
+hash = "9a9c6d119178daf5ac36faacc7aa08df42757c1854ae17083915073e92184180"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_moleman_05b3.json"
-hash = "7420e9140ad32eea1aa8a9e094656724cc8bfdff2ca5a719a875970ad87ddd5d"
+hash = "2832195e95629cf249b74c01f857439aee0615c0b6a5f092ce0633719194bb0a"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/elite_four_penny_05b6.json"
-hash = "6b57bab5d9f612e52ccfbc238f952a54933e581aa64e0bcc8623799cc2ff8e4d"
+hash = "3e2d1712e3260bfda96ec1022570da67f7bc24570c6a2a69590405cd74503d40"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_byron_0399.json"
-hash = "88a7b6d803ee1115e3a102c4eac779d21b40a84eecd675767d99a3878922e568"
+hash = "b523c4e619e7901f408e85c30a0fcc85918b83534571d715d2e7214c9370150a"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_candice_03da.json"
-hash = "6f8411ad057487ed520ee66973897233e62045c090e95c7ea3ffbf719ed31eaa"
+hash = "6c030da34f8d8d45394c5bb78afe8fe3f67f5675e141faaac206592efe10d389"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_fantina_03d9.json"
-hash = "70c4334f0e383b6c67bd1ed1bf010d837dea53ed903e61e879b312afc64894e9"
+hash = "63d0481e36543981cc9c2391bea7650907cc305f25dd2a1d6b1c39334df585c4"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_gardenia_03d6.json"
-hash = "b6ff6e6b73a98228f5a693abd9753a9555d2a8f0ed88e7ac6f4e972290beb89e"
+hash = "8ac3fd38912c368c10603de43c986c1816be3c096046e979efe2f5307d0b27e0"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_maylene_03d8.json"
-hash = "3477142e03992535a649157374505fefd5b7cf92090339e44f05800e001d5c11"
+hash = "be6927f66c9334cb6a779397956023776df182e7fa969c8685640db6ab6981fc"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_roark_0395.json"
-hash = "c0d2c808a1b7713e601f71f590e73a2dae497da84471d85ba10d28faec3c0039"
+hash = "82ec67f5d987eb2ccbb80918384b6c0add3e51526ae445e9b9edb73d95af142a"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_volkner_03db.json"
-hash = "34d7915d6d34a2e2806c2b9d017c6f3ac4fe8df8435f99325969ead295f264f0"
+hash = "50d0644e8d1a76f76014d54fc7db9cc055cf452ae6e86f9c9a8094b4c73c6a8a"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/gym_leader_wake_03d7.json"
-hash = "211a55340d50de494f628f9398b0b33134d464eaf950b0899fb8e950b30749c8"
+hash = "0dd39506655d1d696b587a30bc0d385888c390eaa7a1162ca6b29dc6ab49084f"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/hl_bird_keeper_55_jonah_1.json"
@@ -8234,67 +8482,67 @@ hash = "da4b2bd3a828eb285381f77c7f7b0a5f3bce35dc54c7685a105bd0e5b073ba0c"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_alice_05ac.json"
-hash = "c0b7270fbc85be26f217d4cb29d27d61e9e46ca07c6fe3b1c0903939fdec46bb"
+hash = "fd0dba1330c08cf9790a78ba5e3f77fbf49eb0f925a26abff97cb23d87a68e59"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_benjamin_05b2.json"
-hash = "cf34eb386dcd466a117a8a522b263b15fae6769c2150b78f99a01f97a43e6c79"
+hash = "9baced858379f0fe52c7f67aee44abb63c206830a54f35ec354360250a7542dd"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_big_mo_05b0.json"
-hash = "dc4e4eca377cf235ef9ec60cb0657ad0fce30bc24d99070fab235bccb0b800f7"
+hash = "75190c0463ef4290710189084a962ba86f44ab7433effdd95dd243be0e06a66b"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_blaine_01a3.json"
-hash = "55780f28dc145b93bef1d67c007bf17fa61e22de0703b2b31a19f357f84d3f7b"
+hash = "613e5faae76ae3463505c93549e1c2459c4baad785d12a9ac141b1883749b232"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_brock_019e.json"
-hash = "f9bc5b3059e627b1fb308c16dbeb9d547f36fa1be6fb79f514f6df0824908126"
+hash = "897c6b4a44433298bc17686188fe812c764b99021297b061c7ec02f7477a8d4d"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_clair_004a.json"
-hash = "f565a262a1d25fce6e3225c3fb2dd69edb025acd30f4226227f267c8c1020c27"
+hash = "f791d8810039f20b6ffab50dfb8b9598e437d71f65806d8d9b3e46ae5a7a55d7"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_erika_01a1.json"
-hash = "b6f373d91aaf20cb855a618a2798a3039aacf4ae7ed94a6e382bb437416725a1"
+hash = "1a7ca5cd310c6ceb63dd67f4f5cc23eff7265ae6ff166fd19b801dac1a249615"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_galavan_05af.json"
-hash = "5a6a7804586d8e74307ee76a82abf844b32d90bee5d7a8c2802a8e0767e3dd6a"
+hash = "dae655512b8bdedc460fcdc020831766b94000e978fcec5181781b02a32215be"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_koga_01a2.json"
-hash = "be5af0aeec5bf87b18497cd0c942b8cfc3523798e4a024d0dbebcfa30089a638"
+hash = "65aadc3e696e280e111312a85bf42364eeafa445a773bd53b2c28b325a339e75"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_lt_surge_01a0.json"
-hash = "17530e68bd4b8ae0625aa49f1e6dd9da5383274d98b28da1aa529b1523209ada"
+hash = "5b3b2cf98d7e1e2f9127e4dfd100d6a1aff7346a28d0bb2aa4d130e0c5061c2e"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_mel_05ad.json"
-hash = "ebcbd5116a3d899a232f7281f4af7db7294575aedb15ede614e26e74672304b5"
+hash = "03708d330d9f8cb2886cc3bc2ab78c4c09c5bdc9405b5875c68251596ec4111a"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_mirskle_05aa.json"
-hash = "c55d231b88b6f4a864c7a5c595f386bbb7a0701161767a9363084249a47c2b16"
+hash = "3296519143b79d730a123f08b26fbdb530f69033b72f20cb1c2ea36611e7be8c"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_misty_019f.json"
-hash = "7744b4e1f4ddead3bc2a6949a0766f3a32708dd085543ec1d49d945292eee4c7"
+hash = "f18aa93afed79fe5d8e4852a7b71203800f024731ef3d3b8985ee7f686d0298d"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_sabrina_01a4.json"
-hash = "f6c2b298b5c741feaddbcfd1d3dacf4db31ac2a6702be8b25492d33f6d21cca1"
+hash = "70dbdb705eb864754854b9a8f2c99cbe3e74ce1f0cd1ee01d358819d26a67adc"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_tessy_05b1.json"
-hash = "ad07549f9e7ceff01ed55fb7445cfb21b1170cbb42757311e29ec3ff98738a40"
+hash = "c3edce78c5bcd830940792372934b4b74978e5f3d0a811c740c413d774112df5"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/leader_vega_05ab.json"
-hash = "4f0a206c3c4be0cc8a755762a1677de26aecd37e9873adfb75a269d38f7a317c"
+hash = "3f9fecfd70796830e88524efc0c86ada0d9dab58a33864fe753244a4cd8ace6e"
 
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/data/rctmod/mobs/trainers/single/light_of_ruin_admin_ivory_3_05c3.json"

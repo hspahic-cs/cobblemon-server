@@ -1,6 +1,7 @@
 name = "Cobblemon: Legendary Monuments"
 filename = "LegendaryMonuments-7.8.jar"
 side = "both"
+pin = true
 
 [download]
 url = "https://cdn.modrinth.com/data/m6RyHSbV/versions/kSVEEVIv/LegendaryMonuments-7.8.jar"

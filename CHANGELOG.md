@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.9] - 2026-06-22
+
+### Changed
+- **Dropped the hidden-ability breeding nerf.** Bred Pokémon now keep an inherited Hidden Ability
+  every time again. The previous ~50% "reroll the HA to a normal ability on hatch" behavior in
+  `BredTagHook` is removed.
+
+### Fixed
+- **Egg incubation is now hard-capped at 6 at a time.** Only the **first 6 Cobreeding eggs** in a
+  player's inventory (by slot order) count down toward hatching; any beyond that are frozen until a
+  slot frees up. Earlier attempts to limit simultaneous incubation didn't reliably hold — this one
+  cancels Cobreeding's `PokemonEgg.inventoryTick` at the HEAD for over-cap eggs, so their hatch
+  countdown genuinely stops. The cap applies to every egg the same way, whether it came from a crate
+  or from breeding (eggs are matched by item identity, no source distinction).
+- **Eggs now show their incubation status.** Each egg carries a synced tooltip line — `Incubating
+  (N/6)` when it's one of the active 6, or `Not incubating` when it's paused — so it's obvious which
+  eggs are ticking. (Server-authoritative via the item's lore component, since the bridge is
+  server-only.)
+
 ## [0.23.8] - 2026-06-22
 
 ### Changed

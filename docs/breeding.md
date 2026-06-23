@@ -15,6 +15,13 @@
     A Pasture Block holds **up to 5 Pokémon**, and you can have **up to 4 active pastures** at a time.
     Breeding still works a pair at a time (a compatible male/female, or a Ditto plus another Pokémon).
 
+!!! tip "Only 6 eggs incubate at once"
+    Eggs only count down while they sit in your inventory, and at most **6 do so at a time**. The first
+    6 eggs (in slot order) tick toward hatching; any extras are paused. Each egg shows its status in
+    its tooltip: **Incubating (N/6)** or **Not incubating**. To get a paused egg moving, hatch or store
+    one of the active 6 to free up a slot. This counts every egg the same way, whether it came from a
+    crate or from breeding.
+
 ## Restrictions
 
 Breeding here is intentionally nerfed. It's meant for getting a specific Pokémon you want, not for

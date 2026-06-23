@@ -4,14 +4,12 @@ import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.pokemon.Pokemon
-import com.cobblemon.mod.common.pokemon.abilities.HiddenAbility
 import com.cobblemonbridge.CobblemonBridge
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.abs
-import kotlin.random.Random
 
 /**
  * Tags freshly-hatched Pokémon with `cobblemon_bridge:bred=true` in their persistent NBT,
@@ -87,9 +85,6 @@ object BredTagHook {
                 event.pokemon.shiny = false
                 CobblemonBridge.logger.debug("Forced bred {} non-shiny (shiny breeding disabled)", event.pokemon.species.name)
             }
-            // Hidden-ability breeding is nerfed: a bred Pokémon that inherited its hidden ability
-            // keeps it only ~HA_KEEP_CHANCE of the time; otherwise it's rerolled to a normal ability.
-            nerfBredHiddenAbility(event.pokemon)
             CobblemonBridge.logger.debug(
                 "Tagged hatched {} (uuid={}) as bred",
                 event.pokemon.species.name, event.pokemon.uuid,
@@ -156,23 +151,4 @@ object BredTagHook {
      *  has been used as a breeding parent. The single check used by the trade gates. */
     fun isTradeLocked(pokemon: Pokemon): Boolean =
         isBred(pokemon) || isBreedingParent(pokemon)
-
-    /** Fraction of bred Pokémon that get to KEEP an inherited hidden ability (rest are rerolled). */
-    private const val HA_KEEP_CHANCE = 0.5
-
-    /** If [pokemon] hatched with its species' hidden ability, keep it only [HA_KEEP_CHANCE] of the
-     *  time — otherwise swap to a randomly-chosen normal ability from the form's pool. No-op if the
-     *  current ability isn't hidden or the form has no normal abilities to fall back to. */
-    private fun nerfBredHiddenAbility(pokemon: Pokemon) {
-        val pool = pokemon.form.abilities
-        val currentName = pokemon.ability.template.name
-        val isHidden = pool.any { it is HiddenAbility && it.template.name == currentName }
-        if (!isHidden || Random.nextDouble() < HA_KEEP_CHANCE) return
-        val normal = pool.filter { it !is HiddenAbility }.randomOrNull() ?: return
-        pokemon.updateAbility(normal.template.create(false, Priority.NORMAL))
-        CobblemonBridge.logger.debug(
-            "Rerolled bred {} hidden ability {} -> {} (HA breeding nerf)",
-            pokemon.species.name, currentName, normal.template.name,
-        )
-    }
 }

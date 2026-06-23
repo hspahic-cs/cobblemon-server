@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "Switch the bdsp/radicalred/unbound pack gym leaders + E4 to the pe (poke-engine) AI, matching our custom gyms. See ops/gen_pack_leader_ai.py.",
+    "pack_format": 48
+  }
+}

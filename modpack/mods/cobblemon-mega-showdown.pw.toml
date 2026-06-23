@@ -1,6 +1,7 @@
 name = "Cobblemon: Mega Showdown"
 filename = "mega_showdown-neoforge-1.8.2+1.7.3+1.21.1-hotfix.jar"
 side = "both"
+pin = true
 
 [download]
 url = "https://cdn.modrinth.com/data/SszvX85I/versions/bOTrftup/mega_showdown-neoforge-1.8.2%2B1.7.3%2B1.21.1-hotfix.jar"

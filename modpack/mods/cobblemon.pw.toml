@@ -1,6 +1,7 @@
 name = "Cobblemon"
 filename = "Cobblemon-neoforge-1.7.3+1.21.1.jar"
 side = "both"
+pin = true
 
 [download]
 url = "https://cdn.modrinth.com/data/MdwFAVRL/versions/S1TrAn8c/Cobblemon-neoforge-1.7.3%2B1.21.1.jar"

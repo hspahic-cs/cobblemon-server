@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.22] - 2026-06-23
+
+### Changed
+- **Updated 15 mods** to their latest 1.21.1/NeoForge builds: Xaero's Minimap (25.3.13 → 26.1.0)
+  and World Map (1.40.16 → 1.41.2) — the bump silences Xaero's in-mod "update available" nag —
+  plus Athena, Balm, Collective, Entity Culling, GlitchCore, ModernFix, JEI, Waystones, Chatbubbles,
+  CobbleFurnies, Starter Kit, and Sophisticated Backpacks + Core. Library/perf/QoL only; no
+  Cobblemon battle-ecosystem mods touched.
+- **Pinned 9 mods** (`packwiz pin`) so a future `update --all` can't move them: the Cobblemon-1.7.3
+  -coupled mods (Cobblemon, Counter, Linkie, Unchained, Mega Showdown, Cobbleworkers) plus three
+  held back on purpose — Tim Core (1.8.x build), Legendary Monuments (NeoForge tag is older than the
+  Fabric-via-Connector jar we run), and Sodium (only a 0.8 beta is newer than our stable 0.6.13).
+
 ## [0.23.21] - 2026-06-23
 
 ### Changed

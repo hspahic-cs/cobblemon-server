@@ -12,7 +12,16 @@ root README.
 
 ## [Unreleased]
 
-## [0.23.17] - 2026-06-23
+## [0.23.18] - 2026-06-23
+
+### Changed
+- **Ultra crate: Ash Cap out, Battle Bond Greninja into the Ultra Egg pool.** Removed the Ash Cap
+  reward from the Ultra crate and folded its 5.7% into the **Ultra Egg** (now 17.1%). Added a
+  **Battle Bond Greninja** to the Ultra-Rare egg pool (now 34 species), so an Ultra Egg can hatch a
+  Bond-form Greninja that carries the `battlebond` ability (becomes Ash-Greninja in battle). Egg
+  pool entries can now carry an optional `properties` `PokemonProperties` fragment (here
+  `battle_bond=bond`) appended to `givepokemonegg`; `RewardGranter` passes it through. Note: with
+  Ash Cap also already craft-disabled (0.23.8), it's now unobtainable in normal play.
 
 ### Fixed
 - **Egg incubation cap now actually pauses capped eggs.** The cap was enforced in the wrong place:

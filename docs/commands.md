@@ -26,14 +26,17 @@ The commands you'll reach for most often. Open chat (`T` or `/`), type the comma
 
 | Command | What it does |
 |---|---|
-| `/market` | Open the market to check live buy/sell prices. |
+| `/market prices` | List live buy/sell prices and stock for all tradeable items. |
+| `/market price <item>` | Show the price history for a single item. |
 | `/pay <player> <amount>` | Send money from your wallet to another player. |
+
+To actually **buy or sell**, look at the **Shopkeeper NPC** at the spawn shop and press `R` to open the market screen. (`/market` on its own just prints help.)
 
 ## Battling
 
 | Command | What it does |
 |---|---|
-| `/challenge <player>` | Challenge another player to a Pokémon battle. |
+| `/challenge <player> [wager]` | Challenge another player to a **Ranked** battle (ELO on the line; optional coin wager). |
 | `/ranked leaderboard` | View the Ranked PvP leaderboard. |
 
 See the [PvP rules](pvp.md) for the Ranked format and team restrictions.

@@ -8,11 +8,12 @@
     - a **Ditto** plus (almost) any other Pokémon.
 3. **Wait.** After several minutes of you being nearby and active, an **egg** appears in the pasture.
    Take it out and keep it in your inventory.
-4. **Hatch it.** Carry the egg while you play, and it hatches after about **1 hour of active (non-AFK)
-   play**. (AFK time doesn't count.)
+4. **Hatch it.** Carry the egg while you play. Hatch time depends on how rare the baby is in the wild:
+   about **10 minutes** for common species up to **30 minutes** for the rarest (and for every
+   pseudo-legendary and starter line). Only **active (non-AFK)** play counts; AFK time doesn't.
 
 !!! tip "Pasture limits"
-    A Pasture Block holds **up to 5 Pokémon**, and you can have **up to 4 active pastures** at a time.
+    A Pasture Block holds **up to 6 Pokémon**, and you can have **up to 4 active pastures** at a time.
     Breeding still works a pair at a time (a compatible male/female, or a Ditto plus another Pokémon).
 
 !!! tip "Only 6 eggs incubate at once"
@@ -29,9 +30,9 @@ mass-producing them:
 
 | Restriction | Detail |
 |---|---|
-| **Hatch time** | Bred eggs take **~1 hour** of active play to hatch. |
+| **Hatch time** | **10 to 30 minutes** of active play, scaled by how rare the baby is (rarest species, pseudo-legendaries, and starters take the full 30 minutes). |
 | **No shiny breeding** | Bred Pokémon are **never shiny**. (Shinies come from the wild and crates.) |
-| **Pasture size** | **5 Pokémon** per pasture, **4 active pastures** per player. |
+| **Pasture size** | **6 Pokémon** per pasture, **4 active pastures** per player. |
 | **Ditto × Ditto** | Two Dittos can't produce Legendary, Paradox, Ultra Beast, or undiscovered eggs. |
 
 ## Important trading rules

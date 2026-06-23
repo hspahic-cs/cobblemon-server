@@ -31,7 +31,7 @@ On first launch it'll ask for:
    matches the server you're about to connect to.
 2. Drag the `.mrpack` file onto the Prism Launcher window.
 3. Name the instance (e.g. `Cobblemon Server`) → **OK**.
-4. Prism downloads NeoForge 1.21.1 and ~35 mods. Takes 2–5 minutes.
+4. Prism downloads NeoForge 1.21.1 and ~70 mods. Takes 2–5 minutes.
 
 ## 3. Launch
 
@@ -65,4 +65,4 @@ Worlds, screenshots, and settings are preserved; only mods are swapped.
 !!! warning "Mods not loading in-game"
     Verify Prism actually launched the modpack: the main menu should say
     `NeoForge 21.1.227` in the bottom-left, and the **Mods** button should
-    show 35+ entries. If it says `Vanilla`, you launched the wrong instance.
+    show 70+ entries. If it says `Vanilla`, you launched the wrong instance.

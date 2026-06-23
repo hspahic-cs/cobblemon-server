@@ -15,20 +15,20 @@ Every quest available on the server, grouped by chain.
 | 7 | **Nurse Joy** | Heal a Pokémon with carrots or a Poké Healer. | Revive |
 | 8 | **First Trainer Down** | Defeat any wild trainer NPC. | Exeggcute Egg |
 | 9 | **Trained Up** | Train any party Pokémon to level 20 (your starting level cap). | Sophisticated Backpack |
-| 10 | **Gym 1: Clay** | Defeat the Ground-type gym leader. | $150 + Rare Key |
+| 10 | **Gym 1: Dusty** | Defeat the Ground-type gym leader. | $150 + Rare Key |
 | 11 | **Pocket Change** | Sell enough items to reach $250. | Leaf Stone |
 | 12 | **Sunny Side Up** | Use the Leaf Stone to evolve your Exeggcute into Exeggutor. | Pasture Block |
 | 13 | **Farm Hands** | Place your Pasture Block to set up your first automated farm. | 16 Bone Meal |
 | 14 | **First Blood** | Win your first Ranked PvP battle. | Common Egg |
 | 15 | **Gym 2: Gardenia** | Defeat the Grass-type gym leader. | $300 + Rare Key |
-| 16 | **Gym 3: Korrina** | Defeat the Fighting-type gym leader. | $450 + Rare Key |
-| 17 | **Gym 4: Byron** | Defeat the Steel-type gym leader. | $600 + Rare Key |
-| 18 | **Gym 5: Blaine** | Defeat the Fire-type gym leader. | $750 + Rare Key |
-| 19 | **Gym 6: Volkner** | Defeat the Electric-type gym leader. | $900 + Rare Key |
-| 20 | **Gym 7: Crasher Wake** | Defeat the Water-type gym leader. | $1,050 + Rare Key |
-| 21 | **Gym 8: Sabrina** | Defeat the Psychic-type gym leader. | $1,200 + Rare Key |
-| 22 | **Gym 9: Drayden** | Defeat the Dragon-type gym leader. | $1,350 + Rare Key |
-| 23 | **Gym 10: Morty** | Defeat the Ghost-type gym leader. | $1,500 + Ultra Key |
+| 16 | **Gym 3: Lee Sin** | Defeat the Fighting-type gym leader. | $450 + Rare Key |
+| 17 | **Gym 4: Jarvis** | Defeat the Steel-type gym leader. | $600 + Rare Key |
+| 18 | **Gym 5: Zuko** | Defeat the Fire-type gym leader. | $750 + Rare Key |
+| 19 | **Gym 6: Stan** | Defeat the Electric-type gym leader. | $900 + Rare Key |
+| 20 | **Gym 7: Kai** | Defeat the Water-type gym leader. | $1,050 + Rare Key |
+| 21 | **Gym 8: Juniper** | Defeat the Psychic-type gym leader. | $1,200 + Rare Key |
+| 22 | **Gym 9: Quinn** | Defeat the Dragon-type gym leader. | $1,350 + Rare Key |
+| 23 | **Gym 10: Grimm** | Defeat the Ghost-type gym leader. | $1,500 + Ultra Key |
 | 24 | **Elite Four #1** | Defeat Elite Four #1: Weather Wars. | $3,000 + Rare Key |
 | 25 | **Elite Four #2** | Defeat Elite Four #2: Hyper Offense. | $3,150 + Rare Key |
 | 26 | **Elite Four #3** | Defeat Elite Four #3: Full Stall. | $3,300 + Rare Key |
@@ -82,16 +82,16 @@ Every quest available on the server, grouped by chain.
 
 | # | Quest | Condition | Reward |
 |---:|---|---|---|
-| 1 | **Gym 1: Clay Challenge** | Defeat the challenge variant of Gym 1. | $150 + Rare Key |
+| 1 | **Gym 1: Dusty Challenge** | Defeat the challenge variant of Gym 1. | $150 + Rare Key |
 | 2 | **Gym 2: Gardenia Challenge** | Defeat the challenge variant of Gym 2. | $300 + Rare Key |
-| 3 | **Gym 3: Korrina Challenge** | Defeat the challenge variant of Gym 3. | $450 + Rare Key |
-| 4 | **Gym 4: Byron Challenge** | Defeat the challenge variant of Gym 4. | $600 + Rare Key |
-| 5 | **Gym 5: Blaine Challenge** | Defeat the challenge variant of Gym 5. | $750 + Rare Key |
-| 6 | **Gym 6: Volkner Challenge** | Defeat the challenge variant of Gym 6. | $900 + Rare Key |
-| 7 | **Gym 7: Crasher Wake Challenge** | Defeat the challenge variant of Gym 7. | $1,050 + Rare Key |
-| 8 | **Gym 8: Sabrina Challenge** | Defeat the challenge variant of Gym 8. | $1,200 + Rare Key |
-| 9 | **Gym 9: Drayden Challenge** | Defeat the challenge variant of Gym 9. | $1,350 + Rare Key |
-| 10 | **Gym 10: Morty Challenge** | Defeat the challenge variant of Gym 10. | $1,500 + Ultra Key |
+| 3 | **Gym 3: Lee Sin Challenge** | Defeat the challenge variant of Gym 3. | $450 + Rare Key |
+| 4 | **Gym 4: Jarvis Challenge** | Defeat the challenge variant of Gym 4. | $600 + Rare Key |
+| 5 | **Gym 5: Zuko Challenge** | Defeat the challenge variant of Gym 5. | $750 + Rare Key |
+| 6 | **Gym 6: Stan Challenge** | Defeat the challenge variant of Gym 6. | $900 + Rare Key |
+| 7 | **Gym 7: Kai Challenge** | Defeat the challenge variant of Gym 7. | $1,050 + Rare Key |
+| 8 | **Gym 8: Juniper Challenge** | Defeat the challenge variant of Gym 8. | $1,200 + Rare Key |
+| 9 | **Gym 9: Quinn Challenge** | Defeat the challenge variant of Gym 9. | $1,350 + Rare Key |
+| 10 | **Gym 10: Grimm Challenge** | Defeat the challenge variant of Gym 10. | $1,500 + Ultra Key |
 
 Challenge variants are fought at your team's true **Lv 50** (no downlevel cap). Beat the regular gym first to unlock its challenge.
 

@@ -1,6 +1,9 @@
 # Pokémon spawn biomes
 
-Type a partial name to filter. Bucket rarity (within ultra-rare bucket too) determines how heavily a species shows up in its biomes; see the [legendaries page](legendaries.md) for the bucket roll rates.
+Type a partial name to filter. Each species lists the biomes it spawns in and its rarity **bucket**. Each spawn attempt first rolls a bucket with these odds: **common 94.9% / uncommon 5% / rare 0.1% / ultra-rare 0.02%**, then picks a species from that bucket weighted by its spawn weight.
+
+!!! warning "This table shows base spawn data, not the server's nerfs"
+    These rows come straight from the AllTheMons spawn data and do **not** reflect the server's spawn nerfs. On this server, **every Legendary, Mythical, Paradox, and Ultra Beast is forced into the ultra-rare bucket (or disabled entirely)**, regardless of the bucket a row shows here. So treat any `rare` (or lower) bucket listed for one of those species as inaccurate for this server. Normal species are unaffected.
 
 <input type="text" id="spawn-filter" placeholder="Type a name (e.g. 'char' for Charmander, Charmeleon, Charizard…)" style="width:100%;padding:8px;margin-bottom:12px;font-size:14px;box-sizing:border-box;">
 

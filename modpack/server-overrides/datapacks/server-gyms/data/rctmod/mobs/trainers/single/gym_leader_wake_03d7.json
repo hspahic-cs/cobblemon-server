@@ -24,6 +24,6 @@
     "bdsp"
   ],
   "signatureItem": "minecraft:nautilus_shell",
-  "spawnWeightFactor": 0.0,
+  "spawnWeightFactor": 1.0,
   "type": "leader"
 }

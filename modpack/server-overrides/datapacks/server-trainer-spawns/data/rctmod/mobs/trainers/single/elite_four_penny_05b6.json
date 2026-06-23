@@ -20,7 +20,7 @@
     "unbound"
   ],
   "signatureItem": "cobblemon:quick_claw",
-  "spawnWeightFactor": 0.0,
+  "spawnWeightFactor": 1.0,
   "type": "e4",
   "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
 }

@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.20] - 2026-06-23
+
+### Fixed
+- **Pack gym leaders / Elite Four now spawn again.** All 56 pack progression bosses
+  (`gym_leader_*`, `elite_four_*`, `leader_*` across bdsp/radicalred/unbound) had
+  `spawnWeightFactor = 0`, so they never spawned in the wild — the series cards listed them but
+  they were unreachable, and the Trainer Card's locator arrow had nothing to point to. Restored
+  them to the RCT default `1.0` (built-in gym leaders carry no explicit weight = 1.0); as key
+  trainers they get RCT's 64× key-spawn boost, so they surface preferentially as you progress. The
+  64 **custom building gyms** (`gym_01_ground … gym_24_n`, `bt_*`) stay at `0` — those are fought at
+  the physical gyms via the bridge, not in the wild.
+
 ## [0.23.19] - 2026-06-23
 
 ### Fixed

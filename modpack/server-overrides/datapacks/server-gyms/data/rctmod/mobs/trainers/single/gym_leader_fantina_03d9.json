@@ -22,6 +22,6 @@
     "bdsp"
   ],
   "signatureItem": "minecraft:ender_eye",
-  "spawnWeightFactor": 0.0,
+  "spawnWeightFactor": 1.0,
   "type": "leader"
 }

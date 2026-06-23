@@ -26,7 +26,7 @@
     "radicalred"
   ],
   "signatureItem": "cobblemon:mystic_water",
-  "spawnWeightFactor": 0.0,
+  "spawnWeightFactor": 1.0,
   "type": "leader",
   "_comment": "wild spawn disabled (gym leader / Elite Four) \u2014 server-trainer-spawns"
 }

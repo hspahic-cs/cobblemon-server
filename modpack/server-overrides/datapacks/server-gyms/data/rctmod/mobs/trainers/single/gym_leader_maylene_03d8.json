@@ -26,6 +26,6 @@
     "bdsp"
   ],
   "signatureItem": "cobblemon:black_belt",
-  "spawnWeightFactor": 0.0,
+  "spawnWeightFactor": 1.0,
   "type": "leader"
 }

@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bug Catcher Mason",
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png",
+  "team": [
+    {
+      "species": "crustle",
+      "level": 64,
+      "gender": "RANDOM",
+      "nature": "sassy",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "heracross",
+      "level": 63,
+      "gender": "RANDOM",
+      "nature": "mild",
+      "ability": "swarm",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "durant",
+      "level": 67,
+      "gender": "RANDOM",
+      "nature": "jolly",
+      "ability": "swarm",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bird Keeper Jonah",
+  "textureResource": "rctmod:textures/trainers/single/type_flying.png",
+  "team": [
+    {
+      "species": "dodrio",
+      "level": 86,
+      "gender": "RANDOM",
+      "nature": "naughty",
+      "ability": "runaway",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "skarmory",
+      "level": 88,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "keeneye",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "noctowl",
+      "level": 87,
+      "gender": "RANDOM",
+      "nature": "careful",
+      "ability": "insomnia",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

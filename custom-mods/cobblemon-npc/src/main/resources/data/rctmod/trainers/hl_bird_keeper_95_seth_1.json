@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bird Keeper Seth",
+  "textureResource": "rctmod:textures/trainers/single/type_flying.png",
+  "team": [
+    {
+      "species": "staraptor",
+      "level": 98,
+      "gender": "RANDOM",
+      "nature": "quiet",
+      "ability": "intimidate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "unfezant",
+      "level": 98,
+      "gender": "RANDOM",
+      "nature": "brave",
+      "ability": "bigpecks",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "fearow",
+      "level": 98,
+      "gender": "RANDOM",
+      "nature": "naive",
+      "ability": "keeneye",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

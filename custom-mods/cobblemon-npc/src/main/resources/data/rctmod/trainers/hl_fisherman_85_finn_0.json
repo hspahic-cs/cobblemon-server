@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Fisherman Finn",
+  "textureResource": "rctmod:textures/trainers/single/type_water.png",
+  "team": [
+    {
+      "species": "whiscash",
+      "level": 82,
+      "gender": "RANDOM",
+      "nature": "lonely",
+      "ability": "oblivious",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gyarados",
+      "level": 87,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "intimidate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

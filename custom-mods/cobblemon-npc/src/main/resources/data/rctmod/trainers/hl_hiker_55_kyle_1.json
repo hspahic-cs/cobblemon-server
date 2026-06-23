@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hiker Kyle",
+  "textureResource": "rctmod:textures/trainers/single/type_rock.png",
+  "team": [
+    {
+      "species": "carbink",
+      "level": 53,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "clearbody",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "marowak",
+      "level": 52,
+      "gender": "RANDOM",
+      "nature": "relaxed",
+      "ability": "rockhead",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "probopass",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "lonely",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

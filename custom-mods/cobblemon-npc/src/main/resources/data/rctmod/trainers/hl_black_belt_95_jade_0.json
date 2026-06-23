@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Black Belt Jade",
+  "textureResource": "rctmod:textures/trainers/single/type_fighting.png",
+  "team": [
+    {
+      "species": "primeape",
+      "level": 95,
+      "gender": "RANDOM",
+      "nature": "relaxed",
+      "ability": "vitalspirit",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "mienshao",
+      "level": 94,
+      "gender": "RANDOM",
+      "nature": "careful",
+      "ability": "innerfocus",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

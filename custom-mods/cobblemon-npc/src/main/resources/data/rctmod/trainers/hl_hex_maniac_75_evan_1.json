@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hex Maniac Evan",
+  "textureResource": "rctmod:textures/trainers/single/type_ghost.png",
+  "team": [
+    {
+      "species": "gengar",
+      "level": 72,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "cursedbody",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "dusknoir",
+      "level": 76,
+      "gender": "RANDOM",
+      "nature": "calm",
+      "ability": "pressure",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "cofagrigus",
+      "level": 78,
+      "gender": "RANDOM",
+      "nature": "calm",
+      "ability": "mummy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

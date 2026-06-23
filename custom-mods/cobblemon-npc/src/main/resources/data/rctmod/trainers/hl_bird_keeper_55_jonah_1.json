@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bird Keeper Jonah",
+  "textureResource": "rctmod:textures/trainers/single/type_flying.png",
+  "team": [
+    {
+      "species": "pelipper",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "gentle",
+      "ability": "keeneye",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "crobat",
+      "level": 52,
+      "gender": "RANDOM",
+      "nature": "timid",
+      "ability": "innerfocus",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "unfezant",
+      "level": 52,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "bigpecks",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "noctowl",
+      "level": 57,
+      "gender": "RANDOM",
+      "nature": "calm",
+      "ability": "insomnia",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

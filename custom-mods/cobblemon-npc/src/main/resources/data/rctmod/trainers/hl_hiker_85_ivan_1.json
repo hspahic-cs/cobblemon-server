@@ -1,0 +1,74 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Hiker Ivan",
+  "textureResource": "rctmod:textures/trainers/single/type_rock.png",
+  "team": [
+    {
+      "species": "marowak",
+      "level": 85,
+      "gender": "RANDOM",
+      "nature": "gentle",
+      "ability": "rockhead",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "donphan",
+      "level": 84,
+      "gender": "RANDOM",
+      "nature": "lonely",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "crustle",
+      "level": 87,
+      "gender": "RANDOM",
+      "nature": "careful",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "aggron",
+      "level": 85,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

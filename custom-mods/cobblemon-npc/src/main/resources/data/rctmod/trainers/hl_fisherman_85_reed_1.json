@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Fisherman Reed",
+  "textureResource": "rctmod:textures/trainers/single/type_water.png",
+  "team": [
+    {
+      "species": "qwilfish",
+      "level": 86,
+      "gender": "RANDOM",
+      "nature": "quirky",
+      "ability": "poisonpoint",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "ludicolo",
+      "level": 84,
+      "gender": "RANDOM",
+      "nature": "hasty",
+      "ability": "swiftswim",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "cloyster",
+      "level": 84,
+      "gender": "RANDOM",
+      "nature": "quirky",
+      "ability": "shellarmor",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

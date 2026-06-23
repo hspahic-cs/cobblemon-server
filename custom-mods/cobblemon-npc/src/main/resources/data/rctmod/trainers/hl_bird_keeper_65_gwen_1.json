@@ -1,0 +1,42 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bird Keeper Gwen",
+  "textureResource": "rctmod:textures/trainers/single/type_flying.png",
+  "team": [
+    {
+      "species": "crobat",
+      "level": 62,
+      "gender": "RANDOM",
+      "nature": "lax",
+      "ability": "innerfocus",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "swellow",
+      "level": 62,
+      "gender": "RANDOM",
+      "nature": "impish",
+      "ability": "guts",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -24,7 +24,24 @@ REPO = Path(__file__).resolve().parent.parent
 TRAINER_DIRS = [
     REPO / "modpack/server-overrides/datapacks/server-gyms/data/rctmod/trainers",
     REPO / "modpack/server-overrides/datapacks/server-gym-ai-test/data/rctmod/trainers",
+    REPO / "modpack/server-overrides/datapacks/server-trainer-spawns/data/rctmod/trainers",
 ]
+
+# The hl_* high-level wild trainers (gen_highlevel_trainers.py) declare a
+# `textureResource` of type_<x>.png — a skin RCT does NOT ship (it only has
+# per-character textures + default.png), so those trainers rendered as the default
+# skin. Map each invented type_<x> skin to a representative real RCT texture of that
+# trainer class so they get a class-appropriate skin instead of the default.
+TYPE_FALLBACK = {
+    "type_flying": "bird_keeper_alexandra_0326",
+    "type_bug": "bug_catcher_anthony_0213",
+    "type_rock": "hiker_alan_00b9",
+    "type_water": "fisherman_andrew_00e9",
+    "type_fighting": "black_belt_aaron_0140",
+    "type_psychic": "psychic_abigail_0345",
+    "type_ghost": "pokemaniac_ashton_00a8",
+    "type_normal": "ace_trainer_abel_04a5",
+}
 # Ships inside the cobblemon-npc mod jar — that mod goes to BOTH sides
 # (cobblemon-poke-ai is in CI's SERVER_ONLY list and never reaches clients).
 # Mirrors how RCT's own built-ins work: the client needs the trainer DATA
@@ -59,8 +76,13 @@ def main() -> None:
             ns, _, rel = ref.partition(":")
             jar_entry = f"assets/{ns}/{rel}"
             if jar_entry not in jar_names:
-                missing.append(f"{path.stem} -> {jar_entry} (not in jar)")
-                continue
+                # Invented type_<x>.png skins -> representative real class texture.
+                fb = TYPE_FALLBACK.get(Path(rel).stem)
+                if fb:
+                    jar_entry = f"assets/rctmod/textures/trainers/single/{fb}.png"
+                if jar_entry not in jar_names:
+                    missing.append(f"{path.stem} -> {ref} (not in jar)")
+                    continue
             (out_textures / f"{path.stem}.png").write_bytes(jar.read(jar_entry))
             written += 1
 

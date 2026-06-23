@@ -7,5 +7,9 @@
   "maxTrainerWins": -1,
   "optional": false,
   "biomeTagWhitelist": [],
-  "biomeTagBlacklist": []
+  "biomeTagBlacklist": [],
+  "series": [
+    "server_bosses"
+  ],
+  "requiredDefeats": []
 }

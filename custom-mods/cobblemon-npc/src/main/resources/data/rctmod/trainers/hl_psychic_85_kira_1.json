@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Psychic Kira",
+  "textureResource": "rctmod:textures/trainers/single/type_psychic.png",
+  "team": [
+    {
+      "species": "claydol",
+      "level": 86,
+      "gender": "RANDOM",
+      "nature": "serious",
+      "ability": "levitate",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "alakazam",
+      "level": 88,
+      "gender": "RANDOM",
+      "nature": "impish",
+      "ability": "synchronize",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "beheeyem",
+      "level": 84,
+      "gender": "RANDOM",
+      "nature": "jolly",
+      "ability": "telepathy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Bug Catcher Evan",
+  "textureResource": "rctmod:textures/trainers/single/type_bug.png",
+  "team": [
+    {
+      "species": "ribombee",
+      "level": 74,
+      "gender": "RANDOM",
+      "nature": "modest",
+      "ability": "honeygather",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "crustle",
+      "level": 76,
+      "gender": "RANDOM",
+      "nature": "mild",
+      "ability": "sturdy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "beedrill",
+      "level": 76,
+      "gender": "RANDOM",
+      "nature": "relaxed",
+      "ability": "swarm",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

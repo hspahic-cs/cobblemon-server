@@ -1,0 +1,58 @@
+{
+  "ai": {
+    "type": "rb",
+    "data": {}
+  },
+  "name": "Psychic Noah",
+  "textureResource": "rctmod:textures/trainers/single/type_psychic.png",
+  "team": [
+    {
+      "species": "exeggutor",
+      "level": 54,
+      "gender": "RANDOM",
+      "nature": "rash",
+      "ability": "chlorophyll",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "beheeyem",
+      "level": 53,
+      "gender": "RANDOM",
+      "nature": "bashful",
+      "ability": "telepathy",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    },
+    {
+      "species": "gothitelle",
+      "level": 58,
+      "gender": "RANDOM",
+      "nature": "hasty",
+      "ability": "frisk",
+      "ivs": {
+        "hp": 12,
+        "atk": 12,
+        "def": 12,
+        "spa": 12,
+        "spd": 12,
+        "spe": 12
+      },
+      "evs": {}
+    }
+  ]
+}

@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.16] - 2026-06-23
+
+### Fixed
+- **Custom high-level wild trainers no longer render with the default skin.** The 80 `hl_*`
+  trainers (`gen_highlevel_trainers.py`) declared a `textureResource` of `type_<x>.png` — a skin
+  RCT doesn't actually ship (it has per-character textures + one `default.png`), so they all fell
+  back to the default skin. Made very visible by the higher spawn rate. `gen_trainer_texture_pack.py`
+  now also processes `server-trainer-spawns` and maps each invented `type_<x>` skin to a
+  representative real RCT texture of that trainer class (bird_keeper, hiker, etc.), shipping the 80
+  skins client-side via the cobblemon-npc mod. (The other built-in pack trainers already resolve
+  their skins from the rctmod jar — only these custom ones were broken.)
+
 ## [0.23.15] - 2026-06-23
 
 ### Fixed

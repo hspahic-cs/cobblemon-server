@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.15] - 2026-06-23
+
+### Fixed
+- **Egg incubation cap (0.23.9) now actually counts eggs.** The cap identified eggs by item
+  *instance*, but Cobreeding registers a separate `PokemonEgg` item per Pokémon type (`bug_egg`,
+  `water_egg`, … plus `pokemon_egg`, `manaphy_egg`, and shiny variants). A fire egg and a water egg
+  are therefore different items, so the rank scan only counted eggs of the *same* type — every egg
+  in a mixed inventory computed rank 1 or 2, the "Incubating (N/6)" number was wrong, and the cap
+  never triggered (7+ eggs all kept ticking). Now eggs are matched by their item **class**, so all
+  variants count toward the one cap: the first 6 (any types, in slot order) show their real
+  `Incubating (N/6)`, and the rest correctly show `Not incubating` and freeze.
+
 ## [0.23.14] - 2026-06-23
 
 ### Fixed

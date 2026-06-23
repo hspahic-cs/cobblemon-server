@@ -12,7 +12,19 @@ root README.
 
 ## [Unreleased]
 
-## [0.23.16] - 2026-06-23
+## [0.23.17] - 2026-06-23
+
+### Fixed
+- **Egg incubation cap now actually pauses capped eggs.** The cap was enforced in the wrong place:
+  `PokemonEggMixin` cancelled Cobreeding's *native* `inventoryTick` countdown, but the bridge's own
+  `EggDefeatHook` is the real hatch driver — it runs a per-second counter and re-pins Cobreeding's
+  `TIMER` every second — so capped eggs kept counting down anyway (the 0.23.16 client-resync attempt
+  couldn't help because the server timer itself was still advancing). Moved the cap into
+  `EggDefeatHook`: an egg beyond the first `MAX_INCUBATING` (6, in slot order) simply doesn't get its
+  counter decremented, exactly like an AFK player's eggs — so the per-second re-sync rewinds
+  Cobreeding's decrement and the egg holds. Capped eggs also floor their pinned `TIMER` so Cobreeding
+  can't sneak a near-done one to a hatch between re-syncs. Removed the defunct `inventoryTick` cap
+  inject and the client-resync helpers.
 
 ### Fixed
 - **Mega Evolution now applies the Mega form's ability** (e.g. Mega Gengar → Shadow Tag). mega_showdown

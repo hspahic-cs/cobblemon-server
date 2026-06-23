@@ -1,12 +1,26 @@
 #!/usr/bin/env python3
 """
-Wire the custom RCT boss trainers into a dedicated `server_bosses` series so they
-stop polluting every other series' Trainer Card list, and give them a linear
-progression chain for the card.
+Give the custom RCT boss trainers a progression chain, and surface them as a
+`server_bosses` series WITHOUT removing them from the bdsp/radicalred/unbound
+packs.
 
-Series-local initialLevelCap=15 so the progress graph shows real trainer levels
-(not the global 200) and the per-player cap tracks progression. allowOverLeveling
-still lets players level past it freely.
+Key point about RCT's data model: a trainer with NO `series` field belongs to
+EVERY series (`isOfSeries` is true when the list is empty). So we leave the boss
+trainers series-less — they show up in all the pack paths (the "old system") AND
+in `server_bosses` (which, being defined, renders a boss-only view since the 80
+pack wild-trainers DO carry an explicit series and are excluded from it).
+
+`requiredDefeats` in RCT is global, not per-series, so this one chain is shared by
+every series the trainer appears in (that's the accepted tradeoff for keeping the
+bosses shared rather than duplicating 55 entries):
+  - gyms 1-10: linear, each requires the previous.
+  - Elite Four (Alder, Cynthia, Ash, Lance): each requires only gym 10 -> beatable
+    in ANY order.
+  - Champion (N): requires all four Elite Four members.
+
+Series-local initialLevelCap=15 (and the global cap is also lowered to 15 in
+rctmod-server.toml) so the progress graph shows real trainer levels instead of the
+old global 200. allowOverLeveling still lets players level past the cap freely.
 
 Idempotent. Skips legacy gym_11..gym_19 and the native bdsp gym_leader_* overrides.
 Battle-tower entries (bt_*, incl. bt_19/bt_20) are matched by prefix, so new tower
@@ -31,10 +45,20 @@ PROGRESSION = [
     "gym_05_fire", "gym_06_electric", "gym_07_water", "gym_08_psychic",
     "gym_09_dragon", "gym_10_ghost",
 ]
-# Elite Four + Champion: continues the chain after the 10 gyms.
-E4 = ["gym_20_alder", "gym_21_cynthia", "gym_22_ash", "gym_23_lance", "gym_24_n"]
-CHAIN = PROGRESSION + E4
-CHAIN_REQ = {tid: ([] if i == 0 else [[CHAIN[i - 1]]]) for i, tid in enumerate(CHAIN)}
+LAST_GYM = PROGRESSION[-1]
+# Elite Four: each gated on gym 10 only -> beatable in any order.
+E4_MEMBERS = ["gym_20_alder", "gym_21_cynthia", "gym_22_ash", "gym_23_lance"]
+# Champion: requires all four Elite Four members defeated.
+CHAMPION = "gym_24_n"
+
+# requiredDefeats is List[Set] = AND of ORs. A single-option OR per clause means
+# "this exact trainer"; multiple clauses mean "all of them" (the N champion gate).
+CHAIN_REQ = {}
+for _i, _tid in enumerate(PROGRESSION):
+    CHAIN_REQ[_tid] = [] if _i == 0 else [[PROGRESSION[_i - 1]]]
+for _tid in E4_MEMBERS:
+    CHAIN_REQ[_tid] = [[LAST_GYM]]
+CHAIN_REQ[CHAMPION] = [[m] for m in E4_MEMBERS]
 
 
 def write(path: Path, data) -> None:
@@ -75,7 +99,9 @@ def main() -> None:
             skipped += 1
             continue
         d = json.loads(fp.read_text())
-        d["series"] = [SERIES_ID]
+        # No `series` field -> trainer belongs to every series (pack paths + server_bosses).
+        # Undoes #251's `series: [server_bosses]`, which had pulled them out of the packs.
+        d.pop("series", None)
         d["requiredDefeats"] = req
         d["optional"] = optional
         fp.write_text(json.dumps(d, indent=2) + "\n")

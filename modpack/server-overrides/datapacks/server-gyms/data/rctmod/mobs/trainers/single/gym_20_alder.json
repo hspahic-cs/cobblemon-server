@@ -8,9 +8,6 @@
   "optional": false,
   "biomeTagWhitelist": [],
   "biomeTagBlacklist": [],
-  "series": [
-    "server_bosses"
-  ],
   "requiredDefeats": [
     [
       "gym_10_ghost"

@@ -8,10 +8,16 @@
   "optional": false,
   "biomeTagWhitelist": [],
   "biomeTagBlacklist": [],
-  "series": [
-    "server_bosses"
-  ],
   "requiredDefeats": [
+    [
+      "gym_20_alder"
+    ],
+    [
+      "gym_21_cynthia"
+    ],
+    [
+      "gym_22_ash"
+    ],
     [
       "gym_23_lance"
     ]

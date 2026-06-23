@@ -5,7 +5,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemLore;
 
@@ -23,10 +22,13 @@ import java.util.List;
  * Source is irrelevant: crate/gacha eggs and daycare-bred eggs are all just {@code PokemonEgg}
  * stacks and share the one cap.
  *
- * <p>Eggs are identified purely by {@link Item} identity ({@code other.getItem() == eggItem}) so the
- * bridge needs no compile-time dependency on Cobreeding. Status is shown through the vanilla {@code
- * LORE} data component, which the dedicated server syncs to clients — the bridge is server-only, so
- * a client-side tooltip mixin isn't an option.
+ * <p>Eggs are identified by their item's <b>class</b> ({@code getItem().getClass() == PokemonEgg}),
+ * not by item instance: Cobreeding registers a separate {@code PokemonEgg} item per Pokémon type
+ * ({@code bug_egg}, {@code water_egg}, … plus {@code pokemon_egg}, {@code manaphy_egg}, and shiny
+ * variants), so a fire egg and a water egg are different {@code Item} instances of the same class.
+ * Comparing by class counts them all as eggs while still needing no compile-time dependency on
+ * Cobreeding. Status is shown through the vanilla {@code LORE} data component, which the dedicated
+ * server syncs to clients — the bridge is server-only, so a client-side tooltip mixin isn't an option.
  */
 public final class EggIncubationLimit {
 
@@ -54,10 +56,12 @@ public final class EggIncubationLimit {
         // we can reason about, so we don't interfere.
         if (inv.getItem(slot) != stack) return -1;
 
-        Item eggItem = stack.getItem();
+        // Count by PokemonEgg *class*, not item instance: every Cobreeding egg variant
+        // (per-type, manaphy, shiny) is a distinct Item but the same class, and they all share one cap.
+        Class<?> eggClass = stack.getItem().getClass();
         int eggsBefore = 0;
         for (int i = 0; i < slot; i++) {
-            if (inv.getItem(i).getItem() == eggItem) eggsBefore++;
+            if (inv.getItem(i).getItem().getClass() == eggClass) eggsBefore++;
         }
         int rank = eggsBefore + 1;
         return rank <= MAX_INCUBATING ? rank : 0;

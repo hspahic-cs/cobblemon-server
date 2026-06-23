@@ -59,7 +59,14 @@ public class PokemonEggMixin {
         if (rank < 0) return; // couldn't resolve the slot — let Cobreeding tick it normally
         EggIncubationLimit.applyStatusLore(stack, rank);
         if (rank == 0) {
-            ci.cancel(); // over the cap: freeze the hatch countdown for this egg
+            // Over the cap: freeze the hatch countdown. Also toggle a hidden custom-data byte so the
+            // slot re-syncs to the client each tick — otherwise the client keeps decrementing its own
+            // predicted TIMER and the "Not incubating" egg still appears to count down.
+            EggIncubationLimit.pinFrozenTimer(stack);
+            ci.cancel();
+        } else {
+            // Incubating again: drop the resync flag; Cobreeding's own per-tick updates re-sync it.
+            EggIncubationLimit.clearFrozenTimerPin(stack);
         }
     }
 

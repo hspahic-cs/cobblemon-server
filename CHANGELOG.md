@@ -12,7 +12,24 @@ root README.
 
 ## [Unreleased]
 
-## [0.23.15] - 2026-06-23
+## [0.23.16] - 2026-06-23
+
+### Fixed
+- **Mega Evolution now applies the Mega form's ability** (e.g. Mega Gengar → Shadow Tag). mega_showdown
+  mega-evolves by toggling Cobblemon's `mega` aspect, which calls `Pokemon.attemptAbilityUpdate()` —
+  but that early-returns when the current ability is `forced`, so a force-set base ability (Cursed
+  Body) survived the form change. New `MegaAbilityMixin` clears the `forced` flag at the head of
+  `attemptAbilityUpdate` when the current form is a Mega form (keyed on the lowercased `mega` form
+  label, so Mega / Mega-X / Mega-Y all qualify), letting Cobblemon's own re-resolution pick the Mega
+  ability by the existing priority/index mapping. General to all Megas; reverts cleanly on un-mega;
+  non-Mega forced abilities are untouched.
+- **"Not incubating" eggs no longer appear to count down.** The cap froze the egg's hatch timer
+  server-side, but the timer is drawn client-side from Cobreeding's `TIMER` component, and the client
+  keeps running its own `inventoryTick` — so a frozen egg's displayed timer still ticked down on the
+  client (the unchanged server stack never re-synced to correct it). Capped eggs now toggle a hidden
+  custom-data byte each tick, forcing the slot to re-broadcast so the client's predicted timer is
+  overwritten with the frozen server value. The egg already never actually hatched; this fixes the
+  misleading display.
 
 ### Fixed
 - **Egg incubation cap (0.23.9) now actually counts eggs.** The cap identified eggs by item

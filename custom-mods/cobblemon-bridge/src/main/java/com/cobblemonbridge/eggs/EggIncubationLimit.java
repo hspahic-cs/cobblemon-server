@@ -2,10 +2,12 @@ package com.cobblemonbridge.eggs;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.ItemLore;
 
 import java.util.List;
@@ -81,6 +83,42 @@ public final class EggIncubationLimit {
         ItemLore desired = new ItemLore(List.of(line));
         if (!desired.equals(stack.get(DataComponents.LORE))) {
             stack.set(DataComponents.LORE, desired);
+        }
+    }
+
+    /** Hidden custom-data key toggled each tick on a capped egg (see {@link #pinFrozenTimer}). */
+    private static final String RESYNC_KEY = "cobblemonbridge_egg_resync";
+
+    /**
+     * Force this egg's inventory slot to re-broadcast to the client this tick by toggling a hidden
+     * custom-data byte. Needed because the hatch timer is rendered client-side from Cobreeding's
+     * {@code TIMER} component: when we freeze a capped egg (cancel its server tick), the server stack
+     * stops changing, so the vanilla container sync never corrects the client — which keeps running
+     * Cobreeding's {@code inventoryTick} and decrements its own local copy, showing a timer that
+     * appears to count down. Changing a component every tick makes {@code broadcastChanges} resend the
+     * slot, overwriting the client's drift with the frozen server value. Call once per tick on capped
+     * eggs (after {@link #applyStatusLore}, before cancelling the tick).
+     */
+    public static void pinFrozenTimer(ItemStack stack) {
+        CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        tag.putByte(RESYNC_KEY, (byte) (tag.getByte(RESYNC_KEY) == 0 ? 1 : 0));
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    }
+
+    /**
+     * Drop the resync flag once an egg is incubating again — from then on Cobreeding's own per-tick
+     * {@code SECOND} updates keep the slot in sync. No-op when the flag is absent, so it never churns
+     * the stack for eggs that were never capped.
+     */
+    public static void clearFrozenTimerPin(ItemStack stack) {
+        CustomData cd = stack.get(DataComponents.CUSTOM_DATA);
+        if (cd == null || !cd.copyTag().contains(RESYNC_KEY)) return;
+        CompoundTag tag = cd.copyTag();
+        tag.remove(RESYNC_KEY);
+        if (tag.isEmpty()) {
+            stack.remove(DataComponents.CUSTOM_DATA);
+        } else {
+            stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
         }
     }
 }

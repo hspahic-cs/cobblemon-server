@@ -1,7 +1,6 @@
 package com.cobblemonbridge.mixin;
 
 import com.cobblemonbridge.eggs.BredTagHook;
-import com.cobblemonbridge.eggs.EggIncubationLimit;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,45 +29,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(targets = "ludichat.cobbreeding.PokemonEgg", remap = false)
 public class PokemonEggMixin {
-
-    /**
-     * Caps the number of simultaneously-incubating eggs. At the HEAD of {@code inventoryTick} we rank
-     * this egg among the egg stacks in the player's inventory: the first
-     * {@link EggIncubationLimit#MAX_INCUBATING} (by slot) tick normally, the rest have the tick
-     * cancelled so their hatch countdown freezes. Either way we stamp a synced status lore line on the
-     * stack. Server-side only; clients receive the frozen TIMER + lore through normal item sync.
-     */
-    @Inject(
-        method = "inventoryTick(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZ)V",
-        at = @At("HEAD"),
-        cancellable = true,
-        remap = false
-    )
-    private void cobblemonbridge$capIncubation(
-        ItemStack stack,
-        Level level,
-        Entity entity,
-        int slot,
-        boolean selected,
-        CallbackInfo ci
-    ) {
-        if (level.isClientSide() || level.getServer() == null) return;
-        if (!(entity instanceof ServerPlayer player)) return;
-
-        int rank = EggIncubationLimit.incubationRank(player, stack, slot);
-        if (rank < 0) return; // couldn't resolve the slot — let Cobreeding tick it normally
-        EggIncubationLimit.applyStatusLore(stack, rank);
-        if (rank == 0) {
-            // Over the cap: freeze the hatch countdown. Also toggle a hidden custom-data byte so the
-            // slot re-syncs to the client each tick — otherwise the client keeps decrementing its own
-            // predicted TIMER and the "Not incubating" egg still appears to count down.
-            EggIncubationLimit.pinFrozenTimer(stack);
-            ci.cancel();
-        } else {
-            // Incubating again: drop the resync flag; Cobreeding's own per-tick updates re-sync it.
-            EggIncubationLimit.clearFrozenTimerPin(stack);
-        }
-    }
 
     @Inject(
         method = "inventoryTick(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;IZ)V",

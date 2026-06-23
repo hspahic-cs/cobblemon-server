@@ -1,0 +1,79 @@
+{
+  "name": "Gym Leader Gardenia",
+  "ai": {
+    "type": "pe",
+    "data": {
+      "temperature": 0.5
+    }
+  },
+  "battleRules": {
+    "maxItemUses": 2
+  },
+  "bag": [
+    {
+      "item": "cobblemon:super_potion",
+      "quantity": 1
+    }
+  ],
+  "team": [
+    {
+      "species": "cherubi",
+      "gender": "MALE",
+      "level": 19,
+      "nature": "timid",
+      "ability": "chlorophyll",
+      "moveset": [
+        "grassknot",
+        "growth",
+        "dazzlinggleam",
+        "safeguard"
+      ],
+      "ivs": {},
+      "evs": {}
+    },
+    {
+      "species": "turtwig",
+      "gender": "MALE",
+      "level": 19,
+      "nature": "relaxed",
+      "ability": "shellarmor",
+      "moveset": [
+        "grassknot",
+        "razorleaf",
+        "reflect",
+        "workup"
+      ],
+      "ivs": {},
+      "evs": {},
+      "heldItem": [
+        "miracle_seed"
+      ]
+    },
+    {
+      "species": "roserade",
+      "gender": "MALE",
+      "level": 22,
+      "nature": "timid",
+      "ability": "technician",
+      "moveset": [
+        "grassknot",
+        "petalblizzard",
+        "poisonsting",
+        "stunspore"
+      ],
+      "ivs": {
+        "atk": 15,
+        "spa": 15,
+        "spe": 15
+      },
+      "evs": {
+        "atk": 36,
+        "spa": 36,
+        "spe": 36
+      },
+      "heldItem": [
+        "sitrus_berry"
+      ]
+    }
+  ]
+}

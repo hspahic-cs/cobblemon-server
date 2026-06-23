@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.14] - 2026-06-23
+
+### Fixed
+- **Gym/E4 bosses no longer clutter the pack trainer cards.** They were showing up on every card
+  (bdsp/radicalred/unbound) because the 0.23.12 work wired them into a progression chain
+  (`requiredDefeats`). RCT only draws a trainer on a card if it's part of a progression graph — it
+  excludes "alone" nodes with no requiredDefeats links (that's why ~1400 wild trainers spawn but
+  never appear on a card). Stripped the `series`/`requiredDefeats`/`optional` wiring from the 55
+  boss files, so they're now "alone" and drop off every card. They stay series-less (fightable from
+  any series at the gym buildings) and `spawnWeightFactor = 0` (never wild-spawn); gym progression
+  is still gated by the bridge's `GymPrereqHook`, not RCT. Retired the now-empty `server_bosses`
+  series and renamed the generator to `ops/keep_bosses_off_cards.py`.
+
 ## [0.23.13] - 2026-06-23
 
 ### Fixed

@@ -26,73 +26,73 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 4.0% | 20 Great Balls |
     | 4.0% | 3 Revives |
     | 4.0% | 1 Nature Mint (random) |
-    | 3.0% | 10 Ultra Balls |
+    | 3.0% | 20 Ultra Balls |
     | 3.0% | 3 PP Up |
     | 3.0% | 1 Lucky Egg |
-    | 3.0% | 32 Quick Balls |
+    | 3.0% | 20 Quick Balls |
     | 2.0% | 5 Max Potions |
     | 2.0% | 2 Max Revives |
     | 2.0% | 1 Exp Share |
     | 0.5% | 2 Common Keys |
     | 0.5% | 1 Rare Key |
 
-??? note "Rare crate: 22 possible rewards"
+??? note "Rare crate: 27 possible rewards"
 
     | Chance | Reward |
     |---:|---|
-    | 15.5% | Rare Pokémon Egg |
-    | 11.0% | Uncommon Pokémon Egg |
-    | 8.5% | 2 Rare Candy |
-    | 6.0% | 3 Exp Candy M |
-    | 5.5% | Lucky egg |
-    | 5.0% | 2 EXP Candy L |
-    | 5.0% | 1 Ability Patch |
-    | 5.0% | Competitive Held Item (random) |
-    | 5.0% | 20 Eye of Ender |
-    | 4.0% | EV Training Item (random) |
-    | 4.0% | 3 IV Candy (random) |
-    | 3.0% | Silk Touch Book |
-    | 3.0% | Breeding Item (random) |
-    | 2.5% | 2 EXP candy XL |
-    | 2.5% | 1 Master Ball |
-    | 2.5% | Urn of Frost |
-    | 2.5% | Urn of Storms |
-    | 2.5% | Urn of Embers |
-    | 2.0% | 2 Rare keys |
-    | 2.0% | Keystone |
-    | 2.0% | Mega Stone |
-    | 1.0% | 1 Ultra Key |
+    | 14.7% | Rare Pokémon Egg |
+    | 10.6% | Uncommon Pokémon Egg |
+    | 8.2% | 2 Rare Candy |
+    | 5.8% | 3 Exp Candy M |
+    | 5.3% | Lucky egg |
+    | 4.9% | 2 EXP Candy L |
+    | 4.9% | 1 Ability Patch |
+    | 4.9% | Competitive Held Item (random) |
+    | 3.9% | EV Training Item (random) |
+    | 3.9% | 3 IV Candy (random) |
+    | 2.9% | Silk Touch Book |
+    | 2.9% | Breeding Item (random) |
+    | 2.4% | 2 EXP candy XL |
+    | 2.4% | Urn of Frost |
+    | 2.4% | Urn of Storms |
+    | 2.4% | Urn of Embers |
+    | 2.0% | Titan Key |
+    | 2.0% | Rock Golem Key |
+    | 2.0% | Steel Golem Key |
+    | 2.0% | Ice Golem Key |
+    | 2.0% | Dragon Golem Key |
+    | 1.9% | Keystone |
+    | 1.9% | Mega Stone |
+    | 1.8% | 16 Eye of Ender |
+    | 0.9% | 2 Rare keys |
+    | 0.5% | 1 Master Ball |
+    | 0.5% | 1 Ultra Key |
 
-??? note "Ultra crate: 26 possible rewards"
+??? note "Ultra crate: 21 possible rewards"
 
     | Chance | Reward |
     |---:|---|
-    | 8.0% | 2 Ability Patches |
-    | 8.0% | Ultra Egg |
-    | 6.5% | Rock Golem Key |
-    | 6.5% | Steel Golem Key |
-    | 6.5% | Ice Golem Key |
-    | 6.5% | Dragon Golem Key |
-    | 4.0% | Fullmoon Whistle |
-    | 4.0% | Newmoon Whistle |
-    | 4.0% | Liberty Pass |
-    | 4.0% | Curry of Justice |
-    | 4.0% | Titan Key |
-    | 4.0% | 2 Master Balls |
-    | 4.0% | Ash Cap |
-    | 3.0% | Rainbow Feather |
-    | 3.0% | Red Chain |
-    | 3.0% | Shiny Egg |
-    | 3.0% | Light Stone |
-    | 3.0% | Dark Stone |
-    | 3.0% | Proof of Conquest (U) |
-    | 3.0% | Proof of Conquest (A) |
-    | 3.0% | Proof of Conquest (M) |
-    | 3.0% | Vortex Stone |
-    | 1.0% | Totem of Undying (Zacian) |
-    | 1.0% | Griseous Orb |
-    | 0.5% | Azure Flute |
-    | 0.5% | 2 Ultra Keys |
+    | 11.5% | 2 Ability Patches |
+    | 11.4% | Ultra Egg |
+    | 5.7% | Fullmoon Whistle |
+    | 5.7% | Newmoon Whistle |
+    | 5.7% | Liberty Pass |
+    | 5.7% | Curry of Justice |
+    | 5.7% | 2 Master Balls |
+    | 5.7% | Ash Cap |
+    | 4.3% | Rainbow Feather |
+    | 4.3% | Red Chain |
+    | 4.3% | Shiny Egg |
+    | 4.3% | Light Stone |
+    | 4.3% | Dark Stone |
+    | 4.3% | Proof of Conquest (U) |
+    | 4.3% | Proof of Conquest (A) |
+    | 4.3% | Proof of Conquest (M) |
+    | 4.3% | Vortex Stone |
+    | 1.4% | Totem of Undying (Zacian) |
+    | 1.4% | Griseous Orb |
+    | 0.7% | Azure Flute |
+    | 0.7% | 2 Ultra Keys |
 
 ??? note "Pokémon crate: 6 possible rewards"
 
@@ -103,7 +103,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 14.9% | Rare Pokémon Egg |
     | 3.5% | Shiny Egg |
     | 1.5% | Ultra Rare Pokémon Egg |
-    | 0.5% | Legendary Pokémon Egg |
+    | 0.5% | Cosmetic Pokémon Egg |
 
 ## Egg species pools
 
@@ -127,7 +127,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
 
 ??? note "Baby Legend egg pool: 22 species (collectible novelties)"
 
-    Baby pre-evolutions of legendaries from the Baby Legends mod. They **do not** evolve into the real legendary and have baby-tier stats (BST 220) — collectibles, not battle-viable. Never spawn in the wild; the Legendary Egg is the only source.
+    Baby pre-evolutions of legendaries from the Baby Legends mod. They **do not** evolve into the real legendary and have baby-tier stats (BST 220): collectibles, not battle-viable. Never spawn in the wild; the Cosmetic Pokémon Egg (Ultra crate, Pokémon crate) is the only source.
 
     Articoo *(Articuno)*, Beta *(Arceus)*, Courpup *(Zacian/Zamazenta)*, Creslume *(Cresselia)*, Delcalf *(Kyogre)*, Giragrub *(Giratina)*, Haidon *(Koraidon)*, Kaidon *(Miraidon)*, Karfoal *(Keldeo)*, Latot *(Latios/Latias)*, Neonite *(Necrozma)*, Oh-ho *(Ho-Oh)*, Raygul *(Rayquaza)*, Regiclay *(Regi line)*, Rotisikree *(Moltres)*, Saladune *(Groudon)*, Statchic *(Zapdos)*, Temga *(Dialga)*, Xerfawn *(Xerneas)*, Yangram *(Zekrom/Reshiram/Kyurem)*, Yivpip *(Yveltal)*, Zerpint *(Zygarde)*
 

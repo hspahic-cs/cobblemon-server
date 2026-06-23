@@ -8,8 +8,5 @@
   "optional": false,
   "biomeTagWhitelist": [],
   "biomeTagBlacklist": [],
-  "series": [
-    "server_bosses"
-  ],
   "requiredDefeats": []
 }

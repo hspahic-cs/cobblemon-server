@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.12] - 2026-06-22
+
+### Fixed
+- **Restored the bdsp/radicalred/unbound trainer paths.** The 0.23.x `server_bosses` work
+  (#251) overwrote each gym/E4 boss's `series` to `["server_bosses"]`, which pulled them out of
+  every pack series — so the Brilliant Diamond (bdsp) path lost its bosses and the trainer
+  association only offered "Server Bosses." The bosses are now **series-less again** (RCT treats an
+  empty `series` as "belongs to every series"), so they show up in all the pack paths *and* in
+  `server_bosses` (which still renders a boss-only view, since the 80 pack wild-trainers carry an
+  explicit series and are excluded from it).
+- **Elite Four is beatable in any order.** The boss chain was strictly linear
+  (Alder→Cynthia→Ash→Lance→N). Now gyms 1–10 stay linear, the four Elite Four members (Alder,
+  Cynthia, Ash, Lance) each gate only on gym 10 → any order, and the champion (N) requires all
+  four. (`requiredDefeats` is global per trainer in RCT, so this one chain is shared across every
+  series the bosses appear in.)
+
+### Changed
+- **Progress-graph levels show real trainer levels instead of 200** (`initialLevelCap` 200 → 15).
+  The graph node renders `max(initialLevelCap(series), trainerLevels)`, and pack series have no
+  per-series cap, so the old global 200 floored every node at 200. **Note:** this also lowers RCT's
+  per-player level cap to track series progression, so RCT trainers now spawn scaled to your next
+  unbeaten boss rather than your raw party level — a deliberate shift from the 0.23.10 spawn tuning
+  baseline. `allowOverLeveling` still lets Pokémon level past the cap freely.
+
 ## [0.23.11] - 2026-06-22
 
 ### Fixed

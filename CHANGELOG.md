@@ -12,6 +12,29 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.10] - 2026-06-22
+
+### Changed
+- **RCT wild-trainer level window tightened at high levels (`maxLevelDiff` 25 → 10).** The spawn
+  window is `±min(maxLevelDiff, max(4, maxLevelDiff·playerLevel/100))`, so the old 25 stayed at the
+  ±4 floor for low-level players but ballooned to ±20 at L80 — spawning trainers far over the
+  player. 10 leaves low levels untouched (still ±4) and caps the high-level window to ±8–10, so
+  trainers cluster near the player's own level. Also fixes the "a weak player near a strong player
+  can't find their-level trainers" complaint: RCT already spawns per-player, the tighter window
+  just makes each player's trainers cluster nearer them (and see the nameplate change below).
+- **Trainers no longer walk up and force a battle on sight (`forceBattleOnSight` true → false).**
+  They wander; you right-click to fight. (`ForceIntoBattleGoal` never fires at 0% chance, so they
+  also stop pathing toward players.)
+- **Wild-trainer spawns ~1.5× more frequent and denser.** `spawnIntervalTicks` 180 → 120 and
+  `maxTrainersPerPlayer` 12 → 15.
+
+### Added
+- **Trainer nameplates show the team's highest Pokémon level**, e.g. `Ace Trainer Lv.45` (dim gray
+  suffix). Read a trainer's level at a glance instead of right-clicking every team to find a
+  fightable one. New `TrainerNameplateMixin` in cobblemon-bridge (`@ModifyReturnValue` on
+  `TrainerMob.getDisplayName()`), with `TrainerLevelBridge` reflecting `LevelUtils.trainerLevel`
+  since RCTmod isn't a compile dep — degrades silently if the level can't be resolved.
+
 ## [0.23.9] - 2026-06-22
 
 ### Changed

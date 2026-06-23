@@ -18,7 +18,7 @@
 	#The interval in ticks at which a spawn attempt is made per player.
 	# Default: 180
 	# Range: 1 ~ 2147483646
-	spawnIntervalTicks = 180
+	spawnIntervalTicks = 120
 	#━━━━━━━━━━
 	#The spawn interval ticks will grow towards this value based of how many trainers are already
 	#spawned in for a player. For example if a player has 0 trainers spawned for them the spawn
@@ -57,7 +57,7 @@
 	#Spawn cap of trainers per player.
 	# Default: 12
 	# Range: 0 ~ 2147483646
-	maxTrainersPerPlayer = 12
+	maxTrainersPerPlayer = 15
 	#━━━━━━━━━━
 	#Total trainer spawn cap. This value may be increased for servers with higher expected
 	#player numbers (> 4), for example (|players| + 1)*maxTrainersPerPlayer.
@@ -80,7 +80,7 @@
 	#The spawn weight decreases with a higher level difference.
 	# Default: 25
 	# Range: 0 ~ 100
-	maxLevelDiff = 25
+	maxLevelDiff = 10
 	#━━━━━━━━━━
 	#If enabled trainers will only spawn naturally around players that have a trainer card
 	#in their inventory (does not affect trainer spawners).
@@ -114,7 +114,7 @@
 	#━━━━━━━━━━
 	#Determines if trainers may force players into a battle if they look at each other for
 	#a certain amount if time.
-	forceBattleOnSight = true
+	forceBattleOnSight = false
 	#━━━━━━━━━━
 	#Max distance in blocks at which trainers may start a battle on sight.
 	# Default: 8.0

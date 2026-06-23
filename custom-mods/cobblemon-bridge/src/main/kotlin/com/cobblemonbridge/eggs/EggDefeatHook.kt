@@ -24,10 +24,12 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent
  *      the tier's full duration, pin Cobreeding's `TIMER` component to a near-infinite value so
  *      Cobreeding's own playtime tick never finishes the hatch on its own, and DM the player
  *      the expected play time.
- *   2. **Tick** (per second, only for non-AFK online players) — decrement
- *      `seconds_remaining` by 1 for every gacha-tagged egg in the player's inventory. When a
- *      counter reaches 0, flip Cobreeding's `TIMER` to 1 so its next inventory tick hatches
- *      the egg, and chat the player that it's ready.
+ *   2. **Tick** (per second) — decrement `seconds_remaining` by 1 for each egg, but ONLY when the
+ *      player is active (non-AFK) and the egg is within the incubation cap (the first
+ *      [EggIncubationLimit.MAX_INCUBATING] eggs in slot order). Capped eggs hold their counter — the
+ *      same pause mechanism as AFK — and show a "Not incubating" lore line. When an incubating egg's
+ *      counter reaches 0, flip Cobreeding's `TIMER` to 1 so its next inventory tick hatches the egg,
+ *      and chat the player that it's ready.
  *
  * The class name is preserved (legacy) to minimize churn in [com.cobblemonbridge.CobblemonBridge]
  * — the BATTLE_VICTORY subscription is gone; only the server-tick subscriber remains.
@@ -53,6 +55,11 @@ object EggDefeatHook {
     private const val NBT_SECONDS_REMAINING = "cobblemongacha_seconds_remaining"
     private const val NBT_HATCH_READY = "cobblemongacha_hatch_ready"
 
+    /** TIMER floor (in Cobreeding ticks) for cap-paused eggs, so Cobreeding's own native per-tick
+     *  decrement can't reach a hatch between our once-per-second re-syncs. Cobreeding drops TIMER by
+     *  at most ~60/sec (20 base + 40 with an incubator ability); 200 leaves comfortable margin. */
+    private const val HATCH_GUARD_TICKS = 200
+
     private var subTickCounter = 0
 
     @SubscribeEvent
@@ -64,9 +71,10 @@ object EggDefeatHook {
         for (player in event.server.playerList.players) {
             initializeNewEggs(player)
             // Always sync TIMER from our counter (overwrites Cobreeding's own decrement so the
-            // tooltip stays accurate AND AFK time doesn't slip through). Only DECREMENT the
-            // counter when the player isn't AFK.
-            tickActiveEggs(player, decrementCounter = !AfkBridge.isAfk(player.uuid))
+            // tooltip stays accurate AND AFK time doesn't slip through). Whether a given egg's
+            // counter DECREMENTS is decided per-egg inside: only when the player is active (non-AFK)
+            // AND the egg is within the incubation cap.
+            tickActiveEggs(player, playerActive = !AfkBridge.isAfk(player.uuid))
         }
     }
 
@@ -159,13 +167,21 @@ object EggDefeatHook {
         else -> "$seconds seconds"
     }
 
-    // ─── Per-second tick (non-AFK players only) ────────────────────────────
-    private fun tickActiveEggs(player: ServerPlayer, decrementCounter: Boolean) {
+    // ─── Per-second tick (active players; capped eggs paused like AFK) ──────
+    private fun tickActiveEggs(player: ServerPlayer, playerActive: Boolean) {
         val inv = player.inventory
+        var eggOrdinal = 0
         for (i in 0 until inv.containerSize) {
             val stack = inv.getItem(i)
             if (stack.isEmpty) continue
             if (!CobreedingBridge.isPokemonEgg(stack)) continue
+
+            // Rank every egg in slot order; only the first MAX_INCUBATING incubate, the rest are
+            // paused (frozen timer) exactly like an AFK player's eggs. Stamp the synced status lore.
+            eggOrdinal++
+            val incubating = eggOrdinal <= EggIncubationLimit.MAX_INCUBATING
+            EggIncubationLimit.applyStatusLore(stack, if (incubating) eggOrdinal else 0)
+
             val data = stack.get(DataComponents.CUSTOM_DATA) ?: continue
             val tag = data.copyTag()
             if (!tag.getBoolean(NBT_INITIALIZED)) continue
@@ -174,18 +190,24 @@ object EggDefeatHook {
             val label = tag.getString(NBT_TIER).takeIf { it.isNotEmpty() } ?: BRED_LABEL
 
             val remaining = tag.getInt(NBT_SECONDS_REMAINING)
-            val next = if (decrementCounter) (remaining - 1).coerceAtLeast(0) else remaining
+            // Decrement only when the player is active AND this egg is within the cap. Capped eggs
+            // hold their counter (same as AFK) so the per-second TIMER re-sync below rewinds
+            // Cobreeding's native decrement, keeping the egg frozen.
+            val next = if (playerActive && incubating) (remaining - 1).coerceAtLeast(0) else remaining
             if (next != remaining) tag.putInt(NBT_SECONDS_REMAINING, next)
 
             // ALWAYS sync Cobreeding TIMER from our seconds counter — this overwrites Cobreeding's
-            // own per-second decrement (so AFK time, during which we don't decrement, doesn't
-            // slip through) AND keeps the Cobreeding tooltip showing a sensible countdown.
-            CobreedingBridge.setTimer(stack, next * TICKS_PER_SECOND)
-            // Force-broadcast the slot so the client's cached TIMER updates in real time
+            // own per-second decrement (so AFK/capped time doesn't slip through) AND keeps the
+            // tooltip showing a sensible countdown. Capped eggs floor the TIMER so Cobreeding's own
+            // native decrement can't sneak them to a hatch between our once-per-second re-syncs.
+            val timerTicks = if (incubating) next * TICKS_PER_SECOND
+                             else maxOf(next * TICKS_PER_SECOND, HATCH_GUARD_TICKS)
+            CobreedingBridge.setTimer(stack, timerTicks)
+            // Force-broadcast the slot so the client's cached TIMER (and lore) updates in real time
             // (Cobreeding's tooltip reads off the client-side ItemStack).
             forceSlotSync(player, i, stack)
 
-            if (next == 0) {
+            if (incubating && next == 0) {
                 tag.putBoolean(NBT_HATCH_READY, true)
                 stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag))
                 player.sendSystemMessage(Component.literal(

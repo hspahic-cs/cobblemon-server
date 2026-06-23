@@ -227,7 +227,7 @@
     {
       "lootTier": "Standard",
       "label": "Ultra Egg",
-      "weightPct": 11.4,
+      "weightPct": 17.1,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -236,20 +236,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "An ultra-rare Pokémon egg"
-    },
-    {
-      "lootTier": "Standard",
-      "label": "Ash Cap",
-      "weightPct": 5.7,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "mega_showdown:ash_cap",
-          "count": 1
-        }
-      ],
-      "notes": "Ash-Cap Pikachu cosmetic"
+      "notes": "An ultra-rare Pokémon egg (pool includes a Battle Bond Greninja). Absorbed the removed Ash Cap's weight."
     },
     {
       "lootTier": "Jackpot",

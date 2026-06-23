@@ -276,6 +276,12 @@
       "id": "ironcrown",
       "hasHiddenAbility": false,
       "notes": "Paradox"
+    },
+    {
+      "id": "greninja",
+      "hasHiddenAbility": false,
+      "properties": "battle_bond=bond",
+      "notes": "Battle Bond Greninja (Bond form, Ash-Greninja capable). Replaces the Ash Cap reward."
     }
   ],
   "rare": [

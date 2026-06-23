@@ -12,7 +12,7 @@ root README.
 
 ## [Unreleased]
 
-## [0.23.16] - 2026-06-23
+## [0.23.19] - 2026-06-23
 
 ### Fixed
 - **Custom high-level wild trainers no longer render with the default skin.** The 80 `hl_*`
@@ -24,7 +24,45 @@ root README.
   skins client-side via the cobblemon-npc mod. (The other built-in pack trainers already resolve
   their skins from the rctmod jar — only these custom ones were broken.)
 
-## [0.23.15] - 2026-06-23
+## [0.23.18] - 2026-06-23
+
+### Changed
+- **Ultra crate: Ash Cap out, Battle Bond Greninja into the Ultra Egg pool.** Removed the Ash Cap
+  reward from the Ultra crate and folded its 5.7% into the **Ultra Egg** (now 17.1%). Added a
+  **Battle Bond Greninja** to the Ultra-Rare egg pool (now 34 species), so an Ultra Egg can hatch a
+  Bond-form Greninja that carries the `battlebond` ability (becomes Ash-Greninja in battle). Egg
+  pool entries can now carry an optional `properties` `PokemonProperties` fragment (here
+  `battle_bond=bond`) appended to `givepokemonegg`; `RewardGranter` passes it through. Note: with
+  Ash Cap also already craft-disabled (0.23.8), it's now unobtainable in normal play.
+
+### Fixed
+- **Egg incubation cap now actually pauses capped eggs.** The cap was enforced in the wrong place:
+  `PokemonEggMixin` cancelled Cobreeding's *native* `inventoryTick` countdown, but the bridge's own
+  `EggDefeatHook` is the real hatch driver — it runs a per-second counter and re-pins Cobreeding's
+  `TIMER` every second — so capped eggs kept counting down anyway (the 0.23.16 client-resync attempt
+  couldn't help because the server timer itself was still advancing). Moved the cap into
+  `EggDefeatHook`: an egg beyond the first `MAX_INCUBATING` (6, in slot order) simply doesn't get its
+  counter decremented, exactly like an AFK player's eggs — so the per-second re-sync rewinds
+  Cobreeding's decrement and the egg holds. Capped eggs also floor their pinned `TIMER` so Cobreeding
+  can't sneak a near-done one to a hatch between re-syncs. Removed the defunct `inventoryTick` cap
+  inject and the client-resync helpers.
+
+### Fixed
+- **Mega Evolution now applies the Mega form's ability** (e.g. Mega Gengar → Shadow Tag). mega_showdown
+  mega-evolves by toggling Cobblemon's `mega` aspect, which calls `Pokemon.attemptAbilityUpdate()` —
+  but that early-returns when the current ability is `forced`, so a force-set base ability (Cursed
+  Body) survived the form change. New `MegaAbilityMixin` clears the `forced` flag at the head of
+  `attemptAbilityUpdate` when the current form is a Mega form (keyed on the lowercased `mega` form
+  label, so Mega / Mega-X / Mega-Y all qualify), letting Cobblemon's own re-resolution pick the Mega
+  ability by the existing priority/index mapping. General to all Megas; reverts cleanly on un-mega;
+  non-Mega forced abilities are untouched.
+- **"Not incubating" eggs no longer appear to count down.** The cap froze the egg's hatch timer
+  server-side, but the timer is drawn client-side from Cobreeding's `TIMER` component, and the client
+  keeps running its own `inventoryTick` — so a frozen egg's displayed timer still ticked down on the
+  client (the unchanged server stack never re-synced to correct it). Capped eggs now toggle a hidden
+  custom-data byte each tick, forcing the slot to re-broadcast so the client's predicted timer is
+  overwritten with the frozen server value. The egg already never actually hatched; this fixes the
+  misleading display.
 
 ### Fixed
 - **Egg incubation cap (0.23.9) now actually counts eggs.** The cap identified eggs by item

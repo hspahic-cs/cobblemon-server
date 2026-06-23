@@ -12,5 +12,8 @@
     [
       "gym_01_ground"
     ]
+  ],
+  "series": [
+    "server_bosses"
   ]
 }

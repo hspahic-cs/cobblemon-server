@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.14] - 2026-06-23
+
+### Changed
+- **The gym/E4 bosses are now their own card.** They carry `series: ["server_bosses"]` again
+  (removed from the bdsp/radicalred/unbound packs), so the boss run renders as a dedicated
+  standalone card and the packs stay pure wild-trainer hunts. The any-order E4 chain from 0.23.12
+  is preserved.
+- **Bosses stay fightable from any series.** RCT couples a trainer's card with battle eligibility
+  (`canBattleAgainst` requires `isOfSeries(currentSeries)`), which would otherwise refuse a player
+  in a pack series when they walk up to a gym. New `TrainerSeriesGateMixin` rewrites just that
+  series gate to `true` for `server_bosses` trainers, so the gyms are battleable no matter which
+  series you're in. The bridge's own `GymPrereqHook`/`GymBattleGate` still enforce the actual gym
+  prerequisites; non-boss trainers keep their normal series gating.
+
 ## [0.23.12] - 2026-06-22
 
 ### Fixed

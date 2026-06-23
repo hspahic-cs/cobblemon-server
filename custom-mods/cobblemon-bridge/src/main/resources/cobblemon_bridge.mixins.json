@@ -9,7 +9,8 @@
     "PokemonEggMixin",
     "TrainerMobMixin",
     "TrainerMobBattleMixin",
-    "TrainerNameplateMixin"
+    "TrainerNameplateMixin",
+    "TrainerSeriesGateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

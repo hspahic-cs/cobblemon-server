@@ -12,5 +12,8 @@
     [
       "gym_03_fighting"
     ]
+  ],
+  "series": [
+    "server_bosses"
   ]
 }

@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 """
-Give the custom RCT boss trainers a progression chain, and surface them as a
-`server_bosses` series WITHOUT removing them from the bdsp/radicalred/unbound
-packs.
+Put the custom RCT boss trainers in their OWN card: a dedicated `server_bosses`
+series, removed from the bdsp/radicalred/unbound packs.
 
-Key point about RCT's data model: a trainer with NO `series` field belongs to
-EVERY series (`isOfSeries` is true when the list is empty). So we leave the boss
-trainers series-less — they show up in all the pack paths (the "old system") AND
-in `server_bosses` (which, being defined, renders a boss-only view since the 80
-pack wild-trainers DO carry an explicit series and are excluded from it).
+Each boss carries `series: ["server_bosses"]`, so the gym/E4 run renders as a
+clean standalone card and the packs stay pure wild-trainer hunts. RCT normally
+couples a trainer's series with battle eligibility (`canBattleAgainst` requires
+`isOfSeries(currentSeries)`), which would block players in a pack series from
+fighting the bosses — so cobblemon-bridge's `TrainerSeriesGateMixin` bypasses that
+one check for `server_bosses` trainers, keeping them fightable from any series
+(the bridge's own GymPrereqHook still gates the actual gym prerequisites).
 
-`requiredDefeats` in RCT is global, not per-series, so this one chain is shared by
-every series the trainer appears in (that's the accepted tradeoff for keeping the
-bosses shared rather than duplicating 55 entries):
+The progression chain (`requiredDefeats`):
   - gyms 1-10: linear, each requires the previous.
   - Elite Four (Alder, Cynthia, Ash, Lance): each requires only gym 10 -> beatable
     in ANY order.
@@ -99,9 +98,9 @@ def main() -> None:
             skipped += 1
             continue
         d = json.loads(fp.read_text())
-        # No `series` field -> trainer belongs to every series (pack paths + server_bosses).
-        # Undoes #251's `series: [server_bosses]`, which had pulled them out of the packs.
-        d.pop("series", None)
+        # Dedicated card: bosses live only in server_bosses, out of the bdsp/radicalred/unbound
+        # packs. Cross-series battle access is handled by the bridge's TrainerSeriesGateMixin.
+        d["series"] = [SERIES_ID]
         d["requiredDefeats"] = req
         d["optional"] = optional
         fp.write_text(json.dumps(d, indent=2) + "\n")

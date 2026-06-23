@@ -36,6 +36,7 @@ object TrainerLevelBridge {
     private var getTrainerManager: Method? = null
     private var getData: Method? = null
     private var trainerLevel: Method? = null
+    private var isOfSeriesMethod: Method? = null
     private val warnedOnce = AtomicBoolean(false)
 
     private fun resolve(): Boolean {
@@ -54,6 +55,7 @@ object TrainerLevelBridge {
                 getData = getTrainerManager!!.returnType.getMethod("getData", trainerMobClass)
                 // LevelUtils.trainerLevel is overloaded; select the TrainerMobData overload (static).
                 trainerLevel = levelUtils.getMethod("trainerLevel", tmdClass)
+                isOfSeriesMethod = tmdClass.getMethod("isOfSeries", String::class.java)
 
                 resolved = true
                 unavailable = false
@@ -85,6 +87,26 @@ object TrainerLevelBridge {
             if (level > 0) level else UNAVAILABLE
         } catch (e: Throwable) {
             UNAVAILABLE
+        }
+    }
+
+    /**
+     * Whether [trainer] belongs to [seriesId] per RCT's `TrainerMobData.isOfSeries` (which is true
+     * for any series when the trainer's series list is empty). Returns false if [trainer] isn't a
+     * TrainerMob, the mod is absent, or anything goes wrong. Never throws.
+     *
+     * Used by `TrainerSeriesGateMixin` to keep `server_bosses` trainers fightable from any series.
+     */
+    fun isOfSeries(trainer: Entity, seriesId: String): Boolean {
+        if (!resolve()) return false
+        if (!trainerMobClass!!.isInstance(trainer)) return false
+        return try {
+            val instance = getInstance!!.invoke(null)
+            val manager = getTrainerManager!!.invoke(instance)
+            val tmd = getData!!.invoke(manager, trainer) ?: return false
+            isOfSeriesMethod!!.invoke(tmd, seriesId) as? Boolean ?: false
+        } catch (e: Throwable) {
+            false
         }
     }
 

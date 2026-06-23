@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.11] - 2026-06-22
+
+### Fixed
+- **Trainer nameplate levels now actually show up.** The 0.23.10 `TrainerNameplateMixin` hooked
+  `TrainerMob.getDisplayName()`, but cobblemon-bridge is a server-only mod and nameplates are drawn
+  client-side from the client's own `getDisplayName()` — so the mixin never ran where the plate is
+  rendered, and no level appeared on hover. Reworked to bake the ` Lv.N` suffix into the trainer's
+  **synced custom name** server-side (in RCT's `udpateCustomName()`), which rides the normal
+  entity-data sync to every client (vanilla or modded) with no client mod needed.
+
 ## [0.23.10] - 2026-06-22
 
 ### Changed

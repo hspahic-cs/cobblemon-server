@@ -20,6 +20,6 @@
     "bdsp"
   ],
   "signatureItem": "cobblemon:ice_stone",
-  "spawnWeightFactor": 0.0,
+  "spawnWeightFactor": 1.0,
   "type": "leader"
 }

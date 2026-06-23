@@ -68,18 +68,17 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 0.5% | 1 Master Ball |
     | 0.5% | 1 Ultra Key |
 
-??? note "Ultra crate: 21 possible rewards"
+??? note "Ultra crate: 20 possible rewards"
 
     | Chance | Reward |
     |---:|---|
+    | 17.1% | Ultra Egg |
     | 11.5% | 2 Ability Patches |
-    | 11.4% | Ultra Egg |
     | 5.7% | Fullmoon Whistle |
     | 5.7% | Newmoon Whistle |
     | 5.7% | Liberty Pass |
     | 5.7% | Curry of Justice |
     | 5.7% | 2 Master Balls |
-    | 5.7% | Ash Cap |
     | 4.3% | Rainbow Feather |
     | 4.3% | Red Chain |
     | 4.3% | Shiny Egg |
@@ -121,9 +120,9 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
 
     Pawniard, Gligar **(HA)**, Togepi, Mimikyu, Honedge, Cleffa, Sneasel, Larvesta, Fletchling **(HA)**, Magnemite, Chansey, Axew, Ditto **(HA)**, Lapras, Litwick, Shellder, Tyrunt, Spiritomb, Toxel, Salandit, Snivy **(HA)**, Oshawott, Litten **(HA)**, Grookey **(HA)**, Sprigatito **(HA)**, Charcadet
 
-??? note "Ultra Rare egg pool: 33 species (pseudo-legendaries, gen starters, and all 20 Paradox Pokémon)"
+??? note "Ultra Rare egg pool: 34 species (pseudo-legendaries, gen starters, all 20 Paradox Pokémon, and a Battle Bond Greninja)"
 
-    Dratini **(HA)**, Larvitar, Beldum, Bagon **(HA)**, Gible **(HA)**, Deino, Goomy, Jangmo-O, Dreepy, Frigibax, Torchic **(HA)**, Froakie **(HA)**, Scorbunny **(HA)**, Greattusk, Screamtail, Brutebonnet, Fluttermane, Slitherwing, Sandyshocks, Roaringmoon, Walkingwake, Gougingfire, Ragingbolt, Irontreads, Ironbundle, Ironhands, Ironjugulis, Ironmoth, Ironthorns, Ironvaliant, Ironleaves, Ironboulder, Ironcrown
+    Dratini **(HA)**, Larvitar, Beldum, Bagon **(HA)**, Gible **(HA)**, Deino, Goomy, Jangmo-O, Dreepy, Frigibax, Torchic **(HA)**, Froakie **(HA)**, Scorbunny **(HA)**, Greattusk, Screamtail, Brutebonnet, Fluttermane, Slitherwing, Sandyshocks, Roaringmoon, Walkingwake, Gougingfire, Ragingbolt, Irontreads, Ironbundle, Ironhands, Ironjugulis, Ironmoth, Ironthorns, Ironvaliant, Ironleaves, Ironboulder, Ironcrown, **Greninja** *(Battle Bond, becomes Ash-Greninja)*
 
 ??? note "Baby Legend egg pool: 22 species (collectible novelties)"
 

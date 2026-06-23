@@ -10,11 +10,17 @@ import kotlin.random.Random
  *
  * `notes` carries any annotation from the CSV (e.g. "Own Tempo", "Yes (both forms)") so the
  * data isn't lost; the code doesn't act on it for v1.
+ *
+ * `properties` is an optional extra `PokemonProperties` fragment appended verbatim to the
+ * `givepokemonegg` command (e.g. `"battle_bond=bond"` to hatch a Battle Bond Greninja). Nullable
+ * because most pool entries omit it and the plain Gson loader doesn't honour Kotlin defaults for
+ * absent JSON fields.
  */
 data class EggSpecies(
     val id: String,
     val hasHiddenAbility: Boolean,
     val notes: String = "",
+    val properties: String? = null,
 )
 
 /**

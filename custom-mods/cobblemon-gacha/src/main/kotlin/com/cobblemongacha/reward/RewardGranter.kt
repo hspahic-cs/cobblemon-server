@@ -158,6 +158,9 @@ object RewardGranter {
             add("min_perfect_ivs=2")
             if (spec.shiny) add("shiny=true")
             if (grantHa) add("ha=yes")
+            // Optional per-species PokemonProperties fragment (e.g. "battle_bond=bond" → a Battle
+            // Bond Greninja, whose Bond form carries the battlebond ability).
+            if (!picked.properties.isNullOrBlank()) add(picked.properties)
         }.joinToString(" ")
         val cmd = "givepokemonegg ${player.gameProfile.name} $args"
         val src = player.server.createCommandSourceStack()

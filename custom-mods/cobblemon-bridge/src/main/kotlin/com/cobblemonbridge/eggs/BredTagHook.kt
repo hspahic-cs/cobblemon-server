@@ -78,13 +78,11 @@ object BredTagHook {
                 return@subscribe
             }
             event.pokemon.persistentData.putBoolean(TAG_KEY, true)
-            // Shiny breeding is disabled on this server: a bred (non-gacha) Pokémon never hatches
-            // shiny, regardless of cobbreeding's Masuda/method shiny rolls. Gacha eggs are exempt
-            // (handled above) — those keep their own shiny pool.
-            if (event.pokemon.shiny) {
-                event.pokemon.shiny = false
-                CobblemonBridge.logger.debug("Forced bred {} non-shiny (shiny breeding disabled)", event.pokemon.species.name)
-            }
+            // Shiny breeding is ENABLED at a flat 1/4096 with no bonuses: cobbreeding's shinyMethod
+            // is configured `always: 2.0, masuda: 1.0, crystal: 1.0`, so every bred egg rolls at
+            // 8192/2 = 1/4096 regardless of parent OTs (no Masuda boost), parent shininess (no
+            // crystal boost), or any streak. We let cobbreeding's roll stand here — no force-off.
+            // Gacha eggs keep their own shiny pool (handled by the gacha-hatch branch above).
             CobblemonBridge.logger.debug(
                 "Tagged hatched {} (uuid={}) as bred",
                 event.pokemon.species.name, event.pokemon.uuid,

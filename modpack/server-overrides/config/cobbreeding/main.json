@@ -4,9 +4,9 @@
   "mirrorHerbTimeInTicks": 600,
   "eggHatchMultiplier": 1.0,
   "shinyMethod": {
-    "masuda": 4.0,
+    "masuda": 1.0,
     "crystal": 1.0,
-    "always": 1.0
+    "always": 2.0
   },
   "hiddenAbilitiesEnabled": true,
   "forcedAbilitiesEnabled": false,

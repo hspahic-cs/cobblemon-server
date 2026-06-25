@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.24] - 2026-06-25
+
+### Changed
+- **Bred Pokémon can now hatch shiny at a flat 1/4096.** Shiny breeding was previously forced
+  off entirely (every bred mon was made non-shiny on hatch). Now cobbreeding's shiny roll stands,
+  configured for a flat 1/4096 on every egg with **no bonuses**: the Masuda method (different-OT
+  parents) and shiny-parent ("crystal") multipliers are neutralized to x1, and there is no streak
+  booster. Wild encounter shiny odds are unchanged (still the global 1/8192). Gacha/crate eggs keep
+  their own separate shiny pool.
+
 ## [0.23.23] - 2026-06-25
 
 ### Changed

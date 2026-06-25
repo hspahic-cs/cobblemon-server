@@ -18,7 +18,7 @@
     {
       "species": "spiritomb",
       "level": 65,
-      "nature": "calm",
+      "nature": "modest",
       "ivs": {
         "hp": 25,
         "atk": 25,
@@ -31,17 +31,17 @@
         "hp": 180,
         "atk": 0,
         "def": 4,
-        "spa": 0,
-        "spd": 180,
+        "spa": 180,
+        "spd": 0,
         "spe": 0
       },
       "ability": "infiltrator",
       "heldItem": "cobblemon:leftovers",
       "moveset": [
+        "nastyplot",
         "darkpulse",
         "shadowball",
-        "willowisp",
-        "painsplit"
+        "willowisp"
       ]
     },
     {

@@ -18,6 +18,14 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.nio.file.Files
+import java.nio.file.Path
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import kotlin.io.path.exists
+import kotlin.streams.toList
 
 /**
  * Caps wilderness world growth by regenerating chunks outside a persistent keep-box.
@@ -70,6 +78,17 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
         var stateDirty = false
         logger.info("Keep-box (effective): X[{}..{}] Z[{}..{}]", box.minX, box.maxX, box.minZ, box.maxZ)
 
+        // Resolve the snapshot dir for this boot's prune (one timestamped dir shared by all
+        // dimensions). Only on a real run with backups on — a dry run never deletes, so there is
+        // nothing to snapshot. Files are MOVED here right before deletion (see RegionResetter).
+        val snapshotRoot: Path? = if (config.backupBeforeReset && !config.dryRun) {
+            val base = Path.of(config.backupDir)
+            val resolved = if (base.isAbsolute) base else FMLPaths.GAMEDIR.get().resolve(base)
+            resolved.resolve(snapshotStamp(now, config.displayTimeZone))
+        } else {
+            null
+        }
+
         for (dimId in config.dimensions) {
             val folder = DimensionFolders.resolve(worldRoot, dimId)
             if (folder == null) {
@@ -99,7 +118,8 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
 
             val reason = if (forced) "manually armed" else "interval elapsed"
             logger.info("[{}] running reset ({}, dryRun={})...", dimId, reason, config.dryRun)
-            RegionResetter.run(dimId, folder, box, config.dryRun, config.maxDeleteFraction, logger)
+            val dimBackup = snapshotRoot?.resolve(dimId.replace(':', '_'))
+            RegionResetter.run(dimId, folder, box, config.dryRun, config.maxDeleteFraction, dimBackup, logger)
 
             if (!config.dryRun) {
                 state.lastResetEpochMillis[dimId] = now
@@ -112,6 +132,29 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             stateDirty = true
         }
         if (stateDirty) state.save()
+
+        // Trim old prune snapshots (newest [backupRetention] kept). The timestamped dir names
+        // sort chronologically, so a lexical sort + drop-oldest does the right thing.
+        if (snapshotRoot != null) pruneOldSnapshots(snapshotRoot.parent, config.backupRetention)
+    }
+
+    /** Filesystem-safe `yyyy-MM-dd_HH-mm-ss` stamp in the configured zone (UTC if it can't parse). */
+    private fun snapshotStamp(epochMillis: Long, timeZone: String): String {
+        val zone = runCatching { ZoneId.of(timeZone) }.getOrDefault(ZoneOffset.UTC)
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").withZone(zone)
+            .format(Instant.ofEpochMilli(epochMillis))
+    }
+
+    /** Delete all but the newest [keep] snapshot dirs under [base]. No-op if [keep] <= 0. */
+    private fun pruneOldSnapshots(base: Path, keep: Int) {
+        if (keep <= 0 || !base.exists()) return
+        runCatching {
+            val dirs = Files.list(base).use { s -> s.filter { Files.isDirectory(it) }.sorted().toList() }
+            for (old in dirs.dropLast(keep)) {
+                old.toFile().deleteRecursively()
+                logger.info("Pruned old wilderness snapshot {}", old)
+            }
+        }.onFailure { logger.warn("Snapshot retention failed under {}: {}", base, it.message) }
     }
 
     companion object {

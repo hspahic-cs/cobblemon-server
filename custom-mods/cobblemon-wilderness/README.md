@@ -21,6 +21,13 @@ deliberately turn it on.
   −40..39). Set `snapToRegions: false` to use the box verbatim.
 - Deleted chunks regenerate fresh next time a player visits. The matching files in
   `region/`, `entities/`, and `poi/` are all removed together.
+- **A snapshot is taken right before the prune** (`backupBeforeReset`, default on): on a real
+  run, each to-be-deleted file is **moved** into a timestamped dir under `backupDir` rather than
+  unlinked — the move *is* the deletion (the chunk still regenerates), so it leaves a restore
+  copy at ~no extra disk on the same filesystem. The newest `backupRetention` snapshots are kept.
+  This is a per-prune safety net **separate from** (not a replacement for) any scheduled
+  world-snapshot — by default it lands at `<server-dir>/wilderness-snapshots/`, outside a typical
+  `world/`-only snapshot's scope.
 - **All deletion happens at server boot only** (`ServerAboutToStartEvent`, before any
   level loads — chunks guaranteed unloaded, no open region files). Live commands only
   preview or arm the next boot's pass. Nothing destructive ever runs on a live world.
@@ -37,13 +44,36 @@ deliberately turn it on.
   "snapToRegions": true,
   "warnPlayersOutsideBox": true,
   "displayTimeZone": "America/New_York",
-  "maxDeleteFraction": 0.9
+  "maxDeleteFraction": 0.9,
+  "backupBeforeReset": true,
+  "backupDir": "wilderness-snapshots",
+  "backupRetention": 5
 }
 ```
 
 Two independent safety gates, both default-safe:
 - `enabled` — master switch. `false` = the mod is inert.
 - `dryRun` — when `true`, runs only **log** what they would delete (no deletion).
+
+Snapshot knobs:
+- `backupBeforeReset` — `true` (default) moves pruned files into a snapshot before deletion; `false` deletes outright.
+- `backupDir` — snapshot location. Relative paths resolve against the server dir; absolute paths used as-is. Keep it outside your scheduled world-snapshot's scope.
+- `backupRetention` — how many recent prune snapshots to keep (`0` = keep all).
+
+## Restore from a prune snapshot
+
+Each prune writes `<backupDir>/<timestamp>/<dimension>/{region,entities,poi}/r.X.Z.mca`. To bring
+pruned terrain back, **stop the server** and move the files back into the world (the chunks then
+load from the restored data instead of regenerating):
+
+```sh
+ts=wilderness-snapshots/2026-06-25_02-55-18/minecraft_overworld
+for sub in region entities poi; do
+  cp -an "$ts/$sub/." "world/$sub/"      # -n: never clobber a newer file
+done
+```
+
+Note `minecraft:overworld` is written as `minecraft_overworld` (the `:` is path-sanitized).
 
 ## Player warnings
 

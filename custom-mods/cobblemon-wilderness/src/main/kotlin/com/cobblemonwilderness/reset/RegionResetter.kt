@@ -4,6 +4,7 @@ import com.cobblemonwilderness.config.BoundingBox
 import org.slf4j.Logger
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.file.StandardCopyOption
 import kotlin.io.path.deleteIfExists
 import kotlin.io.path.exists
 import kotlin.io.path.fileSize
@@ -79,6 +80,12 @@ object RegionResetter {
      *
      * Two passes: first classify every region (so we know the delete fraction), then — only
      * if the [maxDeleteFraction] circuit breaker is satisfied — perform the deletions.
+     *
+     * When [backupTarget] is non-null and this is a real (non-[dryRun]) run, each to-be-deleted
+     * file is MOVED into [backupTarget]/<sub>/<name> instead of being unlinked. The move is the
+     * deletion — the chunk is gone from world/ and regenerates fresh — and it leaves a restore
+     * copy. On the same filesystem the move is an instant rename (no extra disk); across
+     * filesystems it falls back to copy+delete.
      */
     fun run(
         dimensionId: String,
@@ -86,6 +93,7 @@ object RegionResetter {
         box: BoundingBox,
         dryRun: Boolean,
         maxDeleteFraction: Double,
+        backupTarget: Path?,
         log: Logger,
     ): ResetReport {
         val regionDir = dimensionFolder.resolve("region")
@@ -115,8 +123,11 @@ object RegionResetter {
             return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true)
         }
 
-        // Pass 2 — delete (or tally) the matching r.X.Z.mca in region/, entities/, poi/.
+        // Pass 2 — remove (or tally) the matching r.X.Z.mca in region/, entities/, poi/. With a
+        // backupTarget on a real run we MOVE each file into the snapshot, which both preserves a
+        // restore copy and clears it from world/; otherwise we unlink it.
         var bytesFreed = 0L
+        var filesBackedUp = 0
         for (name in toDelete) {
             for (sub in MCA_SUBFOLDERS) {
                 val target = dimensionFolder.resolve(sub).resolve(name)
@@ -124,13 +135,21 @@ object RegionResetter {
                 val size = runCatching { target.fileSize() }.getOrDefault(0L)
                 if (dryRun) {
                     bytesFreed += size
-                } else {
-                    try {
+                    continue
+                }
+                try {
+                    if (backupTarget != null) {
+                        val dest = backupTarget.resolve(sub).resolve(name)
+                        Files.createDirectories(dest.parent)
+                        Files.move(target, dest, StandardCopyOption.REPLACE_EXISTING)
+                        filesBackedUp++
+                    } else {
                         target.deleteIfExists()
-                        bytesFreed += size
-                    } catch (e: Exception) {
-                        log.warn("[{}] failed to delete {}: {}", dimensionId, target, e.message)
                     }
+                    bytesFreed += size
+                } catch (e: Exception) {
+                    // Fail-safe: a failed move/delete leaves the file in place rather than losing it.
+                    log.warn("[{}] failed to remove {}: {}", dimensionId, target, e.message)
                 }
             }
         }
@@ -140,6 +159,9 @@ object RegionResetter {
             "[{}] {} {} region(s), kept {}, {} {} MB ({})",
             dimensionId, verb, toDelete.size, kept, verb, bytesFreed / (1024 * 1024), regionDir,
         )
+        if (!dryRun && backupTarget != null) {
+            log.info("[{}] snapshotted {} file(s) to {} before removal", dimensionId, filesBackedUp, backupTarget)
+        }
         return ResetReport(dimensionId, kept, toDelete.size, bytesFreed, dryRun)
     }
 }

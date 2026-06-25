@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **Wilderness prune: pre-prune snapshot.** `cobblemon-wilderness` now takes a snapshot right
+  before a real prune (`backupBeforeReset`, default on): each to-be-deleted region file is *moved*
+  into a timestamped dir under `backupDir` (default `<server-dir>/wilderness-snapshots/`, kept
+  `backupRetention=5` deep) instead of being unlinked. The move *is* the deletion — chunks still
+  regenerate — so it adds a restore path at ~no extra disk on the same filesystem, separate from
+  the weekly `/opt/snapshots` world backup. See the mod README for restore steps.
+- **`ops/wilderness-reset.sh`** — drives a prune on dev/prod: read-only preview by default, or
+  `confirm` to flip config → arm `/wildreset now` → broadcast a player countdown → restart (the
+  brief kick) → verify. Verify polls the boot log for the actual prune line rather than a fixed
+  sleep (a fixed sleep races the boot-time prune and can misreport "removed 0").
+
 ## [0.23.22] - 2026-06-23
 
 ### Changed

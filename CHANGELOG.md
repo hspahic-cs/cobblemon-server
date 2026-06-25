@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.23] - 2026-06-25
+
 ### Added
 - **Wilderness prune: relocate structures on reset** (`reseedStructuresOutsideBox`, off by
   default). Pruned chunks normally regenerate identically (one world seed). With this on, a

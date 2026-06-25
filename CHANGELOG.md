@@ -13,6 +13,13 @@ root README.
 ## [Unreleased]
 
 ### Added
+- **Wilderness prune: relocate structures on reset** (`reseedStructuresOutsideBox`, off by
+  default). Pruned chunks normally regenerate identically (one world seed). With this on, a
+  per-cycle salt — bumped on every real prune — is mixed into vanilla structure placement
+  (`RandomSpreadStructurePlacement`) for grid cells wholly outside the keep-box, so monuments and
+  structures move to new spots each cycle while terrain stays unchanged. One mixin covers every
+  structure set (vanilla + modded, incl. Legendary Monuments) with no per-structure list; inside
+  the box placement is byte-identical. New server-only mixin infra in the mod.
 - **Wilderness prune: pre-prune snapshot.** `cobblemon-wilderness` now takes a snapshot right
   before a real prune (`backupBeforeReset`, default on): each to-be-deleted region file is *moved*
   into a timestamped dir under `backupDir` (default `<server-dir>/wilderness-snapshots/`, kept

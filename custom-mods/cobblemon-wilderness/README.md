@@ -31,6 +31,17 @@ deliberately turn it on.
 - **All deletion happens at server boot only** (`ServerAboutToStartEvent`, before any
   level loads — chunks guaranteed unloaded, no open region files). Live commands only
   preview or arm the next boot's pass. Nothing destructive ever runs on a live world.
+- **Optional: relocating structures** (`reseedStructuresOutsideBox`, off by default). Deleting a
+  chunk regenerates it from the same seed — *identical* terrain. With this on, structures and
+  monuments in chunks **outside the box** are moved to new spots each reset cycle, so a
+  pruned-then-revisited frontier has its landmarks somewhere new. It works by mixing a per-cycle
+  salt (bumped on every real prune, stored in runtime state) into vanilla structure placement
+  (`RandomSpreadStructurePlacement`) for grid cells lying wholly outside the box — so it covers
+  **every** structure set at once (vanilla *and* modded, e.g. Legendary Monuments), no list to
+  maintain. **Terrain is unchanged** (only placement moves), and inside the box placement is
+  byte-identical. Caveats: structures still only appear where their biome allows, so variety is
+  bounded; the hook has no dimension context, so it applies to all dimensions' structures beyond
+  the X/Z box (only the pruned overworld actually regenerates them).
 
 ## Config — `config/cobblemon-wilderness/authored/config.json`
 
@@ -47,7 +58,8 @@ deliberately turn it on.
   "maxDeleteFraction": 0.9,
   "backupBeforeReset": true,
   "backupDir": "wilderness-snapshots",
-  "backupRetention": 5
+  "backupRetention": 5,
+  "reseedStructuresOutsideBox": false
 }
 ```
 
@@ -59,6 +71,9 @@ Snapshot knobs:
 - `backupBeforeReset` — `true` (default) moves pruned files into a snapshot before deletion; `false` deletes outright.
 - `backupDir` — snapshot location. Relative paths resolve against the server dir; absolute paths used as-is. Keep it outside your scheduled world-snapshot's scope.
 - `backupRetention` — how many recent prune snapshots to keep (`0` = keep all).
+
+Frontier knob:
+- `reseedStructuresOutsideBox` — `false` (default). `true` relocates structures/monuments outside the box each reset cycle (see "relocating structures" above). Takes effect from the first real prune after you enable it; needs the mixin jar (this build).
 
 ## Restore from a prune snapshot
 

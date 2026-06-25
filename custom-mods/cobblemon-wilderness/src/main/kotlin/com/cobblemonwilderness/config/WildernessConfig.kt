@@ -116,6 +116,15 @@ data class WildernessConfig(
     val backupDir: String = "wilderness-snapshots",
     /** Keep this many of the most recent prune snapshots; older ones are deleted after a run. 0 = keep all. */
     val backupRetention: Int = 5,
+    /**
+     * When true, structures and monuments in chunks OUTSIDE the keep-box are relocated each reset
+     * cycle (a per-cycle salt is mixed into structure placement), so a pruned-then-revisited
+     * frontier has its landmarks in new spots — terrain itself is unchanged. Off by default: this
+     * is a deliberate gameplay change, and it applies to all dimensions' structures beyond the
+     * X/Z box (the placement hook has no dimension context), though only the pruned overworld
+     * actually regenerates them. Inside the box, placement is always untouched.
+     */
+    val reseedStructuresOutsideBox: Boolean = false,
 ) {
     /** The box actually enforced — region-aligned when [snapToRegions] is on. */
     fun effectiveBox(): BoundingBox = if (snapToRegions) box.snappedToRegions() else box.normalized()

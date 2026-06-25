@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.26] - 2026-06-25
+
+### Fixed
+- **Egg incubation timers are now driven by one clock instead of two.** Cobreeding decremented its
+  own egg `TIMER` every second at the same time the bridge re-pinned that timer from its own
+  playtime/incubation-cap counter, and the two fought. The visible symptoms:
+  - **"Not incubating" eggs still counted down** — the bridge held a capped egg's counter, but
+    Cobreeding's native decrement kept nibbling the timer between the once-per-second re-syncs.
+  - **An egg showed different hatch times in the hotbar vs the main inventory**, and behaved
+    differently while a chest screen was open vs closed — the native decrement raced the bridge's
+    per-slot sync, so the displayed value depended on where the egg sat and what screen was open.
+
+  A new mixin suppresses Cobreeding's native `TIMER` decrement on bridge-managed eggs, so the only
+  thing that ever moves an egg's timer is the bridge's per-second re-pin. Capped/AFK eggs are now
+  genuinely frozen (not just "frozen between re-syncs"), and a given egg shows the same time
+  everywhere. Hatching is unchanged: when an egg's counter hits 0 the bridge pins the timer to 0 and
+  Cobreeding hatches it on its next tick.
+
 ## [0.23.25] - 2026-06-25
 
 ### Fixed

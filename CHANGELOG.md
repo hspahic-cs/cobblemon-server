@@ -12,6 +12,22 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.23] - 2026-06-25
+
+### Changed
+- **E4 + Champion team rebalance** after a player swept the gauntlet (Alder → Cynthia → Ash →
+  Lance → N). Reworked four of the five teams; every change is mirrored across both the
+  `server-gyms` datapack and the `cobblemon-npc` jar.
+  - **Ash** (E4) rebuilt: Focus Sash utility-lead Pikachu, maxed Battle Bond Greninja + Mega
+    Charizard X aces, and a Snorlax + Goodra defensive core (the old all-frail team was 6-0'd by a
+    single Dragapult).
+  - **Cynthia** (E4): Spiritomb swapped from a passive set to an offensive Nasty Plot breaker.
+  - **Lance** (E4): bulkier, fully-maxed Dragons with answers to fast sweepers (Choice Scarf
+    Dragapult) and to Fairy walls (Iron Head / Poison Jab coverage).
+  - **N** (Champion) rebuilt into a competitive, mostly-non-legendary team — Reshiram, Mega
+    Rayquaza, Choice Scarf Zoroark (Illusion mirrors Rayquaza), plus Ferrothorn / Toxapex / Scizor
+    for hazards, Haze, and priority — closing the fast-sweeper hole that let one Pokémon sweep it.
+
 ## [0.23.22] - 2026-06-23
 
 ### Changed

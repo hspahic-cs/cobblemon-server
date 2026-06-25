@@ -23,8 +23,9 @@ import java.util.Random
  * Daily battle tower at spawn — three floors, three rotating challenge-mode gym leaders.
  *
  * Rotation: every server-local midnight (checked on a coarse tick poll), yesterday's tower
- * NPCs are killed (selector: `tag=cobblemon_bridge.tower`) and three leaders from the
- * 18-strong challenge pool are summoned at the op-configured floor positions
+ * NPCs are cleared ([cleanupOldTrainers] — by tower trainer-id, after the floor chunks load, so
+ * tag-less or wandered strays don't survive) and three leaders from the challenge pool are
+ * summoned at the op-configured floor positions
  * (`/tower setfloor 1..3`). The pick is a deterministic function of the epoch-day
  * ([leadersForDay]) — no stored roll, every restart agrees on today's lineup, and
  * [TowerStore.lastRotatedEpochDay] only prevents double-summoning within the same day.
@@ -79,6 +80,14 @@ object TowerManager {
         "bt_20_oak_challenge" to "Professor Oak",
     )
 
+    /** Every trainer id that can ever stand in the tower — each leader's challenge id AND its
+     *  normal-track id (`_challenge` dropped). These ids are tower-exclusive, so the pre-summon
+     *  cleanup ([cleanupOldTrainers]) can safely discard ANY rctmod trainer whose id is in this set,
+     *  regardless of whether it kept its tower tag or wandered off its floor spot. */
+    private val TOWER_TRAINER_IDS: Set<String> = POOL.flatMap { (challengeId, _) ->
+        listOf(challengeId, challengeId.removeSuffix("_challenge"))
+    }.toSet()
+
     /** Server-local timezone — midnight in this zone is the rotation + reward-reset boundary. */
     private val ZONE: ZoneId = ZoneId.systemDefault()
 
@@ -110,8 +119,13 @@ object TowerManager {
     private var settleCountdown = 0
     /** Ticks to wait after [rotate] force-loads the floor chunks before the first summon: RCTmod's
      *  summon searches for a spawnable position and mis-places the trainer far away if the target
-     *  chunk's block data isn't loaded yet. */
+     *  chunk's block data isn't loaded yet. The pre-summon cleanup ([cleanupOldTrainers]) also runs
+     *  at the END of this warmup — only once the force-loaded chunks (and their stale trainers) are
+     *  actually loaded, which is the whole reason the old in-`rotate` kill selectors missed them. */
     private var warmupCountdown = 0
+    /** Floor spots to sweep for yesterday's trainers when [warmupCountdown] elapses. Captured by
+     *  [rotate]; consumed once by [cleanupOldTrainers]. */
+    private var cleanupPositions: List<WarpPos> = emptyList()
 
     @Volatile
     private var store: TowerStore? = null
@@ -163,9 +177,13 @@ object TowerManager {
      *  then move to the next. Returns true while a rotation is in progress, so [onServerTick] skips
      *  its poll. (Forceloads are NOT removed — see [tagFloor].) */
     private fun advanceRotationPipeline(server: MinecraftServer): Boolean {
-        // Let the freshly force-loaded floor chunks finish loading before the first summon.
+        // Let the freshly force-loaded floor chunks finish loading before the first summon. When the
+        // warmup elapses the chunks (and any of yesterday's trainers in them) are loaded, so THIS is
+        // where we clear stale trainers — before the first summon, so today's fresh NPCs are never
+        // caught by the sweep.
         if (warmupCountdown > 0 && spawnQueue.isNotEmpty()) {
             warmupCountdown--
+            if (warmupCountdown == 0) cleanupOldTrainers(server)
             return true
         }
         settling?.let { p ->
@@ -181,6 +199,37 @@ object TowerManager {
             return true
         }
         return false
+    }
+
+    /** Clear yesterday's tower trainers, run ONCE when the rotation warmup elapses (so the
+     *  force-loaded floor chunks are loaded and their entities are present). For each floor spot we
+     *  scan a generous box and discard any rctmod trainer whose id is a known tower leader
+     *  ([TOWER_TRAINER_IDS]) — this catches trainers that lost their tower tag (e.g. a restart during
+     *  the materialise window left them untagged) or wandered off their spot, both of which the old
+     *  tag-/radius-scoped `kill` selectors missed, accumulating duplicates day over day. The id
+     *  filter keeps it safe: only tower leaders are removed, never an unrelated trainer that happens
+     *  to be nearby. Runs before the first summon, so today's fresh NPCs are never swept. */
+    private fun cleanupOldTrainers(server: MinecraftServer) {
+        val positions = cleanupPositions
+        cleanupPositions = emptyList()
+        if (positions.isEmpty()) return
+        var discarded = 0
+        for (pos in positions) {
+            val level = levelFor(server, pos.world) ?: continue
+            val box = AABB(pos.x - 64, pos.y - 48, pos.z - 64, pos.x + 64, pos.y + 48, pos.z + 64)
+            val stale = level.getEntitiesOfClass(Mob::class.java, box) { mob ->
+                RctTrainerBridge.trainerIdOf(mob)?.let { it in TOWER_TRAINER_IDS } == true
+            }
+            for (m in stale) { m.discard(); discarded++ }
+        }
+        // Belt-and-suspenders: a dimension-wide sweep of anything still carrying the tower tag but
+        // sitting outside every floor box (e.g. a leader dragged far away before this ran).
+        val src = server.createCommandSourceStack().withPermission(4).withSuppressedOutput()
+        for (dim in positions.map { it.world }.distinct()) {
+            server.commands.performPrefixedCommand(
+                src, "execute in $dim run kill @e[type=rctmod:trainer,tag=${BridgeTags.TOWER}]")
+        }
+        CobblemonBridge.logger.info("tower: pre-summon cleanup discarded {} stale tower trainer(s)", discarded)
     }
 
     /** Summon one floor's trainer via RCTmod's positional summon_persistent (explicit BlockPos,
@@ -287,16 +336,15 @@ object TowerManager {
             for ((difficulty, trainerId) in listOf("hard" to challengeId, "normal" to normalId)) {
                 val pos = s.floor(floor, difficulty) ?: continue
                 run("execute in ${pos.world} run forceload add ${Math.floor(pos.x).toInt()} ${Math.floor(pos.z).toInt()}")
-                // Clear any stray already standing here so the spot ends up with exactly our summon.
-                run("execute in ${pos.world} positioned ${pos.x} ${pos.y} ${pos.z} run kill @e[type=rctmod:trainer,distance=..6]")
                 floorPositions.add(pos)
                 spawnQueue.add(PendingFloor(pos, floor, trainerId, difficulty, name))
             }
         }
-        // Sweep any tower-tagged leftover elsewhere in the floor dimensions (e.g. a moved floor).
-        for (dim in floorPositions.map { it.world }.distinct()) {
-            run("execute in $dim run kill @e[type=rctmod:trainer,tag=${BridgeTags.TOWER}]")
-        }
+        // Yesterday's trainers are cleared NOT here but in [cleanupOldTrainers], which runs once the
+        // warmup elapses — by then the chunks force-loaded just above are actually loaded, so the
+        // sweep can see (and discard) the stale trainers. Doing it inline here ran on a cold chunk at
+        // midnight (nobody near spawn), matched nothing, and let yesterday's NPCs survive → duplicates.
+        cleanupPositions = floorPositions.toList()
 
         s.setLastRotatedEpochDay(epochDay)
         // New lineup invalidates every in-flight run (the NPCs just changed under them).

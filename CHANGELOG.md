@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.25] - 2026-06-25
+
+### Fixed
+- **Battle Tower: clearing the tower now returns you to the Receptionist**, not the first floor.
+  Finishing the final floor teleported to the run-end "return spot", which falls back to floor 1
+  when unset (it usually is): you'd win and get dropped back at the bottom. Wins now warp to the
+  entry spot where the Receptionist stands, same as a loss does.
+- **Battle Tower: yesterday's leaders no longer pile up as duplicates.** The midnight rotation
+  cleared old trainers with `kill` selectors issued in the same tick it force-loaded the floor
+  chunks, so when nobody was near spawn at midnight the chunks were still cold, the selectors
+  matched nothing, and yesterday's NPCs survived once the chunk later loaded for the new summon,
+  stacking day over day. Cleanup now runs after the chunks finish loading and discards trainers by
+  tower leader-id, so tag-less (e.g. a restart mid-summon) or wandered strays are cleared too.
+
+### Added
+- **`/battletower` op command** as an alias of `/tower` (so `/battletower rotate`, `/battletower
+  status`, etc. work). `/battletower rotate` force-rotates the tower on demand for testing.
+
 ## [0.23.24] - 2026-06-25
 
 ### Changed

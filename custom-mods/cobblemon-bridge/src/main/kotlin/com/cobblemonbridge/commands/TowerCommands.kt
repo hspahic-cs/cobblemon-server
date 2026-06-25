@@ -19,7 +19,8 @@ import net.minecraft.world.entity.npc.VillagerType
 import net.minecraft.world.phys.AABB
 
 /**
- * Op tooling for the daily battle tower. All subcommands are op level 2.
+ * Op tooling for the daily battle tower. All subcommands are op level 2. Also registered under
+ * the alias `/battletower` (so `/battletower rotate`, `/battletower status`, … all work).
  *
  *   /tower setfloor <1-3> [hard|normal] — capture the sender's position as that floor's leader
  *                           spot for the given difficulty (default hard). Each floor has BOTH a
@@ -38,7 +39,7 @@ object TowerCommands {
     private const val OP_LEVEL = 2
 
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
-        dispatcher.register(
+        val towerNode = dispatcher.register(
             Commands.literal("tower")
                 .requires { it.hasPermission(OP_LEVEL) }
                 .then(Commands.literal("setfloor")
@@ -63,6 +64,13 @@ object TowerCommands {
                 .then(Commands.literal("status")
                     .executes { ctx -> status(ctx.source); 1 }
                 )
+        )
+        // `/battletower ...` is an op-level alias of `/tower ...` (so `/battletower rotate`,
+        // `/battletower status`, etc. all work) — the name admins reach for when testing.
+        dispatcher.register(
+            Commands.literal("battletower")
+                .requires { it.hasPermission(OP_LEVEL) }
+                .redirect(towerNode)
         )
     }
 

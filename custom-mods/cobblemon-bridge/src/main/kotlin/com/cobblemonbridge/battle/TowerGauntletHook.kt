@@ -292,9 +292,9 @@ object TowerGauntletHook {
     }
 
     /** The tower's floors are physically separate — teleports move the player through them.
-     *  Win floor N → warp up to floor N+1's spot; lose/flee/heal → warp to the entry/start spot
-     *  ([teleportToEntry]); clear floor 3 → warp to the return spot. The floor positions double as
-     *  the NPC anchors, so arrival is right next to the leader. */
+     *  Win floor N → warp up to floor N+1's spot; lose/flee/heal AND clearing the final floor →
+     *  warp back to the entry spot where the Receptionist stands ([teleportToEntry]). The floor
+     *  positions double as the NPC anchors, so arrival is right next to the leader. */
     private fun teleportToFloor(player: ServerPlayer, floor: Int, difficulty: String?) {
         val store = TowerManager.store()
         val diff = difficulty ?: BridgeTags.DIFFICULTY_HARD
@@ -303,15 +303,9 @@ object TowerGauntletHook {
         }
     }
 
-    /** Run complete → warp to the tower's return spot (or floor 1). */
-    private fun teleportOut(player: ServerPlayer) {
-        TowerManager.store().returnPos()?.let {
-            com.cobblemonbridge.util.DelayedTeleports.schedule(player, it)
-        }
-    }
-
-    /** Run failed → warp back to the entry/start spot (where the entry NPC is), not floor 1, so the
-     *  player restarts the gauntlet from the bottom. Falls back to the return spot, then floor 1. */
+    /** Run ended (win OR loss) → warp back to the entry/start spot (where the Receptionist NPC is),
+     *  NOT floor 1. Finishing the tower drops the player at the Receptionist, same as a loss does, so
+     *  they're never stranded on the top floor. Falls back to the return spot, then floor 1. */
     private fun teleportToEntry(player: ServerPlayer) {
         val store = TowerManager.store()
         (store.entryPos() ?: store.returnPos() ?: store.floor(1, BridgeTags.DIFFICULTY_HARD))?.let {
@@ -324,7 +318,7 @@ object TowerGauntletHook {
         val hard = runDifficulty[player.uuid] != BridgeTags.DIFFICULTY_NORMAL
         clearRun(player.uuid)
         player.persistentData.remove(RUN_NBT_KEY)
-        teleportOut(player)
+        teleportToEntry(player)  // finished → back to the Receptionist (not the top floor)
         if (clearedToday(player.uuid)) return  // belt-and-braces; interact gate already blocks
         TowerManager.store().markCleared(player.uuid, TowerManager.todayEpochDay())
         val keyTier = if (hard) "rare" else "common"

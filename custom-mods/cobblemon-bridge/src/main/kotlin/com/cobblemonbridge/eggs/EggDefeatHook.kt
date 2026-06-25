@@ -21,15 +21,21 @@ import net.neoforged.neoforge.event.tick.ServerTickEvent
  * Mechanism:
  *   1. **Initialization** (per-second scan of online players' inventories) — when a gacha-tagged
  *      egg appears that we haven't seen before, stamp `cobblemongacha_seconds_remaining` with
- *      the tier's full duration, pin Cobreeding's `TIMER` component to a near-infinite value so
- *      Cobreeding's own playtime tick never finishes the hatch on its own, and DM the player
+ *      the tier's full duration, pin Cobreeding's `TIMER` component to match, and DM the player
  *      the expected play time.
  *   2. **Tick** (per second) — decrement `seconds_remaining` by 1 for each egg, but ONLY when the
  *      player is active (non-AFK) and the egg is within the incubation cap (the first
  *      [EggIncubationLimit.MAX_INCUBATING] eggs in slot order). Capped eggs hold their counter — the
  *      same pause mechanism as AFK — and show a "Not incubating" lore line. When an incubating egg's
- *      counter reaches 0, flip Cobreeding's `TIMER` to 1 so its next inventory tick hatches the egg,
+ *      counter reaches 0, pin Cobreeding's `TIMER` to 0 so its next inventory tick hatches the egg,
  *      and chat the player that it's ready.
+ *
+ * This bridge is the SINGLE source of truth for the hatch timer:
+ * [com.cobblemonbridge.mixin.PokemonEggMixin] suppresses Cobreeding's own native per-second `TIMER`
+ * decrement on bridge-managed eggs, so the only thing that ever moves the timer is the per-second
+ * re-pin here. That's what makes the AFK/cap pause exact (a held counter = a frozen timer, with no
+ * native decrement leaking through between re-syncs) and keeps the displayed time consistent across
+ * the hotbar, the main inventory, and open container screens.
  *
  * The class name is preserved (legacy) to minimize churn in [com.cobblemonbridge.CobblemonBridge]
  * — the BATTLE_VICTORY subscription is gone; only the server-tick subscriber remains.
@@ -55,11 +61,6 @@ object EggDefeatHook {
     private const val NBT_SECONDS_REMAINING = "cobblemongacha_seconds_remaining"
     private const val NBT_HATCH_READY = "cobblemongacha_hatch_ready"
 
-    /** TIMER floor (in Cobreeding ticks) for cap-paused eggs, so Cobreeding's own native per-tick
-     *  decrement can't reach a hatch between our once-per-second re-syncs. Cobreeding drops TIMER by
-     *  at most ~60/sec (20 base + 40 with an incubator ability); 200 leaves comfortable margin. */
-    private const val HATCH_GUARD_TICKS = 200
-
     private var subTickCounter = 0
 
     @SubscribeEvent
@@ -70,10 +71,10 @@ object EggDefeatHook {
         if (!CobreedingBridge.available()) return
         for (player in event.server.playerList.players) {
             initializeNewEggs(player)
-            // Always sync TIMER from our counter (overwrites Cobreeding's own decrement so the
-            // tooltip stays accurate AND AFK time doesn't slip through). Whether a given egg's
-            // counter DECREMENTS is decided per-egg inside: only when the player is active (non-AFK)
-            // AND the egg is within the incubation cap.
+            // Re-pin TIMER from our counter every second (the mixin suppresses Cobreeding's native
+            // decrement, so this is the timer's only driver). Whether a given egg's counter actually
+            // DECREMENTS is decided per-egg inside: only when the player is active (non-AFK) AND the
+            // egg is within the incubation cap.
             tickActiveEggs(player, playerActive = !AfkBridge.isAfk(player.uuid))
         }
     }
@@ -103,10 +104,9 @@ object EggDefeatHook {
             }
 
             // Sync Cobreeding TIMER to our duration (in cobreeding ticks, 20/sec). The per-second
-            // tick re-syncs from seconds_remaining, so Cobreeding's tooltip stays accurate AND
-            // its natural per-tick decrement gets continuously overwritten — that's how AFK
-            // pause works (during AFK we don't decrement seconds_remaining, so the sync rewinds
-            // Cobreeding's decrement back to where it was).
+            // tick re-syncs from seconds_remaining; once this egg is marked initialized (just below)
+            // PokemonEggMixin suppresses Cobreeding's native decrement, so our counter is the only
+            // thing that moves the timer — AFK/cap pause is then exact (a held counter = frozen timer).
             CobreedingBridge.setTimer(stack, durationSeconds * TICKS_PER_SECOND)
             tag.putBoolean(NBT_INITIALIZED, true)
             tag.putInt(NBT_SECONDS_REMAINING, durationSeconds)
@@ -191,17 +191,16 @@ object EggDefeatHook {
 
             val remaining = tag.getInt(NBT_SECONDS_REMAINING)
             // Decrement only when the player is active AND this egg is within the cap. Capped eggs
-            // hold their counter (same as AFK) so the per-second TIMER re-sync below rewinds
-            // Cobreeding's native decrement, keeping the egg frozen.
+            // (and AFK players' eggs) simply hold their counter — they don't tick down.
             val next = if (playerActive && incubating) (remaining - 1).coerceAtLeast(0) else remaining
             if (next != remaining) tag.putInt(NBT_SECONDS_REMAINING, next)
 
-            // ALWAYS sync Cobreeding TIMER from our seconds counter — this overwrites Cobreeding's
-            // own per-second decrement (so AFK/capped time doesn't slip through) AND keeps the
-            // tooltip showing a sensible countdown. Capped eggs floor the TIMER so Cobreeding's own
-            // native decrement can't sneak them to a hatch between our once-per-second re-syncs.
-            val timerTicks = if (incubating) next * TICKS_PER_SECOND
-                             else maxOf(next * TICKS_PER_SECOND, HATCH_GUARD_TICKS)
+            // Pin Cobreeding's TIMER to our counter. PokemonEggMixin suppresses Cobreeding's native
+            // per-second decrement on bridge-managed eggs, so this is the ONLY thing that moves the
+            // timer — no flooring/guard needed. Capped eggs hold a constant TIMER (truly frozen, not
+            // just "frozen between re-syncs"), which is what makes "Not incubating" actually stop the
+            // countdown and keeps the tooltip identical in the hotbar, inventory, and open containers.
+            val timerTicks = next * TICKS_PER_SECOND
             CobreedingBridge.setTimer(stack, timerTicks)
             // Force-broadcast the slot so the client's cached TIMER (and lore) updates in real time
             // (Cobreeding's tooltip reads off the client-side ItemStack).

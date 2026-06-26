@@ -438,16 +438,25 @@ def _build_battle_unlocked(battle_id: str, req: PickRequest) -> Battle:
             )
         try:
             process_battle_updates(battle)
-        except Exception as exc:
-            # foul-play occasionally raises mid-replay (observed: IndexError in
-            # update_dataset_possibilities/_do_check on certain turns). That must
-            # NOT 500 the pick: a 500 sends Cobblemon into its StrongBattleAI
-            # fallback, which can't parse switch choices and degenerates into
-            # perma-switching (the dragon-gym symptom). Degrade to the current
-            # request snapshot — no historical replay/enrichment — so we still
-            # return a legal, reasonable move. The full request + trace is also
-            # appended to pick_failures.jsonl so the underlying foul-play bug
-            # can be reproduced and fixed upstream.
+        except BaseException as exc:
+            # Catch BaseException, not just Exception: poke-engine is a Rust
+            # extension and surfaces internal panics as pyo3_runtime.PanicException,
+            # which subclasses BaseException — an `except Exception` lets it escape
+            # and 500 the pick (e.g. "Invalid PokemonMoveIndex: 4" from the immune /
+            # Zoroark-detection path on the Champion N team). Re-raise the genuine
+            # control-flow signals so shutdown/Ctrl-C still work.
+            #
+            # foul-play also raises ordinary exceptions mid-replay (observed:
+            # IndexError in update_dataset_possibilities/_do_check on certain turns).
+            # Either way a 500 must NOT happen: it sends Cobblemon into its
+            # StrongBattleAI fallback, which can't parse switch choices and
+            # degenerates into perma-switching (the dragon-gym symptom). Degrade to
+            # the current request snapshot — no historical replay/enrichment — so we
+            # still return a legal, reasonable move. The full request + trace is also
+            # appended to pick_failures.jsonl so the underlying foul-play bug can be
+            # reproduced and fixed upstream.
+            if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+                raise
             logger.warning(
                 "process_battle_updates failed for battle=%s; "
                 "using request snapshot without log replay",

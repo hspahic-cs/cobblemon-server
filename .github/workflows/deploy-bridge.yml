@@ -23,7 +23,7 @@ on:
 # deltastream weather -> none so Mega Rayquaza doesn't 500 the pick. Bump to
 # track our fork / pull new upstream.
 env:
-  FOUL_PLAY_COMMIT: fceea38fb32b60ea62a43175b2350f92e2ba9941
+  FOUL_PLAY_COMMIT: 36045e4578631551896cff7ea1b40ef914e3f56e
 
 jobs:
   deploy:

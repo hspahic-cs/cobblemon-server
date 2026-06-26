@@ -130,12 +130,23 @@ def pick(battle_id: str, body: PickRequestBody) -> PickResponse:
     started = time.monotonic()
     try:
         choice = pick_move(battle_id, req)
-    except Exception as e:
+    except BaseException as e:
         # Never 500 a pick. A 500 drops Cobblemon into its StrongBattleAI
         # fallback, which mishandles switch choices and bugs the whole battle
         # out. Log the failure (replayable, in pick_failures.jsonl) and degrade
         # to a legal move parsed from the request so the battle continues with a
         # sane, parseable action instead.
+        #
+        # Catch BaseException, not Exception: poke-engine is a Rust extension and
+        # raises pyo3_runtime.PanicException (a BaseException subclass) on internal
+        # panics — e.g. "Invalid PokemonMoveIndex: 4" from the immune/Zoroark path.
+        # An `except Exception` lets that escape and 500 the pick (which is exactly
+        # how the Champion-N fight broke: every post-panic turn fell back to
+        # StrongBattleAI, and _log_battle_turn/record_pick_failure below never ran,
+        # leaving empty failure logs and degrades:0). Re-raise the real control-flow
+        # signals so shutdown/Ctrl-C still work.
+        if isinstance(e, (KeyboardInterrupt, SystemExit)):
+            raise
         err = f"{type(e).__name__}: {e}"
         logger.warning(
             "pick failed for battle=%s (%s) — degrading to a legal request move",

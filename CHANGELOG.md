@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.28] - 2026-06-25
+
+### Fixed
+- **Gym AI no longer drops to the fallback AI mid-fight (Champion N, etc.).** A poke-engine Rust
+  panic (`Invalid PokemonMoveIndex: 4`) surfaced as `pyo3_runtime.PanicException`, which subclasses
+  `BaseException` — so the bridge's `except Exception` degrade guards (`app.py` pick endpoint and
+  `bridge.py` log-replay) let it escape and 500 the pick. Every post-panic turn fell back to
+  Cobblemon's `StrongBattleAI` (the "glitched out / playing very poorly" symptom), and the failure
+  was invisible (`pick_failures.jsonl` empty, `degrades:0`). Both guards now catch `BaseException`
+  (re-raising `KeyboardInterrupt`/`SystemExit`) so a panic degrades to a legal move instead of 500.
+- **Root-cause of the `Invalid PokemonMoveIndex: 4` panic** (foul-play fork, pin bumped). A Pokémon
+  that accumulated a 5th move — e.g. Zoroark/Illusion stacking the disguised mon's move onto the
+  displayed identity — made the `last_used_move` index lookup emit `move:4` against the 4-move-capped
+  serialized state. The lookup is now capped to `moves[:4]`.
+- **Gym AI no longer plays an illegal move after a faint (Ash's Snorlax using Goodra's Draco Meteor,
+  etc.).** `AsyncChoiceDispatcher` computed a move off-thread for the active mon, but a faint could
+  force a replacement before the result was applied on the server thread, so the previous mon's move
+  was submitted for the new active mon (`IllegalActionChoiceException`). The dispatcher now drops a
+  stale result when the actor's request advanced mid-search; the new request is answered by its own
+  dispatch.
+
 ## [0.23.27] - 2026-06-25
 
 ### Added

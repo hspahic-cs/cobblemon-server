@@ -12,6 +12,28 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.27] - 2026-06-25
+
+### Added
+- **Wilderness prune: relocate structures on reset** (`reseedStructuresOutsideBox`, off by
+  default). Pruned chunks normally regenerate identically (one world seed). With this on, a
+  per-cycle salt — bumped on every real prune — is mixed into vanilla structure placement
+  (`RandomSpreadStructurePlacement`) for grid cells wholly outside the keep-box, so monuments and
+  structures move to new spots each cycle while terrain stays unchanged. One mixin covers every
+  structure set (vanilla + modded, incl. Legendary Monuments) with no per-structure list; inside
+  the box placement is byte-identical. New server-only mixin infra in the mod (javafml + TOML
+  `[[mixins]]`, mirroring cobblemon-npc).
+- **Wilderness prune: pre-prune snapshot.** `cobblemon-wilderness` now takes a snapshot right
+  before a real prune (`backupBeforeReset`, default on): each to-be-deleted region file is *moved*
+  into a timestamped dir under `backupDir` (default `<server-dir>/wilderness-snapshots/`, kept
+  `backupRetention=5` deep) instead of being unlinked. The move *is* the deletion — chunks still
+  regenerate — so it adds a restore path at ~no extra disk on the same filesystem, separate from
+  the weekly `/opt/snapshots` world backup. See the mod README for restore steps.
+- **`ops/wilderness-reset.sh`** — drives a prune on dev/prod: read-only preview by default, or
+  `confirm` to flip config → arm `/wildreset now` → broadcast a player countdown → restart (the
+  brief kick) → verify. Verify polls the boot log for the actual prune line rather than a fixed
+  sleep (a fixed sleep races the boot-time prune and can misreport "removed 0").
+
 ## [0.23.26] - 2026-06-25
 
 ### Fixed

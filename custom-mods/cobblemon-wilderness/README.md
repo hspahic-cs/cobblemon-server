@@ -21,9 +21,27 @@ deliberately turn it on.
   −40..39). Set `snapToRegions: false` to use the box verbatim.
 - Deleted chunks regenerate fresh next time a player visits. The matching files in
   `region/`, `entities/`, and `poi/` are all removed together.
+- **A snapshot is taken right before the prune** (`backupBeforeReset`, default on): on a real
+  run, each to-be-deleted file is **moved** into a timestamped dir under `backupDir` rather than
+  unlinked — the move *is* the deletion (the chunk still regenerates), so it leaves a restore
+  copy at ~no extra disk on the same filesystem. The newest `backupRetention` snapshots are kept.
+  This is a per-prune safety net **separate from** (not a replacement for) any scheduled
+  world-snapshot — by default it lands at `<server-dir>/wilderness-snapshots/`, outside a typical
+  `world/`-only snapshot's scope.
 - **All deletion happens at server boot only** (`ServerAboutToStartEvent`, before any
   level loads — chunks guaranteed unloaded, no open region files). Live commands only
   preview or arm the next boot's pass. Nothing destructive ever runs on a live world.
+- **Optional: relocating structures** (`reseedStructuresOutsideBox`, off by default). Deleting a
+  chunk regenerates it from the same seed — *identical* terrain. With this on, structures and
+  monuments in chunks **outside the box** are moved to new spots each reset cycle, so a
+  pruned-then-revisited frontier has its landmarks somewhere new. It works by mixing a per-cycle
+  salt (bumped on every real prune, stored in runtime state) into vanilla structure placement
+  (`RandomSpreadStructurePlacement`) for grid cells lying wholly outside the box — so it covers
+  **every** structure set at once (vanilla *and* modded, e.g. Legendary Monuments), no list to
+  maintain. **Terrain is unchanged** (only placement moves), and inside the box placement is
+  byte-identical. Caveats: structures still only appear where their biome allows, so variety is
+  bounded; the hook has no dimension context, so it applies to all dimensions' structures beyond
+  the X/Z box (only the pruned overworld actually regenerates them).
 
 ## Config — `config/cobblemon-wilderness/authored/config.json`
 
@@ -37,13 +55,40 @@ deliberately turn it on.
   "snapToRegions": true,
   "warnPlayersOutsideBox": true,
   "displayTimeZone": "America/New_York",
-  "maxDeleteFraction": 0.9
+  "maxDeleteFraction": 0.9,
+  "backupBeforeReset": true,
+  "backupDir": "wilderness-snapshots",
+  "backupRetention": 5,
+  "reseedStructuresOutsideBox": false
 }
 ```
 
 Two independent safety gates, both default-safe:
 - `enabled` — master switch. `false` = the mod is inert.
 - `dryRun` — when `true`, runs only **log** what they would delete (no deletion).
+
+Snapshot knobs:
+- `backupBeforeReset` — `true` (default) moves pruned files into a snapshot before deletion; `false` deletes outright.
+- `backupDir` — snapshot location. Relative paths resolve against the server dir; absolute paths used as-is. Keep it outside your scheduled world-snapshot's scope.
+- `backupRetention` — how many recent prune snapshots to keep (`0` = keep all).
+
+Frontier knob:
+- `reseedStructuresOutsideBox` — `false` (default). `true` relocates structures/monuments outside the box each reset cycle (see "relocating structures" above). Takes effect from the first real prune after you enable it; needs the mixin jar (this build).
+
+## Restore from a prune snapshot
+
+Each prune writes `<backupDir>/<timestamp>/<dimension>/{region,entities,poi}/r.X.Z.mca`. To bring
+pruned terrain back, **stop the server** and move the files back into the world (the chunks then
+load from the restored data instead of regenerating):
+
+```sh
+ts=wilderness-snapshots/2026-06-25_02-55-18/minecraft_overworld
+for sub in region entities poi; do
+  cp -an "$ts/$sub/." "world/$sub/"      # -n: never clobber a newer file
+done
+```
+
+Note `minecraft:overworld` is written as `minecraft_overworld` (the `:` is path-sanitized).
 
 ## Player warnings
 

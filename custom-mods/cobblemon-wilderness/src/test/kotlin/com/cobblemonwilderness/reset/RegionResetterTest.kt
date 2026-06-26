@@ -1,6 +1,9 @@
 package com.cobblemonwilderness.reset
 
 import com.cobblemonwilderness.config.BoundingBox
+import org.slf4j.helpers.NOPLogger
+import java.nio.file.Files
+import java.nio.file.Path
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -10,6 +13,79 @@ import kotlin.test.assertTrue
 class RegionResetterTest {
 
     private val box = BoundingBox(minX = -20000, minZ = -20000, maxX = 20000, maxZ = 20000)
+    private val subfolders = listOf("region", "entities", "poi")
+
+    /** Builds a temp dimension folder with one inside-box region (r.0.0) and one outside
+     *  (r.100.100), each present in region/, entities/ and poi/. Returns the folder. */
+    private fun makeDimension(): Path {
+        val dim = Files.createTempDirectory("wild-dim")
+        for (sub in subfolders) {
+            val d = Files.createDirectories(dim.resolve(sub))
+            Files.write(d.resolve("r.0.0.mca"), byteArrayOf(1, 2, 3))       // inside box
+            Files.write(d.resolve("r.100.100.mca"), byteArrayOf(4, 5, 6))   // outside box
+        }
+        return dim
+    }
+
+    @Test
+    fun `real run with backupTarget moves outside-box files into the snapshot and keeps inside`() {
+        val dim = makeDimension()
+        val backup = dim.resolveSibling("snap")
+        try {
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
+                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+            )
+            assertEquals(1, report.regionsDeleted)
+            assertEquals(1, report.regionsKept)
+            for (sub in subfolders) {
+                // outside-box file left world/ and now lives in the snapshot
+                assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+                assertTrue(Files.exists(backup.resolve(sub).resolve("r.100.100.mca")))
+                // inside-box file untouched, and never copied into the snapshot
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
+                assertFalse(Files.exists(backup.resolve(sub).resolve("r.0.0.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `real run without backupTarget deletes outside-box files outright`() {
+        val dim = makeDimension()
+        try {
+            RegionResetter.run(
+                "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
+                backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            for (sub in subfolders) {
+                assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `dry run neither deletes nor snapshots`() {
+        val dim = makeDimension()
+        val backup = dim.resolveSibling("snap")
+        try {
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = true, maxDeleteFraction = 1.0,
+                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+            )
+            assertEquals(1, report.regionsDeleted) // tallied, not performed
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+            assertFalse(Files.exists(backup)) // nothing written
+        } finally {
+            dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
+        }
+    }
 
     @Test
     fun `region at origin is kept`() {

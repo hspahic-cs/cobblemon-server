@@ -99,6 +99,32 @@ data class WildernessConfig(
      * collapsed to a point). Set to 1.0 to disable.
      */
     val maxDeleteFraction: Double = 0.9,
+    /**
+     * When true (default), a real (non-dryRun) reset MOVES every to-be-deleted region file into
+     * a timestamped snapshot under [backupDir] instead of unlinking it. The move IS the deletion
+     * — the chunk still regenerates fresh because the file is gone from world/ — so it adds a
+     * restore path at ~no extra disk on the same filesystem. This is a per-prune safety net taken
+     * right before the prune; it is SEPARATE from, and not a replacement for, the server's
+     * scheduled world snapshot.
+     */
+    val backupBeforeReset: Boolean = true,
+    /**
+     * Where prune snapshots go. A relative path resolves against the server (game) dir; an
+     * absolute path is used as-is. Default keeps snapshots OUTSIDE the scheduled world-snapshot's
+     * scope (which copies world/ and config/cobblemon-*), so the two don't overlap.
+     */
+    val backupDir: String = "wilderness-snapshots",
+    /** Keep this many of the most recent prune snapshots; older ones are deleted after a run. 0 = keep all. */
+    val backupRetention: Int = 5,
+    /**
+     * When true, structures and monuments in chunks OUTSIDE the keep-box are relocated each reset
+     * cycle (a per-cycle salt is mixed into structure placement), so a pruned-then-revisited
+     * frontier has its landmarks in new spots — terrain itself is unchanged. Off by default: this
+     * is a deliberate gameplay change, and it applies to all dimensions' structures beyond the
+     * X/Z box (the placement hook has no dimension context), though only the pruned overworld
+     * actually regenerates them. Inside the box, placement is always untouched.
+     */
+    val reseedStructuresOutsideBox: Boolean = false,
 ) {
     /** The box actually enforced — region-aligned when [snapToRegions] is on. */
     fun effectiveBox(): BoundingBox = if (snapToRegions) box.snappedToRegions() else box.normalized()
@@ -113,10 +139,36 @@ data class WildernessConfig(
                 return default
             }
             return try {
-                gson.fromJson(file.readText(), WildernessConfig::class.java)
+                val parsed = fromJsonWithDefaults(file.readText())
+                // If the file predated newer fields, backfill them on disk so it's complete.
+                if (parsed != gson.fromJson(file.readText(), WildernessConfig::class.java)) {
+                    save(configDir, parsed)
+                }
+                parsed
             } catch (e: Exception) {
                 CobblemonWilderness.logger.error("Failed to load wilderness config, using defaults", e)
                 WildernessConfig()
+            }
+        }
+
+        /**
+         * Parse a config JSON, backfilling fields absent from a pre-snapshot file. Gson
+         * instantiates via Unsafe and so bypasses Kotlin default values — a missing field comes
+         * back as false/0/null, not its declared default. An older config has no `backupDir`
+         * (→ null), which we treat as the sentinel for "this file predates the snapshot fields"
+         * and restore all three to their defaults (snapshots ON), rather than silently OFF.
+         */
+        fun fromJsonWithDefaults(json: String): WildernessConfig {
+            val parsed = gson.fromJson(json, WildernessConfig::class.java)
+            return if (parsed.backupDir.isNullOrBlank()) {
+                val d = WildernessConfig()
+                parsed.copy(
+                    backupBeforeReset = d.backupBeforeReset,
+                    backupDir = d.backupDir,
+                    backupRetention = d.backupRetention,
+                )
+            } else {
+                parsed
             }
         }
 

@@ -70,7 +70,8 @@ object WildernessCommands {
                 continue
             }
             val report = RegionResetter.run(
-                dimId, folder, box, dryRun = true, maxDeleteFraction = cfg.maxDeleteFraction, log = CobblemonWilderness.logger,
+                dimId, folder, box, dryRun = true, maxDeleteFraction = cfg.maxDeleteFraction,
+                backupTarget = null, log = CobblemonWilderness.logger,
             )
             val mb = report.bytesFreed / (1024 * 1024)
             if (report.aborted) {

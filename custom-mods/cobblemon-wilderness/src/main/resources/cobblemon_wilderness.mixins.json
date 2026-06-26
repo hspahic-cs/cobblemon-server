@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.cobblemonwilderness.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "cobblemon_wilderness.refmap.json",
+  "mixins": [
+    "RandomSpreadStructurePlacementMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

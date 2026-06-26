@@ -109,18 +109,19 @@ sleep 30
 # --- Restart (prune runs at boot) --------------------------------------------
 echo "[$(date '+%F %T')] ${ENVNAME}: restarting $SERVICE (prune executes at boot)"
 before_count=$(find "$REGION" -name '*.mca' | wc -l)
-log_mark=$(wc -l < "$LOG")
 sudo -n /usr/bin/systemctl restart "$SERVICE"
 
 # Wait for the actual prune to finish, NOT just for systemd "active" — the mod runs at
 # ServerAboutToStartEvent, which fires AFTER systemd reports active (active = the screen
-# process started, not the world loaded). Poll the log (from the pre-restart mark) for the
-# mod's terminal line: a real run ("deleted ... region"), a baseline skip, or an abort.
-# A fixed sleep here races the prune and can report "removed 0" before it has run.
+# process started, not the world loaded). A fixed sleep races the prune; a pre-restart line
+# count breaks because MC ROTATES latest.log on restart. So anchor on THIS boot's wilderness
+# init marker (the last "...initializing" line) and read the prune's terminal line after it —
+# correct whether or not the log rotated.
 result=""
 for i in $(seq 1 60); do
   sleep 5
-  result=$(tail -n +"$((log_mark + 1))" "$LOG" 2>/dev/null \
+  start=$(grep -n 'Cobblemon Wilderness Reset initializing' "$LOG" 2>/dev/null | tail -1 | cut -d: -f1)
+  result=$(tail -n +"${start:-1}" "$LOG" 2>/dev/null \
     | grep -iE 'cobblemon_wilderness' \
     | grep -iE 'deleted [0-9]+ region|recorded baseline|baseline.*no reset|aborted|circuit breaker' \
     | tail -1 || true)

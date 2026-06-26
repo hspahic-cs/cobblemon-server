@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.29] - 2026-06-25
+
+### Changed
+- **Ash (E4) team follow-ups** — the 0.23.23 rebalance merged before these two fixes landed:
+  - Swapped Pikachu for a maxed **Lycanroc-Dusk** (Tough Claws, Accelerock priority) — a real fast
+    revenge-killer instead of dead weight.
+  - Gave Ash's **Greninja the Bond form** (`aspects: ["bond"]`) so Battle Bond actually fires;
+    it had been battling as base Greninja, where the ability does nothing. (Gen9 Battle Bond grants
+    +1 Atk/SpA/Spe on the first KO — there is no Ash-Greninja transform in gen9.)
+
 ## [0.23.28] - 2026-06-25
 
 ### Fixed

@@ -63,6 +63,22 @@ object AsyncChoiceDispatcher {
                 active.map { PassActionResponse }
             }
             server.execute {
+                // The battle can advance while we searched off-thread: a faint
+                // forces a replacement and Cobblemon issues a NEW request for this
+                // actor with a different active mon. `responses` were computed for
+                // the OLD request, so applying them makes Cobblemon reject a move
+                // the new active mon doesn't have (IllegalActionChoiceException —
+                // e.g. Ash's Snorlax told to use Goodra's Draco Meteor). Drop the
+                // stale result; the new request triggered its own tryDispatch, so
+                // it gets answered by that dispatch (no softlock).
+                if (actor.request !== request) {
+                    log.warn(
+                        "stale pe choice for battle={} — request advanced before " +
+                            "dispatch; dropping (current request handled separately)",
+                        battle.battleId,
+                    )
+                    return@execute
+                }
                 actor.setActionResponses(responses)
                 actor.pokemonList.forEach { it.willBeSwitchedIn = false }
             }

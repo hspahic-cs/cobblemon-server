@@ -20,6 +20,12 @@ import kotlin.io.path.writeText
 data class ResetState(
     val lastResetEpochMillis: MutableMap<String, Long> = mutableMapOf(),
     var forceNextBoot: Boolean = false,
+    /**
+     * Per-cycle salt mixed into structure placement for chunks outside the keep-box, so monuments
+     * and structures relocate each reset. Bumped on every real prune; 0 = never pruned yet (the
+     * structure mixin treats 0 as inactive). Read on the worldgen hot path via [WildernessGenState].
+     */
+    var structureSalt: Int = 0,
 ) {
     @Transient
     private var configDir: Path? = null

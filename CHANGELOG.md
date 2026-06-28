@@ -25,10 +25,13 @@ root README.
   Runs at the tail of `AnvilMenu.createResult` and fails open.
 
 ### Removed
-- **Totem of Undying no longer drops from chests.** Stripped the totem entry from the Bell Tower
-  structure chest (`server-no-exp-candy-chests`) — the only Legendary Monuments chest table (of 11)
-  that contained one, and no vanilla chest carries it. The totem (which doubles as the Zacian summon
-  at the Sword Temple) is now obtainable only from the Ultra loot crate.
+- **Totem of Undying no longer drops from chests.** A full scan of every prod mod jar found two
+  chest sources: the Legendary Monuments **Bell Tower** chest (the only LM chest of 11 with one),
+  and an Enhanced Celestials append that injected a totem (weight 3) into the vanilla **Woodland
+  Mansion** chest. Both stripped via `server-no-exp-candy-chests` overrides; no vanilla chest carries
+  a totem on its own. The totem (which doubles as the Zacian summon at the Sword Temple) is now
+  obtainable from the Ultra loot crate. (Non-chest sources left intact: RCT legendary-trainer drops
+  and vanilla evoker drops in raids/mansions.)
 
 ## [0.23.30] - 2026-06-28
 

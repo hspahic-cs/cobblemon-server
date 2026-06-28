@@ -12,6 +12,34 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.31] - 2026-06-28
+
+### Changed
+- **Red Chain is now one-time-use.** Legendary Monuments ships the Red Chain (summons Dialga/Palkia
+  at the Spear Pillar) as a repairable item: using it leaves a broken `fragmented_red_chain`, and
+  the mod's own anvil mixin combines `fragmented_red_chain + origin_ingot` back into a fresh
+  `red_chain` — so one chain could summon at every Spear Pillar forever. A new `cobblemon-bridge`
+  mixin (`AnvilRedChainRepairMixin`) blanks the anvil result whenever a `red_chain`/
+  `fragmented_red_chain` is an input, killing the repair loop. A used chain stays fragmented; each
+  summon now needs a fresh chain (craft from the lake-trio items, or pull one from the Ultra crate).
+  Runs at the tail of `AnvilMenu.createResult` and fails open.
+- **Eternatus is no longer re-summonable.** The monument one-shot lock recognized activation blocks
+  by name suffix (`_pedestal`/`_lock`/`_shrine`/`_stake` + a few exacts), but `eternatus_cocoon`
+  matched none and — unlike `meltan_box`/`regi_statue`, which self-destruct on use — the cocoon stays
+  placed, so Eternatus could be summoned over and over at the same spot (and spawned through LM's
+  incomplete pipeline, i.e. the no-moveset bug). Added `eternatus_cocoon` (plus `meltan_box` and
+  `regi_statue` for completeness) to `LegendaryMonumentLock`, so the cocoon now drains to crying
+  obsidian on use and Eternatus re-spawns via the proper Cobblemon path.
+
+### Removed
+- **Totem of Undying no longer drops from chests.** A full scan of every prod mod jar found two
+  chest sources: the Legendary Monuments **Bell Tower** chest (the only LM chest of 11 with one),
+  and an Enhanced Celestials append that injected a totem (weight 3) into the vanilla **Woodland
+  Mansion** chest. Both stripped via `server-no-exp-candy-chests` overrides; no vanilla chest carries
+  a totem on its own. The totem (which doubles as the Zacian summon at the Sword Temple) is now
+  obtainable from the Ultra loot crate. (Non-chest sources left intact: RCT legendary-trainer drops
+  and vanilla evoker drops in raids/mansions.)
+
 ## [0.23.30] - 2026-06-28
 
 ### Changed

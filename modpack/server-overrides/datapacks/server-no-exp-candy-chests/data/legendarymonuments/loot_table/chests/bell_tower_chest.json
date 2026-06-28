@@ -155,11 +155,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "minecraft:totem_of_undying",
-          "weight": 8
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:turtle_egg",
           "weight": 8
         },

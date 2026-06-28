@@ -191,7 +191,18 @@ object LegendaryMonumentLock {
         path.endsWith("_stake") ||
         path == "pokemon_trial_spawner" ||
         path == "sanctuary_block" ||
-        path == "hoopa_boss_summon"
+        path == "hoopa_boss_summon" ||
+        // Summon blocks that don't fit the suffix patterns. eternatus_cocoon is the
+        // important one: unlike meltan_box (spawnMeltan + destroyBlock) and regi_statue
+        // (spawnRegiAndBreak), the cocoon does NOT remove itself on use, so without this
+        // it stays placed and Eternatus is re-summonable at the same spot. Draining it
+        // makes the monument one-shot and routes the spawn through our re-spawn path
+        // (proper moveset/sync) instead of LM's incomplete pipeline. meltan_box/regi_statue
+        // are included for completeness; if the mod has already removed them by the time the
+        // entity joins, findPedestal simply won't match and we leave them alone.
+        path == "eternatus_cocoon" ||
+        path == "meltan_box" ||
+        path == "regi_statue"
 
     /** Replaces only the single pedestal block with crying obsidian. */
     private fun drainPedestal(level: ServerLevel, pedestal: BlockPos) {

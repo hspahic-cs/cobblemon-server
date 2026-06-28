@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.31] - 2026-06-28
+
+### Changed
+- **Red Chain is now one-time-use.** Legendary Monuments ships the Red Chain (summons Dialga/Palkia
+  at the Spear Pillar) as a repairable item: using it leaves a broken `fragmented_red_chain`, and
+  the mod's own anvil mixin combines `fragmented_red_chain + origin_ingot` back into a fresh
+  `red_chain` — so one chain could summon at every Spear Pillar forever. A new `cobblemon-bridge`
+  mixin (`AnvilRedChainRepairMixin`) blanks the anvil result whenever a `red_chain`/
+  `fragmented_red_chain` is an input, killing the repair loop. A used chain stays fragmented; each
+  summon now needs a fresh chain (craft from the lake-trio items, or pull one from the Ultra crate).
+  Runs at the tail of `AnvilMenu.createResult` and fails open.
+
+### Removed
+- **Totem of Undying no longer drops from chests.** Stripped the totem entry from the Bell Tower
+  structure chest (`server-no-exp-candy-chests`) — the only Legendary Monuments chest table (of 11)
+  that contained one, and no vanilla chest carries it. The totem (which doubles as the Zacian summon
+  at the Sword Temple) is now obtainable only from the Ultra loot crate.
+
 ## [0.23.30] - 2026-06-28
 
 ### Changed

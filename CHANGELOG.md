@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.30] - 2026-06-28
+
+### Changed
+- **Legendary monument density dialed back from ~2× to ~1.2×.** `server-monument-frequency` now
+  scales the rare monuments' `spacing`/`separation` by ~0.913× the LegendaryMonuments defaults
+  (was 0.7× ≈ ×2). All 15 overridden structure sets keep `spacing > separation`; common monuments
+  (shrines, lakes, outskirt stand, dyna tree) remain untouched. Applies to newly generated chunks /
+  the next wilderness reseed only — already-generated structures are unchanged.
+
 ## [0.23.29] - 2026-06-25
 
 ### Changed

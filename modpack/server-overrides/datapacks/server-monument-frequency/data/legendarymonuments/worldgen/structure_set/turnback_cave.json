@@ -8,8 +8,8 @@
   "placement": {
     "type": "minecraft:random_spread",
     "salt": 103812912,
-    "separation": 140,
-    "spacing": 175,
+    "separation": 183,
+    "spacing": 228,
     "exclusion_zone": {
       "other_set": "minecraft:strongholds",
       "chunk_count": 12

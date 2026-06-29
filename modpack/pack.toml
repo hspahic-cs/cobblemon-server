@@ -1,6 +1,6 @@
 name = "Cobblemon Server"
 author = "Harris Spahic"
-version = "0.23.31"
+version = "0.23.32"
 pack-format = "packwiz:1.1.0"
 
 [index]

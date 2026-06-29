@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.32] - 2026-06-29
+
+### Added
+- **Flying-mount speed cap.** Rideable flying Pokémon top speed reduced to 0.75× (bird 20→15,
+  jet 24→18, hover 20→15) so players can't outrun chunk generation while exploring far out. Min-speed
+  floors and stamina unchanged; the boost-based `rocket` controller is left as-is.
+  (`server-flight-speed-cap` datapack.)
+
+### Changed
+- **Legendary Monument density lowered** from ~1.2× to ~1.05× of the mod default. All 15 boosted
+  structure sets rescaled (`spacing`/`separation` ×1.069; `spacing > separation` preserved). Worldgen
+  change — affects newly generated terrain only.
+- **RCT trainer spawns now skew below your team level.** `TrainerSpawner.computeWeight` weighted
+  eligible trainers symmetrically around your level; a new `cobblemon-bridge` injector decays a
+  candidate's weight 0.8× per level it sits *above* your team level, so you mostly meet trainers at or
+  just below your level with a thin tail of tougher ones. RCT's eligibility band (`maxLevelDiff`) is
+  unchanged.
+
+### Fixed
+- **`cobblemon-bridge` no longer crash-loops on boot.** The 0.23.31 `AnvilRedChainRepairMixin`
+  `@Shadow`-ed `ItemCombinerMenu.inputSlots`/`resultSlots` — superclass fields with no refMap in the
+  build — causing a `MixinApplyError` ~6s into startup. Rewritten to use the public
+  `AbstractContainerMenu#getSlot` API instead; the one-time-use Red Chain behavior is unchanged.
+
 ## [0.23.31] - 2026-06-28
 
 ### Changed

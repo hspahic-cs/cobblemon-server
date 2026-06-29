@@ -14,12 +14,6 @@ root README.
 
 ## [0.23.32] - 2026-06-29
 
-### Added
-- **Flying-mount speed cap.** Rideable flying Pokémon top speed reduced to 0.75× (bird 20→15,
-  jet 24→18, hover 20→15) so players can't outrun chunk generation while exploring far out. Min-speed
-  floors and stamina unchanged; the boost-based `rocket` controller is left as-is.
-  (`server-flight-speed-cap` datapack.)
-
 ### Changed
 - **Legendary Monument density lowered** from ~1.2× to ~1.05× of the mod default. All 15 boosted
   structure sets rescaled (`spacing`/`separation` ×1.069; `spacing > separation` preserved). Worldgen

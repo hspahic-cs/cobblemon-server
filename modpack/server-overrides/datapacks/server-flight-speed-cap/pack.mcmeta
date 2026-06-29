@@ -1,6 +1,0 @@
-{
-  "pack": {
-    "pack_format": 48,
-    "description": "Caps rideable flying Pokemon top speed to 0.75x (bird 20->15, jet 24->18, hover 20->15) so players can't outrun chunk generation while scanning for Legendary Monuments. Overrides cobblemon ride_settings. Min-speed floors and stamina unchanged. 'rocket' controller intentionally left as-is (boost-based, not a sustained cruiser)."
-  }
-}

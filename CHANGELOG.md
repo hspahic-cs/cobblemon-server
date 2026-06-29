@@ -23,6 +23,9 @@ root README.
   candidate's weight 0.8× per level it sits *above* your team level, so you mostly meet trainers at or
   just below your level with a thin tail of tougher ones. RCT's eligibility band (`maxLevelDiff`) is
   unchanged.
+- **Lunar events are rarer.** Enhanced Celestials blood/harvest/blue moons now roll `chance` 0.033
+  (was 0.10) with `min_number_of_nights_between` 12 (was 4) — roughly a third as often (≈ one special
+  moon every ~16–20 nights instead of ~5–7). Super moons unchanged. (`server-lunar-frequency` datapack.)
 
 ### Fixed
 - **`cobblemon-bridge` no longer crash-loops on boot.** The 0.23.31 `AnvilRedChainRepairMixin`

@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.32] - 2026-06-29
+
+### Fixed
+- **Trade level-cap check was backwards in the vanilla trade GUI.** It rejected trades based on the
+  Pokémon you were *giving away* vs your own cap, so you could *receive* a Pokémon above your level
+  cap but couldn't *hand off* one that was above your cap. Root cause: Cobblemon's `TradeEvent`
+  exposes `tradeParticipantNPokemon` as the mon participant N *receives* (its KDoc says the
+  opposite, but the event is built `Pre(player1, pokemon2, player2, pokemon1)`), and the hook had
+  the two sides swapped. Now each player's cap is checked against the mon they actually receive, so
+  an over-cap Pokémon can't be traded *down* to a player who hasn't earned the levels. (The custom
+  `/trade` command already checked the correct direction.)
+
 ## [0.23.31] - 2026-06-28
 
 ### Changed

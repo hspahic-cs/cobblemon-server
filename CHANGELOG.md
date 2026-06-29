@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.33] - 2026-06-29
+
+### Fixed
+- **Mythical Pokémon now count against the ranked/tournament legendary cap.** Cobblemon labels
+  Mythicals (Mew, Celebi, Darkrai, and **Arceus** — every plate form, including Arceus-Ghost) with
+  `mythical`, NOT `legendary`, so `isLegendary()` returned false for them and they slipped the cap.
+  That's how a team fielded Arceus-Ghost *and* Zacian under a 1-legendary limit. Both the normal
+  ranked `maxLegendaries` rule and the tournament "specials" cap (per-battle limit of 1) now count
+  Mythical Pokémon as legendary, alongside the Paradox/Ultra-Beast handling that was already there.
+
 ## [0.23.32] - 2026-06-29
 
 ### Fixed

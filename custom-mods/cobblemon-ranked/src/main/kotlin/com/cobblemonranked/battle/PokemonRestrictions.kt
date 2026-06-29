@@ -6,14 +6,15 @@ import net.minecraft.core.registries.BuiltInRegistries
 /**
  * Whether a Pokémon counts toward the ranked `maxLegendaries` cap.
  *
- * Cobblemon's [Pokemon.isLegendary] only flags species with the `legendary` label (mythical and
- * ultra_beast are separate booleans). Paradox Pokémon carry the `paradox` label and NO `legendary`
- * label, so `isLegendary()` returns false for them — yet many (Flutter Mane, Iron Valiant, Roaring
- * Moon, Iron Bundle, …) are Smogon Ubers-tier. For ranked team legality we treat Paradox as
- * legendary so they count against the same cap.
+ * Cobblemon's [Pokemon.isLegendary] only flags species with the `legendary` label. Mythicals carry
+ * the `mythical` label (Mew, Celebi, Darkrai, and crucially **Arceus** — including every plate form
+ * like Arceus-Ghost) and Paradox Pokémon carry the `paradox` label; NEITHER sets `legendary`, so
+ * `isLegendary()` returns false for both — yet they're all Smogon restricted/Ubers tier. For ranked
+ * team legality we count Mythical and Paradox as legendary too, against the same cap. (Without the
+ * Mythical clause an Arceus slipped past the 1-legendary limit alongside a true legendary.)
  */
 fun Pokemon.countsAsLegendary(): Boolean =
-    isLegendary() || isParadox()
+    isLegendary() || isMythical() || isParadox()
 
 /** True if the species carries Cobblemon's `paradox` label. */
 fun Pokemon.isParadox(): Boolean =
@@ -25,16 +26,16 @@ fun Pokemon.isUltraBeast(): Boolean =
 
 /**
  * Whether a Pokémon counts toward the **tournament** special cap. Tournaments treat Legendary,
- * Paradox, AND Ultra Beast as "special" (roster cap is 4 of these; a battle subset caps at 1).
- * Broader than [countsAsLegendary], which omits Ultra Beasts (left as-is for the normal ranked
- * `maxLegendaries` rule).
+ * Mythical, Paradox, AND Ultra Beast as "special" (roster cap is 4 of these; a battle subset caps
+ * at 1). Broader than [countsAsLegendary] only by Ultra Beasts.
  */
 fun Pokemon.countsAsSpecial(): Boolean =
-    isLegendary() || isParadox() || isUltraBeast()
+    isLegendary() || isMythical() || isParadox() || isUltraBeast()
 
 /** Human-readable special category for menu/messaging, or null if the Pokémon isn't special. */
 fun Pokemon.specialCategory(): String? = when {
     isLegendary() -> "Legendary"
+    isMythical() -> "Mythical"
     isParadox() -> "Paradox"
     isUltraBeast() -> "Ultra-Beast"
     else -> null

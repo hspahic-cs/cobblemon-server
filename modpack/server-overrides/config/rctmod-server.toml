@@ -80,7 +80,7 @@
 	#The spawn weight decreases with a higher level difference.
 	# Default: 25
 	# Range: 0 ~ 100
-	maxLevelDiff = 10
+	maxLevelDiff = 20
 	#━━━━━━━━━━
 	#If enabled trainers will only spawn naturally around players that have a trainer card
 	#in their inventory (does not affect trainer spawners).

@@ -12,6 +12,22 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.35] - 2026-06-30
+
+### Changed
+- **RCT trainer levels now lean further below yours.** 0.23.34's downward skew still peaked *at* your
+  team level. Reworked so the spawn distribution centers ~10 levels below you (weight decays 0.72/level
+  for trainers above `teamLevel - 10`), and widened the eligible band (`maxLevelDiff` 10 → 20) so
+  trainers range further down. Typical mix is now ~5-6 below-level, ~2-3 near your level, ~1 above.
+
+### Fixed
+- **Red Chain anvil repair is now actually blocked.** 0.23.34's `AnvilRedChainRepairMixin` injected
+  at `createResult` RETURN, but Legendary Monuments cancels that method at HEAD (sets the result to
+  `red_chain` and returns early), so our block never ran on the repair path — the chain stayed
+  repairable. Reworked to inject at HEAD with `cancellable=true` and a lower mixin priority (100) so
+  our callback runs before LM's: when a `red_chain`/`fragmented_red_chain` is an anvil input we blank
+  the result and cancel. One-time-use Red Chain is now enforced (verified on dev).
+
 ## [0.23.34] - 2026-06-30
 
 ### Changed

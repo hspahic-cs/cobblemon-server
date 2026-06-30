@@ -12,6 +12,26 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.34] - 2026-06-30
+
+### Changed
+- **Legendary Monument density lowered** from ~1.2× to ~1.05× of the mod default. All 15 boosted
+  structure sets rescaled (`spacing`/`separation` ×1.069; `spacing > separation` preserved). Worldgen
+  change — affects newly generated terrain only.
+- **RCT trainer spawns now skew below your team level.** `TrainerSpawner.computeWeight` weighted
+  eligible trainers symmetrically around your level; a new `cobblemon-bridge` injector decays a
+  candidate's weight 0.8× per level it sits *above* your team level, so you mostly meet trainers at or
+  just below your level with a thin tail of tougher ones. RCT's eligibility band (`maxLevelDiff`) is
+  unchanged.
+- **Lunar events are rarer.** Enhanced Celestials blood/harvest/blue moons now roll `chance` 0.033
+  (was 0.10) with `min_number_of_nights_between` 12 (was 4) — roughly a third as often (≈ one special
+  moon every ~16–20 nights instead of ~5–7). Super moons unchanged. (`server-lunar-frequency` datapack.)
+
+### Fixed
+- **`cobblemon-bridge` no longer crash-loops on boot.** The 0.23.31 `AnvilRedChainRepairMixin`
+  `@Shadow`-ed `ItemCombinerMenu.inputSlots`/`resultSlots` — superclass fields with no refMap in the
+  build — causing a `MixinApplyError` ~6s into startup. Rewritten to use the public
+  `AbstractContainerMenu#getSlot` API instead; the one-time-use Red Chain behavior is unchanged.
 ## [0.23.33] - 2026-06-29
 
 ### Fixed

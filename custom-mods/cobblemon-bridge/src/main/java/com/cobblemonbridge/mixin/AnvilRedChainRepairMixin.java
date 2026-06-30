@@ -2,13 +2,10 @@ package com.cobblemonbridge.mixin;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.AnvilMenu;
-import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -32,19 +29,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *
  * <p>Matched by registry id (not a compile dependency on LM) and {@code require = 0} so this
  * compiles and loads fine if LM is ever removed or renamed; the body is wrapped to fail open.
+ *
+ * <p>We reach the slots through the public {@link AbstractContainerMenu} API
+ * ({@code getSlot(0/1)} = the two anvil inputs, {@code getSlot(2)} = the result output) rather
+ * than {@code @Shadow}-ing {@code ItemCombinerMenu.inputSlots/resultSlots}. Those fields live in
+ * the superclass, and with no mixin refMap in this build a {@code @Shadow} of them fails to resolve
+ * and crash-loops boot ({@code InvalidMixinException: ... not located in target AnvilMenu}). The
+ * public slot accessors need no shadowing or refMap.
  */
 @Mixin(AnvilMenu.class)
 public abstract class AnvilRedChainRepairMixin {
 
-    @Shadow @Final protected Container inputSlots;
-    @Shadow @Final protected ResultContainer resultSlots;
-
     @Inject(method = "createResult", at = @At("RETURN"), require = 0)
     private void cobblemonbridge$blockRedChainRepair(CallbackInfo ci) {
         try {
-            if (cobblemonbridge$isRedChainItem(inputSlots.getItem(0))
-                || cobblemonbridge$isRedChainItem(inputSlots.getItem(1))) {
-                resultSlots.setItem(0, ItemStack.EMPTY);
+            AbstractContainerMenu self = (AbstractContainerMenu) (Object) this;
+            // ItemCombinerMenu/AnvilMenu slot layout: 0,1 = inputs, 2 = result output.
+            if (cobblemonbridge$isRedChainItem(self.getSlot(0).getItem())
+                || cobblemonbridge$isRedChainItem(self.getSlot(1).getItem())) {
+                self.getSlot(2).set(ItemStack.EMPTY);
             }
         } catch (Throwable ignored) {
             // Fail open: never let a repair-block bug break the anvil for normal items.

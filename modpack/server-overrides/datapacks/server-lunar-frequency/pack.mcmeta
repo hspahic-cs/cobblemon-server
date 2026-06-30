@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Lowers Enhanced Celestials lunar event frequency: blood/harvest/blue moon go from chance 0.10 (min 4 nights) to 0.033 (min 12) — roughly a third as often. Overrides data/enhancedcelestials/.../lunar/event/*.json. Super moons left unchanged."
+  }
+}

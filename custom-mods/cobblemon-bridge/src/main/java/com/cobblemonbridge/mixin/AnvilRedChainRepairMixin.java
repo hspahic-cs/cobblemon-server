@@ -20,12 +20,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * anvil is the <em>only</em> path back to a working chain ({@code /repair} and grindstone can only
  * zero durability on the held item, neither converts a fragmented chain into a red chain).
  *
- * <p>We inject at the <em>tail</em> of {@link AnvilMenu#createResult()} — after both vanilla and
- * LM's mixin have written the output slot — and blank the result whenever either input slot holds a
- * {@code red_chain} or {@code fragmented_red_chain}. Running last means we don't have to win a
- * mixin-priority fight with LM; whatever it produced is simply discarded before the player can take
- * it. Net effect: a used chain stays fragmented permanently, and players must obtain/craft a new
- * one (lake-trio items, or the Ultra crate) for each summon.
+ * <p>LM's {@code AnvilScreenHandlerMixin} injects at {@code @At("HEAD")} with
+ * {@code cancellable = true}: on {@code fragmented_red_chain + origin_ingot} it sets the result to
+ * {@code red_chain} and CANCELS {@code createResult} — so anything injecting at RETURN/TAIL is
+ * skipped on the repair path. We therefore inject at {@code @At("HEAD")} too, with a LOWER
+ * {@code priority} (100) than LM — verified empirically (LM is a Fabric mixin via Sinytra Connector;
+ * at this {@code priority} our HEAD callback runs first). When either input is a
+ * {@code red_chain}/{@code fragmented_red_chain} we blank the result and {@code ci.cancel()},
+ * short-circuiting LM's repair before it runs. Net effect: a used chain stays fragmented permanently;
+ * players craft a new one (lake-trio items) or pull one from the Ultra crate for each summon.
  *
  * <p>Matched by registry id (not a compile dependency on LM) and {@code require = 0} so this
  * compiles and loads fine if LM is ever removed or renamed; the body is wrapped to fail open.
@@ -37,10 +40,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * and crash-loops boot ({@code InvalidMixinException: ... not located in target AnvilMenu}). The
  * public slot accessors need no shadowing or refMap.
  */
-@Mixin(AnvilMenu.class)
+@Mixin(value = AnvilMenu.class, priority = 100)
 public abstract class AnvilRedChainRepairMixin {
 
-    @Inject(method = "createResult", at = @At("RETURN"), require = 0)
+    @Inject(method = "createResult", at = @At("HEAD"), cancellable = true, require = 0)
     private void cobblemonbridge$blockRedChainRepair(CallbackInfo ci) {
         try {
             AbstractContainerMenu self = (AbstractContainerMenu) (Object) this;
@@ -48,6 +51,7 @@ public abstract class AnvilRedChainRepairMixin {
             if (cobblemonbridge$isRedChainItem(self.getSlot(0).getItem())
                 || cobblemonbridge$isRedChainItem(self.getSlot(1).getItem())) {
                 self.getSlot(2).set(ItemStack.EMPTY);
+                ci.cancel();
             }
         } catch (Throwable ignored) {
             // Fail open: never let a repair-block bug break the anvil for normal items.

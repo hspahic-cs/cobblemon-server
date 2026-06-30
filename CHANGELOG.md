@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.35] - 2026-06-30
+
+### Fixed
+- **Red Chain anvil repair is now actually blocked.** 0.23.34's `AnvilRedChainRepairMixin` injected
+  at `createResult` RETURN, but Legendary Monuments cancels that method at HEAD (sets the result to
+  `red_chain` and returns early), so our block never ran on the repair path — the chain stayed
+  repairable. Reworked to inject at HEAD with `cancellable=true` and a lower mixin priority (100) so
+  our callback runs before LM's: when a `red_chain`/`fragmented_red_chain` is an anvil input we blank
+  the result and cancel. One-time-use Red Chain is now enforced (verified on dev).
+
 ## [0.23.34] - 2026-06-30
 
 ### Changed

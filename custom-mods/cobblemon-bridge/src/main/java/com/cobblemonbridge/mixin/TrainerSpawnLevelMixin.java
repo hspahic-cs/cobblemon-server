@@ -50,8 +50,16 @@ public class TrainerSpawnLevelMixin {
 
     // --- Downward level skew (favor trainers at/below the player's team level) ---
 
-    /** Spawn weight is multiplied by this per level a trainer sits ABOVE the team level. */
-    private static final double ABOVE_LEVEL_DECAY = 0.8;
+    /** Spawn weight is multiplied by this per level a trainer sits above the skew ceiling. */
+    private static final double ABOVE_LEVEL_DECAY = 0.72;
+
+    /**
+     * Skew ceiling offset: weight decays for trainers above {@code teamLevel - TARGET_DROP}, so the
+     * spawn distribution peaks ~{@code TARGET_DROP} levels BELOW the player rather than at their
+     * level. Pairs with {@code rctmod-server.toml maxLevelDiff = 20} (band ±20) so spawns cluster in
+     * the lower half of the eligible range.
+     */
+    private static final int TARGET_DROP = 10;
 
     private static boolean cobblemonbridge$reflectInit;
     private static boolean cobblemonbridge$reflectOk;
@@ -62,11 +70,12 @@ public class TrainerSpawnLevelMixin {
 
     /**
      * RCT's {@code computeWeight} weights candidates symmetrically on {@code |trainerLevel -
-     * teamLevel|}. We reshape that downward: trainers at/below the team level keep full weight;
-     * trainers above decay by {@link #ABOVE_LEVEL_DECAY} per level above (e.g. +5 ≈ 33%, +10 ≈ 11%).
-     * RCT's own {@code maxLevelDiff} band still bounds eligibility, so this only redistributes within
-     * it. Resolved by reflection (this bridge keeps no compile dep on RCT); fails open to the
-     * unmodified weight if anything is missing.
+     * teamLevel|} — i.e. the mode sits exactly AT the player's level. To move the typical trainer
+     * BELOW the player, we decay weight for any trainer above {@code teamLevel - TARGET_DROP} (the
+     * "ceiling") by {@link #ABOVE_LEVEL_DECAY} per level over it. Combined with RCT's natural taper
+     * below, the distribution peaks ~{@code TARGET_DROP} levels under the player with a thin tail
+     * above. RCT's {@code maxLevelDiff} band still bounds eligibility. Resolved by reflection (no
+     * compile dep on RCT); fails open to the unmodified weight if anything is missing.
      */
     @ModifyReturnValue(method = "computeWeight", at = @At("RETURN"), require = 0)
     private double cobblemonbridge$skewBelowTeamLevel(double weight, Player player, String trainerId, @Coerce Object data) {
@@ -81,8 +90,11 @@ public class TrainerSpawnLevelMixin {
             Object mgr = cobblemonbridge$mGetTrainerManager.invoke(cobblemonbridge$mGetInstance.invoke(null));
             int teamLevel = ((Integer) cobblemonbridge$mGetPlayerLevel.invoke(mgr, player)).intValue();
             int trainerLevel = ((Integer) cobblemonbridge$mTrainerLevel.invoke(null, data)).intValue();
-            if (teamLevel > 0 && trainerLevel > teamLevel) {
-                weight *= Math.pow(ABOVE_LEVEL_DECAY, trainerLevel - teamLevel);
+            if (teamLevel > 0) {
+                int ceiling = teamLevel - TARGET_DROP;  // skew the mode this far below the player
+                if (trainerLevel > ceiling) {
+                    weight *= Math.pow(ABOVE_LEVEL_DECAY, trainerLevel - ceiling);
+                }
             }
         } catch (Throwable ignored) {
             // Fail open: a weighting tweak must never break trainer spawning.

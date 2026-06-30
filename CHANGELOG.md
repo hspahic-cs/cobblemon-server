@@ -12,7 +12,7 @@ root README.
 
 ## [Unreleased]
 
-## [0.23.32] - 2026-06-29
+## [0.23.34] - 2026-06-30
 
 ### Changed
 - **Legendary Monument density lowered** from ~1.2× to ~1.05× of the mod default. All 15 boosted
@@ -32,6 +32,27 @@ root README.
   `@Shadow`-ed `ItemCombinerMenu.inputSlots`/`resultSlots` — superclass fields with no refMap in the
   build — causing a `MixinApplyError` ~6s into startup. Rewritten to use the public
   `AbstractContainerMenu#getSlot` API instead; the one-time-use Red Chain behavior is unchanged.
+## [0.23.33] - 2026-06-29
+
+### Fixed
+- **Mythical Pokémon now count against the ranked/tournament legendary cap.** Cobblemon labels
+  Mythicals (Mew, Celebi, Darkrai, and **Arceus** — every plate form, including Arceus-Ghost) with
+  `mythical`, NOT `legendary`, so `isLegendary()` returned false for them and they slipped the cap.
+  That's how a team fielded Arceus-Ghost *and* Zacian under a 1-legendary limit. Both the normal
+  ranked `maxLegendaries` rule and the tournament "specials" cap (per-battle limit of 1) now count
+  Mythical Pokémon as legendary, alongside the Paradox/Ultra-Beast handling that was already there.
+
+## [0.23.32] - 2026-06-29
+
+### Fixed
+- **Trade level-cap check was backwards in the vanilla trade GUI.** It rejected trades based on the
+  Pokémon you were *giving away* vs your own cap, so you could *receive* a Pokémon above your level
+  cap but couldn't *hand off* one that was above your cap. Root cause: Cobblemon's `TradeEvent`
+  exposes `tradeParticipantNPokemon` as the mon participant N *receives* (its KDoc says the
+  opposite, but the event is built `Pre(player1, pokemon2, player2, pokemon1)`), and the hook had
+  the two sides swapped. Now each player's cap is checked against the mon they actually receive, so
+  an over-cap Pokémon can't be traded *down* to a player who hasn't earned the levels. (The custom
+  `/trade` command already checked the correct direction.)
 
 ## [0.23.31] - 2026-06-28
 

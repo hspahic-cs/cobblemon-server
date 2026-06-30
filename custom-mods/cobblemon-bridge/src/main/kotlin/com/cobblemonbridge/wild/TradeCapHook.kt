@@ -26,8 +26,14 @@ object TradeCapHook {
             val server = guessServer(event) ?: return@subscribe
             val p1 = resolvePlayer(server, event.tradeParticipant1.uuid)
             val p2 = resolvePlayer(server, event.tradeParticipant2.uuid)
-            val incoming1 = event.tradeParticipant2Pokemon  // p1 receives p2's offered mon
-            val incoming2 = event.tradeParticipant1Pokemon  // p2 receives p1's offered mon
+            // Cobblemon's TradeEvent.Pre is constructed `Pre(player1, pokemon2, player2, pokemon1)`,
+            // so tradeParticipantNPokemon is the mon participant N RECEIVES (it came from the OTHER
+            // party), NOT the one they give away. (Cobblemon's KDoc claims the opposite — it's wrong;
+            // verified against the construction + party swap in Cobblemon's TradeManager.performTrade.)
+            // The previous code had these swapped, which checked each player's cap against the mon
+            // they were GIVING — so you could RECEIVE an over-cap mon but couldn't give one away.
+            val incoming1 = event.tradeParticipant1Pokemon  // p1 receives THIS (came from p2's party)
+            val incoming2 = event.tradeParticipant2Pokemon  // p2 receives THIS (came from p1's party)
 
             // Bred Pokémon are non-tradeable (both directions). Applies to vanilla Cobblemon
             // trade GUI; the custom /trade flow does its own check in TradeManager.execute.

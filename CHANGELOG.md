@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.36] - 2026-06-30
+
+### Fixed
+- **Cobbleworkers harvesters no longer stall after long uptime.** A pastured worker (e.g. a Scizor
+  apricorn harvester) would harvest for a while, then permanently stop claiming ripe targets — only a
+  server restart revived it. Root cause (confirmed by decompiling the 2.0.4 jar): Cobbleworkers'
+  global `ClaimService.blockClaims` map has no TTL, and `tryClaim` is `putIfAbsent`, so any worker
+  stranded mid-job while holding a claim (entity unload/recall, an executor exception, navigation that
+  never arrives — the claim path has no timeout, unlike deposit) leaks that target's reservation
+  **forever**; no worker can ever re-claim it. Leaks accumulate over uptime until harvesting halts.
+  Added `CobbleworkersClaimReaperHook` to `cobblemon-bridge`: every 5 minutes it clears
+  `ClaimService` (plus the two scan systems, as insurance against a wedged area scan) via fail-open
+  reflection — the in-process equivalent of the restart. Verified against the real jar: the leak
+  reproduces and the reaper frees the stuck claim. Tunable via `-Dcobbleworkers.claimReapTicks`.
+
 ## [0.23.35] - 2026-06-30
 
 ### Changed

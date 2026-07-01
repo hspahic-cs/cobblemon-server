@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.38] - 2026-07-01
+
+### Added
+- **Tournament matches now have a per-turn move timer.** In tournament battles only, each player gets
+  60 seconds to choose a move (or a forced switch), then a silent 4-second grace, after which the
+  server picks for them so a match can't stall. The clock is per player and per decision: whoever
+  still owes a choice is on the clock, and a player who already locked in this turn sees nothing.
+  Countdown warnings show at 30/15/10 seconds (chat) and 5/3/2/1/0 seconds (action bar). On an
+  actual timeout the server uses the first legal move (slot 1, or the next move with PP if it's
+  disabled/empty; Struggle when nothing has PP), or for a forced switch sends in the next healthy
+  Pokémon. Only when a pick is auto-selected, a notice goes to the two players, any spectators, and
+  the admin host (not the whole server). Normal ranked and wager battles are unaffected.
+
 ## [0.23.37] - 2026-07-01
 
 ### Added

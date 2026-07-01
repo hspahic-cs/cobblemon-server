@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.37] - 2026-07-01
+
+### Added
+- **Tournament matches can be pinned to a specific arena.** `/ranked tournament play <p1> <p2>` now
+  takes an optional trailing arena number: `1` (arena 1), `2` (arena 2), or `3` (overflow/spawn). When
+  given, the match uses that arena directly, overriding auto-selection and its one-match-per-arena
+  mutex (so two matches can share an arena if an admin wants). Omit it to keep the old behavior
+  (auto-pick arena 1 → 2 → spawn). Falls back to auto if the forced arena isn't configured.
+- **Public join announcements during tournament registration.** When a player first locks in their
+  roster via `/join`, everyone online now sees `<Name> (ELO <X>) joined the tournament!`. Re-joining
+  to change a roster stays quiet so it doesn't spam chat.
+
 ## [0.23.36] - 2026-06-30
 
 ### Fixed

@@ -103,6 +103,13 @@ object RankedBattleManager {
     private val matchHost: ConcurrentHashMap<UUID, UUID> = ConcurrentHashMap()
 
     /**
+     * Admin-forced arena for a pending tournament match (1→ARENA_1, 2→ARENA_2, 3→SPAWN), keyed by
+     * each participant's UUID. Set by [startTournamentMatch] when the host passes an arena number;
+     * consumed in [startBattle], which honors it over auto-allocation (bypassing the in-use mutex).
+     */
+    private val pendingForcedSlot: ConcurrentHashMap<UUID, ArenaSlot> = ConcurrentHashMap()
+
+    /**
      * Begin the team-select phase of a ranked match. [wagerPerSide] is the cobble-dollar
      * amount each player will be charged when both confirm their teams. Escrow happens at
      * startBattle time, not here, so a cancelled team-select doesn't touch money. [hostUuid] is
@@ -132,7 +139,7 @@ object RankedBattleManager {
      * command, notified on cancel. Returns an error string if either player isn't a valid entrant,
      * or null on success.
      */
-    fun startTournamentMatch(player1: ServerPlayer, player2: ServerPlayer, hostUuid: UUID?): String? {
+    fun startTournamentMatch(player1: ServerPlayer, player2: ServerPlayer, hostUuid: UUID?, forcedArena: Int? = null): String? {
         val tm = com.cobblemonranked.tournament.TournamentManager
         val roster1 = tm.resolveRoster(player1) ?: return "${player1.name.string} hasn't entered the tournament."
         val roster2 = tm.resolveRoster(player2) ?: return "${player2.name.string} hasn't entered the tournament."
@@ -148,6 +155,17 @@ object RankedBattleManager {
         if (hostUuid != null) {
             matchHost[player1.uuid] = hostUuid
             matchHost[player2.uuid] = hostUuid
+        }
+        // Optional admin override: pin this match to a specific arena instead of auto-selecting.
+        val forcedSlot = when (forcedArena) {
+            1 -> ArenaSlot.ARENA_1
+            2 -> ArenaSlot.ARENA_2
+            3 -> ArenaSlot.SPAWN
+            else -> null
+        }
+        if (forcedSlot != null) {
+            pendingForcedSlot[player1.uuid] = forcedSlot
+            pendingForcedSlot[player2.uuid] = forcedSlot
         }
         openTournamentSelectionGui(player1, roster1, roster2)
         openTournamentSelectionGui(player2, roster2, roster1)
@@ -207,8 +225,8 @@ object RankedBattleManager {
     ) {
         val config = CobblemonRanked.config
 
-        // Legality check. countsAsLegendary() also counts Mythical (Arceus, Mew, …) and Paradox
-        // Pokémon, which Cobblemon's isLegendary() does not — all are Ubers/restricted tier.
+        // Legality check. countsAsLegendary() includes Paradox Pokémon (paradox label), which
+        // Cobblemon's isLegendary() does not — many Paradox mons are Ubers-tier.
         val p1Legendaries = team1.count { it.countsAsLegendary() }
         val p2Legendaries = team2.count { it.countsAsLegendary() }
 
@@ -289,7 +307,11 @@ object RankedBattleManager {
         // SPAWN is a shared overflow with no mutex so a 3rd+ concurrent match always has
         // somewhere to land. If no arena is configured at all, [ArenaSlot.NONE] means players
         // battle in place — no teleport, no teleport-back.
-        val slot = allocateSlot(config)
+        // An admin-forced arena (via `/ranked tournament play <p1> <p2> <arena>`) wins over
+        // auto-allocation, but only if that arena is actually configured; otherwise fall back.
+        val forcedSlot = pendingForcedSlot[player1.uuid]
+        val slot = if (forcedSlot != null && isSlotConfigured(forcedSlot, config)) forcedSlot
+                   else allocateSlot(config)
         val originals: Map<UUID, OriginalLocation> = if (slot != ArenaSlot.NONE) {
             val map = mapOf(
                 player1.uuid to captureLocation(player1),
@@ -380,6 +402,14 @@ object RankedBattleManager {
             config.isSpawnConfigured() -> ArenaSlot.SPAWN
             else -> ArenaSlot.NONE
         }
+    }
+
+    /** Whether the landing positions backing [slot] are set in config (so we can teleport there). */
+    private fun isSlotConfigured(slot: ArenaSlot, config: RankedConfig): Boolean = when (slot) {
+        ArenaSlot.ARENA_1 -> config.isArenaConfigured()
+        ArenaSlot.ARENA_2 -> config.isArena2Configured()
+        ArenaSlot.SPAWN -> config.isSpawnConfigured()
+        ArenaSlot.NONE -> true
     }
 
     /** Returns (player1 landing pos, player2 landing pos) for the given slot. */
@@ -817,6 +847,8 @@ object RankedBattleManager {
         pendingMatches.remove(uuid2)
         matchHost.remove(uuid1)
         matchHost.remove(uuid2)
+        pendingForcedSlot.remove(uuid1)
+        pendingForcedSlot.remove(uuid2)
     }
 
     private fun broadcast(server: MinecraftServer, message: String) {

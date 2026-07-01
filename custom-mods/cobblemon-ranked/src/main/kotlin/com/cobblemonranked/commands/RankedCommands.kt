@@ -236,14 +236,28 @@ object RankedCommands {
                     .then(Commands.literal("play")
                         .then(Commands.argument("player1", EntityArgument.player())
                             .then(Commands.argument("player2", EntityArgument.player())
+                                // No arena given → auto-select (arena 1 → arena 2 → spawn).
                                 .executes { ctx ->
                                     tournamentPlay(
                                         ctx.source,
                                         EntityArgument.getPlayer(ctx, "player1"),
                                         EntityArgument.getPlayer(ctx, "player2"),
+                                        forcedArena = null,
                                     )
                                     1
                                 }
+                                // Optional: force a specific arena (1, 2, or 3 = overflow/spawn).
+                                .then(Commands.argument("arena", IntegerArgumentType.integer(1, 3))
+                                    .executes { ctx ->
+                                        tournamentPlay(
+                                            ctx.source,
+                                            EntityArgument.getPlayer(ctx, "player1"),
+                                            EntityArgument.getPlayer(ctx, "player2"),
+                                            forcedArena = IntegerArgumentType.getInteger(ctx, "arena"),
+                                        )
+                                        1
+                                    }
+                                )
                             )
                         )
                     )
@@ -538,18 +552,19 @@ object RankedCommands {
         com.cobblemonranked.tournament.TournamentManager.closeRegistration(source.server)
     }
 
-    private fun tournamentPlay(source: CommandSourceStack, p1: ServerPlayer, p2: ServerPlayer) {
+    private fun tournamentPlay(source: CommandSourceStack, p1: ServerPlayer, p2: ServerPlayer, forcedArena: Int?) {
         if (p1.uuid == p2.uuid) {
             source.sendSystemMessage(Component.literal("§c[Tournament] Pick two different players."))
             return
         }
-        val err = RankedBattleManager.startTournamentMatch(p1, p2, source.player?.uuid)
+        val err = RankedBattleManager.startTournamentMatch(p1, p2, source.player?.uuid, forcedArena)
         if (err != null) {
             source.sendSystemMessage(Component.literal("§c[Tournament] $err"))
             return
         }
+        val arenaNote = forcedArena?.let { " §7(forced to arena $it)" } ?: ""
         source.sendSystemMessage(Component.literal(
-            "§a[Tournament] Match started: ${p1.name.string} vs ${p2.name.string} — both picking their 6."))
+            "§a[Tournament] Match started: ${p1.name.string} vs ${p2.name.string} — both picking their 6.$arenaNote"))
     }
 
     private fun tournamentJoin(player: ServerPlayer) {

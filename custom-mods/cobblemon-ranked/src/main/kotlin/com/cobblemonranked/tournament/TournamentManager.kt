@@ -78,9 +78,20 @@ object TournamentManager {
 
     /** Lock (or replace) a player's roster, officially entering them. */
     fun lockIn(player: ServerPlayer, roster: List<Pokemon>) {
+        // Announce publicly only on the FIRST entry — re-joining to tweak a roster shouldn't spam.
+        val firstEntry = !entries.containsKey(player.uuid)
         entries[player.uuid] = Entry(player.uuid, player.name.string, roster.map { it.uuid })
         player.sendSystemMessage(Component.literal(
             "§a§l[Tournament] §r§aYou're entered with a ${roster.size}-Pokémon roster! §7You can /join again to change it until registration closes."))
+        if (firstEntry) {
+            val store = CobblemonRanked.eloStore
+            val elo = store.get(player.uuid)?.elo ?: store.getOrCreate(player.uuid, player.name.string).elo
+            val announce = Component.literal(
+                "§6§l[Tournament] §r§e${player.name.string} §7(ELO §e$elo§7) §ejoined the tournament!")
+            for (p in player.server.playerList.players) {
+                p.sendSystemMessage(announce)
+            }
+        }
     }
 
     fun isEntered(uuid: UUID): Boolean = entries.containsKey(uuid)

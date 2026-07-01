@@ -117,6 +117,11 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         // EggDefeatHook is timer-based now; only the server-tick subscriber is needed.
         NeoForge.EVENT_BUS.register(EggDefeatHook)
 
+        // Cobbleworkers leaks global harvest claims over long uptime (no TTL on ClaimService),
+        // which silently stops apricorn/berry workers. Reaper periodically releases them so a
+        // prod restart isn't needed. Fail-open: no-ops if Cobbleworkers is absent/changed.
+        NeoForge.EVENT_BUS.register(com.cobblemonbridge.cobbleworkers.CobbleworkersClaimReaperHook)
+
         NeoForge.EVENT_BUS.register(GymTpNpcHook)
         NeoForge.EVENT_BUS.register(EntityAnchor)
         NeoForge.EVENT_BUS.register(TradeLifecycle)

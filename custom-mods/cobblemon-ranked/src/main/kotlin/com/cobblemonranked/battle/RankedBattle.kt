@@ -61,6 +61,12 @@ data class ActiveRankedMatch(
      * winner receives it all. Voided matches (both flee, both disconnect) refund both sides.
      */
     val wagerPerSide: Int = 0,
+    /**
+     * True for matches started via [RankedBattleManager.startTournamentMatch]. Only these are
+     * driven by the per-turn move timer ([TournamentTurnTimer]); normal ranked/wager battles
+     * are untimed.
+     */
+    val isTournament: Boolean = false,
 )
 
 /** Result of [RankedBattleManager.applyMatchResult]. */
@@ -108,6 +114,13 @@ object RankedBattleManager {
      * consumed in [startBattle], which honors it over auto-allocation (bypassing the in-use mutex).
      */
     private val pendingForcedSlot: ConcurrentHashMap<UUID, ArenaSlot> = ConcurrentHashMap()
+
+    /**
+     * Participants of a pending tournament match, recorded by [startTournamentMatch] and read in
+     * [startBattle] to stamp [ActiveRankedMatch.isTournament]. Cleared in [cleanup]. A plain
+     * concurrent set (the value carries no info beyond membership).
+     */
+    private val pendingTournament: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
 
     /**
      * Begin the team-select phase of a ranked match. [wagerPerSide] is the cobble-dollar
@@ -167,6 +180,9 @@ object RankedBattleManager {
             pendingForcedSlot[player1.uuid] = forcedSlot
             pendingForcedSlot[player2.uuid] = forcedSlot
         }
+        // Mark both players so [startBattle] flags the resulting match as tournament-timed.
+        pendingTournament.add(player1.uuid)
+        pendingTournament.add(player2.uuid)
         openTournamentSelectionGui(player1, roster1, roster2)
         openTournamentSelectionGui(player2, roster2, roster1)
         return null
@@ -354,6 +370,7 @@ object RankedBattleManager {
         result.ifSuccessful { battle ->
             val match = ActiveRankedMatch(
                 player1.uuid, player2.uuid, battle.battleId, originals, slot, actualWager,
+                isTournament = pendingTournament.contains(player1.uuid),
             )
             rankedBattles[battle.battleId] = match
 
@@ -849,6 +866,19 @@ object RankedBattleManager {
         matchHost.remove(uuid2)
         pendingForcedSlot.remove(uuid1)
         pendingForcedSlot.remove(uuid2)
+        pendingTournament.remove(uuid1)
+        pendingTournament.remove(uuid2)
+    }
+
+    /**
+     * Per-second driver for tournament move timers. Called from [CobblemonRanked]'s server tick
+     * (once per second). Hands the live tournament matches and a host-lookup to
+     * [TournamentTurnTimer], which owns the countdown state. No-op when nothing is timed.
+     */
+    fun tickTournamentTimers(server: MinecraftServer) {
+        if (rankedBattles.isEmpty()) return
+        val timed = rankedBattles.values.filter { it.isTournament && it.battleId != null }
+        TournamentTurnTimer.tick(server, timed) { uuid -> matchHost[uuid] }
     }
 
     private fun broadcast(server: MinecraftServer, message: String) {

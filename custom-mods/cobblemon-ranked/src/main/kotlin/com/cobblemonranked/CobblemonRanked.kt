@@ -48,6 +48,9 @@ class CobblemonRanked(modBus: IEventBus, container: ModContainer) {
 
     private fun onServerTickPost(event: ServerTickEvent.Post) {
         tickCounter++
+        if (tickCounter % 20 == 0) {
+            RankedBattleManager.tickTournamentTimers(event.server)
+        }
         if (tickCounter % 100 == 0) {
             challengeManager.cleanupExpired()
         }

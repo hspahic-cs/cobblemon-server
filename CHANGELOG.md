@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.23.39] - 2026-07-02
+
+### Fixed
+- **Tournament turn-timer auto-pick no longer jams the battle.** 0.23.38's auto-selection submitted
+  the move by its display name (e.g. "Sunsteel Strike") instead of its Showdown id ("sunsteelstrike").
+  Cobblemon's `MoveActionResponse` resolves the move slot by matching the id, so the display name
+  never matched: Showdown rejected it as "doesn't have a move 0" and the actor was left unable to act
+  for the rest of the battle (most visible on a Choice-locked mon, whose only legal move sits in a
+  later slot). Now submits `InBattleMove.id`; the readable name is still used for the chat notice.
+
 ## [0.23.38] - 2026-07-01
 
 ### Added

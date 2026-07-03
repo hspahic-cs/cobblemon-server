@@ -114,7 +114,11 @@ object TournamentTurnTimer {
             val move = moveset.moves.firstOrNull { it.canBeUsed() }
                 ?: moveset.moves.firstOrNull()
                 ?: return
-            actor.forceChoose(MoveActionResponse(move.move))
+            // Submit by move id (e.g. "sunsteelstrike"): MoveActionResponse.toShowdownString
+            // resolves the slot via indexOfFirst { it.id == moveName }, so passing the display
+            // name (`move.move`, e.g. "Sunsteel Strike") would never match and Showdown would
+            // reject it as "move 0". `move.move` stays for the human-readable announcement.
+            actor.forceChoose(MoveActionResponse(move.id))
             announce(server, battle, hostUuid, Component.literal(
                 "§6[Tournament] §e$playerName §7ran out of time. §f${move.move} §7was auto-selected."))
         }

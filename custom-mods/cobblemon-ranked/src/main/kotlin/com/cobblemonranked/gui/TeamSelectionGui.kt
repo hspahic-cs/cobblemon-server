@@ -12,6 +12,7 @@ import java.util.function.Consumer
 class TeamSelectionGui(
     private val player: ServerPlayer,
     private val maxLegendaries: Int,
+    private val showRental: Boolean,
     private val onConfirm: Consumer<List<Pokemon>>,
     private val onCancel: Runnable,
 ) {
@@ -19,6 +20,7 @@ class TeamSelectionGui(
         val provider = TeamSelectionMenuProvider(
             player = player,
             maxLegendaries = maxLegendaries,
+            showRental = showRental,
             onConfirm = { team -> onConfirm.accept(team) },
             onCancel = { onCancel.run() },
         )

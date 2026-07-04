@@ -46,6 +46,7 @@ class TeamSelectionMenu private constructor(
     private val playerInventory: Inventory,
     private val player: ServerPlayer?,
     private val maxLegendaries: Int,
+    private val showRental: Boolean,
     private val onConfirm: ((List<Pokemon>) -> Unit)?,
     private val onCancel: (() -> Unit)?,
 ) : AbstractContainerMenu(MenuType.GENERIC_9x6, containerId) {
@@ -55,6 +56,8 @@ class TeamSelectionMenu private constructor(
     private var currentBox: Int = 0
     private var confirmed = false
     private var cancelled = false
+    /** Set when we hand off to the rental menu, so [removed] doesn't cancel the match on the swap. */
+    private var navigating = false
     private val party: PartyStore? = player?.let { Cobblemon.storage.getParty(it) }
     private val pc: PCStore? = player?.let { Cobblemon.storage.getPC(it) }
 
@@ -124,7 +127,17 @@ class TeamSelectionMenu private constructor(
                                    else filler(Items.LIGHT_GRAY_STAINED_GLASS_PANE))
         }
 
-        display.setItem(51, filler(Items.BLACK_STAINED_GLASS_PANE))
+        if (showRental) {
+            val rent = named(Items.EMERALD,
+                Component.literal("Rent a Team").withStyle(Style.EMPTY.withBold(true)))
+            rent.set(DataComponents.LORE, ItemLore(listOf(
+                Component.literal("§7Skip building — battle with a prebuilt"),
+                Component.literal("§7competitive team instead."),
+            )))
+            display.setItem(51, rent)
+        } else {
+            display.setItem(51, filler(Items.BLACK_STAINED_GLASS_PANE))
+        }
         display.setItem(52, named(Items.LIME_CONCRETE,
             Component.literal("Confirm Team").withStyle(Style.EMPTY.withBold(true))))
         display.setItem(53, named(Items.RED_CONCRETE,
@@ -194,6 +207,21 @@ class TeamSelectionMenu private constructor(
                 sp.closeContainer()
                 onConfirm?.invoke(selected.toList())
             }
+            slotId == 51 && showRental -> {
+                navigating = true
+                sp.openMenu(com.cobblemonranked.gui.RentalTeamMenuProvider(
+                    player = sp,
+                    onConfirm = { team -> onConfirm?.invoke(team) },
+                    onCancel = { onCancel?.invoke() },
+                    onBack = {
+                        sp.openMenu(TeamSelectionMenuProvider(
+                            sp, maxLegendaries, showRental,
+                            { team -> onConfirm?.invoke(team) },
+                            { onCancel?.invoke() },
+                        ))
+                    },
+                ))
+            }
             slotId == 53 -> { cancelled = true; sp.closeContainer(); onCancel?.invoke() }
         }
     }
@@ -218,7 +246,7 @@ class TeamSelectionMenu private constructor(
 
     override fun removed(player: Player) {
         super.removed(player)
-        if (!confirmed && !cancelled) { cancelled = true; onCancel?.invoke() }
+        if (!confirmed && !cancelled && !navigating) { cancelled = true; onCancel?.invoke() }
     }
 
     private class DisplaySlot(c: SimpleContainer, slot: Int, x: Int, y: Int) : Slot(c, slot, x, y) {
@@ -255,19 +283,21 @@ class TeamSelectionMenu private constructor(
             playerInventory: Inventory,
             player: ServerPlayer,
             maxLegendaries: Int,
+            showRental: Boolean,
             onConfirm: (List<Pokemon>) -> Unit,
             onCancel: () -> Unit,
-        ): TeamSelectionMenu = TeamSelectionMenu(containerId, playerInventory, player, maxLegendaries, onConfirm, onCancel)
+        ): TeamSelectionMenu = TeamSelectionMenu(containerId, playerInventory, player, maxLegendaries, showRental, onConfirm, onCancel)
     }
 }
 
 class TeamSelectionMenuProvider(
     private val player: ServerPlayer,
     private val maxLegendaries: Int,
+    private val showRental: Boolean,
     private val onConfirm: (List<Pokemon>) -> Unit,
     private val onCancel: () -> Unit,
 ) : MenuProvider {
     override fun getDisplayName(): Component = Component.literal("Select Your Team")
     override fun createMenu(containerId: Int, inv: Inventory, ignored: Player): AbstractContainerMenu =
-        TeamSelectionMenu.forServer(containerId, inv, player, maxLegendaries, onConfirm, onCancel)
+        TeamSelectionMenu.forServer(containerId, inv, player, maxLegendaries, showRental, onConfirm, onCancel)
 }

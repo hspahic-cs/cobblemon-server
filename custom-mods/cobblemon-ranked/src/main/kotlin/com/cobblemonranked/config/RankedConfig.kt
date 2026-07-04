@@ -38,6 +38,10 @@ data class RankedConfig(
     val kFactor: Int = 32,
     val levelCap: Int = 50,
     val maxLegendaries: Int = 1,
+    /** Show the "Rent a Team" button in team-select, letting players battle with a prebuilt
+     *  competitive team instead of their own party. Flip to false to remove rentals from ranked
+     *  (e.g. if the ladder homogenises into mirror rental matches) without a code change. */
+    val allowRentalsInRanked: Boolean = true,
     val forcesPerDayPerPair: Int = 1,
     /** Off by default in 0.7.8. Decay is paused while we tune; flip to `true` (and ensure
      *  [minimumElo] is the desired decay floor) to re-enable. */

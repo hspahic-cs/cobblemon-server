@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.24.0] - 2026-07-04
+
+### Added
+- **Rental teams in ranked PvP.** Players can now battle with one of four prebuilt competitive singles
+  teams instead of their own party, so newcomers can try ranked without breeding or EV-training a squad.
+  A **Rent a Team** button in the team-select menu opens a picker with four OU archetypes —
+  **Hyper Offense** (Chi-Yu / Mega Charizard X), **Balance** (Zapdos / Mega Scizor), **Stall**
+  (Ting-Lu / Mega Sableye), and **Trick Room** (Cresselia / Mega Mawile). Each is exactly one
+  monument-obtainable legendary plus one Mega, no Paradox, and no banned power-forms; sets are
+  deliberately de-tuned (EVs capped at 168/stat, IVs a flat 25) so rentals don't outclass hand-built
+  teams. Rental Pokémon are built fresh for the battle and never enter a player's storage. Editable at
+  `config/cobblemon-ranked/authored/rentals.json`; gated by `allowRentalsInRanked` (default on).
+
 ## [0.23.39] - 2026-07-02
 
 ### Fixed

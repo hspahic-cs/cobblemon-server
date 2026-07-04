@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.25.0] - 2026-07-05
+
 ### Added
 - **Player Auction House (`cobblemon-auction`).** A persistent player-to-player market. Right-click
   the Auctioneer NPC to open it: sell the item in your hand (type a total price into the anvil box —

@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **Player Auction House (`cobblemon-auction`).** A persistent player-to-player market. Right-click
+  the Auctioneer NPC to open it: sell the item in your hand (type a total price into the anvil box —
+  the item is escrowed while you decide, and handed back if you cancel), browse everyone's listings,
+  and buy with a two-click confirm so a stray click can't spend money. Purchases and any
+  returned/expired/cancelled items land in a per-player **Mailbox** to collect. Listings expire after
+  a configurable number of days (default 7) back to the seller's mailbox; prices, per-player listing
+  caps, and a blocklist (Poké Balls by default) are config. Prices settle in NeoEssentials currency.
+  Server-only, chest-GUI driven, no client mod. Provision the NPC with `/auctionadmin spawn` (op).
+
 ## [0.24.0] - 2026-07-04
 
 ### Added

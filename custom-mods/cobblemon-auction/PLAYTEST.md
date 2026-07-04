@@ -63,3 +63,22 @@ Tell us (with a screenshot if you can):
 - Anything confusing, any error message, or any crash.
 
 Thanks! This is brand-new and hasn't had a real in-game shakedown yet — your testing is the verification. 🙏
+
+---
+
+## Quick Checklist (TL;DR)
+
+- [ ] **List** — hold item, *Sell*, type price, confirm → item leaves hand, shows in listings, fee deducted
+- [ ] **Cancel a sell** — close the anvil without confirming → item returned
+- [ ] **Buy** (2nd player) — left-click a listing, left-click again → money moves, item in **Mailbox**
+- [ ] **Collect** — Mailbox → click item → into inventory
+- [ ] **Cancel listing** — *Your Listings* → cancel → item back in Mailbox (fee **not** refunded)
+- [ ] **Fee refund** — a listing that **sells** refunds the seller's fee (price + fee); expired/cancelled keeps it
+- [ ] **Can't afford** — buy too pricey → blocked; list with ~$0 balance → fee refused, item returned
+- [ ] **Own listing** — buying your own → refused
+- [ ] **Blocked item** — sell a Poké Ball → refused
+- [ ] **Bad price** — 0 / letters / huge number → confirm won't go through
+- [ ] **Enchanted/renamed** — list one, buy it → name + enchants survive
+- [ ] **Logout mid-sell** — *Sell* then log out before pricing → item in Mailbox on return
+
+**Report:** any item that disappears, wrong money, lost enchant/name, or a crash.

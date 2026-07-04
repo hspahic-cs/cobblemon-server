@@ -30,6 +30,7 @@ class CobblemonRanked(modBus: IEventBus, container: ModContainer) {
         eloStore.load()
         challengeManager = ChallengeManager()
         teamStore = TeamStore(configDir)
+        com.cobblemonranked.rental.RentalTeams.load(configDir)
 
         RankedBattleManager.registerEvents()
         NeoForge.EVENT_BUS.register(RankedBattleManager)  // PlayerLoggedOutEvent → forfeit

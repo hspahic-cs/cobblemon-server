@@ -209,6 +209,7 @@ object RankedBattleManager {
         TeamSelectionGui(
             player = player,
             maxLegendaries = maxLegendaries,
+            showRental = CobblemonRanked.config.allowRentalsInRanked,
             onConfirm = { team ->
                 pendingTeams[player.uuid] = team.map { it.clone() }
                 player.sendSystemMessage(Component.literal("[Ranked] Team locked in! Waiting for opponent..."))

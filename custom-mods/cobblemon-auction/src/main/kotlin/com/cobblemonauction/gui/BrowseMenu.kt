@@ -65,11 +65,19 @@ object BrowseMenu {
             "§7Left-click a listing to select it.",
             "§7Left-click again to confirm the purchase.",
         ))
-        container.setItem(SELL_SLOT, Gui.button(
-            Items.EMERALD, "§aSell Held Item",
+        val cfg = CobblemonAuction.config
+        val sellLore = mutableListOf(
             "§7Hold the item you want to sell,",
             "§7then click here to set a price.",
-        ))
+        )
+        if (cfg.listingFeePercent > 0 || cfg.minListingFee > 0) {
+            val pct = cfg.listingFeePercent
+            val pctStr = if (pct % 1.0 == 0.0) pct.toInt().toString() else pct.toString()
+            sellLore += ""
+            sellLore += "§7Listing fee: §f$pctStr% §7(min §f\$${cfg.minListingFee}§7)"
+            sellLore += "§8Refunded if the item sells."
+        }
+        container.setItem(SELL_SLOT, Gui.button(Items.EMERALD, "§aSell Held Item", *sellLore.toTypedArray()))
         val mailCount = CobblemonAuction.mailboxStore.count(player.uuid)
         container.setItem(MAILBOX_SLOT, Gui.button(
             Items.ENDER_CHEST, "§bMailbox§7 ($mailCount)",

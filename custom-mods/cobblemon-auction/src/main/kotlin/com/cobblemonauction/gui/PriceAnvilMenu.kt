@@ -83,8 +83,12 @@ class PriceAnvilMenu(
         return if (n in cfg.minPrice..cfg.maxPrice) n else null
     }
 
-    private fun confirmStack(price: Int): ItemStack =
-        Gui.button(Items.PAPER, "§a§lList for \$$price", "§7Click to put it on the market.")
+    private fun confirmStack(price: Int): ItemStack {
+        val fee = CobblemonAuction.config.listingFee(price)
+        val lore = mutableListOf("§7Click to put it on the market.")
+        if (fee > 0) lore += "§7Listing fee: §f\$$fee §8(refunded if it sells)"
+        return Gui.button(Items.PAPER, "§a§lList for \$$price", *lore.toTypedArray())
+    }
 
     private fun hintStack(): ItemStack {
         val cfg = CobblemonAuction.config
@@ -96,10 +100,16 @@ class PriceAnvilMenu(
 
     private fun report(sp: ServerPlayer, res: AuctionService.ListResult) {
         val msg = when (res) {
-            is AuctionService.ListResult.Success ->
-                "§a[AH] Listed ${res.listing.count}× ${Gui.prettyItemName(res.listing.itemId)} for \$${res.listing.price}."
+            is AuctionService.ListResult.Success -> {
+                val feeNote = if (res.listing.fee > 0) " §7(fee \$${res.listing.fee}, refunded if it sells)" else ""
+                "§a[AH] Listed ${res.listing.count}× ${Gui.prettyItemName(res.listing.itemId)} for \$${res.listing.price}.$feeNote"
+            }
             is AuctionService.ListResult.PriceOutOfRange ->
                 "§c[AH] Price must be between \$${res.min} and \$${res.max}."
+            is AuctionService.ListResult.FeeUnaffordable ->
+                "§c[AH] The \$${res.fee} listing fee is more than your \$${res.have} — item returned."
+            AuctionService.ListResult.EconomyUnavailable ->
+                "§c[AH] The economy is unavailable right now — item returned, try again later."
             AuctionService.ListResult.NothingEscrowed -> "§c[AH] Nothing to list — start again from the Sell button."
             AuctionService.ListResult.Error -> "§c[AH] Couldn't create that listing — your item was returned."
         }

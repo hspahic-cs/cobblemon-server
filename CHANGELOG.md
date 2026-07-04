@@ -22,6 +22,8 @@ root README.
   returned/expired/cancelled items land in a per-player **Mailbox** to collect. Listings expire after
   a configurable number of days (default 7) back to the seller's mailbox; prices, per-player listing
   caps, and a blocklist (Poké Balls by default) are config. Prices settle in NeoEssentials currency.
+  A configurable **listing fee** (default 5% of the asking price, min $1) is charged when you list
+  and **refunded if the item sells** — kept as a currency sink if the listing expires or is cancelled.
   Server-only, chest-GUI driven, no client mod. Provision the NPC with `/auctionadmin spawn` (op).
 
 ## [0.24.0] - 2026-07-04

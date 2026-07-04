@@ -17,6 +17,12 @@ import kotlin.io.path.writeText
  *                                seller's mailbox.
  * @property maxListingsPerPlayer Cap on a player's simultaneous active listings.
  * @property minPrice/maxPrice    Inclusive bounds on the total price a seller may set.
+ * @property listingFeePercent    Fee charged when a listing is created, as a percent of the asking
+ *                                price. It's a deposit: refunded to the seller if the item sells,
+ *                                kept (destroyed — a currency sink) if the listing expires or is
+ *                                cancelled. Set to 0 to disable fees.
+ * @property minListingFee        Floor on the listing fee so cheap listings still cost something
+ *                                (anti-spam). The fee never exceeds the asking price itself.
  * @property blocklist            Item ids (namespace:path) that may not be listed. Living
  *                                Pokémon aren't itemstacks in Cobblemon, so there's nothing to
  *                                block there today; this covers Poké Balls and any future/edge
@@ -27,10 +33,23 @@ data class AuctionConfig(
     val maxListingsPerPlayer: Int = 10,
     val minPrice: Int = 1,
     val maxPrice: Int = 1_000_000,
+    val listingFeePercent: Double = 5.0,
+    val minListingFee: Int = 1,
     val blocklist: List<String> = DEFAULT_BLOCKLIST,
 ) {
     /** TTL in milliseconds, clamped to a sane floor so a misconfig can't expire listings instantly. */
     fun ttlMillis(): Long = listingTtlDays.coerceAtLeast(1).toLong() * 24L * 60L * 60L * 1000L
+
+    /**
+     * Listing fee for an item priced at [price]: `ceil(price * pct/100)`, floored at [minListingFee]
+     * and never more than the price itself. Returns 0 when [listingFeePercent] and [minListingFee]
+     * are both 0 (fees disabled).
+     */
+    fun listingFee(price: Int): Int {
+        if (listingFeePercent <= 0.0 && minListingFee <= 0) return 0
+        val pct = kotlin.math.ceil(price * listingFeePercent / 100.0).toInt()
+        return maxOf(minListingFee, pct).coerceIn(0, price)
+    }
 
     fun isBlocked(itemId: String): Boolean = itemId in blockedSet
     private val blockedSet: Set<String> by lazy { blocklist.toHashSet() }

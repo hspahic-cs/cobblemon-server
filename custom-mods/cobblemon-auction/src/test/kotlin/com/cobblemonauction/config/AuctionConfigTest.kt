@@ -36,6 +36,18 @@ class AuctionConfigTest {
     }
 
     @Test
+    fun `listing fee is percent of price, floored at the minimum, capped at price`() {
+        val cfg = AuctionConfig(listingFeePercent = 5.0, minListingFee = 1)
+        assertEquals(50, cfg.listingFee(1000))                 // 5% of 1000
+        assertEquals(5, cfg.listingFee(100))                   // 5% of 100
+        assertEquals(1, cfg.listingFee(3))                     // ceil(0.15)=1, meets the min
+        // fee can never exceed the asking price itself
+        assertEquals(1, AuctionConfig(listingFeePercent = 0.0, minListingFee = 5).listingFee(1))
+        // both knobs zero → fees disabled
+        assertEquals(0, AuctionConfig(listingFeePercent = 0.0, minListingFee = 0).listingFee(1000))
+    }
+
+    @Test
     fun `timeLeft formats day hour and minute buckets`() {
         assertEquals("expiring", Gui.timeLeft(0))
         assertEquals("42m", Gui.timeLeft(42 * 60_000L))

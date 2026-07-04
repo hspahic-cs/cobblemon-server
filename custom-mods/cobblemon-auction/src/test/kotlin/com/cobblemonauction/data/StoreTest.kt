@@ -19,7 +19,7 @@ class StoreTest {
     ) = Listing(
         id = id, sellerUuid = seller.toString(), sellerName = "Seller",
         itemId = "minecraft:diamond", count = 3, item = "{id:\"minecraft:diamond\"}",
-        price = price, createdAt = createdAt, expiresAt = expiresAt,
+        price = price, fee = 5, createdAt = createdAt, expiresAt = expiresAt,
     )
 
     @Test

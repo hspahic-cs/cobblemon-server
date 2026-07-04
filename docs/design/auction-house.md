@@ -98,8 +98,10 @@ Round-trip fidelity is unit-tested.
 
 - `listingTtlDays` (default 7)
 - `maxListingsPerPlayer` (default 10)
-- `blocklist` (item ids / tags)
 - `minPrice`, `maxPrice`
+- `listingFeePercent` (default 5.0), `minListingFee` (default 1) — the listing-fee deposit; set both
+  to 0 to disable fees
+- `blocklist` (item ids / tags)
 
 ## Testing
 
@@ -125,8 +127,21 @@ classpath). Gson is pulled in as a `testImplementation` since MC provides it onl
   under `## [Unreleased]` never deploy. Prod is manual. (This feature currently sits under
   `[Unreleased]` — no deploy until it's versioned.)
 
+## Listing fee (deposit model)
+
+A **listing fee** is charged when a listing is created — `ceil(price × listingFeePercent/100)`,
+floored at `minListingFee`, never more than the price itself. It's a **deposit**: refunded to the
+seller when the item sells (`buy()` pays out `price + fee`), and **kept** — destroyed, a currency
+sink — when the listing expires or is cancelled. The fee is charged up front in `confirmSell` and
+stored on the `Listing` so the refund is exact even if config changes later. Fails closed: if the
+economy is down or the seller can't cover the fee, the listing is refused and the item handed back.
+
+This is primarily an inflation sink (unsold/cancelled listings burn currency) and secondarily
+anti-spam / anti-"AH-as-storage". Successful sellers pay nothing net.
+
 ## Open / deferred (not in v1)
 
-- Fees / sales tax (money sink) — deferred; hooks left in config shape.
+- Sales tax / cut on completion (a second, dodge-proof sink) — the listing-fee deposit is the sink
+  for now; add a completion cut later if inflation still runs hot.
 - Partial-quantity buys — out of scope (whole-bundle only).
 - Search / filtering in the browser — start with pagination only.

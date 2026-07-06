@@ -61,17 +61,31 @@ object AuctionService {
     sealed interface ListResult {
         data class Success(val listing: Listing) : ListResult
         data class PriceOutOfRange(val min: Int, val max: Int) : ListResult
+        data class FeeUnaffordable(val fee: Int, val have: Int) : ListResult
+        data object EconomyUnavailable : ListResult
         data object NothingEscrowed : ListResult
         data object Error : ListResult
     }
 
     fun confirmSell(player: ServerPlayer, price: Int): ListResult {
         val cfg = CobblemonAuction.config
-        val escrow = pendingSells[player.uuid] ?: return ListResult.NothingEscrowed
+        // Once we take the escrow out, EVERY return path must either list the item or hand it back.
+        val escrow = pendingSells.remove(player.uuid) ?: return ListResult.NothingEscrowed
         if (price < cfg.minPrice || price > cfg.maxPrice) {
+            returnToPlayer(player, escrow)
             return ListResult.PriceOutOfRange(cfg.minPrice, cfg.maxPrice)
         }
-        pendingSells.remove(player.uuid)
+
+        // Charge the listing fee up front — a deposit, refunded to the seller on sale (see buy())
+        // and kept (a currency sink) on expiry/cancel. Fail closed if economy is down or the seller
+        // can't cover it, and give the item back.
+        val fee = cfg.listingFee(price)
+        if (fee > 0 && !EconomyBridge.withdraw(player.uuid, fee)) {
+            returnToPlayer(player, escrow)
+            return if (!EconomyBridge.isAvailable()) ListResult.EconomyUnavailable
+                   else ListResult.FeeUnaffordable(fee, EconomyBridge.getBalance(player.uuid))
+        }
+
         return try {
             val snbt = ItemStacks.encode(escrow, player.level().registryAccess())
             val now = System.currentTimeMillis()
@@ -83,6 +97,7 @@ object AuctionService {
                 count = escrow.count,
                 item = snbt,
                 price = price,
+                fee = fee,
                 createdAt = now,
                 expiresAt = now + cfg.ttlMillis(),
             )
@@ -90,6 +105,7 @@ object AuctionService {
             ListResult.Success(listing)
         } catch (e: Throwable) {
             CobblemonAuction.logger.error("Failed to create listing for ${player.gameProfile.name}", e)
+            if (fee > 0) EconomyBridge.deposit(player.uuid, fee)   // undo the fee; the listing didn't happen
             returnToPlayer(player, escrow)   // don't eat the item on a serialization failure
             ListResult.Error
         }
@@ -151,10 +167,11 @@ object AuctionService {
             return BuyResult.Gone
         }
 
-        EconomyBridge.deposit(UUID.fromString(listing.sellerUuid), listing.price)
+        // Seller gets the sale price plus their listing fee back (the deposit is refunded on sale).
+        EconomyBridge.deposit(UUID.fromString(listing.sellerUuid), listing.price + listing.fee)
         CobblemonAuction.mailboxStore.add(player.uuid, mailFrom(listing, "Purchased from ${listing.sellerName}"))
         CobblemonAuction.logger.info(
-            "SALE ${listing.count}x ${listing.itemId} for \$${listing.price}: " +
+            "SALE ${listing.count}x ${listing.itemId} for \$${listing.price} (fee \$${listing.fee} refunded): " +
                 "${listing.sellerName} -> ${player.gameProfile.name}"
         )
         return BuyResult.Success(listing)
@@ -178,9 +195,18 @@ object AuctionService {
 
     // ---- Expiry sweep ----------------------------------------------------------------------
 
-    /** Move every expired listing into its seller's mailbox. Returns how many were swept. */
+    /** Listings are removed this long BEFORE their nominal `expiresAt`. Both the browse/my-listings
+     *  filters and the sweep use this lead, so a listing disappears during its final minute instead
+     *  of ever showing a zeroed-out countdown. */
+    const val REMOVAL_LEAD_MS = 60_000L
+
+    /** The moment a listing effectively leaves the market (a minute before its nominal expiry). */
+    fun effectiveExpiry(listing: Listing): Long = listing.expiresAt - REMOVAL_LEAD_MS
+
+    /** Move every effectively-expired listing into its seller's mailbox. Returns how many were swept. */
     fun sweepExpired(now: Long): Int {
-        val expired = CobblemonAuction.auctionStore.expired(now)
+        // now + lead ≡ effectiveExpiry <= now, i.e. sweep a minute early.
+        val expired = CobblemonAuction.auctionStore.expired(now + REMOVAL_LEAD_MS)
         for (listing in expired) {
             val removed = CobblemonAuction.auctionStore.remove(listing.id) ?: continue
             CobblemonAuction.mailboxStore.add(

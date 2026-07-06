@@ -49,7 +49,7 @@ object BrowseMenu {
     }
 
     private fun activeListings(now: Long): List<Listing> =
-        CobblemonAuction.auctionStore.all().filter { it.expiresAt > now }
+        CobblemonAuction.auctionStore.all().filter { AuctionService.effectiveExpiry(it) > now }
 
     private fun pageCount(now: Long): Int {
         val n = activeListings(now).size
@@ -65,11 +65,19 @@ object BrowseMenu {
             "§7Left-click a listing to select it.",
             "§7Left-click again to confirm the purchase.",
         ))
-        container.setItem(SELL_SLOT, Gui.button(
-            Items.EMERALD, "§aSell Held Item",
+        val cfg = CobblemonAuction.config
+        val sellLore = mutableListOf(
             "§7Hold the item you want to sell,",
             "§7then click here to set a price.",
-        ))
+        )
+        if (cfg.listingFeePercent > 0 || cfg.minListingFee > 0) {
+            val pct = cfg.listingFeePercent
+            val pctStr = if (pct % 1.0 == 0.0) pct.toInt().toString() else pct.toString()
+            sellLore += ""
+            sellLore += "§7Listing fee: §f$pctStr% §7(min §f\$${cfg.minListingFee}§7)"
+            sellLore += "§8Refunded if the item sells."
+        }
+        container.setItem(SELL_SLOT, Gui.button(Items.EMERALD, "§aSell Held Item", *sellLore.toTypedArray()))
         val mailCount = CobblemonAuction.mailboxStore.count(player.uuid)
         container.setItem(MAILBOX_SLOT, Gui.button(
             Items.ENDER_CHEST, "§bMailbox§7 ($mailCount)",
@@ -86,8 +94,10 @@ object BrowseMenu {
         val start = page * PAGE_SIZE
         val slice = all.subList(start.coerceAtMost(all.size), (start + PAGE_SIZE).coerceAtMost(all.size))
         val registries = player.level().registryAccess()
+        val ownUuid = player.uuid.toString()
         for ((index, listing) in slice.withIndex()) {
-            container.setItem(FIRST_ITEM_SLOT + index, listingStack(listing, registries, now, armedId == listing.id))
+            container.setItem(FIRST_ITEM_SLOT + index,
+                listingStack(listing, registries, now, armedId == listing.id, listing.sellerUuid == ownUuid))
         }
 
         if (page > 0) container.setItem(PREV_SLOT, Gui.button(Items.ARROW, "§aPrevious Page", "§7Page ${page} / $pages"))
@@ -95,17 +105,23 @@ object BrowseMenu {
         container.setChanged()
     }
 
-    private fun listingStack(listing: Listing, registries: net.minecraft.core.HolderLookup.Provider, now: Long, armed: Boolean): ItemStack {
+    private fun listingStack(listing: Listing, registries: net.minecraft.core.HolderLookup.Provider, now: Long, armed: Boolean, own: Boolean): ItemStack {
         val stack = ItemStacks.decode(listing.item, registries)
         if (stack.isEmpty) {
             return Gui.button(Items.BARRIER, "§cUnavailable listing", "§7This item couldn't be loaded.")
         }
+        val action = when {
+            own && armed -> "§c§lClick again to CANCEL this listing"
+            own -> "§eYour listing §7— click to cancel (to Mailbox)"
+            armed -> "§e§lClick again to confirm purchase"
+            else -> "§aLeft-click to buy"
+        }
         val lore = mutableListOf(
             "§ePrice: §f\$${listing.price} §7(for ${listing.count})",
             "§7Seller: §f${listing.sellerName}",
-            "§7Expires in: §f${Gui.timeLeft(listing.expiresAt - now)}",
+            "§7Expires in: §f${Gui.timeLeft(AuctionService.effectiveExpiry(listing) - now)}",
             "",
-            if (armed) "§e§lClick again to confirm purchase" else "§aLeft-click to buy",
+            action,
         )
         return Gui.withLore(stack, lore)
     }
@@ -140,14 +156,18 @@ object BrowseMenu {
             val all = activeListings(now)
             val idx = page * PAGE_SIZE + (slotId - FIRST_ITEM_SLOT)
             val listing = all.getOrNull(idx) ?: return
+            val own = listing.sellerUuid == sp.uuid.toString()
 
             if (armedId == listing.id) {
                 armedId = null
-                reportBuy(sp, listing, AuctionService.buy(sp, listing.id))
+                if (own) reportCancel(sp, listing, AuctionService.cancel(sp, listing.id))
+                else reportBuy(sp, listing, AuctionService.buy(sp, listing.id))
             } else {
                 armedId = listing.id
+                val name = Gui.prettyItemName(listing.itemId)
                 sp.sendSystemMessage(Component.literal(
-                    "§e[AH] Click again to confirm buying ${listing.count}× ${Gui.prettyItemName(listing.itemId)} for \$${listing.price}."
+                    if (own) "§e[AH] Click again to CANCEL your listing of ${listing.count}× $name — it returns to your Mailbox."
+                    else "§e[AH] Click again to confirm buying ${listing.count}× $name for \$${listing.price}."
                 ))
             }
             refresh()
@@ -191,6 +211,17 @@ object BrowseMenu {
                 is AuctionService.BuyResult.InsufficientBalance ->
                     "§c[AH] You need \$${result.need} but only have \$${result.have}."
                 AuctionService.BuyResult.EconomyUnavailable -> "§c[AH] The economy is unavailable right now — try again later."
+            }
+            sp.sendSystemMessage(Component.literal(msg))
+        }
+
+        private fun reportCancel(sp: ServerPlayer, listing: Listing, result: AuctionService.CancelResult) {
+            val name = Gui.prettyItemName(listing.itemId)
+            val msg = when (result) {
+                is AuctionService.CancelResult.Success ->
+                    "§a[AH] Cancelled your listing of ${listing.count}× $name — returned to your Mailbox."
+                AuctionService.CancelResult.Gone -> "§c[AH] That listing is no longer active."
+                AuctionService.CancelResult.NotOwner -> "§c[AH] That isn't your listing."
             }
             sp.sendSystemMessage(Component.literal(msg))
         }

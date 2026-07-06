@@ -13,6 +13,9 @@ data class Listing(
     val count: Int,
     val item: String,
     val price: Int,
+    /** Listing fee charged at creation. Refunded to the seller on sale; kept on expiry/cancel.
+     *  Stored per-listing so a refund is exact even if the config fee changes later. */
+    val fee: Int,
     val createdAt: Long,
     val expiresAt: Long,
 )

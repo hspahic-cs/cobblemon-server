@@ -2,7 +2,9 @@ package com.cobblemonauction.gui
 
 import com.cobblemonauction.CobblemonAuction
 import com.cobblemonauction.service.AuctionService
+import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Inventory
@@ -83,8 +85,12 @@ class PriceAnvilMenu(
         return if (n in cfg.minPrice..cfg.maxPrice) n else null
     }
 
-    private fun confirmStack(price: Int): ItemStack =
-        Gui.button(Items.PAPER, "§a§lList for \$$price", "§7Click to put it on the market.")
+    private fun confirmStack(price: Int): ItemStack {
+        val fee = CobblemonAuction.config.listingFee(price)
+        val lore = mutableListOf("§7Click to put it on the market.")
+        if (fee > 0) lore += "§7Listing fee: §f\$$fee §8(refunded if it sells)"
+        return Gui.button(Items.PAPER, "§a§lList for \$$price", *lore.toTypedArray())
+    }
 
     private fun hintStack(): ItemStack {
         val cfg = CobblemonAuction.config
@@ -92,14 +98,34 @@ class PriceAnvilMenu(
             "§7Enter a whole number between", "§7\$${cfg.minPrice} and \$${cfg.maxPrice}.")
     }
 
-    private fun placeholder(): ItemStack = Gui.button(Items.NAME_TAG, "§fPrice")
+    /** Placeholder in the anvil input slot. The vanilla anvil seeds its rename box from this item's
+     *  name, so we give it an EMPTY custom name — the box opens blank instead of showing literal
+     *  "§fPrice" for the player to delete. The RESULT slot carries the "type a price" hint. */
+    private fun placeholder(): ItemStack {
+        val stack = ItemStack(Items.NAME_TAG)
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal("").setStyle(Style.EMPTY.withItalic(false)))
+        return stack
+    }
 
     private fun report(sp: ServerPlayer, res: AuctionService.ListResult) {
+        // Success gets an explicit second line about the fee so the player can't miss the charge.
+        if (res is AuctionService.ListResult.Success) {
+            sp.sendSystemMessage(Component.literal(
+                "§a[AH] Listed ${res.listing.count}× ${Gui.prettyItemName(res.listing.itemId)} for \$${res.listing.price}."))
+            if (res.listing.fee > 0) {
+                sp.sendSystemMessage(Component.literal(
+                    "§7A §f\$${res.listing.fee} §7listing fee was charged — §arefunded if it sells§7, kept if it expires or you cancel."))
+            }
+            return
+        }
         val msg = when (res) {
-            is AuctionService.ListResult.Success ->
-                "§a[AH] Listed ${res.listing.count}× ${Gui.prettyItemName(res.listing.itemId)} for \$${res.listing.price}."
+            is AuctionService.ListResult.Success -> ""   // handled above
             is AuctionService.ListResult.PriceOutOfRange ->
                 "§c[AH] Price must be between \$${res.min} and \$${res.max}."
+            is AuctionService.ListResult.FeeUnaffordable ->
+                "§c[AH] The \$${res.fee} listing fee is more than your \$${res.have} — item returned."
+            AuctionService.ListResult.EconomyUnavailable ->
+                "§c[AH] The economy is unavailable right now — item returned, try again later."
             AuctionService.ListResult.NothingEscrowed -> "§c[AH] Nothing to list — start again from the Sell button."
             AuctionService.ListResult.Error -> "§c[AH] Couldn't create that listing — your item was returned."
         }

@@ -35,9 +35,11 @@ internal object Gui {
     fun prettyItemName(itemId: String): String =
         itemId.substringAfterLast(':').split('_').joinToString(" ") { it.replaceFirstChar(Char::uppercase) }
 
-    /** Human "time left" from a millisecond duration: "3d 4h", "5h 12m", "42m", or "expiring". */
+    /** Human "time left" from a millisecond duration: "3d 4h", "5h 12m", "42m", or — for the final
+     *  stretch — "under a minute" (a pending-expiry cue; listings are removed a minute early, so a
+     *  bare zeroed countdown never shows). */
     fun timeLeft(millis: Long): String {
-        if (millis <= 0) return "expiring"
+        if (millis < 60_000) return "under a minute"
         val totalMin = millis / 60_000
         val d = totalMin / 1440
         val h = (totalMin % 1440) / 60

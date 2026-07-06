@@ -62,7 +62,7 @@ class CobblemonAuction(modBus: IEventBus, container: ModContainer) {
 
     companion object {
         const val MOD_ID = "cobblemon_auction"
-        private const val SWEEP_INTERVAL_TICKS = 6000   // ~5 minutes at 20 TPS
+        private const val SWEEP_INTERVAL_TICKS = 1200   // ~1 minute at 20 TPS
         val logger: Logger = LoggerFactory.getLogger(MOD_ID)
 
         lateinit var config: AuctionConfig

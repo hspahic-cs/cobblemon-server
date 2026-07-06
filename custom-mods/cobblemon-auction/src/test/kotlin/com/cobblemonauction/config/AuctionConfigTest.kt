@@ -23,11 +23,18 @@ class AuctionConfigTest {
     }
 
     @Test
-    fun `blocklist matches default poke balls but not other items`() {
+    fun `blocklist is empty by default so ordinary items list freely`() {
         val cfg = AuctionConfig()
-        assertTrue(cfg.isBlocked("cobblemon:poke_ball"))
-        assertTrue(cfg.isBlocked("cobblemon:master_ball"))
+        // Empty Poké Balls are ordinary tradeable items; nothing is blocked out of the box.
+        assertFalse(cfg.isBlocked("cobblemon:poke_ball"))
         assertFalse(cfg.isBlocked("minecraft:diamond"))
+    }
+
+    @Test
+    fun `blocklist matches items an operator adds`() {
+        val cfg = AuctionConfig(blocklist = listOf("cobblemon:master_ball"))
+        assertTrue(cfg.isBlocked("cobblemon:master_ball"))
+        assertFalse(cfg.isBlocked("cobblemon:poke_ball"))
     }
 
     @Test
@@ -36,8 +43,21 @@ class AuctionConfigTest {
     }
 
     @Test
+    fun `listing fee is percent of price, floored at the minimum, capped at price`() {
+        val cfg = AuctionConfig(listingFeePercent = 5.0, minListingFee = 1)
+        assertEquals(50, cfg.listingFee(1000))                 // 5% of 1000
+        assertEquals(5, cfg.listingFee(100))                   // 5% of 100
+        assertEquals(1, cfg.listingFee(3))                     // ceil(0.15)=1, meets the min
+        // fee can never exceed the asking price itself
+        assertEquals(1, AuctionConfig(listingFeePercent = 0.0, minListingFee = 5).listingFee(1))
+        // both knobs zero → fees disabled
+        assertEquals(0, AuctionConfig(listingFeePercent = 0.0, minListingFee = 0).listingFee(1000))
+    }
+
+    @Test
     fun `timeLeft formats day hour and minute buckets`() {
-        assertEquals("expiring", Gui.timeLeft(0))
+        assertEquals("under a minute", Gui.timeLeft(0))
+        assertEquals("under a minute", Gui.timeLeft(59_000L))
         assertEquals("42m", Gui.timeLeft(42 * 60_000L))
         assertEquals("5h 12m", Gui.timeLeft((5 * 60 + 12) * 60_000L))
         assertEquals("3d 4h", Gui.timeLeft((3 * 1440 + 4 * 60) * 60_000L))

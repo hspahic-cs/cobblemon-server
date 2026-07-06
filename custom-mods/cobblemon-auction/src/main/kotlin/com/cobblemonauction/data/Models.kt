@@ -30,3 +30,15 @@ data class MailEntry(
     val addedAt: Long,
     val note: String,
 )
+
+/** A record that one of a seller's listings sold, kept only while the seller is OFFLINE so we can
+ *  summarize it on their next login (online sellers are told immediately and never get a receipt).
+ *  Proceeds are already in their balance; this is purely a notification. */
+data class SaleReceipt(
+    val id: String,
+    val itemId: String,
+    val count: Int,
+    val price: Int,
+    val buyerName: String,
+    val soldAt: Long,
+)

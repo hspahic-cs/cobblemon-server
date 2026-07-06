@@ -205,7 +205,8 @@ object BrowseMenu {
             val name = Gui.prettyItemName(listing.itemId)
             val msg = when (result) {
                 is AuctionService.BuyResult.Success ->
-                    "§a[AH] Bought ${listing.count}× $name for \$${listing.price}. Collect it from your Mailbox."
+                    "§a§l[AH] Purchased! §r§a${listing.count}× $name is now in your §bMailbox§a — " +
+                        "open the Auctioneer and click §bMailbox§a to collect it."
                 AuctionService.BuyResult.Gone -> "§c[AH] That listing is no longer available."
                 AuctionService.BuyResult.OwnListing -> "§c[AH] You can't buy your own listing — cancel it from Your Listings."
                 is AuctionService.BuyResult.InsufficientBalance ->

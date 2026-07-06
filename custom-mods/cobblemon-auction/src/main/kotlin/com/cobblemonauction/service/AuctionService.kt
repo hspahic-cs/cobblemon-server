@@ -4,6 +4,7 @@ import com.cobblemonauction.CobblemonAuction
 import com.cobblemonauction.data.ItemStacks
 import com.cobblemonauction.data.Listing
 import com.cobblemonauction.data.MailEntry
+import com.cobblemonauction.data.SaleReceipt
 import com.cobblemonauction.economy.EconomyBridge
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.server.level.ServerPlayer
@@ -174,7 +175,30 @@ object AuctionService {
             "SALE ${listing.count}x ${listing.itemId} for \$${listing.price} (fee \$${listing.fee} refunded): " +
                 "${listing.sellerName} -> ${player.gameProfile.name}"
         )
+        notifySellerOfSale(player, listing)
         return BuyResult.Success(listing)
+    }
+
+    /** Tell the seller their item sold: immediately if they're online, otherwise queue a receipt
+     *  that's summarized on their next login. Proceeds are already in their balance either way. */
+    private fun notifySellerOfSale(buyer: ServerPlayer, listing: Listing) {
+        val sellerUuid = UUID.fromString(listing.sellerUuid)
+        val online = buyer.server.playerList.getPlayer(sellerUuid)
+        val name = com.cobblemonauction.gui.Gui.prettyItemName(listing.itemId)
+        if (online != null) {
+            online.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+                "§a§l[AH] Sold! §r§aYour ${listing.count}× $name sold to ${buyer.gameProfile.name} " +
+                    "for §e\$${listing.price}§a — paid into your balance."))
+        } else {
+            CobblemonAuction.salesReceiptStore.add(sellerUuid, SaleReceipt(
+                id = UUID.randomUUID().toString(),
+                itemId = listing.itemId,
+                count = listing.count,
+                price = listing.price,
+                buyerName = buyer.gameProfile.name,
+                soldAt = System.currentTimeMillis(),
+            ))
+        }
     }
 
     // ---- Cancel a live listing -------------------------------------------------------------

@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.25.3] - 2026-07-07
+
+### Fixed
+- **Auction House price anvil no longer crashes on shift-click.** `PriceAnvilMenu` didn't override
+  `quickMoveStack`, so shift-clicking the result "paper" ran the vanilla anvil's repair-slot transfer
+  logic against our hijacked slots. Quick-move is now blocked and the confirm path is guarded.
+- **Price-entry window title fits on screen** — shortened to "Type price here".
+
+### Added
+- **Sellers are notified when their listings sell.** Online sellers get an immediate chat message
+  (item + price paid into their balance); offline sellers get an itemized summary on their next login
+  ("While you were away, N listing(s) sold for $X total"). The buyer's purchase message now spells out
+  that the item is waiting in their **Mailbox** and how to collect it.
+
 ## [0.25.2] - 2026-07-06
 
 ### Fixed

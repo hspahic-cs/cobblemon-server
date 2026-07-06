@@ -15,7 +15,10 @@ import net.minecraft.commands.arguments.DimensionArgument
 import net.minecraft.commands.arguments.EntityArgument
 import net.minecraft.commands.arguments.coordinates.RotationArgument
 import net.minecraft.commands.arguments.coordinates.Vec3Argument
+import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.HoverEvent
+import net.minecraft.network.chat.Style
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.fml.loading.FMLPaths
 
@@ -31,6 +34,12 @@ object RankedCommands {
                 .then(Commands.literal("help")
                     .executes { ctx ->
                         showHelp(ctx.source, ctx.source.hasPermission(4))
+                        1
+                    }
+                )
+                .then(Commands.literal("guide")
+                    .executes { ctx ->
+                        sendGuideLink(ctx.source)
                         1
                     }
                 )
@@ -350,9 +359,26 @@ object RankedCommands {
         ))
     }
 
+    /** Send the player a clickable chat link to the rental-teams wiki guide. (Chest-menu tooltips
+     *  can't be clickable, so the in-game rental menu points players here instead.) */
+    private fun sendGuideLink(source: CommandSourceStack) {
+        val url = CobblemonRanked.config.rentalGuideUrl
+        if (url.isBlank()) {
+            source.sendSystemMessage(Component.literal("§7[Ranked] No rental guide is configured."))
+            return
+        }
+        source.sendSystemMessage(Component.literal(
+            "§a[Ranked] §fRental teams — moves, roles, and how to play each one:"))
+        source.sendSystemMessage(Component.literal("§b§n📖 Open the Rental Teams guide").withStyle(
+            Style.EMPTY
+                .withClickEvent(ClickEvent(ClickEvent.Action.OPEN_URL, url))
+                .withHoverEvent(HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("§7$url")))))
+    }
+
     private fun showHelp(source: CommandSourceStack, includeAdmin: Boolean) {
         val lines = mutableListOf(
             "§e[Ranked] §fCommands:",
+            "§7  /ranked guide §f— open the rental-teams guide (how to play each team)",
             "§7  /ranked challenge <player> §f— challenge a player to a ranked match",
             "§7  /ranked accept §f— accept a pending challenge",
             "§7  /ranked decline §f— decline a pending challenge",

@@ -59,13 +59,24 @@ class PriceAnvilMenu(
         setCarried(ItemStack.EMPTY)          // never hand the confirm token to the player's cursor
         getSlot(RESULT).set(ItemStack.EMPTY)
         val sp = player as? ServerPlayer ?: return
-        val price = parsePrice(typed)
-        if (price == null) { sp.closeContainer(); return }
-        confirmed = true                     // confirmSell consumes or returns the escrow itself
-        report(sp, AuctionService.confirmSell(sp, price))
-        getSlot(INPUT).set(ItemStack.EMPTY)
-        sp.closeContainer()
+        try {
+            val price = parsePrice(typed)
+            if (price == null) { sp.closeContainer(); return }
+            confirmed = true                 // confirmSell consumes or returns the escrow itself
+            report(sp, AuctionService.confirmSell(sp, price))
+            getSlot(INPUT).set(ItemStack.EMPTY)
+        } catch (e: Throwable) {
+            CobblemonAuction.logger.error("Price-anvil confirm failed", e)
+        } finally {
+            sp.closeContainer()
+        }
     }
+
+    /** Block shift-click / quick-transfer entirely. The vanilla anvil's quick-move logic operates on
+     *  its repair slots and misbehaves (crashes) on our hijacked slot layout — e.g. shift-clicking the
+     *  result "paper". Confirming is a plain left-click on the result (see [onTake]), so nothing here
+     *  needs quick-move. */
+    override fun quickMoveStack(player: Player, index: Int): ItemStack = ItemStack.EMPTY
 
     override fun removed(player: Player) {
         getSlot(INPUT).set(ItemStack.EMPTY)
@@ -140,7 +151,7 @@ class PriceAnvilMenu(
         fun open(player: ServerPlayer) {
             val provider = SimpleMenuProvider(
                 { syncId, inv, _ -> PriceAnvilMenu(syncId, inv, player) },
-                Component.literal("§0Set a price — type a number"),
+                Component.literal("§0Type price here"),
             )
             player.openMenu(provider)
         }

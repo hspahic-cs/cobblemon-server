@@ -53,6 +53,9 @@ markdown_extensions:
   - pymdownx.snippets
   - pymdownx.keys
 
+extra_css:
+  - stylesheets/extra.css
+
 # Internal/dev docs stay in the repo but are excluded from the published
 # site — keeps the public wiki focused on players.
 exclude_docs: |
@@ -77,4 +80,5 @@ nav:
       - Pokémon spawn biomes: spawn-lookup.md
       - Cobbleworkers jobs: cobbleworkers.md
       - PvP rules: pvp.md
+      - Rental teams: rental-teams.md
       - Finding legendaries: legendaries.md

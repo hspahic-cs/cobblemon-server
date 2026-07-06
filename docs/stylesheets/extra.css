@@ -1,91 +1,81 @@
-/* Rental Teams guide — sprite cards, type-colored move badges, difficulty pills.
-   Colors key off Material theme vars so it works in both light (default) and dark (slate). */
+/* Rental Teams guide — sprite cards with visible move data, roles, and item/ability notes.
+   Colors key off Material theme vars so it works in light (default) and dark (slate). */
+
+/* team header: colored left bar per archetype */
+.md-typeset h2.team-h { border-left: 5px solid var(--md-default-fg-color--light); padding-left: .55rem; }
+h2.team-h[data-hue="bal"]   { border-left-color: #5b8def; }
+h2.team-h[data-hue="tr"]    { border-left-color: #e061a6; }
+h2.team-h[data-hue="ho"]    { border-left-color: #e5533d; }
+h2.team-h[data-hue="stall"] { border-left-color: #a274e0; }
 
 .roster {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: .6rem;
-  margin: .8rem 0 1.6rem;
+  margin: .8rem 0 1.4rem;
 }
-
 .mon {
-  display: flex;
-  gap: .7rem;
-  align-items: flex-start;
-  padding: .6rem .7rem;
+  display: flex; gap: .7rem; align-items: flex-start;
+  padding: .65rem .75rem;
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: .5rem;
   background: var(--md-code-bg-color);
 }
 .mon .sprite {
-  flex: 0 0 66px;
-  width: 66px; height: 66px;
-  object-fit: contain;
-  image-rendering: pixelated;
+  flex: 0 0 64px; width: 64px; height: 64px;
+  object-fit: contain; image-rendering: pixelated;
   background: var(--md-default-bg-color);
   border: 1px solid var(--md-default-fg-color--lightest);
   border-radius: .4rem;
 }
 .mon-info { min-width: 0; flex: 1; }
-.mon-name { font-weight: 700; font-size: .82rem; line-height: 1.2; }
-.mon-gear { font-size: .68rem; color: var(--md-default-fg-color--light); margin: .1rem 0 .35rem; }
-.mon-gear .abil { opacity: .85; }
+.mon-name { font-weight: 700; font-size: .84rem; line-height: 1.25; }
+.mon-role { font-size: .72rem; color: var(--md-default-fg-color--light); margin: .15rem 0 .45rem; }
 
-.moves { display: flex; flex-wrap: wrap; gap: .28rem; }
+/* role tag pill next to the name */
+.tag {
+  font-size: .58rem; font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
+  padding: .08rem .4rem; border-radius: .5rem; vertical-align: middle;
+  color: var(--md-primary-fg-color);
+  background: color-mix(in srgb, var(--md-primary-fg-color) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-primary-fg-color) 30%, transparent);
+}
+
+/* visible move list */
+.movelist { list-style: none; margin: 0 0 .5rem; padding: 0; display: flex; flex-direction: column; gap: .28rem; }
+.movelist li { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem; font-size: .7rem; line-height: 1.35; }
 .mv {
-  font-size: .66rem;
-  font-weight: 600;
-  color: #fff;
-  text-shadow: 0 1px 1px rgba(0,0,0,.32);
-  padding: .12rem .42rem .12rem .34rem;
-  border-radius: .28rem;
-  white-space: nowrap;
-  cursor: help;
-  display: inline-flex;
-  align-items: center;
-  gap: .3rem;
+  font-size: .68rem; font-weight: 600; color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.3);
+  padding: .1rem .4rem; border-radius: .28rem; white-space: nowrap;
 }
-/* category "bubble" dot before the move name */
-.mv::before {
-  content: "";
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1.5px rgba(255,255,255,.55);
-  flex: 0 0 auto;
-}
-.c-physical::before { background: #f2643b; }
-.c-special::before  { background: #4d90d6; }
-.c-status::before   { background: #b7bcc6; }
+.mmeta { font-family: var(--md-code-font-family, monospace); font-size: .6rem; color: var(--md-default-fg-color--light); opacity: .85; }
+.meff  { color: var(--md-default-fg-color--light); font-size: .7rem; flex: 1 1 100%; margin-left: .1rem; }
 
-/* 18 type colors */
-.t-normal   { background:#9099a1; } .t-fire    { background:#e8623b; }
-.t-water    { background:#4b8fd6; } .t-electric{ background:#e0b12c; }
-.t-grass    { background:#5fb04e; } .t-ice     { background:#4fc0c0; }
-.t-fighting { background:#cc4155; } .t-poison  { background:#a35bc0; }
-.t-ground   { background:#c9922f; } .t-flying  { background:#7a9fe0; }
-.t-psychic  { background:#e5628f; } .t-bug     { background:#93a327; }
-.t-rock     { background:#b09642; } .t-ghost   { background:#6b5a97; }
-.t-dragon   { background:#5a52c9; } .t-dark    { background:#5a5060; }
-.t-steel    { background:#7f8ba0; } .t-fairy   { background:#df84a8; }
+/* item / ability notes */
+.mon-gear { display: flex; flex-direction: column; gap: .12rem; font-size: .66rem; color: var(--md-default-fg-color--light); border-top: 1px solid var(--md-default-fg-color--lightest); padding-top: .4rem; }
+.mon-gear b { color: var(--md-default-fg-color); font-weight: 700; margin-right: .25rem; font-size: .58rem; text-transform: uppercase; letter-spacing: .03em; }
 
-/* role + difficulty pills */
+/* tier + difficulty pills */
 .role, .diff {
-  font-size: .6rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  padding: .08rem .4rem;
-  border-radius: .5rem;
-  vertical-align: middle;
+  font-size: .58rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: .08rem .4rem; border-radius: .5rem; vertical-align: middle; white-space: nowrap;
 }
 .role.legend { color:#a9862a; background:rgba(224,193,74,.18); }
 .role.mega   { color:#8a5cc0; background:rgba(162,116,224,.18); }
-
-.diff { font-size:.62rem; }
 .diff.beg  { color:#1f8a5b; background:rgba(62,207,142,.18); }
 .diff.mod  { color:#9a7a10; background:rgba(231,181,60,.20); }
 .diff.hard { color:#c25f1e; background:rgba(232,130,58,.18); }
 .diff.exp  { color:#c23a4c; background:rgba(224,89,107,.18); }
+.md-typeset h2 .diff { margin-left: .4rem; }
 
-/* h2 team headers get a bit of breathing room + the pill inline */
-.md-typeset h2 .diff { margin-left:.4rem; }
+/* 18 type colors for move badges */
+.t-normal   { background:#9099a1; } .t-fire    { background:#e8623b; }
+.t-water    { background:#4b8fd6; } .t-electric{ background:#d9a91f; }
+.t-grass    { background:#5fb04e; } .t-ice     { background:#46b6b6; }
+.t-fighting { background:#cc4155; } .t-poison  { background:#a35bc0; }
+.t-ground   { background:#c9922f; } .t-flying  { background:#6f93d6; }
+.t-psychic  { background:#e5628f; } .t-bug     { background:#93a327; }
+.t-rock     { background:#b09642; } .t-ghost   { background:#6b5a97; }
+.t-dragon   { background:#5a52c9; } .t-dark    { background:#5a5060; }
+.t-steel    { background:#7f8ba0; } .t-fairy   { background:#df84a8; }

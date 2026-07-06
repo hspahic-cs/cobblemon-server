@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.25.1] - 2026-07-06
+
+### Added
+- **Auction House listing fee (currency sink).** A configurable fee (default 5% of the asking price,
+  min $1) is charged when you create a listing and **refunded if the item sells** — kept as a
+  currency sink if the listing expires or is cancelled. It's surfaced on its own chat line when you
+  list, and previewed on the Sell button and the price-confirm token.
+
+### Changed
+- **Auction House playtest fixes.** From dev testing of 0.25.0:
+  - The price anvil now opens with an **empty** text box instead of a literal `§fPrice` placeholder.
+  - Clicking **your own listing** in the browser now cancels it (two-click confirm, returns to your
+    Mailbox), with the tooltip and chat saying so — instead of just refusing a "buy".
+  - **Mailbox** and **Your Listings** are now paginated (previously capped silently at 45 entries).
+  - **Empty Poké Balls are no longer blocked** — the default blocklist is empty (Cobblemon Pokémon
+    aren't itemstacks, so the old entries protected nothing).
+  - **Max listings per player** raised 10 → 30.
+  - Expiry sweep runs every **~1 minute** (was 5), and listings are removed a minute before their
+    nominal expiry so they disappear in their final minute rather than showing a zeroed-out
+    countdown; the sub-minute label reads **"under a minute"**.
+
+  Note: the fee, empty blocklist, and new listing cap live in `config.json` — regenerate the auction
+  config (`config/cobblemon-auction/authored/config.json`) on an existing server for them to apply.
+
 ## [0.25.0] - 2026-07-05
 
 ### Added

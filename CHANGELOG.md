@@ -12,6 +12,13 @@ root README.
 
 ## [Unreleased]
 
+## [0.25.2] - 2026-07-06
+
+### Fixed
+- **Auction House config no longer writes a junk `blockedSet$delegate` field.** `AuctionConfig` cached
+  the blocklist in a `by lazy` set, whose backing field Gson serialized into `config.json`. Dropped the
+  lazy (`isBlocked` now checks the tiny blocklist directly), so regenerated configs are clean.
+
 ## [0.25.1] - 2026-07-06
 
 ### Added

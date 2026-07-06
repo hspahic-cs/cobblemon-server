@@ -51,8 +51,10 @@ data class AuctionConfig(
         return maxOf(minListingFee, pct).coerceIn(0, price)
     }
 
-    fun isBlocked(itemId: String): Boolean = itemId in blockedSet
-    private val blockedSet: Set<String> by lazy { blocklist.toHashSet() }
+    // Direct list check — no cached `by lazy` set, because Gson serializes a lazy delegate's
+    // backing field into config.json as junk ("blockedSet$delegate": {...}). The blocklist is
+    // tiny, so a linear scan is fine.
+    fun isBlocked(itemId: String): Boolean = itemId in blocklist
 
     companion object {
         private val log = LoggerFactory.getLogger("cobblemon-auction/config")

@@ -5,6 +5,7 @@ import com.cobblemonauction.service.AuctionService
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import net.minecraft.network.protocol.game.ClientboundSetExperiencePacket
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Inventory
@@ -88,18 +89,17 @@ class PriceAnvilMenu(
         getSlot(RESULT).set(ItemStack.EMPTY)
         super.removed(player)
         if (player is ServerPlayer) {
-            // Some XP charge lands during this tick's packet handling — sometimes AFTER removed()
-            // runs — so refund on the next server task instead of synchronously here, and log what
-            // (if anything) was taken so we can pin the source. Listing should never cost XP.
+            // The vanilla anvil's client UI visually drops an XP level (its "rename cost") even though
+            // we never actually charge XP — the server-side level is unchanged, so nothing to refund
+            // (confirmed: no refund ever logged). Force an XP resync so the client's level display
+            // matches the real value. Deferred one task so it lands after the menu fully closes.
             val sp = player
-            val before = openXpLevel
             sp.server.execute {
-                val after = sp.experienceLevel
-                if (after < before) {
-                    sp.giveExperienceLevels(before - after)
-                    CobblemonAuction.logger.info(
-                        "Refunded ${before - after} XP level(s) charged while listing (open=$before, after=$after) for ${sp.gameProfile.name}")
+                if (sp.experienceLevel < openXpLevel) {  // safety net in case a real charge ever slips in
+                    sp.giveExperienceLevels(openXpLevel - sp.experienceLevel)
                 }
+                sp.connection.send(ClientboundSetExperiencePacket(
+                    sp.experienceProgress, sp.totalExperience, sp.experienceLevel))
             }
         }
         if (!confirmed && player is ServerPlayer) AuctionService.cancelSell(player)

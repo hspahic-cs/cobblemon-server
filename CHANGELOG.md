@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.26.5] - 2026-07-07
+
+### Fixed
+- **Auction listing no longer *appears* to cost an XP level.** The server never actually charged XP
+  (confirmed via logging — no refund ever fired), but the vanilla anvil's client UI visually drops a
+  "rename cost" level. The price box now resyncs your real XP to the client on close, so the display
+  stays correct.
+
 ## [0.26.4] - 2026-07-07
 
 ### Fixed

@@ -1,6 +1,7 @@
 package com.cobblemonmarket.economy
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.config.effectiveBundleSize
 import com.cobblemonmarket.config.effectiveBuyClamp
 import com.cobblemonmarket.config.effectiveBuyStockImpact
 import com.cobblemonmarket.config.effectiveMinBuyPrice
@@ -61,9 +62,13 @@ object TradeOps {
         )
         val totalCost = result.totalPrice
 
+        // Bundled items (e.g. building blocks priced per stack) deliver bundleSize per unit
+        // bought while cost/stock stay in bundle units. Default bundleSize is 1 → unchanged.
+        val delivered = qty * entry.effectiveBundleSize
+
         val balance = EconomyBridge.getBalance(player.uuid)
         if (balance < totalCost) return TradeResult.InsufficientBalance(balance, totalCost)
-        if (!hasInventorySpace(player, qty)) return TradeResult.NoInventorySpace
+        if (!hasInventorySpace(player, delivered)) return TradeResult.NoInventorySpace
         if (!EconomyBridge.withdraw(player.uuid, totalCost)) return TradeResult.EconomyFailed
 
         val priceBefore = PricingEngine.buyPrice(
@@ -77,7 +82,7 @@ object TradeOps {
         )
 
         val item: Item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemId))
-        player.inventory.add(ItemStack(item, qty))
+        player.inventory.add(ItemStack(item, delivered))
         val avgPrice = (totalCost + qty / 2) / qty
         CobblemonMarket.marketStore.recordPriceTick(
             itemId = itemId, type = "buy",

@@ -63,6 +63,15 @@ data class ItemEntry(
     val sellStockImpact: Double? = null,
     /** Hard per-item floor on the buy price (applied after rounding, before the clamp ratio). Defaults to 0 = no floor beyond the global ratio. */
     val minBuyPrice: Int? = null,
+    /**
+     * Items delivered per unit "bought". Defaults to 1. Set to 64 to sell a full stack per
+     * click at a single [baseBuyPrice] — used by the buy-only building-materials vendor where
+     * prices are quoted per stack (e.g. Dirt "×64 for \$25"). One purchase of `qty` clicks
+     * delivers `qty × bundleSize` items and charges `qty × baseBuyPrice`; stock and pricing are
+     * still tracked in bundle units, so a fixed-price (elasticity 0) bundle item costs
+     * [baseBuyPrice] no matter how many stacks are in supply. Sell-side ignores bundling.
+     */
+    val bundleSize: Int? = null,
 )
 
 /** Empty string = the default unscoped vendor. */
@@ -77,6 +86,8 @@ val ItemEntry.effectiveSellClamp: Double get() = sellPriceClamp ?: com.cobblemon
 val ItemEntry.effectiveBuyStockImpact: Double get() = buyStockImpact ?: 3.0
 val ItemEntry.effectiveSellStockImpact: Double get() = sellStockImpact ?: 1.0
 val ItemEntry.effectiveMinBuyPrice: Int get() = minBuyPrice ?: 0
+/** Items delivered per unit bought. Defaults to 1; the block vendor sets 64 to sell by the stack. */
+val ItemEntry.effectiveBundleSize: Int get() = (bundleSize ?: 1).coerceAtLeast(1)
 
 object ItemConfig {
     private val gson: Gson = GsonBuilder().setPrettyPrinting().create()

@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.26.0] - 2026-07-07
+
+### Added
+- **Shopkeeper category tabs.** The spawn Shopkeeper now has a tab bar across the top of its GUI
+  to switch categories without leaving the NPC — no extra shopkeepers to spawn. Three tabs:
+  - **General Store** — the existing Pokémon supplies (Poké Balls, candies, medicine, etc.).
+  - **Blocks & Decor** — new buy-only building materials and decorative items: Axolotl Bucket
+    ($5,000), Tropical Fish Bucket ($5,000), Ochre/Verdant/Pearlescent Froglights ($2,500 each),
+    Beacon ($50,000), and stacks of Oak Log ($125), Stone Bricks ($250), Dark Prismarine ($2,500),
+    Prismarine ($1,000), Dirt ($25), Sand ($25), Cobblestone ($100), Bricks ($250), Smooth Stone
+    ($400), and Gravel ($50). Building materials are sold by the stack — one click buys 64 for the
+    listed price (new `bundleSize` option in `items.json`).
+  - **Upgrades** — permanent account upgrades bought out of the same PokeDollar balance. First
+    upgrade is extra `/sethome` slots: an additional home costs $100,000, with each subsequent slot
+    costing $50,000 more ($150,000 for the second, $200,000 for the third, and so on). Slots are
+    granted through NeoEssentials' permission system (`neoessentials.home.<N>`) and persist across
+    restarts.
+
+  The Held-Item and TM vendors are unchanged (single-category NPCs). Existing Shopkeeper NPCs pick
+  up the tabs automatically — no re-spawn needed.
+
 ## [0.25.4] - 2026-07-07
 
 ### Added

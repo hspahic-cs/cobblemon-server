@@ -70,6 +70,7 @@ object RentalTeams {
         val id: String,
         val name: String,
         val archetype: String,             // one-line strategy blurb for the menu
+        val difficulty: String = "Moderate", // Beginner | Moderate | Hard | Expert (menu badge)
         val icon: String,                  // namespaced vanilla item id for the menu button
         val members: List<RentalMon>,
     )
@@ -120,7 +121,8 @@ object RentalTeams {
         RentalTeam(
             id = "hyper_offense",
             name = "Hyper Offense",
-            archetype = "Hazards up turn 1, then overwhelm before they stabilise.",
+            archetype = "All-out attack — set traps, then overwhelm before they can dig in.",
+            difficulty = "Hard",
             icon = "minecraft:blaze_powder",
             members = listOf(
                 RentalMon("glimmora", ability = "toxicdebris", nature = "timid", item = "cobblemon:focus_sash",
@@ -146,7 +148,8 @@ object RentalTeams {
         RentalTeam(
             id = "balance",
             name = "Balance",
-            archetype = "Sturdy pivots + Volt-Turn into one or two win conditions. Beginner-friendly.",
+            archetype = "The safe, flexible all-rounder — the best team to learn on.",
+            difficulty = "Beginner",
             icon = "minecraft:iron_sword",
             members = listOf(
                 RentalMon("garchomp", ability = "roughskin", nature = "impish", item = "cobblemon:rocky_helmet",
@@ -172,7 +175,8 @@ object RentalTeams {
         RentalTeam(
             id = "stall",
             name = "Stall",
-            archetype = "No sweepers — hazards, status, recovery. Win by attrition. Hard to pilot.",
+            archetype = "Outlast everything — wall, poison, heal, repeat.",
+            difficulty = "Expert",
             icon = "minecraft:shield",
             members = listOf(
                 RentalMon("sableye", ability = "prankster", nature = "bold", item = "mega_showdown:sablenite",
@@ -198,7 +202,8 @@ object RentalTeams {
         RentalTeam(
             id = "trick_room",
             name = "Trick Room",
-            archetype = "Invert speed for 5 turns so slow nukes strike first.",
+            archetype = "Flip the speed rules so your slow bruisers strike first.",
+            difficulty = "Moderate",
             icon = "minecraft:clock",
             members = listOf(
                 RentalMon("cresselia", ability = "levitate", nature = "sassy", item = "cobblemon:leftovers",

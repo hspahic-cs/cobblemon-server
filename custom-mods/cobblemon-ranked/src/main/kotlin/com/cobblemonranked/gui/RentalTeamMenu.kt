@@ -86,7 +86,11 @@ class RentalTeamMenu private constructor(
         val stack = ItemStack(resolveItem(team.icon))
         stack.set(DataComponents.CUSTOM_NAME,
             Component.literal("§a§l${team.name}").withStyle(Style.EMPTY.withItalic(false)))
+        // Coalesce a null/blank difficulty — an older rentals.json (written before this field) would
+        // leave it null since Gson bypasses the Kotlin default.
+        val diff = (team.difficulty as String?)?.ifBlank { null } ?: "Moderate"
         val lore = mutableListOf<Component>()
+        lore.add(Component.literal("§7Difficulty: ${diffColor(diff)}$diff"))
         lore.add(Component.literal("§7${team.archetype}"))
         lore.add(Component.literal(" "))
         team.members.forEach { mon ->
@@ -102,6 +106,14 @@ class RentalTeamMenu private constructor(
     private fun displayName(mon: RentalTeams.RentalMon): String {
         val base = mon.species.replaceFirstChar { it.uppercase() }
         return if (mon.form != null) "$base-${mon.form.replaceFirstChar { it.uppercase() }}" else base
+    }
+
+    private fun diffColor(difficulty: String): String = when (difficulty.lowercase()) {
+        "beginner" -> "§a"
+        "moderate" -> "§e"
+        "hard" -> "§6"
+        "expert" -> "§c"
+        else -> "§7"
     }
 
     private fun resolveItem(id: String): Item {

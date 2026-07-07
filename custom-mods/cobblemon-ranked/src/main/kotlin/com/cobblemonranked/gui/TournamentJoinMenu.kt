@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.item.PokemonItem
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.battle.countsAsSpecial
 import com.cobblemonranked.battle.specialCategory
+import com.cobblemonranked.CobblemonRanked
 import com.cobblemonranked.tournament.TournamentManager
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -57,6 +58,7 @@ class TournamentJoinMenu private constructor(
     private var currentBox: Int = 0
     private var confirmed = false
     private var cancelled = false
+    private var navigating = false
     private val party: PartyStore? = player?.let { Cobblemon.storage.getParty(it) }
     private val pc: PCStore? = player?.let { Cobblemon.storage.getPC(it) }
 
@@ -138,7 +140,17 @@ class TournamentJoinMenu private constructor(
                                    else filler(Items.LIGHT_GRAY_STAINED_GLASS_PANE))
         }
 
-        display.setItem(51, filler(Items.BLACK_STAINED_GLASS_PANE))
+        if (CobblemonRanked.config.allowRentalsInRanked) {
+            val rent = named(Items.EMERALD, Component.literal("§aRent a Team instead")
+                .withStyle(Style.EMPTY.withBold(true)))
+            rent.set(DataComponents.LORE, ItemLore(listOf(
+                Component.literal("§7New to competitive? Enter with a"),
+                Component.literal("§7ready-made team instead of a roster."),
+            )))
+            display.setItem(51, rent)
+        } else {
+            display.setItem(51, filler(Items.BLACK_STAINED_GLASS_PANE))
+        }
         val ready = selected.size == TournamentManager.ROSTER_SIZE
         display.setItem(52, named(if (ready) Items.LIME_CONCRETE else Items.GRAY_CONCRETE,
             Component.literal(if (ready) "§aConfirm Roster" else "§7Pick ${TournamentManager.ROSTER_SIZE - selected.size} more")
@@ -194,6 +206,19 @@ class TournamentJoinMenu private constructor(
             // Wrap-around navigation so "previous" from box 1 goes to the last box, and vice versa.
             slotId == 6 -> { if (boxes.isNotEmpty()) { currentBox = (currentBox - 1 + boxes.size) % boxes.size; repaint() } }
             slotId == 8 -> { if (boxes.isNotEmpty()) { currentBox = (currentBox + 1) % boxes.size; repaint() } }
+            slotId == 51 && CobblemonRanked.config.allowRentalsInRanked -> {
+                navigating = true
+                sp.openMenu(RentalTeamMenuProvider(
+                    player = sp,
+                    onConfirm = { },                          // unused in pick-team mode
+                    onCancel = { onCancel?.invoke() },        // backing all the way out cancels the join
+                    onBack = {                                 // return to the roster picker
+                        sp.openMenu(TournamentJoinMenuProvider(sp, initialUuids,
+                            { team -> onConfirm?.invoke(team) }, { onCancel?.invoke() }))
+                    },
+                    onPickTeam = { team -> TournamentManager.lockInRental(sp, team) },
+                ))
+            }
             slotId == 52 -> {
                 if (selected.size != TournamentManager.ROSTER_SIZE) {
                     sp.sendSystemMessage(Component.literal(
@@ -226,7 +251,7 @@ class TournamentJoinMenu private constructor(
 
     override fun removed(player: Player) {
         super.removed(player)
-        if (!confirmed && !cancelled) { cancelled = true; onCancel?.invoke() }
+        if (!confirmed && !cancelled && !navigating) { cancelled = true; onCancel?.invoke() }
     }
 
     private class DisplaySlot(c: SimpleContainer, slot: Int, x: Int, y: Int) : Slot(c, slot, x, y) {

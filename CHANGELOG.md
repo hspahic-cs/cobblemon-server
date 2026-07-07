@@ -12,6 +12,13 @@ root README.
 
 ## [Unreleased]
 
+## [0.26.3] - 2026-07-07
+
+### Added
+- **Rent a team in tournaments.** The tournament roster picker (`/join`) now has a **Rent a Team
+  instead** button — pick a prebuilt rental team and it becomes your tournament entry, no personal
+  roster needed. Great for newcomers. (Gated by the same `allowRentalsInRanked` config.)
+
 ## [0.26.2] - 2026-07-07
 
 ### Fixed

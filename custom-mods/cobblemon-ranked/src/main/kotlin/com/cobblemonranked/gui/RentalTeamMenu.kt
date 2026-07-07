@@ -39,6 +39,9 @@ class RentalTeamMenu private constructor(
     private val onConfirm: ((List<Pokemon>) -> Unit)?,
     private val onCancel: (() -> Unit)?,
     private val onBack: (() -> Unit)?,
+    /** If set, picking a team calls this with the chosen [RentalTeams.RentalTeam] instead of building
+     *  it and invoking [onConfirm] — used by the tournament "rent as your roster" flow. */
+    private val onPickTeam: ((RentalTeams.RentalTeam) -> Unit)? = null,
 ) : AbstractContainerMenu(MenuType.GENERIC_9x6, containerId) {
 
     private val display = SimpleContainer(SLOT_COUNT)
@@ -133,6 +136,13 @@ class RentalTeamMenu private constructor(
             in TEAM_SLOT_TO_INDEX -> {
                 val idx = TEAM_SLOT_TO_INDEX.getValue(slotId)
                 val team = RentalTeams.all().getOrNull(idx) ?: return
+                // Tournament "rent as roster" mode: hand back the team, skip building a battle party.
+                onPickTeam?.let { pick ->
+                    navigatingAway = true
+                    sp.closeContainer()
+                    pick(team)
+                    return
+                }
                 val built = try {
                     RentalTeams.build(team)
                 } catch (e: Exception) {
@@ -193,8 +203,9 @@ class RentalTeamMenu private constructor(
             onConfirm: (List<Pokemon>) -> Unit,
             onCancel: () -> Unit,
             onBack: () -> Unit,
+            onPickTeam: ((RentalTeams.RentalTeam) -> Unit)? = null,
         ): RentalTeamMenu =
-            RentalTeamMenu(containerId, playerInventory, player, onConfirm, onCancel, onBack)
+            RentalTeamMenu(containerId, playerInventory, player, onConfirm, onCancel, onBack, onPickTeam)
     }
 }
 
@@ -203,8 +214,9 @@ class RentalTeamMenuProvider(
     private val onConfirm: (List<Pokemon>) -> Unit,
     private val onCancel: () -> Unit,
     private val onBack: () -> Unit,
+    private val onPickTeam: ((RentalTeams.RentalTeam) -> Unit)? = null,
 ) : MenuProvider {
     override fun getDisplayName(): Component = Component.literal("Rent a Team")
     override fun createMenu(containerId: Int, inv: Inventory, ignored: Player): AbstractContainerMenu =
-        RentalTeamMenu.forServer(containerId, inv, player, onConfirm, onCancel, onBack)
+        RentalTeamMenu.forServer(containerId, inv, player, onConfirm, onCancel, onBack, onPickTeam)
 }

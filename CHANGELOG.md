@@ -12,6 +12,13 @@ root README.
 
 ## [Unreleased]
 
+## [0.26.4] - 2026-07-07
+
+### Fixed
+- **Auction listing XP charge — deferred refund + logging.** The 0.26.2 synchronous refund could run
+  before the XP charge lands (it happens during the same tick's packet handling), so it's now deferred
+  to the next server task and logs any levels it refunds, to pin the source if it recurs.
+
 ## [0.26.3] - 2026-07-07
 
 ### Added

@@ -34,6 +34,11 @@ class PriceAnvilMenu(
     private var typed: String = ""
     private var confirmed = false
 
+    /** The player's XP level when the price box opened. The vanilla anvil charges XP levels when you
+     *  take its result; we only borrow the anvil for its text field, so we refund anything it took
+     *  (see [removed]). */
+    private val openXpLevel: Int = viewer.experienceLevel
+
     init {
         getSlot(INPUT).set(placeholder())
         refreshResult()
@@ -82,6 +87,11 @@ class PriceAnvilMenu(
         getSlot(INPUT).set(ItemStack.EMPTY)
         getSlot(RESULT).set(ItemStack.EMPTY)
         super.removed(player)
+        if (player is ServerPlayer) {
+            // Refund any XP levels the vanilla anvil charged on take — listing should never cost XP.
+            val taken = openXpLevel - player.experienceLevel
+            if (taken > 0) player.giveExperienceLevels(taken)
+        }
         if (!confirmed && player is ServerPlayer) AuctionService.cancelSell(player)
     }
 

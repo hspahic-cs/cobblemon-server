@@ -12,6 +12,13 @@ root README.
 
 ## [Unreleased]
 
+## [0.26.2] - 2026-07-07
+
+### Fixed
+- **Listing in the Auction House no longer costs you XP levels.** The price-entry box borrows a
+  vanilla anvil, which charges XP when you take its result; the auction only uses it for the text
+  field, so it now snapshots your XP level when the box opens and refunds any levels the anvil took.
+
 ## [0.26.1] - 2026-07-07
 
 ### Changed

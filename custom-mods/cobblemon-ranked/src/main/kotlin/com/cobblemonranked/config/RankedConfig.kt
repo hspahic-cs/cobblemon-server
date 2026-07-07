@@ -42,6 +42,9 @@ data class RankedConfig(
      *  competitive team instead of their own party. Flip to false to remove rentals from ranked
      *  (e.g. if the ladder homogenises into mirror rental matches) without a code change. */
     val allowRentalsInRanked: Boolean = true,
+    /** Wiki page explaining the rental teams. Surfaced as a clickable link via `/ranked guide`
+     *  and hinted in the rental menu. Blank hides the guide command/hint. */
+    val rentalGuideUrl: String = "https://hspahic-cs.github.io/cobblemon-server/rental-teams.html",
     val forcesPerDayPerPair: Int = 1,
     /** Off by default in 0.7.8. Decay is paused while we tune; flip to `true` (and ensure
      *  [minimumElo] is the desired decay floor) to re-enable. */

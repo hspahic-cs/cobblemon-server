@@ -69,9 +69,11 @@ class RentalTeamMenu private constructor(
         display.setItem(4, named(Items.WRITABLE_BOOK,
             Component.literal("Rent a Team").withStyle(Style.EMPTY.withBold(true))).also {
             it.set(DataComponents.LORE, ItemLore(listOf(
-                Component.literal("§7Prebuilt competitive teams — no"),
-                Component.literal("§7breeding or EV training required."),
-                Component.literal("§8EVs capped at 168/stat · IVs 25."),
+                Component.literal("§7Prebuilt competitive teams — ready to"),
+                Component.literal("§7battle, no breeding or training needed."),
+                Component.literal("§8 "),
+                Component.literal("§7New here? Run §f/ranked guide"),
+                Component.literal("§7for how to play each team."),
             )))
         })
         display.setItem(49, named(Items.ARROW,

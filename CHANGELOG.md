@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.25.4] - 2026-07-07
+
+### Added
+- **`/ranked guide` — in-game link to the rental teams wiki.** Sends a clickable chat link to the
+  [Rental Teams guide](https://hspahic-cs.github.io/cobblemon-server/rental-teams.html) (moves, roles,
+  and how to play each team). The rental team-select menu now points players to it. URL is config
+  (`rentalGuideUrl`); blank disables it.
+
+### Changed
+- Removed the confusing "EVs capped at 168/stat · IVs 25" line from the rental menu.
+
 ## [0.25.3] - 2026-07-07
 
 ### Fixed

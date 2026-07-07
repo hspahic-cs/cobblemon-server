@@ -6989,6 +6989,17 @@
     "buyStockImpact": 1.0,
     "bundleSize": 64
   },
+  "minecraft:terracotta": {
+    "baseBuyPrice": 400,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
   "minecraft:gravel": {
     "baseBuyPrice": 50,
     "baseSellPrice": 0,

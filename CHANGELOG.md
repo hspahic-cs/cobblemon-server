@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.26.1] - 2026-07-07
+
+### Changed
+- **Clearer rental team-select.** Each rental team now shows a difficulty badge (Beginner →
+  Expert) and a plain-language one-liner instead of competitive jargon.
+
+### Added
+- **Terracotta in the Blocks & Decor shop** — one stack for $400.
+
 ## [0.26.0] - 2026-07-07
 
 ### Added

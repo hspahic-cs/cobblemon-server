@@ -88,9 +88,19 @@ class PriceAnvilMenu(
         getSlot(RESULT).set(ItemStack.EMPTY)
         super.removed(player)
         if (player is ServerPlayer) {
-            // Refund any XP levels the vanilla anvil charged on take — listing should never cost XP.
-            val taken = openXpLevel - player.experienceLevel
-            if (taken > 0) player.giveExperienceLevels(taken)
+            // Some XP charge lands during this tick's packet handling — sometimes AFTER removed()
+            // runs — so refund on the next server task instead of synchronously here, and log what
+            // (if anything) was taken so we can pin the source. Listing should never cost XP.
+            val sp = player
+            val before = openXpLevel
+            sp.server.execute {
+                val after = sp.experienceLevel
+                if (after < before) {
+                    sp.giveExperienceLevels(before - after)
+                    CobblemonAuction.logger.info(
+                        "Refunded ${before - after} XP level(s) charged while listing (open=$before, after=$after) for ${sp.gameProfile.name}")
+                }
+            }
         }
         if (!confirmed && player is ServerPlayer) AuctionService.cancelSell(player)
     }

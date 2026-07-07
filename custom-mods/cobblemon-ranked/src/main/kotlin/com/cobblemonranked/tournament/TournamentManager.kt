@@ -29,8 +29,9 @@ object TournamentManager {
     const val ROSTER_SIZE = 9
     const val MAX_SPECIALS_ROSTER = 4
 
-    /** A locked entrant: the roster is a list of Pokémon UUIDs into the player's party/PC. */
-    data class Entry(val uuid: UUID, val name: String, val pokemonUuids: List<UUID>)
+    /** A locked entrant. Either a personal roster ([pokemonUuids] into the player's party/PC) OR a
+     *  prebuilt rental team ([rentalTeamId] set; [pokemonUuids] empty), resolved fresh each match. */
+    data class Entry(val uuid: UUID, val name: String, val pokemonUuids: List<UUID>, val rentalTeamId: String? = null)
 
     @Volatile private var open = false
     private val entries = ConcurrentHashMap<UUID, Entry>()
@@ -94,6 +95,21 @@ object TournamentManager {
         }
     }
 
+    /** Enter (or replace an entry) with a prebuilt rental team instead of a personal roster. */
+    fun lockInRental(player: ServerPlayer, team: com.cobblemonranked.rental.RentalTeams.RentalTeam) {
+        val firstEntry = !entries.containsKey(player.uuid)
+        entries[player.uuid] = Entry(player.uuid, player.name.string, emptyList(), team.id)
+        player.sendSystemMessage(Component.literal(
+            "§a§l[Tournament] §r§aYou're entered with the §f${team.name}§a rental team! §7You can /join again to change it."))
+        if (firstEntry) {
+            val store = CobblemonRanked.eloStore
+            val elo = store.get(player.uuid)?.elo ?: store.getOrCreate(player.uuid, player.name.string).elo
+            val announce = Component.literal(
+                "§6§l[Tournament] §r§e${player.name.string} §7(ELO §e$elo§7) §ejoined the tournament!")
+            for (p in player.server.playerList.players) p.sendSystemMessage(announce)
+        }
+    }
+
     fun isEntered(uuid: UUID): Boolean = entries.containsKey(uuid)
     fun getEntry(uuid: UUID): Entry? = entries[uuid]
 
@@ -117,6 +133,15 @@ object TournamentManager {
      */
     fun resolveRoster(player: ServerPlayer): List<Pokemon>? {
         val entry = entries[player.uuid] ?: return null
+        entry.rentalTeamId?.let { id ->
+            val team = com.cobblemonranked.rental.RentalTeams.byId(id) ?: return null
+            return try {
+                com.cobblemonranked.rental.RentalTeams.build(team)
+            } catch (e: Exception) {
+                CobblemonRanked.logger.error("Failed to build rental roster '$id' for ${player.name.string}", e)
+                null
+            }
+        }
         val byId = collectOwnedPokemon(player)
         return entry.pokemonUuids.mapNotNull { byId[it] }
     }

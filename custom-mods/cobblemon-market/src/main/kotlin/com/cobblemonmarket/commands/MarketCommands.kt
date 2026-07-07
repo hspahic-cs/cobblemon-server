@@ -397,6 +397,7 @@ object MarketCommands {
      */
     fun vendorDisplayName(vendorTag: String): String = when {
         vendorTag.isEmpty() -> "Shopkeeper"
+        vendorTag == "blocks" -> "Blocks & Decor Vendor"
         vendorTag.startsWith("tm_") ->
             vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
         else ->

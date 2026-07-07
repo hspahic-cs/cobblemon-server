@@ -6829,5 +6829,175 @@
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
     "sellable": false
+  },
+  "minecraft:axolotl_bucket": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:tropical_fish_bucket": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:ochre_froglight": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:verdant_froglight": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:pearlescent_froglight": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:oak_log": {
+    "baseBuyPrice": 125,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:stone_bricks": {
+    "baseBuyPrice": 250,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:dark_prismarine": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:prismarine": {
+    "baseBuyPrice": 1000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:dirt": {
+    "baseBuyPrice": 25,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:sand": {
+    "baseBuyPrice": 25,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:cobblestone": {
+    "baseBuyPrice": 100,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:beacon": {
+    "baseBuyPrice": 50000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:bricks": {
+    "baseBuyPrice": 250,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:smooth_stone": {
+    "baseBuyPrice": 400,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:gravel": {
+    "baseBuyPrice": 50,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
   }
 }

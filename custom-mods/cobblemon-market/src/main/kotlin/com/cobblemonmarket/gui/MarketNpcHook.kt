@@ -34,7 +34,7 @@ object MarketNpcHook {
         try {
             MarketMenu.open(player, vendorTag)
         } catch (t: Throwable) {
-            CobblemonMarket.logger.error("Failed to open MarketMenu for ${player.gameProfile.name}", t)
+            CobblemonMarket.logger.error("Failed to open vendor menu for ${player.gameProfile.name}", t)
         }
     }
 

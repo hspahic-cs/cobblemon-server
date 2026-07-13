@@ -99,11 +99,13 @@ data class AuctionConfig(
         // add specific item ids/tags here if a future item needs keeping off the market.
         private val DEFAULT_BLOCKLIST = emptyList<String>()
 
-        // Small in-code seed written to authored/requestable-items.json on first boot so a fresh dev
-        // world (no server-override present) isn't left with a dead feature. The authoritative list
-        // is the one shipped under modpack/server-overrides/.../authored/requestable-items.json — a
-        // deploy replacing this file with the repo version is the intended model. Favours items the
-        // market NPC does NOT sell (evolution stones/items, mints, EV vitamins, master ball).
+        // The mod owns and self-seeds authored/requestable-items.json — it's written on first boot if
+        // absent (as the service user, in the mod's own config dir), exactly like config.json. It is
+        // NOT shipped via modpack/server-overrides: deploys run as `deployer`, which can't create new
+        // files in the service-owned config dir (mkstemp → Permission denied), so shipping it broke
+        // the config rsync. This in-code seed is therefore the authoritative starting list; operators
+        // tune it by editing the generated file on the server. Favours items the market NPC does NOT
+        // sell (evolution stones/items, mints, EV vitamins, master ball).
         private val DEFAULT_REQUESTABLE: Map<String, RequestableItem> = linkedMapOf(
             // Evolution stones
             "cobblemon:fire_stone" to RequestableItem("Evolution Stones", 3000),

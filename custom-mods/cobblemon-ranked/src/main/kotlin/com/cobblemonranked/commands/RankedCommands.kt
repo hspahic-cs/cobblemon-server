@@ -2,6 +2,7 @@ package com.cobblemonranked.commands
 
 import com.cobblemonranked.CobblemonRanked
 import com.cobblemonranked.battle.RankedBattleManager
+import com.cobblemonranked.bp.BpCommands
 import com.cobblemonranked.config.ArenaPos
 import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.decay.DecayManager
@@ -43,6 +44,7 @@ object RankedCommands {
                         1
                     }
                 )
+                .then(BpCommands.buildBpCommand())
                 .then(Commands.literal("challenge")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes { ctx ->

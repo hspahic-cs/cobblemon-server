@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.27.2] - 2026-07-13
+
+### Added
+- **BP Shop NPC in market.** Admins can tag an NPC with `cobblemon_bridge.market_vendor.bp_shop` to create a configurable Battle Points shop. Players can right-click to buy items with BP. Prices configured in `config/bp-items.json` with items ranging 1-100 BP.
+- **Voucher items for TR and held-item vendors.** TR vendors and held-item vendors now check player inventory for vouchers (2 BP each) before charging currency. Vouchers are consumable single-use items.
+- **Shiny voucher command.** `/ranked shiny <player> <slot>` admin command to consume a shiny voucher and mark a Pokémon for shinification (manual admin implementation of actual shiny mechanism TBD).
+
+### Fixed
+- **BP item prices tuned.** Ultra Key 30 BP, Master Ball 20 BP, Ability Patch 10 BP, TR/Held-Item vouchers 5 BP each (held-item 4 BP), Rare Key 5 BP, Pokémon Crate 2 BP, Rare Candy 1 BP, Shiny Voucher 100 BP.
+
 ## [0.27.1] - 2026-07-13
 
 ### Fixed

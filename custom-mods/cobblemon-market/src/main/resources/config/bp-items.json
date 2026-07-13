@@ -1,0 +1,59 @@
+[
+  {
+    "id": "ultra_key",
+    "cost": 30,
+    "displayName": "Ultra Key",
+    "isVoucher": false
+  },
+  {
+    "id": "master_ball",
+    "cost": 20,
+    "displayName": "Master Ball",
+    "isVoucher": false
+  },
+  {
+    "id": "pokemon_crate",
+    "cost": 2,
+    "displayName": "Pokémon Crate",
+    "isVoucher": false
+  },
+  {
+    "id": "rare_candy",
+    "cost": 1,
+    "displayName": "Rare Candy",
+    "isVoucher": false
+  },
+  {
+    "id": "rare_key",
+    "cost": 5,
+    "displayName": "Rare Key",
+    "isVoucher": false
+  },
+  {
+    "id": "tr_voucher",
+    "cost": 5,
+    "displayName": "TR Voucher",
+    "isVoucher": true,
+    "voucherType": "tr"
+  },
+  {
+    "id": "held_item_voucher",
+    "cost": 4,
+    "displayName": "Held Item Voucher",
+    "isVoucher": true,
+    "voucherType": "held_item"
+  },
+  {
+    "id": "ability_patch",
+    "cost": 10,
+    "displayName": "Ability Patch",
+    "isVoucher": false
+  },
+  {
+    "id": "shiny_voucher",
+    "cost": 100,
+    "displayName": "Shiny Voucher",
+    "isVoucher": true,
+    "voucherType": "shiny"
+  }
+]

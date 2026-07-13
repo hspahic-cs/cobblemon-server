@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.battles.MoveActionResponse
 import com.cobblemon.mod.common.battles.SwitchActionResponse
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import net.minecraft.network.chat.Component
+import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket
 import net.minecraft.server.MinecraftServer
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
@@ -76,7 +77,7 @@ object TournamentTurnTimer {
                     }
                     secondsLeft in ACTION_BAR_WARNINGS -> {
                         val timingComponent = if (secondsLeft <= 0) Component.literal("§c§lTime!") else Component.literal("§c§l$secondsLeft…")
-                        player?.displayClientMessage(timingComponent, true)
+                        player?.connection?.send(ClientboundSetTitleTextPacket(timingComponent))
                     }
                 }
             }
@@ -101,9 +102,8 @@ object TournamentTurnTimer {
         // out of PP; Showdown substitutes Struggle when nothing has PP, and that lands here too).
         try {
             if (request.forceSwitch.getOrNull(0) == true) {
-                // Get the active Pokemon objects directly to properly identify them
-                val activePokemon = actor.activePokemon.mapNotNull { it.battlePokemon }.toSet()
-                val next = actor.pokemonList.firstOrNull { it.health > 0 && it !in activePokemon } ?: return
+                val next = actor.pokemonList.firstOrNull { it.canBeSentOut() } ?: return
+                next.willBeSwitchedIn = true
                 actor.forceChoose(SwitchActionResponse(next.uuid))
                 val name = next.effectedPokemon.species.translatedName.string
                 announce(server, battle, hostUuid, Component.literal(

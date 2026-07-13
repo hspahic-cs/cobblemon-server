@@ -169,7 +169,16 @@ object AuctionService {
         }
 
         // Seller gets the sale price plus their listing fee back (the deposit is refunded on sale).
-        EconomyBridge.deposit(UUID.fromString(listing.sellerUuid), listing.price + listing.fee)
+        // deposit() now reports success: if the seller can't be paid (economy threw mid-settle),
+        // unwind rather than silently losing their money — restore the listing, refund the buyer,
+        // and don't hand over the item. Mirrors the request-fulfill recovery.
+        if (!EconomyBridge.deposit(UUID.fromString(listing.sellerUuid), listing.price + listing.fee)) {
+            CobblemonAuction.auctionStore.add(listing)
+            EconomyBridge.deposit(player.uuid, listing.price)   // best-effort buyer refund
+            CobblemonAuction.logger.error(
+                "BUY unwound: seller payout failed for listing ${listing.id} — refunded buyer, re-listed")
+            return BuyResult.EconomyUnavailable
+        }
         CobblemonAuction.mailboxStore.add(player.uuid, mailFrom(listing, "Purchased from ${listing.sellerName}"))
         CobblemonAuction.logger.info(
             "SALE ${listing.count}x ${listing.itemId} for \$${listing.price} (fee \$${listing.fee} refunded): " +

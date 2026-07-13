@@ -29,11 +29,12 @@ root README.
     whole-request (the full count from one held stack), so a request's quantity is capped at the
     item's stack size. Filled requests notify the requester immediately, or summarize on next login
     if they're offline.
-  - **What's requestable** is a curated whitelist (`config/cobblemon-auction/authored/
-    requestable-items.json`), seeded with evolution stones/items, nature mints, EV vitamins, and a
-    few rare items — deliberately favouring things the Shopkeeper doesn't sell. Ids also on the
-    `blocklist` are dropped from the whitelist (blocklist wins). New config knobs: `requestTtlDays`
-    (7) and `maxRequestsPerPlayer` (30); requests reuse the existing `minPrice`/`maxPrice` bounds.
+  - **What's requestable** is a curated whitelist the mod writes on first boot to
+    `config/cobblemon-auction/authored/requestable-items.json` (edit it there to tune), seeded with
+    evolution stones/items, nature mints, EV vitamins, and a few rare items — deliberately favouring
+    things the Shopkeeper doesn't sell. Ids also on the `blocklist` are dropped from the whitelist
+    (blocklist wins). New config knobs: `requestTtlDays` (7) and `maxRequestsPerPlayer` (30);
+    requests reuse the existing `minPrice`/`maxPrice` bounds.
 
 ### Changed
 - **`EconomyBridge.deposit` now reports success** (returns a Boolean, like `withdraw`). Escrow

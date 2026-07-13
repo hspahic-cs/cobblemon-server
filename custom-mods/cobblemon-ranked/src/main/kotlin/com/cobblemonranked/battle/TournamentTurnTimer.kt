@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * Timeline (seconds elapsed on the current decision):
  *   - 0                          armed, 60s left, silent
- *   - warnings at 5/3/2/1/0 left title display (0 left == 60s elapsed)
+ *   - warnings at 5/3/2/1/0 left action bar (0 left == 60s elapsed)
  *   - 61..63                     silent grace
  *   - 64                         auto-select fires
  */
@@ -35,7 +35,7 @@ object TournamentTurnTimer {
     private const val LIMIT_SECONDS = 60
     private const val GRACE_SECONDS = 4
 
-    /** Seconds-remaining values that display as a title (center of screen). */
+    /** Seconds-remaining values that display on the action bar. */
     private val ACTION_BAR_WARNINGS = setOf(5, 3, 2, 1, 0)
 
     /** Elapsed seconds on the current decision, keyed by "battleId|actorUuid". */

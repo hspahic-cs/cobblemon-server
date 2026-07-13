@@ -71,7 +71,15 @@ object TournamentTurnTimer {
 
                 when {
                     e >= LIMIT_SECONDS + GRACE_SECONDS -> {
-                        forcePick(server, battle, actor, hostOf(actor.uuid))
+                        // For forced switches, skip auto-pick and let Cobblemon handle timeout naturally.
+                        // Auto-pick on switches doesn't work correctly yet; disable timer for switches only.
+                        if (actor.request?.forceSwitch?.getOrNull(0) != true) {
+                            forcePick(server, battle, actor, hostOf(actor.uuid))
+                        } else {
+                            org.slf4j.LoggerFactory.getLogger("cobblemon-ranked/timer").warn(
+                                "Timeout on forced switch for {} in battle {} — skipping auto-pick, letting Cobblemon handle",
+                                player?.name?.string ?: actor.uuid, battle.battleId)
+                        }
                         elapsed.remove(key)
                         live.remove(key)
                     }
@@ -117,7 +125,10 @@ object TournamentTurnTimer {
                 // resolves the slot via indexOfFirst { it.id == moveName }, so passing the display
                 // name (`move.move`, e.g. "Sunsteel Strike") would never match and Showdown would
                 // reject it as "move 0". `move.move` stays for the human-readable announcement.
+                val logger = org.slf4j.LoggerFactory.getLogger("cobblemon-ranked/timer")
+                logger.info("Auto-selecting move for {} in battle {}: {}", playerName, battle.battleId, move.id)
                 actor.forceChoose(MoveActionResponse(move.id))
+                logger.info("Move choice submitted for {}", playerName)
                 announce(server, battle, hostUuid, Component.literal(
                     "§6[Tournament] §e$playerName §7ran out of time. §f${move.move} §7was auto-selected."))
             }

@@ -16,6 +16,7 @@ root README.
 
 ### Fixed
 - **Tournament timeout during switch now properly submits the choice.** The forced switch Pokemon wasn't being marked with `willBeSwitchedIn = true` before submission, causing Cobblemon to reject the choice silently and leave both players stuck. The timer would re-fire every 60 seconds with the same message without advancing the battle.
+- **Tournament switch timeout disabled as temporary workaround.** Forced switch timeouts still don't work correctly. Disabled the auto-pick timer for switches only (move timeouts still work). Cobblemon handles switch timeouts naturally, allowing tournaments to run. Added console logging to debug the issue for a future proper fix.
 
 ## [0.27.0] - 2026-07-13
 

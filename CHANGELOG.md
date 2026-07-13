@@ -12,7 +12,19 @@ root README.
 
 ## [Unreleased]
 
-## [0.27.3] - 2026-07-13
+## [0.27.4] - 2026-07-13
+
+### Changed
+- **Auction requests can now be for ANY item in the game**, not just a curated list. On the
+  **Wanted** tab, **Create Request** now offers a **🔍 Search all items** button next to the
+  curated **Suggested** shortcut: type part of an item's name (e.g. `enchanted book`, `rare candy`,
+  `netherite`) and pick from a grid of matching items — matched on display name *or* id, so
+  anything you can find in JEI/EMI is requestable. The old curated list stays as a one-click
+  "Suggested" set (with suggested prices). Picking any item flows into the same quantity → price →
+  escrow steps as before.
+- **Max active requests per player lowered from 30 to 10.**
+- The only limit on what can be requested is now the auction **blocklist** (empty by default);
+  any real, non-blocklisted item is fair game. A request no one can fill simply expires and refunds.
 
 ### Added
 - **Auction House requests (buy orders).** The Auctioneer now has a second side: players can post a

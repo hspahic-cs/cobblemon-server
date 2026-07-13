@@ -29,7 +29,7 @@ class AuctionConfigTest {
     fun `request knobs default and reload`(@TempDir dir: Path) {
         val first = AuctionConfig.load(dir)
         assertEquals(7, first.requestTtlDays)
-        assertEquals(30, first.maxRequestsPerPlayer)
+        assertEquals(10, first.maxRequestsPerPlayer)
         assertEquals(7L * 24 * 60 * 60 * 1000, first.requestTtlMillis())
 
         val second = AuctionConfig.load(dir)
@@ -38,10 +38,10 @@ class AuctionConfigTest {
     }
 
     @Test
-    fun `load seeds a non-empty requestable whitelist on first boot`(@TempDir dir: Path) {
+    fun `load seeds a non-empty suggested list on first boot`(@TempDir dir: Path) {
         val cfg = AuctionConfig.load(dir)
-        assertTrue(cfg.requestable.isNotEmpty(), "expected a seeded whitelist")
-        assertTrue(cfg.isRequestable("cobblemon:master_ball"))
+        assertTrue(cfg.requestable.isNotEmpty(), "expected a seeded suggested list")
+        assertTrue(cfg.isSuggested("cobblemon:master_ball"))
         assertTrue(dir.resolve("cobblemon-auction/authored/requestable-items.json").exists())
     }
 

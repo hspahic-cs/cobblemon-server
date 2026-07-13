@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+## [0.27.0] - 2026-07-13
+
+### Fixed
+- **Tournament timeout during switch no longer breaks battle.** When a player timed out while switching
+  Pokémon, the forced switch would corrupt the battle state and neither player could select actions.
+  Fixed by correcting Pokémon identification logic (object comparison vs. UUID mismatch).
+- **Timer display moved to action bar.** Countdown warnings now appear in the center of the screen
+  (action bar) at 5/3/2/1/0 seconds instead of chat spam.
+
+### Added
+- **Battle Points (BP) currency system foundation.** Admins can now grant BP to players with
+  `/ranked bp add <player> <amount>` and `/ranked bp set <player> <amount>`. BP is stored per-player
+  in JSON files (`bp/<uuid>.json`). Shop implementation (voucher items, vendor integration) coming
+  in the next phase.
+
 ## [0.26.5] - 2026-07-07
 
 ### Fixed

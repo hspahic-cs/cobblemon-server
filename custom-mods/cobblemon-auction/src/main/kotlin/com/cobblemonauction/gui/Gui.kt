@@ -1,11 +1,14 @@
 package com.cobblemonauction.gui
 
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.Style
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.ItemLore
 
 /** Shared chest-GUI helpers for the auction menus. */
@@ -29,6 +32,14 @@ internal object Gui {
     fun withLore(stack: ItemStack, lines: List<String>): ItemStack {
         stack.set(DataComponents.LORE, ItemLore(lines.map { line(it) as Component }))
         return stack
+    }
+
+    /** A plain display stack for an item id (no serialized components — requests are by TYPE), or a
+     *  BARRIER placeholder if the id doesn't resolve. Count is clamped to a positive value. */
+    fun itemStack(itemId: String, count: Int): ItemStack {
+        val loc = ResourceLocation.tryParse(itemId) ?: return ItemStack(Items.BARRIER)
+        val item = BuiltInRegistries.ITEM.getOptional(loc).orElse(null) ?: return ItemStack(Items.BARRIER)
+        return ItemStack(item, count.coerceAtLeast(1))
     }
 
     /** "itemid:some_thing" -> "Some Thing" for chat messages. */

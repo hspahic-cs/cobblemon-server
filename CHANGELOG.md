@@ -12,6 +12,35 @@ root README.
 
 ## [Unreleased]
 
+## [0.27.3] - 2026-07-13
+
+### Added
+- **Auction House requests (buy orders).** The Auctioneer now has a second side: players can post a
+  *request* for an item they want, and any seller can fill it. The browse GUI gains a **For Sale |
+  Wanted** tab toggle.
+  - **Create a request** — on the Wanted tab, click **Create Request**, pick an item from a
+    category-tabbed catalog, choose a quantity, and type a total price. The price is **withdrawn up
+    front and held in escrow**; it is refunded in full if the request expires or you cancel it.
+  - **Fulfill a request** — hold the matching item stack in your main hand and click a request
+    (two-click confirm, like buying). The item goes to the requester's **Mailbox** and the escrowed
+    money is paid to you.
+  - **Your Requests** — view and cancel your active requests (cancelling refunds the escrow).
+  - Requests are for an item *type* (id + count); matching ignores components. Fulfillment is
+    whole-request (the full count from one held stack), so a request's quantity is capped at the
+    item's stack size. Filled requests notify the requester immediately, or summarize on next login
+    if they're offline.
+  - **What's requestable** is a curated whitelist (`config/cobblemon-auction/authored/
+    requestable-items.json`), seeded with evolution stones/items, nature mints, EV vitamins, and a
+    few rare items — deliberately favouring things the Shopkeeper doesn't sell. Ids also on the
+    `blocklist` are dropped from the whitelist (blocklist wins). New config knobs: `requestTtlDays`
+    (7) and `maxRequestsPerPlayer` (30); requests reuse the existing `minPrice`/`maxPrice` bounds.
+
+### Changed
+- **`EconomyBridge.deposit` now reports success** (returns a Boolean, like `withdraw`). Escrow
+  operations use it to fail safe: on a payout/refund failure the request/listing is restored rather
+  than the money being silently lost. Buying a listing now unwinds (re-lists, refunds the buyer) if
+  the seller payout can't be completed.
+
 ## [0.27.2] - 2026-07-13
 
 ### Added

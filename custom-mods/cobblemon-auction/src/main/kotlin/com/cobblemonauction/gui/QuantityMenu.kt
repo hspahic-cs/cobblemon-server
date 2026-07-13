@@ -72,7 +72,7 @@ object QuantityMenu {
                 PLUS_1 -> adjust(+1)
                 PLUS_8 -> adjust(+8)
                 PLUS_64 -> adjust(+64)
-                BACK_SLOT -> CatalogMenu.open(sp)
+                BACK_SLOT -> SearchAnvilMenu.open(sp)
                 CONFIRM_SLOT -> PriceAnvilMenu.open(sp, PriceIntent.CreateRequest(itemId, count))
             }
         }

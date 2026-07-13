@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.27.5] - 2026-07-13
+
+### Changed
+- **Simpler request flow.** On the Auction House **Wanted** tab, **Create Request** now goes
+  straight to the item search box instead of a curated "Suggested" catalog first — type an item
+  name, pick from the results, and continue to quantity and price. The suggested-catalog landing
+  was removed as unnecessary (suggested-price hints still appear on matching items). Search icon
+  is now a compass; a blank search just closes, and a search with no matches reopens so you can
+  retype.
+
 ## [0.27.4] - 2026-07-13
 
 ### Changed

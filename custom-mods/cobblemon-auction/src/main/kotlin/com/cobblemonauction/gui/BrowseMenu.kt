@@ -235,7 +235,8 @@ object BrowseMenu {
         }
 
         private fun onAction(sp: ServerPlayer) {
-            if (tab == Tab.FOR_SALE) startSell(sp) else CatalogMenu.open(sp)
+            // Create Request goes straight to the item search (no "suggested" catalog landing).
+            if (tab == Tab.FOR_SALE) startSell(sp) else SearchAnvilMenu.open(sp)
         }
 
         private fun onListingClick(sp: ServerPlayer, gridIndex: Int) {

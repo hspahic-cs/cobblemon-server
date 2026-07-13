@@ -76,7 +76,7 @@ object TournamentTurnTimer {
                     }
                     secondsLeft in ACTION_BAR_WARNINGS -> {
                         val timingComponent = if (secondsLeft <= 0) Component.literal("§c§lTime!") else Component.literal("§c§l$secondsLeft…")
-                        player?.showTitle(net.minecraft.network.protocol.game.ClientboundShowTitlePacket.TitlePart.TITLE, timingComponent)
+                        player?.displayClientMessage(timingComponent, true)
                     }
                 }
             }

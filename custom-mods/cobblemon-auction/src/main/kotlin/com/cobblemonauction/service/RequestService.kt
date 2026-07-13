@@ -42,7 +42,9 @@ object RequestService {
 
     fun createRequest(player: ServerPlayer, itemId: String, count: Int, price: Int): CreateResult {
         val cfg = CobblemonAuction.config
-        if (!cfg.isRequestable(itemId)) return CreateResult.NotRequestable
+        // Any REAL, non-blocklisted item may be requested (the curated list is suggestions only, not
+        // a gate). Reject ids that don't resolve to a registered item or that are on the blocklist.
+        if (resolveItem(itemId) == null || cfg.isBlocked(itemId)) return CreateResult.NotRequestable
         // Held-hand fulfillment takes the whole count from a SINGLE main-hand stack, so a request for
         // more than the item's stack size would be structurally unfulfillable — cap at maxStackSize.
         val maxStack = maxStackFor(itemId)
@@ -215,6 +217,44 @@ object RequestService {
             refunded++
         }
         return refunded
+    }
+
+    // ---- Search ---------------------------------------------------------------------------
+
+    /**
+     * Free-text search over the full item registry for the create-request picker. Matches the trimmed
+     * [query] (case-insensitive **contains**) against either an item's id (`namespace:path`) or its
+     * display name, excluding blocklisted ids and `minecraft:air`. Results are ranked so the most
+     * obvious matches surface first — exact name, then name/id starts-with, then contains — ties
+     * broken alphabetically by display name, and capped at [limit].
+     *
+     * Iterating the ~1500-item registry per call is fine: it's one pass per user action, on the
+     * server thread. Returns the matching item ids.
+     */
+    fun searchItems(query: String, limit: Int): List<String> {
+        val q = query.trim().lowercase()
+        if (q.isEmpty() || limit <= 0) return emptyList()
+        val cfg = CobblemonAuction.config
+
+        data class Match(val id: String, val name: String, val rank: Int)
+
+        val matches = ArrayList<Match>()
+        for (item in BuiltInRegistries.ITEM) {
+            val id = BuiltInRegistries.ITEM.getKey(item).toString()
+            if (id == "minecraft:air" || cfg.isBlocked(id)) continue
+            val name = ItemStack(item).hoverName.string
+            val idLc = id.lowercase()
+            val nameLc = name.lowercase()
+            if (q !in idLc && q !in nameLc) continue
+            val rank = when {
+                nameLc == q -> 0
+                nameLc.startsWith(q) || idLc.startsWith(q) -> 1
+                else -> 2
+            }
+            matches.add(Match(id, name, rank))
+        }
+        matches.sortWith(compareBy({ it.rank }, { it.name.lowercase() }, { it.id }))
+        return matches.take(limit).map { it.id }
     }
 
     // ---- Helpers --------------------------------------------------------------------------

@@ -11,8 +11,10 @@ import kotlin.io.path.readText
 import kotlin.io.path.writeText
 
 /**
- * One entry in the requestable-items whitelist (`authored/requestable-items.json`). [category]
+ * One entry in the suggested-items list (`authored/requestable-items.json`). [category]
  * groups the item under a Catalog tab; [suggestedPrice], if present, pre-fills the price-anvil hint.
+ * These are *suggestions* surfaced in the catalog's "Suggested" grid — players may request any
+ * registered, non-blocklisted item via search, whether or not it appears here.
  */
 data class RequestableItem(
     val category: String = "Misc",
@@ -37,18 +39,19 @@ data class RequestableItem(
  *                                cancelled. Set to 0 to disable fees.
  * @property minListingFee        Floor on the listing fee so cheap listings still cost something
  *                                (anti-spam). The fee never exceeds the asking price itself.
- * @property blocklist            Item ids (namespace:path) that may not be listed. Living
- *                                Pokémon aren't itemstacks in Cobblemon, so there's nothing to
- *                                block there today; this covers Poké Balls and any future/edge
- *                                items we decide to keep off the market. Also wins over the
- *                                requestable whitelist: any id present in both is dropped from
- *                                requestable on load.
+ * @property blocklist            Item ids (namespace:path) that may not be listed OR requested.
+ *                                Living Pokémon aren't itemstacks in Cobblemon, so there's nothing
+ *                                to block there today; this covers Poké Balls and any future/edge
+ *                                items we decide to keep off the market. It is the only gate on the
+ *                                request side (any registered item that isn't blocklisted may be
+ *                                requested), and it wins over the suggested list: any id present in
+ *                                both is dropped from the suggestions on load.
  */
 data class AuctionConfig(
     val listingTtlDays: Int = 7,
     val maxListingsPerPlayer: Int = 30,
     val requestTtlDays: Int = 7,
-    val maxRequestsPerPlayer: Int = 30,
+    val maxRequestsPerPlayer: Int = 10,
     val minPrice: Int = 1,
     val maxPrice: Int = 1_000_000,
     val listingFeePercent: Double = 5.0,
@@ -56,10 +59,12 @@ data class AuctionConfig(
     val blocklist: List<String> = DEFAULT_BLOCKLIST,
 ) {
     /**
-     * The reconciled requestable-items whitelist, populated by [load] from
+     * The reconciled suggested-items list, populated by [load] from
      * `authored/requestable-items.json` (a SEPARATE file from config.json). Marked transient so Gson
      * never (de)serializes it into config.json; [load] always assigns it before returning, so it is
      * never observed unset. Insertion order is the file's order, preserved for stable Catalog tabs.
+     * This drives the catalog's "Suggested" grid and per-item suggested prices only — it is NOT a
+     * gate on what can be requested (see [isBlocked], the sole request-side gate).
      */
     @Transient
     var requestable: Map<String, RequestableItem> = emptyMap()
@@ -87,8 +92,9 @@ data class AuctionConfig(
     // tiny, so a linear scan is fine.
     fun isBlocked(itemId: String): Boolean = itemId in blocklist
 
-    /** Whether [itemId] is on the (already blocklist-reconciled) requestable whitelist. */
-    fun isRequestable(itemId: String): Boolean = itemId in requestable
+    /** Whether [itemId] is on the (already blocklist-reconciled) suggested-items list. Used to decide
+     *  whether to show a suggested-price hint — NOT a gate on what may be requested. */
+    fun isSuggested(itemId: String): Boolean = itemId in requestable
 
     companion object {
         private val log = LoggerFactory.getLogger("cobblemon-auction/config")
@@ -99,13 +105,15 @@ data class AuctionConfig(
         // add specific item ids/tags here if a future item needs keeping off the market.
         private val DEFAULT_BLOCKLIST = emptyList<String>()
 
-        // The mod owns and self-seeds authored/requestable-items.json — it's written on first boot if
-        // absent (as the service user, in the mod's own config dir), exactly like config.json. It is
-        // NOT shipped via modpack/server-overrides: deploys run as `deployer`, which can't create new
-        // files in the service-owned config dir (mkstemp → Permission denied), so shipping it broke
-        // the config rsync. This in-code seed is therefore the authoritative starting list; operators
-        // tune it by editing the generated file on the server. Favours items the market NPC does NOT
-        // sell (evolution stones/items, mints, EV vitamins, master ball).
+        // The suggested items surfaced in the catalog's "Suggested" grid (NOT a gate — players can
+        // request any registered, non-blocklisted item via search). The mod owns and self-seeds
+        // authored/requestable-items.json — it's written on first boot if absent (as the service user,
+        // in the mod's own config dir), exactly like config.json. It is NOT shipped via
+        // modpack/server-overrides: deploys run as `deployer`, which can't create new files in the
+        // service-owned config dir (mkstemp → Permission denied), so shipping it broke the config
+        // rsync. This in-code seed is therefore the authoritative starting list; operators tune it by
+        // editing the generated file on the server. Favours items the market NPC does NOT sell
+        // (evolution stones/items, mints, EV vitamins, master ball).
         private val DEFAULT_REQUESTABLE: Map<String, RequestableItem> = linkedMapOf(
             // Evolution stones
             "cobblemon:fire_stone" to RequestableItem("Evolution Stones", 3000),
@@ -206,10 +214,10 @@ data class AuctionConfig(
         }
 
         /**
-         * Load the requestable-items whitelist, seeding the file with [DEFAULT_REQUESTABLE] if absent,
-         * then reconcile it against [blocklist]: any id in both is DROPPED from requestable (blocklist
-         * wins) and logged, so the two lists can't silently contradict each other. The request path
-         * then trusts the reconciled whitelist and never re-checks the blocklist per-request.
+         * Load the suggested-items list, seeding the file with [DEFAULT_REQUESTABLE] if absent, then
+         * reconcile it against [blocklist]: any id in both is DROPPED from the suggestions (blocklist
+         * wins) and logged, so a blocklisted item is never surfaced as a suggestion. The blocklist
+         * remains the sole gate on the request path itself (checked per-request in [RequestService]).
          */
         internal fun loadRequestable(configDir: Path, blocklist: List<String>): Map<String, RequestableItem> {
             val file = ConfigPaths.authored(configDir, "requestable-items.json")
@@ -217,9 +225,9 @@ data class AuctionConfig(
                 try {
                     file.parent.createDirectories()
                     file.writeText(gson.toJson(DEFAULT_REQUESTABLE))
-                    log.info("Wrote default requestable-items whitelist (${DEFAULT_REQUESTABLE.size} items)")
+                    log.info("Wrote default suggested-items list (${DEFAULT_REQUESTABLE.size} items)")
                 } catch (e: Exception) {
-                    log.warn("Failed to write default requestable-items whitelist: ${e.message}")
+                    log.warn("Failed to write default suggested-items list: ${e.message}")
                 }
                 DEFAULT_REQUESTABLE
             } else {
@@ -227,7 +235,7 @@ data class AuctionConfig(
                     val type = object : TypeToken<LinkedHashMap<String, RequestableItem>>() {}.type
                     gson.fromJson(file.readText(), type) ?: LinkedHashMap()
                 } catch (e: Exception) {
-                    log.error("Failed to parse requestable-items whitelist — request feature disabled", e)
+                    log.error("Failed to parse suggested-items list — no suggestions shown", e)
                     LinkedHashMap()
                 }
             }
@@ -236,7 +244,7 @@ data class AuctionConfig(
             val reconciled = LinkedHashMap<String, RequestableItem>()
             for ((id, item) in raw) {
                 if (id in blocked) {
-                    log.warn("Requestable id '$id' is also on the blocklist — dropping from requestable (blocklist wins)")
+                    log.warn("Suggested id '$id' is also on the blocklist — dropping from suggestions (blocklist wins)")
                     continue
                 }
                 reconciled[id] = item

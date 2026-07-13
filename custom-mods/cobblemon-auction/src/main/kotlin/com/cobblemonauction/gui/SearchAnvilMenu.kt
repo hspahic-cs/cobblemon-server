@@ -19,7 +19,7 @@ import net.minecraft.world.item.Items
  * [PriceAnvilMenu]: a placeholder sits in input slot 0 so the client enables the rename box, the
  * player types an item name there, and the result slot (slot 2) becomes a "search" token whenever
  * the box is non-blank. Taking it runs [RequestService.searchItems] and opens the results grid
- * ([CatalogMenu.openResults]); a blank box reopens the suggestions and a zero-hit query returns there
+ * ([CatalogMenu.openResults]); a blank box just closes, and a zero-hit query reopens this search
  * with a chat hint. Nothing is escrowed here, so abandoning the screen costs nothing.
  */
 class SearchAnvilMenu(
@@ -61,22 +61,18 @@ class SearchAnvilMenu(
         getSlot(INPUT).set(ItemStack.EMPTY)
         // Defer the follow-up menu one task so it opens cleanly after this anvil finishes closing.
         try {
-            if (query.isEmpty()) {
-                sp.server.execute { CatalogMenu.open(sp) }
-                return
-            }
+            if (query.isEmpty()) return                       // nothing typed — just close
             val results = RequestService.searchItems(query, CatalogMenu.SEARCH_LIMIT)
             if (results.isEmpty()) {
                 sp.sendSystemMessage(Component.literal(
                     "§e[AH] No items match \"$query\" — try a different name."))
-                sp.server.execute { CatalogMenu.open(sp) }
+                sp.server.execute { SearchAnvilMenu.open(sp) }   // reopen so they can retype
                 return
             }
             val capped = results.size >= CatalogMenu.SEARCH_LIMIT
             sp.server.execute { CatalogMenu.openResults(sp, results, query, capped) }
         } catch (e: Throwable) {
             CobblemonAuction.logger.error("Item search failed for query '$query'", e)
-            sp.server.execute { CatalogMenu.open(sp) }
         } finally {
             sp.closeContainer()
         }
@@ -109,12 +105,12 @@ class SearchAnvilMenu(
     }
 
     private fun confirmStack(): ItemStack = Gui.button(
-        Items.SPYGLASS, "§a§lSearch \"${typed.trim().take(24)}\"",
+        Items.COMPASS, "§a§lSearch \"${typed.trim().take(24)}\"",
         "§7Click to search every item for this name.",
     )
 
     private fun hintStack(): ItemStack = Gui.button(
-        Items.SPYGLASS, "§eType an item name in the box above",
+        Items.COMPASS, "§eType an item name in the box above",
         "§7e.g. §fenchanted book§7, §frare candy§7, §fnetherite§7.",
         "§7Then click here to search.",
     )

@@ -2,6 +2,7 @@ package com.cobblemonauction.gui
 
 import com.cobblemonauction.CobblemonAuction
 import com.cobblemonauction.service.AuctionService
+import com.cobblemonauction.service.RequestService
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
@@ -15,21 +16,25 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
 /**
- * Price entry for a sell. The item is already escrowed in [AuctionService] (see
- * [AuctionService.beginSell]); this menu only collects a number.
+ * Price entry, shared by both market sides via a [PriceIntent]:
+ *
+ *  - [PriceIntent.Sell] — the item is already escrowed in [AuctionService] (see
+ *    [AuctionService.beginSell]); confirming lists it. Closing without confirming hands it back.
+ *  - [PriceIntent.CreateRequest] — carries the drafted `(itemId, count)`; confirming withdraws the
+ *    escrow and stores a [com.cobblemonauction.data.Request]. There is NO persistent escrow, so
+ *    abandoning any screen costs nothing.
  *
  * We reuse the vanilla anvil purely for its text field. A placeholder sits in input slot 0 so the
  * client enables the rename box; the player types the price there. We override the result pipeline
  * so the output slot (slot 2) becomes a "confirm" token only when the typed text is a valid price,
- * and taking it lists the item. Nothing about anvil XP cost or item repair applies — those paths
- * are overridden or short-circuited (the menu is built with the NULL level access).
- *
- * If the player closes the anvil without confirming, [removed] hands the escrowed item back.
+ * and taking it dispatches on the intent. Anvil XP cost / item repair don't apply — those paths are
+ * overridden or short-circuited (the menu is built with the NULL level access).
  */
 class PriceAnvilMenu(
     syncId: Int,
     playerInv: Inventory,
     private val viewer: ServerPlayer,
+    private val intent: PriceIntent,
 ) : AnvilMenu(syncId, playerInv) {
 
     private var typed: String = ""
@@ -68,8 +73,12 @@ class PriceAnvilMenu(
         try {
             val price = parsePrice(typed)
             if (price == null) { sp.closeContainer(); return }
-            confirmed = true                 // confirmSell consumes or returns the escrow itself
-            report(sp, AuctionService.confirmSell(sp, price))
+            confirmed = true                 // the service consumes/refunds its own escrow
+            when (val i = intent) {
+                is PriceIntent.Sell -> reportSell(sp, AuctionService.confirmSell(sp, price))
+                is PriceIntent.CreateRequest ->
+                    reportRequest(sp, RequestService.createRequest(sp, i.itemId, i.count, price))
+            }
             getSlot(INPUT).set(ItemStack.EMPTY)
         } catch (e: Throwable) {
             CobblemonAuction.logger.error("Price-anvil confirm failed", e)
@@ -93,6 +102,7 @@ class PriceAnvilMenu(
             // we never actually charge XP — the server-side level is unchanged, so nothing to refund
             // (confirmed: no refund ever logged). Force an XP resync so the client's level display
             // matches the real value. Deferred one task so it lands after the menu fully closes.
+            // Applies to both Sell and Request price entry — the anvil is borrowed either way.
             val sp = player
             sp.server.execute {
                 if (sp.experienceLevel < openXpLevel) {  // safety net in case a real charge ever slips in
@@ -102,7 +112,8 @@ class PriceAnvilMenu(
                     sp.experienceProgress, sp.totalExperience, sp.experienceLevel))
             }
         }
-        if (!confirmed && player is ServerPlayer) AuctionService.cancelSell(player)
+        // Only the Sell intent holds an escrow to return; a request draft costs nothing to abandon.
+        if (!confirmed && intent is PriceIntent.Sell && player is ServerPlayer) AuctionService.cancelSell(player)
     }
 
     private fun refreshResult() {
@@ -116,17 +127,31 @@ class PriceAnvilMenu(
         return if (n in cfg.minPrice..cfg.maxPrice) n else null
     }
 
-    private fun confirmStack(price: Int): ItemStack {
-        val fee = CobblemonAuction.config.listingFee(price)
-        val lore = mutableListOf("§7Click to put it on the market.")
-        if (fee > 0) lore += "§7Listing fee: §f\$$fee §8(refunded if it sells)"
-        return Gui.button(Items.PAPER, "§a§lList for \$$price", *lore.toTypedArray())
+    private fun confirmStack(price: Int): ItemStack = when (intent) {
+        is PriceIntent.Sell -> {
+            val fee = CobblemonAuction.config.listingFee(price)
+            val lore = mutableListOf("§7Click to put it on the market.")
+            if (fee > 0) lore += "§7Listing fee: §f\$$fee §8(refunded if it sells)"
+            Gui.button(Items.PAPER, "§a§lList for \$$price", *lore.toTypedArray())
+        }
+        is PriceIntent.CreateRequest -> Gui.button(
+            Items.PAPER, "§a§lRequest for \$$price",
+            "§7Click to post your buy order.",
+            "§7§lYou'll pay \$$price now §7(held in escrow).",
+            "§8Refunded if it expires or you cancel.",
+        )
     }
 
     private fun hintStack(): ItemStack {
         val cfg = CobblemonAuction.config
-        return Gui.button(Items.PAPER, "§eType a price in the box above",
-            "§7Enter a whole number between", "§7\$${cfg.minPrice} and \$${cfg.maxPrice}.")
+        val lore = mutableListOf(
+            "§7Enter a whole number between",
+            "§7\$${cfg.minPrice} and \$${cfg.maxPrice}.",
+        )
+        val suggested = (intent as? PriceIntent.CreateRequest)
+            ?.let { cfg.requestable[it.itemId]?.suggestedPrice }
+        if (suggested != null) lore += "§7Suggested: §f\$$suggested"
+        return Gui.button(Items.PAPER, "§eType a price in the box above", *lore.toTypedArray())
     }
 
     /** Placeholder in the anvil input slot. The vanilla anvil seeds its rename box from this item's
@@ -138,7 +163,7 @@ class PriceAnvilMenu(
         return stack
     }
 
-    private fun report(sp: ServerPlayer, res: AuctionService.ListResult) {
+    private fun reportSell(sp: ServerPlayer, res: AuctionService.ListResult) {
         // Success gets an explicit second line about the fee so the player can't miss the charge.
         if (res is AuctionService.ListResult.Success) {
             sp.sendSystemMessage(Component.literal(
@@ -163,17 +188,51 @@ class PriceAnvilMenu(
         sp.sendSystemMessage(Component.literal(msg))
     }
 
+    private fun reportRequest(sp: ServerPlayer, res: RequestService.CreateResult) {
+        val msg = when (res) {
+            is RequestService.CreateResult.Success ->
+                "§a[AH] Requested ${res.request.count}× ${Gui.prettyItemName(res.request.itemId)} for \$${res.request.price} " +
+                    "— the money is held in escrow until a seller fills it (refunded if it expires or you cancel)."
+            RequestService.CreateResult.NotRequestable ->
+                "§c[AH] That item can't be requested."
+            is RequestService.CreateResult.CountOutOfRange ->
+                "§c[AH] You can request between 1 and ${res.max} of that item at once."
+            is RequestService.CreateResult.PriceOutOfRange ->
+                "§c[AH] Price must be between \$${res.min} and \$${res.max}."
+            is RequestService.CreateResult.TooMany ->
+                "§c[AH] You already have the maximum ${res.max} active requests."
+            is RequestService.CreateResult.InsufficientBalance ->
+                "§c[AH] You need \$${res.need} but only have \$${res.have}."
+            RequestService.CreateResult.EconomyUnavailable ->
+                "§c[AH] The economy is unavailable right now — try again later."
+            RequestService.CreateResult.Error ->
+                "§c[AH] Couldn't create that request — your money was refunded."
+        }
+        sp.sendSystemMessage(Component.literal(msg))
+    }
+
     companion object {
         // ItemCombinerMenu slot layout: 0,1 = inputs, 2 = result output.
         private const val INPUT = 0
         private const val RESULT = 2
 
-        fun open(player: ServerPlayer) {
+        /** Sell price entry (item already escrowed). */
+        fun open(player: ServerPlayer) = open(player, PriceIntent.Sell)
+
+        fun open(player: ServerPlayer, intent: PriceIntent) {
             val provider = SimpleMenuProvider(
-                { syncId, inv, _ -> PriceAnvilMenu(syncId, inv, player) },
+                { syncId, inv, _ -> PriceAnvilMenu(syncId, inv, player, intent) },
                 Component.literal("§0Type price here"),
             )
             player.openMenu(provider)
         }
     }
+}
+
+/** What a [PriceAnvilMenu] confirm should do with the entered price. */
+sealed interface PriceIntent {
+    /** List the item currently escrowed in [AuctionService] for the confirmed price. */
+    data object Sell : PriceIntent
+    /** Post a buy order for [count]× [itemId], escrowing the confirmed price. */
+    data class CreateRequest(val itemId: String, val count: Int) : PriceIntent
 }

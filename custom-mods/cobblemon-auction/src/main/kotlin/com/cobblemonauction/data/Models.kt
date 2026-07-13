@@ -42,3 +42,34 @@ data class SaleReceipt(
     val buyerName: String,
     val soldAt: Long,
 )
+
+/**
+ * One live buy order (the inversion of [Listing]). `itemId` + `count` describe the wanted TYPE —
+ * there is no serialized stack, because no concrete item exists yet; the stack a fulfilling seller
+ * provides is what gets encoded into the requester's mailbox at fulfill time. `price` is the whole
+ * escrow, already withdrawn from the requester's balance at creation and held here — on fulfill it
+ * is paid to the seller, on cancel/expiry it is refunded to the requester. No `fee` field: there is
+ * no sink in v1 (full refund on cancel/expiry).
+ */
+data class Request(
+    val id: String,
+    val requesterUuid: String,
+    val requesterName: String,
+    val itemId: String,
+    val count: Int,
+    val price: Int,
+    val createdAt: Long,
+    val expiresAt: Long,
+)
+
+/** Fulfillment notification for an OFFLINE requester (mirror of [SaleReceipt]). The item is already
+ *  in their mailbox; this explains why on their next login. The escrow left their balance at
+ *  creation, so nothing money-side changes here — it's purely a notification. */
+data class RequestReceipt(
+    val id: String,
+    val itemId: String,
+    val count: Int,
+    val price: Int,
+    val sellerName: String,
+    val filledAt: Long,
+)

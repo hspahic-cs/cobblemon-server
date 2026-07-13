@@ -26,7 +26,6 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * Timeline (seconds elapsed on the current decision):
  *   - 0                          armed, 60s left, silent
- *   - warnings at 30/15/10 left  chat
  *   - warnings at 5/3/2/1/0 left action bar (0 left == 60s elapsed)
  *   - 61..63                     silent grace
  *   - 64                         auto-select fires
@@ -36,9 +35,7 @@ object TournamentTurnTimer {
     private const val LIMIT_SECONDS = 60
     private const val GRACE_SECONDS = 4
 
-    /** Seconds-remaining values that warn in chat (the sparse, early ones). */
-    private val CHAT_WARNINGS = setOf(30, 15, 10)
-    /** Seconds-remaining values that warn on the action bar (the rapid final ones). */
+    /** Seconds-remaining values that display on the action bar. */
     private val ACTION_BAR_WARNINGS = setOf(5, 3, 2, 1, 0)
 
     /** Elapsed seconds on the current decision, keyed by "battleId|actorUuid". */
@@ -77,10 +74,10 @@ object TournamentTurnTimer {
                         elapsed.remove(key)
                         live.remove(key)
                     }
-                    secondsLeft in CHAT_WARNINGS ->
-                        player?.sendSystemMessage(chatWarning(secondsLeft))
-                    secondsLeft in ACTION_BAR_WARNINGS ->
-                        player?.displayClientMessage(actionBarWarning(secondsLeft), true)
+                    secondsLeft in ACTION_BAR_WARNINGS -> {
+                        val timingComponent = if (secondsLeft <= 0) Component.literal("§c§lTime!") else Component.literal("§c§l$secondsLeft…")
+                        player?.displayClientMessage(timingComponent, true)
+                    }
                 }
             }
         }
@@ -102,25 +99,31 @@ object TournamentTurnTimer {
         // A faint (or any forced-switch slot) means the only legal action is a switch. Otherwise
         // it's a normal turn: default to attacking with move slot 1 (next legal move if disabled /
         // out of PP; Showdown substitutes Struggle when nothing has PP, and that lands here too).
-        if (request.forceSwitch.getOrNull(0) == true) {
-            val activeUuids = actor.activePokemon.mapNotNull { it.battlePokemon?.uuid }.toSet()
-            val next = actor.pokemonList.firstOrNull { it.health > 0 && it.uuid !in activeUuids } ?: return
-            actor.forceChoose(SwitchActionResponse(next.uuid))
-            val name = next.effectedPokemon.species.translatedName.string
-            announce(server, battle, hostUuid, Component.literal(
-                "§6[Tournament] §e$playerName §7ran out of time. §f$name §7was sent in."))
-        } else {
-            val moveset = request.active?.getOrNull(0) ?: return
-            val move = moveset.moves.firstOrNull { it.canBeUsed() }
-                ?: moveset.moves.firstOrNull()
-                ?: return
-            // Submit by move id (e.g. "sunsteelstrike"): MoveActionResponse.toShowdownString
-            // resolves the slot via indexOfFirst { it.id == moveName }, so passing the display
-            // name (`move.move`, e.g. "Sunsteel Strike") would never match and Showdown would
-            // reject it as "move 0". `move.move` stays for the human-readable announcement.
-            actor.forceChoose(MoveActionResponse(move.id))
-            announce(server, battle, hostUuid, Component.literal(
-                "§6[Tournament] §e$playerName §7ran out of time. §f${move.move} §7was auto-selected."))
+        try {
+            if (request.forceSwitch.getOrNull(0) == true) {
+                // Get the active Pokemon objects directly to properly identify them
+                val activePokemon = actor.activePokemon.mapNotNull { it.battlePokemon }.toSet()
+                val next = actor.pokemonList.firstOrNull { it.health > 0 && it !in activePokemon } ?: return
+                actor.forceChoose(SwitchActionResponse(next.uuid))
+                val name = next.effectedPokemon.species.translatedName.string
+                announce(server, battle, hostUuid, Component.literal(
+                    "§6[Tournament] §e$playerName §7ran out of time. §f$name §7was sent in."))
+            } else {
+                val moveset = request.active?.getOrNull(0) ?: return
+                val move = moveset.moves.firstOrNull { it.canBeUsed() }
+                    ?: moveset.moves.firstOrNull()
+                    ?: return
+                // Submit by move id (e.g. "sunsteelstrike"): MoveActionResponse.toShowdownString
+                // resolves the slot via indexOfFirst { it.id == moveName }, so passing the display
+                // name (`move.move`, e.g. "Sunsteel Strike") would never match and Showdown would
+                // reject it as "move 0". `move.move` stays for the human-readable announcement.
+                actor.forceChoose(MoveActionResponse(move.id))
+                announce(server, battle, hostUuid, Component.literal(
+                    "§6[Tournament] §e$playerName §7ran out of time. §f${move.move} §7was auto-selected."))
+            }
+        } catch (e: Exception) {
+            com.cobblemonranked.CobblemonRanked.logger.error(
+                "Failed to force pick for {} in battle {}: {}", playerName, battle.battleId, e.message, e)
         }
     }
 
@@ -132,13 +135,4 @@ object TournamentTurnTimer {
         hostUuid?.let { recipients.add(it) }
         recipients.forEach { server.playerList.getPlayer(it)?.sendSystemMessage(msg) }
     }
-
-    private fun chatWarning(secondsLeft: Int): Component {
-        val color = if (secondsLeft <= 10) "§c" else "§e"
-        return Component.literal("§e[Tournament] $color$secondsLeft§e seconds to choose your move.")
-    }
-
-    private fun actionBarWarning(secondsLeft: Int): Component =
-        if (secondsLeft <= 0) Component.literal("§c§lTime!")
-        else Component.literal("§c§l$secondsLeft…")
 }

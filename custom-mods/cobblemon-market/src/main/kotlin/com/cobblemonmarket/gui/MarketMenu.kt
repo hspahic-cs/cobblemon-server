@@ -162,9 +162,39 @@ object MarketMenu {
     private fun formatTag(tag: String): String =
         com.cobblemonmarket.commands.MarketCommands.vendorDisplayName(tag).removeSuffix(" Vendor")
 
-    /** All entries for an item scope, in stable registration order. */
-    private fun visibleItems(scope: String): List<Map.Entry<String, ItemEntry>> =
-        CobblemonMarket.items.entries.filter { it.value.vendorScope == scope }
+    /**
+     * All entries for an item scope. The General Store (scope `""`) is grouped so like items sit
+     * together — Poké Balls, HP potions, revives, status cures, PP restores, then candies — and is
+     * tiered by price within each group (like a backpack's "sort by category"). Other scopes keep
+     * their authored order. Both the render (`populate`) and the click→item mapping (`clicked`)
+     * call this, so they always agree on order — the sort must stay deterministic.
+     */
+    private fun visibleItems(scope: String): List<Map.Entry<String, ItemEntry>> {
+        val entries = CobblemonMarket.items.entries.filter { it.value.vendorScope == scope }
+        if (scope != "") return entries
+        return entries.sortedWith(
+            compareBy({ generalStoreGroup(it.key) }, { it.value.baseBuyPrice }, { it.key }),
+        )
+    }
+
+    /**
+     * Coarse category rank for General-Store sorting, so like items cluster. Matched by item-id
+     * suffix/keyword; anything unrecognised sorts last.
+     */
+    private fun generalStoreGroup(itemId: String): Int {
+        val id = itemId.substringAfterLast(':')
+        return when {
+            id.endsWith("_ball")                                 -> 0  // Poké Balls
+            id == "potion" || id.endsWith("_potion") ||
+                id == "full_restore"                             -> 1  // HP potions
+            id == "revive" || id == "max_revive"                 -> 2  // revives
+            id.endsWith("_heal") || id == "antidote" ||
+                id == "awakening"                                -> 3  // status cures
+            id.endsWith("ether") || id.endsWith("elixir")        -> 4  // PP restores
+            id.contains("candy")                                 -> 5  // candies
+            else                                                 -> 6  // everything else
+        }
+    }
 
     /** Number of pages this tab needs (upgrade/non-item tabs are always a single page). */
     private fun pageCount(tab: Tab): Int {

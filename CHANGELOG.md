@@ -12,6 +12,14 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.5] - 2026-07-14
+
+### Changed
+- **General Store is now sorted by category.** Items are grouped so like items sit together —
+  Poké Balls, HP potions, revives, status cures, PP restores, then candies — and tiered by price
+  within each group (cheapest first), like a backpack's "sort by category". New General-Store
+  items slot into their group automatically.
+
 ## [0.28.4] - 2026-07-14
 
 ### Fixed

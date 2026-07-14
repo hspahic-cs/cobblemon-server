@@ -44,10 +44,10 @@ import net.minecraft.world.item.component.ItemLore
  * no tab bar — their layout is unchanged.
  *
  * Layout (54-slot GENERIC_9x6):
- *   Row 0: nav bar.
- *     - With tabs (default shopkeeper): slots 0..N-1 = category tabs, slot 4 = balance,
- *       slot 6 / slot 8 = previous / next page.
- *     - Without tabs (scoped vendor): slot 0 = previous, slot 4 = balance, slot 8 = next.
+ *   Row 0: nav bar. Balance always sits in the top-right corner (slot 8).
+ *     - With tabs (default shopkeeper): slots 0..N-1 = category tabs, slot 6 / slot 7 = previous /
+ *       next page, slot 8 = balance.
+ *     - Without tabs (scoped vendor): slot 0 = previous, slot 7 = next, slot 8 = balance.
  *   Rows 1-5: up to [PAGE_SIZE] content slots (45) — item catalog for item tabs, or the upgrade
  *     panel for the Upgrades tab.
  *
@@ -64,15 +64,16 @@ object MarketMenu {
 
     private const val ROWS = 6
     private const val SLOTS = ROWS * 9
-    private const val BALANCE_SLOT = 4               // center of row 0
+    private const val BALANCE_SLOT = 8               // top-right corner of row 0
     private const val FIRST_ITEM_SLOT = 9            // row 1 col 0
     private const val PAGE_SIZE = SLOTS - FIRST_ITEM_SLOT  // 45 content slots per page
 
     // Page arrows sit at different columns depending on whether the tab bar is present, so the
-    // tabs (slots 0..N-1) never collide with the previous-page arrow.
+    // tabs (slots 0..N-1) never collide with the previous-page arrow. Balance sits in the top-right
+    // corner (slot 8), so next-page is slot 7 — leaving the left of the row free for category tabs.
     private const val TABBED_PREV_SLOT = 6
     private const val SINGLE_PREV_SLOT = 0
-    private const val NEXT_SLOT = 8
+    private const val NEXT_SLOT = 7
 
     /** Nav slot for the "Back to type list" button in the TM Merchant's type view. */
     private const val BACK_SLOT = 0
@@ -102,36 +103,25 @@ object MarketMenu {
         Tab("Upgrades", Items.NETHER_STAR, null),
     )
 
-    /** Resolve a mega_showdown Arceus plate item for a type icon, falling back to paper. */
-    private fun plateIcon(plateName: String): Item {
-        val rl = ResourceLocation.tryParse("mega_showdown:${plateName}_plate") ?: return Items.PAPER
+    /** Resolve a Cobblemon type gem (`cobblemon:<type>_gem`) for a type icon, falling back to paper. */
+    private fun gemIcon(type: String): Item {
+        val rl = ResourceLocation.tryParse("cobblemon:${type}_gem") ?: return Items.PAPER
         return BuiltInRegistries.ITEM.getOptional(rl).orElse(Items.PAPER)
     }
 
-    /**
-     * The TM Merchant's 18 type entries (scope `tm_<type>`), built lazily so the plate-icon
-     * registry lookups happen at open-time rather than class-init. Normal has no plate → paper.
-     */
-    private fun tmTypeTabs(): List<Tab> = listOf(
-        Tab("Normal", Items.PAPER, "tm_normal"),
-        Tab("Fire", plateIcon("flame"), "tm_fire"),
-        Tab("Water", plateIcon("splash"), "tm_water"),
-        Tab("Electric", plateIcon("zap"), "tm_electric"),
-        Tab("Grass", plateIcon("meadow"), "tm_grass"),
-        Tab("Ice", plateIcon("icicle"), "tm_ice"),
-        Tab("Fighting", plateIcon("fist"), "tm_fighting"),
-        Tab("Poison", plateIcon("toxic"), "tm_poison"),
-        Tab("Ground", plateIcon("earth"), "tm_ground"),
-        Tab("Flying", plateIcon("sky"), "tm_flying"),
-        Tab("Psychic", plateIcon("mind"), "tm_psychic"),
-        Tab("Bug", plateIcon("insect"), "tm_bug"),
-        Tab("Rock", plateIcon("stone"), "tm_rock"),
-        Tab("Ghost", plateIcon("spooky"), "tm_ghost"),
-        Tab("Dragon", plateIcon("draco"), "tm_dragon"),
-        Tab("Dark", plateIcon("dread"), "tm_dark"),
-        Tab("Steel", plateIcon("iron"), "tm_steel"),
-        Tab("Fairy", plateIcon("pixie"), "tm_fairy"),
+    /** The 18 Pokémon types, in TM-picker order (scope is `tm_<type>`, icon is that type's gem). */
+    private val TM_TYPES = listOf(
+        "normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison",
+        "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy",
     )
+
+    /**
+     * The TM Merchant's 18 type entries (scope `tm_<type>`), built lazily so the gem-icon registry
+     * lookups happen at open-time rather than class-init.
+     */
+    private fun tmTypeTabs(): List<Tab> = TM_TYPES.map { type ->
+        Tab(type.replaceFirstChar { it.uppercase() }, gemIcon(type), "tm_$type")
+    }
 
     /**
      * Open the shopkeeper GUI.

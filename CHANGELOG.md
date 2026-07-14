@@ -12,6 +12,15 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.2] - 2026-07-13
+
+### Changed
+- **TM Merchant type icons are now type gems** (`cobblemon:<type>_gem`) instead of Arceus plates —
+  including a proper Normal gem (was a paper placeholder).
+- **Shop balance moved to the top-right corner.** The gold-bar balance indicator now sits in the
+  top-right of the shop GUI instead of the middle of the top row, freeing space for the category
+  tabs (page arrows shifted accordingly).
+
 ## [0.28.1] - 2026-07-13
 
 ### Added

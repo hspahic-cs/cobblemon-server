@@ -12,7 +12,7 @@ root README.
 
 ## [Unreleased]
 
-## [0.28.0] - 2026-07-13
+## [0.28.1] - 2026-07-13
 
 ### Added
 - **New "Special Items" tab on the Shopkeeper.** Elemental **Arceus plates** (all 17) are now

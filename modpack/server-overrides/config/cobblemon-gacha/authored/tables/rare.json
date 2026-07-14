@@ -170,7 +170,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Frost",
-      "weightPct": 2.4,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -183,7 +183,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Storms",
-      "weightPct": 2.4,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -196,7 +196,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Embers",
-      "weightPct": 2.4,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -321,7 +321,7 @@
     {
       "lootTier": "High",
       "label": "Titan Key",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -334,7 +334,7 @@
     {
       "lootTier": "High",
       "label": "Rock Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -347,7 +347,7 @@
     {
       "lootTier": "High",
       "label": "Steel Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -360,7 +360,7 @@
     {
       "lootTier": "High",
       "label": "Ice Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -373,7 +373,7 @@
     {
       "lootTier": "High",
       "label": "Dragon Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 1.9,
       "items": [
         {
           "type": "vanilla",
@@ -382,6 +382,19 @@
         }
       ],
       "notes": "Summons Regidrago"
+    },
+    {
+      "lootTier": "High",
+      "label": "Zygarde Core",
+      "weightPct": 2.0,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:zygarde_core",
+          "count": 1
+        }
+      ],
+      "notes": "Core to assemble Zygarde — combine with Zygarde Cells"
     }
   ]
 }

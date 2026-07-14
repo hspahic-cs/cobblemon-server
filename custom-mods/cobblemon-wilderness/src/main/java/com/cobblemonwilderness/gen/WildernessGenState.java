@@ -89,6 +89,13 @@ public final class WildernessGenState {
      * binary search, no allocation.
      */
     public static int cellSalt(int cellX, int cellZ, int spacing) {
+        // Inert fast path first: while no region has ever been reset (or the feature is off) `active`
+        // is false, so short-circuit BEFORE touching the OVERWORLD ThreadLocal — zero per-cell work
+        // on the worldgen hot path in the common (never-pruned) case. Behavior is identical to the
+        // 4-arg core, which returns 0 when !active regardless of the flag.
+        if (!active) {
+            return 0;
+        }
         return cellSalt(cellX, cellZ, spacing, OVERWORLD.get());
     }
 

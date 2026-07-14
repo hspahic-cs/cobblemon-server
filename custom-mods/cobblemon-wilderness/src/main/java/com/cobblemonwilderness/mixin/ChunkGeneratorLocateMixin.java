@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 /**
- * CHECKPOINT DELIVERABLE — NOT YET REGISTERED in cobblemon_wilderness.mixins.json.
+ * Registered via {@code cobblemon_wilderness.gate.mixins.json} (required=false): a mapping break
+ * degrades to "no relocation" rather than a boot crash-loop.
  *
  * The /locate half of the overworld gate. {@code getNearestGeneratedStructure} recomputes potential
  * structure chunks when searching for a structure; it receives a {@code LevelReader}. We mark the

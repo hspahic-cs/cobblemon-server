@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Inject;
 
 /**
- * CHECKPOINT DELIVERABLE — NOT YET REGISTERED in cobblemon_wilderness.mixins.json.
+ * Registered via {@code cobblemon_wilderness.gate.mixins.json} (required=false): a mapping break
+ * degrades to "no relocation" rather than a boot crash-loop.
  *
  * Tags each dimension's {@code ChunkGeneratorStructureState} with whether it is the overworld, at the
  * tail of {@code ChunkMap}'s constructor (the state and level are both set by then). This is the

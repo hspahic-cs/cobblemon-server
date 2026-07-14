@@ -136,6 +136,13 @@ object RegionResetter {
      * deletion — the chunk is gone from world/ and regenerates fresh — and it leaves a restore
      * copy. On the same filesystem the move is an instant rename (no extra disk); across
      * filesystems it falls back to copy+delete.
+     *
+     * [forced] bypasses ONLY the [maxDeleteFraction] circuit breaker, for the one supervised
+     * first-run cleanup where the outside backlog legitimately exceeds the steady-state limit. It
+     * changes nothing else: [dryRun] still only tallies, and the per-dimension baseline-skip (in the
+     * caller) is unaffected. When [forced] and the breaker WOULD trip, the override is logged loudly
+     * (the overridden fraction + the backup dir) and the run proceeds; the breaker denominator stays
+     * "all present region files".
      */
     fun run(
         dimensionId: String,
@@ -147,6 +154,7 @@ object RegionResetter {
         nowSeconds: Long,
         backupTarget: Path?,
         log: Logger,
+        forced: Boolean = false,
     ): ResetReport {
         val regionDir = dimensionFolder.resolve("region")
         if (!regionDir.exists()) {
@@ -182,12 +190,22 @@ object RegionResetter {
         val kept = total - toDelete.size
         if (exceedsLimit(toDelete.size, total, maxDeleteFraction)) {
             val pct = if (total > 0) toDelete.size * 100 / total else 0
-            log.error(
-                "[{}] CIRCUIT BREAKER: would delete {} of {} region(s) ({}%) > limit {}%. " +
-                    "Aborting — check the box config. Nothing was deleted.",
+            if (!forced) {
+                log.error(
+                    "[{}] CIRCUIT BREAKER: would delete {} of {} region(s) ({}%) > limit {}%. " +
+                        "Aborting — check the box config. Nothing was deleted.",
+                    dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
+                )
+                return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true, scans = outside)
+            }
+            // Forced override (T4): the supervised first-run cleanup may legitimately exceed the
+            // steady-state fraction. Log loudly what we overrode and where backups land, then proceed.
+            log.warn(
+                "[{}] CIRCUIT BREAKER OVERRIDDEN (forced): deleting {} of {} region(s) ({}%) exceeds " +
+                    "limit {}%, but /wildreset now force was set. Backups → {}. Proceeding.",
                 dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
+                backupTarget ?: "<none — unlinking without backup>",
             )
-            return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true, scans = outside)
         }
 
         // Pass 2 — remove (or tally) the matching r.X.Z.mca in region/, entities/, poi/. With a

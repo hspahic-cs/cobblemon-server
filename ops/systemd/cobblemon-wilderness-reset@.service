@@ -1,0 +1,18 @@
+# Arm-and-restart the wilderness prune for one cobblemon environment.
+# Templated by env: `cobblemon-wilderness-reset@dev` / `cobblemon-wilderness-reset@prod`
+# (the %i instance name is passed to the driver as <dev|prod>).
+#
+# Paired with cobblemon-wilderness-reset@.timer, which fires this at 05:30 America/New_York.
+# Runs as the service user (sysadmin); the restart inside the script escalates via NOPASSWD sudo.
+#
+# Install: see ops/systemd/README.md. Do NOT enable the .service directly — enable the .timer.
+[Unit]
+Description=Arm + restart cobblemon-%i wilderness prune
+# Don't fire if the target server unit isn't installed.
+After=cobblemon-%i.service
+
+[Service]
+Type=oneshot
+User=sysadmin
+# Adjust if you install the driver elsewhere (see README).
+ExecStart=/usr/local/bin/wilderness-arm-restart.sh %i

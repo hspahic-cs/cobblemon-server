@@ -12,7 +12,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 /**
- * CHECKPOINT DELIVERABLE — NOT YET REGISTERED in cobblemon_wilderness.mixins.json.
+ * Registered via {@code cobblemon_wilderness.gate.mixins.json} (required=false): if a future
+ * MC/mapping break stops this from applying, the gate degrades to "no relocation" rather than
+ * crash-looping boot — the salt hook stays loaded but the overworld flag is never set.
  *
  * The GEN-PATH half of the overworld gate. {@code isPlacementChunk(state, x, z)} is where chunk
  * generation asks whether a structure lands in a chunk; it receives the per-dimension

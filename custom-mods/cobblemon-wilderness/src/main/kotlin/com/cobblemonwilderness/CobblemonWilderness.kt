@@ -80,18 +80,21 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
         // Cadence is armed, not scheduled: the prune fires only when the ops job has armed it via
         // /wildreset now (forceNextBoot). Unarmed boots (deploys, apt restarts) are inert — no
         // interval clock of our own. See the "Cadence & scheduling" plan section.
-        val forced = state.forceNextBoot
+        val armed = state.forceNextBoot
+        // Separate one-shot flag (T4): armed only by `/wildreset now force`. Bypasses ONLY the
+        // maxDeleteFraction breaker for this run; consumed alongside forceNextBoot below.
+        val forceBreaker = state.forceBreakerOverride
         var stateDirty = false
         logger.info(
-            "Keep-box (effective): X[{}..{}] Z[{}..{}]  (armed={}, idleTtlDays={}, tz={})",
-            box.minX, box.maxX, box.minZ, box.maxZ, forced, config.idleTtlDays, config.scheduleTimeZone,
+            "Keep-box (effective): X[{}..{}] Z[{}..{}]  (armed={}, forceBreaker={}, idleTtlDays={}, tz={})",
+            box.minX, box.maxX, box.minZ, box.maxZ, armed, forceBreaker, config.idleTtlDays, config.scheduleTimeZone,
         )
 
         // Resolve the snapshot dir for this boot's prune (one timestamped dir shared by all
         // dimensions). Only on an armed real run — an unarmed boot deletes nothing and a dry run
         // never deletes, so there is nothing to snapshot. Files are MOVED here right before
         // deletion (see RegionResetter).
-        val snapshotRoot: Path? = if (forced && config.backupBeforeReset && !config.dryRun) {
+        val snapshotRoot: Path? = if (armed && config.backupBeforeReset && !config.dryRun) {
             val base = Path.of(config.backupDir)
             val resolved = if (base.isAbsolute) base else FMLPaths.GAMEDIR.get().resolve(base)
             resolved.resolve(snapshotStamp(now, config.displayTimeZone))
@@ -111,7 +114,7 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             // First time we ever observe this dimension: record a baseline and skip, so
             // flipping enabled=true doesn't trigger a surprise wipe on the very next boot.
             // Use /wildreset now to force the first real reset deliberately.
-            if (last == 0L && !forced) {
+            if (last == 0L && !armed) {
                 logger.info("[{}] first run — recording baseline, no reset this boot.", dimId)
                 state.lastResetEpochMillis[dimId] = now
                 stateDirty = true
@@ -119,16 +122,16 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             }
 
             // Armed-only cadence: with no interval clock, an unarmed boot never prunes.
-            if (!forced) {
+            if (!armed) {
                 logger.info("[{}] prune not armed — skipping (use /wildreset now to arm the next boot).", dimId)
                 continue
             }
 
-            logger.info("[{}] running reset (manually armed, dryRun={})...", dimId, config.dryRun)
+            logger.info("[{}] running reset (manually armed, dryRun={}, forceBreaker={})...", dimId, config.dryRun, forceBreaker)
             val dimBackup = snapshotRoot?.resolve(dimId.replace(':', '_'))
             val report = RegionResetter.run(
                 dimId, folder, box, config.dryRun, config.maxDeleteFraction,
-                config.idleTtlDays, nowSeconds, dimBackup, logger,
+                config.idleTtlDays, nowSeconds, dimBackup, logger, forced = forceBreaker,
             )
 
             if (!config.dryRun) {
@@ -156,6 +159,11 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
 
         if (state.forceNextBoot) {
             state.forceNextBoot = false
+            stateDirty = true
+        }
+        // Consume the one-shot breaker override too, so it never carries into a later boot.
+        if (state.forceBreakerOverride) {
+            state.forceBreakerOverride = false
             stateDirty = true
         }
         if (stateDirty) state.save()

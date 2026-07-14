@@ -74,6 +74,58 @@ class RegionResetterTest {
     }
 
     @Test
+    fun `a normal run aborts above the fraction and deletes nothing`() {
+        // 1 inside + 1 outside-eligible → deletable 1 of 2 = 50% > the 40% limit → breaker trips.
+        val dim = makeDimension()
+        val backup = dim.resolveSibling("snap")
+        try {
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = false, maxDeleteFraction = 0.4,
+                idleTtlDays = ttl, nowSeconds = now,
+                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+                // forced defaults false
+            )
+            assertTrue(report.aborted)
+            assertEquals(0, report.bytesFreed)
+            for (sub in subfolders) {
+                // nothing deleted, nothing snapshotted
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+            assertFalse(Files.exists(backup))
+        } finally {
+            dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `a forced run proceeds past the fraction and still backs up`() {
+        // Same 50%-over-40% setup, but forced=true bypasses ONLY the breaker: the outside region is
+        // deleted and moved into the backup exactly as a normal under-limit run would.
+        val dim = makeDimension()
+        val backup = dim.resolveSibling("snap")
+        try {
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = false, maxDeleteFraction = 0.4,
+                idleTtlDays = ttl, nowSeconds = now,
+                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+                forced = true,
+            )
+            assertFalse(report.aborted)
+            assertEquals(1, report.regionsDeleted)
+            assertEquals(1, report.regionsKept)
+            for (sub in subfolders) {
+                // outside file left world/ and now lives in the snapshot
+                assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+                assertTrue(Files.exists(backup.resolve(sub).resolve("r.100.100.mca")))
+                // inside file untouched
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
     fun `dry run neither deletes nor snapshots`() {
         val dim = makeDimension()
         val backup = dim.resolveSibling("snap")

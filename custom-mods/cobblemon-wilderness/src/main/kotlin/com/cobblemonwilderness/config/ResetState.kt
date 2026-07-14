@@ -17,6 +17,12 @@ import kotlin.io.path.writeText
  * `/wildreset now` to make the next server start perform a reset regardless of the
  * interval (destructive deletes only ever happen at boot, never on a live world).
  *
+ * `forceBreakerOverride` is a SEPARATE one-shot flag armed only by `/wildreset now force`. It rides
+ * alongside `forceNextBoot` and tells the boot pass to run `RegionResetter` with `forced=true`, which
+ * bypasses ONLY the `maxDeleteFraction` circuit breaker for the supervised first-run cleanup. Like
+ * `forceNextBoot`, it is consumed (cleared) after the boot pass. Plain `/wildreset now` leaves it
+ * false, so the breaker stays enforced for every routine run.
+ *
  * `resetGeneration` is the per-region reset-generation counter for the overworld (T3): each
  * region that is pruned has its generation bumped, which relocates that region's structures on
  * regen. It is persisted as an array of `[regionKey, generation]` pairs — Gson stringifies long
@@ -26,6 +32,8 @@ import kotlin.io.path.writeText
 data class ResetState(
     val lastResetEpochMillis: MutableMap<String, Long> = mutableMapOf(),
     var forceNextBoot: Boolean = false,
+    /** One-shot: armed by `/wildreset now force`, consumed at boot; bypasses only the fraction breaker. */
+    var forceBreakerOverride: Boolean = false,
     /**
      * Persisted form of the overworld reset-generation map: an array of `[regionKey, generation]`
      * pairs. Do NOT read this for logic — use the generation* helpers, which operate on the hydrated

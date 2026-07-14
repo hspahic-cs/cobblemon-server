@@ -6,7 +6,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 /**
- * CHECKPOINT DELIVERABLE — NOT YET REGISTERED in cobblemon_wilderness.mixins.json.
+ * Registered via {@code cobblemon_wilderness.gate.mixins.json} (required=false): a mapping break
+ * degrades to "no relocation" rather than a boot crash-loop.
  *
  * Adds a per-dimension "is overworld" tag to {@code ChunkGeneratorStructureState}. The state is
  * created once per dimension in {@code ChunkMap}'s constructor, which is where {@link ChunkMapMixin}

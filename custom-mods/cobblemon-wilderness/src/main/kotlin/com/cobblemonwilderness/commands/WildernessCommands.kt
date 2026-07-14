@@ -23,7 +23,11 @@ object WildernessCommands {
                 .requires { it.hasPermission(4) }
                 .then(Commands.literal("status").executes(::status))
                 .then(Commands.literal("preview").executes(::preview))
-                .then(Commands.literal("now").executes(::armNow))
+                .then(
+                    Commands.literal("now")
+                        .then(Commands.literal("force").executes(::armNowForce))
+                        .executes(::armNow),
+                )
                 .then(Commands.literal("cancel").executes(::cancel))
                 .executes(::status),
         )
@@ -127,6 +131,7 @@ object WildernessCommands {
         val cfg = CobblemonWilderness.config
         val state = CobblemonWilderness.state
         state.forceNextBoot = true
+        state.forceBreakerOverride = false // plain arm keeps the fraction breaker enforced
         state.save()
 
         src.sendSuccess({ Component.literal("§aReset armed — it will run on the next server restart.") }, false)
@@ -139,9 +144,34 @@ object WildernessCommands {
         return 1
     }
 
+    /**
+     * `/wildreset now force` — arms the next boot AND bypasses the `maxDeleteFraction` circuit breaker
+     * for that one run (the supervised first large cleanup). Everything else — `dryRun`, baseline-skip —
+     * still applies. Both flags are consumed after the run.
+     */
+    private fun armNowForce(ctx: CommandContext<CommandSourceStack>): Int {
+        val src = ctx.source
+        val cfg = CobblemonWilderness.config
+        val state = CobblemonWilderness.state
+        state.forceNextBoot = true
+        state.forceBreakerOverride = true
+        state.save()
+
+        src.sendSuccess({ Component.literal("§aReset armed WITH breaker override — it will run on the next server restart.") }, false)
+        src.sendSuccess({ Component.literal("§c⚠ The maxDeleteFraction circuit breaker (${cfg.maxDeleteFraction}) will be BYPASSED for this one run.") }, false)
+        if (!cfg.enabled) {
+            src.sendSuccess({ Component.literal("§e⚠ enabled=false in config — the armed reset will NOT run until you set enabled=true.") }, false)
+        }
+        if (cfg.dryRun) {
+            src.sendSuccess({ Component.literal("§e⚠ dryRun=true — next boot will only LOG what it would delete, not delete it.") }, false)
+        }
+        return 1
+    }
+
     private fun cancel(ctx: CommandContext<CommandSourceStack>): Int {
         val state = CobblemonWilderness.state
         state.forceNextBoot = false
+        state.forceBreakerOverride = false
         state.save()
         ctx.source.sendSuccess({ Component.literal("§aArmed reset cancelled.") }, false)
         return 1

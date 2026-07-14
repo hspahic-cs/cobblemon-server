@@ -22,6 +22,7 @@ class ResetStateTest {
         try {
             val s = ResetState.load(dir)
             s.forceNextBoot = true
+            s.forceBreakerOverride = true
             s.lastResetEpochMillis["minecraft:overworld"] = 999L
             s.bumpGeneration(WildernessGenState.regionKey(5, 3))
             s.bumpGeneration(WildernessGenState.regionKey(5, 3))     // → 2
@@ -34,6 +35,7 @@ class ResetStateTest {
             assertEquals(0, r.generationOf(WildernessGenState.regionKey(9, 9))) // absent → 0
             assertTrue(r.hasAnyGeneration())
             assertTrue(r.forceNextBoot)
+            assertTrue(r.forceBreakerOverride)
             assertEquals(999L, r.lastResetEpochMillis["minecraft:overworld"])
         } finally {
             dir.toFile().deleteRecursively()

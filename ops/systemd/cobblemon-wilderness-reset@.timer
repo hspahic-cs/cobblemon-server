@@ -1,0 +1,20 @@
+# Fire the wilderness arm-and-restart daily at 05:30 America/New_York.
+# Templated by env: enable `cobblemon-wilderness-reset@dev.timer` / `...@prod.timer`.
+#
+# The timezone is pinned in the OnCalendar expression itself (systemd >= v240), so the job tracks
+# EST<->EDT automatically — 05:30 local year-round, NOT a hardcoded UTC offset that would drift an
+# hour across DST. Verify with: `systemd-analyze calendar '*-*-* 05:30:00 America/New_York'`.
+[Unit]
+Description=Daily 05:30 ET wilderness prune for cobblemon-%i
+
+[Timer]
+OnCalendar=*-*-* 05:30:00 America/New_York
+# Persistent=false on purpose: if the VM missed 05:30 (down for maintenance, etc.) we do NOT want a
+# catch-up run firing at an arbitrary HIGH-population hour — that would restart mid-day, defeating
+# the low-pop-window intent. Just wait for the next 05:30. Missing a day is harmless (the prune is
+# idle-gated + idempotent).
+Persistent=false
+Unit=cobblemon-wilderness-reset@%i.service
+
+[Install]
+WantedBy=timers.target

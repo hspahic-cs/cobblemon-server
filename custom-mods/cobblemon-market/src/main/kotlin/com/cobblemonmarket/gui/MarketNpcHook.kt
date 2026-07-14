@@ -24,6 +24,14 @@ object MarketNpcHook {
 
     private const val VENDOR_TAG_PREFIX = "cobblemon_bridge.market_vendor"
 
+    /**
+     * Scoped vendor tags handled by other hooks, not the regular price-chart market menu.
+     * `bp_shop` (`cobblemon_bridge.market_vendor.bp_shop`) is owned by [com.cobblemonmarket.bp.BpShopNpcHook];
+     * without this exclusion MarketNpcHook would match its `market_vendor.` prefix first, cancel the
+     * event, and open an empty scoped market menu (no market item has that vendorScope).
+     */
+    private val EXCLUDED_SCOPES = setOf("bp_shop")
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun onEntityInteract(event: PlayerInteractEvent.EntityInteract) {
         if (event.level.isClientSide) return
@@ -46,6 +54,9 @@ object MarketNpcHook {
     private fun resolveVendorTag(tags: Collection<String>): String? {
         if (VENDOR_TAG_PREFIX in tags) return ""
         val scoped = tags.firstOrNull { it.startsWith("$VENDOR_TAG_PREFIX.") } ?: return null
-        return scoped.removePrefix("$VENDOR_TAG_PREFIX.")
+        val scope = scoped.removePrefix("$VENDOR_TAG_PREFIX.")
+        // Let hooks that own a specific scope (e.g. the BP shop) handle their own tag.
+        if (scope in EXCLUDED_SCOPES) return null
+        return scope
     }
 }

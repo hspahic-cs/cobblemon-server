@@ -96,16 +96,9 @@ object BoundaryWarden {
     }
 
     /**
-     * Human phrase for when the current area is reset. Resets are idle-driven (a tile is reset once
-     * left untouched past the TTL, when an operator arms a prune), not on a fixed calendar date, so
-     * we describe the condition rather than predict a day.
+     * Human phrase for when the current area is reset. The wipe is armed by ops (external cadence)
+     * and runs at the next boot, not on a fixed calendar date, so we describe the condition rather
+     * than predict a day.
      */
-    private fun resetWhen(): String {
-        val ttl = CobblemonWilderness.config.idleTtlDays
-        return if (ttl <= 0) {
-            "during the next scheduled maintenance"
-        } else {
-            "once this area is left untouched for about $ttl day(s)"
-        }
-    }
+    private fun resetWhen(): String = "during the next scheduled wilderness maintenance"
 }

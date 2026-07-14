@@ -4,8 +4,6 @@ import com.cobblemonwilderness.CobblemonWilderness
 import com.cobblemonwilderness.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.exists
@@ -75,13 +73,6 @@ data class BoundingBox(
 data class WildernessConfig(
     val enabled: Boolean = false,
     val dryRun: Boolean = true,
-    /**
-     * Idle time-to-live, in days. A region wholly outside the box is reset only if NONE of its
-     * chunks (across region/entities/poi) has been written within this many days — recently
-     * visited frontier persists. <= 0 disables the idle gate: geometry alone decides (every
-     * outside region with a present chunk is eligible), matching the old `intervalDays <= 0`.
-     */
-    val idleTtlDays: Int = 14,
     /** Dimensions to clean, by id. Default: overworld only. */
     val dimensions: List<String> = listOf("minecraft:overworld"),
     val box: BoundingBox = BoundingBox(),
@@ -130,15 +121,6 @@ data class WildernessConfig(
     val backupDir: String = "wilderness-snapshots",
     /** Keep this many of the most recent prune snapshots; older ones are deleted after a run. 0 = keep all. */
     val backupRetention: Int = 5,
-    /**
-     * When true, structures and monuments in chunks OUTSIDE the keep-box are relocated each reset
-     * cycle (a per-cycle salt is mixed into structure placement), so a pruned-then-revisited
-     * frontier has its landmarks in new spots — terrain itself is unchanged. Off by default: this
-     * is a deliberate gameplay change, and it applies to all dimensions' structures beyond the
-     * X/Z box (the placement hook has no dimension context), though only the pruned overworld
-     * actually regenerates them. Inside the box, placement is always untouched.
-     */
-    val reseedStructuresOutsideBox: Boolean = false,
 ) {
     /** The box actually enforced — region-aligned when [snapToRegions] is on. */
     fun effectiveBox(): BoundingBox = if (snapToRegions) box.snappedToRegions() else box.normalized()
@@ -175,15 +157,6 @@ data class WildernessConfig(
         fun fromJsonWithDefaults(json: String): WildernessConfig {
             var parsed = gson.fromJson(json, WildernessConfig::class.java) ?: return WildernessConfig()
             val d = WildernessConfig()
-            val obj: JsonObject? = runCatching { JsonParser.parseString(json).asJsonObject }.getOrNull()
-
-            // idleTtlDays: a missing field deserializes to 0, which is a VALID value (disabled), so we
-            // must distinguish "absent" from "written 0" via the raw JSON. Absent → default (14),
-            // unless a legacy `intervalDays` is present, in which case honor it (rename migration).
-            if (obj != null && !obj.has("idleTtlDays")) {
-                val legacy = obj.get("intervalDays")?.takeIf { it.isJsonPrimitive }?.asInt
-                parsed = parsed.copy(idleTtlDays = legacy ?: d.idleTtlDays)
-            }
 
             // scheduleTimeZone: an absent String comes back null under Unsafe → restore the default.
             if (parsed.scheduleTimeZone.isNullOrBlank()) {

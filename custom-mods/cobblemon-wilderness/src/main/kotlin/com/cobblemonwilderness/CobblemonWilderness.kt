@@ -3,9 +3,7 @@ package com.cobblemonwilderness
 import com.cobblemonwilderness.commands.WildernessCommands
 import com.cobblemonwilderness.config.ResetState
 import com.cobblemonwilderness.config.WildernessConfig
-import com.cobblemonwilderness.gen.WildernessGenState
 import com.cobblemonwilderness.reset.DimensionFolders
-import com.cobblemonwilderness.reset.RegionDisposition
 import com.cobblemonwilderness.reset.RegionResetter
 import com.cobblemonwilderness.warn.BoundaryWarden
 import net.minecraft.server.MinecraftServer
@@ -53,8 +51,8 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
         NeoForge.EVENT_BUS.addListener(BoundaryWarden::onLogout)
 
         logger.info(
-            "Cobblemon Wilderness Reset initialized (enabled={}, dryRun={}, idleTtlDays={}, box={})",
-            config.enabled, config.dryRun, config.idleTtlDays, config.box,
+            "Cobblemon Wilderness Reset initialized (enabled={}, dryRun={}, box={})",
+            config.enabled, config.dryRun, config.box,
         )
     }
 
@@ -69,12 +67,10 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
     private fun runScheduledReset(server: MinecraftServer) {
         if (!config.enabled) {
             logger.info("Wilderness reset disabled (enabled=false) — skipping.")
-            WildernessGenState.disable() // keep the structure hook inert while the mod is off
             return
         }
 
         val now = System.currentTimeMillis()
-        val nowSeconds = now / 1000L
         val worldRoot = server.getWorldPath(LevelResource.ROOT)
         val box = config.effectiveBox()
         // Cadence is armed, not scheduled: the prune fires only when the ops job has armed it via
@@ -86,8 +82,8 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
         val forceBreaker = state.forceBreakerOverride
         var stateDirty = false
         logger.info(
-            "Keep-box (effective): X[{}..{}] Z[{}..{}]  (armed={}, forceBreaker={}, idleTtlDays={}, tz={})",
-            box.minX, box.maxX, box.minZ, box.maxZ, armed, forceBreaker, config.idleTtlDays, config.scheduleTimeZone,
+            "Keep-box (effective): X[{}..{}] Z[{}..{}]  (armed={}, forceBreaker={}, tz={})",
+            box.minX, box.maxX, box.minZ, box.maxZ, armed, forceBreaker, config.scheduleTimeZone,
         )
 
         // Resolve the snapshot dir for this boot's prune (one timestamped dir shared by all
@@ -131,29 +127,12 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             val dimBackup = snapshotRoot?.resolve(dimId.replace(':', '_'))
             val report = RegionResetter.run(
                 dimId, folder, box, config.dryRun, config.maxDeleteFraction,
-                config.idleTtlDays, nowSeconds, dimBackup, logger, forced = forceBreaker,
+                dimBackup, logger, forced = forceBreaker,
             )
 
             if (!config.dryRun) {
                 state.lastResetEpochMillis[dimId] = now
                 stateDirty = true
-                // A real prune of the OVERWORLD bumps each deleted region's reset generation, so its
-                // structures relocate when those chunks regenerate. Overworld-only: resetGeneration is
-                // keyed by region coords, which collide across dimensions. Skipped on abort (nothing
-                // was deleted). Structures still won't move until the dimension-aware mixin is wired
-                // (see WildernessGenState) — the generation is recorded now regardless.
-                if (!report.aborted && dimId == OVERWORLD_ID) {
-                    var bumped = 0
-                    for (scan in report.scans) {
-                        if (scan.disposition == RegionDisposition.ELIGIBLE) {
-                            state.bumpGeneration(WildernessGenState.regionKey(scan.rx, scan.rz))
-                            bumped++
-                        }
-                    }
-                    if (bumped > 0) {
-                        logger.info("[{}] bumped reset generation for {} region(s).", dimId, bumped)
-                    }
-                }
             }
         }
 
@@ -167,16 +146,6 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             stateDirty = true
         }
         if (stateDirty) state.save()
-
-        // Configure the structure-placement hook for this boot's generation. It publishes the current
-        // per-region generation snapshot + box every boot; the hook no-ops when the feature is off or
-        // no region has ever been reset (empty snapshot), and — until the dimension-aware mixin marks
-        // overworld worldgen — stays inert for every dimension.
-        if (config.reseedStructuresOutsideBox) {
-            WildernessGenState.configure(true, state.generationSnapshot(), box.minX, box.minZ, box.maxX, box.maxZ)
-        } else {
-            WildernessGenState.disable()
-        }
 
         // Trim old prune snapshots (newest [backupRetention] kept). The timestamped dir names
         // sort chronologically, so a lexical sort + drop-oldest does the right thing.
@@ -205,8 +174,6 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
     companion object {
         const val MOD_ID = "cobblemon_wilderness"
         const val MILLIS_PER_DAY = 86_400_000L
-        /** Only the overworld is pruned/relocated; its region-keyed generation map must not be shared. */
-        const val OVERWORLD_ID = "minecraft:overworld"
         val logger: Logger = LoggerFactory.getLogger(MOD_ID)
 
         lateinit var config: WildernessConfig

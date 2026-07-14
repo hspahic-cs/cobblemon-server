@@ -40,8 +40,7 @@ object WildernessCommands {
         val now = System.currentTimeMillis()
 
         src.sendSuccess({ Component.literal("§6=== Wilderness Reset ===") }, false)
-        val ttlNote = if (cfg.idleTtlDays <= 0) "§7(idle gate off — geometry only)" else ""
-        src.sendSuccess({ Component.literal("enabled: ${cfg.enabled}   dryRun: ${cfg.dryRun}   idleTtlDays: ${cfg.idleTtlDays} $ttlNote") }, false)
+        src.sendSuccess({ Component.literal("enabled: ${cfg.enabled}   dryRun: ${cfg.dryRun}") }, false)
         val box = cfg.effectiveBox()
         src.sendSuccess({ Component.literal("box (configured): X[${cfg.box.minX}..${cfg.box.maxX}] Z[${cfg.box.minZ}..${cfg.box.maxZ}]") }, false)
         val snapNote = if (cfg.snapToRegions) " §7(region-aligned)" else ""
@@ -53,7 +52,7 @@ object WildernessCommands {
                 "  $dimId: no baseline yet (prunes only when armed via /wildreset now)"
             } else {
                 val daysSince = (now - last) / CobblemonWilderness.MILLIS_PER_DAY
-                "  $dimId: last reset ${daysSince}d ago (idle TTL ${cfg.idleTtlDays}d)"
+                "  $dimId: last reset ${daysSince}d ago"
             }
             src.sendSuccess({ Component.literal(line) }, false)
         }
@@ -66,9 +65,8 @@ object WildernessCommands {
         val cfg = CobblemonWilderness.config
         val worldRoot = src.server.getWorldPath(LevelResource.ROOT)
         val box = cfg.effectiveBox()
-        val nowSeconds = System.currentTimeMillis() / 1000L
 
-        src.sendSuccess({ Component.literal("§6Wilderness reset preview (read-only, idle TTL ${cfg.idleTtlDays}d):") }, false)
+        src.sendSuccess({ Component.literal("§6Wilderness reset preview (read-only):") }, false)
         for (dimId in cfg.dimensions) {
             val folder = DimensionFolders.resolve(worldRoot, dimId)
             if (folder == null) {
@@ -77,7 +75,6 @@ object WildernessCommands {
             }
             val report = RegionResetter.run(
                 dimId, folder, box, dryRun = true, maxDeleteFraction = cfg.maxDeleteFraction,
-                idleTtlDays = cfg.idleTtlDays, nowSeconds = nowSeconds,
                 backupTarget = null, log = CobblemonWilderness.logger,
             )
             val mb = report.bytesFreed / (1024 * 1024)
@@ -87,21 +84,19 @@ object WildernessCommands {
                 }, false)
             } else {
                 src.sendSuccess({
-                    Component.literal("  $dimId: would delete ${report.regionsDeleted} region(s) (~${mb} MB), keep ${report.regionsKept}")
+                    Component.literal("  $dimId: would delete ${report.regionsDeleted} region(s) (~${mb} MB), keep ${report.regionsKept} (inside ${report.keptInside}, straddle ${report.keptStraddle}, monument ${report.keptMonument})")
                 }, false)
             }
 
-            // Per-candidate idle ages so the operator sees WHY each outside region is kept/eligible.
-            // Oldest first; cap the listing so a huge frontier doesn't flood chat.
-            val ordered = report.scans.sortedByDescending { it.idleSeconds ?: Long.MIN_VALUE }
+            // Per-candidate rows so the operator sees WHY each outside region is kept vs deleted.
+            // Monuments first (the ones that matter), then deletables; cap so a huge frontier doesn't flood chat.
+            val ordered = report.scans.sortedByDescending { it.disposition.ordinal }
             for (scan in ordered.take(MAX_PREVIEW_ROWS)) {
-                val age = scan.idleSeconds?.let { formatAge(it) } ?: "no chunks"
                 val tag = when (scan.disposition) {
-                    RegionDisposition.ELIGIBLE -> "§celigible"
-                    RegionDisposition.KEPT_FRESH -> "§akept (fresh)"
-                    RegionDisposition.SKIPPED_EMPTY -> "§7skipped (empty)"
+                    RegionDisposition.DELETABLE -> "§cdelete"
+                    RegionDisposition.KEPT_MONUMENT -> "§akept (monument)"
                 }
-                src.sendSuccess({ Component.literal("    §7r.${scan.rx}.${scan.rz}: idle $age → $tag") }, false)
+                src.sendSuccess({ Component.literal("    §7r.${scan.rx}.${scan.rz}: $tag") }, false)
             }
             if (ordered.size > MAX_PREVIEW_ROWS) {
                 src.sendSuccess({ Component.literal("    §7… ${ordered.size - MAX_PREVIEW_ROWS} more outside region(s) not shown") }, false)
@@ -112,19 +107,6 @@ object WildernessCommands {
 
     /** Cap on per-region rows printed by /wildreset preview (keeps chat readable on a big frontier). */
     private const val MAX_PREVIEW_ROWS = 40
-
-    /** Renders an idle age in seconds as a compact `Xd Yh` / `Yh Zm` / `Zm` string. */
-    private fun formatAge(seconds: Long): String {
-        if (seconds < 0) return "0m"
-        val days = seconds / 86_400
-        val hours = (seconds % 86_400) / 3600
-        val minutes = (seconds % 3600) / 60
-        return when {
-            days > 0 -> "${days}d ${hours}h"
-            hours > 0 -> "${hours}h ${minutes}m"
-            else -> "${minutes}m"
-        }
-    }
 
     private fun armNow(ctx: CommandContext<CommandSourceStack>): Int {
         val src = ctx.source

@@ -17,43 +17,45 @@ data class ResetReport(
     val regionsDeleted: Int,
     val bytesFreed: Long,
     val dryRun: Boolean,
-    /** True if the circuit breaker tripped: nothing was deleted because the run was too broad. */
+    /** Kept because they lie fully inside the keep-box (geometry). */
+    val keptInside: Int = 0,
+    /** Kept because they straddle the box edge (overlap but not fully inside). */
+    val keptStraddle: Int = 0,
+    /** Kept because a present chunk references a legendary monument (frozen as-is, never regenerated). */
+    val keptMonument: Int = 0,
+    /** True if the circuit breaker tripped: nothing was deleted because the box looked unsafe. */
     val aborted: Boolean = false,
     /** Per-region classification for every fully-outside region (for /wildreset preview). */
     val scans: List<RegionScan> = emptyList(),
 )
 
-/** How a fully-outside region was classified against the idle-TTL gate. */
+/** How a fully-outside region was classified. */
 enum class RegionDisposition {
-    /** Idle past the TTL → will be reset. */
-    ELIGIBLE,
+    /** No monument → will be reset (deleted → regenerates fresh on next visit). */
+    DELETABLE,
 
-    /** Has a chunk touched within the TTL → kept (visiting pins the whole 512m tile). */
-    KEPT_FRESH,
-
-    /** No present chunk in any of region/entities/poi → nothing to age out, skipped. */
-    SKIPPED_EMPTY,
+    /** References a legendary monument → kept untouched (never regenerated; spent stays spent). */
+    KEPT_MONUMENT,
 }
 
-/** One fully-outside region file and why it was kept or reset. */
+/** One fully-outside region file and whether it is deletable or kept for a monument. */
 data class RegionScan(
     val name: String,
     val rx: Int,
     val rz: Int,
     val disposition: RegionDisposition,
-    /** Newest present-chunk timestamp (epoch seconds) across the three folders, or null if none present. */
-    val maxTsSeconds: Long?,
-    /** Idle age in seconds (`now - maxTs`), or null when no chunk is present. */
-    val idleSeconds: Long?,
 )
 
 /**
- * Deletes the on-disk chunk data (region/, entities/, poi/) for every region file that
- * lies WHOLLY outside the keep-box, so those chunks regenerate fresh on next visit.
+ * Deletes the on-disk chunk data (region/, entities/, poi/) for every region file that lies WHOLLY
+ * outside the keep-box AND holds no legendary monument, so those chunks regenerate fresh on next
+ * visit. A monument region is left completely untouched — never regenerated — so its world state
+ * (drained pedestals, emptied chests) is frozen exactly as players left it: spent stays spent, and
+ * an unclaimed monument stays claimable. See the reset-v2 plan.
  *
- * Region-file granularity only. A region that overlaps the box at all is kept (see
- * [BoundingBox] docs for the outward-rounding bias). All deletion must happen while the
- * target chunks are guaranteed unloaded — i.e. at server boot, before levels load.
+ * Region-file granularity only. A region that overlaps the box at all is kept (see [BoundingBox]
+ * docs for the outward-rounding bias). All deletion must happen while the target chunks are
+ * guaranteed unloaded — i.e. at server boot, before levels load.
  */
 object RegionResetter {
 
@@ -64,7 +66,7 @@ object RegionResetter {
 
     /**
      * True if region (rx, rz) — covering blocks [rx*512 .. rx*512+511] on each axis —
-     * does not intersect [box] at all, and is therefore safe to delete.
+     * does not intersect [box] at all, and is therefore a delete candidate.
      *
      * Pure function: the unit tests pin the boundary behaviour here.
      */
@@ -79,24 +81,21 @@ object RegionResetter {
         return !overlaps
     }
 
-    /** Seconds in a day, for turning the idle TTL (authored in days) into a timestamp delta. */
-    private const val SECONDS_PER_DAY = 86_400L
-
     /**
-     * The idle gate on top of the geometric "fully outside" test: a region is reset-eligible only
-     * if its newest present-chunk write ([maxTsSeconds]) is older than [idleTtlDays] before
-     * [nowSeconds]. One fresh chunk keeps the whole 512m tile.
-     *
-     * [idleTtlDays] <= 0 disables the idle gate (mirrors the old `intervalDays <= 0`): geometry
-     * alone decides, so every present outside region is eligible. (Empty regions are still skipped
-     * by the caller — this predicate only runs for regions with a present chunk.)
+     * True if region (rx, rz) lies WHOLLY inside [box] (every block within the box). A region that
+     * overlaps the box but is not fully inside is "straddling". Kept vs deleted is decided by
+     * [isRegionFullyOutside]; this only separates the two KEEP reasons for reporting.
      *
      * Pure function: unit-tested alongside the geometry.
      */
-    fun isIdleEligible(maxTsSeconds: Long, nowSeconds: Long, idleTtlDays: Int): Boolean {
-        if (idleTtlDays <= 0) return true
-        val ttlSeconds = idleTtlDays.toLong() * SECONDS_PER_DAY
-        return maxTsSeconds < nowSeconds - ttlSeconds
+    fun isRegionFullyInside(box: BoundingBox, rx: Int, rz: Int): Boolean {
+        val b = box.normalized()
+        val regionMinX = rx * REGION_BLOCKS
+        val regionMaxX = regionMinX + REGION_BLOCKS - 1
+        val regionMinZ = rz * REGION_BLOCKS
+        val regionMaxZ = regionMinZ + REGION_BLOCKS - 1
+        return regionMinX >= b.minX && regionMaxX <= b.maxX &&
+            regionMinZ >= b.minZ && regionMaxZ <= b.maxZ
     }
 
     /**
@@ -121,28 +120,21 @@ object RegionResetter {
     }
 
     /**
-     * Scans [dimensionFolder]'s region/ folder and deletes (or, when [dryRun], merely
-     * tallies) every fully-outside region that is ALSO idle past the TTL, across all three
-     * chunk-data subfolders.
+     * Scans [dimensionFolder]'s region/ folder and deletes (or, when [dryRun], merely tallies) every
+     * fully-outside region that does NOT reference a legendary monument, across all three chunk-data
+     * subfolders. Regions overlapping the box are kept outright (geometry, no NBT read); a fully-
+     * outside region is monument-checked ([McaTimestampReader.regionHasMonument]) and kept if it holds
+     * one — never regenerated, so its world state stays frozen.
      *
-     * Two passes: first classify every region (so we know the delete fraction), then — only
-     * if the [maxDeleteFraction] circuit breaker is satisfied — perform the deletions. A region
-     * that is geometrically outside the box is only reset if its newest present-chunk write is
-     * older than [idleTtlDays] before [nowSeconds] (see [isIdleEligible]); a fresh chunk keeps the
-     * whole tile and a region with no present chunk is skipped.
+     * Two passes: first classify every region (so we know the delete fraction), then — only if the
+     * [maxDeleteFraction] circuit breaker is satisfied — perform the deletions.
      *
-     * When [backupTarget] is non-null and this is a real (non-[dryRun]) run, each to-be-deleted
-     * file is MOVED into [backupTarget]/<sub>/<name> instead of being unlinked. The move is the
-     * deletion — the chunk is gone from world/ and regenerates fresh — and it leaves a restore
-     * copy. On the same filesystem the move is an instant rename (no extra disk); across
-     * filesystems it falls back to copy+delete.
+     * When [backupTarget] is non-null and this is a real (non-[dryRun]) run, each to-be-deleted file
+     * is MOVED into [backupTarget]/<sub>/<name> instead of being unlinked. The move is the deletion —
+     * the chunk is gone from world/ and regenerates fresh — and it leaves a restore copy.
      *
-     * [forced] bypasses ONLY the [maxDeleteFraction] circuit breaker, for the one supervised
-     * first-run cleanup where the outside backlog legitimately exceeds the steady-state limit. It
-     * changes nothing else: [dryRun] still only tallies, and the per-dimension baseline-skip (in the
-     * caller) is unaffected. When [forced] and the breaker WOULD trip, the override is logged loudly
-     * (the overridden fraction + the backup dir) and the run proceeds; the breaker denominator stays
-     * "all present region files".
+     * [forced] bypasses ONLY the [maxDeleteFraction] circuit breaker for a supervised override; it
+     * changes nothing else (dryRun still only tallies).
      */
     fun run(
         dimensionId: String,
@@ -150,8 +142,6 @@ object RegionResetter {
         box: BoundingBox,
         dryRun: Boolean,
         maxDeleteFraction: Double,
-        idleTtlDays: Int,
-        nowSeconds: Long,
         backupTarget: Path?,
         log: Logger,
         forced: Boolean = false,
@@ -162,31 +152,31 @@ object RegionResetter {
             return ResetReport(dimensionId, 0, 0, 0, dryRun)
         }
 
-        // Pass 1 — classify. Regions overlapping the box are kept outright (geometry, no header
-        // read). Fully-outside regions are then gated on idle age: reset only if no chunk in the
-        // tile (across region/entities/poi) has been written within the TTL.
-        var insideKept = 0
+        // Pass 1 — classify. Inside/straddling regions are kept by geometry (no NBT read). Each
+        // fully-outside region is monument-checked: a monument reference keeps the whole region.
+        var keptInside = 0
+        var keptStraddle = 0
         val outside = ArrayList<RegionScan>()
         Files.list(regionDir).use { stream ->
             for (regionFile in stream) {
                 val (rx, rz) = parseRegionCoords(regionFile.name) ?: continue
                 if (!isRegionFullyOutside(box, rx, rz)) {
-                    insideKept++
+                    if (isRegionFullyInside(box, rx, rz)) keptInside++ else keptStraddle++
                     continue
                 }
-                val maxTs = McaTimestampReader.maxTimestamp(dimensionFolder, rx, rz)
-                val disposition = when {
-                    maxTs == null -> RegionDisposition.SKIPPED_EMPTY
-                    isIdleEligible(maxTs, nowSeconds, idleTtlDays) -> RegionDisposition.ELIGIBLE
-                    else -> RegionDisposition.KEPT_FRESH
+                val disposition = if (McaTimestampReader.regionHasMonument(regionFile)) {
+                    RegionDisposition.KEPT_MONUMENT
+                } else {
+                    RegionDisposition.DELETABLE
                 }
-                outside.add(RegionScan(regionFile.name, rx, rz, disposition, maxTs, maxTs?.let { nowSeconds - it }))
+                outside.add(RegionScan(regionFile.name, rx, rz, disposition))
             }
         }
 
-        val toDelete = outside.filter { it.disposition == RegionDisposition.ELIGIBLE }.map { it.name }
+        val keptMonument = outside.count { it.disposition == RegionDisposition.KEPT_MONUMENT }
+        val toDelete = outside.filter { it.disposition == RegionDisposition.DELETABLE }.map { it.name }
         // Breaker denominator is ALL present region files (kept + to-delete), per the plan.
-        val total = insideKept + outside.size
+        val total = keptInside + keptStraddle + outside.size
         val kept = total - toDelete.size
         if (exceedsLimit(toDelete.size, total, maxDeleteFraction)) {
             val pct = if (total > 0) toDelete.size * 100 / total else 0
@@ -196,10 +186,12 @@ object RegionResetter {
                         "Aborting — check the box config. Nothing was deleted.",
                     dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
                 )
-                return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true, scans = outside)
+                return ResetReport(
+                    dimensionId, kept, toDelete.size, 0, dryRun,
+                    keptInside = keptInside, keptStraddle = keptStraddle, keptMonument = keptMonument,
+                    aborted = true, scans = outside,
+                )
             }
-            // Forced override (T4): the supervised first-run cleanup may legitimately exceed the
-            // steady-state fraction. Log loudly what we overrode and where backups land, then proceed.
             log.warn(
                 "[{}] CIRCUIT BREAKER OVERRIDDEN (forced): deleting {} of {} region(s) ({}%) exceeds " +
                     "limit {}%, but /wildreset now force was set. Backups → {}. Proceeding.",
@@ -209,8 +201,7 @@ object RegionResetter {
         }
 
         // Pass 2 — remove (or tally) the matching r.X.Z.mca in region/, entities/, poi/. With a
-        // backupTarget on a real run we MOVE each file into the snapshot, which both preserves a
-        // restore copy and clears it from world/; otherwise we unlink it.
+        // backupTarget on a real run we MOVE each file into the snapshot; otherwise we unlink it.
         var bytesFreed = 0L
         var filesBackedUp = 0
         for (name in toDelete) {
@@ -241,12 +232,17 @@ object RegionResetter {
 
         val verb = if (dryRun) "would delete" else "deleted"
         log.info(
-            "[{}] {} {} region(s), kept {}, {} {} MB ({})",
-            dimensionId, verb, toDelete.size, kept, verb, bytesFreed / (1024 * 1024), regionDir,
+            "[{}] {} {} region(s), kept {} (inside {}, straddle {}, monument {}), {} {} MB ({})",
+            dimensionId, verb, toDelete.size, kept, keptInside, keptStraddle, keptMonument,
+            verb, bytesFreed / (1024 * 1024), regionDir,
         )
         if (!dryRun && backupTarget != null) {
             log.info("[{}] snapshotted {} file(s) to {} before removal", dimensionId, filesBackedUp, backupTarget)
         }
-        return ResetReport(dimensionId, kept, toDelete.size, bytesFreed, dryRun, scans = outside)
+        return ResetReport(
+            dimensionId, kept, toDelete.size, bytesFreed, dryRun,
+            keptInside = keptInside, keptStraddle = keptStraddle, keptMonument = keptMonument,
+            scans = outside,
+        )
     }
 }

@@ -7,12 +7,14 @@ import kotlin.test.assertTrue
 
 class WildernessConfigTest {
 
-    // A config written by a build that predated the snapshot fields — no backup* keys.
+    // A config written by a build that predated the snapshot fields — no backup* keys. Also carries
+    // the now-removed `intervalDays`/`idleTtlDays` keys, which must be tolerated (ignored) on load.
     private val preSnapshotJson = """
         {
           "enabled": true,
           "dryRun": false,
           "intervalDays": 14,
+          "idleTtlDays": 14,
           "dimensions": ["minecraft:overworld"],
           "box": { "minX": -20480, "minZ": -20480, "maxX": 20479, "maxZ": 20479 },
           "snapToRegions": true,
@@ -45,33 +47,15 @@ class WildernessConfigTest {
     }
 
     @Test
-    fun `legacy intervalDays is honored when idleTtlDays is absent`() {
-        // preSnapshotJson has intervalDays:14 and no idleTtlDays → rename migration keeps 14.
-        val cfg = WildernessConfig.fromJsonWithDefaults(preSnapshotJson)
-        assertEquals(14, cfg.idleTtlDays)
-        // A different legacy value carries over verbatim.
-        val sevenDay = preSnapshotJson.replace("\"intervalDays\": 14", "\"intervalDays\": 7")
-        assertEquals(7, WildernessConfig.fromJsonWithDefaults(sevenDay).idleTtlDays)
-    }
-
-    @Test
-    fun `missing idleTtlDays defaults to 14, not the Unsafe-zero`() {
-        // Neither idleTtlDays nor legacy intervalDays present → declared default, not 0.
-        val json = """{ "enabled": true, "backupDir": "wilderness-snapshots" }"""
-        assertEquals(14, WildernessConfig.fromJsonWithDefaults(json).idleTtlDays)
-    }
-
-    @Test
-    fun `an explicit idleTtlDays of zero is preserved as disabled`() {
-        // 0 is a valid value (idle gate off); it must NOT be backfilled to 14.
-        val json = """{ "enabled": true, "idleTtlDays": 0, "backupDir": "wilderness-snapshots" }"""
-        assertEquals(0, WildernessConfig.fromJsonWithDefaults(json).idleTtlDays)
-    }
-
-    @Test
-    fun `explicit idleTtlDays wins over any legacy intervalDays`() {
-        val json = """{ "idleTtlDays": 30, "intervalDays": 7, "backupDir": "wilderness-snapshots" }"""
-        assertEquals(30, WildernessConfig.fromJsonWithDefaults(json).idleTtlDays)
+    fun `removed idle and relocation keys are tolerated on load`() {
+        // Keys from the removed idle/relocation approaches must not break deserialization.
+        val json = """
+            { "enabled": true, "idleTtlDays": 30, "intervalDays": 7,
+              "reseedStructuresOutsideBox": true, "backupDir": "wilderness-snapshots" }
+        """.trimIndent()
+        val cfg = WildernessConfig.fromJsonWithDefaults(json)
+        assertTrue(cfg.enabled)
+        assertEquals("wilderness-snapshots", cfg.backupDir)
     }
 
     @Test

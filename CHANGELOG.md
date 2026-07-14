@@ -91,12 +91,19 @@ root README.
 ## [0.27.2] - 2026-07-13
 
 ### Added
-- **BP Shop NPC in market.** Admins can tag an NPC with `cobblemon_bridge.market_vendor.bp_shop` to create a configurable Battle Points shop. Players can right-click to buy items with BP. Prices configured in `config/bp-items.json` with items ranging 1-100 BP.
-- **Voucher items for TR and held-item vendors.** TR vendors and held-item vendors now check player inventory for vouchers (2 BP each) before charging currency. Vouchers are consumable single-use items.
+- **BP Shop NPC in market.** Admins can spawn with `/market admin spawn bp_shop` to create a configurable Battle Points shop. Players right-click to buy items with BP. Prices configured in `config/bp-items.json` (1–100 BP range).
+  - Items: Rare Candy (1 BP), Pokémon Crate (2 BP), Rare Key (5 BP), TR Voucher (5 BP), Held Item Voucher (4 BP), Ability Patch (10 BP), Master Ball (15 BP), Ultra Key (20 BP), Totem of Undying (40 BP), Shiny Egg (40 BP), Shiny Voucher (100 BP).
+- **Voucher items for TR and held-item vendors.** TR vendors and held-item vendors check player inventory for vouchers before charging currency. Vouchers are consumable single-use items.
 - **Shiny voucher command.** `/ranked shiny <player> <slot>` admin command to consume a shiny voucher and mark a Pokémon for shinification (manual admin implementation of actual shiny mechanism TBD).
+- **Five new Poké Ball variants in market:** Net Ball, Timer Ball, Nest Ball, Dusk Ball, Quick Ball — all priced at buy 33 / sell 11 with dynamic pricing (elasticity 0.3).
 
-### Fixed
-- **BP item prices tuned.** Ultra Key 30 BP, Master Ball 20 BP, Ability Patch 10 BP, TR/Held-Item vouchers 5 BP each (held-item 4 BP), Rare Key 5 BP, Pokémon Crate 2 BP, Rare Candy 1 BP, Shiny Voucher 100 BP.
+### Changed
+- **Market shop pricing restructured:** Buy/sell spread reduced from 5× to 3× (e.g., Potion was buy 90/sell 18 → now buy 54/sell 18). All 27 dynamic items cheaper to purchase, sell prices unchanged.
+- **Market shop base stock:** All dynamic items (potions, balls, candies, etc.) normalized to baseStock 500; held items remain 9999 (no dynamic pricing).
+- **Comprehensive gacha crate rework:**
+  - **Common crate:** Removed exp candies, potions, revives, PP Ups, and Exp Share. Added Timer Balls (32) and Dream Balls (16). Doubled EV vitamin rewards (5→10) and Nature Mints (1→2). Equalized common and uncommon egg rates (both 12.5%). Moved competitive held items, breeding items, EV training items, Keystone, and Mega Stones from rare → common.
+  - **Rare crate:** Removed exp candies and held-item entries; moved Griseous Orb from Ultra (now at 3.3%, High tier). Added TR Voucher (3.2%) and Held Item Voucher (2.4%).
+  - **Ultra crate:** Removed 2 Ability Patches entirely. Removed Griseous Orb (moved to rare). Rebalanced remaining items proportionally.
 
 ## [0.27.1] - 2026-07-13
 

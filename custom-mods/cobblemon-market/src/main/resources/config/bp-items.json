@@ -1,59 +1,81 @@
 [
   {
     "id": "ultra_key",
-    "cost": 30,
+    "cost": 20,
     "displayName": "Ultra Key",
-    "isVoucher": false
+    "isVoucher": false,
+    "baseStock": 500
   },
   {
     "id": "master_ball",
-    "cost": 20,
+    "cost": 15,
     "displayName": "Master Ball",
-    "isVoucher": false
+    "isVoucher": false,
+    "baseStock": 500
   },
   {
     "id": "pokemon_crate",
     "cost": 2,
     "displayName": "Pokémon Crate",
-    "isVoucher": false
+    "isVoucher": false,
+    "baseStock": 500
   },
   {
     "id": "rare_candy",
     "cost": 1,
     "displayName": "Rare Candy",
-    "isVoucher": false
+    "isVoucher": false,
+    "baseStock": 500
   },
   {
     "id": "rare_key",
     "cost": 5,
     "displayName": "Rare Key",
-    "isVoucher": false
+    "isVoucher": false,
+    "baseStock": 500
   },
   {
     "id": "tr_voucher",
     "cost": 5,
     "displayName": "TR Voucher",
     "isVoucher": true,
-    "voucherType": "tr"
+    "voucherType": "tr",
+    "baseStock": 500
   },
   {
     "id": "held_item_voucher",
     "cost": 4,
     "displayName": "Held Item Voucher",
     "isVoucher": true,
-    "voucherType": "held_item"
+    "voucherType": "held_item",
+    "baseStock": 500
   },
   {
     "id": "ability_patch",
     "cost": 10,
     "displayName": "Ability Patch",
-    "isVoucher": false
+    "isVoucher": false,
+    "baseStock": 500
   },
   {
     "id": "shiny_voucher",
     "cost": 100,
     "displayName": "Shiny Voucher",
     "isVoucher": true,
-    "voucherType": "shiny"
+    "voucherType": "shiny",
+    "baseStock": 500
+  },
+  {
+    "id": "totem_of_undying",
+    "cost": 40,
+    "displayName": "Totem of Undying",
+    "isVoucher": false,
+    "baseStock": 500
+  },
+  {
+    "id": "shiny_egg",
+    "cost": 40,
+    "displayName": "Shiny Egg",
+    "isVoucher": false
   }
 ]

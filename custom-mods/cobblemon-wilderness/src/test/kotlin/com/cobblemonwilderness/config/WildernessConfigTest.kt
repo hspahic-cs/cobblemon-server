@@ -1,5 +1,6 @@
 package com.cobblemonwilderness.config
 
+import com.cobblemonwilderness.reset.RegionResetter
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -63,5 +64,28 @@ class WildernessConfigTest {
     fun `scheduleTimeZone defaults when absent`() {
         val json = """{ "enabled": true, "backupDir": "wilderness-snapshots" }"""
         assertEquals("America/New_York", WildernessConfig.fromJsonWithDefaults(json).scheduleTimeZone)
+    }
+
+    @Test
+    fun `pre-W3 config without minKeepBoxSideBlocks backfills the floor and re-arms the breaker`() {
+        // preSnapshotJson predates minKeepBoxSideBlocks; Gson-Unsafe would leave it 0, which disables
+        // the degenerate-box breaker (isBoxDegenerate then tests side < 0, never true). The backfill
+        // must restore the default so the guard actually fires on a collapsed box.
+        val cfg = WildernessConfig.fromJsonWithDefaults(preSnapshotJson)
+        assertEquals(1024, cfg.minKeepBoxSideBlocks)
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), cfg.minKeepBoxSideBlocks))
+        assertFalse(RegionResetter.isBoxDegenerate(cfg.box, cfg.minKeepBoxSideBlocks))
+    }
+
+    @Test
+    fun `a non-positive minKeepBoxSideBlocks is treated as absent and restored to the default`() {
+        // A written 0/negative would silently disable the breaker → always coerced back to the default.
+        assertEquals(1024, WildernessConfig.fromJsonWithDefaults("""{ "minKeepBoxSideBlocks": 0, "backupDir": "x" }""").minKeepBoxSideBlocks)
+        assertEquals(1024, WildernessConfig.fromJsonWithDefaults("""{ "minKeepBoxSideBlocks": -5, "backupDir": "x" }""").minKeepBoxSideBlocks)
+    }
+
+    @Test
+    fun `an explicit positive minKeepBoxSideBlocks is preserved`() {
+        assertEquals(2048, WildernessConfig.fromJsonWithDefaults("""{ "minKeepBoxSideBlocks": 2048, "backupDir": "x" }""").minKeepBoxSideBlocks)
     }
 }

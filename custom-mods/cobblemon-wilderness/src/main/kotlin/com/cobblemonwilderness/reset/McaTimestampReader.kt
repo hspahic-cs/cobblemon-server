@@ -216,7 +216,7 @@ object McaTimestampReader {
             val name = readString(buf)
             if (type == TAG_LONG_ARRAY && isMonumentId(name)) {
                 val n = buf.int
-                skip(buf, if (n > 0) n * 8 else 0) // consume the array either way
+                skip(buf, if (n > 0) n.toLong() * 8 else 0L) // consume the array either way (bounds-checked)
                 if (n > 0) return true
             } else {
                 skipPayload(buf, type)
@@ -244,19 +244,29 @@ object McaTimestampReader {
     /** True if a structure id string is in the `legendarymonuments` namespace. */
     private fun isMonumentId(name: String): Boolean = name.substringBefore(':', "") == LM_NAMESPACE
 
-    /** Advances past one tag's payload of [type], recursing through lists and compounds. */
+    /**
+     * Advances past one tag's payload of [type], recursing through lists and compounds. Array/list
+     * lengths are read straight off disk, so they're widened to [Long] and bounds-checked in [skip]
+     * (and here for lists): a corrupt length can't overflow an `Int` multiply into a negative
+     * backward seek or trigger a huge allocation — it fails fast, which the callers treat as
+     * "no monument". Element payloads themselves are never pre-allocated (we only skip), so there is
+     * no large-buffer allocation to guard beyond the bounds check.
+     */
     private fun skipPayload(buf: ByteBuffer, type: Int) {
         when (type) {
             TAG_BYTE -> skip(buf, 1)
             TAG_SHORT -> skip(buf, 2)
             TAG_INT, TAG_FLOAT -> skip(buf, 4)
             TAG_LONG, TAG_DOUBLE -> skip(buf, 8)
-            TAG_BYTE_ARRAY -> skip(buf, buf.int)
+            TAG_BYTE_ARRAY -> skip(buf, buf.int.toLong())
             TAG_STRING -> skipString(buf)
             TAG_LIST -> {
                 val elemType = buf.get().toInt() and 0xFF
                 val n = buf.int
-                repeat(if (n > 0) n else 0) { skipPayload(buf, elemType) }
+                // Each element consumes ≥1 byte, so a valid count can't exceed the bytes left; reject
+                // an out-of-range count up front rather than spinning through a bogus repeat.
+                if (n < 0 || n > buf.remaining()) throw IllegalStateException("bad NBT list length $n")
+                repeat(n) { skipPayload(buf, elemType) }
             }
             TAG_COMPOUND -> {
                 while (true) {
@@ -266,22 +276,24 @@ object McaTimestampReader {
                     skipPayload(buf, t)
                 }
             }
-            TAG_INT_ARRAY -> skip(buf, buf.int * 4)
-            TAG_LONG_ARRAY -> skip(buf, buf.int * 8)
+            TAG_INT_ARRAY -> skip(buf, buf.int.toLong() * 4)
+            TAG_LONG_ARRAY -> skip(buf, buf.int.toLong() * 8)
             else -> throw IllegalStateException("unknown NBT tag id $type")
         }
     }
 
     private fun readString(buf: ByteBuffer): String {
-        val n = buf.short.toInt() and 0xFFFF
+        val n = buf.short.toInt() and 0xFFFF // unsigned 16-bit → ≤ 65535, no allocation guard needed
         val bytes = ByteArray(n)
         buf.get(bytes)
         return String(bytes, Charsets.UTF_8) // tag names are ASCII, so modified-UTF-8 is moot here
     }
 
-    private fun skipString(buf: ByteBuffer) = skip(buf, buf.short.toInt() and 0xFFFF)
+    private fun skipString(buf: ByteBuffer) = skip(buf, (buf.short.toInt() and 0xFFFF).toLong())
 
-    private fun skip(buf: ByteBuffer, n: Int) {
-        buf.position(buf.position() + n)
+    /** Advances [buf] by [n] bytes, rejecting a negative or past-the-end length (corrupt NBT → fail fast). */
+    private fun skip(buf: ByteBuffer, n: Long) {
+        if (n < 0 || n > buf.remaining()) throw IllegalStateException("bad NBT length $n")
+        buf.position(buf.position() + n.toInt())
     }
 }

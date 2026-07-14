@@ -61,6 +61,29 @@ class McaMonumentReaderTest {
         assertFalse(McaTimestampReader.chunkReferencesMonument(ByteArray(0)))
     }
 
+    @Test
+    fun `a corrupt oversized array length fails fast to no-monument, no OOM`() {
+        // root compound → a TAG_Byte_Array 'x' whose declared length is ~2.1e9 (0x7FFFFFFF). Without
+        // the bounds check this either over-allocates/over-skips; the guard must reject it → false.
+        val nbt = byteArrayOf(
+            10, 0, 0,                                   // root TAG_Compound, empty name
+            7, 0, 1, 'x'.code.toByte(),                 // TAG_Byte_Array named "x"
+            0x7F, 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(), // length 2147483647
+        )
+        assertFalse(McaTimestampReader.chunkReferencesMonument(nbt))
+    }
+
+    @Test
+    fun `a corrupt negative array length fails fast to no-monument`() {
+        // TAG_Int_Array 'y' with length 0xFFFFFFFF (-1) — a backward seek if unchecked.
+        val nbt = byteArrayOf(
+            10, 0, 0,
+            11, 0, 1, 'y'.code.toByte(),               // TAG_Int_Array named "y"
+            0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(), // length -1
+        )
+        assertFalse(McaTimestampReader.chunkReferencesMonument(nbt))
+    }
+
     // ---- regionHasMonument (region file, all compressions) ----
 
     @Test

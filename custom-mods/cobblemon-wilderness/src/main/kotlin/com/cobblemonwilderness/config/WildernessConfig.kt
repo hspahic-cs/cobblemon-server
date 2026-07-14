@@ -158,6 +158,16 @@ data class WildernessConfig(
             var parsed = gson.fromJson(json, WildernessConfig::class.java) ?: return WildernessConfig()
             val d = WildernessConfig()
 
+            // minKeepBoxSideBlocks: a missing Int comes back 0 under Unsafe. It is the SOLE input to
+            // the degenerate-box safety breaker, and 0 (or negative) disables it — isBoxDegenerate then
+            // tests `side < 0`, which is never true, so the breaker never trips. Every config predating
+            // this field (all existing dev/prod files) would load 0 and silently lose the guard. There
+            // is no legitimate use for a ≤0 floor, so absent-or-≤0 → declared default (no need to
+            // inspect the raw JSON to distinguish absent from a written 0).
+            if (parsed.minKeepBoxSideBlocks <= 0) {
+                parsed = parsed.copy(minKeepBoxSideBlocks = d.minKeepBoxSideBlocks)
+            }
+
             // scheduleTimeZone: an absent String comes back null under Unsafe → restore the default.
             if (parsed.scheduleTimeZone.isNullOrBlank()) {
                 parsed = parsed.copy(scheduleTimeZone = d.scheduleTimeZone)

@@ -12,6 +12,24 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.0] - 2026-07-13
+
+### Added
+- **Special Items at the Items Merchant.** Elemental **Arceus plates** (all 17) are now buyable
+  at **$5,000** each, and **Zygarde Cells** at **$500** each — buy-only, fixed price — under the
+  new **Special Items** tab.
+- **Zygarde Core** is now a possible **Rare crate** reward (2.0%, "High"). The eight legendary-summon
+  items in the Rare crate (three bird Urns, five Regi Golem keys) were leveled to **1.9% each** to
+  make room, keeping the crate at 100% and giving those summons equal odds.
+
+### Changed
+- **One TM Merchant replaces the 18 per-type TM NPCs.** Right-clicking the TM Merchant opens a
+  **type picker** (a grid of the 18 types); click a type to browse and buy that type's TRs, with a
+  **Back** button to return to the picker. The per-type catalog (`tm_<type>`) is unchanged — it's
+  just navigated from one NPC now.
+- **The Held Items vendor is now the "Items Merchant"**, a tabbed shop: a **Held Items** tab (the
+  existing selection) and a **Special Items** tab (plates + Zygarde Cells).
+
 ## [0.27.5] - 2026-07-13
 
 ### Changed

@@ -7010,5 +7010,167 @@
     "sellable": false,
     "buyStockImpact": 1.0,
     "bundleSize": 64
+  },
+  "mega_showdown:zygarde_cell": {
+    "baseBuyPrice": 500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:flame_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:splash_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:zap_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:meadow_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:icicle_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:fist_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:toxic_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:earth_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:sky_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:mind_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:stone_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:spooky_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:draco_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:dread_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:iron_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:insect_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "cobblemon:pixie_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
   }
 }

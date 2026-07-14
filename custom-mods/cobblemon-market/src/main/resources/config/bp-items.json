@@ -61,5 +61,11 @@
     "cost": 40,
     "displayName": "Totem of Undying",
     "isVoucher": false
+  },
+  {
+    "id": "shiny_egg",
+    "cost": 40,
+    "displayName": "Shiny Egg",
+    "isVoucher": false
   }
 ]

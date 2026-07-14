@@ -43,4 +43,40 @@ class WildernessConfigTest {
         assertEquals("/opt/snapshots/wild", cfg.backupDir)
         assertEquals(2, cfg.backupRetention)
     }
+
+    @Test
+    fun `legacy intervalDays is honored when idleTtlDays is absent`() {
+        // preSnapshotJson has intervalDays:14 and no idleTtlDays → rename migration keeps 14.
+        val cfg = WildernessConfig.fromJsonWithDefaults(preSnapshotJson)
+        assertEquals(14, cfg.idleTtlDays)
+        // A different legacy value carries over verbatim.
+        val sevenDay = preSnapshotJson.replace("\"intervalDays\": 14", "\"intervalDays\": 7")
+        assertEquals(7, WildernessConfig.fromJsonWithDefaults(sevenDay).idleTtlDays)
+    }
+
+    @Test
+    fun `missing idleTtlDays defaults to 14, not the Unsafe-zero`() {
+        // Neither idleTtlDays nor legacy intervalDays present → declared default, not 0.
+        val json = """{ "enabled": true, "backupDir": "wilderness-snapshots" }"""
+        assertEquals(14, WildernessConfig.fromJsonWithDefaults(json).idleTtlDays)
+    }
+
+    @Test
+    fun `an explicit idleTtlDays of zero is preserved as disabled`() {
+        // 0 is a valid value (idle gate off); it must NOT be backfilled to 14.
+        val json = """{ "enabled": true, "idleTtlDays": 0, "backupDir": "wilderness-snapshots" }"""
+        assertEquals(0, WildernessConfig.fromJsonWithDefaults(json).idleTtlDays)
+    }
+
+    @Test
+    fun `explicit idleTtlDays wins over any legacy intervalDays`() {
+        val json = """{ "idleTtlDays": 30, "intervalDays": 7, "backupDir": "wilderness-snapshots" }"""
+        assertEquals(30, WildernessConfig.fromJsonWithDefaults(json).idleTtlDays)
+    }
+
+    @Test
+    fun `scheduleTimeZone defaults when absent`() {
+        val json = """{ "enabled": true, "backupDir": "wilderness-snapshots" }"""
+        assertEquals("America/New_York", WildernessConfig.fromJsonWithDefaults(json).scheduleTimeZone)
+    }
 }

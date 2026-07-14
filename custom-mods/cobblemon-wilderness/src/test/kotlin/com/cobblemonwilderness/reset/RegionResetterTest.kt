@@ -15,15 +15,18 @@ class RegionResetterTest {
     private val box = BoundingBox(minX = -20000, minZ = -20000, maxX = 20000, maxZ = 20000)
     private val subfolders = listOf("region", "entities", "poi")
 
+    // Outside region carries an old write; "now" is 40 days later so it is idle past the 14-day TTL.
+    private val outsideTs = 1_000_000L
+    private val now = outsideTs + 40L * 86_400
+    private val ttl = 14
+
     /** Builds a temp dimension folder with one inside-box region (r.0.0) and one outside
-     *  (r.100.100), each present in region/, entities/ and poi/. Returns the folder. */
+     *  (r.100.100), each a valid header present in region/, entities/ and poi/. The outside region
+     *  is stamped [outsideTs] (idle past the TTL at [now]). Returns the folder. */
     private fun makeDimension(): Path {
         val dim = Files.createTempDirectory("wild-dim")
-        for (sub in subfolders) {
-            val d = Files.createDirectories(dim.resolve(sub))
-            Files.write(d.resolve("r.0.0.mca"), byteArrayOf(1, 2, 3))       // inside box
-            Files.write(d.resolve("r.100.100.mca"), byteArrayOf(4, 5, 6))   // outside box
-        }
+        McaTestFiles.writeAllFolders(dim, 0, 0, now)             // inside box (kept by geometry)
+        McaTestFiles.writeAllFolders(dim, 100, 100, outsideTs)  // outside box, idle
         return dim
     }
 
@@ -34,6 +37,7 @@ class RegionResetterTest {
         try {
             val report = RegionResetter.run(
                 "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
+                idleTtlDays = ttl, nowSeconds = now,
                 backupTarget = backup, log = NOPLogger.NOP_LOGGER,
             )
             assertEquals(1, report.regionsDeleted)
@@ -57,6 +61,7 @@ class RegionResetterTest {
         try {
             RegionResetter.run(
                 "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
+                idleTtlDays = ttl, nowSeconds = now,
                 backupTarget = null, log = NOPLogger.NOP_LOGGER,
             )
             for (sub in subfolders) {
@@ -75,6 +80,7 @@ class RegionResetterTest {
         try {
             val report = RegionResetter.run(
                 "d", dim, box, dryRun = true, maxDeleteFraction = 1.0,
+                idleTtlDays = ttl, nowSeconds = now,
                 backupTarget = backup, log = NOPLogger.NOP_LOGGER,
             )
             assertEquals(1, report.regionsDeleted) // tallied, not performed
@@ -186,5 +192,102 @@ class RegionResetterTest {
         assertNull(RegionResetter.parseRegionCoords("r.0.0.mcc"))
         assertNull(RegionResetter.parseRegionCoords("level.dat"))
         assertNull(RegionResetter.parseRegionCoords("r.x.0.mca"))
+    }
+
+    // ---- idle-TTL predicate ----
+
+    @Test
+    fun `isIdleEligible only when the newest write predates the TTL window`() {
+        val now = 100L * 86_400 // day 100
+        // Last write 20 days ago vs a 14-day TTL → idle enough → eligible.
+        assertTrue(RegionResetter.isIdleEligible(80L * 86_400, now, 14))
+        // Last write 10 days ago → still fresh → kept.
+        assertFalse(RegionResetter.isIdleEligible(90L * 86_400, now, 14))
+        // Exactly at the boundary is NOT past it (strict <).
+        assertFalse(RegionResetter.isIdleEligible(now - 14L * 86_400, now, 14))
+    }
+
+    @Test
+    fun `idleTtlDays of zero or less disables the idle gate`() {
+        val now = 100L * 86_400
+        // A brand-new write is still eligible when the gate is off — geometry alone decides.
+        assertTrue(RegionResetter.isIdleEligible(now, now, 0))
+        assertTrue(RegionResetter.isIdleEligible(now, now, -1))
+    }
+
+    // ---- disposition via run() over real headers ----
+
+    @Test
+    fun `a fresh outside region is kept, not reset`() {
+        val dim = Files.createTempDirectory("wild-fresh")
+        try {
+            McaTestFiles.writeAllFolders(dim, 100, 100, now) // written "now" → fresh
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = true, maxDeleteFraction = 1.0,
+                idleTtlDays = ttl, nowSeconds = now,
+                backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            assertEquals(0, report.regionsDeleted)
+            assertEquals(RegionDisposition.KEPT_FRESH, report.scans.single { it.rx == 100 }.disposition)
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `an idle outside region is eligible`() {
+        val dim = Files.createTempDirectory("wild-idle")
+        try {
+            McaTestFiles.writeAllFolders(dim, 100, 100, outsideTs) // old
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = true, maxDeleteFraction = 1.0,
+                idleTtlDays = ttl, nowSeconds = now,
+                backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            assertEquals(1, report.regionsDeleted)
+            assertEquals(RegionDisposition.ELIGIBLE, report.scans.single { it.rx == 100 }.disposition)
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `an outside region with no present chunk is skipped`() {
+        val dim = Files.createTempDirectory("wild-empty")
+        try {
+            // Empty headers in all three folders → zero present chunks → skipped, never deleted.
+            for (sub in subfolders) {
+                McaTestFiles.writeRegion(dim.resolve(sub).resolve("r.100.100.mca"), emptyList())
+            }
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
+                idleTtlDays = ttl, nowSeconds = now,
+                backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            assertEquals(0, report.regionsDeleted)
+            assertEquals(RegionDisposition.SKIPPED_EMPTY, report.scans.single { it.rx == 100 }.disposition)
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `with the idle gate disabled a fresh outside region is still eligible`() {
+        val dim = Files.createTempDirectory("wild-nogate")
+        try {
+            McaTestFiles.writeAllFolders(dim, 100, 100, now) // fresh, but gate is off
+            val report = RegionResetter.run(
+                "d", dim, box, dryRun = true, maxDeleteFraction = 1.0,
+                idleTtlDays = 0, nowSeconds = now,
+                backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            assertEquals(1, report.regionsDeleted)
+            assertEquals(RegionDisposition.ELIGIBLE, report.scans.single { it.rx == 100 }.disposition)
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
     }
 }

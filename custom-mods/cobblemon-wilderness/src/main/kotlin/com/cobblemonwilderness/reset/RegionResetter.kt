@@ -19,6 +19,32 @@ data class ResetReport(
     val dryRun: Boolean,
     /** True if the circuit breaker tripped: nothing was deleted because the run was too broad. */
     val aborted: Boolean = false,
+    /** Per-region classification for every fully-outside region (for /wildreset preview). */
+    val scans: List<RegionScan> = emptyList(),
+)
+
+/** How a fully-outside region was classified against the idle-TTL gate. */
+enum class RegionDisposition {
+    /** Idle past the TTL → will be reset. */
+    ELIGIBLE,
+
+    /** Has a chunk touched within the TTL → kept (visiting pins the whole 512m tile). */
+    KEPT_FRESH,
+
+    /** No present chunk in any of region/entities/poi → nothing to age out, skipped. */
+    SKIPPED_EMPTY,
+}
+
+/** One fully-outside region file and why it was kept or reset. */
+data class RegionScan(
+    val name: String,
+    val rx: Int,
+    val rz: Int,
+    val disposition: RegionDisposition,
+    /** Newest present-chunk timestamp (epoch seconds) across the three folders, or null if none present. */
+    val maxTsSeconds: Long?,
+    /** Idle age in seconds (`now - maxTs`), or null when no chunk is present. */
+    val idleSeconds: Long?,
 )
 
 /**
@@ -53,6 +79,26 @@ object RegionResetter {
         return !overlaps
     }
 
+    /** Seconds in a day, for turning the idle TTL (authored in days) into a timestamp delta. */
+    private const val SECONDS_PER_DAY = 86_400L
+
+    /**
+     * The idle gate on top of the geometric "fully outside" test: a region is reset-eligible only
+     * if its newest present-chunk write ([maxTsSeconds]) is older than [idleTtlDays] before
+     * [nowSeconds]. One fresh chunk keeps the whole 512m tile.
+     *
+     * [idleTtlDays] <= 0 disables the idle gate (mirrors the old `intervalDays <= 0`): geometry
+     * alone decides, so every present outside region is eligible. (Empty regions are still skipped
+     * by the caller — this predicate only runs for regions with a present chunk.)
+     *
+     * Pure function: unit-tested alongside the geometry.
+     */
+    fun isIdleEligible(maxTsSeconds: Long, nowSeconds: Long, idleTtlDays: Int): Boolean {
+        if (idleTtlDays <= 0) return true
+        val ttlSeconds = idleTtlDays.toLong() * SECONDS_PER_DAY
+        return maxTsSeconds < nowSeconds - ttlSeconds
+    }
+
     /**
      * Circuit breaker: true if deleting [deletable] of [total] regions exceeds [maxFraction].
      * Guards against a fat-fingered box (e.g. collapsed to a point → ~100% deletable) wiping
@@ -76,10 +122,14 @@ object RegionResetter {
 
     /**
      * Scans [dimensionFolder]'s region/ folder and deletes (or, when [dryRun], merely
-     * tallies) every fully-outside region across all three chunk-data subfolders.
+     * tallies) every fully-outside region that is ALSO idle past the TTL, across all three
+     * chunk-data subfolders.
      *
      * Two passes: first classify every region (so we know the delete fraction), then — only
-     * if the [maxDeleteFraction] circuit breaker is satisfied — perform the deletions.
+     * if the [maxDeleteFraction] circuit breaker is satisfied — perform the deletions. A region
+     * that is geometrically outside the box is only reset if its newest present-chunk write is
+     * older than [idleTtlDays] before [nowSeconds] (see [isIdleEligible]); a fresh chunk keeps the
+     * whole tile and a region with no present chunk is skipped.
      *
      * When [backupTarget] is non-null and this is a real (non-[dryRun]) run, each to-be-deleted
      * file is MOVED into [backupTarget]/<sub>/<name> instead of being unlinked. The move is the
@@ -93,6 +143,8 @@ object RegionResetter {
         box: BoundingBox,
         dryRun: Boolean,
         maxDeleteFraction: Double,
+        idleTtlDays: Int,
+        nowSeconds: Long,
         backupTarget: Path?,
         log: Logger,
     ): ResetReport {
@@ -102,17 +154,32 @@ object RegionResetter {
             return ResetReport(dimensionId, 0, 0, 0, dryRun)
         }
 
-        // Pass 1 — classify. Collect the names of fully-outside regions; count the rest.
-        val toDelete = ArrayList<String>()
-        var kept = 0
+        // Pass 1 — classify. Regions overlapping the box are kept outright (geometry, no header
+        // read). Fully-outside regions are then gated on idle age: reset only if no chunk in the
+        // tile (across region/entities/poi) has been written within the TTL.
+        var insideKept = 0
+        val outside = ArrayList<RegionScan>()
         Files.list(regionDir).use { stream ->
             for (regionFile in stream) {
                 val (rx, rz) = parseRegionCoords(regionFile.name) ?: continue
-                if (isRegionFullyOutside(box, rx, rz)) toDelete.add(regionFile.name) else kept++
+                if (!isRegionFullyOutside(box, rx, rz)) {
+                    insideKept++
+                    continue
+                }
+                val maxTs = McaTimestampReader.maxTimestamp(dimensionFolder, rx, rz)
+                val disposition = when {
+                    maxTs == null -> RegionDisposition.SKIPPED_EMPTY
+                    isIdleEligible(maxTs, nowSeconds, idleTtlDays) -> RegionDisposition.ELIGIBLE
+                    else -> RegionDisposition.KEPT_FRESH
+                }
+                outside.add(RegionScan(regionFile.name, rx, rz, disposition, maxTs, maxTs?.let { nowSeconds - it }))
             }
         }
 
-        val total = kept + toDelete.size
+        val toDelete = outside.filter { it.disposition == RegionDisposition.ELIGIBLE }.map { it.name }
+        // Breaker denominator is ALL present region files (kept + to-delete), per the plan.
+        val total = insideKept + outside.size
+        val kept = total - toDelete.size
         if (exceedsLimit(toDelete.size, total, maxDeleteFraction)) {
             val pct = if (total > 0) toDelete.size * 100 / total else 0
             log.error(
@@ -120,7 +187,7 @@ object RegionResetter {
                     "Aborting — check the box config. Nothing was deleted.",
                 dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
             )
-            return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true)
+            return ResetReport(dimensionId, kept, toDelete.size, 0, dryRun, aborted = true, scans = outside)
         }
 
         // Pass 2 — remove (or tally) the matching r.X.Z.mca in region/, entities/, poi/. With a
@@ -162,6 +229,6 @@ object RegionResetter {
         if (!dryRun && backupTarget != null) {
             log.info("[{}] snapshotted {} file(s) to {} before removal", dimensionId, filesBackedUp, backupTarget)
         }
-        return ResetReport(dimensionId, kept, toDelete.size, bytesFreed, dryRun)
+        return ResetReport(dimensionId, kept, toDelete.size, bytesFreed, dryRun, scans = outside)
     }
 }

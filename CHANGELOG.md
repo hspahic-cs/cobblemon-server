@@ -14,34 +14,18 @@ root README.
 
 ## [0.28.1] - 2026-07-13
 
-### Fixed
-- **Arceus plates now actually appear.** In 0.28.0 the 17 plates were listed under the wrong
-  namespace (`cobblemon:*_plate`); they are `mega_showdown:*_plate` (Cobblemon 1.7.3 has no
-  elemental plates). The shop slots and the TM Merchant's type icons were silently rendering
-  empty/paper. Corrected in the shop catalog and the type-picker icons.
-
-### Changed
-- **Special Items moved to the Shopkeeper.** The Arceus plates + Zygarde Cells are now a
-  **Special Items** tab on the default Shopkeeper, instead of on the held-items vendor. The
-  held-items vendor is back to its original single-tab "Held Items Vendor".
-
-## [0.28.0] - 2026-07-13
-
 ### Added
-- **Special Items at the Items Merchant.** Elemental **Arceus plates** (all 17) are now buyable
-  at **$5,000** each, and **Zygarde Cells** at **$500** each — buy-only, fixed price — under the
-  new **Special Items** tab.
+- **New "Special Items" tab on the Shopkeeper.** Elemental **Arceus plates** (all 17) are now
+  buyable at **$5,000** each, and **Zygarde Cells** at **$500** each — buy-only, fixed price.
 - **Zygarde Core** is now a possible **Rare crate** reward (2.0%, "High"). The eight legendary-summon
   items in the Rare crate (three bird Urns, five Regi Golem keys) were leveled to **1.9% each** to
   make room, keeping the crate at 100% and giving those summons equal odds.
 
 ### Changed
 - **One TM Merchant replaces the 18 per-type TM NPCs.** Right-clicking the TM Merchant opens a
-  **type picker** (a grid of the 18 types); click a type to browse and buy that type's TRs, with a
-  **Back** button to return to the picker. The per-type catalog (`tm_<type>`) is unchanged — it's
-  just navigated from one NPC now.
-- **The Held Items vendor is now the "Items Merchant"**, a tabbed shop: a **Held Items** tab (the
-  existing selection) and a **Special Items** tab (plates + Zygarde Cells).
+  **type picker** (a grid of the 18 types, each shown as its elemental plate); click a type to
+  browse and buy that type's TRs, with a **Back** button to return to the picker. The per-type
+  catalog (`tm_<type>`) is unchanged — it's just navigated from one NPC now.
 
 ## [0.27.5] - 2026-07-13
 

@@ -1,13 +1,13 @@
 [
   {
     "id": "ultra_key",
-    "cost": 30,
+    "cost": 20,
     "displayName": "Ultra Key",
     "isVoucher": false
   },
   {
     "id": "master_ball",
-    "cost": 20,
+    "cost": 15,
     "displayName": "Master Ball",
     "isVoucher": false
   },

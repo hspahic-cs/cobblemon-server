@@ -27,7 +27,7 @@
     "sellable": false
   },
   "cobblemon:antidote": {
-    "baseBuyPrice": 60,
+    "baseBuyPrice": 36,
     "baseSellPrice": 12,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -45,7 +45,7 @@
     "sellable": false
   },
   "cobblemon:awakening": {
-    "baseBuyPrice": 60,
+    "baseBuyPrice": 36,
     "baseSellPrice": 12,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -117,7 +117,7 @@
     "sellable": false
   },
   "cobblemon:burn_heal": {
-    "baseBuyPrice": 60,
+    "baseBuyPrice": 36,
     "baseSellPrice": 12,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -242,6 +242,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:dusk_ball": {
+    "baseBuyPrice": 33,
+    "baseSellPrice": 11,
+    "baseStock": 500,
+    "elasticity": 0.3,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:eject_button": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -261,7 +270,7 @@
     "sellable": false
   },
   "cobblemon:elixir": {
-    "baseBuyPrice": 225,
+    "baseBuyPrice": 135,
     "baseSellPrice": 45,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -270,7 +279,7 @@
     "sellable": true
   },
   "cobblemon:ether": {
-    "baseBuyPrice": 90,
+    "baseBuyPrice": 54,
     "baseSellPrice": 18,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -297,7 +306,7 @@
     "sellable": false
   },
   "cobblemon:exp_candy_l": {
-    "baseBuyPrice": 1350,
+    "baseBuyPrice": 810,
     "baseSellPrice": 270,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -306,7 +315,7 @@
     "sellable": true
   },
   "cobblemon:exp_candy_m": {
-    "baseBuyPrice": 450,
+    "baseBuyPrice": 270,
     "baseSellPrice": 90,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -315,7 +324,7 @@
     "sellable": true
   },
   "cobblemon:exp_candy_s": {
-    "baseBuyPrice": 150,
+    "baseBuyPrice": 90,
     "baseSellPrice": 30,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -324,7 +333,7 @@
     "sellable": true
   },
   "cobblemon:exp_candy_xl": {
-    "baseBuyPrice": 4050,
+    "baseBuyPrice": 2430,
     "baseSellPrice": 810,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -333,7 +342,7 @@
     "sellable": true
   },
   "cobblemon:exp_candy_xs": {
-    "baseBuyPrice": 25,
+    "baseBuyPrice": 15,
     "baseSellPrice": 5,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -405,7 +414,7 @@
     "sellable": false
   },
   "cobblemon:full_heal": {
-    "baseBuyPrice": 190,
+    "baseBuyPrice": 114,
     "baseSellPrice": 38,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -414,7 +423,7 @@
     "sellable": true
   },
   "cobblemon:full_restore": {
-    "baseBuyPrice": 300,
+    "baseBuyPrice": 180,
     "baseSellPrice": 60,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -423,7 +432,7 @@
     "sellable": true
   },
   "cobblemon:great_ball": {
-    "baseBuyPrice": 75,
+    "baseBuyPrice": 45,
     "baseSellPrice": 15,
     "baseStock": 500,
     "elasticity": 0.5,
@@ -468,7 +477,7 @@
     "sellable": false
   },
   "cobblemon:hyper_potion": {
-    "baseBuyPrice": 180,
+    "baseBuyPrice": 108,
     "baseSellPrice": 36,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -477,7 +486,7 @@
     "sellable": true
   },
   "cobblemon:ice_heal": {
-    "baseBuyPrice": 60,
+    "baseBuyPrice": 36,
     "baseSellPrice": 12,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -594,7 +603,7 @@
     "sellable": false
   },
   "cobblemon:max_elixir": {
-    "baseBuyPrice": 315,
+    "baseBuyPrice": 189,
     "baseSellPrice": 63,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -603,7 +612,7 @@
     "sellable": true
   },
   "cobblemon:max_ether": {
-    "baseBuyPrice": 190,
+    "baseBuyPrice": 114,
     "baseSellPrice": 38,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -612,7 +621,7 @@
     "sellable": true
   },
   "cobblemon:max_potion": {
-    "baseBuyPrice": 225,
+    "baseBuyPrice": 135,
     "baseSellPrice": 45,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -621,7 +630,7 @@
     "sellable": true
   },
   "cobblemon:max_revive": {
-    "baseBuyPrice": 225,
+    "baseBuyPrice": 135,
     "baseSellPrice": 45,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -701,6 +710,24 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:nest_ball": {
+    "baseBuyPrice": 33,
+    "baseSellPrice": 11,
+    "baseStock": 500,
+    "elasticity": 0.3,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
+  "cobblemon:net_ball": {
+    "baseBuyPrice": 33,
+    "baseSellPrice": 11,
+    "baseStock": 500,
+    "elasticity": 0.3,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:never_melt_ice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -711,7 +738,7 @@
     "sellable": false
   },
   "cobblemon:paralyze_heal": {
-    "baseBuyPrice": 60,
+    "baseBuyPrice": 36,
     "baseSellPrice": 12,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -729,7 +756,7 @@
     "sellable": false
   },
   "cobblemon:poke_ball": {
-    "baseBuyPrice": 40,
+    "baseBuyPrice": 24,
     "baseSellPrice": 8,
     "baseStock": 500,
     "elasticity": 0.3,
@@ -738,7 +765,7 @@
     "sellable": true
   },
   "cobblemon:potion": {
-    "baseBuyPrice": 90,
+    "baseBuyPrice": 54,
     "baseSellPrice": 18,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -827,6 +854,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:quick_ball": {
+    "baseBuyPrice": 33,
+    "baseSellPrice": 11,
+    "baseStock": 500,
+    "elasticity": 0.3,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:quick_claw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -846,7 +882,7 @@
     "sellable": false
   },
   "cobblemon:rare_candy": {
-    "baseBuyPrice": 4050,
+    "baseBuyPrice": 2430,
     "baseSellPrice": 810,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -882,7 +918,7 @@
     "sellable": false
   },
   "cobblemon:revive": {
-    "baseBuyPrice": 90,
+    "baseBuyPrice": 54,
     "baseSellPrice": 18,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -1035,7 +1071,7 @@
     "sellable": false
   },
   "cobblemon:super_potion": {
-    "baseBuyPrice": 135,
+    "baseBuyPrice": 81,
     "baseSellPrice": 27,
     "baseStock": 500,
     "elasticity": 1.0,
@@ -1061,6 +1097,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:timer_ball": {
+    "baseBuyPrice": 33,
+    "baseSellPrice": 11,
+    "baseStock": 500,
+    "elasticity": 0.3,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:toxic_orb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -1080,7 +1125,7 @@
     "sellable": false
   },
   "cobblemon:ultra_ball": {
-    "baseBuyPrice": 125,
+    "baseBuyPrice": 75,
     "baseSellPrice": 25,
     "baseStock": 500,
     "elasticity": 0.5,
@@ -1142,14 +1187,357 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "mega_showdown:draco_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:dread_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:earth_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:fist_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:flame_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:icicle_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:insect_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:iron_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:meadow_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:mind_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:pixie_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:sky_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:splash_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:spooky_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:stone_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:toxic_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:zap_plate": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "mega_showdown:zygarde_cell": {
+    "baseBuyPrice": 500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "special_items",
+    "sellable": false
+  },
+  "minecraft:axolotl_bucket": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:beacon": {
+    "baseBuyPrice": 50000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:bricks": {
+    "baseBuyPrice": 250,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
   "minecraft:carrot": {
-    "baseBuyPrice": 8,
+    "baseBuyPrice": 6,
     "baseSellPrice": 2,
     "baseStock": 500,
     "elasticity": 0.7,
     "maxStockMultiplier": 10.0,
     "vendorTag": "",
     "sellable": true
+  },
+  "minecraft:cobblestone": {
+    "baseBuyPrice": 100,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:dark_prismarine": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:dirt": {
+    "baseBuyPrice": 25,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:gravel": {
+    "baseBuyPrice": 50,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:oak_log": {
+    "baseBuyPrice": 125,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:ochre_froglight": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:pearlescent_froglight": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:prismarine": {
+    "baseBuyPrice": 1000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:sand": {
+    "baseBuyPrice": 25,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:smooth_stone": {
+    "baseBuyPrice": 400,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:stone_bricks": {
+    "baseBuyPrice": 250,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:terracotta": {
+    "baseBuyPrice": 400,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0,
+    "bundleSize": 64
+  },
+  "minecraft:tropical_fish_bucket": {
+    "baseBuyPrice": 5000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
+  },
+  "minecraft:verdant_froglight": {
+    "baseBuyPrice": 2500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "blocks",
+    "sellable": false,
+    "buyStockImpact": 1.0
   },
   "simpletms:tr_absorb": {
     "baseBuyPrice": 5000,
@@ -6828,349 +7216,6 @@
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
-    "sellable": false
-  },
-  "minecraft:axolotl_bucket": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0
-  },
-  "minecraft:tropical_fish_bucket": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0
-  },
-  "minecraft:ochre_froglight": {
-    "baseBuyPrice": 2500,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0
-  },
-  "minecraft:verdant_froglight": {
-    "baseBuyPrice": 2500,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0
-  },
-  "minecraft:pearlescent_froglight": {
-    "baseBuyPrice": 2500,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0
-  },
-  "minecraft:oak_log": {
-    "baseBuyPrice": 125,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:stone_bricks": {
-    "baseBuyPrice": 250,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:dark_prismarine": {
-    "baseBuyPrice": 2500,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:prismarine": {
-    "baseBuyPrice": 1000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:dirt": {
-    "baseBuyPrice": 25,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:sand": {
-    "baseBuyPrice": 25,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:cobblestone": {
-    "baseBuyPrice": 100,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:beacon": {
-    "baseBuyPrice": 50000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0
-  },
-  "minecraft:bricks": {
-    "baseBuyPrice": 250,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:smooth_stone": {
-    "baseBuyPrice": 400,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:terracotta": {
-    "baseBuyPrice": 400,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "minecraft:gravel": {
-    "baseBuyPrice": 50,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "blocks",
-    "sellable": false,
-    "buyStockImpact": 1.0,
-    "bundleSize": 64
-  },
-  "mega_showdown:zygarde_cell": {
-    "baseBuyPrice": 500,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:flame_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:splash_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:zap_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:meadow_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:icicle_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:fist_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:toxic_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:earth_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:sky_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:mind_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:stone_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:spooky_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:draco_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:dread_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:iron_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:insect_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
-    "sellable": false
-  },
-  "mega_showdown:pixie_plate": {
-    "baseBuyPrice": 5000,
-    "baseSellPrice": 0,
-    "baseStock": 9999,
-    "elasticity": 0.0,
-    "maxStockMultiplier": 10.0,
-    "vendorTag": "special_items",
     "sellable": false
   }
 }

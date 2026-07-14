@@ -28,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class ChunkGeneratorLocateMixin {
 
     @WrapOperation(
-        method = "getNearestGeneratedStructure",
+        method = "getNearestGeneratedStructure(Ljava/util/Set;Lnet/minecraft/world/level/LevelReader;Lnet/minecraft/world/level/StructureManager;IIIZJLnet/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement;)Lcom/mojang/datafixers/util/Pair;",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/world/level/levelgen/structure/placement/RandomSpreadStructurePlacement;getPotentialStructureChunk(JII)Lnet/minecraft/world/level/ChunkPos;"

@@ -5,7 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "cobblemon_wilderness.refmap.json",
   "mixins": [
-    "RandomSpreadStructurePlacementMixin"
+    "RandomSpreadStructurePlacementMixin",
+    "RandomSpreadPlacementDimensionMixin",
+    "ChunkGeneratorLocateMixin",
+    "ChunkGeneratorStructureStateMixin",
+    "ChunkMapMixin"
   ],
   "client": [],
   "server": [],

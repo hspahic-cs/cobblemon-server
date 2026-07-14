@@ -2,7 +2,7 @@
   "cobblemon:ability_shield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -11,7 +11,7 @@
   "cobblemon:absorb_bulb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -20,7 +20,7 @@
   "cobblemon:air_balloon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -38,7 +38,7 @@
   "cobblemon:assault_vest": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -56,7 +56,7 @@
   "cobblemon:big_root": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -65,7 +65,7 @@
   "cobblemon:binding_band": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -74,7 +74,7 @@
   "cobblemon:black_belt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -83,7 +83,7 @@
   "cobblemon:black_glasses": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -92,7 +92,7 @@
   "cobblemon:black_sludge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -101,7 +101,7 @@
   "cobblemon:blunder_policy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -110,7 +110,7 @@
   "cobblemon:bright_powder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -128,7 +128,7 @@
   "cobblemon:cell_battery": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -137,7 +137,7 @@
   "cobblemon:charcoal_stick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -146,7 +146,7 @@
   "cobblemon:choice_band": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -155,7 +155,7 @@
   "cobblemon:choice_scarf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -164,7 +164,7 @@
   "cobblemon:choice_specs": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -173,7 +173,7 @@
   "cobblemon:cleanse_tag": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -182,7 +182,7 @@
   "cobblemon:clear_amulet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -191,7 +191,7 @@
   "cobblemon:covert_cloak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -200,7 +200,7 @@
   "cobblemon:damp_rock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -209,7 +209,7 @@
   "cobblemon:deep_sea_scale": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -218,7 +218,7 @@
   "cobblemon:deep_sea_tooth": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -227,7 +227,7 @@
   "cobblemon:destiny_knot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -236,7 +236,7 @@
   "cobblemon:dragon_fang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -245,7 +245,7 @@
   "cobblemon:eject_button": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -254,7 +254,7 @@
   "cobblemon:eject_pack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -281,7 +281,7 @@
   "cobblemon:everstone": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -290,7 +290,7 @@
   "cobblemon:eviolite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -344,7 +344,7 @@
   "cobblemon:exp_share": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -353,7 +353,7 @@
   "cobblemon:expert_belt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -362,7 +362,7 @@
   "cobblemon:fairy_feather": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -371,7 +371,7 @@
   "cobblemon:flame_orb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -380,7 +380,7 @@
   "cobblemon:float_stone": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -389,7 +389,7 @@
   "cobblemon:focus_band": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -398,7 +398,7 @@
   "cobblemon:focus_sash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -434,7 +434,7 @@
   "cobblemon:grip_claw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -443,7 +443,7 @@
   "cobblemon:hard_stone": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -452,7 +452,7 @@
   "cobblemon:heat_rock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -461,7 +461,7 @@
   "cobblemon:heavy_duty_boots": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -488,7 +488,7 @@
   "cobblemon:icy_rock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -497,7 +497,7 @@
   "cobblemon:iron_ball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -506,7 +506,7 @@
   "cobblemon:kings_rock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -515,7 +515,7 @@
   "cobblemon:lagging_tail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -524,7 +524,7 @@
   "cobblemon:leftovers": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -533,7 +533,7 @@
   "cobblemon:life_orb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -542,7 +542,7 @@
   "cobblemon:light_ball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -551,7 +551,7 @@
   "cobblemon:light_clay": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -560,7 +560,7 @@
   "cobblemon:loaded_dice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -569,7 +569,7 @@
   "cobblemon:lucky_egg": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -578,7 +578,7 @@
   "cobblemon:luminous_moss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -587,7 +587,7 @@
   "cobblemon:magnet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -632,7 +632,7 @@
   "cobblemon:mental_herb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -641,7 +641,7 @@
   "cobblemon:metal_coat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -650,7 +650,7 @@
   "cobblemon:metal_powder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -659,7 +659,7 @@
   "cobblemon:metronome": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -668,7 +668,7 @@
   "cobblemon:miracle_seed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -677,7 +677,7 @@
   "cobblemon:mirror_herb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -686,7 +686,7 @@
   "cobblemon:muscle_band": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -695,7 +695,7 @@
   "cobblemon:mystic_water": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -704,7 +704,7 @@
   "cobblemon:never_melt_ice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -722,7 +722,7 @@
   "cobblemon:poison_barb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -749,7 +749,7 @@
   "cobblemon:power_anklet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -758,7 +758,7 @@
   "cobblemon:power_band": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -767,7 +767,7 @@
   "cobblemon:power_belt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -776,7 +776,7 @@
   "cobblemon:power_bracer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -785,7 +785,7 @@
   "cobblemon:power_herb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -794,7 +794,7 @@
   "cobblemon:power_lens": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -803,7 +803,7 @@
   "cobblemon:power_weight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -812,7 +812,7 @@
   "cobblemon:protective_pads": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -821,7 +821,7 @@
   "cobblemon:punching_glove": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -830,7 +830,7 @@
   "cobblemon:quick_claw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -839,7 +839,7 @@
   "cobblemon:quick_powder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -857,7 +857,7 @@
   "cobblemon:razor_claw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -866,7 +866,7 @@
   "cobblemon:razor_fang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -875,7 +875,7 @@
   "cobblemon:red_card": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -893,7 +893,7 @@
   "cobblemon:ring_target": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -902,7 +902,7 @@
   "cobblemon:rocky_helmet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -911,7 +911,7 @@
   "cobblemon:room_service": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -920,7 +920,7 @@
   "cobblemon:safety_goggles": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -929,7 +929,7 @@
   "cobblemon:scope_lens": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -938,7 +938,7 @@
   "cobblemon:sharp_beak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -947,7 +947,7 @@
   "cobblemon:shed_shell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -956,7 +956,7 @@
   "cobblemon:shell_bell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -965,7 +965,7 @@
   "cobblemon:silk_scarf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -974,7 +974,7 @@
   "cobblemon:silver_powder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -983,7 +983,7 @@
   "cobblemon:smoke_ball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -992,7 +992,7 @@
   "cobblemon:smooth_rock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1001,7 +1001,7 @@
   "cobblemon:soft_sand": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1010,7 +1010,7 @@
   "cobblemon:soothe_bell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1019,7 +1019,7 @@
   "cobblemon:spell_tag": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1028,7 +1028,7 @@
   "cobblemon:sticky_barb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1046,7 +1046,7 @@
   "cobblemon:terrain_extender": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1055,7 +1055,7 @@
   "cobblemon:throat_spray": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1064,7 +1064,7 @@
   "cobblemon:toxic_orb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1073,7 +1073,7 @@
   "cobblemon:twisted_spoon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1091,7 +1091,7 @@
   "cobblemon:utility_umbrella": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1100,7 +1100,7 @@
   "cobblemon:weakness_policy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1109,7 +1109,7 @@
   "cobblemon:white_herb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1118,7 +1118,7 @@
   "cobblemon:wide_lens": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1127,7 +1127,7 @@
   "cobblemon:wise_glasses": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1136,7 +1136,7 @@
   "cobblemon:zoom_lens": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "held_items",
@@ -1154,7 +1154,7 @@
   "simpletms:tr_absorb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -1163,7 +1163,7 @@
   "simpletms:tr_acid": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1172,7 +1172,7 @@
   "simpletms:tr_acidarmor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1181,7 +1181,7 @@
   "simpletms:tr_acidspray": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1190,7 +1190,7 @@
   "simpletms:tr_acrobatics": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -1199,7 +1199,7 @@
   "simpletms:tr_acupressure": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1208,7 +1208,7 @@
   "simpletms:tr_aerialace": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -1217,7 +1217,7 @@
   "simpletms:tr_afteryou": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1226,7 +1226,7 @@
   "simpletms:tr_agility": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1235,7 +1235,7 @@
   "simpletms:tr_aircutter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -1244,7 +1244,7 @@
   "simpletms:tr_airslash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -1253,7 +1253,7 @@
   "simpletms:tr_alluringvoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -1262,7 +1262,7 @@
   "simpletms:tr_allyswitch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1271,7 +1271,7 @@
   "simpletms:tr_amnesia": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1280,7 +1280,7 @@
   "simpletms:tr_ancientpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -1289,7 +1289,7 @@
   "simpletms:tr_aquacutter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1298,7 +1298,7 @@
   "simpletms:tr_aquajet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1307,7 +1307,7 @@
   "simpletms:tr_aquaring": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1316,7 +1316,7 @@
   "simpletms:tr_aquatail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1325,7 +1325,7 @@
   "simpletms:tr_armthrust": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1334,7 +1334,7 @@
   "simpletms:tr_aromatherapy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -1343,7 +1343,7 @@
   "simpletms:tr_aromaticmist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -1352,7 +1352,7 @@
   "simpletms:tr_assist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1361,7 +1361,7 @@
   "simpletms:tr_assurance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -1370,7 +1370,7 @@
   "simpletms:tr_astonish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -1379,7 +1379,7 @@
   "simpletms:tr_attract": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1388,7 +1388,7 @@
   "simpletms:tr_aurasphere": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1397,7 +1397,7 @@
   "simpletms:tr_aurorabeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -1406,7 +1406,7 @@
   "simpletms:tr_auroraveil": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -1415,7 +1415,7 @@
   "simpletms:tr_autotomize": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -1424,7 +1424,7 @@
   "simpletms:tr_avalanche": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -1433,7 +1433,7 @@
   "simpletms:tr_axekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1442,7 +1442,7 @@
   "simpletms:tr_babydolleyes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -1451,7 +1451,7 @@
   "simpletms:tr_barrier": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1460,7 +1460,7 @@
   "simpletms:tr_batonpass": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1469,7 +1469,7 @@
   "simpletms:tr_beatup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -1478,7 +1478,7 @@
   "simpletms:tr_belch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1487,7 +1487,7 @@
   "simpletms:tr_bellydrum": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1496,7 +1496,7 @@
   "simpletms:tr_bestow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1505,7 +1505,7 @@
   "simpletms:tr_bide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1514,7 +1514,7 @@
   "simpletms:tr_bind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1523,7 +1523,7 @@
   "simpletms:tr_bite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -1532,7 +1532,7 @@
   "simpletms:tr_blastburn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -1541,7 +1541,7 @@
   "simpletms:tr_blazekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -1550,7 +1550,7 @@
   "simpletms:tr_blizzard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -1559,7 +1559,7 @@
   "simpletms:tr_block": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1568,7 +1568,7 @@
   "simpletms:tr_bodypress": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1577,7 +1577,7 @@
   "simpletms:tr_bodyslam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1586,7 +1586,7 @@
   "simpletms:tr_boomburst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1595,7 +1595,7 @@
   "simpletms:tr_bounce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -1604,7 +1604,7 @@
   "simpletms:tr_bravebird": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -1613,7 +1613,7 @@
   "simpletms:tr_breakingswipe": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -1622,7 +1622,7 @@
   "simpletms:tr_brickbreak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1631,7 +1631,7 @@
   "simpletms:tr_brine": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1640,7 +1640,7 @@
   "simpletms:tr_brutalswing": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -1649,7 +1649,7 @@
   "simpletms:tr_bubble": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1658,7 +1658,7 @@
   "simpletms:tr_bubblebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1667,7 +1667,7 @@
   "simpletms:tr_bugbite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -1676,7 +1676,7 @@
   "simpletms:tr_bugbuzz": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -1685,7 +1685,7 @@
   "simpletms:tr_bulkup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1694,7 +1694,7 @@
   "simpletms:tr_bulldoze": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -1703,7 +1703,7 @@
   "simpletms:tr_bulletpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -1712,7 +1712,7 @@
   "simpletms:tr_bulletseed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -1721,7 +1721,7 @@
   "simpletms:tr_burningjealousy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -1730,7 +1730,7 @@
   "simpletms:tr_burnup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -1739,7 +1739,7 @@
   "simpletms:tr_calmmind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1748,7 +1748,7 @@
   "simpletms:tr_camouflage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1757,7 +1757,7 @@
   "simpletms:tr_captivate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1766,7 +1766,7 @@
   "simpletms:tr_celebrate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1775,7 +1775,7 @@
   "simpletms:tr_charge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -1784,7 +1784,7 @@
   "simpletms:tr_chargebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -1793,7 +1793,7 @@
   "simpletms:tr_charm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -1802,7 +1802,7 @@
   "simpletms:tr_chillingwater": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1811,7 +1811,7 @@
   "simpletms:tr_chipaway": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1820,7 +1820,7 @@
   "simpletms:tr_circlethrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1829,7 +1829,7 @@
   "simpletms:tr_clamp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -1838,7 +1838,7 @@
   "simpletms:tr_clearsmog": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1847,7 +1847,7 @@
   "simpletms:tr_closecombat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1856,7 +1856,7 @@
   "simpletms:tr_coaching": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1865,7 +1865,7 @@
   "simpletms:tr_coil": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1874,7 +1874,7 @@
   "simpletms:tr_cometpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1883,7 +1883,7 @@
   "simpletms:tr_comeuppance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -1892,7 +1892,7 @@
   "simpletms:tr_confide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1901,7 +1901,7 @@
   "simpletms:tr_confuseray": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -1910,7 +1910,7 @@
   "simpletms:tr_confusion": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1919,7 +1919,7 @@
   "simpletms:tr_constrict": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1928,7 +1928,7 @@
   "simpletms:tr_copycat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1937,7 +1937,7 @@
   "simpletms:tr_corrosivegas": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -1946,7 +1946,7 @@
   "simpletms:tr_cosmicpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -1955,7 +1955,7 @@
   "simpletms:tr_cottonguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -1964,7 +1964,7 @@
   "simpletms:tr_cottonspore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -1973,7 +1973,7 @@
   "simpletms:tr_counter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -1982,7 +1982,7 @@
   "simpletms:tr_covet": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -1991,7 +1991,7 @@
   "simpletms:tr_crabhammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -2000,7 +2000,7 @@
   "simpletms:tr_craftyshield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -2009,7 +2009,7 @@
   "simpletms:tr_crosschop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2018,7 +2018,7 @@
   "simpletms:tr_crosspoison": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -2027,7 +2027,7 @@
   "simpletms:tr_crunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2036,7 +2036,7 @@
   "simpletms:tr_crushclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2045,7 +2045,7 @@
   "simpletms:tr_curse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -2054,7 +2054,7 @@
   "simpletms:tr_cut": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2063,7 +2063,7 @@
   "simpletms:tr_darkestlariat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2072,7 +2072,7 @@
   "simpletms:tr_darkpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2081,7 +2081,7 @@
   "simpletms:tr_dazzlinggleam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -2090,7 +2090,7 @@
   "simpletms:tr_defensecurl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2099,7 +2099,7 @@
   "simpletms:tr_defog": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -2108,7 +2108,7 @@
   "simpletms:tr_destinybond": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -2117,7 +2117,7 @@
   "simpletms:tr_detect": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2126,7 +2126,7 @@
   "simpletms:tr_dig": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -2135,7 +2135,7 @@
   "simpletms:tr_disable": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2144,7 +2144,7 @@
   "simpletms:tr_disarmingvoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -2153,7 +2153,7 @@
   "simpletms:tr_discharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -2162,7 +2162,7 @@
   "simpletms:tr_dive": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -2171,7 +2171,7 @@
   "simpletms:tr_dizzypunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2180,7 +2180,7 @@
   "simpletms:tr_doubleedge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2189,7 +2189,7 @@
   "simpletms:tr_doublehit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2198,7 +2198,7 @@
   "simpletms:tr_doublekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2207,7 +2207,7 @@
   "simpletms:tr_doubleslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2216,7 +2216,7 @@
   "simpletms:tr_doubleteam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2225,7 +2225,7 @@
   "simpletms:tr_dracometeor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2234,7 +2234,7 @@
   "simpletms:tr_dragonbreath": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2243,7 +2243,7 @@
   "simpletms:tr_dragoncheer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2252,7 +2252,7 @@
   "simpletms:tr_dragonclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2261,7 +2261,7 @@
   "simpletms:tr_dragondance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2270,7 +2270,7 @@
   "simpletms:tr_dragonhammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2279,7 +2279,7 @@
   "simpletms:tr_dragonpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2288,7 +2288,7 @@
   "simpletms:tr_dragonrage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2297,7 +2297,7 @@
   "simpletms:tr_dragonrush": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2306,7 +2306,7 @@
   "simpletms:tr_dragontail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2315,7 +2315,7 @@
   "simpletms:tr_drainingkiss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -2324,7 +2324,7 @@
   "simpletms:tr_drainpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2333,7 +2333,7 @@
   "simpletms:tr_dreameater": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -2342,7 +2342,7 @@
   "simpletms:tr_drillpeck": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -2351,7 +2351,7 @@
   "simpletms:tr_drillrun": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -2360,7 +2360,7 @@
   "simpletms:tr_dualchop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -2369,7 +2369,7 @@
   "simpletms:tr_dualwingbeat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -2378,7 +2378,7 @@
   "simpletms:tr_dynamicpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2387,7 +2387,7 @@
   "simpletms:tr_earthpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -2396,7 +2396,7 @@
   "simpletms:tr_earthquake": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -2405,7 +2405,7 @@
   "simpletms:tr_echoedvoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2414,7 +2414,7 @@
   "simpletms:tr_eerieimpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -2423,7 +2423,7 @@
   "simpletms:tr_eggbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2432,7 +2432,7 @@
   "simpletms:tr_electricterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -2441,7 +2441,7 @@
   "simpletms:tr_electrify": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -2450,7 +2450,7 @@
   "simpletms:tr_electroball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -2459,7 +2459,7 @@
   "simpletms:tr_electroweb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -2468,7 +2468,7 @@
   "simpletms:tr_embargo": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2477,7 +2477,7 @@
   "simpletms:tr_ember": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2486,7 +2486,7 @@
   "simpletms:tr_encore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2495,7 +2495,7 @@
   "simpletms:tr_endeavor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2504,7 +2504,7 @@
   "simpletms:tr_endure": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2513,7 +2513,7 @@
   "simpletms:tr_energyball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -2522,7 +2522,7 @@
   "simpletms:tr_entrainment": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2531,7 +2531,7 @@
   "simpletms:tr_eruption": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2540,7 +2540,7 @@
   "simpletms:tr_expandingforce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -2549,7 +2549,7 @@
   "simpletms:tr_explosion": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2558,7 +2558,7 @@
   "simpletms:tr_extrasensory": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -2567,7 +2567,7 @@
   "simpletms:tr_extremespeed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2576,7 +2576,7 @@
   "simpletms:tr_facade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2585,7 +2585,7 @@
   "simpletms:tr_fairywind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -2594,7 +2594,7 @@
   "simpletms:tr_fakeout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2603,7 +2603,7 @@
   "simpletms:tr_faketears": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2612,7 +2612,7 @@
   "simpletms:tr_falseswipe": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2621,7 +2621,7 @@
   "simpletms:tr_featherdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -2630,7 +2630,7 @@
   "simpletms:tr_feint": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2639,7 +2639,7 @@
   "simpletms:tr_feintattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2648,7 +2648,7 @@
   "simpletms:tr_fellstinger": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -2657,7 +2657,7 @@
   "simpletms:tr_fierywrath": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2666,7 +2666,7 @@
   "simpletms:tr_finalgambit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2675,7 +2675,7 @@
   "simpletms:tr_fireblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2684,7 +2684,7 @@
   "simpletms:tr_firefang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2693,7 +2693,7 @@
   "simpletms:tr_firelash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2702,7 +2702,7 @@
   "simpletms:tr_firepledge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2711,7 +2711,7 @@
   "simpletms:tr_firepunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2720,7 +2720,7 @@
   "simpletms:tr_firespin": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2729,7 +2729,7 @@
   "simpletms:tr_firstimpression": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -2738,7 +2738,7 @@
   "simpletms:tr_fissure": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -2747,7 +2747,7 @@
   "simpletms:tr_flail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2756,7 +2756,7 @@
   "simpletms:tr_flameburst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2765,7 +2765,7 @@
   "simpletms:tr_flamecharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2774,7 +2774,7 @@
   "simpletms:tr_flamethrower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2783,7 +2783,7 @@
   "simpletms:tr_flamewheel": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2792,7 +2792,7 @@
   "simpletms:tr_flareblitz": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -2801,7 +2801,7 @@
   "simpletms:tr_flash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2810,7 +2810,7 @@
   "simpletms:tr_flashcannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -2819,7 +2819,7 @@
   "simpletms:tr_flatter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2828,7 +2828,7 @@
   "simpletms:tr_fling": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2837,7 +2837,7 @@
   "simpletms:tr_flipturn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -2846,7 +2846,7 @@
   "simpletms:tr_flowershield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -2855,7 +2855,7 @@
   "simpletms:tr_fly": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -2864,7 +2864,7 @@
   "simpletms:tr_focusblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2873,7 +2873,7 @@
   "simpletms:tr_focusenergy": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2882,7 +2882,7 @@
   "simpletms:tr_focuspunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2891,7 +2891,7 @@
   "simpletms:tr_followme": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2900,7 +2900,7 @@
   "simpletms:tr_forcepalm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -2909,7 +2909,7 @@
   "simpletms:tr_foresight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2918,7 +2918,7 @@
   "simpletms:tr_foulplay": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -2927,7 +2927,7 @@
   "simpletms:tr_freezedry": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -2936,7 +2936,7 @@
   "simpletms:tr_frenzyplant": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -2945,7 +2945,7 @@
   "simpletms:tr_frostbreath": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -2954,7 +2954,7 @@
   "simpletms:tr_frustration": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2963,7 +2963,7 @@
   "simpletms:tr_furyattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2972,7 +2972,7 @@
   "simpletms:tr_furycutter": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -2981,7 +2981,7 @@
   "simpletms:tr_furyswipes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -2990,7 +2990,7 @@
   "simpletms:tr_futuresight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -2999,7 +2999,7 @@
   "simpletms:tr_gastroacid": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -3008,7 +3008,7 @@
   "simpletms:tr_gigadrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3017,7 +3017,7 @@
   "simpletms:tr_gigaimpact": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3026,7 +3026,7 @@
   "simpletms:tr_glare": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3035,7 +3035,7 @@
   "simpletms:tr_grassknot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3044,7 +3044,7 @@
   "simpletms:tr_grasspledge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3053,7 +3053,7 @@
   "simpletms:tr_grasswhistle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3062,7 +3062,7 @@
   "simpletms:tr_grassyglide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3071,7 +3071,7 @@
   "simpletms:tr_grassyterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3080,7 +3080,7 @@
   "simpletms:tr_gravity": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3089,7 +3089,7 @@
   "simpletms:tr_growl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3098,7 +3098,7 @@
   "simpletms:tr_growth": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3107,7 +3107,7 @@
   "simpletms:tr_grudge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -3116,7 +3116,7 @@
   "simpletms:tr_guardsplit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3125,7 +3125,7 @@
   "simpletms:tr_guardswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3134,7 +3134,7 @@
   "simpletms:tr_guillotine": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3143,7 +3143,7 @@
   "simpletms:tr_gunkshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -3152,7 +3152,7 @@
   "simpletms:tr_gust": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -3161,7 +3161,7 @@
   "simpletms:tr_gyroball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3170,7 +3170,7 @@
   "simpletms:tr_hail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3179,7 +3179,7 @@
   "simpletms:tr_hammerarm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3188,7 +3188,7 @@
   "simpletms:tr_happyhour": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3197,7 +3197,7 @@
   "simpletms:tr_harden": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3206,7 +3206,7 @@
   "simpletms:tr_hardpress": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3215,7 +3215,7 @@
   "simpletms:tr_haze": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3224,7 +3224,7 @@
   "simpletms:tr_headbutt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3233,7 +3233,7 @@
   "simpletms:tr_headlongrush": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -3242,7 +3242,7 @@
   "simpletms:tr_headsmash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -3251,7 +3251,7 @@
   "simpletms:tr_healbell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3260,7 +3260,7 @@
   "simpletms:tr_healblock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3269,7 +3269,7 @@
   "simpletms:tr_healingwish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3278,7 +3278,7 @@
   "simpletms:tr_healpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3287,7 +3287,7 @@
   "simpletms:tr_heartstamp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3296,7 +3296,7 @@
   "simpletms:tr_heartswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3305,7 +3305,7 @@
   "simpletms:tr_heatcrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -3314,7 +3314,7 @@
   "simpletms:tr_heatwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -3323,7 +3323,7 @@
   "simpletms:tr_heavyslam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3332,7 +3332,7 @@
   "simpletms:tr_helpinghand": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3341,7 +3341,7 @@
   "simpletms:tr_hex": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -3350,7 +3350,7 @@
   "simpletms:tr_hiddenpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3359,7 +3359,7 @@
   "simpletms:tr_highhorsepower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -3368,7 +3368,7 @@
   "simpletms:tr_highjumpkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3377,7 +3377,7 @@
   "simpletms:tr_holdback": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3386,7 +3386,7 @@
   "simpletms:tr_holdhands": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3395,7 +3395,7 @@
   "simpletms:tr_honeclaws": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -3404,7 +3404,7 @@
   "simpletms:tr_hornattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3413,7 +3413,7 @@
   "simpletms:tr_horndrill": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3422,7 +3422,7 @@
   "simpletms:tr_hornleech": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3431,7 +3431,7 @@
   "simpletms:tr_howl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3440,7 +3440,7 @@
   "simpletms:tr_hurricane": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -3449,7 +3449,7 @@
   "simpletms:tr_hydrocannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -3458,7 +3458,7 @@
   "simpletms:tr_hydropump": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -3467,7 +3467,7 @@
   "simpletms:tr_hyperbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3476,7 +3476,7 @@
   "simpletms:tr_hyperfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3485,7 +3485,7 @@
   "simpletms:tr_hypervoice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3494,7 +3494,7 @@
   "simpletms:tr_hypnosis": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3503,7 +3503,7 @@
   "simpletms:tr_iceball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3512,7 +3512,7 @@
   "simpletms:tr_icebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3521,7 +3521,7 @@
   "simpletms:tr_icefang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3530,7 +3530,7 @@
   "simpletms:tr_icehammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3539,7 +3539,7 @@
   "simpletms:tr_icepunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3548,7 +3548,7 @@
   "simpletms:tr_iceshard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3557,7 +3557,7 @@
   "simpletms:tr_icespinner": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3566,7 +3566,7 @@
   "simpletms:tr_iciclecrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3575,7 +3575,7 @@
   "simpletms:tr_iciclespear": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3584,7 +3584,7 @@
   "simpletms:tr_icywind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -3593,7 +3593,7 @@
   "simpletms:tr_imprison": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3602,7 +3602,7 @@
   "simpletms:tr_incinerate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -3611,7 +3611,7 @@
   "simpletms:tr_inferno": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -3620,7 +3620,7 @@
   "simpletms:tr_infestation": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -3629,7 +3629,7 @@
   "simpletms:tr_ingrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3638,7 +3638,7 @@
   "simpletms:tr_iondeluge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -3647,7 +3647,7 @@
   "simpletms:tr_irondefense": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3656,7 +3656,7 @@
   "simpletms:tr_ironhead": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3665,7 +3665,7 @@
   "simpletms:tr_irontail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3674,7 +3674,7 @@
   "simpletms:tr_jumpkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3683,7 +3683,7 @@
   "simpletms:tr_karatechop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3692,7 +3692,7 @@
   "simpletms:tr_knockoff": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -3701,7 +3701,7 @@
   "simpletms:tr_laserfocus": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3710,7 +3710,7 @@
   "simpletms:tr_lashout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -3719,7 +3719,7 @@
   "simpletms:tr_lastresort": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3728,7 +3728,7 @@
   "simpletms:tr_lastrespects": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -3737,7 +3737,7 @@
   "simpletms:tr_lavaplume": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -3746,7 +3746,7 @@
   "simpletms:tr_leafage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3755,7 +3755,7 @@
   "simpletms:tr_leafblade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3764,7 +3764,7 @@
   "simpletms:tr_leafstorm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3773,7 +3773,7 @@
   "simpletms:tr_leaftornado": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3782,7 +3782,7 @@
   "simpletms:tr_leechlife": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -3791,7 +3791,7 @@
   "simpletms:tr_leechseed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3800,7 +3800,7 @@
   "simpletms:tr_leer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3809,7 +3809,7 @@
   "simpletms:tr_lick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -3818,7 +3818,7 @@
   "simpletms:tr_lifedew": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -3827,7 +3827,7 @@
   "simpletms:tr_lightscreen": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3836,7 +3836,7 @@
   "simpletms:tr_liquidation": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -3845,7 +3845,7 @@
   "simpletms:tr_lockon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3854,7 +3854,7 @@
   "simpletms:tr_lowkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3863,7 +3863,7 @@
   "simpletms:tr_lowsweep": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3872,7 +3872,7 @@
   "simpletms:tr_luckychant": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3881,7 +3881,7 @@
   "simpletms:tr_lunge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -3890,7 +3890,7 @@
   "simpletms:tr_machpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3899,7 +3899,7 @@
   "simpletms:tr_magicalleaf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -3908,7 +3908,7 @@
   "simpletms:tr_magiccoat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3917,7 +3917,7 @@
   "simpletms:tr_magicroom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3926,7 +3926,7 @@
   "simpletms:tr_magnetbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -3935,7 +3935,7 @@
   "simpletms:tr_magneticflux": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -3944,7 +3944,7 @@
   "simpletms:tr_magnetrise": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -3953,7 +3953,7 @@
   "simpletms:tr_magnitude": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -3962,7 +3962,7 @@
   "simpletms:tr_matblock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -3971,7 +3971,7 @@
   "simpletms:tr_meanlook": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3980,7 +3980,7 @@
   "simpletms:tr_meditate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -3989,7 +3989,7 @@
   "simpletms:tr_mefirst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -3998,7 +3998,7 @@
   "simpletms:tr_megadrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -4007,7 +4007,7 @@
   "simpletms:tr_megahorn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -4016,7 +4016,7 @@
   "simpletms:tr_megakick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4025,7 +4025,7 @@
   "simpletms:tr_megapunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4034,7 +4034,7 @@
   "simpletms:tr_memento": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4043,7 +4043,7 @@
   "simpletms:tr_metalburst": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -4052,7 +4052,7 @@
   "simpletms:tr_metalclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -4061,7 +4061,7 @@
   "simpletms:tr_metalsound": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -4070,7 +4070,7 @@
   "simpletms:tr_meteorbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -4079,7 +4079,7 @@
   "simpletms:tr_meteormash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -4088,7 +4088,7 @@
   "simpletms:tr_metronome": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4097,7 +4097,7 @@
   "simpletms:tr_milkdrink": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4106,7 +4106,7 @@
   "simpletms:tr_mimic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4115,7 +4115,7 @@
   "simpletms:tr_mindreader": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4124,7 +4124,7 @@
   "simpletms:tr_minimize": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4133,7 +4133,7 @@
   "simpletms:tr_miracleeye": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4142,7 +4142,7 @@
   "simpletms:tr_mirrorcoat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4151,7 +4151,7 @@
   "simpletms:tr_mirrormove": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -4160,7 +4160,7 @@
   "simpletms:tr_mirrorshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -4169,7 +4169,7 @@
   "simpletms:tr_mist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -4178,7 +4178,7 @@
   "simpletms:tr_mistyexplosion": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -4187,7 +4187,7 @@
   "simpletms:tr_mistyterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -4196,7 +4196,7 @@
   "simpletms:tr_moonblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -4205,7 +4205,7 @@
   "simpletms:tr_moonlight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -4214,7 +4214,7 @@
   "simpletms:tr_morningsun": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4223,7 +4223,7 @@
   "simpletms:tr_mudbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -4232,7 +4232,7 @@
   "simpletms:tr_muddywater": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -4241,7 +4241,7 @@
   "simpletms:tr_mudshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -4250,7 +4250,7 @@
   "simpletms:tr_mudslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -4259,7 +4259,7 @@
   "simpletms:tr_mudsport": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -4268,7 +4268,7 @@
   "simpletms:tr_mysticalfire": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -4277,7 +4277,7 @@
   "simpletms:tr_nastyplot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4286,7 +4286,7 @@
   "simpletms:tr_naturalgift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4295,7 +4295,7 @@
   "simpletms:tr_naturepower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4304,7 +4304,7 @@
   "simpletms:tr_needlearm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -4313,7 +4313,7 @@
   "simpletms:tr_nightmare": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -4322,7 +4322,7 @@
   "simpletms:tr_nightshade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -4331,7 +4331,7 @@
   "simpletms:tr_nightslash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4340,7 +4340,7 @@
   "simpletms:tr_nobleroar": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4349,7 +4349,7 @@
   "simpletms:tr_nuzzle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -4358,7 +4358,7 @@
   "simpletms:tr_octazooka": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -4367,7 +4367,7 @@
   "simpletms:tr_odorsleuth": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4376,7 +4376,7 @@
   "simpletms:tr_ominouswind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -4385,7 +4385,7 @@
   "simpletms:tr_orderup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -4394,7 +4394,7 @@
   "simpletms:tr_outrage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -4403,7 +4403,7 @@
   "simpletms:tr_overheat": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -4412,7 +4412,7 @@
   "simpletms:tr_painsplit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4421,7 +4421,7 @@
   "simpletms:tr_paraboliccharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -4430,7 +4430,7 @@
   "simpletms:tr_partingshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4439,7 +4439,7 @@
   "simpletms:tr_payback": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4448,7 +4448,7 @@
   "simpletms:tr_payday": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4457,7 +4457,7 @@
   "simpletms:tr_peck": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -4466,7 +4466,7 @@
   "simpletms:tr_perishsong": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4475,7 +4475,7 @@
   "simpletms:tr_petalblizzard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -4484,7 +4484,7 @@
   "simpletms:tr_petaldance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -4493,7 +4493,7 @@
   "simpletms:tr_phantomforce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -4502,7 +4502,7 @@
   "simpletms:tr_photongeyser": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4511,7 +4511,7 @@
   "simpletms:tr_pinmissile": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -4520,7 +4520,7 @@
   "simpletms:tr_playnice": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4529,7 +4529,7 @@
   "simpletms:tr_playrough": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -4538,7 +4538,7 @@
   "simpletms:tr_pluck": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -4547,7 +4547,7 @@
   "simpletms:tr_poisonfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -4556,7 +4556,7 @@
   "simpletms:tr_poisongas": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -4565,7 +4565,7 @@
   "simpletms:tr_poisonjab": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -4574,7 +4574,7 @@
   "simpletms:tr_poisonpowder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -4583,7 +4583,7 @@
   "simpletms:tr_poisonsting": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -4592,7 +4592,7 @@
   "simpletms:tr_poisontail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -4601,7 +4601,7 @@
   "simpletms:tr_pollenpuff": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -4610,7 +4610,7 @@
   "simpletms:tr_poltergeist": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -4619,7 +4619,7 @@
   "simpletms:tr_pounce": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -4628,7 +4628,7 @@
   "simpletms:tr_pound": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4637,7 +4637,7 @@
   "simpletms:tr_powdersnow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -4646,7 +4646,7 @@
   "simpletms:tr_powergem": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -4655,7 +4655,7 @@
   "simpletms:tr_powershift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4664,7 +4664,7 @@
   "simpletms:tr_powersplit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4673,7 +4673,7 @@
   "simpletms:tr_powerswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4682,7 +4682,7 @@
   "simpletms:tr_powertrick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4691,7 +4691,7 @@
   "simpletms:tr_powertrip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4700,7 +4700,7 @@
   "simpletms:tr_poweruppunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -4709,7 +4709,7 @@
   "simpletms:tr_powerwhip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -4718,7 +4718,7 @@
   "simpletms:tr_protect": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4727,7 +4727,7 @@
   "simpletms:tr_psybeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4736,7 +4736,7 @@
   "simpletms:tr_psychic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4745,7 +4745,7 @@
   "simpletms:tr_psychicfangs": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4754,7 +4754,7 @@
   "simpletms:tr_psychicnoise": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4763,7 +4763,7 @@
   "simpletms:tr_psychicterrain": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4772,7 +4772,7 @@
   "simpletms:tr_psychocut": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4781,7 +4781,7 @@
   "simpletms:tr_psychoshift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4790,7 +4790,7 @@
   "simpletms:tr_psychup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4799,7 +4799,7 @@
   "simpletms:tr_psyshock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4808,7 +4808,7 @@
   "simpletms:tr_psywave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4817,7 +4817,7 @@
   "simpletms:tr_punishment": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4826,7 +4826,7 @@
   "simpletms:tr_pursuit": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4835,7 +4835,7 @@
   "simpletms:tr_quash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -4844,7 +4844,7 @@
   "simpletms:tr_quickattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4853,7 +4853,7 @@
   "simpletms:tr_quickguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -4862,7 +4862,7 @@
   "simpletms:tr_quiverdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -4871,7 +4871,7 @@
   "simpletms:tr_rage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4880,7 +4880,7 @@
   "simpletms:tr_ragepowder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -4889,7 +4889,7 @@
   "simpletms:tr_ragingfury": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -4898,7 +4898,7 @@
   "simpletms:tr_raindance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -4907,7 +4907,7 @@
   "simpletms:tr_rapidspin": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4916,7 +4916,7 @@
   "simpletms:tr_razorleaf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -4925,7 +4925,7 @@
   "simpletms:tr_razorshell": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -4934,7 +4934,7 @@
   "simpletms:tr_razorwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4943,7 +4943,7 @@
   "simpletms:tr_recover": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4952,7 +4952,7 @@
   "simpletms:tr_recycle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4961,7 +4961,7 @@
   "simpletms:tr_reflect": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4970,7 +4970,7 @@
   "simpletms:tr_reflecttype": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4979,7 +4979,7 @@
   "simpletms:tr_refresh": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -4988,7 +4988,7 @@
   "simpletms:tr_rest": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -4997,7 +4997,7 @@
   "simpletms:tr_retaliate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5006,7 +5006,7 @@
   "simpletms:tr_return": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5015,7 +5015,7 @@
   "simpletms:tr_revenge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5024,7 +5024,7 @@
   "simpletms:tr_reversal": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5033,7 +5033,7 @@
   "simpletms:tr_risingvoltage": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -5042,7 +5042,7 @@
   "simpletms:tr_roar": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5051,7 +5051,7 @@
   "simpletms:tr_rockblast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5060,7 +5060,7 @@
   "simpletms:tr_rockclimb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5069,7 +5069,7 @@
   "simpletms:tr_rockpolish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5078,7 +5078,7 @@
   "simpletms:tr_rockslide": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5087,7 +5087,7 @@
   "simpletms:tr_rocksmash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5096,7 +5096,7 @@
   "simpletms:tr_rockthrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5105,7 +5105,7 @@
   "simpletms:tr_rocktomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5114,7 +5114,7 @@
   "simpletms:tr_rockwrecker": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5123,7 +5123,7 @@
   "simpletms:tr_roleplay": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -5132,7 +5132,7 @@
   "simpletms:tr_rollingkick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5141,7 +5141,7 @@
   "simpletms:tr_rollout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5150,7 +5150,7 @@
   "simpletms:tr_roost": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -5159,7 +5159,7 @@
   "simpletms:tr_rototiller": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -5168,7 +5168,7 @@
   "simpletms:tr_round": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5177,7 +5177,7 @@
   "simpletms:tr_sacredfire": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -5186,7 +5186,7 @@
   "simpletms:tr_sacredsword": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5195,7 +5195,7 @@
   "simpletms:tr_safeguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5204,7 +5204,7 @@
   "simpletms:tr_sandattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -5213,7 +5213,7 @@
   "simpletms:tr_sandstorm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5222,7 +5222,7 @@
   "simpletms:tr_sandtomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -5231,7 +5231,7 @@
   "simpletms:tr_scald": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -5240,7 +5240,7 @@
   "simpletms:tr_scaleshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -5249,7 +5249,7 @@
   "simpletms:tr_scaryface": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5258,7 +5258,7 @@
   "simpletms:tr_scorchingsands": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -5267,7 +5267,7 @@
   "simpletms:tr_scratch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5276,7 +5276,7 @@
   "simpletms:tr_screech": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5285,7 +5285,7 @@
   "simpletms:tr_secretpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5294,7 +5294,7 @@
   "simpletms:tr_seedbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5303,7 +5303,7 @@
   "simpletms:tr_seismictoss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5312,7 +5312,7 @@
   "simpletms:tr_selfdestruct": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5321,7 +5321,7 @@
   "simpletms:tr_shadowball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -5330,7 +5330,7 @@
   "simpletms:tr_shadowclaw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -5339,7 +5339,7 @@
   "simpletms:tr_shadowpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -5348,7 +5348,7 @@
   "simpletms:tr_shadowsneak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -5357,7 +5357,7 @@
   "simpletms:tr_sharpen": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5366,7 +5366,7 @@
   "simpletms:tr_shedtail": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5375,7 +5375,7 @@
   "simpletms:tr_sheercold": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -5384,7 +5384,7 @@
   "simpletms:tr_shellsidearm": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -5393,7 +5393,7 @@
   "simpletms:tr_shellsmash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5402,7 +5402,7 @@
   "simpletms:tr_shiftgear": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -5411,7 +5411,7 @@
   "simpletms:tr_shockwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -5420,7 +5420,7 @@
   "simpletms:tr_signalbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5429,7 +5429,7 @@
   "simpletms:tr_silverwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5438,7 +5438,7 @@
   "simpletms:tr_simplebeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5447,7 +5447,7 @@
   "simpletms:tr_sing": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5456,7 +5456,7 @@
   "simpletms:tr_skillswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -5465,7 +5465,7 @@
   "simpletms:tr_skittersmack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5474,7 +5474,7 @@
   "simpletms:tr_skullbash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5483,7 +5483,7 @@
   "simpletms:tr_skyattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -5492,7 +5492,7 @@
   "simpletms:tr_skydrop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -5501,7 +5501,7 @@
   "simpletms:tr_skyuppercut": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5510,7 +5510,7 @@
   "simpletms:tr_slackoff": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5519,7 +5519,7 @@
   "simpletms:tr_slam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5528,7 +5528,7 @@
   "simpletms:tr_slash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5537,7 +5537,7 @@
   "simpletms:tr_sleeppowder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5546,7 +5546,7 @@
   "simpletms:tr_sleeptalk": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5555,7 +5555,7 @@
   "simpletms:tr_sludge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -5564,7 +5564,7 @@
   "simpletms:tr_sludgebomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -5573,7 +5573,7 @@
   "simpletms:tr_sludgewave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -5582,7 +5582,7 @@
   "simpletms:tr_smackdown": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5591,7 +5591,7 @@
   "simpletms:tr_smartstrike": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -5600,7 +5600,7 @@
   "simpletms:tr_smellingsalts": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5609,7 +5609,7 @@
   "simpletms:tr_smog": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -5618,7 +5618,7 @@
   "simpletms:tr_smokescreen": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5627,7 +5627,7 @@
   "simpletms:tr_snarl": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -5636,7 +5636,7 @@
   "simpletms:tr_snatch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -5645,7 +5645,7 @@
   "simpletms:tr_snore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5654,7 +5654,7 @@
   "simpletms:tr_snowscape": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -5663,7 +5663,7 @@
   "simpletms:tr_soak": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -5672,7 +5672,7 @@
   "simpletms:tr_solarbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5681,7 +5681,7 @@
   "simpletms:tr_solarblade": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5690,7 +5690,7 @@
   "simpletms:tr_sonicboom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5699,7 +5699,7 @@
   "simpletms:tr_spark": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -5708,7 +5708,7 @@
   "simpletms:tr_speedswap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -5717,7 +5717,7 @@
   "simpletms:tr_spiderweb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5726,7 +5726,7 @@
   "simpletms:tr_spikecannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5735,7 +5735,7 @@
   "simpletms:tr_spikes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -5744,7 +5744,7 @@
   "simpletms:tr_spikyshield": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5753,7 +5753,7 @@
   "simpletms:tr_spinout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -5762,7 +5762,7 @@
   "simpletms:tr_spite": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ghost",
@@ -5771,7 +5771,7 @@
   "simpletms:tr_spitup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5780,7 +5780,7 @@
   "simpletms:tr_splash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5789,7 +5789,7 @@
   "simpletms:tr_spore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5798,7 +5798,7 @@
   "simpletms:tr_spotlight": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5807,7 +5807,7 @@
   "simpletms:tr_stealthrock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5816,7 +5816,7 @@
   "simpletms:tr_steamroller": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5825,7 +5825,7 @@
   "simpletms:tr_steelbeam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -5834,7 +5834,7 @@
   "simpletms:tr_steelroller": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -5843,7 +5843,7 @@
   "simpletms:tr_steelwing": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_steel",
@@ -5852,7 +5852,7 @@
   "simpletms:tr_stickyweb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5861,7 +5861,7 @@
   "simpletms:tr_stockpile": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5870,7 +5870,7 @@
   "simpletms:tr_stomp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5879,7 +5879,7 @@
   "simpletms:tr_stompingtantrum": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ground",
@@ -5888,7 +5888,7 @@
   "simpletms:tr_stoneedge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -5897,7 +5897,7 @@
   "simpletms:tr_storedpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -5906,7 +5906,7 @@
   "simpletms:tr_stormthrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5915,7 +5915,7 @@
   "simpletms:tr_strength": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5924,7 +5924,7 @@
   "simpletms:tr_strengthsap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5933,7 +5933,7 @@
   "simpletms:tr_stringshot": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5942,7 +5942,7 @@
   "simpletms:tr_struggle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5951,7 +5951,7 @@
   "simpletms:tr_strugglebug": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -5960,7 +5960,7 @@
   "simpletms:tr_stuffcheeks": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5969,7 +5969,7 @@
   "simpletms:tr_stunspore": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -5978,7 +5978,7 @@
   "simpletms:tr_submission": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -5987,7 +5987,7 @@
   "simpletms:tr_substitute": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -5996,7 +5996,7 @@
   "simpletms:tr_suckerpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -6005,7 +6005,7 @@
   "simpletms:tr_sunnyday": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -6014,7 +6014,7 @@
   "simpletms:tr_supercellslam": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6023,7 +6023,7 @@
   "simpletms:tr_superfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6032,7 +6032,7 @@
   "simpletms:tr_superpower": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6041,7 +6041,7 @@
   "simpletms:tr_supersonic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6050,7 +6050,7 @@
   "simpletms:tr_surf": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6059,7 +6059,7 @@
   "simpletms:tr_swagger": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6068,7 +6068,7 @@
   "simpletms:tr_swallow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6077,7 +6077,7 @@
   "simpletms:tr_sweetkiss": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fairy",
@@ -6086,7 +6086,7 @@
   "simpletms:tr_sweetscent": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6095,7 +6095,7 @@
   "simpletms:tr_swift": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6104,7 +6104,7 @@
   "simpletms:tr_switcheroo": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -6113,7 +6113,7 @@
   "simpletms:tr_swordsdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6122,7 +6122,7 @@
   "simpletms:tr_synchronoise": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6131,7 +6131,7 @@
   "simpletms:tr_synthesis": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -6140,7 +6140,7 @@
   "simpletms:tr_syrupbomb": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -6149,7 +6149,7 @@
   "simpletms:tr_tackle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6158,7 +6158,7 @@
   "simpletms:tr_tailslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6167,7 +6167,7 @@
   "simpletms:tr_tailwhip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6176,7 +6176,7 @@
   "simpletms:tr_tailwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -6185,7 +6185,7 @@
   "simpletms:tr_takedown": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6194,7 +6194,7 @@
   "simpletms:tr_taunt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -6203,7 +6203,7 @@
   "simpletms:tr_tearfullook": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6212,7 +6212,7 @@
   "simpletms:tr_teeterdance": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6221,7 +6221,7 @@
   "simpletms:tr_telekinesis": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6230,7 +6230,7 @@
   "simpletms:tr_teleport": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6239,7 +6239,7 @@
   "simpletms:tr_temperflare": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -6248,7 +6248,7 @@
   "simpletms:tr_terablast": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6257,7 +6257,7 @@
   "simpletms:tr_terrainpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6266,7 +6266,7 @@
   "simpletms:tr_thief": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -6275,7 +6275,7 @@
   "simpletms:tr_thrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6284,7 +6284,7 @@
   "simpletms:tr_throatchop": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -6293,7 +6293,7 @@
   "simpletms:tr_thunder": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6302,7 +6302,7 @@
   "simpletms:tr_thunderbolt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6311,7 +6311,7 @@
   "simpletms:tr_thunderfang": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6320,7 +6320,7 @@
   "simpletms:tr_thunderouskick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6329,7 +6329,7 @@
   "simpletms:tr_thunderpunch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6338,7 +6338,7 @@
   "simpletms:tr_thundershock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6347,7 +6347,7 @@
   "simpletms:tr_thunderwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6356,7 +6356,7 @@
   "simpletms:tr_tickle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6365,7 +6365,7 @@
   "simpletms:tr_tidyup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6374,7 +6374,7 @@
   "simpletms:tr_torment": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dark",
@@ -6383,7 +6383,7 @@
   "simpletms:tr_toxic": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -6392,7 +6392,7 @@
   "simpletms:tr_toxicspikes": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -6401,7 +6401,7 @@
   "simpletms:tr_trailblaze": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -6410,7 +6410,7 @@
   "simpletms:tr_transform": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6419,7 +6419,7 @@
   "simpletms:tr_triattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6428,7 +6428,7 @@
   "simpletms:tr_trick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6437,7 +6437,7 @@
   "simpletms:tr_trickroom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6446,7 +6446,7 @@
   "simpletms:tr_tripleaxel": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_ice",
@@ -6455,7 +6455,7 @@
   "simpletms:tr_triplekick": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6464,7 +6464,7 @@
   "simpletms:tr_trumpcard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6473,7 +6473,7 @@
   "simpletms:tr_twineedle": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -6482,7 +6482,7 @@
   "simpletms:tr_twister": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_dragon",
@@ -6491,7 +6491,7 @@
   "simpletms:tr_upperhand": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6500,7 +6500,7 @@
   "simpletms:tr_uproar": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6509,7 +6509,7 @@
   "simpletms:tr_uturn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -6518,7 +6518,7 @@
   "simpletms:tr_vacuumwave": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6527,7 +6527,7 @@
   "simpletms:tr_venomdrench": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -6536,7 +6536,7 @@
   "simpletms:tr_venoshock": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_poison",
@@ -6545,7 +6545,7 @@
   "simpletms:tr_vinewhip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -6554,7 +6554,7 @@
   "simpletms:tr_visegrip": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6563,7 +6563,7 @@
   "simpletms:tr_vitalthrow": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6572,7 +6572,7 @@
   "simpletms:tr_voltswitch": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6581,7 +6581,7 @@
   "simpletms:tr_wakeupslap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fighting",
@@ -6590,7 +6590,7 @@
   "simpletms:tr_waterfall": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6599,7 +6599,7 @@
   "simpletms:tr_watergun": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6608,7 +6608,7 @@
   "simpletms:tr_waterpledge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6617,7 +6617,7 @@
   "simpletms:tr_waterpulse": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6626,7 +6626,7 @@
   "simpletms:tr_watersport": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6635,7 +6635,7 @@
   "simpletms:tr_waterspout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6644,7 +6644,7 @@
   "simpletms:tr_wavecrash": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6653,7 +6653,7 @@
   "simpletms:tr_weatherball": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6662,7 +6662,7 @@
   "simpletms:tr_whirlpool": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6671,7 +6671,7 @@
   "simpletms:tr_whirlwind": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6680,7 +6680,7 @@
   "simpletms:tr_wideguard": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_rock",
@@ -6689,7 +6689,7 @@
   "simpletms:tr_wildcharge": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6698,7 +6698,7 @@
   "simpletms:tr_willowisp": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_fire",
@@ -6707,7 +6707,7 @@
   "simpletms:tr_wingattack": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_flying",
@@ -6716,7 +6716,7 @@
   "simpletms:tr_wish": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6725,7 +6725,7 @@
   "simpletms:tr_withdraw": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_water",
@@ -6734,7 +6734,7 @@
   "simpletms:tr_wonderroom": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6743,7 +6743,7 @@
   "simpletms:tr_woodhammer": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -6752,7 +6752,7 @@
   "simpletms:tr_workup": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6761,7 +6761,7 @@
   "simpletms:tr_worryseed": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_grass",
@@ -6770,7 +6770,7 @@
   "simpletms:tr_wrap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6779,7 +6779,7 @@
   "simpletms:tr_wringout": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6788,7 +6788,7 @@
   "simpletms:tr_xscissor": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_bug",
@@ -6797,7 +6797,7 @@
   "simpletms:tr_yawn": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_normal",
@@ -6806,7 +6806,7 @@
   "simpletms:tr_zapcannon": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6815,7 +6815,7 @@
   "simpletms:tr_zenheadbutt": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_psychic",
@@ -6824,7 +6824,7 @@
   "simpletms:tr_zingzap": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "tm_electric",
@@ -6833,7 +6833,7 @@
   "minecraft:axolotl_bucket": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6843,7 +6843,7 @@
   "minecraft:tropical_fish_bucket": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6853,7 +6853,7 @@
   "minecraft:ochre_froglight": {
     "baseBuyPrice": 2500,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6863,7 +6863,7 @@
   "minecraft:verdant_froglight": {
     "baseBuyPrice": 2500,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6873,7 +6873,7 @@
   "minecraft:pearlescent_froglight": {
     "baseBuyPrice": 2500,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6883,7 +6883,7 @@
   "minecraft:oak_log": {
     "baseBuyPrice": 125,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6894,7 +6894,7 @@
   "minecraft:stone_bricks": {
     "baseBuyPrice": 250,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6905,7 +6905,7 @@
   "minecraft:dark_prismarine": {
     "baseBuyPrice": 2500,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6916,7 +6916,7 @@
   "minecraft:prismarine": {
     "baseBuyPrice": 1000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6927,7 +6927,7 @@
   "minecraft:dirt": {
     "baseBuyPrice": 25,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6938,7 +6938,7 @@
   "minecraft:sand": {
     "baseBuyPrice": 25,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6949,7 +6949,7 @@
   "minecraft:cobblestone": {
     "baseBuyPrice": 100,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6960,7 +6960,7 @@
   "minecraft:beacon": {
     "baseBuyPrice": 50000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6970,7 +6970,7 @@
   "minecraft:bricks": {
     "baseBuyPrice": 250,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6981,7 +6981,7 @@
   "minecraft:smooth_stone": {
     "baseBuyPrice": 400,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -6992,7 +6992,7 @@
   "minecraft:terracotta": {
     "baseBuyPrice": 400,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -7003,7 +7003,7 @@
   "minecraft:gravel": {
     "baseBuyPrice": 50,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "blocks",
@@ -7014,7 +7014,7 @@
   "mega_showdown:zygarde_cell": {
     "baseBuyPrice": 500,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7023,7 +7023,7 @@
   "mega_showdown:flame_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7032,7 +7032,7 @@
   "mega_showdown:splash_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7041,7 +7041,7 @@
   "mega_showdown:zap_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7050,7 +7050,7 @@
   "mega_showdown:meadow_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7059,7 +7059,7 @@
   "mega_showdown:icicle_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7068,7 +7068,7 @@
   "mega_showdown:fist_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7077,7 +7077,7 @@
   "mega_showdown:toxic_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7086,7 +7086,7 @@
   "mega_showdown:earth_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7095,7 +7095,7 @@
   "mega_showdown:sky_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7104,7 +7104,7 @@
   "mega_showdown:mind_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7113,7 +7113,7 @@
   "mega_showdown:stone_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7122,7 +7122,7 @@
   "mega_showdown:spooky_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7131,7 +7131,7 @@
   "mega_showdown:draco_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7140,7 +7140,7 @@
   "mega_showdown:dread_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7149,7 +7149,7 @@
   "mega_showdown:iron_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7158,7 +7158,7 @@
   "mega_showdown:insect_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",
@@ -7167,7 +7167,7 @@
   "mega_showdown:pixie_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
-    "baseStock": 500,
+    "baseStock": 9999,
     "elasticity": 0.0,
     "maxStockMultiplier": 10.0,
     "vendorTag": "special_items",

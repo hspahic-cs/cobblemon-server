@@ -88,7 +88,7 @@ root README.
   than the money being silently lost. Buying a listing now unwinds (re-lists, refunds the buyer) if
   the seller payout can't be completed.
 
-## [0.27.2] - 2026-07-13
+## [0.28.3] - 2026-07-14
 
 ### Added
 - **BP Shop NPC in market.** Admins can spawn with `/market admin spawn bp_shop` to create a configurable Battle Points shop. Players right-click to buy items with BP. Prices configured in `config/bp-items.json` (1–100 BP range).

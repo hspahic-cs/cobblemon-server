@@ -7020,7 +7020,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:flame_plate": {
+  "mega_showdown:flame_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7029,7 +7029,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:splash_plate": {
+  "mega_showdown:splash_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7038,7 +7038,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:zap_plate": {
+  "mega_showdown:zap_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7047,7 +7047,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:meadow_plate": {
+  "mega_showdown:meadow_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7056,7 +7056,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:icicle_plate": {
+  "mega_showdown:icicle_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7065,7 +7065,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:fist_plate": {
+  "mega_showdown:fist_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7074,7 +7074,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:toxic_plate": {
+  "mega_showdown:toxic_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7083,7 +7083,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:earth_plate": {
+  "mega_showdown:earth_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7092,7 +7092,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:sky_plate": {
+  "mega_showdown:sky_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7101,7 +7101,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:mind_plate": {
+  "mega_showdown:mind_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7110,7 +7110,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:stone_plate": {
+  "mega_showdown:stone_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7119,7 +7119,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:spooky_plate": {
+  "mega_showdown:spooky_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7128,7 +7128,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:draco_plate": {
+  "mega_showdown:draco_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7137,7 +7137,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:dread_plate": {
+  "mega_showdown:dread_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7146,7 +7146,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:iron_plate": {
+  "mega_showdown:iron_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7155,7 +7155,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:insect_plate": {
+  "mega_showdown:insect_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,
@@ -7164,7 +7164,7 @@
     "vendorTag": "special_items",
     "sellable": false
   },
-  "cobblemon:pixie_plate": {
+  "mega_showdown:pixie_plate": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
     "baseStock": 9999,

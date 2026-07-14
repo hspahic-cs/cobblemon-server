@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.1] - 2026-07-13
+
+### Fixed
+- **Arceus plates now actually appear.** In 0.28.0 the 17 plates were listed under the wrong
+  namespace (`cobblemon:*_plate`); they are `mega_showdown:*_plate` (Cobblemon 1.7.3 has no
+  elemental plates). The shop slots and the TM Merchant's type icons were silently rendering
+  empty/paper. Corrected in the shop catalog and the type-picker icons.
+
+### Changed
+- **Special Items moved to the Shopkeeper.** The Arceus plates + Zygarde Cells are now a
+  **Special Items** tab on the default Shopkeeper, instead of on the held-items vendor. The
+  held-items vendor is back to its original single-tab "Held Items Vendor".
+
 ## [0.28.0] - 2026-07-13
 
 ### Added

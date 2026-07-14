@@ -98,18 +98,13 @@ object MarketMenu {
     private val DEFAULT_TABS = listOf(
         Tab("General Store", Items.EMERALD, ""),
         Tab("Blocks & Decor", Items.BRICKS, "blocks"),
+        Tab("Special Items", Items.HEART_OF_THE_SEA, "special_items"),
         Tab("Upgrades", Items.NETHER_STAR, null),
     )
 
-    /** The Items Merchant's tabs (the promoted former Held-Items vendor, tag `held_items`). */
-    private val ITEMS_MERCHANT_TABS = listOf(
-        Tab("Held Items", Items.LEATHER_HELMET, "held_items"),
-        Tab("Special Items", Items.NETHER_STAR, "special_items"),
-    )
-
-    /** Resolve a Cobblemon Arceus plate item for a type icon, falling back to paper. */
+    /** Resolve a mega_showdown Arceus plate item for a type icon, falling back to paper. */
     private fun plateIcon(plateName: String): Item {
-        val rl = ResourceLocation.tryParse("cobblemon:${plateName}_plate") ?: return Items.PAPER
+        val rl = ResourceLocation.tryParse("mega_showdown:${plateName}_plate") ?: return Items.PAPER
         return BuiltInRegistries.ITEM.getOptional(rl).orElse(Items.PAPER)
     }
 
@@ -159,18 +154,12 @@ object MarketMenu {
             return
         }
 
-        val tabs = when {
-            vendorTag.isEmpty()        -> DEFAULT_TABS
-            vendorTag == "held_items"  -> ITEMS_MERCHANT_TABS
-            else                       -> listOf(Tab(formatTag(vendorTag), Items.EMERALD, vendorTag))
-        }
+        val tabs = if (vendorTag.isEmpty()) DEFAULT_TABS
+                   else listOf(Tab(formatTag(vendorTag), Items.EMERALD, vendorTag))
         val container = SimpleContainer(SLOTS)
         populate(container, player, tabs, activeTab = 0, page = 0)
-        val title = when {
-            vendorTag.isEmpty()        -> "§0Shopkeeper"
-            vendorTag == "held_items"  -> "§0Items Merchant"
-            else                       -> "§0Market — ${formatTag(vendorTag)}"
-        }
+        val title = if (vendorTag.isEmpty()) "§0Shopkeeper"
+                    else "§0Market — ${formatTag(vendorTag)}"
         val provider = SimpleMenuProvider(
             { syncId, inv, _ -> Impl(syncId, inv, container, player, tabs) },
             Component.literal(title),

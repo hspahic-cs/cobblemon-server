@@ -399,7 +399,6 @@ object MarketCommands {
         vendorTag.isEmpty() -> "Shopkeeper"
         vendorTag == "blocks" -> "Blocks & Decor Vendor"
         vendorTag == "tm_merchant" -> "TM Merchant"          // consolidated TM vendor (before the tm_ branch)
-        vendorTag == "held_items" -> "Items Merchant"        // promoted to a tabbed Held/Special vendor
         vendorTag.startsWith("tm_") ->
             vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
         else ->

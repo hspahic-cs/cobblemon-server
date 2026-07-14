@@ -1,6 +1,7 @@
 package com.cobblemonmarket.commands
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.bp.Vouchers
 import com.cobblemonmarket.config.ItemConfig
 import com.cobblemonmarket.config.MarketConfig
 import com.cobblemonmarket.config.effectiveBuyClamp
@@ -206,7 +207,41 @@ object MarketCommands {
                         )
                     )
                 )
+                // Voucher grants (mirror `/gacha grant`): `/market <voucher> grant <player> [count]`.
+                // Perm level 2 so they're callable from command blocks / non-op admins, like gacha.
+                .then(voucherGrantCommand("tm_voucher", "tr"))
+                .then(voucherGrantCommand("held_item_voucher", "held_item"))
+                .then(voucherGrantCommand("shiny_voucher", "shiny"))
         )
+    }
+
+    /** Builds `/market <literal> grant <player> [count]`, granting a [voucherType] voucher. */
+    private fun voucherGrantCommand(literal: String, voucherType: String) =
+        Commands.literal(literal)
+            .requires { it.hasPermission(2) }
+            .then(Commands.literal("grant")
+                .then(Commands.argument("player", EntityArgument.player())
+                    .executes { ctx ->
+                        grantVoucher(ctx.source, EntityArgument.getPlayer(ctx, "player"), voucherType, 1)
+                    }
+                    .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
+                        .executes { ctx ->
+                            grantVoucher(
+                                ctx.source, EntityArgument.getPlayer(ctx, "player"),
+                                voucherType, IntegerArgumentType.getInteger(ctx, "count"),
+                            )
+                        }
+                    )
+                )
+            )
+
+    private fun grantVoucher(source: CommandSourceStack, target: ServerPlayer, voucherType: String, count: Int): Int {
+        val stack = Vouchers.create(voucherType, count)
+        val label = stack.hoverName.string
+        if (!target.inventory.add(stack)) target.drop(stack, false)
+        target.sendSystemMessage(Component.literal("§a[Market] You received §f$count× $label §afrom an admin."))
+        source.sendSystemMessage(Component.literal("§a[Market] Gave ${target.name.string} $count× $label."))
+        return 1
     }
 
     /**

@@ -12,6 +12,16 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.4] - 2026-07-14
+
+### Fixed
+- **BP shop NPC now actually works.** Three bugs kept it broken: (1) the regular market hook matched the `bp_shop` tag first and opened an empty market menu — it now ignores that scope so the BP hook handles it; (2) `bp-items.json` is a JSON array but the loader expected a `{"items":{…}}` object, so it always parsed empty — the loader now reads the array; (3) the menu was a chat-message stub — it's now a real chest GUI where you left-click an item to buy it with BP.
+- **BP shop items are now real, distinct items** instead of blank paper. Vouchers are `custom_data`-tagged paper (so TR/held/shiny vouchers are actually distinguishable); crate keys use the same tag scheme as rolled keys (so a shop-bought Ultra/Rare/Pokémon key works at the crates); Master Ball, Rare Candy, Ability Patch, and Totem of Undying resolve from the item registry; the Shiny Egg is granted via the gacha egg command.
+- **Crate odds preview no longer has gaps.** In the "Possible Rewards" box, entries whose icon didn't resolve used to leave empty holes (and mis-sized the grid). Icons are now built first and placed contiguously, so the rare crate (and any crate) shows a clean, gap-free grid.
+
+### Added
+- **Admin voucher grants.** `/market tm_voucher grant <player> [count]`, `/market held_item_voucher grant <player> [count]`, and `/market shiny_voucher grant <player> [count]` (permission level 2, mirroring `/gacha grant`).
+
 ## [0.28.3] - 2026-07-14
 
 ### Added

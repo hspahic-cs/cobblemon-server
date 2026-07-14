@@ -30,12 +30,14 @@ object OddsMenu {
             .sortedByDescending { it.weightPct }
         val placeholders = table.entries.filter { it.weightPct <= 0.0 }
         val all = rollable + placeholders
-        val rows = ((all.size + 8) / 9).coerceAtMost(6).coerceAtLeast(1)
-        val cap = rows * 9
-        val display = SimpleContainer(cap)
-        all.take(cap).forEachIndexed { i, entry ->
+
+        // Build the display stacks first, dropping any entry whose representative resolves to an
+        // empty item. Computing rows/slots from this filtered list (rather than the raw entry count)
+        // is what keeps the grid gap-free: a skipped entry no longer burns its slot index, and rows
+        // no longer over-allocate for entries that never render.
+        val stacks = all.mapNotNull { entry ->
             val stack = RewardGranter.representative(entry).copy()
-            if (stack.isEmpty) return@forEachIndexed
+            if (stack.isEmpty) return@mapNotNull null
             val isPlaceholder = entry.weightPct <= 0.0
             val namePrefix = if (isPlaceholder) "§8" else tierColor(entry.lootTier.name)
             stack.set(DataComponents.CUSTOM_NAME, Component.literal("$namePrefix${entry.label}"))
@@ -49,8 +51,13 @@ object OddsMenu {
             )
             if (entry.notes.isNotBlank()) lore += Component.literal("§8${entry.notes}")
             stack.set(DataComponents.LORE, ItemLore(lore))
-            display.setItem(i, stack)
+            stack
         }
+
+        val rows = ((stacks.size + 8) / 9).coerceAtMost(6).coerceAtLeast(1)
+        val cap = rows * 9
+        val display = SimpleContainer(cap)
+        stacks.take(cap).forEachIndexed { i, stack -> display.setItem(i, stack) }
         val title = Component.literal("§e[${tier.displayName} Box] §7Possible Rewards")
         val provider = SimpleMenuProvider({ syncId, inv, _ ->
             GachaChestMenu(rows = rows, syncId = syncId, inv = inv, container = display)

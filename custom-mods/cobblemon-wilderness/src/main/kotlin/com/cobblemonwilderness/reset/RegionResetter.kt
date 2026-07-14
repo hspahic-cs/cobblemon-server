@@ -99,15 +99,19 @@ object RegionResetter {
     }
 
     /**
-     * Circuit breaker: true if deleting [deletable] of [total] regions exceeds [maxFraction].
-     * Guards against a fat-fingered box (e.g. collapsed to a point → ~100% deletable) wiping
-     * the world. A maxFraction >= 1.0 disables the check.
+     * Safety breaker (rescoped): true if [box] is too small to be a sane keep-zone — collapsed
+     * toward a point or sliver so that "outside" would engulf spawn and the intended build area.
+     * Either side (X or Z) shorter than [minSideBlocks] fails the check. This is the one
+     * catastrophic misconfig a blanket outside-wipe must guard against; it replaces the old
+     * delete-fraction gate, which now trips on every normal cycle (full-outside deletion is normal).
      *
      * Pure function: unit-tested alongside the geometry.
      */
-    fun exceedsLimit(deletable: Int, total: Int, maxFraction: Double): Boolean {
-        if (maxFraction >= 1.0 || total <= 0) return false
-        return deletable.toDouble() / total.toDouble() > maxFraction
+    fun isBoxDegenerate(box: BoundingBox, minSideBlocks: Int): Boolean {
+        val b = box.normalized()
+        val sideX = b.maxX.toLong() - b.minX.toLong() + 1
+        val sideZ = b.maxZ.toLong() - b.minZ.toLong() + 1
+        return sideX < minSideBlocks || sideZ < minSideBlocks
     }
 
     /** Parses region coords from an `r.X.Z.mca` filename, or null if it doesn't match. */
@@ -126,22 +130,23 @@ object RegionResetter {
      * outside region is monument-checked ([McaTimestampReader.regionHasMonument]) and kept if it holds
      * one — never regenerated, so its world state stays frozen.
      *
-     * Two passes: first classify every region (so we know the delete fraction), then — only if the
-     * [maxDeleteFraction] circuit breaker is satisfied — perform the deletions.
+     * The safety breaker is a degenerate-box guard ([isBoxDegenerate]): a collapsed/sliver keep-box
+     * would make "outside" swallow spawn and builds, so the run aborts and deletes nothing. It never
+     * gates on delete fraction — a full-outside wipe is normal operation now.
      *
      * When [backupTarget] is non-null and this is a real (non-[dryRun]) run, each to-be-deleted file
      * is MOVED into [backupTarget]/<sub>/<name> instead of being unlinked. The move is the deletion —
      * the chunk is gone from world/ and regenerates fresh — and it leaves a restore copy.
      *
-     * [forced] bypasses ONLY the [maxDeleteFraction] circuit breaker for a supervised override; it
-     * changes nothing else (dryRun still only tallies).
+     * [forced] bypasses ONLY the degenerate-box guard for a supervised override; it changes nothing
+     * else (dryRun still only tallies).
      */
     fun run(
         dimensionId: String,
         dimensionFolder: Path,
         box: BoundingBox,
         dryRun: Boolean,
-        maxDeleteFraction: Double,
+        minBoxSideBlocks: Int,
         backupTarget: Path?,
         log: Logger,
         forced: Boolean = false,
@@ -150,6 +155,25 @@ object RegionResetter {
         if (!regionDir.exists()) {
             log.warn("[{}] no region/ folder at {} — nothing to do", dimensionId, regionDir)
             return ResetReport(dimensionId, 0, 0, 0, dryRun)
+        }
+
+        // Safety breaker (rescoped): fail CLOSED on a degenerate/collapsed keep-box — the one
+        // catastrophic misconfig, where "outside" would engulf spawn/builds. Checked up front (box
+        // only), before any scan, so nothing is deleted. forceBreakerOverride is the escape hatch.
+        if (isBoxDegenerate(box, minBoxSideBlocks)) {
+            if (!forced) {
+                log.error(
+                    "[{}] CIRCUIT BREAKER: keep-box X[{}..{}] Z[{}..{}] is degenerate (a side < {} " +
+                        "blocks) — 'outside' would engulf spawn/builds. Aborting; nothing was deleted.",
+                    dimensionId, box.minX, box.maxX, box.minZ, box.maxZ, minBoxSideBlocks,
+                )
+                return ResetReport(dimensionId, 0, 0, 0, dryRun, aborted = true)
+            }
+            log.warn(
+                "[{}] CIRCUIT BREAKER OVERRIDDEN (forced): keep-box is degenerate (a side < {} blocks), " +
+                    "but /wildreset now force was set. Proceeding.",
+                dimensionId, minBoxSideBlocks,
+            )
         }
 
         // Pass 1 — classify. Inside/straddling regions are kept by geometry (no NBT read). Each
@@ -175,30 +199,8 @@ object RegionResetter {
 
         val keptMonument = outside.count { it.disposition == RegionDisposition.KEPT_MONUMENT }
         val toDelete = outside.filter { it.disposition == RegionDisposition.DELETABLE }.map { it.name }
-        // Breaker denominator is ALL present region files (kept + to-delete), per the plan.
         val total = keptInside + keptStraddle + outside.size
         val kept = total - toDelete.size
-        if (exceedsLimit(toDelete.size, total, maxDeleteFraction)) {
-            val pct = if (total > 0) toDelete.size * 100 / total else 0
-            if (!forced) {
-                log.error(
-                    "[{}] CIRCUIT BREAKER: would delete {} of {} region(s) ({}%) > limit {}%. " +
-                        "Aborting — check the box config. Nothing was deleted.",
-                    dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
-                )
-                return ResetReport(
-                    dimensionId, kept, toDelete.size, 0, dryRun,
-                    keptInside = keptInside, keptStraddle = keptStraddle, keptMonument = keptMonument,
-                    aborted = true, scans = outside,
-                )
-            }
-            log.warn(
-                "[{}] CIRCUIT BREAKER OVERRIDDEN (forced): deleting {} of {} region(s) ({}%) exceeds " +
-                    "limit {}%, but /wildreset now force was set. Backups → {}. Proceeding.",
-                dimensionId, toDelete.size, total, pct, (maxDeleteFraction * 100).toInt(),
-                backupTarget ?: "<none — unlinking without backup>",
-            )
-        }
 
         // Pass 2 — remove (or tally) the matching r.X.Z.mca in region/, entities/, poi/. With a
         // backupTarget on a real run we MOVE each file into the snapshot; otherwise we unlink it.

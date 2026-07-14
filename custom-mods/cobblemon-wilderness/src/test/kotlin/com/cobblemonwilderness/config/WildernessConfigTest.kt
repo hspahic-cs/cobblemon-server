@@ -25,10 +25,11 @@ class WildernessConfigTest {
     """.trimIndent()
 
     @Test
-    fun `pre-snapshot config backfills the new fields to defaults instead of false-null`() {
+    fun `pre-snapshot config backfills the snapshot fields to their defaults`() {
         val cfg = WildernessConfig.fromJsonWithDefaults(preSnapshotJson)
-        // Without the backfill, gson would leave these at false / null / 0 — snapshots silently OFF.
-        assertTrue(cfg.backupBeforeReset)
+        // Snapshots now default OFF — the pipeline owns backups; the backfill must not leave the
+        // absent backupDir/retention at null/0 (they'd read as garbage), it restores the defaults.
+        assertFalse(cfg.backupBeforeReset)
         assertEquals("wilderness-snapshots", cfg.backupDir)
         assertEquals(5, cfg.backupRetention)
         // Existing fields are still honored, not reset to defaults.

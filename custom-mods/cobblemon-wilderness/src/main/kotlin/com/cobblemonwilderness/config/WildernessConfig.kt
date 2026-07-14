@@ -99,24 +99,24 @@ data class WildernessConfig(
      */
     val scheduleTimeZone: String = "America/New_York",
     /**
-     * Circuit breaker. If a run would delete more than this fraction of a dimension's region
-     * files, it aborts and deletes nothing — a safety net against a mis-typed box (e.g. one
-     * collapsed to a point). Set to 1.0 to disable.
+     * Safety breaker floor, in blocks. A run ABORTS (deletes nothing) if either side of the enforced
+     * keep-box is shorter than this — the catastrophic misconfig where the box has collapsed toward a
+     * point/sliver so "outside" would swallow spawn and the build area. It does NOT gate on delete
+     * fraction: a full-outside wipe is normal operation. `/wildreset now force` overrides it.
      */
-    val maxDeleteFraction: Double = 0.9,
+    val minKeepBoxSideBlocks: Int = 1024,
     /**
-     * When true (default), a real (non-dryRun) reset MOVES every to-be-deleted region file into
-     * a timestamped snapshot under [backupDir] instead of unlinking it. The move IS the deletion
-     * — the chunk still regenerates fresh because the file is gone from world/ — so it adds a
-     * restore path at ~no extra disk on the same filesystem. This is a per-prune safety net taken
-     * right before the prune; it is SEPARATE from, and not a replacement for, the server's
-     * scheduled world snapshot.
+     * OFF by default: the unified maintenance pipeline takes the world backup (server down, before
+     * the wipe) and owns the rollback point — the mod does NOT back up. When flipped on for manual
+     * use, a real (non-dryRun) reset MOVES every to-be-deleted region file into a timestamped
+     * snapshot under [backupDir] instead of unlinking it; on a normal blanket wipe that would
+     * duplicate ~the whole outside world each cycle and fight the memory goal, so leave it off.
      */
-    val backupBeforeReset: Boolean = true,
+    val backupBeforeReset: Boolean = false,
     /**
-     * Where prune snapshots go. A relative path resolves against the server (game) dir; an
-     * absolute path is used as-is. Default keeps snapshots OUTSIDE the scheduled world-snapshot's
-     * scope (which copies world/ and config/cobblemon-*), so the two don't overlap.
+     * Where prune snapshots go IF [backupBeforeReset] is manually enabled. A relative path resolves
+     * against the server (game) dir; an absolute path is used as-is. Kept OUTSIDE the scheduled
+     * world-snapshot's scope so the two don't overlap.
      */
     val backupDir: String = "wilderness-snapshots",
     /** Keep this many of the most recent prune snapshots; older ones are deleted after a run. 0 = keep all. */
@@ -164,7 +164,8 @@ data class WildernessConfig(
             }
 
             // A pre-snapshot config has no `backupDir` (→ null): the sentinel for "this file predates
-            // the snapshot fields" — restore all three to their defaults (snapshots ON), not OFF.
+            // the snapshot fields" — restore all three to their defaults (snapshots now OFF; the
+            // pipeline owns backups).
             if (parsed.backupDir.isNullOrBlank()) {
                 parsed = parsed.copy(
                     backupBeforeReset = d.backupBeforeReset,

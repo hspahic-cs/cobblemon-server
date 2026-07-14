@@ -35,8 +35,8 @@ class RegionResetterTest {
         McaTestFiles.writeRegion(dim.resolve("poi").resolve("r.$rx.$rz.mca"), listOf(1L))
     }
 
-    private fun run(dim: Path, dryRun: Boolean, maxFraction: Double = 1.0, backup: Path? = null, forced: Boolean = false) =
-        RegionResetter.run("d", dim, box, dryRun, maxFraction, backup, NOPLogger.NOP_LOGGER, forced)
+    private fun run(dim: Path, dryRun: Boolean, minSide: Int = 1, backup: Path? = null, forced: Boolean = false) =
+        RegionResetter.run("d", dim, box, dryRun, minSide, backup, NOPLogger.NOP_LOGGER, forced)
 
     @Test
     fun `real run with backupTarget moves outside non-monument files into the snapshot and keeps inside`() {
@@ -127,14 +127,32 @@ class RegionResetterTest {
     }
 
     @Test
-    fun `a normal run aborts above the fraction and deletes nothing`() {
-        // 1 inside + 1 outside-deletable → deletable 1 of 2 = 50% > the 40% limit → breaker trips.
+    fun `a normal box wiping ~all outside is NOT aborted`() {
+        // The whole point of the rescope: full-outside deletion is normal and must not trip.
+        val dim = makeDimension()
+        try {
+            val report = run(dim, dryRun = false, minSide = 1024)
+            assertFalse(report.aborted)
+            assertEquals(1, report.regionsDeleted)
+            assertFalse(Files.exists(dim.resolve("region").resolve("r.100.100.mca")))
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `a degenerate box aborts and deletes nothing`() {
         val dim = makeDimension()
         val backup = dim.resolveSibling("snap")
         try {
-            val report = run(dim, dryRun = false, maxFraction = 0.4, backup = backup)
+            // Collapsed keep-box (a single block) → both sides far below the 1024 floor → abort.
+            val degenerate = BoundingBox(minX = 0, minZ = 0, maxX = 0, maxZ = 0)
+            val report = RegionResetter.run(
+                "d", dim, degenerate, dryRun = false, minBoxSideBlocks = 1024,
+                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+            )
             assertTrue(report.aborted)
-            assertEquals(0, report.bytesFreed)
+            assertEquals(0, report.regionsDeleted)
             for (sub in subfolders) {
                 assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
             }
@@ -145,20 +163,19 @@ class RegionResetterTest {
     }
 
     @Test
-    fun `a forced run proceeds past the fraction and still backs up`() {
+    fun `forceBreakerOverride bypasses the degenerate-box guard`() {
         val dim = makeDimension()
-        val backup = dim.resolveSibling("snap")
         try {
-            val report = run(dim, dryRun = false, maxFraction = 0.4, backup = backup, forced = true)
+            val degenerate = BoundingBox(minX = 0, minZ = 0, maxX = 0, maxZ = 0)
+            val report = RegionResetter.run(
+                "d", dim, degenerate, dryRun = false, minBoxSideBlocks = 1024,
+                backupTarget = null, log = NOPLogger.NOP_LOGGER, forced = true,
+            )
             assertFalse(report.aborted)
-            assertEquals(1, report.regionsDeleted)
-            for (sub in subfolders) {
-                assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
-                assertTrue(Files.exists(backup.resolve(sub).resolve("r.100.100.mca")))
-                assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
-            }
+            // r.100.100 is fully outside the collapsed box and non-monument → deleted.
+            assertFalse(Files.exists(dim.resolve("region").resolve("r.100.100.mca")))
         } finally {
-            dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
+            dim.toFile().deleteRecursively()
         }
     }
 
@@ -245,12 +262,16 @@ class RegionResetterTest {
     }
 
     @Test
-    fun `circuit breaker trips only above the fraction`() {
-        assertTrue(RegionResetter.exceedsLimit(95, 100, 0.9))
-        assertFalse(RegionResetter.exceedsLimit(90, 100, 0.9))
-        assertFalse(RegionResetter.exceedsLimit(50, 100, 0.9))
-        assertFalse(RegionResetter.exceedsLimit(100, 100, 1.0))
-        assertFalse(RegionResetter.exceedsLimit(0, 0, 0.9))
+    fun `isBoxDegenerate flags collapsed and sliver boxes, not a sane one`() {
+        // The default keep-box is far above any floor.
+        assertFalse(RegionResetter.isBoxDegenerate(box, 1024))
+        // Collapsed to a point.
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), 1024))
+        // Sliver: wide on X, collapsed on Z → still degenerate (either side triggers).
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(minX = -20000, minZ = 0, maxX = 20000, maxZ = 10), 1024))
+        // Exactly at the floor (side == minSide) is NOT degenerate; one below is.
+        assertFalse(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1023, 1023), 1024)) // side 1024
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1022, 1022), 1024))  // side 1023
     }
 
     @Test

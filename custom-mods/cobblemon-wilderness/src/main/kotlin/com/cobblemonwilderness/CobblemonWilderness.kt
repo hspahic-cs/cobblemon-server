@@ -77,8 +77,8 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
         // /wildreset now (forceNextBoot). Unarmed boots (deploys, apt restarts) are inert — no
         // interval clock of our own. See the "Cadence & scheduling" plan section.
         val armed = state.forceNextBoot
-        // Separate one-shot flag (T4): armed only by `/wildreset now force`. Bypasses ONLY the
-        // maxDeleteFraction breaker for this run; consumed alongside forceNextBoot below.
+        // Separate one-shot flag: armed only by `/wildreset now force`. Bypasses ONLY the
+        // degenerate-box safety breaker for this run; consumed alongside forceNextBoot below.
         val forceBreaker = state.forceBreakerOverride
         var stateDirty = false
         logger.info(
@@ -126,7 +126,7 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             logger.info("[{}] running reset (manually armed, dryRun={}, forceBreaker={})...", dimId, config.dryRun, forceBreaker)
             val dimBackup = snapshotRoot?.resolve(dimId.replace(':', '_'))
             val report = RegionResetter.run(
-                dimId, folder, box, config.dryRun, config.maxDeleteFraction,
+                dimId, folder, box, config.dryRun, config.minKeepBoxSideBlocks,
                 dimBackup, logger, forced = forceBreaker,
             )
 

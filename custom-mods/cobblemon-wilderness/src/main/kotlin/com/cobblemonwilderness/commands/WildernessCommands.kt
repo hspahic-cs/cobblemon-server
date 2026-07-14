@@ -74,13 +74,13 @@ object WildernessCommands {
                 continue
             }
             val report = RegionResetter.run(
-                dimId, folder, box, dryRun = true, maxDeleteFraction = cfg.maxDeleteFraction,
+                dimId, folder, box, dryRun = true, minBoxSideBlocks = cfg.minKeepBoxSideBlocks,
                 backupTarget = null, log = CobblemonWilderness.logger,
             )
             val mb = report.bytesFreed / (1024 * 1024)
             if (report.aborted) {
                 src.sendSuccess({
-                    Component.literal("  §c$dimId: would delete ${report.regionsDeleted}/${report.regionsKept + report.regionsDeleted} regions — exceeds maxDeleteFraction (${cfg.maxDeleteFraction}); a real run would ABORT. Check the box.")
+                    Component.literal("  §c$dimId: keep-box is degenerate (a side < ${cfg.minKeepBoxSideBlocks} blocks); a real run would ABORT and delete nothing. Check the box.")
                 }, false)
             } else {
                 src.sendSuccess({
@@ -127,9 +127,9 @@ object WildernessCommands {
     }
 
     /**
-     * `/wildreset now force` — arms the next boot AND bypasses the `maxDeleteFraction` circuit breaker
-     * for that one run (the supervised first large cleanup). Everything else — `dryRun`, baseline-skip —
-     * still applies. Both flags are consumed after the run.
+     * `/wildreset now force` — arms the next boot AND bypasses the degenerate-box safety breaker for
+     * that one run (a deliberate override). Everything else — `dryRun`, baseline-skip — still applies.
+     * Both flags are consumed after the run.
      */
     private fun armNowForce(ctx: CommandContext<CommandSourceStack>): Int {
         val src = ctx.source
@@ -140,7 +140,7 @@ object WildernessCommands {
         state.save()
 
         src.sendSuccess({ Component.literal("§aReset armed WITH breaker override — it will run on the next server restart.") }, false)
-        src.sendSuccess({ Component.literal("§c⚠ The maxDeleteFraction circuit breaker (${cfg.maxDeleteFraction}) will be BYPASSED for this one run.") }, false)
+        src.sendSuccess({ Component.literal("§c⚠ The degenerate-box safety breaker (min side ${cfg.minKeepBoxSideBlocks} blocks) will be BYPASSED for this one run.") }, false)
         if (!cfg.enabled) {
             src.sendSuccess({ Component.literal("§e⚠ enabled=false in config — the armed reset will NOT run until you set enabled=true.") }, false)
         }

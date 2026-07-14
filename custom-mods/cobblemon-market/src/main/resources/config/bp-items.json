@@ -55,5 +55,11 @@
     "displayName": "Shiny Voucher",
     "isVoucher": true,
     "voucherType": "shiny"
+  },
+  {
+    "id": "totem_of_undying",
+    "cost": 40,
+    "displayName": "Totem of Undying",
+    "isVoucher": false
   }
 ]

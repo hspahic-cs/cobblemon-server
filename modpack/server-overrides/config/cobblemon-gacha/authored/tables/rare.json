@@ -5,7 +5,7 @@
     {
       "lootTier": "Standard",
       "label": "2 Rare Candy",
-      "weightPct": 8.2,
+      "weightPct": 9.8,
       "items": [
         {
           "type": "vanilla",
@@ -16,22 +16,9 @@
       "notes": "Two Rare Candies — instantly level up"
     },
     {
-      "lootTier": "Standard",
-      "label": "3 Exp Candy M",
-      "weightPct": 5.8,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_m",
-          "count": 3
-        }
-      ],
-      "notes": ""
-    },
-    {
       "lootTier": "Mid",
       "label": "2 EXP Candy L",
-      "weightPct": 4.9,
+      "weightPct": 5.8,
       "items": [
         {
           "type": "vanilla",
@@ -44,7 +31,7 @@
     {
       "lootTier": "Mid",
       "label": "Uncommon Pokémon Egg",
-      "weightPct": 10.6,
+      "weightPct": 12.6,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -58,7 +45,7 @@
     {
       "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 5.3,
+      "weightPct": 6.3,
       "items": [
         {
           "type": "vanilla",
@@ -69,29 +56,9 @@
       "notes": "XP-boost held item — not a Pokémon egg"
     },
     {
-      "lootTier": "Mid",
-      "label": "EV Training Item (random)",
-      "weightPct": 3.9,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:power_anklet",
-            "cobblemon:power_band",
-            "cobblemon:power_belt",
-            "cobblemon:power_bracer",
-            "cobblemon:power_lens",
-            "cobblemon:power_weight"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Random EV-training Power item"
-    },
-    {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 4.9,
+      "weightPct": 5.8,
       "items": [
         {
           "type": "vanilla",
@@ -104,7 +71,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pokémon Egg",
-      "weightPct": 14.7,
+      "weightPct": 17.5,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -116,22 +83,9 @@
       "notes": "A rare-pool Pokémon egg"
     },
     {
-      "lootTier": "High",
-      "label": "2 EXP candy XL",
-      "weightPct": 2.4,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_xl",
-          "count": 2
-        }
-      ],
-      "notes": ""
-    },
-    {
       "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 0.5,
+      "weightPct": 0.6,
       "items": [
         {
           "type": "vanilla",
@@ -144,7 +98,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Ultra Key",
-      "weightPct": 0.5,
+      "weightPct": 0.6,
       "items": [
         {
           "type": "gacha_key",
@@ -157,7 +111,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Rare keys",
-      "weightPct": 0.9,
+      "weightPct": 1.1,
       "items": [
         {
           "type": "gacha_key",
@@ -170,7 +124,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Frost",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -183,7 +137,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Storms",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -196,7 +150,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Embers",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -207,35 +161,9 @@
       "notes": "Summons Moltres — charge by defeating Fire-types"
     },
     {
-      "lootTier": "Mid",
-      "label": "Keystone",
-      "weightPct": 1.9,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "mega_showdown:keystone",
-          "count": 1
-        }
-      ],
-      "notes": "Mega Evolution — trainer keystone"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Mega Stone",
-      "weightPct": 1.9,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "mega_showdown:mega_stone",
-          "count": 1
-        }
-      ],
-      "notes": "Raw Mega Stone (becomes a species Mega Stone)"
-    },
-    {
       "lootTier": "High",
       "label": "Silk Touch Book",
-      "weightPct": 2.9,
+      "weightPct": 3.5,
       "items": [
         {
           "type": "enchanted_book",
@@ -248,47 +176,8 @@
     },
     {
       "lootTier": "High",
-      "label": "Competitive Held Item (random)",
-      "weightPct": 4.9,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:choice_band",
-            "cobblemon:choice_specs",
-            "cobblemon:choice_scarf",
-            "cobblemon:assault_vest",
-            "cobblemon:heavy_duty_boots",
-            "cobblemon:life_orb",
-            "cobblemon:focus_sash",
-            "cobblemon:rocky_helmet",
-            "cobblemon:eviolite"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Choice items, Assault Vest, Heavy-Duty Boots, Life Orb, Focus Sash, Rocky Helmet, Eviolite"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Breeding Item (random)",
-      "weightPct": 2.9,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:destiny_knot",
-            "cobblemon:everstone"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Destiny Knot / Everstone"
-    },
-    {
-      "lootTier": "High",
       "label": "3 IV Candy (random)",
-      "weightPct": 3.9,
+      "weightPct": 4.6,
       "items": [
         {
           "type": "random_item",
@@ -308,7 +197,7 @@
     {
       "lootTier": "High",
       "label": "16 Eye of Ender",
-      "weightPct": 1.8,
+      "weightPct": 2.1,
       "items": [
         {
           "type": "vanilla",
@@ -321,7 +210,7 @@
     {
       "lootTier": "High",
       "label": "Titan Key",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -334,7 +223,7 @@
     {
       "lootTier": "High",
       "label": "Rock Golem Key",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -347,7 +236,7 @@
     {
       "lootTier": "High",
       "label": "Steel Golem Key",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -360,7 +249,7 @@
     {
       "lootTier": "High",
       "label": "Ice Golem Key",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -373,7 +262,7 @@
     {
       "lootTier": "High",
       "label": "Dragon Golem Key",
-      "weightPct": 1.9,
+      "weightPct": 2.3,
       "items": [
         {
           "type": "vanilla",
@@ -386,7 +275,7 @@
     {
       "lootTier": "High",
       "label": "Zygarde Core",
-      "weightPct": 2.0,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -395,6 +284,45 @@
         }
       ],
       "notes": "Core to assemble Zygarde — combine with Zygarde Cells"
+    },
+    {
+      "lootTier": "High",
+      "label": "TR Voucher (5 BP)",
+      "weightPct": 3.2,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:tr_voucher",
+          "count": 1
+        }
+      ],
+      "notes": "Exchange for a random TR at the Trading Post"
+    },
+    {
+      "lootTier": "High",
+      "label": "Held Item Voucher (4 BP)",
+      "weightPct": 2.4,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:held_item_voucher",
+          "count": 1
+        }
+      ],
+      "notes": "Exchange for a random held item at the Trading Post"
+    },
+    {
+      "lootTier": "High",
+      "label": "Griseous Orb",
+      "weightPct": 3.3,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:griseous_orb",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Giratina at the Giratina Pedestal (Distortion World); also yields an Antimatter Globe"
     }
   ]
 }

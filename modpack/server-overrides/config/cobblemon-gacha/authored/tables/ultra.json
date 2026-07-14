@@ -5,7 +5,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Azure Flute",
-      "weightPct": 0.7,
+      "weightPct": 0.8,
       "items": [
         {
           "type": "vanilla",
@@ -18,7 +18,7 @@
     {
       "lootTier": "Jackpot",
       "label": "Totem of Undying (Zacian)",
-      "weightPct": 1.4,
+      "weightPct": 1.6,
       "items": [
         {
           "type": "vanilla",
@@ -29,22 +29,9 @@
       "notes": "Summons Zacian (with a Rusted Sword at the Sword Temple)"
     },
     {
-      "lootTier": "Jackpot",
-      "label": "Griseous Orb",
-      "weightPct": 1.4,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "mega_showdown:griseous_orb",
-          "count": 1
-        }
-      ],
-      "notes": "Summons Giratina at the Giratina Pedestal (Distortion World); also yields an Antimatter Globe"
-    },
-    {
       "lootTier": "High",
       "label": "Rainbow Feather",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -57,7 +44,7 @@
     {
       "lootTier": "High",
       "label": "Red Chain",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -70,7 +57,7 @@
     {
       "lootTier": "High",
       "label": "Shiny Egg",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -84,7 +71,7 @@
     {
       "lootTier": "High",
       "label": "Light Stone",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -97,7 +84,7 @@
     {
       "lootTier": "High",
       "label": "Dark Stone",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -110,7 +97,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (U)",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -123,7 +110,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (A)",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -136,7 +123,7 @@
     {
       "lootTier": "Mid",
       "label": "Proof of Conquest (M)",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",
@@ -149,7 +136,7 @@
     {
       "lootTier": "Mid",
       "label": "Fullmoon Whistle",
-      "weightPct": 5.7,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -162,7 +149,7 @@
     {
       "lootTier": "Mid",
       "label": "Newmoon Whistle",
-      "weightPct": 5.7,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -175,7 +162,7 @@
     {
       "lootTier": "Mid",
       "label": "Liberty Pass",
-      "weightPct": 5.7,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -188,7 +175,7 @@
     {
       "lootTier": "Mid",
       "label": "Curry of Justice",
-      "weightPct": 5.7,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -201,7 +188,7 @@
     {
       "lootTier": "Mid",
       "label": "2 Master Balls",
-      "weightPct": 5.7,
+      "weightPct": 6.5,
       "items": [
         {
           "type": "vanilla",
@@ -213,21 +200,8 @@
     },
     {
       "lootTier": "Standard",
-      "label": "2 Ability Patches",
-      "weightPct": 11.5,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:ability_patch",
-          "count": 2
-        }
-      ],
-      "notes": "Two Ability Patches — change a Pokémon to its Hidden Ability"
-    },
-    {
-      "lootTier": "Standard",
       "label": "Ultra Egg",
-      "weightPct": 17.1,
+      "weightPct": 20.2,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -236,12 +210,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "An ultra-rare Pokémon egg (pool includes a Battle Bond Greninja). Absorbed the removed Ash Cap's weight."
+      "notes": "An ultra-rare Pokémon egg (pool includes a Battle Bond Greninja). Absorbed the removed Ability Patches weight."
     },
     {
       "lootTier": "Jackpot",
       "label": "2 Ultra Keys",
-      "weightPct": 0.7,
+      "weightPct": 0.8,
       "items": [
         {
           "type": "gacha_key",
@@ -254,7 +228,7 @@
     {
       "lootTier": "High",
       "label": "Vortex Stone",
-      "weightPct": 4.3,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "vanilla",

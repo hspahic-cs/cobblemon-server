@@ -5,7 +5,7 @@
 # EST<->EDT automatically — 05:30 local year-round, NOT a hardcoded UTC offset that would drift an
 # hour across DST. Verify with: `systemd-analyze calendar '*-*-* 05:30:00 America/New_York'`.
 [Unit]
-Description=Daily 05:30 ET wilderness prune for cobblemon-%i
+Description=Daily 05:30 ET backup + periodic wilderness reset for cobblemon-%i
 
 [Timer]
 OnCalendar=*-*-* 05:30:00 America/New_York

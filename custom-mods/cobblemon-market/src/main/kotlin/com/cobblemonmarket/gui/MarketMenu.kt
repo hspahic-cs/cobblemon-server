@@ -74,6 +74,12 @@ object MarketMenu {
     private const val SINGLE_PREV_SLOT = 0
     private const val NEXT_SLOT = 8
 
+    /** Nav slot for the "Back to type list" button in the TM Merchant's type view. */
+    private const val BACK_SLOT = 0
+
+    /** Sentinel vendor tag for the consolidated TM Merchant (no items.json scope uses it). */
+    const val TM_MERCHANT_TAG = "tm_merchant"
+
     /** Content slot the Upgrades tab renders the "extra home slot" purchase into (row 2, center). */
     private const val HOME_UPGRADE_SLOT = 22
 
@@ -92,7 +98,39 @@ object MarketMenu {
     private val DEFAULT_TABS = listOf(
         Tab("General Store", Items.EMERALD, ""),
         Tab("Blocks & Decor", Items.BRICKS, "blocks"),
+        Tab("Special Items", Items.HEART_OF_THE_SEA, "special_items"),
         Tab("Upgrades", Items.NETHER_STAR, null),
+    )
+
+    /** Resolve a mega_showdown Arceus plate item for a type icon, falling back to paper. */
+    private fun plateIcon(plateName: String): Item {
+        val rl = ResourceLocation.tryParse("mega_showdown:${plateName}_plate") ?: return Items.PAPER
+        return BuiltInRegistries.ITEM.getOptional(rl).orElse(Items.PAPER)
+    }
+
+    /**
+     * The TM Merchant's 18 type entries (scope `tm_<type>`), built lazily so the plate-icon
+     * registry lookups happen at open-time rather than class-init. Normal has no plate → paper.
+     */
+    private fun tmTypeTabs(): List<Tab> = listOf(
+        Tab("Normal", Items.PAPER, "tm_normal"),
+        Tab("Fire", plateIcon("flame"), "tm_fire"),
+        Tab("Water", plateIcon("splash"), "tm_water"),
+        Tab("Electric", plateIcon("zap"), "tm_electric"),
+        Tab("Grass", plateIcon("meadow"), "tm_grass"),
+        Tab("Ice", plateIcon("icicle"), "tm_ice"),
+        Tab("Fighting", plateIcon("fist"), "tm_fighting"),
+        Tab("Poison", plateIcon("toxic"), "tm_poison"),
+        Tab("Ground", plateIcon("earth"), "tm_ground"),
+        Tab("Flying", plateIcon("sky"), "tm_flying"),
+        Tab("Psychic", plateIcon("mind"), "tm_psychic"),
+        Tab("Bug", plateIcon("insect"), "tm_bug"),
+        Tab("Rock", plateIcon("stone"), "tm_rock"),
+        Tab("Ghost", plateIcon("spooky"), "tm_ghost"),
+        Tab("Dragon", plateIcon("draco"), "tm_dragon"),
+        Tab("Dark", plateIcon("dread"), "tm_dark"),
+        Tab("Steel", plateIcon("iron"), "tm_steel"),
+        Tab("Fairy", plateIcon("pixie"), "tm_fairy"),
     )
 
     /**
@@ -102,6 +140,20 @@ object MarketMenu {
      *   A non-empty tag = a single-category scoped vendor (e.g. `"tm_fire"`) with no tab bar.
      */
     fun open(player: ServerPlayer, vendorTag: String = "") {
+        // TM Merchant: one NPC, two-level (type picker → that type's TRs). Its "tabs" are the 18
+        // type entries, navigated via `selectedType` rather than a tab bar.
+        if (vendorTag == TM_MERCHANT_TAG) {
+            val types = tmTypeTabs()
+            val container = SimpleContainer(SLOTS)
+            populateTmMerchant(container, player, types, selectedType = null, page = 0)
+            val provider = SimpleMenuProvider(
+                { syncId, inv, _ -> Impl(syncId, inv, container, player, types, tmMerchant = true) },
+                Component.literal("§0TM Merchant"),
+            )
+            player.openMenu(provider)
+            return
+        }
+
         val tabs = if (vendorTag.isEmpty()) DEFAULT_TABS
                    else listOf(Tab(formatTag(vendorTag), Items.EMERALD, vendorTag))
         val container = SimpleContainer(SLOTS)
@@ -165,6 +217,63 @@ object MarketMenu {
         if (page > 0) container.setItem(prevSlot(tabs), navArrowStack("§a§lPrevious Page", page, pages))
         if (page < pages - 1) container.setItem(NEXT_SLOT, navArrowStack("§a§lNext Page", page, pages))
         container.setChanged()
+    }
+
+    // ─── TM Merchant (two-level: type picker → per-type TR list) ──────────────────────────────
+
+    /**
+     * (Re)populate the TM Merchant. [selectedType] `null` renders the 18-type picker grid; a
+     * non-null index renders that type's TRs (scope `tm_<type>`) paginated, with a Back button.
+     */
+    private fun populateTmMerchant(
+        container: Container, player: ServerPlayer,
+        types: List<Tab>, selectedType: Int?, page: Int,
+    ) {
+        for (i in 0 until container.containerSize) container.setItem(i, ItemStack.EMPTY)
+        container.setItem(BALANCE_SLOT, balanceStack(player))
+
+        if (selectedType == null) {
+            // Picker: 18 type icons filling the content area (rows 1-2).
+            for ((i, type) in types.withIndex()) {
+                container.setItem(FIRST_ITEM_SLOT + i, tmTypeIconStack(type))
+            }
+            container.setChanged()
+            return
+        }
+
+        // Type view: that type's TRs, paginated, with a Back button (slot 0) and page arrows (6/8).
+        val type = types[selectedType]
+        val all = visibleItems(type.scope!!)
+        val pages = ((all.size + PAGE_SIZE - 1) / PAGE_SIZE).coerceAtLeast(1)
+        container.setItem(BACK_SLOT, tmBackStack(type))
+        val start = page * PAGE_SIZE
+        val slice = all.subList(start.coerceAtMost(all.size), (start + PAGE_SIZE).coerceAtMost(all.size))
+        for ((index, kv) in slice.withIndex()) {
+            container.setItem(FIRST_ITEM_SLOT + index, itemStackFor(kv.key, kv.value))
+        }
+        if (page > 0) container.setItem(TABBED_PREV_SLOT, navArrowStack("§a§lPrevious Page", page, pages))
+        if (page < pages - 1) container.setItem(NEXT_SLOT, navArrowStack("§a§lNext Page", page, pages))
+        container.setChanged()
+    }
+
+    private fun tmTypeIconStack(type: Tab): ItemStack {
+        val stack = ItemStack(type.icon)
+        stack.set(DataComponents.CUSTOM_NAME, line("§e§l${type.label} TMs"))
+        val count = visibleItems(type.scope!!).size
+        stack.set(DataComponents.LORE, ItemLore(listOf(
+            line("§7$count moves available.") as Component,
+            line("§8Click to browse.") as Component,
+        )))
+        return stack
+    }
+
+    private fun tmBackStack(type: Tab): ItemStack {
+        val stack = ItemStack(Items.ARROW)
+        stack.set(DataComponents.CUSTOM_NAME, line("§c§l◀ Back to Types"))
+        stack.set(DataComponents.LORE, ItemLore(listOf(
+            line("§7Viewing: §f${type.label} TMs") as Component,
+        )))
+        return stack
     }
 
     /** Component with italics off — vanilla auto-italicizes custom item names and lore. */
@@ -320,19 +429,30 @@ object MarketMenu {
         private val container: Container,
         private val viewer: ServerPlayer,
         private val tabs: List<Tab>,
+        private val tmMerchant: Boolean = false,
     ) : ChestMenu(MenuType.GENERIC_9x6, syncId, inv, container, ROWS) {
 
         private var activeTab: Int = 0
         private var page: Int = 0
 
+        /** TM Merchant only: `null` = showing the type picker; else the selected type index. */
+        private var selectedType: Int? = null
+
         override fun clicked(slotId: Int, button: Int, clickType: ClickType, player: Player) {
-            // Drag and number-key swaps are blocked entirely — they'd pull display items.
-            if (clickType == ClickType.QUICK_CRAFT || clickType == ClickType.SWAP) return
+            // Drag, number-key swaps, and double-click "collect all" are blocked entirely — they'd
+            // pull the chest's display copies into the player's cursor/inventory (free extraction).
+            if (clickType == ClickType.QUICK_CRAFT || clickType == ClickType.SWAP ||
+                clickType == ClickType.PICKUP_ALL) return
             if (slotId !in 0 until SLOTS) {
                 super.clicked(slotId, button, clickType, player)
                 return
             }
             if (slotId == BALANCE_SLOT) return
+
+            if (tmMerchant) {
+                clickedTmMerchant(slotId, button, clickType, player)
+                return
+            }
 
             // ── Nav row ──
             if (slotId < FIRST_ITEM_SLOT) {
@@ -400,6 +520,70 @@ object MarketMenu {
             broadcastChanges()
         }
 
+        /** TM Merchant click handling: type picker → per-type TR list, Back, pages, buy/sell. */
+        private fun clickedTmMerchant(slotId: Int, button: Int, clickType: ClickType, player: Player) {
+            val sel = selectedType
+            if (sel == null) {
+                // Picker: click a type icon to drill in.
+                if (slotId >= FIRST_ITEM_SLOT) {
+                    val idx = slotId - FIRST_ITEM_SLOT
+                    if (idx in tabs.indices) {
+                        selectedType = idx
+                        page = 0
+                        populateTmMerchant(container, viewer, tabs, selectedType, page)
+                        broadcastChanges()
+                    }
+                }
+                return
+            }
+
+            // Type view nav row.
+            if (slotId < FIRST_ITEM_SLOT) {
+                if (slotId == BACK_SLOT) {
+                    selectedType = null
+                    page = 0
+                    populateTmMerchant(container, viewer, tabs, selectedType, page)
+                    broadcastChanges()
+                    return
+                }
+                if (slotId == TABBED_PREV_SLOT || slotId == NEXT_SLOT) {
+                    val all = visibleItems(tabs[sel].scope!!)
+                    val pages = ((all.size + PAGE_SIZE - 1) / PAGE_SIZE).coerceAtLeast(1)
+                    val next = if (slotId == NEXT_SLOT) page + 1 else page - 1
+                    if (next in 0 until pages) {
+                        page = next
+                        populateTmMerchant(container, viewer, tabs, selectedType, page)
+                        broadcastChanges()
+                    }
+                }
+                return
+            }
+
+            // Type view content: buy/sell a TR (TRs are buy-only, but keep the shared semantics).
+            val sp = player as? ServerPlayer ?: return
+            val items = visibleItems(tabs[sel].scope!!)
+            val itemIndex = page * PAGE_SIZE + (slotId - FIRST_ITEM_SLOT)
+            if (itemIndex !in items.indices) return
+            val (itemId, entry) = items[itemIndex]
+
+            val (action, qty) = when {
+                button == 0 && clickType == ClickType.PICKUP      -> "buy" to 1
+                button == 0 && clickType == ClickType.QUICK_MOVE  -> "buy" to 16
+                button == 1 && clickType == ClickType.PICKUP      -> "sell" to 1
+                button == 1 && clickType == ClickType.QUICK_MOVE  -> "sell" to 64
+                else -> return
+            }
+            if (action == "sell" && !entry.isSellable) {
+                sp.sendSystemMessage(Component.literal("§c[Market] This vendor doesn't buy items back."))
+                return
+            }
+            val result: TradeResult = if (action == "buy") TradeOps.buy(sp, itemId, qty) else TradeOps.sell(sp, itemId, qty)
+            val delivered = if (action == "buy") qty * entry.effectiveBundleSize else qty
+            reportTrade(sp, action, itemId, delivered, result)
+            populateTmMerchant(container, viewer, tabs, selectedType, page)
+            broadcastChanges()
+        }
+
         /**
          * Shift-click semantics. Shift-clicking a CHEST slot is a no-op (don't let players take
          * display items). Shift-clicking an INVENTORY slot sells the whole stack at the current
@@ -408,6 +592,7 @@ object MarketMenu {
          */
         override fun quickMoveStack(player: Player, slotIndex: Int): ItemStack {
             if (slotIndex in 0 until SLOTS) return ItemStack.EMPTY
+            if (tmMerchant) return ItemStack.EMPTY  // TM Merchant carries only buy-only TRs.
             val sp = player as? ServerPlayer ?: return ItemStack.EMPTY
             val scope = tabs[activeTab].scope ?: return ItemStack.EMPTY  // Upgrades tab: no selling.
             val slot = slots.getOrNull(slotIndex) ?: return ItemStack.EMPTY

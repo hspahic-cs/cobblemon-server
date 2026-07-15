@@ -14,6 +14,7 @@ import com.cobblemonmarket.data.PriceHistory
 import java.time.ZoneId
 import com.cobblemonmarket.economy.TradeOps
 import com.cobblemonmarket.economy.TradeResult
+import com.cobblemonmarket.gui.MarketMenu
 import com.cobblemonmarket.pricing.PricingEngine
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.DoubleArgumentType
@@ -184,11 +185,15 @@ object MarketCommands {
                         .executes { ctx -> spawnVendor(ctx.source, ""); 1 }
                         .then(Commands.argument("vendorTag", StringArgumentType.word())
                             .suggests { _, builder ->
-                                CobblemonMarket.items.values
+                                val scopes = CobblemonMarket.items.values
                                     .map { it.vendorScope }
                                     .filter { it.isNotEmpty() }
                                     .toSortedSet()
-                                    .forEach { builder.suggest(it) }
+                                // Vendors not backed by items.json scopes (their tags are handled by
+                                // dedicated hooks) — surface them here so they're discoverable.
+                                scopes.add("bp_shop")           // BP shop → BpShopNpcHook
+                                scopes.add(MarketMenu.TM_MERCHANT_TAG)
+                                scopes.forEach { builder.suggest(it) }
                                 builder.buildFuture()
                             }
                             .executes { ctx ->
@@ -728,7 +733,9 @@ object MarketCommands {
         CobblemonMarket.config = MarketConfig.load(configDir)
         CobblemonMarket.items = ItemConfig.load(configDir)
         CobblemonMarket.marketStore.ensureInitialized(CobblemonMarket.items)
+        com.cobblemonmarket.bp.BpShopConfig.reload()
         source.sendSystemMessage(Component.literal(
-            "[Market] Config reloaded. ${CobblemonMarket.items.size} items loaded."))
+            "[Market] Config reloaded. ${CobblemonMarket.items.size} items, " +
+                "${com.cobblemonmarket.bp.BpShopConfig.getAllItems().size} BP shop items loaded."))
     }
 }

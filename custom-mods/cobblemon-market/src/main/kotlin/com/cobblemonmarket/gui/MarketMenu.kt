@@ -1,6 +1,7 @@
 package com.cobblemonmarket.gui
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.bp.Vouchers
 import com.cobblemonmarket.config.ItemEntry
 import com.cobblemonmarket.config.effectiveBundleSize
 import com.cobblemonmarket.config.effectiveBuyClamp
@@ -194,6 +195,35 @@ object MarketMenu {
             id.contains("candy")                                 -> 5  // candies
             else                                                 -> 6  // everything else
         }
+    }
+
+    /**
+     * The voucher type redeemable at [scope], or null if that scope takes no voucher. TR vendors
+     * (the TM Merchant and any `tm_<type>` vendor) accept `tr` vouchers; the held-item vendor
+     * accepts `held_item` vouchers.
+     */
+    private fun voucherTypeForScope(scope: String?): String? = when {
+        scope == null -> null
+        scope == "held_items" -> "held_item"
+        scope == TM_MERCHANT_TAG || scope.startsWith("tm_") -> "tr"
+        else -> null
+    }
+
+    /**
+     * If [player] holds a voucher valid for [scope], consume one and deliver a single [itemId] for
+     * free (bundle-size units), then return true so the caller skips the money purchase. This is the
+     * "check for a voucher before charging money" path. Only fires for single-item buys; bulk
+     * (shift) buys still pay money.
+     */
+    private fun tryRedeemVoucher(player: ServerPlayer, scope: String?, itemId: String, entry: ItemEntry): Boolean {
+        val vType = voucherTypeForScope(scope) ?: return false
+        if (!Vouchers.consume(player, vType)) return false
+        val item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemId))
+        val stack = ItemStack(item, entry.effectiveBundleSize)
+        val name = stack.hoverName.string
+        if (!player.inventory.add(stack)) player.drop(stack, false)
+        player.sendSystemMessage(Component.literal("§a[Market] Redeemed a voucher for §f$name§a (no charge)."))
+        return true
     }
 
     /** Number of pages this tab needs (upgrade/non-item tabs are always a single page). */
@@ -533,6 +563,13 @@ object MarketMenu {
                 return
             }
 
+            // Vendors check for a matching voucher before charging money (single-item buys only).
+            if (action == "buy" && qty == 1 && tryRedeemVoucher(sp, tab.scope, itemId, entry)) {
+                populate(container, viewer, tabs, activeTab, page)
+                broadcastChanges()
+                return
+            }
+
             val result: TradeResult = if (action == "buy") TradeOps.buy(sp, itemId, qty) else TradeOps.sell(sp, itemId, qty)
             val delivered = if (action == "buy") qty * entry.effectiveBundleSize else qty
             reportTrade(sp, action, itemId, delivered, result)
@@ -595,6 +632,12 @@ object MarketMenu {
             }
             if (action == "sell" && !entry.isSellable) {
                 sp.sendSystemMessage(Component.literal("§c[Market] This vendor doesn't buy items back."))
+                return
+            }
+            // TR vendors check for a `tr` voucher before charging money (single-item buys only).
+            if (action == "buy" && qty == 1 && tryRedeemVoucher(sp, tabs[sel].scope, itemId, entry)) {
+                populateTmMerchant(container, viewer, tabs, selectedType, page)
+                broadcastChanges()
                 return
             }
             val result: TradeResult = if (action == "buy") TradeOps.buy(sp, itemId, qty) else TradeOps.sell(sp, itemId, qty)

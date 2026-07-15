@@ -3,6 +3,7 @@ package com.cobblemonranked.tournament
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.battle.BattleMode
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.server.MinecraftServer
@@ -26,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object TournamentManager {
 
+    /** Default (Singles) roster size. Doubles uses [BattleMode.tournamentRoster] (6) instead. */
     const val ROSTER_SIZE = 9
     const val MAX_SPECIALS_ROSTER = 4
 
@@ -34,15 +36,23 @@ object TournamentManager {
     data class Entry(val uuid: UUID, val name: String, val pokemonUuids: List<UUID>, val rentalTeamId: String? = null)
 
     @Volatile private var open = false
+    @Volatile private var mode: BattleMode = BattleMode.SINGLES
     private val entries = ConcurrentHashMap<UUID, Entry>()
 
     fun isOpen(): Boolean = open
 
+    /** Singles or Doubles for the current/most-recent tournament. */
+    val currentMode: BattleMode get() = mode
+
+    /** Roster (pre-select) size for the current tournament mode: 9 Singles, 6 Doubles. */
+    val rosterSize: Int get() = mode.tournamentRoster
+
     /** Opens a fresh registration window (clears any prior entrants) and announces it. */
-    fun openRegistration(server: MinecraftServer) {
+    fun openRegistration(server: MinecraftServer, mode: BattleMode = BattleMode.SINGLES) {
         open = true
+        this.mode = mode
         entries.clear()
-        val header = Component.literal("§6§l[Tournament] §r§eRegistration is OPEN! ")
+        val header = Component.literal("§6§l[Tournament] §r§e${mode.displayName} Registration is OPEN! ")
             .append(
                 Component.literal("§a§n[Click here or type /join]").withStyle {
                     it.withClickEvent(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/join"))
@@ -51,7 +61,7 @@ object TournamentManager {
         for (p in server.playerList.players) {
             p.sendSystemMessage(header)
             p.sendSystemMessage(Component.literal(
-                "§7[Tournament] Pick §f$ROSTER_SIZE Pokémon§7 for your roster (max §c$MAX_SPECIALS_ROSTER§7 Legendary/Paradox/Ultra-Beast). You can change it until registration closes."))
+                "§7[Tournament] §b${mode.displayName}§7 — pick §f${mode.tournamentRoster} Pokémon§7 for your roster (max §c$MAX_SPECIALS_ROSTER§7 Legendary/Paradox/Ultra-Beast). You can change it until registration closes."))
         }
     }
 

@@ -1,7 +1,9 @@
 package com.cobblemonranked.commands
 
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.battle.BattleMode
 import com.cobblemonranked.battle.RankedBattleManager
+import com.cobblemonranked.bp.BpCommands
 import com.cobblemonranked.config.ArenaPos
 import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.decay.DecayManager
@@ -43,6 +45,7 @@ object RankedCommands {
                         1
                     }
                 )
+                .then(BpCommands.buildBpCommand())
                 .then(Commands.literal("challenge")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes { ctx ->
@@ -53,6 +56,12 @@ object RankedCommands {
                             )
                             1
                         }
+                        .then(Commands.literal("doubles").executes { ctx ->
+                            handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), 0, BattleMode.DOUBLES); 1
+                        })
+                        .then(Commands.literal("singles").executes { ctx ->
+                            handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), 0, BattleMode.SINGLES); 1
+                        })
                         .then(Commands.argument("wager", IntegerArgumentType.integer(0))
                             .executes { ctx ->
                                 handleChallenge(
@@ -62,6 +71,12 @@ object RankedCommands {
                                 )
                                 1
                             }
+                            .then(Commands.literal("doubles").executes { ctx ->
+                                handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "wager"), BattleMode.DOUBLES); 1
+                            })
+                            .then(Commands.literal("singles").executes { ctx ->
+                                handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "wager"), BattleMode.SINGLES); 1
+                            })
                         )
                     )
                 )
@@ -239,7 +254,11 @@ object RankedCommands {
                 .then(Commands.literal("tournament")
                     .requires { it.hasPermission(4) }
                     .then(Commands.literal("open")
-                        .executes { ctx -> tournamentOpen(ctx.source); 1 })
+                        .executes { ctx -> tournamentOpen(ctx.source, BattleMode.SINGLES); 1 }
+                        .then(Commands.literal("doubles")
+                            .executes { ctx -> tournamentOpen(ctx.source, BattleMode.DOUBLES); 1 })
+                        .then(Commands.literal("singles")
+                            .executes { ctx -> tournamentOpen(ctx.source, BattleMode.SINGLES); 1 }))
                     .then(Commands.literal("close")
                         .executes { ctx -> tournamentClose(ctx.source); 1 })
                     .then(Commands.literal("play")
@@ -290,6 +309,12 @@ object RankedCommands {
                         )
                         1
                     }
+                    .then(Commands.literal("doubles").executes { ctx ->
+                        handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), 0, BattleMode.DOUBLES); 1
+                    })
+                    .then(Commands.literal("singles").executes { ctx ->
+                        handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), 0, BattleMode.SINGLES); 1
+                    })
                     .then(Commands.argument("wager", IntegerArgumentType.integer(0))
                         .executes { ctx ->
                             handleChallenge(
@@ -299,6 +324,12 @@ object RankedCommands {
                             )
                             1
                         }
+                        .then(Commands.literal("doubles").executes { ctx ->
+                            handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "wager"), BattleMode.DOUBLES); 1
+                        })
+                        .then(Commands.literal("singles").executes { ctx ->
+                            handleChallenge(ctx.source.playerOrException, EntityArgument.getPlayer(ctx, "player"), IntegerArgumentType.getInteger(ctx, "wager"), BattleMode.SINGLES); 1
+                        })
                     )
                 )
         )
@@ -428,9 +459,12 @@ object RankedCommands {
         // applyMatchResult already broadcasts the ELO update lines, so no need to repeat here.
     }
 
-    private fun handleChallenge(challenger: ServerPlayer, target: ServerPlayer, wager: Int) {
+    private fun handleChallenge(
+        challenger: ServerPlayer, target: ServerPlayer, wager: Int,
+        mode: com.cobblemonranked.battle.BattleMode = com.cobblemonranked.battle.BattleMode.SINGLES,
+    ) {
         val challengeManager = CobblemonRanked.challengeManager
-        val error = challengeManager.challenge(challenger, target, requestedWager = wager)
+        val error = challengeManager.challenge(challenger, target, requestedWager = wager, mode = mode)
         if (error != null) {
             challenger.sendSystemMessage(Component.literal("[Ranked] $error"))
             return
@@ -440,7 +474,7 @@ object RankedCommands {
         // always wait for an explicit /accept (per design — money on the line must be opted in).
         val forced = challengeManager.getPendingForced(target.uuid)
         if (forced != null && forced.wagerPerSide == 0) {
-            RankedBattleManager.startTeamSelection(challenger, target)
+            RankedBattleManager.startTeamSelection(challenger, target, mode = forced.mode)
         }
     }
 
@@ -455,7 +489,7 @@ object RankedCommands {
             player.sendSystemMessage(Component.literal("[Ranked] Challenger is no longer online."))
             return
         }
-        RankedBattleManager.startTeamSelection(challenger, player, wagerPerSide = challenge.wagerPerSide)
+        RankedBattleManager.startTeamSelection(challenger, player, wagerPerSide = challenge.wagerPerSide, mode = challenge.mode)
     }
 
     private fun handleDecline(player: ServerPlayer) {
@@ -569,9 +603,10 @@ object RankedCommands {
 
     // ── Tournament ────────────────────────────────────────────────────────────────────────────
 
-    private fun tournamentOpen(source: CommandSourceStack) {
-        com.cobblemonranked.tournament.TournamentManager.openRegistration(source.server)
-        source.sendSystemMessage(Component.literal("§a[Tournament] Registration opened — players can /join."))
+    private fun tournamentOpen(source: CommandSourceStack, mode: BattleMode) {
+        com.cobblemonranked.tournament.TournamentManager.openRegistration(source.server, mode)
+        source.sendSystemMessage(Component.literal(
+            "§a[Tournament] §b${mode.displayName}§a registration opened — players can /join."))
     }
 
     private fun tournamentClose(source: CommandSourceStack) {

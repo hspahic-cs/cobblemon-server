@@ -12,6 +12,170 @@ root README.
 
 ## [Unreleased]
 
+## [0.29.0] - 2026-07-15
+
+### Added
+- **Ranked Doubles.** Ranked battles and tournaments can now be run in 2v2 Doubles, using the **same ELO** as Singles (a doubles win/loss moves the same rating — there's no separate doubles ladder).
+  - **1v1:** `/challenge <player> doubles` (works with an optional wager too: `/challenge <player> <wager> doubles`). You pick **4** Pokémon from your PC/party (Singles still picks 6).
+  - **Tournaments:** `/ranked tournament open doubles` (admin). Entrants pre-select a **6**-Pokémon roster via `/join` and pick **4** per match (Singles stays 9-roster / pick-6).
+  - Both commands default to Singles when no mode is given; an explicit `singles` is also accepted. Doubles reuses the same ban list, legendary caps, arenas, wager, and turn-timer systems as Singles.
+
+
+
+### Added
+- **Monster Drops vendor.** A new buy-only NPC shop (spawn with `/market admin spawn mob_drops`) sells vanilla hostile-mob drops at fixed prices, 200–2000: Rotten Flesh / String / Arrow (200), Bone / Spider Eye (400), Prismarine Shard / Slime Ball (500), Gunpowder (600), Magma Cream (700), Prismarine Crystals (800), Blaze Rod / Nautilus Shell (1000), Shulker Shell (1500), Ender Pearl / Ghast Tear / Phantom Membrane (2000). No boss/special drops.
+- **Dream Ball in the main Shopkeeper**, priced at 2× the Ultra Ball's base (buy 150 / sell 50).
+
+### Changed
+- **Gacha crate tuning:**
+  - **Rare crate:** Rare Candy reward increased 2 → 5; the "2 EXP Candy L" entry removed. Weights renormalized to 100%.
+  - **Common crate:** Ultra Balls increased 20 → 32 (Timer Balls stay 32); the "2 Max Revives" entry removed. Weights renormalized to 100%.
+
+## [0.28.6] - 2026-07-14
+
+### Fixed
+- **BP shop was empty because its config never reached the server.** `bp-items.json` only existed bundled inside the market mod jar, but the shop reads `config/bp-items.json` from the server directory — which the deploy populates from `modpack/server-overrides/config/`. The file is now shipped there, so the shop actually loads its items on the server.
+- **BP shop vendor is now discoverable in `/market admin spawn`.** `bp_shop` (and `tm_merchant`) are added to the tab-completion for the spawn command — they aren't backed by `items.json` scopes so they weren't being suggested.
+- **Vouchers now actually work at vendors.** TR vendors (the TM Merchant and `tm_<type>` vendors) and the held-item vendor now check your inventory for a matching voucher and consume it **before** charging money, on single-item (left-click) buys. Previously the voucher item existed but was never redeemed, so you were charged money and kept the voucher.
+
+### Changed
+- **Market stock tracks base-stock changes.** When you edit an item's `baseStock` in config, its current stock is now rescaled to preserve its fullness ratio (stock ÷ baseStock) on boot and on `/market admin reload`, instead of stranding the old absolute stock and jumping the price. E.g. raising baseStock 200 → 500 no longer spikes the price by leaving stock at 200.
+
+### Added
+- **`/version` command.** Reports the modpack version the server is actually running (read from `.deployed_version`, which the deploy writes after a successful restart). Lets anyone confirm in-game whether an update landed, without SSH.
+
+## [0.28.5] - 2026-07-14
+
+### Changed
+- **General Store is now sorted by category.** Items are grouped so like items sit together —
+  Poké Balls, HP potions, revives, status cures, PP restores, then candies — and tiered by price
+  within each group (cheapest first), like a backpack's "sort by category". New General-Store
+  items slot into their group automatically.
+
+## [0.28.4] - 2026-07-14
+
+### Fixed
+- **BP shop NPC now actually works.** Three bugs kept it broken: (1) the regular market hook matched the `bp_shop` tag first and opened an empty market menu — it now ignores that scope so the BP hook handles it; (2) `bp-items.json` is a JSON array but the loader expected a `{"items":{…}}` object, so it always parsed empty — the loader now reads the array; (3) the menu was a chat-message stub — it's now a real chest GUI where you left-click an item to buy it with BP.
+- **BP shop items are now real, distinct items** instead of blank paper. Vouchers are `custom_data`-tagged paper (so TR/held/shiny vouchers are actually distinguishable); crate keys use the same tag scheme as rolled keys (so a shop-bought Ultra/Rare/Pokémon key works at the crates); Master Ball, Rare Candy, Ability Patch, and Totem of Undying resolve from the item registry; the Shiny Egg is granted via the gacha egg command.
+- **Crate odds preview no longer has gaps.** In the "Possible Rewards" box, entries whose icon didn't resolve used to leave empty holes (and mis-sized the grid). Icons are now built first and placed contiguously, so the rare crate (and any crate) shows a clean, gap-free grid.
+
+### Added
+- **Admin voucher grants.** `/market tm_voucher grant <player> [count]`, `/market held_item_voucher grant <player> [count]`, and `/market shiny_voucher grant <player> [count]` (permission level 2, mirroring `/gacha grant`).
+
+## [0.28.3] - 2026-07-14
+
+### Added
+- **BP Shop NPC in market.** Admins can spawn with `/market admin spawn bp_shop` to create a configurable Battle Points shop. Players right-click to buy items with BP. Prices configured in `config/bp-items.json` (1–100 BP range).
+  - Items: Rare Candy (1 BP), Pokémon Crate (2 BP), Rare Key (5 BP), TR Voucher (5 BP), Held Item Voucher (4 BP), Ability Patch (10 BP), Master Ball (15 BP), Ultra Key (20 BP), Totem of Undying (40 BP), Shiny Egg (40 BP), Shiny Voucher (100 BP).
+- **Voucher items for TR and held-item vendors.** TR vendors and held-item vendors check player inventory for vouchers before charging currency. Vouchers are consumable single-use items.
+- **Shiny voucher command.** `/ranked shiny <player> <slot>` admin command to consume a shiny voucher and mark a Pokémon for shinification (manual admin implementation of actual shiny mechanism TBD).
+- **Five new Poké Ball variants in market:** Net Ball, Timer Ball, Nest Ball, Dusk Ball, Quick Ball — all priced at buy 33 / sell 11 with dynamic pricing (elasticity 0.3).
+
+### Changed
+- **Market shop pricing restructured:** Buy/sell spread reduced from 5× to 3× (e.g., Potion was buy 90/sell 18 → now buy 54/sell 18). All 27 dynamic items cheaper to purchase, sell prices unchanged.
+- **Market shop base stock:** All dynamic items (potions, balls, candies, etc.) normalized to baseStock 500; held items remain 9999 (no dynamic pricing).
+- **Comprehensive gacha crate rework:**
+  - **Common crate:** Removed exp candies, potions, revives, PP Ups, and Exp Share. Added Timer Balls (32) and Dream Balls (16). Doubled EV vitamin rewards (5→10) and Nature Mints (1→2). Equalized common and uncommon egg rates (both 12.5%). Moved competitive held items, breeding items, EV training items, Keystone, and Mega Stones from rare → common.
+  - **Rare crate:** Removed exp candies and held-item entries; moved Griseous Orb from Ultra (now at 3.3%, High tier). Added TR Voucher (3.2%) and Held Item Voucher (2.4%).
+  - **Ultra crate:** Removed 2 Ability Patches entirely. Removed Griseous Orb (moved to rare). Rebalanced remaining items proportionally.
+
+## [0.28.2] - 2026-07-13
+
+### Changed
+- **TM Merchant type icons are now type gems** (`cobblemon:<type>_gem`) instead of Arceus plates —
+  including a proper Normal gem (was a paper placeholder).
+- **Shop balance moved to the top-right corner.** The gold-bar balance indicator now sits in the
+  top-right of the shop GUI instead of the middle of the top row, freeing space for the category
+  tabs (page arrows shifted accordingly).
+
+## [0.28.1] - 2026-07-13
+
+### Added
+- **New "Special Items" tab on the Shopkeeper.** Elemental **Arceus plates** (all 17) are now
+  buyable at **$5,000** each, and **Zygarde Cells** at **$500** each — buy-only, fixed price.
+- **Zygarde Core** is now a possible **Rare crate** reward (2.0%, "High"). The eight legendary-summon
+  items in the Rare crate (three bird Urns, five Regi Golem keys) were leveled to **1.9% each** to
+  make room, keeping the crate at 100% and giving those summons equal odds.
+
+### Changed
+- **One TM Merchant replaces the 18 per-type TM NPCs.** Right-clicking the TM Merchant opens a
+  **type picker** (a grid of the 18 types, each shown as its elemental plate); click a type to
+  browse and buy that type's TRs, with a **Back** button to return to the picker. The per-type
+  catalog (`tm_<type>`) is unchanged — it's just navigated from one NPC now.
+
+## [0.27.5] - 2026-07-13
+
+### Changed
+- **Simpler request flow.** On the Auction House **Wanted** tab, **Create Request** now goes
+  straight to the item search box instead of a curated "Suggested" catalog first — type an item
+  name, pick from the results, and continue to quantity and price. The suggested-catalog landing
+  was removed as unnecessary (suggested-price hints still appear on matching items). Search icon
+  is now a compass; a blank search just closes, and a search with no matches reopens so you can
+  retype.
+
+## [0.27.4] - 2026-07-13
+
+### Changed
+- **Auction requests can now be for ANY item in the game**, not just a curated list. On the
+  **Wanted** tab, **Create Request** now offers a **🔍 Search all items** button next to the
+  curated **Suggested** shortcut: type part of an item's name (e.g. `enchanted book`, `rare candy`,
+  `netherite`) and pick from a grid of matching items — matched on display name *or* id, so
+  anything you can find in JEI/EMI is requestable. The old curated list stays as a one-click
+  "Suggested" set (with suggested prices). Picking any item flows into the same quantity → price →
+  escrow steps as before.
+- **Max active requests per player lowered from 30 to 10.**
+- The only limit on what can be requested is now the auction **blocklist** (empty by default);
+  any real, non-blocklisted item is fair game. A request no one can fill simply expires and refunds.
+
+### Added
+- **Auction House requests (buy orders).** The Auctioneer now has a second side: players can post a
+  *request* for an item they want, and any seller can fill it. The browse GUI gains a **For Sale |
+  Wanted** tab toggle.
+  - **Create a request** — on the Wanted tab, click **Create Request**, pick an item from a
+    category-tabbed catalog, choose a quantity, and type a total price. The price is **withdrawn up
+    front and held in escrow**; it is refunded in full if the request expires or you cancel it.
+  - **Fulfill a request** — hold the matching item stack in your main hand and click a request
+    (two-click confirm, like buying). The item goes to the requester's **Mailbox** and the escrowed
+    money is paid to you.
+  - **Your Requests** — view and cancel your active requests (cancelling refunds the escrow).
+  - Requests are for an item *type* (id + count); matching ignores components. Fulfillment is
+    whole-request (the full count from one held stack), so a request's quantity is capped at the
+    item's stack size. Filled requests notify the requester immediately, or summarize on next login
+    if they're offline.
+  - **What's requestable** is a curated whitelist the mod writes on first boot to
+    `config/cobblemon-auction/authored/requestable-items.json` (edit it there to tune), seeded with
+    evolution stones/items, nature mints, EV vitamins, and a few rare items — deliberately favouring
+    things the Shopkeeper doesn't sell. Ids also on the `blocklist` are dropped from the whitelist
+    (blocklist wins). New config knobs: `requestTtlDays` (7) and `maxRequestsPerPlayer` (30);
+    requests reuse the existing `minPrice`/`maxPrice` bounds.
+
+### Changed
+- **`EconomyBridge.deposit` now reports success** (returns a Boolean, like `withdraw`). Escrow
+  operations use it to fail safe: on a payout/refund failure the request/listing is restored rather
+  than the money being silently lost. Buying a listing now unwinds (re-lists, refunds the buyer) if
+  the seller payout can't be completed.
+
+## [0.27.1] - 2026-07-13
+
+### Fixed
+- **Tournament timeout during switch now properly submits the choice.** The forced switch Pokemon wasn't being marked with `willBeSwitchedIn = true` before submission, causing Cobblemon to reject the choice silently and leave both players stuck. The timer would re-fire every 60 seconds with the same message without advancing the battle.
+- **Tournament switch timeout disabled as temporary workaround.** Forced switch timeouts still don't work correctly. Disabled the auto-pick timer for switches only (move timeouts still work). Cobblemon handles switch timeouts naturally, allowing tournaments to run. Added console logging to debug the issue for a future proper fix.
+
+## [0.27.0] - 2026-07-13
+
+### Fixed
+- **Tournament timeout during switch no longer breaks battle.** When a player timed out while switching
+  Pokémon, the forced switch would corrupt the battle state and neither player could select actions.
+  Fixed by correcting Pokémon identification logic (object comparison vs. UUID mismatch).
+- **Timer display moved to action bar.** Countdown warnings now appear in the center of the screen
+  (action bar) at 5/3/2/1/0 seconds instead of chat spam.
+
+### Added
+- **Battle Points (BP) currency system foundation.** Admins can now grant BP to players with
+  `/ranked bp add <player> <amount>` and `/ranked bp set <player> <amount>`. BP is stored per-player
+  in JSON files (`bp/<uuid>.json`). Shop implementation (voucher items, vendor integration) coming
+  in the next phase.
+
 ## [0.26.5] - 2026-07-07
 
 ### Fixed

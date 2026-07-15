@@ -36,7 +36,7 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 0.5% | 2 Common Keys |
     | 0.5% | 1 Rare Key |
 
-??? note "Rare crate: 27 possible rewards"
+??? note "Rare crate: 28 possible rewards"
 
     | Chance | Reward |
     |---:|---|
@@ -53,14 +53,15 @@ Crate **keys** are opened at the gacha machine. Each key tier rolls one reward f
     | 2.9% | Silk Touch Book |
     | 2.9% | Breeding Item (random) |
     | 2.4% | 2 EXP candy XL |
-    | 2.4% | Urn of Frost |
-    | 2.4% | Urn of Storms |
-    | 2.4% | Urn of Embers |
-    | 2.0% | Titan Key |
-    | 2.0% | Rock Golem Key |
-    | 2.0% | Steel Golem Key |
-    | 2.0% | Ice Golem Key |
-    | 2.0% | Dragon Golem Key |
+    | 2.0% | Zygarde Core |
+    | 1.9% | Urn of Frost |
+    | 1.9% | Urn of Storms |
+    | 1.9% | Urn of Embers |
+    | 1.9% | Titan Key |
+    | 1.9% | Rock Golem Key |
+    | 1.9% | Steel Golem Key |
+    | 1.9% | Ice Golem Key |
+    | 1.9% | Dragon Golem Key |
     | 1.9% | Keystone |
     | 1.9% | Mega Stone |
     | 1.8% | 16 Eye of Ender |

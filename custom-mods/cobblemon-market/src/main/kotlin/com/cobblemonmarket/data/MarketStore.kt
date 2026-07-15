@@ -41,16 +41,39 @@ class MarketStore(private val configDir: Path) {
     fun getAll(): Map<String, ItemState> = states.toMap()
 
     /**
-     * Initializes any items that don't yet have an entry — sets stock to baseStock so a
-     * fresh server starts at equilibrium prices instead of zero stock (which would scale
-     * everything by ~baseStock^elasticity on the first /market prices).
+     * Reconciles persisted state against the current item config. Two jobs:
+     *
+     *  1. **New items** get stock = baseStock so a fresh server starts at equilibrium prices
+     *     instead of zero stock (which would scale everything by ~baseStock^elasticity).
+     *  2. **Changed baseStock** rescales the item's current stock to preserve its fullness ratio
+     *     (stock / baseStock). Without this, editing baseStock in config leaves the old absolute
+     *     stock in place — e.g. raising baseStock 200 → 500 would strand stock at 200 (40% full)
+     *     and spike prices. Rescaling keeps the price exactly where it was across the change.
+     *     The rescaled stock is capped at baseStock × maxStockMultiplier.
      */
     fun ensureInitialized(items: Map<String, ItemEntry>) {
         var changed = false
         for ((itemId, entry) in items) {
-            if (!states.containsKey(itemId)) {
-                states[itemId] = ItemState(stock = entry.baseStock.toDouble())
-                changed = true
+            val base = entry.baseStock.toDouble()
+            val existing = states[itemId]
+            when {
+                existing == null -> {
+                    states[itemId] = ItemState(stock = base, baseStockRef = base)
+                    changed = true
+                }
+                // Legacy record with no recorded reference: adopt the current base without rescaling.
+                existing.baseStockRef <= 0.0 -> {
+                    existing.baseStockRef = base
+                    changed = true
+                }
+                // baseStock changed in config: rescale current stock to the same fullness ratio.
+                existing.baseStockRef != base -> {
+                    val ratio = existing.stock / existing.baseStockRef
+                    val maxStock = base * entry.maxStockMultiplier
+                    existing.stock = (ratio * base).coerceIn(0.0, maxStock)
+                    existing.baseStockRef = base
+                    changed = true
+                }
             }
         }
         if (changed) save()

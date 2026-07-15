@@ -15,6 +15,8 @@ class TeamSelectionGui(
     private val showRental: Boolean,
     private val onConfirm: Consumer<List<Pokemon>>,
     private val onCancel: Runnable,
+    /** Pokémon to pick for this match (6 Singles, 4 Doubles). */
+    private val teamSize: Int = TeamSelectionMenu.TEAM_SIZE,
 ) {
     fun open() {
         val provider = TeamSelectionMenuProvider(
@@ -23,6 +25,7 @@ class TeamSelectionGui(
             showRental = showRental,
             onConfirm = { team -> onConfirm.accept(team) },
             onCancel = { onCancel.run() },
+            teamSize = teamSize,
         )
         player.openMenu(provider)
     }

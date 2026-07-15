@@ -58,14 +58,23 @@ object EconomyBridge {
         log.error("EconomyBridge.getBalance failed", e); 0
     }
 
-    /** Credit [amount] to [uuid]. No-op on non-positive amounts or when economy is unavailable. */
-    fun deposit(uuid: UUID, amount: Int) {
-        if (amount <= 0) return
-        try {
-            val mgr = manager() ?: return
-            addBalanceMethod!!.invoke(mgr, uuid, BigDecimal(amount))
+    /**
+     * Credit [amount] to [uuid]. Returns true only if the credit actually happened. Returns FALSE
+     * when the economy is unavailable or the reflected call throws, so callers that removed a
+     * listing/request from escrow can roll it back instead of losing the money. Mirrors [withdraw].
+     *
+     * A non-positive amount is a no-op success (true). NeoEssentials' `addBalance` is symmetric with
+     * `subtractBalance` and returns a Boolean, but we don't hard-depend on that: if the reflected
+     * call returns a Boolean we honor it, otherwise a throw-free invocation counts as success.
+     */
+    fun deposit(uuid: UUID, amount: Int): Boolean {
+        if (amount <= 0) return true
+        return try {
+            val mgr = manager() ?: return false
+            val result = addBalanceMethod!!.invoke(mgr, uuid, BigDecimal(amount))
+            (result as? Boolean) ?: true
         } catch (e: Throwable) {
-            log.error("EconomyBridge.deposit failed", e)
+            log.error("EconomyBridge.deposit failed", e); false
         }
     }
 

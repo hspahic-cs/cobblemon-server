@@ -4,47 +4,21 @@
   "entries": [
     {
       "lootTier": "Standard",
-      "label": "2 Rare Candy",
-      "weightPct": 8.2,
+      "label": "5 Rare Candy",
+      "weightPct": 10.4,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:rare_candy",
-          "count": 2
+          "count": 5
         }
       ],
-      "notes": "Two Rare Candies — instantly level up"
-    },
-    {
-      "lootTier": "Standard",
-      "label": "3 Exp Candy M",
-      "weightPct": 5.8,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_m",
-          "count": 3
-        }
-      ],
-      "notes": ""
+      "notes": "Two Rare Candies \u2014 instantly level up"
     },
     {
       "lootTier": "Mid",
-      "label": "2 EXP Candy L",
-      "weightPct": 4.9,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_l",
-          "count": 2
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Uncommon Pokémon Egg",
-      "weightPct": 10.6,
+      "label": "Uncommon Pok\u00e9mon Egg",
+      "weightPct": 13.4,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -53,12 +27,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "An uncommon-pool Pokémon egg"
+      "notes": "An uncommon-pool Pok\u00e9mon egg"
     },
     {
       "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 5.3,
+      "weightPct": 6.7,
       "items": [
         {
           "type": "vanilla",
@@ -66,32 +40,12 @@
           "count": 1
         }
       ],
-      "notes": "XP-boost held item — not a Pokémon egg"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "EV Training Item (random)",
-      "weightPct": 3.9,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:power_anklet",
-            "cobblemon:power_band",
-            "cobblemon:power_belt",
-            "cobblemon:power_bracer",
-            "cobblemon:power_lens",
-            "cobblemon:power_weight"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Random EV-training Power item"
+      "notes": "XP-boost held item \u2014 not a Pok\u00e9mon egg"
     },
     {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 4.9,
+      "weightPct": 6.2,
       "items": [
         {
           "type": "vanilla",
@@ -99,12 +53,12 @@
           "count": 1
         }
       ],
-      "notes": "Changes a Pokémon to its Hidden Ability"
+      "notes": "Changes a Pok\u00e9mon to its Hidden Ability"
     },
     {
       "lootTier": "High",
-      "label": "Rare Pokémon Egg",
-      "weightPct": 14.7,
+      "label": "Rare Pok\u00e9mon Egg",
+      "weightPct": 19.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -113,25 +67,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "A rare-pool Pokémon egg"
-    },
-    {
-      "lootTier": "High",
-      "label": "2 EXP candy XL",
-      "weightPct": 2.4,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_xl",
-          "count": 2
-        }
-      ],
-      "notes": ""
+      "notes": "A rare-pool Pok\u00e9mon egg"
     },
     {
       "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 0.5,
+      "weightPct": 0.6,
       "items": [
         {
           "type": "vanilla",
@@ -144,7 +85,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Ultra Key",
-      "weightPct": 0.5,
+      "weightPct": 0.6,
       "items": [
         {
           "type": "gacha_key",
@@ -157,7 +98,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Rare keys",
-      "weightPct": 0.9,
+      "weightPct": 1.2,
       "items": [
         {
           "type": "gacha_key",
@@ -178,7 +119,7 @@
           "count": 1
         }
       ],
-      "notes": "Summons Articuno — charge by defeating Ice-types"
+      "notes": "Summons Articuno \u2014 charge by defeating Ice-types"
     },
     {
       "lootTier": "High",
@@ -191,7 +132,7 @@
           "count": 1
         }
       ],
-      "notes": "Summons Zapdos — charge by defeating Electric-types"
+      "notes": "Summons Zapdos \u2014 charge by defeating Electric-types"
     },
     {
       "lootTier": "High",
@@ -204,38 +145,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Moltres — charge by defeating Fire-types"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Keystone",
-      "weightPct": 1.9,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "mega_showdown:keystone",
-          "count": 1
-        }
-      ],
-      "notes": "Mega Evolution — trainer keystone"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Mega Stone",
-      "weightPct": 1.9,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "mega_showdown:mega_stone",
-          "count": 1
-        }
-      ],
-      "notes": "Raw Mega Stone (becomes a species Mega Stone)"
+      "notes": "Summons Moltres \u2014 charge by defeating Fire-types"
     },
     {
       "lootTier": "High",
       "label": "Silk Touch Book",
-      "weightPct": 2.9,
+      "weightPct": 3.7,
       "items": [
         {
           "type": "enchanted_book",
@@ -248,47 +163,8 @@
     },
     {
       "lootTier": "High",
-      "label": "Competitive Held Item (random)",
-      "weightPct": 4.9,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:choice_band",
-            "cobblemon:choice_specs",
-            "cobblemon:choice_scarf",
-            "cobblemon:assault_vest",
-            "cobblemon:heavy_duty_boots",
-            "cobblemon:life_orb",
-            "cobblemon:focus_sash",
-            "cobblemon:rocky_helmet",
-            "cobblemon:eviolite"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Choice items, Assault Vest, Heavy-Duty Boots, Life Orb, Focus Sash, Rocky Helmet, Eviolite"
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Breeding Item (random)",
-      "weightPct": 2.9,
-      "items": [
-        {
-          "type": "random_item",
-          "ids": [
-            "cobblemon:destiny_knot",
-            "cobblemon:everstone"
-          ],
-          "count": 1
-        }
-      ],
-      "notes": "Destiny Knot / Everstone"
-    },
-    {
-      "lootTier": "High",
       "label": "3 IV Candy (random)",
-      "weightPct": 3.9,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "random_item",
@@ -303,12 +179,12 @@
           "count": 3
         }
       ],
-      "notes": "3x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) — raises one IV stat"
+      "notes": "3x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) \u2014 raises one IV stat"
     },
     {
       "lootTier": "High",
       "label": "16 Eye of Ender",
-      "weightPct": 1.8,
+      "weightPct": 2.2,
       "items": [
         {
           "type": "vanilla",
@@ -321,7 +197,7 @@
     {
       "lootTier": "High",
       "label": "Titan Key",
-      "weightPct": 2.0,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -334,7 +210,7 @@
     {
       "lootTier": "High",
       "label": "Rock Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -347,7 +223,7 @@
     {
       "lootTier": "High",
       "label": "Steel Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -360,7 +236,7 @@
     {
       "lootTier": "High",
       "label": "Ice Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -373,7 +249,7 @@
     {
       "lootTier": "High",
       "label": "Dragon Golem Key",
-      "weightPct": 2.0,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -382,6 +258,58 @@
         }
       ],
       "notes": "Summons Regidrago"
+    },
+    {
+      "lootTier": "High",
+      "label": "Zygarde Core",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:zygarde_core",
+          "count": 1
+        }
+      ],
+      "notes": "Core to assemble Zygarde \u2014 combine with Zygarde Cells"
+    },
+    {
+      "lootTier": "High",
+      "label": "TR Voucher (5 BP)",
+      "weightPct": 3.4,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:tr_voucher",
+          "count": 1
+        }
+      ],
+      "notes": "Exchange for a random TR at the Trading Post"
+    },
+    {
+      "lootTier": "High",
+      "label": "Held Item Voucher (4 BP)",
+      "weightPct": 2.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "cobblemon:held_item_voucher",
+          "count": 1
+        }
+      ],
+      "notes": "Exchange for a random held item at the Trading Post"
+    },
+    {
+      "lootTier": "High",
+      "label": "Griseous Orb",
+      "weightPct": 3.5,
+      "items": [
+        {
+          "type": "vanilla",
+          "id": "mega_showdown:griseous_orb",
+          "count": 1
+        }
+      ],
+      "notes": "Summons Giratina at the Giratina Pedestal (Distortion World); also yields an Antimatter Globe"
     }
   ]
 }

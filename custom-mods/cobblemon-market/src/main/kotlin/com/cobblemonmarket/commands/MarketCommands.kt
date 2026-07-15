@@ -1,6 +1,7 @@
 package com.cobblemonmarket.commands
 
 import com.cobblemonmarket.CobblemonMarket
+import com.cobblemonmarket.bp.Vouchers
 import com.cobblemonmarket.config.ItemConfig
 import com.cobblemonmarket.config.MarketConfig
 import com.cobblemonmarket.config.effectiveBuyClamp
@@ -13,6 +14,7 @@ import com.cobblemonmarket.data.PriceHistory
 import java.time.ZoneId
 import com.cobblemonmarket.economy.TradeOps
 import com.cobblemonmarket.economy.TradeResult
+import com.cobblemonmarket.gui.MarketMenu
 import com.cobblemonmarket.pricing.PricingEngine
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.DoubleArgumentType
@@ -183,11 +185,15 @@ object MarketCommands {
                         .executes { ctx -> spawnVendor(ctx.source, ""); 1 }
                         .then(Commands.argument("vendorTag", StringArgumentType.word())
                             .suggests { _, builder ->
-                                CobblemonMarket.items.values
+                                val scopes = CobblemonMarket.items.values
                                     .map { it.vendorScope }
                                     .filter { it.isNotEmpty() }
                                     .toSortedSet()
-                                    .forEach { builder.suggest(it) }
+                                // Vendors not backed by items.json scopes (their tags are handled by
+                                // dedicated hooks) — surface them here so they're discoverable.
+                                scopes.add("bp_shop")           // BP shop → BpShopNpcHook
+                                scopes.add(MarketMenu.TM_MERCHANT_TAG)
+                                scopes.forEach { builder.suggest(it) }
                                 builder.buildFuture()
                             }
                             .executes { ctx ->
@@ -206,7 +212,41 @@ object MarketCommands {
                         )
                     )
                 )
+                // Voucher grants (mirror `/gacha grant`): `/market <voucher> grant <player> [count]`.
+                // Perm level 2 so they're callable from command blocks / non-op admins, like gacha.
+                .then(voucherGrantCommand("tm_voucher", "tr"))
+                .then(voucherGrantCommand("held_item_voucher", "held_item"))
+                .then(voucherGrantCommand("shiny_voucher", "shiny"))
         )
+    }
+
+    /** Builds `/market <literal> grant <player> [count]`, granting a [voucherType] voucher. */
+    private fun voucherGrantCommand(literal: String, voucherType: String) =
+        Commands.literal(literal)
+            .requires { it.hasPermission(2) }
+            .then(Commands.literal("grant")
+                .then(Commands.argument("player", EntityArgument.player())
+                    .executes { ctx ->
+                        grantVoucher(ctx.source, EntityArgument.getPlayer(ctx, "player"), voucherType, 1)
+                    }
+                    .then(Commands.argument("count", IntegerArgumentType.integer(1, 64))
+                        .executes { ctx ->
+                            grantVoucher(
+                                ctx.source, EntityArgument.getPlayer(ctx, "player"),
+                                voucherType, IntegerArgumentType.getInteger(ctx, "count"),
+                            )
+                        }
+                    )
+                )
+            )
+
+    private fun grantVoucher(source: CommandSourceStack, target: ServerPlayer, voucherType: String, count: Int): Int {
+        val stack = Vouchers.create(voucherType, count)
+        val label = stack.hoverName.string
+        if (!target.inventory.add(stack)) target.drop(stack, false)
+        target.sendSystemMessage(Component.literal("§a[Market] You received §f$count× $label §afrom an admin."))
+        source.sendSystemMessage(Component.literal("§a[Market] Gave ${target.name.string} $count× $label."))
+        return 1
     }
 
     /**
@@ -398,6 +438,7 @@ object MarketCommands {
     fun vendorDisplayName(vendorTag: String): String = when {
         vendorTag.isEmpty() -> "Shopkeeper"
         vendorTag == "blocks" -> "Blocks & Decor Vendor"
+        vendorTag == "tm_merchant" -> "TM Merchant"          // consolidated TM vendor (before the tm_ branch)
         vendorTag.startsWith("tm_") ->
             vendorTag.removePrefix("tm_").replaceFirstChar { it.uppercase() } + " TMs"
         else ->
@@ -692,7 +733,9 @@ object MarketCommands {
         CobblemonMarket.config = MarketConfig.load(configDir)
         CobblemonMarket.items = ItemConfig.load(configDir)
         CobblemonMarket.marketStore.ensureInitialized(CobblemonMarket.items)
+        com.cobblemonmarket.bp.BpShopConfig.reload()
         source.sendSystemMessage(Component.literal(
-            "[Market] Config reloaded. ${CobblemonMarket.items.size} items loaded."))
+            "[Market] Config reloaded. ${CobblemonMarket.items.size} items, " +
+                "${com.cobblemonmarket.bp.BpShopConfig.getAllItems().size} BP shop items loaded."))
     }
 }

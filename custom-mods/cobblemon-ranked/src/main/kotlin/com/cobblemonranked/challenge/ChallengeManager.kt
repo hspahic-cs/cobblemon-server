@@ -2,6 +2,7 @@ package com.cobblemonranked.challenge
 
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.battle.BattleMode
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.HoverEvent
@@ -21,6 +22,8 @@ data class PendingChallenge(
      * min(requested, 50% of challenger, 25% of target) before storing.
      */
     val wagerPerSide: Int = 0,
+    /** Singles (1v1) or Doubles (2v2). Determines the battle format and team-pick size. */
+    val mode: BattleMode = BattleMode.SINGLES,
     val timestamp: Long = System.currentTimeMillis()
 )
 
@@ -36,7 +39,12 @@ class ChallengeManager {
      *   the final stored amount is the lower of those three. Pass `0` for a no-money
      *   challenge (legacy behaviour).
      */
-    fun challenge(challenger: ServerPlayer, target: ServerPlayer, requestedWager: Int = 0): String? {
+    fun challenge(
+        challenger: ServerPlayer,
+        target: ServerPlayer,
+        requestedWager: Int = 0,
+        mode: BattleMode = BattleMode.SINGLES,
+    ): String? {
         if (challenger.uuid == target.uuid) {
             return "You can't challenge yourself."
         }
@@ -76,6 +84,7 @@ class ChallengeManager {
             targetUuid = target.uuid,
             isForced = isForced,
             wagerPerSide = effectiveWager,
+            mode = mode,
         )
         pendingChallenges[target.uuid] = challenge
 
@@ -84,7 +93,7 @@ class ChallengeManager {
             CobblemonRanked.eloStore.save()
 
             target.sendSystemMessage(
-                Component.literal("[Ranked] ${challenger.name.string} (${challengerData.elo}) has forced you into a ranked match! Preparing team selection...")
+                Component.literal("[Ranked] ${challenger.name.string} (${challengerData.elo}) has forced you into a ranked ${mode.displayName} match! Preparing team selection...")
             )
             challenger.sendSystemMessage(
                 Component.literal("[Ranked] Force challenge sent to ${target.name.string} (${targetData.elo}). Preparing team selection...")
@@ -102,7 +111,7 @@ class ChallengeManager {
                     .withClickEvent(ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ranked decline"))
                     .withHoverEvent(HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("§cRun /ranked decline"))))
             val targetMsg = Component.literal(
-                "§e[Ranked] §f${challenger.name.string} §7(ELO §e${challengerData.elo}§7) challenges you.$wagerNote §7 "
+                "§e[Ranked] §f${challenger.name.string} §7(ELO §e${challengerData.elo}§7) challenges you to §b${mode.displayName}§7.$wagerNote §7 "
             ).append(acceptClick).append(Component.literal("§7 · ")).append(declineClick)
                 .append(Component.literal("§7  (60s)"))
             target.sendSystemMessage(targetMsg)

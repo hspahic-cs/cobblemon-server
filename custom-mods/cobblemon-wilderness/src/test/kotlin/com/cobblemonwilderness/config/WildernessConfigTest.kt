@@ -1,6 +1,11 @@
 package com.cobblemonwilderness.config
 
+import com.cobblemonwilderness.internal.ConfigPaths
 import com.cobblemonwilderness.reset.RegionResetter
+import java.nio.file.Files
+import kotlin.io.path.createDirectories
+import kotlin.io.path.readText
+import kotlin.io.path.writeText
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -87,5 +92,50 @@ class WildernessConfigTest {
     @Test
     fun `an explicit positive minKeepBoxSideBlocks is preserved`() {
         assertEquals(2048, WildernessConfig.fromJsonWithDefaults("""{ "minKeepBoxSideBlocks": 2048, "backupDir": "x" }""").minKeepBoxSideBlocks)
+    }
+
+    @Test
+    fun `load rewrites a pre-W-schema config to the current schema on disk`() {
+        val dir = Files.createTempDirectory("wild-cfg")
+        try {
+            val file = ConfigPaths.authored(dir, "config.json")
+            file.parent.createDirectories()
+            // A pre-W config: no minKeepBoxSideBlocks, and stale relocation/idle-era keys present.
+            file.writeText(
+                """
+                {
+                  "enabled": true,
+                  "dryRun": false,
+                  "intervalDays": 14,
+                  "idleTtlDays": 14,
+                  "maxDeleteFraction": 0.9,
+                  "reseedStructuresOutsideBox": true,
+                  "dimensions": ["minecraft:overworld"],
+                  "box": { "minX": -20480, "minZ": -20480, "maxX": 20479, "maxZ": 20479 },
+                  "backupDir": "wilderness-snapshots"
+                }
+                """.trimIndent()
+            )
+
+            val cfg = WildernessConfig.load(dir)
+            // Runtime value is the backfilled default.
+            assertEquals(1024, cfg.minKeepBoxSideBlocks)
+
+            // The file was rewritten to the current schema: current field present, legacy keys dropped.
+            val persisted = file.readText()
+            assertTrue(persisted.contains("minKeepBoxSideBlocks"), "expected minKeepBoxSideBlocks in: $persisted")
+            for (legacy in listOf("maxDeleteFraction", "idleTtlDays", "intervalDays", "reseedStructuresOutsideBox")) {
+                assertFalse(persisted.contains(legacy), "legacy key '$legacy' should have been dropped: $persisted")
+            }
+            // Loading the rewritten file again is a no-op (already in schema) and preserves values.
+            val reloaded = WildernessConfig.load(dir)
+            assertEquals(1024, reloaded.minKeepBoxSideBlocks)
+            assertTrue(reloaded.enabled)
+            assertFalse(reloaded.dryRun)
+            assertEquals(-20480, reloaded.box.minX)
+            assertEquals(20479, reloaded.box.maxX)
+        } finally {
+            dir.toFile().deleteRecursively()
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.cobblemonwilderness.CobblemonWilderness
 import com.cobblemonwilderness.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.exists
@@ -135,9 +136,14 @@ data class WildernessConfig(
                 return default
             }
             return try {
-                val parsed = fromJsonWithDefaults(file.readText())
-                // If the file predated newer fields, backfill them on disk so it's complete.
-                if (parsed != gson.fromJson(file.readText(), WildernessConfig::class.java)) {
+                val raw = file.readText()
+                val parsed = fromJsonWithDefaults(raw)
+                // Re-save the normalized config whenever the on-disk file is out of sync with the
+                // current schema, so operators see a clean, complete config.json (with
+                // minKeepBoxSideBlocks) and stale relocation-era keys are dropped. The old check
+                // (parsed != rawParse) misses a drift when Gson fills an absent field with the same
+                // value the backfill would produce, so detect drift STRUCTURALLY from the raw JSON.
+                if (isOutOfSchema(raw) || parsed != gson.fromJson(raw, WildernessConfig::class.java)) {
                     save(configDir, parsed)
                 }
                 parsed
@@ -145,6 +151,24 @@ data class WildernessConfig(
                 CobblemonWilderness.logger.error("Failed to load wilderness config, using defaults", e)
                 WildernessConfig()
             }
+        }
+
+        /** Relocation/idle-era keys that no longer exist; their presence marks a stale file to rewrite. */
+        private val LEGACY_KEYS = listOf(
+            "maxDeleteFraction", "idleTtlDays", "intervalDays", "occupancyThresholdTicks",
+            "reseedStructuresOutsideBox", "structureSalt", "resetGeneration",
+        )
+
+        /**
+         * True if the raw on-disk JSON is out of sync with the current schema: it is missing a
+         * current field (`minKeepBoxSideBlocks`, the newest) or still carries a legacy key. An
+         * unparseable file also counts (so it gets rewritten clean). Value-only migrations are
+         * handled by the caller's fallback comparison; this only decides whether to rewrite.
+         */
+        private fun isOutOfSchema(rawJson: String): Boolean {
+            val obj = runCatching { JsonParser.parseString(rawJson).asJsonObject }.getOrNull() ?: return true
+            if (!obj.has("minKeepBoxSideBlocks")) return true
+            return LEGACY_KEYS.any { obj.has(it) }
         }
 
         /**
@@ -158,12 +182,11 @@ data class WildernessConfig(
             var parsed = gson.fromJson(json, WildernessConfig::class.java) ?: return WildernessConfig()
             val d = WildernessConfig()
 
-            // minKeepBoxSideBlocks: a missing Int comes back 0 under Unsafe. It is the SOLE input to
-            // the degenerate-box safety breaker, and 0 (or negative) disables it — isBoxDegenerate then
-            // tests `side < 0`, which is never true, so the breaker never trips. Every config predating
-            // this field (all existing dev/prod files) would load 0 and silently lose the guard. There
-            // is no legitimate use for a ≤0 floor, so absent-or-≤0 → declared default (no need to
-            // inspect the raw JSON to distinguish absent from a written 0).
+            // minKeepBoxSideBlocks is the sole input to the degenerate-box breaker; a ≤0 floor disables
+            // it (isBoxDegenerate then tests `side < 0`, never true). An ABSENT field already comes back
+            // as the declared default (1024) — Gson uses Kotlin's all-defaults no-arg constructor for
+            // this class, so it doesn't Unsafe-zero the field — but an operator could hand-write 0/
+            // negative and silently defeat the guard, so coerce any ≤0 value back to the default.
             if (parsed.minKeepBoxSideBlocks <= 0) {
                 parsed = parsed.copy(minKeepBoxSideBlocks = d.minKeepBoxSideBlocks)
             }

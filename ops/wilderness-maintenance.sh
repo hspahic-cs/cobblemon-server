@@ -90,18 +90,28 @@ fi
 if [ "$RESET_DAY" = 1 ]; then
   # F2 precondition: the pipeline owns backups, so the mod must NOT also snapshot the whole outside
   # world each cycle. Force backupBeforeReset=false (idempotent). The mod reads config at boot, so
-  # editing before the restart takes effect for this wipe.
-  if command -v jq >/dev/null && [ -f "$WILD_CFG" ]; then
-    if [ "$(jq -r '.backupBeforeReset // false' "$WILD_CFG")" != "false" ]; then
-      tmp="$(mktemp)"
-      if jq '.backupBeforeReset = false' "$WILD_CFG" > "$tmp" && mv "$tmp" "$WILD_CFG"; then
-        log "set backupBeforeReset=false in mod config (pipeline owns backups)"
-      else
-        rm -f "$tmp"; log "WARN: could not rewrite $WILD_CFG — mod may double-snapshot the outside world"
-      fi
+  # editing before the restart takes effect for this wipe. Uses python3 (already required by the
+  # snapshot's RCON helper) — no jq dependency, which isn't installed on the servers.
+  if [ -f "$WILD_CFG" ] && command -v python3 >/dev/null; then
+    if python3 - "$WILD_CFG" <<'PY'
+import json, sys
+p = sys.argv[1]
+try:
+    with open(p) as f: cfg = json.load(f)
+except Exception as e:
+    sys.stderr.write("could not parse config: %s\n" % e); sys.exit(2)
+if cfg.get("backupBeforeReset", False) is not False:
+    cfg["backupBeforeReset"] = False
+    with open(p, "w") as f: json.dump(cfg, f, indent=2)
+    sys.stderr.write("flipped backupBeforeReset -> false\n")
+PY
+    then
+      log "ensured mod backupBeforeReset=false (pipeline owns backups)"
+    else
+      log "WARN: could not enforce backupBeforeReset=false in $WILD_CFG — mod default is false, but verify"
     fi
   else
-    log "WARN: jq or $WILD_CFG missing — ensure backupBeforeReset=false manually so the mod doesn't double-snapshot"
+    log "WARN: python3 or $WILD_CFG missing — ensure backupBeforeReset=false manually"
   fi
 
   [ "$WARN" -gt 0 ] 2>/dev/null && sleep "$WARN"

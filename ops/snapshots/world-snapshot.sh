@@ -40,13 +40,17 @@ mkdir -p "$SNAPSHOT_BASE"
 exec 9>"$SNAPSHOT_BASE/.lock"
 flock -n 9 || { echo "Another snapshot in progress; aborting." >&2; exit 1; }
 
-# RCON helper. Reads password from the env's server.properties on the fly so it survives rotations.
+# RCON helper. Reads password AND port from the env's server.properties on the fly (ports differ
+# per env — prod 25575, dev 25576 — so hardcoding would make the snapshot fail on any non-25575 env
+# and, since a failed snapshot aborts the reset, silently make the pipeline inert there).
 rcon() {
-  local cmd="$1" pw
+  local cmd="$1" pw port
   pw=$(grep ^rcon.password "$DIR/server.properties" | cut -d= -f2)
+  port=$(grep ^rcon.port "$DIR/server.properties" | cut -d= -f2)
+  port=${port:-25575}
   python3 -c "
 import socket, struct, sys
-s = socket.socket(); s.settimeout(10); s.connect(('127.0.0.1', 25575))
+s = socket.socket(); s.settimeout(10); s.connect(('127.0.0.1', $port))
 def pkt(rid, t, b):
     body = struct.pack('<ii', rid, t) + b.encode() + b'\x00\x00'
     return struct.pack('<i', len(body)) + body
@@ -65,7 +69,10 @@ if systemctl is-active --quiet "$SERVICE"; then
 fi
 
 mkdir -p "$DEST"
-LATEST_PREV=$(ls -1dt "$SNAPSHOT_BASE"/${ENVNAME}-* 2>/dev/null | grep -v "$DEST" | head -1 || true)
+# Match ONLY date-stamped snapshot dirs (<env>-YYYY-MM-DD), never sibling ops files like
+# dev-reset.sh or dev-config-*.tar.gz — otherwise the prune below could rm a non-snapshot.
+SNAP_GLOB="${ENVNAME}-[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"
+LATEST_PREV=$(ls -1dt "$SNAPSHOT_BASE"/$SNAP_GLOB 2>/dev/null | grep -v "$DEST" | head -1 || true)
 LINK_DEST=()
 [[ -n "$LATEST_PREV" ]] && LINK_DEST=(--link-dest "$LATEST_PREV")
 
@@ -88,8 +95,8 @@ if $RUNNING; then
   rcon "save-on" >/dev/null
 fi
 
-# Prune: keep most-recent N snapshots for this env.
-ls -1dt "$SNAPSHOT_BASE"/${ENVNAME}-* | tail -n +$((KEEP + 1)) | while read -r old; do
+# Prune: keep most-recent N snapshots for this env (date-stamped dirs only — see SNAP_GLOB).
+ls -1dt "$SNAPSHOT_BASE"/$SNAP_GLOB | tail -n +$((KEEP + 1)) | while read -r old; do
   echo "[$(date)] Pruning old snapshot: $old"
   rm -rf "$old"
 done

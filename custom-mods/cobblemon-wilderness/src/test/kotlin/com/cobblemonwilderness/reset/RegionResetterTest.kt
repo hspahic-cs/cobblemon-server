@@ -35,8 +35,9 @@ class RegionResetterTest {
         McaTestFiles.writeRegion(dim.resolve("poi").resolve("r.$rx.$rz.mca"), listOf(1L))
     }
 
+    // Anchor at origin; the test `box` (±20000) contains it, so normal runs never trip the position guard.
     private fun run(dim: Path, dryRun: Boolean, minSide: Int = 1, backup: Path? = null, forced: Boolean = false) =
-        RegionResetter.run("d", dim, box, dryRun, minSide, backup, NOPLogger.NOP_LOGGER, forced)
+        RegionResetter.run("d", dim, box, dryRun, minSide, 0, 0, backup, NOPLogger.NOP_LOGGER, forced)
 
     @Test
     fun `real run with backupTarget moves outside non-monument files into the snapshot and keeps inside`() {
@@ -149,7 +150,7 @@ class RegionResetterTest {
             val degenerate = BoundingBox(minX = 0, minZ = 0, maxX = 0, maxZ = 0)
             val report = RegionResetter.run(
                 "d", dim, degenerate, dryRun = false, minBoxSideBlocks = 1024,
-                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+                mustContainX = 0, mustContainZ = 0, backupTarget = backup, log = NOPLogger.NOP_LOGGER,
             )
             assertTrue(report.aborted)
             assertEquals(0, report.regionsDeleted)
@@ -169,7 +170,7 @@ class RegionResetterTest {
             val degenerate = BoundingBox(minX = 0, minZ = 0, maxX = 0, maxZ = 0)
             val report = RegionResetter.run(
                 "d", dim, degenerate, dryRun = false, minBoxSideBlocks = 1024,
-                backupTarget = null, log = NOPLogger.NOP_LOGGER, forced = true,
+                mustContainX = 0, mustContainZ = 0, backupTarget = null, log = NOPLogger.NOP_LOGGER, forced = true,
             )
             assertFalse(report.aborted)
             // r.100.100 is fully outside the collapsed box and non-monument → deleted.
@@ -263,15 +264,50 @@ class RegionResetterTest {
 
     @Test
     fun `isBoxDegenerate flags collapsed and sliver boxes, not a sane one`() {
-        // The default keep-box is far above any floor.
-        assertFalse(RegionResetter.isBoxDegenerate(box, 1024))
+        // The default keep-box is far above any floor and contains the origin anchor.
+        assertFalse(RegionResetter.isBoxDegenerate(box, 1024, 0, 0))
         // Collapsed to a point.
-        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), 1024))
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), 1024, 0, 0))
         // Sliver: wide on X, collapsed on Z → still degenerate (either side triggers).
-        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(minX = -20000, minZ = 0, maxX = 20000, maxZ = 10), 1024))
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(minX = -20000, minZ = 0, maxX = 20000, maxZ = 10), 1024, 0, 0))
         // Exactly at the floor (side == minSide) is NOT degenerate; one below is.
-        assertFalse(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1023, 1023), 1024)) // side 1024
-        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1022, 1022), 1024))  // side 1023
+        assertFalse(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1023, 1023), 1024, 0, 0)) // side 1024
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1022, 1022), 1024, 0, 0))  // side 1023
+    }
+
+    @Test
+    fun `isBoxDegenerate flags a large but mis-positioned box that excludes the anchor`() {
+        // Big box (side 100001, well above the floor) but far from origin → excludes the (0,0) anchor,
+        // so "outside" would swallow spawn/builds → unsafe, must abort.
+        val displaced = BoundingBox(minX = 100_000, minZ = 100_000, maxX = 200_000, maxZ = 200_000)
+        assertTrue(RegionResetter.isBoxDegenerate(displaced, 1024, 0, 0))
+        // Same box is safe when the protected anchor genuinely lives inside it (off-origin hub).
+        assertFalse(RegionResetter.isBoxDegenerate(displaced, 1024, 150_000, 150_000))
+        // Anchor on the inclusive edge counts as contained.
+        assertFalse(RegionResetter.isBoxDegenerate(displaced, 1024, 100_000, 200_000))
+        // One block past the edge is excluded → unsafe.
+        assertTrue(RegionResetter.isBoxDegenerate(displaced, 1024, 99_999, 150_000))
+    }
+
+    @Test
+    fun `a displaced box that excludes spawn aborts the run and deletes nothing`() {
+        val dim = makeDimension() // has r.0.0 (near origin) and r.100.100
+        try {
+            // Sanely-sized box, but shifted so it excludes the (0,0) anchor → position guard trips.
+            val displaced = BoundingBox(minX = 100_000, minZ = 100_000, maxX = 200_000, maxZ = 200_000)
+            val report = RegionResetter.run(
+                "d", dim, displaced, dryRun = false, minBoxSideBlocks = 1024,
+                mustContainX = 0, mustContainZ = 0, backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            assertTrue(report.aborted)
+            assertEquals(0, report.regionsDeleted)
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
     }
 
     @Test

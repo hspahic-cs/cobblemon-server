@@ -75,12 +75,13 @@ object WildernessCommands {
             }
             val report = RegionResetter.run(
                 dimId, folder, box, dryRun = true, minBoxSideBlocks = cfg.minKeepBoxSideBlocks,
+                mustContainX = cfg.mustContainX, mustContainZ = cfg.mustContainZ,
                 backupTarget = null, log = CobblemonWilderness.logger,
             )
             val mb = report.bytesFreed / (1024 * 1024)
             if (report.aborted) {
                 src.sendSuccess({
-                    Component.literal("  §c$dimId: keep-box is degenerate (a side < ${cfg.minKeepBoxSideBlocks} blocks); a real run would ABORT and delete nothing. Check the box.")
+                    Component.literal("  §c$dimId: keep-box is unsafe (a side < ${cfg.minKeepBoxSideBlocks} blocks, or it excludes the required point ${cfg.mustContainX},${cfg.mustContainZ}); a real run would ABORT and delete nothing. Check the box.")
                 }, false)
             } else {
                 src.sendSuccess({

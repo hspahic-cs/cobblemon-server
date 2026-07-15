@@ -107,6 +107,16 @@ data class WildernessConfig(
      */
     val minKeepBoxSideBlocks: Int = 1024,
     /**
+     * Position guard for the safety breaker: the enforced keep-box MUST contain this (X, Z) point or
+     * the run ABORTS (fail-closed). It is the anchor of the protected build region — world spawn / the
+     * hub — so a box that is large enough per-side but MIS-POSITIONED (e.g. shifted far from where
+     * players build) is caught before it wipes spawn, not just a collapsed one. Defaults to the world
+     * origin (0, 0), where spawn and the build hub sit on virtually every server; set it to your hub's
+     * X/Z if you keep-box an off-origin area. `/wildreset now force` overrides the abort.
+     */
+    val mustContainX: Int = 0,
+    val mustContainZ: Int = 0,
+    /**
      * OFF by default: the unified maintenance pipeline takes the world backup (server down, before
      * the wipe) and owns the rollback point — the mod does NOT back up. When flipped on for manual
      * use, a real (non-dryRun) reset MOVES every to-be-deleted region file into a timestamped

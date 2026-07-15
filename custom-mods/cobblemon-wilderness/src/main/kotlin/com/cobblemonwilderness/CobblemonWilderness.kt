@@ -132,7 +132,7 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
             val dimBackup = snapshotRoot?.resolve(dimId.replace(':', '_'))
             val report = RegionResetter.run(
                 dimId, folder, box, config.dryRun, config.minKeepBoxSideBlocks,
-                dimBackup, logger, forced = forceBreaker,
+                config.mustContainX, config.mustContainZ, dimBackup, logger, forced = forceBreaker,
             )
 
             if (report.aborted) {

@@ -73,13 +73,12 @@ class WildernessConfigTest {
 
     @Test
     fun `pre-W3 config without minKeepBoxSideBlocks backfills the floor and re-arms the breaker`() {
-        // preSnapshotJson predates minKeepBoxSideBlocks; Gson-Unsafe would leave it 0, which disables
-        // the degenerate-box breaker (isBoxDegenerate then tests side < 0, never true). The backfill
-        // must restore the default so the guard actually fires on a collapsed box.
+        // preSnapshotJson predates minKeepBoxSideBlocks; the backfill must land the default (1024) so
+        // the breaker fires on a collapsed box and passes a sane one (anchor at origin, inside cfg.box).
         val cfg = WildernessConfig.fromJsonWithDefaults(preSnapshotJson)
         assertEquals(1024, cfg.minKeepBoxSideBlocks)
-        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), cfg.minKeepBoxSideBlocks))
-        assertFalse(RegionResetter.isBoxDegenerate(cfg.box, cfg.minKeepBoxSideBlocks))
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), cfg.minKeepBoxSideBlocks, cfg.mustContainX, cfg.mustContainZ))
+        assertFalse(RegionResetter.isBoxDegenerate(cfg.box, cfg.minKeepBoxSideBlocks, cfg.mustContainX, cfg.mustContainZ))
     }
 
     @Test

@@ -99,19 +99,23 @@ object RegionResetter {
     }
 
     /**
-     * Safety breaker (rescoped): true if [box] is too small to be a sane keep-zone — collapsed
-     * toward a point or sliver so that "outside" would engulf spawn and the intended build area.
-     * Either side (X or Z) shorter than [minSideBlocks] fails the check. This is the one
-     * catastrophic misconfig a blanket outside-wipe must guard against; it replaces the old
-     * delete-fraction gate, which now trips on every normal cycle (full-outside deletion is normal).
+     * Safety breaker (rescoped): true if [box] is an unsafe keep-zone for a blanket outside-wipe —
+     * either it is too SMALL (collapsed toward a point/sliver: a side shorter than [minSideBlocks]) or
+     * it is MIS-POSITIONED (it does not contain the required anchor point ([mustContainX], [mustContainZ]),
+     * the protected build region / spawn). Both make "outside" engulf spawn and the build area — the one
+     * catastrophic misconfig a blanket wipe must guard against — so both fail closed. This replaces the
+     * old delete-fraction gate, which now trips on every normal cycle (full-outside deletion is normal).
      *
      * Pure function: unit-tested alongside the geometry.
      */
-    fun isBoxDegenerate(box: BoundingBox, minSideBlocks: Int): Boolean {
+    fun isBoxDegenerate(box: BoundingBox, minSideBlocks: Int, mustContainX: Int, mustContainZ: Int): Boolean {
         val b = box.normalized()
         val sideX = b.maxX.toLong() - b.minX.toLong() + 1
         val sideZ = b.maxZ.toLong() - b.minZ.toLong() + 1
-        return sideX < minSideBlocks || sideZ < minSideBlocks
+        if (sideX < minSideBlocks || sideZ < minSideBlocks) return true
+        // Position guard: a correctly-sized but displaced box that excludes the protected anchor would
+        // put spawn / the build region "outside" and wipe it — as catastrophic as a collapsed box.
+        return !b.contains(mustContainX, mustContainZ)
     }
 
     /** Parses region coords from an `r.X.Z.mca` filename, or null if it doesn't match. */
@@ -130,9 +134,10 @@ object RegionResetter {
      * outside region is monument-checked ([McaTimestampReader.regionHasMonument]) and kept if it holds
      * one — never regenerated, so its world state stays frozen.
      *
-     * The safety breaker is a degenerate-box guard ([isBoxDegenerate]): a collapsed/sliver keep-box
-     * would make "outside" swallow spawn and builds, so the run aborts and deletes nothing. It never
-     * gates on delete fraction — a full-outside wipe is normal operation now.
+     * The safety breaker is a degenerate-box guard ([isBoxDegenerate]): a keep-box that is collapsed/
+     * sliver OR mis-positioned so it excludes the anchor ([mustContainX], [mustContainZ]) would make
+     * "outside" swallow spawn and builds, so the run aborts and deletes nothing. It never gates on
+     * delete fraction — a full-outside wipe is normal operation now.
      *
      * When [backupTarget] is non-null and this is a real (non-[dryRun]) run, each to-be-deleted file
      * is MOVED into [backupTarget]/<sub>/<name> instead of being unlinked. The move is the deletion —
@@ -147,6 +152,8 @@ object RegionResetter {
         box: BoundingBox,
         dryRun: Boolean,
         minBoxSideBlocks: Int,
+        mustContainX: Int,
+        mustContainZ: Int,
         backupTarget: Path?,
         log: Logger,
         forced: Boolean = false,
@@ -157,22 +164,24 @@ object RegionResetter {
             return ResetReport(dimensionId, 0, 0, 0, dryRun)
         }
 
-        // Safety breaker (rescoped): fail CLOSED on a degenerate/collapsed keep-box — the one
-        // catastrophic misconfig, where "outside" would engulf spawn/builds. Checked up front (box
-        // only), before any scan, so nothing is deleted. forceBreakerOverride is the escape hatch.
-        if (isBoxDegenerate(box, minBoxSideBlocks)) {
+        // Safety breaker (rescoped): fail CLOSED on an unsafe keep-box — collapsed/sliver OR
+        // mis-positioned so it excludes the protected anchor — the one catastrophic misconfig, where
+        // "outside" would engulf spawn/builds. Checked up front (box only), before any scan, so nothing
+        // is deleted. forceBreakerOverride is the escape hatch.
+        if (isBoxDegenerate(box, minBoxSideBlocks, mustContainX, mustContainZ)) {
             if (!forced) {
                 log.error(
-                    "[{}] CIRCUIT BREAKER: keep-box X[{}..{}] Z[{}..{}] is degenerate (a side < {} " +
-                        "blocks) — 'outside' would engulf spawn/builds. Aborting; nothing was deleted.",
-                    dimensionId, box.minX, box.maxX, box.minZ, box.maxZ, minBoxSideBlocks,
+                    "[{}] CIRCUIT BREAKER: keep-box X[{}..{}] Z[{}..{}] is unsafe (a side < {} blocks, or " +
+                        "it excludes the required point ({}, {})) — 'outside' would engulf spawn/builds. " +
+                        "Aborting; nothing was deleted.",
+                    dimensionId, box.minX, box.maxX, box.minZ, box.maxZ, minBoxSideBlocks, mustContainX, mustContainZ,
                 )
                 return ResetReport(dimensionId, 0, 0, 0, dryRun, aborted = true)
             }
             log.warn(
-                "[{}] CIRCUIT BREAKER OVERRIDDEN (forced): keep-box is degenerate (a side < {} blocks), " +
-                    "but /wildreset now force was set. Proceeding.",
-                dimensionId, minBoxSideBlocks,
+                "[{}] CIRCUIT BREAKER OVERRIDDEN (forced): keep-box is unsafe (a side < {} blocks, or it " +
+                    "excludes ({}, {})), but /wildreset now force was set. Proceeding.",
+                dimensionId, minBoxSideBlocks, mustContainX, mustContainZ,
             )
         }
 

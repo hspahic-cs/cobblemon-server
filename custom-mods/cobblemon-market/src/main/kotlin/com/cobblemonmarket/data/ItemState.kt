@@ -33,6 +33,13 @@ data class PriceTick(
  */
 data class ItemState(
     var stock: Double = 0.0,
+    /**
+     * The `baseStock` this item's [stock] was last aligned against. When the configured baseStock
+     * changes, [MarketStore.ensureInitialized] rescales [stock] to preserve its fullness ratio and
+     * updates this field, so a config change to baseStock doesn't jump prices. 0 = legacy record
+     * (written before this field existed) — adopted without rescaling on first load.
+     */
+    var baseStockRef: Double = 0.0,
     /** Bounded by MarketConfig.priceHistorySize. Older entries dropped from the head. */
     val priceHistory: MutableList<PriceTick> = mutableListOf(),
 )

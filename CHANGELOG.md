@@ -12,6 +12,19 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.6] - 2026-07-14
+
+### Fixed
+- **BP shop was empty because its config never reached the server.** `bp-items.json` only existed bundled inside the market mod jar, but the shop reads `config/bp-items.json` from the server directory — which the deploy populates from `modpack/server-overrides/config/`. The file is now shipped there, so the shop actually loads its items on the server.
+- **BP shop vendor is now discoverable in `/market admin spawn`.** `bp_shop` (and `tm_merchant`) are added to the tab-completion for the spawn command — they aren't backed by `items.json` scopes so they weren't being suggested.
+- **Vouchers now actually work at vendors.** TR vendors (the TM Merchant and `tm_<type>` vendors) and the held-item vendor now check your inventory for a matching voucher and consume it **before** charging money, on single-item (left-click) buys. Previously the voucher item existed but was never redeemed, so you were charged money and kept the voucher.
+
+### Changed
+- **Market stock tracks base-stock changes.** When you edit an item's `baseStock` in config, its current stock is now rescaled to preserve its fullness ratio (stock ÷ baseStock) on boot and on `/market admin reload`, instead of stranding the old absolute stock and jumping the price. E.g. raising baseStock 200 → 500 no longer spikes the price by leaving stock at 200.
+
+### Added
+- **`/version` command.** Reports the modpack version the server is actually running (read from `.deployed_version`, which the deploy writes after a successful restart). Lets anyone confirm in-game whether an update landed, without SSH.
+
 ## [0.28.5] - 2026-07-14
 
 ### Changed

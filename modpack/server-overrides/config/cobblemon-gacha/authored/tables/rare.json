@@ -4,34 +4,21 @@
   "entries": [
     {
       "lootTier": "Standard",
-      "label": "2 Rare Candy",
-      "weightPct": 9.8,
+      "label": "5 Rare Candy",
+      "weightPct": 10.4,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:rare_candy",
-          "count": 2
+          "count": 5
         }
       ],
-      "notes": "Two Rare Candies — instantly level up"
+      "notes": "Two Rare Candies \u2014 instantly level up"
     },
     {
       "lootTier": "Mid",
-      "label": "2 EXP Candy L",
-      "weightPct": 5.8,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:exp_candy_l",
-          "count": 2
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
-      "label": "Uncommon Pokémon Egg",
-      "weightPct": 12.6,
+      "label": "Uncommon Pok\u00e9mon Egg",
+      "weightPct": 13.4,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -40,12 +27,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "An uncommon-pool Pokémon egg"
+      "notes": "An uncommon-pool Pok\u00e9mon egg"
     },
     {
       "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 6.3,
+      "weightPct": 6.7,
       "items": [
         {
           "type": "vanilla",
@@ -53,12 +40,12 @@
           "count": 1
         }
       ],
-      "notes": "XP-boost held item — not a Pokémon egg"
+      "notes": "XP-boost held item \u2014 not a Pok\u00e9mon egg"
     },
     {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 5.8,
+      "weightPct": 6.2,
       "items": [
         {
           "type": "vanilla",
@@ -66,12 +53,12 @@
           "count": 1
         }
       ],
-      "notes": "Changes a Pokémon to its Hidden Ability"
+      "notes": "Changes a Pok\u00e9mon to its Hidden Ability"
     },
     {
       "lootTier": "High",
-      "label": "Rare Pokémon Egg",
-      "weightPct": 17.5,
+      "label": "Rare Pok\u00e9mon Egg",
+      "weightPct": 19.0,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -80,7 +67,7 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "A rare-pool Pokémon egg"
+      "notes": "A rare-pool Pok\u00e9mon egg"
     },
     {
       "lootTier": "Jackpot",
@@ -111,7 +98,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Rare keys",
-      "weightPct": 1.1,
+      "weightPct": 1.2,
       "items": [
         {
           "type": "gacha_key",
@@ -124,7 +111,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Frost",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -132,12 +119,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Articuno — charge by defeating Ice-types"
+      "notes": "Summons Articuno \u2014 charge by defeating Ice-types"
     },
     {
       "lootTier": "High",
       "label": "Urn of Storms",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -145,12 +132,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Zapdos — charge by defeating Electric-types"
+      "notes": "Summons Zapdos \u2014 charge by defeating Electric-types"
     },
     {
       "lootTier": "High",
       "label": "Urn of Embers",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -158,12 +145,12 @@
           "count": 1
         }
       ],
-      "notes": "Summons Moltres — charge by defeating Fire-types"
+      "notes": "Summons Moltres \u2014 charge by defeating Fire-types"
     },
     {
       "lootTier": "High",
       "label": "Silk Touch Book",
-      "weightPct": 3.5,
+      "weightPct": 3.7,
       "items": [
         {
           "type": "enchanted_book",
@@ -177,7 +164,7 @@
     {
       "lootTier": "High",
       "label": "3 IV Candy (random)",
-      "weightPct": 4.6,
+      "weightPct": 4.9,
       "items": [
         {
           "type": "random_item",
@@ -192,12 +179,12 @@
           "count": 3
         }
       ],
-      "notes": "3x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) — raises one IV stat"
+      "notes": "3x a random IV candy (Health/Mighty/Tough/Smart/Courage/Quick) \u2014 raises one IV stat"
     },
     {
       "lootTier": "High",
       "label": "16 Eye of Ender",
-      "weightPct": 2.1,
+      "weightPct": 2.2,
       "items": [
         {
           "type": "vanilla",
@@ -210,7 +197,7 @@
     {
       "lootTier": "High",
       "label": "Titan Key",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -223,7 +210,7 @@
     {
       "lootTier": "High",
       "label": "Rock Golem Key",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -236,7 +223,7 @@
     {
       "lootTier": "High",
       "label": "Steel Golem Key",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -249,7 +236,7 @@
     {
       "lootTier": "High",
       "label": "Ice Golem Key",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -262,7 +249,7 @@
     {
       "lootTier": "High",
       "label": "Dragon Golem Key",
-      "weightPct": 2.3,
+      "weightPct": 2.4,
       "items": [
         {
           "type": "vanilla",
@@ -275,7 +262,7 @@
     {
       "lootTier": "High",
       "label": "Zygarde Core",
-      "weightPct": 2.4,
+      "weightPct": 2.5,
       "items": [
         {
           "type": "vanilla",
@@ -283,12 +270,12 @@
           "count": 1
         }
       ],
-      "notes": "Core to assemble Zygarde — combine with Zygarde Cells"
+      "notes": "Core to assemble Zygarde \u2014 combine with Zygarde Cells"
     },
     {
       "lootTier": "High",
       "label": "TR Voucher (5 BP)",
-      "weightPct": 3.2,
+      "weightPct": 3.4,
       "items": [
         {
           "type": "vanilla",
@@ -301,7 +288,7 @@
     {
       "lootTier": "High",
       "label": "Held Item Voucher (4 BP)",
-      "weightPct": 2.4,
+      "weightPct": 2.5,
       "items": [
         {
           "type": "vanilla",
@@ -314,7 +301,7 @@
     {
       "lootTier": "High",
       "label": "Griseous Orb",
-      "weightPct": 3.3,
+      "weightPct": 3.5,
       "items": [
         {
           "type": "vanilla",

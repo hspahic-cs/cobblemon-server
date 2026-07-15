@@ -5,7 +5,7 @@
     {
       "lootTier": "Standard",
       "label": "64 Great Balls",
-      "weightPct": 4.0,
+      "weightPct": 4.1,
       "items": [
         {
           "type": "vanilla",
@@ -18,7 +18,7 @@
     {
       "lootTier": "Standard",
       "label": "32 Timer Balls",
-      "weightPct": 4.5,
+      "weightPct": 4.6,
       "items": [
         {
           "type": "vanilla",
@@ -26,12 +26,12 @@
           "count": 32
         }
       ],
-      "notes": "Useful for catching Pokémon at night or in caves"
+      "notes": "Useful for catching Pok\u00e9mon at night or in caves"
     },
     {
       "lootTier": "Standard",
       "label": "16 Dream Balls",
-      "weightPct": 4.5,
+      "weightPct": 4.6,
       "items": [
         {
           "type": "vanilla",
@@ -39,12 +39,12 @@
           "count": 16
         }
       ],
-      "notes": "Useful for catching sleeping Pokémon"
+      "notes": "Useful for catching sleeping Pok\u00e9mon"
     },
     {
       "lootTier": "Standard",
       "label": "20 Quick Balls",
-      "weightPct": 3.0,
+      "weightPct": 3.1,
       "items": [
         {
           "type": "vanilla",
@@ -57,7 +57,7 @@
     {
       "lootTier": "Standard",
       "label": "Type-Boost Held Item (random)",
-      "weightPct": 6.0,
+      "weightPct": 6.1,
       "items": [
         {
           "type": "random_item",
@@ -86,12 +86,12 @@
           "count": 1
         }
       ],
-      "notes": "A random type-boosting held item (Mystic Water, Miracle Seed, Black Sludge, …)"
+      "notes": "A random type-boosting held item (Mystic Water, Miracle Seed, Black Sludge, \u2026)"
     },
     {
       "lootTier": "Standard",
       "label": "Evolution Item (random)",
-      "weightPct": 6.0,
+      "weightPct": 6.1,
       "items": [
         {
           "type": "random_item",
@@ -130,38 +130,25 @@
           "count": 1
         }
       ],
-      "notes": "A random evolution item (Metal Coat, Kings Rock, Razor Claw, …)"
+      "notes": "A random evolution item (Metal Coat, Kings Rock, Razor Claw, \u2026)"
     },
     {
       "lootTier": "Mid",
-      "label": "20 Ultra Balls",
-      "weightPct": 3.0,
+      "label": "32 Ultra Balls",
+      "weightPct": 3.1,
       "items": [
         {
           "type": "vanilla",
           "id": "cobblemon:ultra_ball",
-          "count": 20
+          "count": 32
         }
       ],
       "notes": "A handy catching upgrade"
     },
     {
       "lootTier": "Mid",
-      "label": "2 Max Revives",
-      "weightPct": 2.0,
-      "items": [
-        {
-          "type": "vanilla",
-          "id": "cobblemon:max_revive",
-          "count": 2
-        }
-      ],
-      "notes": ""
-    },
-    {
-      "lootTier": "Mid",
       "label": "10 EV Vitamin (random)",
-      "weightPct": 7.0,
+      "weightPct": 7.1,
       "items": [
         {
           "type": "random_item",
@@ -176,12 +163,12 @@
           "count": 10
         }
       ],
-      "notes": "10× a random EV-boosting vitamin"
+      "notes": "10\u00d7 a random EV-boosting vitamin"
     },
     {
       "lootTier": "Mid",
       "label": "1 Evolution Stone (random)",
-      "weightPct": 7.0,
+      "weightPct": 7.1,
       "items": [
         {
           "type": "random_item",
@@ -205,7 +192,7 @@
     {
       "lootTier": "Mid",
       "label": "EV Training Item (random)",
-      "weightPct": 3.9,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "random_item",
@@ -225,7 +212,7 @@
     {
       "lootTier": "Mid",
       "label": "Breeding Item (random)",
-      "weightPct": 2.9,
+      "weightPct": 3.0,
       "items": [
         {
           "type": "random_item",
@@ -249,7 +236,7 @@
           "count": 1
         }
       ],
-      "notes": "Mega Evolution — trainer keystone"
+      "notes": "Mega Evolution \u2014 trainer keystone"
     },
     {
       "lootTier": "Mid",
@@ -266,8 +253,8 @@
     },
     {
       "lootTier": "High",
-      "label": "Common Pokémon Egg",
-      "weightPct": 12.5,
+      "label": "Common Pok\u00e9mon Egg",
+      "weightPct": 12.7,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -276,12 +263,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "A common-pool Pokémon egg"
+      "notes": "A common-pool Pok\u00e9mon egg"
     },
     {
       "lootTier": "High",
-      "label": "Uncommon Pokémon Egg",
-      "weightPct": 12.5,
+      "label": "Uncommon Pok\u00e9mon Egg",
+      "weightPct": 12.8,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -290,12 +277,12 @@
           "requireHiddenAbility": false
         }
       ],
-      "notes": "An uncommon-pool Pokémon egg"
+      "notes": "An uncommon-pool Pok\u00e9mon egg"
     },
     {
       "lootTier": "High",
       "label": "1 Rare Candy",
-      "weightPct": 5.0,
+      "weightPct": 5.1,
       "items": [
         {
           "type": "vanilla",
@@ -303,12 +290,12 @@
           "count": 1
         }
       ],
-      "notes": "Instantly raises a Pokémon's level"
+      "notes": "Instantly raises a Pok\u00e9mon's level"
     },
     {
       "lootTier": "High",
       "label": "2 Nature Mint (random)",
-      "weightPct": 4.0,
+      "weightPct": 4.1,
       "items": [
         {
           "type": "random_item",
@@ -338,12 +325,12 @@
           "count": 2
         }
       ],
-      "notes": "2× a random Nature Mint — changes a Pokémon's nature"
+      "notes": "2\u00d7 a random Nature Mint \u2014 changes a Pok\u00e9mon's nature"
     },
     {
       "lootTier": "High",
       "label": "Competitive Held Item (random)",
-      "weightPct": 4.4,
+      "weightPct": 4.5,
       "items": [
         {
           "type": "random_item",
@@ -392,7 +379,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Lucky Egg",
-      "weightPct": 3.0,
+      "weightPct": 3.1,
       "items": [
         {
           "type": "vanilla",

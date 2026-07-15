@@ -4,6 +4,7 @@ import com.cobblemonwilderness.CobblemonWilderness
 import com.cobblemonwilderness.internal.ConfigPaths
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.exists
@@ -73,8 +74,6 @@ data class BoundingBox(
 data class WildernessConfig(
     val enabled: Boolean = false,
     val dryRun: Boolean = true,
-    /** Days between automatic resets. <= 0 disables the automatic schedule (manual only). */
-    val intervalDays: Int = 14,
     /** Dimensions to clean, by id. Default: overworld only. */
     val dimensions: List<String> = listOf("minecraft:overworld"),
     val box: BoundingBox = BoundingBox(),
@@ -94,37 +93,45 @@ data class WildernessConfig(
     /** IANA timezone used to render the reset date in player warnings. */
     val displayTimeZone: String = "America/New_York",
     /**
-     * Circuit breaker. If a run would delete more than this fraction of a dimension's region
-     * files, it aborts and deletes nothing — a safety net against a mis-typed box (e.g. one
-     * collapsed to a point). Set to 1.0 to disable.
+     * IANA timezone of the ops schedule that arms the prune (the 05:30 restart job). Display/logging
+     * only — cadence is driven by arming ([ResetState.forceNextBoot]), not by this mod's own clock, so
+     * this never gates execution. Shown in /wildreset status and preview so operators read ages in the
+     * server's local zone.
      */
-    val maxDeleteFraction: Double = 0.9,
+    val scheduleTimeZone: String = "America/New_York",
     /**
-     * When true (default), a real (non-dryRun) reset MOVES every to-be-deleted region file into
-     * a timestamped snapshot under [backupDir] instead of unlinking it. The move IS the deletion
-     * — the chunk still regenerates fresh because the file is gone from world/ — so it adds a
-     * restore path at ~no extra disk on the same filesystem. This is a per-prune safety net taken
-     * right before the prune; it is SEPARATE from, and not a replacement for, the server's
-     * scheduled world snapshot.
+     * Safety breaker floor, in blocks. A run ABORTS (deletes nothing) if either side of the enforced
+     * keep-box is shorter than this — the catastrophic misconfig where the box has collapsed toward a
+     * point/sliver so "outside" would swallow spawn and the build area. It does NOT gate on delete
+     * fraction: a full-outside wipe is normal operation. `/wildreset now force` overrides it.
      */
-    val backupBeforeReset: Boolean = true,
+    val minKeepBoxSideBlocks: Int = 1024,
     /**
-     * Where prune snapshots go. A relative path resolves against the server (game) dir; an
-     * absolute path is used as-is. Default keeps snapshots OUTSIDE the scheduled world-snapshot's
-     * scope (which copies world/ and config/cobblemon-*), so the two don't overlap.
+     * Position guard for the safety breaker: the enforced keep-box MUST contain this (X, Z) point or
+     * the run ABORTS (fail-closed). It is the anchor of the protected build region — world spawn / the
+     * hub — so a box that is large enough per-side but MIS-POSITIONED (e.g. shifted far from where
+     * players build) is caught before it wipes spawn, not just a collapsed one. Defaults to the world
+     * origin (0, 0), where spawn and the build hub sit on virtually every server; set it to your hub's
+     * X/Z if you keep-box an off-origin area. `/wildreset now force` overrides the abort.
+     */
+    val mustContainX: Int = 0,
+    val mustContainZ: Int = 0,
+    /**
+     * OFF by default: the unified maintenance pipeline takes the world backup (server down, before
+     * the wipe) and owns the rollback point — the mod does NOT back up. When flipped on for manual
+     * use, a real (non-dryRun) reset MOVES every to-be-deleted region file into a timestamped
+     * snapshot under [backupDir] instead of unlinking it; on a normal blanket wipe that would
+     * duplicate ~the whole outside world each cycle and fight the memory goal, so leave it off.
+     */
+    val backupBeforeReset: Boolean = false,
+    /**
+     * Where prune snapshots go IF [backupBeforeReset] is manually enabled. A relative path resolves
+     * against the server (game) dir; an absolute path is used as-is. Kept OUTSIDE the scheduled
+     * world-snapshot's scope so the two don't overlap.
      */
     val backupDir: String = "wilderness-snapshots",
     /** Keep this many of the most recent prune snapshots; older ones are deleted after a run. 0 = keep all. */
     val backupRetention: Int = 5,
-    /**
-     * When true, structures and monuments in chunks OUTSIDE the keep-box are relocated each reset
-     * cycle (a per-cycle salt is mixed into structure placement), so a pruned-then-revisited
-     * frontier has its landmarks in new spots — terrain itself is unchanged. Off by default: this
-     * is a deliberate gameplay change, and it applies to all dimensions' structures beyond the
-     * X/Z box (the placement hook has no dimension context), though only the pruned overworld
-     * actually regenerates them. Inside the box, placement is always untouched.
-     */
-    val reseedStructuresOutsideBox: Boolean = false,
 ) {
     /** The box actually enforced — region-aligned when [snapToRegions] is on. */
     fun effectiveBox(): BoundingBox = if (snapToRegions) box.snappedToRegions() else box.normalized()
@@ -139,9 +146,14 @@ data class WildernessConfig(
                 return default
             }
             return try {
-                val parsed = fromJsonWithDefaults(file.readText())
-                // If the file predated newer fields, backfill them on disk so it's complete.
-                if (parsed != gson.fromJson(file.readText(), WildernessConfig::class.java)) {
+                val raw = file.readText()
+                val parsed = fromJsonWithDefaults(raw)
+                // Re-save the normalized config whenever the on-disk file is out of sync with the
+                // current schema, so operators see a clean, complete config.json (with
+                // minKeepBoxSideBlocks) and stale relocation-era keys are dropped. The old check
+                // (parsed != rawParse) misses a drift when Gson fills an absent field with the same
+                // value the backfill would produce, so detect drift STRUCTURALLY from the raw JSON.
+                if (isOutOfSchema(raw) || parsed != gson.fromJson(raw, WildernessConfig::class.java)) {
                     save(configDir, parsed)
                 }
                 parsed
@@ -151,25 +163,60 @@ data class WildernessConfig(
             }
         }
 
+        /** Relocation/idle-era keys that no longer exist; their presence marks a stale file to rewrite. */
+        private val LEGACY_KEYS = listOf(
+            "maxDeleteFraction", "idleTtlDays", "intervalDays", "occupancyThresholdTicks",
+            "reseedStructuresOutsideBox", "structureSalt", "resetGeneration",
+        )
+
         /**
-         * Parse a config JSON, backfilling fields absent from a pre-snapshot file. Gson
-         * instantiates via Unsafe and so bypasses Kotlin default values — a missing field comes
-         * back as false/0/null, not its declared default. An older config has no `backupDir`
-         * (→ null), which we treat as the sentinel for "this file predates the snapshot fields"
-         * and restore all three to their defaults (snapshots ON), rather than silently OFF.
+         * True if the raw on-disk JSON is out of sync with the current schema: it is missing a
+         * current field (`minKeepBoxSideBlocks`, the newest) or still carries a legacy key. An
+         * unparseable file also counts (so it gets rewritten clean). Value-only migrations are
+         * handled by the caller's fallback comparison; this only decides whether to rewrite.
+         */
+        private fun isOutOfSchema(rawJson: String): Boolean {
+            val obj = runCatching { JsonParser.parseString(rawJson).asJsonObject }.getOrNull() ?: return true
+            if (!obj.has("minKeepBoxSideBlocks")) return true
+            return LEGACY_KEYS.any { obj.has(it) }
+        }
+
+        /**
+         * Parse a config JSON, backfilling fields absent from an older file with their declared
+         * defaults. Gson instantiates via Unsafe and so bypasses Kotlin default values — a missing
+         * field comes back as false/0/null, NOT its declared default. Because it can't tell an
+         * absent field from a written `0`/`null`, we inspect the raw JSON for genuinely-missing
+         * keys.
          */
         fun fromJsonWithDefaults(json: String): WildernessConfig {
-            val parsed = gson.fromJson(json, WildernessConfig::class.java)
-            return if (parsed.backupDir.isNullOrBlank()) {
-                val d = WildernessConfig()
-                parsed.copy(
+            var parsed = gson.fromJson(json, WildernessConfig::class.java) ?: return WildernessConfig()
+            val d = WildernessConfig()
+
+            // minKeepBoxSideBlocks is the sole input to the degenerate-box breaker; a ≤0 floor disables
+            // it (isBoxDegenerate then tests `side < 0`, never true). An ABSENT field already comes back
+            // as the declared default (1024) — Gson uses Kotlin's all-defaults no-arg constructor for
+            // this class, so it doesn't Unsafe-zero the field — but an operator could hand-write 0/
+            // negative and silently defeat the guard, so coerce any ≤0 value back to the default.
+            if (parsed.minKeepBoxSideBlocks <= 0) {
+                parsed = parsed.copy(minKeepBoxSideBlocks = d.minKeepBoxSideBlocks)
+            }
+
+            // scheduleTimeZone: an absent String comes back null under Unsafe → restore the default.
+            if (parsed.scheduleTimeZone.isNullOrBlank()) {
+                parsed = parsed.copy(scheduleTimeZone = d.scheduleTimeZone)
+            }
+
+            // A pre-snapshot config has no `backupDir` (→ null): the sentinel for "this file predates
+            // the snapshot fields" — restore all three to their defaults (snapshots now OFF; the
+            // pipeline owns backups).
+            if (parsed.backupDir.isNullOrBlank()) {
+                parsed = parsed.copy(
                     backupBeforeReset = d.backupBeforeReset,
                     backupDir = d.backupDir,
                     backupRetention = d.backupRetention,
                 )
-            } else {
-                parsed
             }
+            return parsed
         }
 
         fun save(configDir: Path, config: WildernessConfig) {

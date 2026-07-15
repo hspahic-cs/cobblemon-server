@@ -12,6 +12,11 @@ root README.
 
 ## [Unreleased]
 
+## [0.30.0] - 2026-07-15
+
+### Added
+- **Wilderness periodic reset — reclaims frontier disk while keeping Legendary Monuments one-time-use.** On a scheduled cadence the server deletes every region fully **outside** the configured border box (regenerating fresh terrain on next visit) but leaves any region that contains a Legendary Monument **completely untouched**. Because a monument's "used" state lives in world blocks (an activated pedestal becomes crying obsidian), never regenerating its chunks means a looted monument **stays looted** — you can't note its coordinates, wait for a reset, and re-farm it; unclaimed monuments stay claimable. Off by default (`enabled=false`, `dryRun=true`); operators set the keep-box and arm a run with `/wildreset now` (`/wildreset preview` shows what a run would delete, read-only). A collapsed or mis-positioned keep-box **fails closed** (aborts and deletes nothing). Ships with a unified 05:30 maintenance pipeline (`ops/wilderness-maintenance.sh`) that always snapshots the world **before** a wipe.
+
 ## [0.29.0] - 2026-07-15
 
 ### Added

@@ -14,35 +14,43 @@ class RegionResetterTest {
 
     private val box = BoundingBox(minX = -20000, minZ = -20000, maxX = 20000, maxZ = 20000)
     private val subfolders = listOf("region", "entities", "poi")
+    private val lmStart = "legendarymonuments:articuno_shrine"
 
-    /** Builds a temp dimension folder with one inside-box region (r.0.0) and one outside
-     *  (r.100.100), each present in region/, entities/ and poi/. Returns the folder. */
+    /** Builds a temp dimension with one inside-box region (r.0.0) and one fully-outside, non-monument
+     *  region (r.100.100), each present in region/, entities/ and poi/ (header-only → no monument). */
     private fun makeDimension(): Path {
         val dim = Files.createTempDirectory("wild-dim")
-        for (sub in subfolders) {
-            val d = Files.createDirectories(dim.resolve(sub))
-            Files.write(d.resolve("r.0.0.mca"), byteArrayOf(1, 2, 3))       // inside box
-            Files.write(d.resolve("r.100.100.mca"), byteArrayOf(4, 5, 6))   // outside box
-        }
+        McaTestFiles.writeAllFolders(dim, 0, 0, 1L)       // inside box (kept by geometry)
+        McaTestFiles.writeAllFolders(dim, 100, 100, 1L)   // outside box, no monument → deletable
         return dim
     }
 
+    /** Writes an outside monument region at (rx, rz): region/ holds an LM start chunk; entities/poi headers. */
+    private fun writeMonument(dim: Path, rx: Int, rz: Int) {
+        McaTestFiles.writeRegionWithChunks(
+            dim.resolve("region").resolve("r.$rx.$rz.mca"),
+            listOf(McaTestFiles.ChunkSpec(slot = 0, nbt = McaTestFiles.chunkStructuresNbt(starts = mapOf(lmStart to lmStart)))),
+        )
+        McaTestFiles.writeRegion(dim.resolve("entities").resolve("r.$rx.$rz.mca"), listOf(1L))
+        McaTestFiles.writeRegion(dim.resolve("poi").resolve("r.$rx.$rz.mca"), listOf(1L))
+    }
+
+    // Anchor at origin; the test `box` (±20000) contains it, so normal runs never trip the position guard.
+    private fun run(dim: Path, dryRun: Boolean, minSide: Int = 1, backup: Path? = null, forced: Boolean = false) =
+        RegionResetter.run("d", dim, box, dryRun, minSide, 0, 0, backup, NOPLogger.NOP_LOGGER, forced)
+
     @Test
-    fun `real run with backupTarget moves outside-box files into the snapshot and keeps inside`() {
+    fun `real run with backupTarget moves outside non-monument files into the snapshot and keeps inside`() {
         val dim = makeDimension()
         val backup = dim.resolveSibling("snap")
         try {
-            val report = RegionResetter.run(
-                "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
-                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
-            )
+            val report = run(dim, dryRun = false, backup = backup)
             assertEquals(1, report.regionsDeleted)
             assertEquals(1, report.regionsKept)
+            assertEquals(1, report.keptInside)
             for (sub in subfolders) {
-                // outside-box file left world/ and now lives in the snapshot
                 assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
                 assertTrue(Files.exists(backup.resolve(sub).resolve("r.100.100.mca")))
-                // inside-box file untouched, and never copied into the snapshot
                 assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
                 assertFalse(Files.exists(backup.resolve(sub).resolve("r.0.0.mca")))
             }
@@ -52,16 +60,51 @@ class RegionResetterTest {
     }
 
     @Test
-    fun `real run without backupTarget deletes outside-box files outright`() {
+    fun `real run without backupTarget deletes outside non-monument files outright`() {
         val dim = makeDimension()
         try {
-            RegionResetter.run(
-                "d", dim, box, dryRun = false, maxDeleteFraction = 1.0,
-                backupTarget = null, log = NOPLogger.NOP_LOGGER,
-            )
+            run(dim, dryRun = false)
             for (sub in subfolders) {
                 assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
                 assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `a monument region is never deleted, even fully outside the box`() {
+        val dim = makeDimension()
+        writeMonument(dim, 200, 200) // fully outside, holds a monument
+        try {
+            val report = run(dim, dryRun = false)
+            assertEquals(1, report.keptMonument)
+            assertEquals(1, report.regionsDeleted) // only r.100.100
+            assertEquals(RegionDisposition.KEPT_MONUMENT, report.scans.single { it.rx == 200 }.disposition)
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.200.200.mca")), "monument $sub must survive")
+                assertFalse(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `a straddling region is kept and counted separately from inside`() {
+        val dim = Files.createTempDirectory("wild-straddle")
+        try {
+            // r.39.0 covers X[19968..20479], overlapping the box edge at maxX=20000 → straddle.
+            McaTestFiles.writeAllFolders(dim, 39, 0, 1L)
+            McaTestFiles.writeAllFolders(dim, 0, 0, 1L)       // fully inside
+            McaTestFiles.writeAllFolders(dim, 100, 100, 1L)   // fully outside → deletable
+            val report = run(dim, dryRun = false)
+            assertEquals(1, report.keptInside)
+            assertEquals(1, report.keptStraddle)
+            assertEquals(1, report.regionsDeleted)
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.39.0.mca")))
             }
         } finally {
             dim.toFile().deleteRecursively()
@@ -73,51 +116,96 @@ class RegionResetterTest {
         val dim = makeDimension()
         val backup = dim.resolveSibling("snap")
         try {
-            val report = RegionResetter.run(
-                "d", dim, box, dryRun = true, maxDeleteFraction = 1.0,
-                backupTarget = backup, log = NOPLogger.NOP_LOGGER,
-            )
+            val report = run(dim, dryRun = true, backup = backup)
             assertEquals(1, report.regionsDeleted) // tallied, not performed
             for (sub in subfolders) {
                 assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
             }
-            assertFalse(Files.exists(backup)) // nothing written
+            assertFalse(Files.exists(backup))
         } finally {
             dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
         }
     }
 
     @Test
+    fun `a normal box wiping ~all outside is NOT aborted`() {
+        // The whole point of the rescope: full-outside deletion is normal and must not trip.
+        val dim = makeDimension()
+        try {
+            val report = run(dim, dryRun = false, minSide = 1024)
+            assertFalse(report.aborted)
+            assertEquals(1, report.regionsDeleted)
+            assertFalse(Files.exists(dim.resolve("region").resolve("r.100.100.mca")))
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `a degenerate box aborts and deletes nothing`() {
+        val dim = makeDimension()
+        val backup = dim.resolveSibling("snap")
+        try {
+            // Collapsed keep-box (a single block) → both sides far below the 1024 floor → abort.
+            val degenerate = BoundingBox(minX = 0, minZ = 0, maxX = 0, maxZ = 0)
+            val report = RegionResetter.run(
+                "d", dim, degenerate, dryRun = false, minBoxSideBlocks = 1024,
+                mustContainX = 0, mustContainZ = 0, backupTarget = backup, log = NOPLogger.NOP_LOGGER,
+            )
+            assertTrue(report.aborted)
+            assertEquals(0, report.regionsDeleted)
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+            assertFalse(Files.exists(backup))
+        } finally {
+            dim.toFile().deleteRecursively(); backup.toFile().deleteRecursively()
+        }
+    }
+
+    @Test
+    fun `forceBreakerOverride bypasses the degenerate-box guard`() {
+        val dim = makeDimension()
+        try {
+            val degenerate = BoundingBox(minX = 0, minZ = 0, maxX = 0, maxZ = 0)
+            val report = RegionResetter.run(
+                "d", dim, degenerate, dryRun = false, minBoxSideBlocks = 1024,
+                mustContainX = 0, mustContainZ = 0, backupTarget = null, log = NOPLogger.NOP_LOGGER, forced = true,
+            )
+            assertFalse(report.aborted)
+            // r.100.100 is fully outside the collapsed box and non-monument → deleted.
+            assertFalse(Files.exists(dim.resolve("region").resolve("r.100.100.mca")))
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
+    }
+
+    // ---- geometry ----
+
+    @Test
     fun `region at origin is kept`() {
-        // r.0.0 covers blocks [0..511] — squarely inside the box.
         assertFalse(RegionResetter.isRegionFullyOutside(box, 0, 0))
     }
 
     @Test
     fun `region far outside is deletable`() {
-        // r.100.100 covers [51200..51711] — nowhere near the box.
         assertTrue(RegionResetter.isRegionFullyOutside(box, 100, 100))
     }
 
     @Test
     fun `region straddling the positive edge is kept`() {
-        // maxX=20000 falls inside r.39 (covers [19968..20479]) → must be kept.
         assertFalse(RegionResetter.isRegionFullyOutside(box, 39, 0))
-        // r.40 covers [20480..20991] — wholly past the edge → deletable.
         assertTrue(RegionResetter.isRegionFullyOutside(box, 40, 0))
     }
 
     @Test
     fun `region straddling the negative edge is kept`() {
-        // minX=-20000 falls inside r.-40 (covers [-20480..-19969]) → must be kept.
         assertFalse(RegionResetter.isRegionFullyOutside(box, -40, 0))
-        // r.-41 covers [-20992..-20481] — wholly past the edge → deletable.
         assertTrue(RegionResetter.isRegionFullyOutside(box, -41, 0))
     }
 
     @Test
     fun `outside on one axis only is still deletable`() {
-        // Inside on X, far outside on Z → does not intersect → deletable.
         assertTrue(RegionResetter.isRegionFullyOutside(box, 0, 100))
     }
 
@@ -129,12 +217,22 @@ class RegionResetterTest {
     }
 
     @Test
-    fun `snapping expands edges out to region boundaries`() {
-        // +/-20000 falls mid-region; snapping rounds out to whole regions -40..39.
+    fun `isRegionFullyInside separates inside, straddle and outside`() {
+        assertTrue(RegionResetter.isRegionFullyInside(box, 0, 0))    // wholly inside
+        assertFalse(RegionResetter.isRegionFullyInside(box, 39, 0))  // straddles the +X edge
+        assertFalse(RegionResetter.isRegionFullyInside(box, 100, 100)) // wholly outside
+        // On a region-snapped box every region is strictly inside or strictly outside.
         val snapped = box.snappedToRegions()
-        assertEquals(-20480, snapped.minX) // start of region -40
+        assertTrue(RegionResetter.isRegionFullyInside(snapped, 39, 39))
+        assertFalse(RegionResetter.isRegionFullyInside(snapped, 40, 0))
+    }
+
+    @Test
+    fun `snapping expands edges out to region boundaries`() {
+        val snapped = box.snappedToRegions()
+        assertEquals(-20480, snapped.minX)
         assertEquals(-20480, snapped.minZ)
-        assertEquals(20479, snapped.maxX)  // end of region 39
+        assertEquals(20479, snapped.maxX)
         assertEquals(20479, snapped.maxZ)
     }
 
@@ -146,37 +244,70 @@ class RegionResetterTest {
 
     @Test
     fun `with a snapped box no region straddles an edge`() {
-        // Every region is now strictly inside or strictly outside — the edge regions are clean.
         val snapped = box.snappedToRegions()
-        assertFalse(RegionResetter.isRegionFullyOutside(snapped, 39, 39)) // last kept
-        assertTrue(RegionResetter.isRegionFullyOutside(snapped, 40, 0))   // first dropped
-        assertFalse(RegionResetter.isRegionFullyOutside(snapped, -40, 0)) // last kept (neg)
-        assertTrue(RegionResetter.isRegionFullyOutside(snapped, -41, 0))  // first dropped (neg)
+        assertFalse(RegionResetter.isRegionFullyOutside(snapped, 39, 39))
+        assertTrue(RegionResetter.isRegionFullyOutside(snapped, 40, 0))
+        assertFalse(RegionResetter.isRegionFullyOutside(snapped, -40, 0))
+        assertTrue(RegionResetter.isRegionFullyOutside(snapped, -41, 0))
     }
 
     @Test
     fun `contains is inclusive of both edges and rejects just past them`() {
-        val b = box.snappedToRegions() // X/Z [-20480..20479]
+        val b = box.snappedToRegions()
         assertTrue(b.contains(0, 0))
-        assertTrue(b.contains(-20480, -20480)) // min corner, inclusive
-        assertTrue(b.contains(20479, 20479))   // max corner, inclusive
-        assertFalse(b.contains(20480, 0))      // one block past +X
-        assertFalse(b.contains(-20481, 0))     // one block past -X
-        assertFalse(b.contains(0, 20480))      // one block past +Z
+        assertTrue(b.contains(-20480, -20480))
+        assertTrue(b.contains(20479, 20479))
+        assertFalse(b.contains(20480, 0))
+        assertFalse(b.contains(-20481, 0))
+        assertFalse(b.contains(0, 20480))
     }
 
     @Test
-    fun `circuit breaker trips only above the fraction`() {
-        // 95 of 100 deletable, limit 0.9 → trips.
-        assertTrue(RegionResetter.exceedsLimit(95, 100, 0.9))
-        // exactly at the limit → does not trip (strictly greater).
-        assertFalse(RegionResetter.exceedsLimit(90, 100, 0.9))
-        // well under → fine.
-        assertFalse(RegionResetter.exceedsLimit(50, 100, 0.9))
-        // disabled (>= 1.0) → never trips even at 100%.
-        assertFalse(RegionResetter.exceedsLimit(100, 100, 1.0))
-        // empty world → nothing to trip on.
-        assertFalse(RegionResetter.exceedsLimit(0, 0, 0.9))
+    fun `isBoxDegenerate flags collapsed and sliver boxes, not a sane one`() {
+        // The default keep-box is far above any floor and contains the origin anchor.
+        assertFalse(RegionResetter.isBoxDegenerate(box, 1024, 0, 0))
+        // Collapsed to a point.
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 0, 0), 1024, 0, 0))
+        // Sliver: wide on X, collapsed on Z → still degenerate (either side triggers).
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(minX = -20000, minZ = 0, maxX = 20000, maxZ = 10), 1024, 0, 0))
+        // Exactly at the floor (side == minSide) is NOT degenerate; one below is.
+        assertFalse(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1023, 1023), 1024, 0, 0)) // side 1024
+        assertTrue(RegionResetter.isBoxDegenerate(BoundingBox(0, 0, 1022, 1022), 1024, 0, 0))  // side 1023
+    }
+
+    @Test
+    fun `isBoxDegenerate flags a large but mis-positioned box that excludes the anchor`() {
+        // Big box (side 100001, well above the floor) but far from origin → excludes the (0,0) anchor,
+        // so "outside" would swallow spawn/builds → unsafe, must abort.
+        val displaced = BoundingBox(minX = 100_000, minZ = 100_000, maxX = 200_000, maxZ = 200_000)
+        assertTrue(RegionResetter.isBoxDegenerate(displaced, 1024, 0, 0))
+        // Same box is safe when the protected anchor genuinely lives inside it (off-origin hub).
+        assertFalse(RegionResetter.isBoxDegenerate(displaced, 1024, 150_000, 150_000))
+        // Anchor on the inclusive edge counts as contained.
+        assertFalse(RegionResetter.isBoxDegenerate(displaced, 1024, 100_000, 200_000))
+        // One block past the edge is excluded → unsafe.
+        assertTrue(RegionResetter.isBoxDegenerate(displaced, 1024, 99_999, 150_000))
+    }
+
+    @Test
+    fun `a displaced box that excludes spawn aborts the run and deletes nothing`() {
+        val dim = makeDimension() // has r.0.0 (near origin) and r.100.100
+        try {
+            // Sanely-sized box, but shifted so it excludes the (0,0) anchor → position guard trips.
+            val displaced = BoundingBox(minX = 100_000, minZ = 100_000, maxX = 200_000, maxZ = 200_000)
+            val report = RegionResetter.run(
+                "d", dim, displaced, dryRun = false, minBoxSideBlocks = 1024,
+                mustContainX = 0, mustContainZ = 0, backupTarget = null, log = NOPLogger.NOP_LOGGER,
+            )
+            assertTrue(report.aborted)
+            assertEquals(0, report.regionsDeleted)
+            for (sub in subfolders) {
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.0.0.mca")))
+                assertTrue(Files.exists(dim.resolve(sub).resolve("r.100.100.mca")))
+            }
+        } finally {
+            dim.toFile().deleteRecursively()
+        }
     }
 
     @Test

@@ -14,18 +14,23 @@ import kotlin.io.path.writeText
  * Mod-managed runtime state. Do not hand-edit.
  *
  * `lastResetEpochMillis` is keyed by dimension id; `forceNextBoot` is armed by
- * `/wildreset now` to make the next server start perform a reset regardless of the
- * interval (destructive deletes only ever happen at boot, never on a live world).
+ * `/wildreset now` to make the next server start perform a reset (destructive deletes only
+ * ever happen at boot, never on a live world).
+ *
+ * `forceBreakerOverride` is a SEPARATE one-shot flag armed only by `/wildreset now force`. It rides
+ * alongside `forceNextBoot` and tells the boot pass to run `RegionResetter` with `forced=true`, which
+ * bypasses ONLY the safety breaker for a supervised override. Like `forceNextBoot`, it is consumed
+ * (cleared) after the boot pass. Plain `/wildreset now` leaves it false, so the breaker stays
+ * enforced for every routine run.
+ *
+ * Legacy fields from the removed relocation approach (`resetGeneration`, `structureSalt`) are simply
+ * ignored on load — Gson drops unknown keys — so an on-disk state.json from that era migrates cleanly.
  */
 data class ResetState(
     val lastResetEpochMillis: MutableMap<String, Long> = mutableMapOf(),
     var forceNextBoot: Boolean = false,
-    /**
-     * Per-cycle salt mixed into structure placement for chunks outside the keep-box, so monuments
-     * and structures relocate each reset. Bumped on every real prune; 0 = never pruned yet (the
-     * structure mixin treats 0 as inactive). Read on the worldgen hot path via [WildernessGenState].
-     */
-    var structureSalt: Int = 0,
+    /** One-shot: armed by `/wildreset now force`, consumed at boot; bypasses only the safety breaker. */
+    var forceBreakerOverride: Boolean = false,
 ) {
     @Transient
     private var configDir: Path? = null
@@ -46,6 +51,8 @@ data class ResetState(
                 ResetState()
             } else {
                 try {
+                    // Legacy state carrying `resetGeneration`/`structureSalt` deserializes cleanly:
+                    // the unknown fields are ignored.
                     gson.fromJson(file.readText(), ResetState::class.java) ?: ResetState()
                 } catch (e: Exception) {
                     CobblemonWilderness.logger.error("Failed to load reset state, starting fresh", e)

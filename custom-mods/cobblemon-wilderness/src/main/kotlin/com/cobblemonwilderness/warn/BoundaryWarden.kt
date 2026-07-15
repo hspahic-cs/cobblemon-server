@@ -5,9 +5,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import java.util.UUID
 
 /**
@@ -26,8 +23,6 @@ object BoundaryWarden {
     /** Position check cadence — every second is plenty for a movement warning. */
     private const val CHECK_INTERVAL_TICKS = 20
     private var tickCounter = 0
-
-    private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
 
     fun onServerTick(event: ServerTickEvent.Post) {
         if (!warningsActive()) {
@@ -89,7 +84,7 @@ object BoundaryWarden {
         val lead = if (isLogin) "You are logged in OUTSIDE the protected zone." else "You have left the protected zone."
         player.sendSystemMessage(Component.literal("§c⚠ $lead"))
         player.sendSystemMessage(
-            Component.literal("§fAnything built or stored here will be §creset ${resetWhen(dimId)}§f.")
+            Component.literal("§fAnything built or stored here will be §creset ${resetWhen()}§f.")
         )
         player.sendSystemMessage(
             Component.literal("§7Safe build zone: X[${box.minX}..${box.maxX}] Z[${box.minZ}..${box.maxZ}]")
@@ -100,19 +95,10 @@ object BoundaryWarden {
         player.sendSystemMessage(Component.literal("§a✔ Back inside the protected zone — builds here are safe."))
     }
 
-    /** Human phrase for when the player's current dimension is next reset. */
-    private fun resetWhen(dimId: String): String {
-        val cfg = CobblemonWilderness.config
-        if (cfg.intervalDays <= 0) return "during the next scheduled maintenance"
-        val last = CobblemonWilderness.state.lastResetEpochMillis[dimId] ?: 0L
-        if (last == 0L) return "on the next scheduled reset"
-
-        val next = last + cfg.intervalDays.toLong() * CobblemonWilderness.MILLIS_PER_DAY
-        val now = System.currentTimeMillis()
-        val days = ((next - now) / CobblemonWilderness.MILLIS_PER_DAY).coerceAtLeast(0)
-        val date = runCatching {
-            Instant.ofEpochMilli(next).atZone(ZoneId.of(cfg.displayTimeZone)).format(dateFormat)
-        }.getOrElse { Instant.ofEpochMilli(next).atZone(ZoneId.of("UTC")).format(dateFormat) }
-        return "on or after $date (~$days day(s) from now)"
-    }
+    /**
+     * Human phrase for when the current area is reset. The wipe is armed by ops (external cadence)
+     * and runs at the next boot, not on a fixed calendar date, so we describe the condition rather
+     * than predict a day.
+     */
+    private fun resetWhen(): String = "during the next scheduled wilderness maintenance"
 }

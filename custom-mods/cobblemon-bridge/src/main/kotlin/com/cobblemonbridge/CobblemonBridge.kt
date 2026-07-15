@@ -147,6 +147,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         QuestCommand.register(event.dispatcher)
         HomeAliases.register(event.dispatcher)
         CommandAliases.register(event.dispatcher)
+        com.cobblemonbridge.commands.VersionCommand.register(event.dispatcher)  // /version — deployed modpack version
         WildCommand.register(event.dispatcher)
         com.cobblemonbridge.commands.TestTeamCommand.register(event.dispatcher)  // dev: give a preset competitive team
         GymTpCommands.register(event.dispatcher)

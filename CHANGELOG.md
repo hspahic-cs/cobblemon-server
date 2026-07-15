@@ -22,6 +22,9 @@ root README.
 ### Changed
 - **Market stock tracks base-stock changes.** When you edit an item's `baseStock` in config, its current stock is now rescaled to preserve its fullness ratio (stock ÷ baseStock) on boot and on `/market admin reload`, instead of stranding the old absolute stock and jumping the price. E.g. raising baseStock 200 → 500 no longer spikes the price by leaving stock at 200.
 
+### Added
+- **`/version` command.** Reports the modpack version the server is actually running (read from `.deployed_version`, which the deploy writes after a successful restart). Lets anyone confirm in-game whether an update landed, without SSH.
+
 ## [0.28.5] - 2026-07-14
 
 ### Changed

@@ -47,6 +47,8 @@ class TeamSelectionMenu private constructor(
     private val player: ServerPlayer?,
     private val maxLegendaries: Int,
     private val showRental: Boolean,
+    /** How many Pokémon this match wants (6 for Singles, 4 for Doubles). Capped at [TEAM_SIZE]. */
+    private val teamSize: Int,
     private val onConfirm: ((List<Pokemon>) -> Unit)?,
     private val onCancel: (() -> Unit)?,
 ) : AbstractContainerMenu(MenuType.GENERIC_9x6, containerId) {
@@ -92,8 +94,9 @@ class TeamSelectionMenu private constructor(
         display.setItem(7, named(Items.NAME_TAG, "§eBox ${currentBox + 1} §7/ ${(boxes?.size ?: 1).coerceAtLeast(1)}"))
         display.setItem(8, named(Items.ARROW, "§7Next Box →"))
 
-        // Selected team (right panel)
-        for (i in 0 until TEAM_SIZE) {
+        // Selected team (right panel) — only render as many slots as this match wants.
+        val shownSlots = teamSize.coerceIn(1, SELECTED_SLOTS.size)
+        for (i in 0 until shownSlots) {
             val slot = SELECTED_SLOTS[i]
             display.setItem(slot, if (i < selected.size) pokemonStack(selected[i], true)
                                    else named(Items.GRAY_STAINED_GLASS_PANE, "§8Team Slot ${i + 1}"))
@@ -101,7 +104,7 @@ class TeamSelectionMenu private constructor(
 
         // Counters
         val info = ItemStack(Items.PAPER)
-        info.set(DataComponents.CUSTOM_NAME, Component.literal("§eSelected: ${selected.size}/$TEAM_SIZE"))
+        info.set(DataComponents.CUSTOM_NAME, Component.literal("§eSelected: ${selected.size}/$teamSize"))
         if (selected.isNotEmpty()) {
             info.set(DataComponents.LORE, ItemLore(selected.map { Component.literal("§7- ${it.species.name} Lv.${it.level}") }))
         }
@@ -218,6 +221,7 @@ class TeamSelectionMenu private constructor(
                             sp, maxLegendaries, showRental,
                             { team -> onConfirm?.invoke(team) },
                             { onCancel?.invoke() },
+                            teamSize,
                         ))
                     },
                 ))
@@ -235,10 +239,10 @@ class TeamSelectionMenu private constructor(
             sp.sendSystemMessage(Component.literal("§c[Ranked] $reason is banned in ranked PvP — can't add it."))
             return
         }
-        if (selected.size < TEAM_SIZE) {
+        if (selected.size < teamSize) {
             selected.add(pokemon)
         } else {
-            sp.sendSystemMessage(Component.literal("§c[Ranked] Team is full! Remove a Pokemon first."))
+            sp.sendSystemMessage(Component.literal("§c[Ranked] Team is full ($teamSize)! Remove a Pokemon first."))
         }
     }
 
@@ -284,9 +288,10 @@ class TeamSelectionMenu private constructor(
             player: ServerPlayer,
             maxLegendaries: Int,
             showRental: Boolean,
+            teamSize: Int,
             onConfirm: (List<Pokemon>) -> Unit,
             onCancel: () -> Unit,
-        ): TeamSelectionMenu = TeamSelectionMenu(containerId, playerInventory, player, maxLegendaries, showRental, onConfirm, onCancel)
+        ): TeamSelectionMenu = TeamSelectionMenu(containerId, playerInventory, player, maxLegendaries, showRental, teamSize, onConfirm, onCancel)
     }
 }
 
@@ -296,8 +301,9 @@ class TeamSelectionMenuProvider(
     private val showRental: Boolean,
     private val onConfirm: (List<Pokemon>) -> Unit,
     private val onCancel: () -> Unit,
+    private val teamSize: Int = TeamSelectionMenu.TEAM_SIZE,
 ) : MenuProvider {
     override fun getDisplayName(): Component = Component.literal("Select Your Team")
     override fun createMenu(containerId: Int, inv: Inventory, ignored: Player): AbstractContainerMenu =
-        TeamSelectionMenu.forServer(containerId, inv, player, maxLegendaries, showRental, onConfirm, onCancel)
+        TeamSelectionMenu.forServer(containerId, inv, player, maxLegendaries, showRental, teamSize, onConfirm, onCancel)
 }

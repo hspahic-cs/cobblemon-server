@@ -128,10 +128,16 @@ object RankedBattleManager {
      * startBattle time, not here, so a cancelled team-select doesn't touch money. [hostUuid] is
      * the admin who forced the match (if any), notified if the team-select is cancelled.
      */
-    fun startTeamSelection(player1: ServerPlayer, player2: ServerPlayer, wagerPerSide: Int = 0, hostUuid: UUID? = null) {
+    fun startTeamSelection(
+        player1: ServerPlayer, player2: ServerPlayer,
+        wagerPerSide: Int = 0, hostUuid: UUID? = null,
+        mode: BattleMode = BattleMode.SINGLES,
+    ) {
         val config = CobblemonRanked.config
         pendingMatches[player1.uuid] = player2.uuid
         pendingMatches[player2.uuid] = player1.uuid
+        pendingMode[player1.uuid] = mode
+        pendingMode[player2.uuid] = mode
         if (hostUuid != null) {
             matchHost[player1.uuid] = hostUuid
             matchHost[player2.uuid] = hostUuid
@@ -141,8 +147,8 @@ object RankedBattleManager {
             pendingWager[player2.uuid] = wagerPerSide
         }
 
-        openSelectionGui(player1, config.maxLegendaries)
-        openSelectionGui(player2, config.maxLegendaries)
+        openSelectionGui(player1, config.maxLegendaries, mode.pick1v1)
+        openSelectionGui(player2, config.maxLegendaries, mode.pick1v1)
     }
 
     /**
@@ -165,6 +171,9 @@ object RankedBattleManager {
 
         pendingMatches[player1.uuid] = player2.uuid
         pendingMatches[player2.uuid] = player1.uuid
+        val mode = tm.currentMode
+        pendingMode[player1.uuid] = mode
+        pendingMode[player2.uuid] = mode
         if (hostUuid != null) {
             matchHost[player1.uuid] = hostUuid
             matchHost[player2.uuid] = hostUuid
@@ -183,16 +192,17 @@ object RankedBattleManager {
         // Mark both players so [startBattle] flags the resulting match as tournament-timed.
         pendingTournament.add(player1.uuid)
         pendingTournament.add(player2.uuid)
-        openTournamentSelectionGui(player1, roster1, roster2)
-        openTournamentSelectionGui(player2, roster2, roster1)
+        openTournamentSelectionGui(player1, roster1, roster2, mode.tournamentPick)
+        openTournamentSelectionGui(player2, roster2, roster1, mode.tournamentPick)
         return null
     }
 
-    private fun openTournamentSelectionGui(player: ServerPlayer, pool: List<Pokemon>, opponentRoster: List<Pokemon>) {
+    private fun openTournamentSelectionGui(player: ServerPlayer, pool: List<Pokemon>, opponentRoster: List<Pokemon>, pickSize: Int) {
         player.openMenu(com.cobblemonranked.gui.TournamentBattleMenuProvider(
             player = player,
             pool = pool,
             opponentRoster = opponentRoster,
+            pickSize = pickSize,
             onConfirm = { team ->
                 pendingTeams[player.uuid] = team.map { it.clone() }
                 player.sendSystemMessage(Component.literal("§a[Tournament] Team locked in! Waiting for opponent..."))
@@ -205,11 +215,15 @@ object RankedBattleManager {
     /** Wager per side for the next-starting match, keyed by either player's UUID. */
     private val pendingWager: ConcurrentHashMap<UUID, Int> = ConcurrentHashMap()
 
-    private fun openSelectionGui(player: ServerPlayer, maxLegendaries: Int) {
+    /** Battle mode (Singles/Doubles) for the pending/in-flight match, keyed by either player's UUID. */
+    private val pendingMode: ConcurrentHashMap<UUID, BattleMode> = ConcurrentHashMap()
+
+    private fun openSelectionGui(player: ServerPlayer, maxLegendaries: Int, teamSize: Int) {
         TeamSelectionGui(
             player = player,
             maxLegendaries = maxLegendaries,
             showRental = CobblemonRanked.config.allowRentalsInRanked,
+            teamSize = teamSize,
             onConfirm = { team ->
                 pendingTeams[player.uuid] = team.map { it.clone() }
                 player.sendSystemMessage(Component.literal("[Ranked] Team locked in! Waiting for opponent..."))
@@ -347,7 +361,9 @@ object RankedBattleManager {
         val tempParty2 = buildTempParty(player2.uuid, team2)
         val teamMap = mapOf(player1.uuid to tempParty1, player2.uuid to tempParty2)
 
-        val format = BattleFormat.GEN_9_SINGLES.copy(adjustLevel = config.levelCap)
+        // Singles or Doubles, per the mode stamped at team-select / tournament-match time.
+        val mode = pendingMode[player1.uuid] ?: pendingMode[player2.uuid] ?: BattleMode.SINGLES
+        val format = mode.format(config.levelCap)
 
         // Flag the about-to-start match so our BATTLE_STARTED_PRE veto in [registerEvents]
         // lets it through. The flag must be set BEFORE pvp1v1 because the PRE event fires
@@ -869,6 +885,8 @@ object RankedBattleManager {
         pendingForcedSlot.remove(uuid2)
         pendingTournament.remove(uuid1)
         pendingTournament.remove(uuid2)
+        pendingMode.remove(uuid1)
+        pendingMode.remove(uuid2)
     }
 
     /**

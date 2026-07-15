@@ -12,7 +12,15 @@ root README.
 
 ## [Unreleased]
 
-## [0.28.7] - 2026-07-15
+## [0.29.0] - 2026-07-15
+
+### Added
+- **Ranked Doubles.** Ranked battles and tournaments can now be run in 2v2 Doubles, using the **same ELO** as Singles (a doubles win/loss moves the same rating — there's no separate doubles ladder).
+  - **1v1:** `/challenge <player> doubles` (works with an optional wager too: `/challenge <player> <wager> doubles`). You pick **4** Pokémon from your PC/party (Singles still picks 6).
+  - **Tournaments:** `/ranked tournament open doubles` (admin). Entrants pre-select a **6**-Pokémon roster via `/join` and pick **4** per match (Singles stays 9-roster / pick-6).
+  - Both commands default to Singles when no mode is given; an explicit `singles` is also accepted. Doubles reuses the same ban list, legendary caps, arenas, wager, and turn-timer systems as Singles.
+
+
 
 ### Added
 - **Monster Drops vendor.** A new buy-only NPC shop (spawn with `/market admin spawn mob_drops`) sells vanilla hostile-mob drops at fixed prices, 200–2000: Rotten Flesh / String / Arrow (200), Bone / Spider Eye (400), Prismarine Shard / Slime Ball (500), Gunpowder (600), Magma Cream (700), Prismarine Crystals (800), Blaze Rod / Nautilus Shell (1000), Shulker Shell (1500), Ender Pearl / Ghast Tear / Phantom Membrane (2000). No boss/special drops.

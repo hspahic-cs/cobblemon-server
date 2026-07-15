@@ -81,6 +81,11 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
         // degenerate-box safety breaker for this run; consumed alongside forceNextBoot below.
         val forceBreaker = state.forceBreakerOverride
         var stateDirty = false
+        // Set if any dimension's run aborted (degenerate-box breaker). The abort is box-global — the
+        // same effective box gates every dimension — so this is effectively all-or-nothing. On abort
+        // we neither stamp a baseline nor consume the arm, so the misconfig can't masquerade as a
+        // completed reset and the operator's armed prune survives to the next (fixed) boot.
+        var anyAborted = false
         logger.info(
             "Keep-box (effective): X[{}..{}] Z[{}..{}]  (armed={}, forceBreaker={}, tz={})",
             box.minX, box.maxX, box.minZ, box.maxZ, armed, forceBreaker, config.scheduleTimeZone,
@@ -130,20 +135,31 @@ class CobblemonWilderness(modBus: IEventBus, container: ModContainer) {
                 dimBackup, logger, forced = forceBreaker,
             )
 
-            if (!config.dryRun) {
+            if (report.aborted) {
+                // Breaker tripped (degenerate box): nothing was deleted. Do NOT stamp a baseline —
+                // recording lastReset=now would make /wildreset status read "last reset 0d ago" and
+                // hide the misconfig. The arm is left intact below so a fixed box reruns next boot.
+                anyAborted = true
+                logger.warn("[{}] reset aborted by the safety breaker — leaving the prune armed; state unchanged.", dimId)
+            } else if (!config.dryRun) {
                 state.lastResetEpochMillis[dimId] = now
                 stateDirty = true
             }
         }
 
-        if (state.forceNextBoot) {
-            state.forceNextBoot = false
-            stateDirty = true
-        }
-        // Consume the one-shot breaker override too, so it never carries into a later boot.
-        if (state.forceBreakerOverride) {
-            state.forceBreakerOverride = false
-            stateDirty = true
+        // Consume the one-shot arm flags only when nothing aborted. On an aborted run the on-disk
+        // arm is preserved (state stays untouched), so the operator can fix the box and the next boot
+        // still runs the armed prune instead of it silently evaporating.
+        if (!anyAborted) {
+            if (state.forceNextBoot) {
+                state.forceNextBoot = false
+                stateDirty = true
+            }
+            // Consume the one-shot breaker override too, so it never carries into a later boot.
+            if (state.forceBreakerOverride) {
+                state.forceBreakerOverride = false
+                stateDirty = true
+            }
         }
         if (stateDirty) state.save()
 

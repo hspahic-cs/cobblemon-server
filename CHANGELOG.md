@@ -12,6 +12,17 @@ root README.
 
 ## [Unreleased]
 
+## [0.28.7] - 2026-07-15
+
+### Added
+- **Monster Drops vendor.** A new buy-only NPC shop (spawn with `/market admin spawn mob_drops`) sells vanilla hostile-mob drops at fixed prices, 200–2000: Rotten Flesh / String / Arrow (200), Bone / Spider Eye (400), Prismarine Shard / Slime Ball (500), Gunpowder (600), Magma Cream (700), Prismarine Crystals (800), Blaze Rod / Nautilus Shell (1000), Shulker Shell (1500), Ender Pearl / Ghast Tear / Phantom Membrane (2000). No boss/special drops.
+- **Dream Ball in the main Shopkeeper**, priced at 2× the Ultra Ball's base (buy 150 / sell 50).
+
+### Changed
+- **Gacha crate tuning:**
+  - **Rare crate:** Rare Candy reward increased 2 → 5; the "2 EXP Candy L" entry removed. Weights renormalized to 100%.
+  - **Common crate:** Ultra Balls increased 20 → 32 (Timer Balls stay 32); the "2 Max Revives" entry removed. Weights renormalized to 100%.
+
 ## [0.28.6] - 2026-07-14
 
 ### Fixed

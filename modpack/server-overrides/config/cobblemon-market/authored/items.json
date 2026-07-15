@@ -242,6 +242,15 @@
     "vendorTag": "held_items",
     "sellable": false
   },
+  "cobblemon:dream_ball": {
+    "baseBuyPrice": 150,
+    "baseSellPrice": 50,
+    "baseStock": 500,
+    "elasticity": 0.5,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "",
+    "sellable": true
+  },
   "cobblemon:dusk_ball": {
     "baseBuyPrice": 33,
     "baseSellPrice": 11,
@@ -1349,6 +1358,15 @@
     "vendorTag": "special_items",
     "sellable": false
   },
+  "minecraft:arrow": {
+    "baseBuyPrice": 200,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
   "minecraft:axolotl_bucket": {
     "baseBuyPrice": 5000,
     "baseSellPrice": 0,
@@ -1368,6 +1386,24 @@
     "vendorTag": "blocks",
     "sellable": false,
     "buyStockImpact": 1.0
+  },
+  "minecraft:blaze_rod": {
+    "baseBuyPrice": 1000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:bone": {
+    "baseBuyPrice": 400,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
   },
   "minecraft:bricks": {
     "baseBuyPrice": 250,
@@ -1422,6 +1458,24 @@
     "buyStockImpact": 1.0,
     "bundleSize": 64
   },
+  "minecraft:ender_pearl": {
+    "baseBuyPrice": 2000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:ghast_tear": {
+    "baseBuyPrice": 2000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
   "minecraft:gravel": {
     "baseBuyPrice": 50,
     "baseSellPrice": 0,
@@ -1432,6 +1486,33 @@
     "sellable": false,
     "buyStockImpact": 1.0,
     "bundleSize": 64
+  },
+  "minecraft:gunpowder": {
+    "baseBuyPrice": 600,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:magma_cream": {
+    "baseBuyPrice": 700,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:nautilus_shell": {
+    "baseBuyPrice": 1000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
   },
   "minecraft:oak_log": {
     "baseBuyPrice": 125,
@@ -1464,6 +1545,15 @@
     "sellable": false,
     "buyStockImpact": 1.0
   },
+  "minecraft:phantom_membrane": {
+    "baseBuyPrice": 2000,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
   "minecraft:prismarine": {
     "baseBuyPrice": 1000,
     "baseSellPrice": 0,
@@ -1474,6 +1564,33 @@
     "sellable": false,
     "buyStockImpact": 1.0,
     "bundleSize": 64
+  },
+  "minecraft:prismarine_crystals": {
+    "baseBuyPrice": 800,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:prismarine_shard": {
+    "baseBuyPrice": 500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:rotten_flesh": {
+    "baseBuyPrice": 200,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
   },
   "minecraft:sand": {
     "baseBuyPrice": 25,
@@ -1486,6 +1603,24 @@
     "buyStockImpact": 1.0,
     "bundleSize": 64
   },
+  "minecraft:shulker_shell": {
+    "baseBuyPrice": 1500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
+  "minecraft:slime_ball": {
+    "baseBuyPrice": 500,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
   "minecraft:smooth_stone": {
     "baseBuyPrice": 400,
     "baseSellPrice": 0,
@@ -1497,6 +1632,15 @@
     "buyStockImpact": 1.0,
     "bundleSize": 64
   },
+  "minecraft:spider_eye": {
+    "baseBuyPrice": 400,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
+  },
   "minecraft:stone_bricks": {
     "baseBuyPrice": 250,
     "baseSellPrice": 0,
@@ -1507,6 +1651,15 @@
     "sellable": false,
     "buyStockImpact": 1.0,
     "bundleSize": 64
+  },
+  "minecraft:string": {
+    "baseBuyPrice": 200,
+    "baseSellPrice": 0,
+    "baseStock": 9999,
+    "elasticity": 0.0,
+    "maxStockMultiplier": 10.0,
+    "vendorTag": "mob_drops",
+    "sellable": false
   },
   "minecraft:terracotta": {
     "baseBuyPrice": 400,

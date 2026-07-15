@@ -44,6 +44,8 @@ class TournamentBattleMenu private constructor(
     private val player: ServerPlayer?,
     private val pool: List<Pokemon>,
     private val opponentRoster: List<Pokemon>,
+    /** Pokémon to pick this match (6 Singles, 4 Doubles). Capped at the pool size. */
+    private val pickSize: Int,
     private val onConfirm: ((List<Pokemon>) -> Unit)?,
     private val onCancel: (() -> Unit)?,
 ) : AbstractContainerMenu(MenuType.GENERIC_9x6, containerId) {
@@ -53,8 +55,8 @@ class TournamentBattleMenu private constructor(
     private var confirmed = false
     private var cancelled = false
 
-    /** How many we require — normally 6, but never more than the pool actually has. */
-    private val requiredSize = minOf(TEAM_SIZE, pool.size)
+    /** How many we require — [pickSize], but never more than the pool actually has. */
+    private val requiredSize = minOf(pickSize, pool.size)
 
     init {
         for (row in 0 until ROWS) for (col in 0 until COLS) {
@@ -268,10 +270,10 @@ class TournamentBattleMenu private constructor(
 
         internal fun forServer(
             containerId: Int, inv: Inventory, player: ServerPlayer,
-            pool: List<Pokemon>, opponentRoster: List<Pokemon>,
+            pool: List<Pokemon>, opponentRoster: List<Pokemon>, pickSize: Int,
             onConfirm: (List<Pokemon>) -> Unit, onCancel: () -> Unit,
         ): TournamentBattleMenu =
-            TournamentBattleMenu(containerId, inv, player, pool, opponentRoster, onConfirm, onCancel)
+            TournamentBattleMenu(containerId, inv, player, pool, opponentRoster, pickSize, onConfirm, onCancel)
     }
 }
 
@@ -281,8 +283,10 @@ class TournamentBattleMenuProvider(
     private val opponentRoster: List<Pokemon>,
     private val onConfirm: (List<Pokemon>) -> Unit,
     private val onCancel: () -> Unit,
+    private val pickSize: Int = TournamentBattleMenu.TEAM_SIZE,
 ) : MenuProvider {
-    override fun getDisplayName(): Component = Component.literal("Tournament Match — pick 6 of 9")
+    override fun getDisplayName(): Component =
+        Component.literal("Tournament Match — pick ${minOf(pickSize, pool.size)} of ${pool.size}")
     override fun createMenu(containerId: Int, inv: Inventory, ignored: Player): AbstractContainerMenu =
-        TournamentBattleMenu.forServer(containerId, inv, player, pool, opponentRoster, onConfirm, onCancel)
+        TournamentBattleMenu.forServer(containerId, inv, player, pool, opponentRoster, pickSize, onConfirm, onCancel)
 }

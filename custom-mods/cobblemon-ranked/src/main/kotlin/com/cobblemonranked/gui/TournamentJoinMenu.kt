@@ -28,7 +28,7 @@ import net.minecraft.world.item.component.ItemLore
 import java.util.UUID
 
 /**
- * Tournament roster picker: choose exactly [TournamentManager.ROSTER_SIZE] (9) Pokémon from PC +
+ * Tournament roster picker: choose exactly [TournamentManager.rosterSize] (9) Pokémon from PC +
  * party, with at most [TournamentManager.MAX_SPECIALS_ROSTER] (4) Legendary/Paradox/Ultra-Beast.
  *
  * Vanilla `GENERIC_9x6` double chest (54 slots, server-side, no client jar/packets). The current PC
@@ -79,7 +79,7 @@ class TournamentJoinMenu private constructor(
         val owned = TournamentManager.collectOwnedPokemon(player)
         for (id in initialUuids) {
             val pk = owned[id] ?: continue
-            if (selected.size < TournamentManager.ROSTER_SIZE) selected.add(pk)
+            if (selected.size < TournamentManager.rosterSize) selected.add(pk)
         }
     }
 
@@ -104,7 +104,7 @@ class TournamentJoinMenu private constructor(
         display.setItem(8, named(Items.ARROW, "§7Next Box →"))
 
         // Selected roster (right panel)
-        for (i in 0 until TournamentManager.ROSTER_SIZE) {
+        for (i in 0 until TournamentManager.rosterSize) {
             val slot = SELECTED_SLOTS[i]
             display.setItem(slot, if (i < selected.size) pokemonStack(selected[i], true)
                                    else named(Items.GRAY_STAINED_GLASS_PANE, "§8Roster Slot ${i + 1}"))
@@ -112,9 +112,9 @@ class TournamentJoinMenu private constructor(
 
         // Counters
         val count = ItemStack(Items.PAPER)
-        count.set(DataComponents.CUSTOM_NAME, Component.literal("§eRoster: ${selected.size}/${TournamentManager.ROSTER_SIZE}"))
+        count.set(DataComponents.CUSTOM_NAME, Component.literal("§eRoster: ${selected.size}/${TournamentManager.rosterSize}"))
         count.set(DataComponents.LORE, ItemLore(listOf(
-            Component.literal("§7Pick exactly §f${TournamentManager.ROSTER_SIZE}§7 Pokémon, then Confirm."),
+            Component.literal("§7Pick exactly §f${TournamentManager.rosterSize}§7 Pokémon, then Confirm."),
             Component.literal("§7Click a roster slot to remove it."),
         )))
         display.setItem(42, count)
@@ -151,9 +151,9 @@ class TournamentJoinMenu private constructor(
         } else {
             display.setItem(51, filler(Items.BLACK_STAINED_GLASS_PANE))
         }
-        val ready = selected.size == TournamentManager.ROSTER_SIZE
+        val ready = selected.size == TournamentManager.rosterSize
         display.setItem(52, named(if (ready) Items.LIME_CONCRETE else Items.GRAY_CONCRETE,
-            Component.literal(if (ready) "§aConfirm Roster" else "§7Pick ${TournamentManager.ROSTER_SIZE - selected.size} more")
+            Component.literal(if (ready) "§aConfirm Roster" else "§7Pick ${TournamentManager.rosterSize - selected.size} more")
                 .withStyle(Style.EMPTY.withBold(true))))
         display.setItem(53, named(Items.RED_CONCRETE,
             Component.literal("Cancel").withStyle(Style.EMPTY.withBold(true))))
@@ -220,9 +220,9 @@ class TournamentJoinMenu private constructor(
                 ))
             }
             slotId == 52 -> {
-                if (selected.size != TournamentManager.ROSTER_SIZE) {
+                if (selected.size != TournamentManager.rosterSize) {
                     sp.sendSystemMessage(Component.literal(
-                        "§c[Tournament] Pick exactly ${TournamentManager.ROSTER_SIZE} Pokémon (you have ${selected.size})."))
+                        "§c[Tournament] Pick exactly ${TournamentManager.rosterSize} Pokémon (you have ${selected.size})."))
                     return
                 }
                 confirmed = true
@@ -235,8 +235,8 @@ class TournamentJoinMenu private constructor(
 
     private fun togglePokemon(pokemon: Pokemon, sp: ServerPlayer) {
         if (pokemon in selected) { selected.remove(pokemon); return }
-        if (selected.size >= TournamentManager.ROSTER_SIZE) {
-            sp.sendSystemMessage(Component.literal("§c[Tournament] Roster is full (${TournamentManager.ROSTER_SIZE}). Remove one first."))
+        if (selected.size >= TournamentManager.rosterSize) {
+            sp.sendSystemMessage(Component.literal("§c[Tournament] Roster is full (${TournamentManager.rosterSize}). Remove one first."))
             return
         }
         if (pokemon.countsAsSpecial() && specialsCount() >= TournamentManager.MAX_SPECIALS_ROSTER) {

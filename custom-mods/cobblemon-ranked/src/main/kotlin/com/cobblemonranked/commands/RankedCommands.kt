@@ -260,7 +260,14 @@ object RankedCommands {
                         .then(Commands.literal("singles")
                             .executes { ctx -> tournamentOpen(ctx.source, BattleMode.SINGLES); 1 }))
                     .then(Commands.literal("close")
-                        .executes { ctx -> tournamentClose(ctx.source); 1 })
+                        .executes { ctx -> tournamentClose(ctx.source); 1 }
+                        // `close auto` → build + run the double-elimination bracket automatically.
+                        .then(Commands.literal("auto")
+                            .executes { ctx -> tournamentCloseAuto(ctx.source); 1 }))
+                    .then(Commands.literal("bracket")
+                        .executes { ctx -> tournamentBracket(ctx.source); 1 })
+                    .then(Commands.literal("cancel")
+                        .executes { ctx -> tournamentCancel(ctx.source); 1 })
                     .then(Commands.literal("play")
                         .then(Commands.argument("player1", EntityArgument.player())
                             .then(Commands.argument("player2", EntityArgument.player())
@@ -295,6 +302,15 @@ object RankedCommands {
         // Top-level /join — players enter the open tournament (opens the roster picker).
         dispatcher.register(
             Commands.literal("join").executes { ctx -> tournamentJoin(ctx.source.playerOrException); 1 }
+        )
+
+        // Top-level /ready — a player confirms they're present for their upcoming bracket match.
+        dispatcher.register(
+            Commands.literal("ready").executes { ctx ->
+                val player = ctx.source.playerOrException
+                player.sendSystemMessage(com.cobblemonranked.tournament.AutoTournamentDriver.markReady(player))
+                1
+            }
         )
 
         // Top-level /challenge and /accept aliases. Same handlers as /ranked challenge|accept.
@@ -420,12 +436,16 @@ object RankedCommands {
             "§7  /queue cancel §f— leave the queue",
             "§7  /queue list §f— who's currently queued",
             "§7  /join §f— enter the active tournament (pick a 9-Pokémon roster)",
+            "§7  /ready §f— confirm you're present when you're up in an auto tournament",
         )
         if (includeAdmin) {
             lines += listOf(
                 "§e[Ranked] §fAdmin (op level 4):",
-                "§7  /ranked tournament open §f— open tournament registration (announces /join)",
+                "§7  /ranked tournament open [doubles] §f— open tournament registration (announces /join)",
                 "§7  /ranked tournament close §f— close registration + print ELO seeding to admins",
+                "§7  /ranked tournament close auto §f— close + run a full ELO-seeded double-elim bracket",
+                "§7  /ranked tournament bracket §f— show the running auto-tournament status",
+                "§7  /ranked tournament cancel §f— abort the running auto tournament",
                 "§7  /ranked tournament play <p1> <p2> §f— run a tournament match (each picks 6 of their 9)",
                 "§7  /ranked admin setelo <player> <value> §f— override a player's ELO",
                 "§7  /ranked admin decay §f— manually trigger daily decay",
@@ -611,6 +631,45 @@ object RankedCommands {
 
     private fun tournamentClose(source: CommandSourceStack) {
         com.cobblemonranked.tournament.TournamentManager.closeRegistration(source.server)
+    }
+
+    /** Close registration and run the whole event as an ELO-seeded double-elimination bracket. */
+    private fun tournamentCloseAuto(source: CommandSourceStack) {
+        val tm = com.cobblemonranked.tournament.TournamentManager
+        val server = source.server
+        if (com.cobblemonranked.tournament.AutoTournamentDriver.isActive()) {
+            source.sendSystemMessage(Component.literal(
+                "§c[Tournament] A tournament is already running. Use §f/ranked tournament cancel§c first."))
+            return
+        }
+        tm.closeRegistration(server)
+        val seeded = tm.seeding()
+        if (seeded.size < 2) {
+            source.sendSystemMessage(Component.literal(
+                "§c[Tournament] Need at least 2 entrants to auto-run a bracket (have ${seeded.size})."))
+            return
+        }
+        val entrants = seeded.mapIndexed { i, (entry, _) ->
+            com.cobblemonranked.tournament.BracketEntrant(entry.uuid, entry.name, i + 1)
+        }
+        val err = com.cobblemonranked.tournament.AutoTournamentDriver.start(server, entrants, tm.currentMode)
+        if (err != null) source.sendSystemMessage(Component.literal("§c[Tournament] $err"))
+    }
+
+    private fun tournamentBracket(source: CommandSourceStack) {
+        com.cobblemonranked.tournament.AutoTournamentDriver.statusLines().forEach {
+            source.sendSystemMessage(Component.literal(it))
+        }
+    }
+
+    private fun tournamentCancel(source: CommandSourceStack) {
+        val driver = com.cobblemonranked.tournament.AutoTournamentDriver
+        if (!driver.isActive()) {
+            source.sendSystemMessage(Component.literal("§7[Tournament] No automated tournament is running."))
+            return
+        }
+        driver.abort(source.server)
+        source.sendSystemMessage(Component.literal("§e[Tournament] Automated tournament cancelled."))
     }
 
     private fun tournamentPlay(source: CommandSourceStack, p1: ServerPlayer, p2: ServerPlayer, forcedArena: Int?) {

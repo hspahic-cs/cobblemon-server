@@ -12,6 +12,20 @@ root README.
 
 ## [Unreleased]
 
+## [0.31.0] - 2026-07-21
+
+### Added
+- **Automated double-elimination tournaments.** `/ranked tournament close auto` closes registration and runs the whole event as an ELO-seeded double-elimination bracket (with a true grand-final bracket reset). Works for Singles and Doubles (`/ranked tournament open doubles`). Up to two matches run at once. When you're up, chat tells you and you type `/ready` within 3 minutes (with countdown reminders) or you forfeit that match; if neither player readies, the higher seed advances. Team selection has a per-match 2-minute clock (shared across cancels) and reopens on cancel up to twice — a third cancel or the clock expiring forfeits the match. Admins watch with `/ranked tournament bracket` and abort with `/ranked tournament cancel`. Byes go to top seeds; not persisted across a restart.
+- **Legendaries in the ultra-rare Pokémon egg pool.** The Pokémon Crate's ultra-rare egg can now hatch 40 legendaries/mythicals that aren't obtainable through Legendary Monuments — sub-legendaries (Forces of Nature, Tapus, Type:Null/Silvally, Kubfu/Urshifu, Ogerpon, the Loyal Three), box/cover legendaries (Mewtwo, the weather trio, Koraidon/Miraidon, Solgaleo/Lunala/Necrozma, Terapagos), and mythicals — alongside the existing pseudo-legendaries and Paradox mons. Ultra Beasts excluded.
+
+### Changed
+- **Tournament turn timer → time bank.** Tournament matches now use a Showdown-style chess clock: 30s per turn plus a 150s reserve bank (no replenish). Switching counts against the clock like moving; running out of time **loses the match** (no auto-selection). The clock replaces the quest action-bar HUD for the whole match.
+- **BP shop rebalance.** Prices cut ~25% (Shiny Voucher 100→75, Totem of Undying/Shiny Egg 40→30, Ultra Key 20→15, Master Ball 15→11, Ability Patch 10→8, TR Voucher 5→4, Held Item Voucher 4→3); Rare Key 5→3; Rare Candy removed from the shop.
+- **Rare crate.** Removed the Uncommon Pokémon Egg drop and rescaled the remaining odds back to 100%.
+
+### Fixed
+- Tournament forced-switch timeouts no longer stall PvP — the broken switch auto-pick is gone; a timeout is simply a loss.
+
 ## [0.30.0] - 2026-07-15
 
 ### Added

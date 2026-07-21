@@ -5,7 +5,7 @@
     {
       "lootTier": "Standard",
       "label": "5 Rare Candy",
-      "weightPct": 10.4,
+      "weightPct": 12.0,
       "items": [
         {
           "type": "vanilla",
@@ -17,22 +17,8 @@
     },
     {
       "lootTier": "Mid",
-      "label": "Uncommon Pok\u00e9mon Egg",
-      "weightPct": 13.4,
-      "items": [
-        {
-          "type": "cobbreeding_egg",
-          "pool": "uncommon",
-          "shiny": false,
-          "requireHiddenAbility": false
-        }
-      ],
-      "notes": "An uncommon-pool Pok\u00e9mon egg"
-    },
-    {
-      "lootTier": "Mid",
       "label": "Lucky egg",
-      "weightPct": 6.7,
+      "weightPct": 7.7,
       "items": [
         {
           "type": "vanilla",
@@ -45,7 +31,7 @@
     {
       "lootTier": "High",
       "label": "1 Ability Patch",
-      "weightPct": 6.2,
+      "weightPct": 7.2,
       "items": [
         {
           "type": "vanilla",
@@ -58,7 +44,7 @@
     {
       "lootTier": "High",
       "label": "Rare Pok\u00e9mon Egg",
-      "weightPct": 19.0,
+      "weightPct": 21.7,
       "items": [
         {
           "type": "cobbreeding_egg",
@@ -72,7 +58,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Master Ball",
-      "weightPct": 0.6,
+      "weightPct": 0.7,
       "items": [
         {
           "type": "vanilla",
@@ -85,7 +71,7 @@
     {
       "lootTier": "Jackpot",
       "label": "1 Ultra Key",
-      "weightPct": 0.6,
+      "weightPct": 0.7,
       "items": [
         {
           "type": "gacha_key",
@@ -98,7 +84,7 @@
     {
       "lootTier": "Jackpot",
       "label": "2 Rare keys",
-      "weightPct": 1.2,
+      "weightPct": 1.4,
       "items": [
         {
           "type": "gacha_key",
@@ -111,7 +97,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Frost",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -124,7 +110,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Storms",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -137,7 +123,7 @@
     {
       "lootTier": "High",
       "label": "Urn of Embers",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -150,7 +136,7 @@
     {
       "lootTier": "High",
       "label": "Silk Touch Book",
-      "weightPct": 3.7,
+      "weightPct": 4.3,
       "items": [
         {
           "type": "enchanted_book",
@@ -164,7 +150,7 @@
     {
       "lootTier": "High",
       "label": "3 IV Candy (random)",
-      "weightPct": 4.9,
+      "weightPct": 5.7,
       "items": [
         {
           "type": "random_item",
@@ -184,7 +170,7 @@
     {
       "lootTier": "High",
       "label": "16 Eye of Ender",
-      "weightPct": 2.2,
+      "weightPct": 2.5,
       "items": [
         {
           "type": "vanilla",
@@ -197,7 +183,7 @@
     {
       "lootTier": "High",
       "label": "Titan Key",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -210,7 +196,7 @@
     {
       "lootTier": "High",
       "label": "Rock Golem Key",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -223,7 +209,7 @@
     {
       "lootTier": "High",
       "label": "Steel Golem Key",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -236,7 +222,7 @@
     {
       "lootTier": "High",
       "label": "Ice Golem Key",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -249,7 +235,7 @@
     {
       "lootTier": "High",
       "label": "Dragon Golem Key",
-      "weightPct": 2.4,
+      "weightPct": 2.8,
       "items": [
         {
           "type": "vanilla",
@@ -262,7 +248,7 @@
     {
       "lootTier": "High",
       "label": "Zygarde Core",
-      "weightPct": 2.5,
+      "weightPct": 2.9,
       "items": [
         {
           "type": "vanilla",
@@ -274,8 +260,8 @@
     },
     {
       "lootTier": "High",
-      "label": "TR Voucher (5 BP)",
-      "weightPct": 3.4,
+      "label": "TR Voucher (4 BP)",
+      "weightPct": 3.9,
       "items": [
         {
           "type": "vanilla",
@@ -287,8 +273,8 @@
     },
     {
       "lootTier": "High",
-      "label": "Held Item Voucher (4 BP)",
-      "weightPct": 2.5,
+      "label": "Held Item Voucher (3 BP)",
+      "weightPct": 2.9,
       "items": [
         {
           "type": "vanilla",
@@ -301,7 +287,7 @@
     {
       "lootTier": "High",
       "label": "Griseous Orb",
-      "weightPct": 3.5,
+      "weightPct": 4.0,
       "items": [
         {
           "type": "vanilla",

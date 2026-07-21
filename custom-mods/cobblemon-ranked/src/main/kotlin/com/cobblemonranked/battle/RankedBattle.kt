@@ -63,7 +63,7 @@ data class ActiveRankedMatch(
     val wagerPerSide: Int = 0,
     /**
      * True for matches started via [RankedBattleManager.startTournamentMatch]. Only these are
-     * driven by the per-turn move timer ([TournamentTurnTimer]); normal ranked/wager battles
+     * driven by the time-bank move clock ([TournamentTurnTimer]); normal ranked/wager battles
      * are untimed.
      */
     val isTournament: Boolean = false,
@@ -122,6 +122,27 @@ object RankedBattleManager {
      */
     private val pendingTournament: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
 
+    // --- Automated-tournament selection state -------------------------------------------------
+    /** Per-match team-select budget for auto-tournament matches (shared across cancel/reopen). */
+    private const val SELECTION_SECONDS = 120L
+    /** Cancels allowed before a DQ. The 3rd cancel forfeits the match; strikes reset each match. */
+    private const val MAX_SELECT_STRIKES = 3
+
+    /** Live team-select state for one auto-tournament match; both players' UUIDs map to it. */
+    private class AutoSelection(val a: UUID, val b: UUID) {
+        val deadlineSec: Long = System.currentTimeMillis() / 1000L + SELECTION_SECONDS
+        val strikes: ConcurrentHashMap<UUID, Int> = ConcurrentHashMap()
+        val confirmed: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
+        var resolved: Boolean = false
+    }
+
+    /** Auto-tournament team-select state, keyed by each participant's UUID (both point at one object). */
+    private val autoSelections: ConcurrentHashMap<UUID, AutoSelection> = ConcurrentHashMap()
+    /** Deferred menu reopens (processed on the next tick to avoid re-entrancy inside `removed()`). */
+    private val autoReopenQueue: java.util.concurrent.ConcurrentLinkedQueue<UUID> = java.util.concurrent.ConcurrentLinkedQueue()
+    /** Players whose currently-running battle is an auto-tournament match (for result routing). */
+    private val autoBattlePlayers: MutableSet<UUID> = ConcurrentHashMap.newKeySet()
+
     /**
      * Begin the team-select phase of a ranked match. [wagerPerSide] is the cobble-dollar
      * amount each player will be charged when both confirm their teams. Escrow happens at
@@ -158,7 +179,7 @@ object RankedBattleManager {
      * command, notified on cancel. Returns an error string if either player isn't a valid entrant,
      * or null on success.
      */
-    fun startTournamentMatch(player1: ServerPlayer, player2: ServerPlayer, hostUuid: UUID?, forcedArena: Int? = null): String? {
+    fun startTournamentMatch(player1: ServerPlayer, player2: ServerPlayer, hostUuid: UUID?, forcedArena: Int? = null, auto: Boolean = false): String? {
         val tm = com.cobblemonranked.tournament.TournamentManager
         val roster1 = tm.resolveRoster(player1) ?: return "${player1.name.string} hasn't entered the tournament."
         val roster2 = tm.resolveRoster(player2) ?: return "${player2.name.string} hasn't entered the tournament."
@@ -192,12 +213,25 @@ object RankedBattleManager {
         // Mark both players so [startBattle] flags the resulting match as tournament-timed.
         pendingTournament.add(player1.uuid)
         pendingTournament.add(player2.uuid)
-        openTournamentSelectionGui(player1, roster1, roster2, mode.tournamentPick)
-        openTournamentSelectionGui(player2, roster2, roster1, mode.tournamentPick)
+        if (auto) {
+            val sel = AutoSelection(player1.uuid, player2.uuid)
+            autoSelections[player1.uuid] = sel
+            autoSelections[player2.uuid] = sel
+            val note = Component.literal(
+                "§7[Tournament] Pick your team — §f2:00§7 for this match, and at most §c3§7 cancels.")
+            player1.sendSystemMessage(note); player2.sendSystemMessage(note)
+        }
+        openTournamentSelectionGui(player1, roster1, roster2, mode.tournamentPick, auto)
+        openTournamentSelectionGui(player2, roster2, roster1, mode.tournamentPick, auto)
         return null
     }
 
-    private fun openTournamentSelectionGui(player: ServerPlayer, pool: List<Pokemon>, opponentRoster: List<Pokemon>, pickSize: Int) {
+    /** Entry point for the automated bracket driver: run a tournament match with the auto
+     *  team-select rules (2-min clock + 3-strike cancel) and route the result back to the driver. */
+    fun startAutoTournamentMatch(player1: ServerPlayer, player2: ServerPlayer): String? =
+        startTournamentMatch(player1, player2, hostUuid = null, forcedArena = null, auto = true)
+
+    private fun openTournamentSelectionGui(player: ServerPlayer, pool: List<Pokemon>, opponentRoster: List<Pokemon>, pickSize: Int, auto: Boolean = false) {
         player.openMenu(com.cobblemonranked.gui.TournamentBattleMenuProvider(
             player = player,
             pool = pool,
@@ -205,11 +239,103 @@ object RankedBattleManager {
             pickSize = pickSize,
             onConfirm = { team ->
                 pendingTeams[player.uuid] = team.map { it.clone() }
+                if (auto) autoSelections[player.uuid]?.confirmed?.add(player.uuid)
                 player.sendSystemMessage(Component.literal("§a[Tournament] Team locked in! Waiting for opponent..."))
                 checkBothReady(player)
             },
-            onCancel = { cancelMatch(player) },
+            onCancel = { if (auto) handleAutoSelectionCancel(player) else cancelMatch(player) },
         ))
+    }
+
+    /**
+     * A player cancelled/closed their auto-tournament team-select. Count a strike (shared across
+     * the match's 2-min budget): a 3rd strike or an expired clock forfeits the match; otherwise the
+     * menu is reopened on the next tick.
+     */
+    private fun handleAutoSelectionCancel(player: ServerPlayer) {
+        val sel = autoSelections[player.uuid] ?: return // already resolved / not auto
+        if (sel.resolved || sel.confirmed.contains(player.uuid)) return
+        val strikes = sel.strikes.merge(player.uuid, 1) { old, _ -> old + 1 } ?: 1
+        val nowSec = System.currentTimeMillis() / 1000L
+        when {
+            strikes >= MAX_SELECT_STRIKES ->
+                forfeitAutoSelection(player, "cancelled team selection $MAX_SELECT_STRIKES times")
+            nowSec >= sel.deadlineSec ->
+                forfeitAutoSelection(player, "ran out of team-selection time")
+            else -> {
+                val left = (sel.deadlineSec - nowSec).coerceAtLeast(0)
+                player.sendSystemMessage(Component.literal(
+                    "§c[Tournament] Cancelled — reopening (strike §f$strikes§c/$MAX_SELECT_STRIKES, §f${left}s§c left). " +
+                    "§7Cancel again and you risk forfeiting."))
+                autoReopenQueue.add(player.uuid)
+            }
+        }
+    }
+
+    /** Forfeit an auto match still in team-select: [player] loses, opponent advances (no ELO). */
+    private fun forfeitAutoSelection(player: ServerPlayer, reason: String) {
+        val sel = autoSelections[player.uuid] ?: return
+        if (sel.resolved) return
+        sel.resolved = true
+        val opponentUuid = if (sel.a == player.uuid) sel.b else sel.a
+        val server = player.server
+        val opponent = server.playerList.getPlayer(opponentUuid)
+        player.sendSystemMessage(Component.literal("§c[Tournament] You forfeit this match — $reason."))
+        opponent?.sendSystemMessage(Component.literal("§a[Tournament] ${player.name.string} $reason — you advance."))
+        opponent?.closeContainer()
+        cleanupAutoSelection(sel)
+        cleanup(player.uuid, opponentUuid)
+        com.cobblemonranked.tournament.AutoTournamentDriver.reportOutcome(server, opponentUuid, player.uuid)
+    }
+
+    private fun cleanupAutoSelection(sel: AutoSelection) {
+        autoSelections.remove(sel.a)
+        autoSelections.remove(sel.b)
+        autoReopenQueue.remove(sel.a)
+        autoReopenQueue.remove(sel.b)
+    }
+
+    /**
+     * Per-second tick for auto-tournament team-select: process deferred menu reopens and enforce
+     * the shared 2-minute selection budget. Called from [CobblemonRanked]'s 1s tick.
+     */
+    fun tickAutoSelections(server: MinecraftServer) {
+        // Deferred reopens (queued from a cancel, run here to avoid re-entrancy in menu removal).
+        while (true) {
+            val uuid = autoReopenQueue.poll() ?: break
+            val sel = autoSelections[uuid] ?: continue
+            if (sel.resolved || sel.confirmed.contains(uuid)) continue
+            val player = server.playerList.getPlayer(uuid) ?: continue
+            val opponentUuid = if (sel.a == uuid) sel.b else sel.a
+            val tm = com.cobblemonranked.tournament.TournamentManager
+            val pool = tm.resolveRoster(player) ?: continue
+            val oppRoster = server.playerList.getPlayer(opponentUuid)?.let { tm.resolveRoster(it) } ?: emptyList()
+            openTournamentSelectionGui(player, pool, oppRoster, (pendingMode[uuid] ?: BattleMode.SINGLES).tournamentPick, auto = true)
+        }
+        // Selection-clock expiry: anyone who hasn't locked in by the deadline forfeits.
+        val nowSec = System.currentTimeMillis() / 1000L
+        for (sel in autoSelections.values.distinct()) {
+            if (sel.resolved || nowSec < sel.deadlineSec) continue
+            val aConf = sel.confirmed.contains(sel.a)
+            val bConf = sel.confirmed.contains(sel.b)
+            if (aConf && bConf) continue // both locked in — battle is (or is about to be) starting
+            val loserUuid = when {
+                aConf -> sel.b
+                bConf -> sel.a
+                else -> if (com.cobblemonranked.tournament.AutoTournamentDriver.higherSeed(sel.a, sel.b) == sel.a) sel.b else sel.a
+            }
+            val loser = server.playerList.getPlayer(loserUuid)
+            if (loser != null) {
+                forfeitAutoSelection(loser, "ran out of team-selection time")
+            } else {
+                // Offline: resolve directly to the opponent.
+                sel.resolved = true
+                val winnerUuid = if (loserUuid == sel.a) sel.b else sel.a
+                cleanupAutoSelection(sel)
+                cleanup(sel.a, sel.b)
+                com.cobblemonranked.tournament.AutoTournamentDriver.reportOutcome(server, winnerUuid, loserUuid)
+            }
+        }
     }
 
     /** Wager per side for the next-starting match, keyed by either player's UUID. */
@@ -256,6 +382,25 @@ object RankedBattleManager {
     ) {
         val config = CobblemonRanked.config
 
+        // Auto-bracket bookkeeping: team-select is over. Mark the battle so any resolveMatch below
+        // (auto-loss, victory, flee, forfeit) routes back to the driver, and drop the select state.
+        val isAutoTournament = autoSelections.containsKey(player1.uuid)
+        if (isAutoTournament) {
+            autoBattlePlayers.add(player1.uuid)
+            autoBattlePlayers.add(player2.uuid)
+            autoSelections[player1.uuid]?.let { cleanupAutoSelection(it) }
+        }
+        // For a void/cancel/failed-start (no resolveMatch is called), the bracket still needs a
+        // result — advance the higher seed so the tournament never stalls.
+        fun autoVoidAdvance() {
+            if (!isAutoTournament) return
+            if (!autoBattlePlayers.remove(player1.uuid)) return
+            autoBattlePlayers.remove(player2.uuid)
+            val winner = com.cobblemonranked.tournament.AutoTournamentDriver.higherSeed(player1.uuid, player2.uuid)
+            val loser = if (winner == player1.uuid) player2.uuid else player1.uuid
+            com.cobblemonranked.tournament.AutoTournamentDriver.reportOutcome(player1.server, winner, loser)
+        }
+
         // Legality check. countsAsLegendary() includes Paradox Pokémon (paradox label), which
         // Cobblemon's isLegendary() does not — many Paradox mons are Ubers-tier.
         val p1Legendaries = team1.count { it.countsAsLegendary() }
@@ -264,6 +409,7 @@ object RankedBattleManager {
         if (p1Legendaries > config.maxLegendaries && p2Legendaries > config.maxLegendaries) {
             broadcast(player1.server,
                 "[Ranked] Both players had illegal teams (too many legendaries). Match voided.")
+            autoVoidAdvance()
             cleanup(player1.uuid, player2.uuid)
             return
         }
@@ -293,6 +439,7 @@ object RankedBattleManager {
                 "[Ranked] Match cancelled — PvP-banned Pokémon: ${listOfNotNull(p1Ban, p2Ban).joinToString(", ")}.")
             player1.sendSystemMessage(msg)
             player2.sendSystemMessage(msg)
+            autoVoidAdvance()
             cleanup(player1.uuid, player2.uuid)
             return
         }
@@ -391,6 +538,19 @@ object RankedBattleManager {
             )
             rankedBattles[battle.battleId] = match
 
+            // Tournament matches run on the time-bank clock. Stamp both combatants with the
+            // BATTLE_TAG so the server-quests datapack suppresses its action-bar HUD for them
+            // (the clock owns the action bar for the whole match), and announce the time control.
+            if (match.isTournament) {
+                player1.addTag(TournamentTurnTimer.BATTLE_TAG)
+                player2.addTag(TournamentTurnTimer.BATTLE_TAG)
+                val timeControl = Component.literal(
+                    "§7[Tournament] §fTime control: §b${TournamentTurnTimer.TURN_ALLOWANCE_SECONDS}s per turn " +
+                    "§7+ §b${TournamentTurnTimer.RESERVE_BANK_SECONDS}s reserve§7 — run out and you lose the match.")
+                player1.sendSystemMessage(timeControl)
+                player2.sendSystemMessage(timeControl)
+            }
+
             // Match announcement: tell every online player who's fighting and where to spectate.
             val store = CobblemonRanked.eloStore
             val e1 = store.getOrCreate(player1.uuid, player1.name.string).elo
@@ -418,6 +578,8 @@ object RankedBattleManager {
                 player1.sendSystemMessage(Component.literal("§7[Ranked] Wager \$$actualWager refunded."))
                 player2.sendSystemMessage(Component.literal("§7[Ranked] Wager \$$actualWager refunded."))
             }
+            // The battle never started — don't let an auto-bracket match hang.
+            autoVoidAdvance()
         }
 
         cleanup(player1.uuid, player2.uuid)
@@ -507,6 +669,10 @@ object RankedBattleManager {
      * who had /queue auto enabled.
      */
     private fun notifyMatchEnded(server: MinecraftServer, match: ActiveRankedMatch) {
+        // Drop the time-bank HUD tag so the quest action-bar HUD resumes. Harmless no-op if the
+        // player is offline or wasn't a tournament combatant (removeTag returns false).
+        server.playerList.getPlayer(match.player1Uuid)?.removeTag(TournamentTurnTimer.BATTLE_TAG)
+        server.playerList.getPlayer(match.player2Uuid)?.removeTag(TournamentTurnTimer.BATTLE_TAG)
         com.cobblemonranked.queue.QueueManager.onMatchEnded(server, match.player1Uuid, match.player2Uuid)
     }
 
@@ -650,6 +816,12 @@ object RankedBattleManager {
             winnerUuid = winner.uuid, winnerName = winner.name.string,
             loserUuid = loser.uuid, loserName = loser.name.string,
         )
+        // Auto-bracket routing: every battle result (victory, flee, forfeit) passes through here.
+        // Pre-battle forfeits (ready no-show, selection DQ/timeout) do NOT, and are handled directly.
+        if (autoBattlePlayers.remove(winner.uuid)) {
+            autoBattlePlayers.remove(loser.uuid)
+            com.cobblemonranked.tournament.AutoTournamentDriver.reportOutcome(winner.server, winner.uuid, loser.uuid)
+        }
     }
 
     /**
@@ -866,7 +1038,12 @@ object RankedBattleManager {
     fun onPlayerLogOut(event: PlayerEvent.PlayerLoggedOutEvent) {
         val player = event.entity as? ServerPlayer ?: return
         if (!forfeitMatch(player, reason = "disconnected")) {
-            // Not in an active battle — but might be in team-select.
+            // Not in an active battle — but might be in team-select. In an auto-bracket match,
+            // disconnecting mid-select is a forfeit (opponent advances); otherwise cancel the match.
+            if (autoSelections.containsKey(player.uuid)) {
+                forfeitAutoSelection(player, "disconnected")
+                return
+            }
             val opponentUuid = pendingMatches[player.uuid] ?: return
             val opponent = player.server.playerList.getPlayer(opponentUuid)
             opponent?.sendSystemMessage(Component.literal("[Ranked] ${player.name.string} disconnected. Match cancelled."))
@@ -887,17 +1064,31 @@ object RankedBattleManager {
         pendingTournament.remove(uuid2)
         pendingMode.remove(uuid1)
         pendingMode.remove(uuid2)
+        autoSelections.remove(uuid1)
+        autoSelections.remove(uuid2)
+        autoReopenQueue.remove(uuid1)
+        autoReopenQueue.remove(uuid2)
+        autoBattlePlayers.remove(uuid1)
+        autoBattlePlayers.remove(uuid2)
     }
 
     /**
-     * Per-second driver for tournament move timers. Called from [CobblemonRanked]'s server tick
-     * (once per second). Hands the live tournament matches and a host-lookup to
-     * [TournamentTurnTimer], which owns the countdown state. No-op when nothing is timed.
+     * Per-second driver for the tournament time-bank clock. Called from [CobblemonRanked]'s
+     * server tick (once per second). Hands the live tournament matches, a host-lookup, and a
+     * timeout→forfeit callback to [TournamentTurnTimer], which owns the clock state and the
+     * action-bar HUD. No-op when nothing is timed.
      */
     fun tickTournamentTimers(server: MinecraftServer) {
         if (rankedBattles.isEmpty()) return
         val timed = rankedBattles.values.filter { it.isTournament && it.battleId != null }
-        TournamentTurnTimer.tick(server, timed) { uuid -> matchHost[uuid] }
+        TournamentTurnTimer.tick(
+            server,
+            timed,
+            hostOf = { uuid -> matchHost[uuid] },
+            // Running out of time on the clock is a loss: reuse the forfeit path (ends the
+            // Cobblemon battle, applies ELO, settles the wager, teleports both back).
+            onTimeout = { loser -> forfeitMatch(loser, reason = "ran out of time") },
+        )
     }
 
     private fun broadcast(server: MinecraftServer, message: String) {

@@ -282,6 +282,206 @@
       "hasHiddenAbility": false,
       "properties": "battle_bond=bond",
       "notes": "Battle Bond Greninja (Bond form, Ash-Greninja capable). Replaces the Ash Cap reward."
+    },
+    {
+      "id": "tornadus",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "thundurus",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "landorus",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "enamorus",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "tapukoko",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "tapulele",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "tapubulu",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "tapufini",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "typenull",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "silvally",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "kubfu",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "urshifu",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "ogerpon",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "okidogi",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "munkidori",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "fezandipiti",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (sub) — not monument-obtainable"
+    },
+    {
+      "id": "mewtwo",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "kyogre",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "groudon",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "rayquaza",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "koraidon",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "miraidon",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "solgaleo",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "lunala",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "necrozma",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "terapagos",
+      "hasHiddenAbility": false,
+      "notes": "Legendary (box/cover) — not monument-obtainable"
+    },
+    {
+      "id": "jirachi",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "deoxys",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "phione",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "manaphy",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "shaymin",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "genesect",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "diancie",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "volcanion",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "magearna",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "zeraora",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "zarude",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "pecharunt",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "meltan",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
+    },
+    {
+      "id": "melmetal",
+      "hasHiddenAbility": false,
+      "notes": "Mythical — not monument-obtainable"
     }
   ],
   "rare": [

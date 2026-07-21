@@ -12,7 +12,9 @@ execute as @a[scores={cq_hud_toggle=1..}] run function server:quests/hud/handle_
 # --- Throttle the HUD refresh to every 30 ticks (1.5s) ----------------------
 scoreboard players add @a cq_hud_tick 1
 
-execute as @a[scores={cq_hud_tick=30..},tag=!cq_hud_off] run function server:quests/hud/tick_player
+# `rt_battle` is set by cobblemon-ranked on both combatants for the duration of a tournament
+# match — while it's present, the ranked time-bank clock owns the action bar, so skip the quest HUD.
+execute as @a[scores={cq_hud_tick=30..},tag=!cq_hud_off,tag=!rt_battle] run function server:quests/hud/tick_player
 
 # Reset the tick counter for anyone who hit 30 this tick (so we count fresh next round).
 scoreboard players set @a[scores={cq_hud_tick=30..}] cq_hud_tick 0

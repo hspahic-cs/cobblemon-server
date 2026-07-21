@@ -2,148 +2,122 @@ package com.cobblemonranked.battle
 
 import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle
-import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
-import com.cobblemon.mod.common.battles.MoveActionResponse
-import com.cobblemon.mod.common.battles.SwitchActionResponse
 import com.cobblemon.mod.common.battles.actor.PlayerBattleActor
 import net.minecraft.network.chat.Component
-import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerPlayer
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Per-decision move timer for tournament matches. Driven once per second by
- * [RankedBattleManager.tickTournamentTimers]. Owns only the countdown bookkeeping; the match
- * roster and the admin-host lookup are passed in each tick.
+ * Time-bank (chess-clock, Showdown-style) move clock for tournament matches. Driven once per
+ * second by [RankedBattleManager.tickTournamentTimers]. Owns only the clock bookkeeping and the
+ * action-bar HUD; the match roster and the timeout resolution are passed in each tick.
  *
- * The clock is per player and per decision. Cobblemon (Showdown) sets `actor.mustChoose = true`
- * with an attached `actor.request` whenever an actor owes a choice, and clears it once they
- * submit. There is no server-side "new turn" event, so we poll `mustChoose`: while it's true we
- * count the actor's seconds; when it flips false (they chose, or it isn't their decision) we drop
- * their timer. This re-arms automatically every turn and on each mid-battle forced switch, and it
- * gives the per-player property for free — a player who already locked in has `mustChoose == false`
- * and sees no countdown.
+ * Model — per player, per battle:
+ *   - [TURN_ALLOWANCE_SECONDS] free every decision (resets each turn).
+ *   - [RESERVE_BANK_SECONDS] reserve that persists across the whole battle and does NOT replenish.
+ *   - A decision only eats the reserve *after* the allowance is spent. The reserve is debited by the
+ *     actual overage when the decision completes.
+ *   - Reserve runs out while still over the allowance → the player LOSES (via the [onTimeout]
+ *     callback, wired to `forfeitMatch`). No auto-pick — that path never worked on forced switches,
+ *     and a time-loss sidesteps having to force a legal choice into Showdown entirely.
  *
- * Timeline (seconds elapsed on the current decision):
- *   - 0                          armed, 60s left, silent
- *   - warnings at 5/3/2/1/0 left action bar (0 left == 60s elapsed)
- *   - 61..63                     silent grace
- *   - 64                         auto-select fires
+ * Pokémon turns are *simultaneous*: both actors have `mustChoose == true` during move selection, so
+ * both clocks tick at once. The moment a player locks in, their `mustChoose` flips false and their
+ * clock pauses (we commit that turn's overage). Forced switches (after a faint) are one-sided but
+ * are just another timed decision under this model.
+ *
+ * HUD: for the entire match, each combatant's action bar shows their clock every second. The
+ * `server-quests` datapack HUD is suppressed for these players via the [BATTLE_TAG] scoreboard tag
+ * (added in `startBattle`, removed in `notifyMatchEnded`), so this HUD owns the bar uncontested.
  */
 object TournamentTurnTimer {
 
-    private const val LIMIT_SECONDS = 60
-    private const val GRACE_SECONDS = 4
+    const val TURN_ALLOWANCE_SECONDS = 30
+    const val RESERVE_BANK_SECONDS = 150
 
-    /** Seconds-remaining values that display on the action bar. */
-    private val ACTION_BAR_WARNINGS = setOf(5, 3, 2, 1, 0)
+    /** Scoreboard tag stamped on both combatants for the life of a tournament match. The
+     *  `server-quests` datapack skips its action-bar HUD for `@a[tag=!rt_battle]`, so this clock
+     *  owns the action bar. Also cleared globally in the datapack's `load.mcfunction` as a
+     *  crash backstop. */
+    const val BATTLE_TAG = "rt_battle"
 
-    /** Elapsed seconds on the current decision, keyed by "battleId|actorUuid". */
-    private val elapsed = ConcurrentHashMap<String, Int>()
+    /** Reserve seconds remaining, keyed by "battleId|actorUuid". Persists across decisions. */
+    private val reserve = ConcurrentHashMap<String, Int>()
+
+    /** Seconds spent on the *current* decision, keyed by "battleId|actorUuid". Reset each turn. */
+    private val turnElapsed = ConcurrentHashMap<String, Int>()
 
     private fun keyOf(battleId: UUID, actorUuid: UUID) = "$battleId|$actorUuid"
 
     /**
      * Advance every timed match by one second. [matches] are the live tournament matches;
-     * [hostOf] maps a participant UUID to the admin host that started the match (or null).
+     * [hostOf] maps a participant UUID to the admin host that started the match (or null — unused
+     * for messaging here but kept for parity with the announce audience). [onTimeout] is invoked
+     * with the player whose clock hit zero; it must resolve the loss (end the battle, apply ELO).
      */
-    fun tick(server: MinecraftServer, matches: List<ActiveRankedMatch>, hostOf: (UUID) -> UUID?) {
-        val live = HashSet<String>()
+    fun tick(
+        server: MinecraftServer,
+        matches: List<ActiveRankedMatch>,
+        @Suppress("UNUSED_PARAMETER") hostOf: (UUID) -> UUID?,
+        onTimeout: (ServerPlayer) -> Unit,
+    ) {
+        val liveKeys = HashSet<String>()
         for (match in matches) {
             val battleId = match.battleId ?: continue
             val battle = Cobblemon.battleRegistry.getBattle(battleId) ?: continue
-            for (actor in battle.actors) {
-                if (actor !is PlayerBattleActor) continue
+            val playerActors = battle.actors.filterIsInstance<PlayerBattleActor>()
+
+            for (actor in playerActors) {
                 val key = keyOf(battleId, actor.uuid)
-
-                if (!actor.mustChoose) {
-                    // Not this actor's decision (submitted, or waiting on the opponent) — disarm.
-                    elapsed.remove(key)
-                    continue
-                }
-
-                val e = (elapsed[key] ?: -1) + 1
-                elapsed[key] = e
-                live.add(key)
-                val secondsLeft = LIMIT_SECONDS - e
+                liveKeys.add(key)
+                val bank = reserve.getOrPut(key) { RESERVE_BANK_SECONDS }
                 val player = server.playerList.getPlayer(actor.uuid)
+                val opponentChoosing = playerActors.any { it.uuid != actor.uuid && it.mustChoose }
 
-                when {
-                    e >= LIMIT_SECONDS + GRACE_SECONDS -> {
-                        // For forced switches, skip auto-pick and let Cobblemon handle timeout naturally.
-                        // Auto-pick on switches doesn't work correctly yet; disable timer for switches only.
-                        if (actor.request?.forceSwitch?.getOrNull(0) != true) {
-                            forcePick(server, battle, actor, hostOf(actor.uuid))
-                        } else {
-                            org.slf4j.LoggerFactory.getLogger("cobblemon-ranked/timer").warn(
-                                "Timeout on forced switch for {} in battle {} — skipping auto-pick, letting Cobblemon handle",
-                                player?.name?.string ?: actor.uuid, battle.battleId)
+                if (actor.mustChoose) {
+                    val elapsed = (turnElapsed[key] ?: 0) + 1
+                    turnElapsed[key] = elapsed
+                    val overage = elapsed - TURN_ALLOWANCE_SECONDS
+
+                    if (overage > 0) {
+                        val reserveLeft = bank - overage
+                        if (reserveLeft < 0) {
+                            // Out of time — this player loses. Drop state and let [onTimeout]
+                            // end the match; the battle disappears from [matches] next tick.
+                            reserve.remove(key)
+                            turnElapsed.remove(key)
+                            if (player != null) onTimeout(player)
+                            break // stop touching this (now-ending) battle's actors
                         }
-                        elapsed.remove(key)
-                        live.remove(key)
+                        actionBar(player, Component.literal(
+                            "§c⏳ Your turn §7• §c§lReserve ${reserveLeft}s"))
+                    } else {
+                        val turnLeft = TURN_ALLOWANCE_SECONDS - elapsed
+                        actionBar(player, Component.literal(
+                            "§a⏳ Your turn §f${turnLeft}s §7• §bReserve ${bank}s"))
                     }
-                    secondsLeft in ACTION_BAR_WARNINGS -> {
-                        val timingComponent = if (secondsLeft <= 0) Component.literal("§c§lTime!") else Component.literal("§c§l$secondsLeft…")
-                        player?.connection?.send(ClientboundSetTitleTextPacket(timingComponent))
+                } else {
+                    // Not this actor's decision: commit the just-finished turn's overage (if any)
+                    // to the reserve, then show a paused-clock line.
+                    val elapsed = turnElapsed.remove(key)
+                    if (elapsed != null) {
+                        val overage = elapsed - TURN_ALLOWANCE_SECONDS
+                        if (overage > 0) reserve[key] = (bank - overage).coerceAtLeast(0)
                     }
+                    val bankNow = reserve[key] ?: bank
+                    val waiting = if (opponentChoosing) "§7⏳ Waiting for opponent…" else "§7⏳ Resolving turn…"
+                    actionBar(player, Component.literal("$waiting §7• §bReserve ${bankNow}s"))
                 }
             }
         }
-        // Prune state for actors/battles no longer choosing (battle ended, actor left, etc.).
-        elapsed.keys.retainAll(live)
+        // Prune state for actors/battles no longer live (battle ended, actor left, etc.).
+        reserve.keys.retainAll(liveKeys)
+        turnElapsed.keys.retainAll(liveKeys)
     }
 
-    /**
-     * Submit an automatic choice for [actor] and, if one actually fired, announce it to the
-     * scoped audience (both players, spectators, host). No-op with no announcement if the actor
-     * has no request or no legal action to take.
-     */
-    private fun forcePick(server: MinecraftServer, battle: PokemonBattle, actor: BattleActor, hostUuid: UUID?) {
-        val request = actor.request ?: return
-        if (request.wait) return
-
-        val playerName = server.playerList.getPlayer(actor.uuid)?.name?.string ?: "A player"
-
-        // A faint (or any forced-switch slot) means the only legal action is a switch. Otherwise
-        // it's a normal turn: default to attacking with move slot 1 (next legal move if disabled /
-        // out of PP; Showdown substitutes Struggle when nothing has PP, and that lands here too).
-        try {
-            if (request.forceSwitch.getOrNull(0) == true) {
-                val next = actor.pokemonList.firstOrNull { it.canBeSentOut() } ?: return
-                next.willBeSwitchedIn = true
-                actor.forceChoose(SwitchActionResponse(next.uuid))
-                val name = next.effectedPokemon.species.translatedName.string
-                announce(server, battle, hostUuid, Component.literal(
-                    "§6[Tournament] §e$playerName §7ran out of time. §f$name §7was sent in."))
-            } else {
-                val moveset = request.active?.getOrNull(0) ?: return
-                val move = moveset.moves.firstOrNull { it.canBeUsed() }
-                    ?: moveset.moves.firstOrNull()
-                    ?: return
-                // Submit by move id (e.g. "sunsteelstrike"): MoveActionResponse.toShowdownString
-                // resolves the slot via indexOfFirst { it.id == moveName }, so passing the display
-                // name (`move.move`, e.g. "Sunsteel Strike") would never match and Showdown would
-                // reject it as "move 0". `move.move` stays for the human-readable announcement.
-                val logger = org.slf4j.LoggerFactory.getLogger("cobblemon-ranked/timer")
-                logger.info("Auto-selecting move for {} in battle {}: {}", playerName, battle.battleId, move.id)
-                actor.forceChoose(MoveActionResponse(move.id))
-                logger.info("Move choice submitted for {}", playerName)
-                announce(server, battle, hostUuid, Component.literal(
-                    "§6[Tournament] §e$playerName §7ran out of time. §f${move.move} §7was auto-selected."))
-            }
-        } catch (e: Exception) {
-            com.cobblemonranked.CobblemonRanked.logger.error(
-                "Failed to force pick for {} in battle {}: {}", playerName, battle.battleId, e.message, e)
-        }
-    }
-
-    /** Send [msg] to exactly the two players, the battle's spectators, and the host (deduped). */
-    private fun announce(server: MinecraftServer, battle: PokemonBattle, hostUuid: UUID?, msg: Component) {
-        val recipients = LinkedHashSet<UUID>()
-        battle.players.forEach { recipients.add(it.uuid) }
-        recipients.addAll(battle.spectators)
-        hostUuid?.let { recipients.add(it) }
-        recipients.forEach { server.playerList.getPlayer(it)?.sendSystemMessage(msg) }
+    private fun actionBar(player: ServerPlayer?, msg: Component) {
+        player?.displayClientMessage(msg, /* actionBar = */ true)
     }
 }

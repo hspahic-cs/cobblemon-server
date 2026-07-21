@@ -16,3 +16,8 @@ gamerule keepInventory true
 
 # Make the trigger visible-and-usable for everyone already online.
 scoreboard players enable @a cq_hud_toggle
+
+# Crash backstop: ranked tournament matches are never persisted across a restart, so nobody can
+# still be in one on load. Clear the ranked time-bank HUD tag globally in case a crash left it set
+# on a combatant (otherwise their quest action-bar HUD would stay suppressed).
+tag @a remove rt_battle

@@ -17,6 +17,9 @@ root README.
 ### Changed
 - **Tournament time bank tuned:** reserve raised from 150s to **180s** (turn allowance unchanged at 30s).
 
+### Fixed
+- **Doubles tournament roster cap:** pre-selection now allows at most **3** Legendary/Paradox/Ultra-Beast for Doubles (was 4); Singles stays at 4.
+
 ## [0.31.0] - 2026-07-21
 
 ### Added

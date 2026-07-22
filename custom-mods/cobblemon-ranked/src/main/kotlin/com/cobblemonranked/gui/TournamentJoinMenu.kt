@@ -29,7 +29,7 @@ import java.util.UUID
 
 /**
  * Tournament roster picker: choose exactly [TournamentManager.rosterSize] (9) Pokémon from PC +
- * party, with at most [TournamentManager.MAX_SPECIALS_ROSTER] (4) Legendary/Paradox/Ultra-Beast.
+ * party, with at most [TournamentManager.maxSpecialsRoster] (4 Singles / 3 Doubles) Legendary/Paradox/Ultra-Beast.
  *
  * Vanilla `GENERIC_9x6` double chest (54 slots, server-side, no client jar/packets). The current PC
  * box is shown IN FULL — all 30 slots — as a 6×5 block in the left six columns (matching Cobblemon's
@@ -120,13 +120,13 @@ class TournamentJoinMenu private constructor(
         display.setItem(42, count)
 
         val specials = specialsCount()
-        val specialColor = if (specials >= TournamentManager.MAX_SPECIALS_ROSTER) "§c" else "§a"
+        val specialColor = if (specials >= TournamentManager.maxSpecialsRoster) "§c" else "§a"
         val specialStack = ItemStack(if (specials > 0) Items.NETHER_STAR else Items.GLASS)
         specialStack.set(DataComponents.CUSTOM_NAME,
-            Component.literal("§dSpecials: $specialColor$specials§d/${TournamentManager.MAX_SPECIALS_ROSTER}"))
+            Component.literal("§dSpecials: $specialColor$specials§d/${TournamentManager.maxSpecialsRoster}"))
         specialStack.set(DataComponents.LORE, ItemLore(listOf(
             Component.literal("§7Legendary / Paradox / Ultra-Beast."),
-            Component.literal("§7Max §c${TournamentManager.MAX_SPECIALS_ROSTER}§7 in your roster"),
+            Component.literal("§7Max §c${TournamentManager.maxSpecialsRoster}§7 in your roster"),
             Component.literal("§7(a 6-mon battle subset may bring §c1§7)."),
         )))
         display.setItem(43, specialStack)
@@ -239,9 +239,9 @@ class TournamentJoinMenu private constructor(
             sp.sendSystemMessage(Component.literal("§c[Tournament] Roster is full (${TournamentManager.rosterSize}). Remove one first."))
             return
         }
-        if (pokemon.countsAsSpecial() && specialsCount() >= TournamentManager.MAX_SPECIALS_ROSTER) {
+        if (pokemon.countsAsSpecial() && specialsCount() >= TournamentManager.maxSpecialsRoster) {
             sp.sendSystemMessage(Component.literal(
-                "§c[Tournament] Max ${TournamentManager.MAX_SPECIALS_ROSTER} Legendary/Paradox/Ultra-Beast in a roster."))
+                "§c[Tournament] Max ${TournamentManager.maxSpecialsRoster} Legendary/Paradox/Ultra-Beast in a roster."))
             return
         }
         selected.add(pokemon)

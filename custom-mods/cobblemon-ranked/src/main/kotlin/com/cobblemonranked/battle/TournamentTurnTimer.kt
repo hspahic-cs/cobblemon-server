@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentHashMap
 object TournamentTurnTimer {
 
     const val TURN_ALLOWANCE_SECONDS = 30
-    const val RESERVE_BANK_SECONDS = 150
+    const val RESERVE_BANK_SECONDS = 180
 
     /** Scoreboard tag stamped on both combatants for the life of a tournament match. The
      *  `server-quests` datapack skips its action-bar HUD for `@a[tag=!rt_battle]`, so this clock

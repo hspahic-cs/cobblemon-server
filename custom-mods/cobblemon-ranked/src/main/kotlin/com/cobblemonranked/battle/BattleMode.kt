@@ -9,10 +9,10 @@ import com.cobblemon.mod.common.battles.BattleFormat
  * result would (there is no separate doubles leaderboard). The mode only changes the Showdown
  * battle format and how many Pokémon each player brings/selects:
  *
- *  | Mode    | 1v1 challenge pick | Tournament roster (pre-select) | Tournament per-match pick |
- *  |---------|--------------------|--------------------------------|---------------------------|
- *  | Singles | 6                  | 9                              | 6                         |
- *  | Doubles | 4                  | 6                              | 4                         |
+ *  | Mode    | 1v1 challenge pick | Tournament roster (pre-select) | Tournament per-match pick | Max specials in roster |
+ *  |---------|--------------------|--------------------------------|---------------------------|------------------------|
+ *  | Singles | 6                  | 9                              | 6                         | 4                      |
+ *  | Doubles | 4                  | 6                              | 4                         | 3                      |
  *
  * [fromId] defaults to [SINGLES] for a missing/unknown token, so commands stay singles unless the
  * player explicitly types `doubles`.
@@ -26,9 +26,11 @@ enum class BattleMode(
     val tournamentRoster: Int,
     /** Pokémon a player picks from their roster for each tournament match. */
     val tournamentPick: Int,
+    /** Max Legendary/Paradox/Ultra-Beast allowed in a tournament roster (pre-selection). */
+    val tournamentMaxSpecials: Int,
 ) {
-    SINGLES("singles", "Singles", pick1v1 = 6, tournamentRoster = 9, tournamentPick = 6),
-    DOUBLES("doubles", "Doubles", pick1v1 = 4, tournamentRoster = 6, tournamentPick = 4);
+    SINGLES("singles", "Singles", pick1v1 = 6, tournamentRoster = 9, tournamentPick = 6, tournamentMaxSpecials = 4),
+    DOUBLES("doubles", "Doubles", pick1v1 = 4, tournamentRoster = 6, tournamentPick = 4, tournamentMaxSpecials = 3);
 
     /** The Cobblemon/Showdown battle format for this mode, at the given adjust-level cap. */
     fun format(adjustLevel: Int): BattleFormat = when (this) {

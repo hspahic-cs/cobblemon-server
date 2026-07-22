@@ -29,6 +29,7 @@ object TournamentManager {
 
     /** Default (Singles) roster size. Doubles uses [BattleMode.tournamentRoster] (6) instead. */
     const val ROSTER_SIZE = 9
+    /** Default (Singles) roster special cap. Prefer the mode-aware [maxSpecialsRoster]. */
     const val MAX_SPECIALS_ROSTER = 4
 
     /** A locked entrant. Either a personal roster ([pokemonUuids] into the player's party/PC) OR a
@@ -47,6 +48,9 @@ object TournamentManager {
     /** Roster (pre-select) size for the current tournament mode: 9 Singles, 6 Doubles. */
     val rosterSize: Int get() = mode.tournamentRoster
 
+    /** Max Legendary/Paradox/Ultra-Beast in a roster for the current mode: 4 Singles, 3 Doubles. */
+    val maxSpecialsRoster: Int get() = mode.tournamentMaxSpecials
+
     /** Opens a fresh registration window (clears any prior entrants) and announces it. */
     fun openRegistration(server: MinecraftServer, mode: BattleMode = BattleMode.SINGLES) {
         open = true
@@ -61,7 +65,7 @@ object TournamentManager {
         for (p in server.playerList.players) {
             p.sendSystemMessage(header)
             p.sendSystemMessage(Component.literal(
-                "§7[Tournament] §b${mode.displayName}§7 — pick §f${mode.tournamentRoster} Pokémon§7 for your roster (max §c$MAX_SPECIALS_ROSTER§7 Legendary/Paradox/Ultra-Beast). You can change it until registration closes."))
+                "§7[Tournament] §b${mode.displayName}§7 — pick §f${mode.tournamentRoster} Pokémon§7 for your roster (max §c${mode.tournamentMaxSpecials}§7 Legendary/Paradox/Ultra-Beast). You can change it until registration closes."))
         }
     }
 

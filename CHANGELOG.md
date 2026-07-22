@@ -12,6 +12,11 @@ root README.
 
 ## [Unreleased]
 
+## [0.31.1] - 2026-07-21
+
+### Changed
+- **Tournament time bank tuned:** reserve raised from 150s to **180s** (turn allowance unchanged at 30s).
+
 ## [0.31.0] - 2026-07-21
 
 ### Added

@@ -1,0 +1,16 @@
+{
+  "type": "choice",
+  "keys": [
+    "percent_cells"
+  ],
+  "default": "50",
+  "choices": [
+    "1",
+    "50",
+    "10",
+    "complete",
+    "core"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}-percent"
+}

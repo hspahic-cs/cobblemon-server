@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "pack_format": 48,
+    "description": "Restores Zygarde's Power Construct. The AllTheMons datapack overrides cobblemon:species/generation6/zygarde.json and wins over both base Cobblemon and Mega Showdown (world datapacks load after mod resources); its copy gives the Complete form Aura Break and deletes the 10%-C / 50%-C forms, so nothing on the server granted Power Construct and the Mega Showdown cube produced an Aura Break Zygarde. This pack re-derives AllTheMons' own file (keeping its stats, scales, movesets and slime-block evolution chain) and re-adds the Power Construct forms, plus Mega Showdown's Core form and the 'core' percent_cells choice the cube needs. Also pins the zygarde power-construct feature assignment, which Cobblemon and Mega Showdown ship conflicting copies of (power_construct vs power-construct). MUST load after AllTheMons. Regenerate with ops/gen_zygarde_power_construct.py."
+  }
+}

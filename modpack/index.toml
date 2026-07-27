@@ -9127,3 +9127,19 @@ hash = "0f33aae4101d83b4e18cdffa332daf1ba005775f581d17e4c4976380eee6620a"
 [[files]]
 file = "server-overrides/datapacks/server-trainer-spawns/pack.mcmeta"
 hash = "e864867becc7722fdd6776153d27aa41928a2b082dc1b367c63253f1907b9f3a"
+
+[[files]]
+file = "server-overrides/datapacks/server-zygarde-power-construct/data/cobblemon/species/generation6/zygarde.json"
+hash = "2ae2dcce9128d21d230731e09f6b3a43dca220ce1d4765b104dd7f4dbcda2998"
+
+[[files]]
+file = "server-overrides/datapacks/server-zygarde-power-construct/data/cobblemon/species_feature_assignments/zygarde_power_construct.json"
+hash = "daaf83e1660c7d7944b99d52794c3536689057ab191bf5c593dfa8a817f5d191"
+
+[[files]]
+file = "server-overrides/datapacks/server-zygarde-power-construct/data/cobblemon/species_features/percent_cells.json"
+hash = "f40d8156c41f680c2e25ea7238933778e5da1f02985b9e5a1d339b7268c51364"
+
+[[files]]
+file = "server-overrides/datapacks/server-zygarde-power-construct/pack.mcmeta"
+hash = "25378e372c7c3980222e45c180d62f5650b307ae3ef1d45322b438c44aa43324"

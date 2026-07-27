@@ -12,6 +12,34 @@ root README.
 
 ## [Unreleased]
 
+## [0.31.2] - 2026-07-26
+
+### Fixed
+- **Zygarde gets Power Construct back.** Assembling a Complete Zygarde with the Mega Showdown
+  cube (5 cores + 95 cells) produced a Zygarde with **Aura Break** instead of Power Construct.
+  The AllTheMons datapack ships its own copy of `cobblemon:species/generation6/zygarde.json`, and
+  because world datapacks load after mod resources it was overriding both base Cobblemon's and
+  Mega Showdown's versions. AllTheMons' copy gives the Complete form `aurabreak` and deletes the
+  `10%-C` / `50%-C` forms entirely — the two forms that carry the `power-construct` aspect — so no
+  Zygarde form on the server granted Power Construct at all. The cube set the aspect correctly;
+  Cobblemon then re-resolved the ability from the (wrong) form data on the form change.
+
+  New `server-zygarde-power-construct` datapack re-derives AllTheMons' file — keeping its stats,
+  scales, hitboxes, movesets and slime-block evolution chain untouched — and re-applies only the
+  Power Construct pieces: the Complete form's ability, plus `10%-C` and `50%-C` cloned from
+  AllTheMons' own 10% and 50% forms so they keep the AllTheMons models. Also restores Mega
+  Showdown's battle-only `Core` form and the `core` choice in `percent_cells` (AllTheMons dropped
+  it while adding its own `1` choice, which broke the cube's Core state), and pins the
+  `zygarde_power_construct` feature assignment, which Cobblemon and Mega Showdown ship conflicting
+  copies of (`power_construct` vs `power-construct`) so the winner depended on mod load order.
+
+  Regenerate after every AllTheMons bump with `ops/gen_zygarde_power_construct.py`, and make sure
+  the pack stays ordered after AllTheMons:
+  `/datapack enable "file/server-zygarde-power-construct" last`
+
+  Existing Zygarde do not fix themselves — they still hold a stored Aura Break. Re-assemble with
+  the cube, or correct the aspect manually.
+
 ## [0.31.1] - 2026-07-21
 
 ### Changed

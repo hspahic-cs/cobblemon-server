@@ -1,0 +1,996 @@
+{
+  "implemented": true,
+  "nationalPokedexNumber": 718,
+  "name": "Zygarde",
+  "primaryType": "dragon",
+  "secondaryType": "ground",
+  "maleRatio": -1,
+  "height": 50,
+  "weight": 3050,
+  "pokedex": [
+    "cobblemon.species.zygarde.desc"
+  ],
+  "labels": [
+    "gen6",
+    "legendary",
+    "restricted"
+  ],
+  "aspects": [
+    "50-percent"
+  ],
+  "abilities": [
+    "aurabreak",
+    "h:aurabreak"
+  ],
+  "eggGroups": [
+    "undiscovered"
+  ],
+  "baseStats": {
+    "hp": 108,
+    "attack": 100,
+    "defence": 121,
+    "special_attack": 81,
+    "special_defence": 95,
+    "speed": 95
+  },
+  "evYield": {
+    "hp": 3,
+    "attack": 0,
+    "defence": 0,
+    "special_attack": 0,
+    "special_defence": 0,
+    "speed": 0
+  },
+  "baseExperienceYield": 300,
+  "experienceGroup": "slow",
+  "catchRate": 3,
+  "eggCycles": 120,
+  "baseScale": 0.9,
+  "hitbox": {
+    "width": 1.5,
+    "height": 4.0,
+    "fixed": false
+  },
+  "behaviour": {
+    "moving": {
+      "walk": {
+        "walkSpeed": 0.25
+      },
+      "swim": {
+        "avoidsWater": true
+      },
+      "fly": {
+        "canFly": false
+      }
+    },
+    "combat": {
+      "willDefendSelf": true,
+      "willDefendOwner": true,
+      "willFlee": false
+    },
+    "resting": {
+      "drowsyChance": 0.0333,
+      "rouseChance": 0.0042
+    }
+  },
+  "baseFriendship": 0,
+  "moves": [
+    "1:bulldoze",
+    "1:dragonbreath",
+    "1:bite",
+    "1:bind",
+    "1:camouflage",
+    "1:thousandarrows",
+    "1:thousandwaves",
+    "1:coreenforcer",
+    "1:dragondance",
+    "8:haze",
+    "16:dig",
+    "24:safeguard",
+    "32:crunch",
+    "40:dragonpulse",
+    "48:landswrath",
+    "56:glare",
+    "64:sandstorm",
+    "72:coil",
+    "80:earthquake",
+    "88:extremespeed",
+    "tm:bind",
+    "tm:block",
+    "tm:bodyslam",
+    "tm:breakingswipe",
+    "tm:brickbreak",
+    "tm:bulldoze",
+    "tm:crunch",
+    "tm:dig",
+    "tm:dracometeor",
+    "tm:dragondance",
+    "tm:dragonpulse",
+    "tm:dragontail",
+    "tm:earthpower",
+    "tm:earthquake",
+    "tm:endure",
+    "tm:facade",
+    "tm:focusblast",
+    "tm:gigaimpact",
+    "tm:grassknot",
+    "tm:haze",
+    "tm:highhorsepower",
+    "tm:hyperbeam",
+    "tm:hypervoice",
+    "tm:irontail",
+    "tm:outrage",
+    "tm:painsplit",
+    "tm:payback",
+    "tm:protect",
+    "tm:rest",
+    "tm:retaliate",
+    "tm:reversal",
+    "tm:rockslide",
+    "tm:rocksmash",
+    "tm:safeguard",
+    "tm:sandstorm",
+    "tm:scaleshot",
+    "tm:scorchingsands",
+    "tm:shockwave",
+    "tm:skittersmack",
+    "tm:sleeptalk",
+    "tm:sludgewave",
+    "tm:spite",
+    "tm:stompingtantrum",
+    "tm:stoneedge",
+    "tm:strength",
+    "tm:substitute",
+    "tm:sunnyday",
+    "tm:superpower",
+    "tm:swift",
+    "tm:terablast",
+    "tm:zenheadbutt",
+    "tutor:bind",
+    "tutor:block",
+    "tutor:bulldoze",
+    "tutor:dracometeor",
+    "tutor:dragonpulse",
+    "tutor:earthpower",
+    "tutor:gigaimpact",
+    "tutor:highhorsepower",
+    "tutor:hyperbeam",
+    "tutor:hypervoice",
+    "tutor:irontail",
+    "tutor:outrage",
+    "tutor:painsplit",
+    "tutor:rest",
+    "tutor:rockslide",
+    "tutor:rocksmash",
+    "tutor:scaleshot",
+    "tutor:scorchingsands",
+    "tutor:shockwave",
+    "tutor:skittersmack",
+    "tutor:sleeptalk",
+    "tutor:spite",
+    "tutor:stompingtantrum",
+    "tutor:stoneedge",
+    "tutor:superpower",
+    "tutor:swift",
+    "tutor:zenheadbutt",
+    "legacy:confide",
+    "legacy:doubleteam",
+    "legacy:frustration",
+    "legacy:hiddenpower",
+    "legacy:return",
+    "legacy:round",
+    "legacy:secretpower",
+    "legacy:snore",
+    "legacy:swagger",
+    "legacy:toxic"
+  ],
+  "evolutions": [
+    {
+      "id": "zygarde50_zygarde100",
+      "variant": "item_interact",
+      "result": "zygarde percent_cells=complete",
+      "consumeHeldItem": false,
+      "learnableMoves": [],
+      "requirements": [
+        {
+          "variant": "level",
+          "minLevel": "100"
+        }
+      ],
+      "requiredContext": "minecraft:slime_block"
+    }
+  ],
+  "forms": [
+    {
+      "name": "1%",
+      "primaryType": "dragon",
+      "secondaryType": "ground",
+      "maleRatio": -1,
+      "height": 12,
+      "weight": 335,
+      "baseScale": 0.6,
+      "hitbox": {
+        "width": 0.7,
+        "height": 0.7,
+        "fixed": false
+      },
+      "pokedex": [
+        "cobblemon.species.zygarde-1.desc"
+      ],
+      "labels": [
+        "gen7",
+        "legendary",
+        "restricted"
+      ],
+      "aspects": [
+        "1-percent"
+      ],
+      "baseStats": {
+        "hp": 45,
+        "attack": 45,
+        "defence": 35,
+        "special_attack": 20,
+        "special_defence": 30,
+        "speed": 20
+      },
+      "behaviour": {
+        "moving": {
+          "swim": {
+            "avoidsWater": true
+          },
+          "fly": {
+            "canFly": false
+          }
+        },
+        "combat": {
+          "willDefendSelf": false,
+          "willDefendOwner": false,
+          "willFlee": true
+        },
+        "resting": {
+          "drowsyChance": 0.0333,
+          "rouseChance": 0.0042
+        }
+      },
+      "baseExperienceYield": 50,
+      "moves": [
+        "1:bite",
+        "1:bind",
+        "1:camouflage",
+        "1:thousandwaves"
+      ],
+      "evolutions": [
+        {
+          "id": "zygarde1_zygarde10",
+          "variant": "item_interact",
+          "result": "zygarde percent_cells=10",
+          "consumeHeldItem": false,
+          "learnableMoves": [],
+          "requirements": [
+            {
+              "variant": "level",
+              "minLevel": "10"
+            }
+          ],
+          "requiredContext": "minecraft:slime_block"
+        }
+      ],
+      "battleOnly": false
+    },
+    {
+      "name": "10",
+      "primaryType": "dragon",
+      "secondaryType": "ground",
+      "maleRatio": -1,
+      "height": 12,
+      "weight": 335,
+      "baseScale": 0.75,
+      "hitbox": {
+        "width": 1.0,
+        "height": 1.55,
+        "fixed": false
+      },
+      "behaviour": {
+        "moving": {
+          "walk": {
+            "walkSpeed": 0.7
+          },
+          "swim": {
+            "avoidsWater": true
+          }
+        },
+        "combat": {
+          "willDefendSelf": true,
+          "willDefendOwner": true,
+          "willFlee": false
+        },
+        "resting": {
+          "drowsyChance": 0.0333,
+          "rouseChance": 0.0042
+        }
+      },
+      "pokedex": [
+        "cobblemon.species.zygarde-10.desc"
+      ],
+      "labels": [
+        "gen7",
+        "legendary",
+        "restricted"
+      ],
+      "aspects": [
+        "10-percent"
+      ],
+      "baseStats": {
+        "hp": 54,
+        "attack": 100,
+        "defence": 71,
+        "special_attack": 61,
+        "special_defence": 85,
+        "speed": 115
+      },
+      "baseExperienceYield": 243,
+      "moves": [
+        "1:bulldoze",
+        "1:dragonbreath",
+        "1:bite",
+        "1:bind",
+        "1:camouflage",
+        "1:thousandarrows",
+        "1:thousandwaves",
+        "1:coreenforcer",
+        "8:haze",
+        "16:dig",
+        "24:safeguard",
+        "32:crunch",
+        "40:dragonpulse",
+        "48:landswrath",
+        "56:glare",
+        "64:sandstorm",
+        "72:coil",
+        "80:earthquake",
+        "88:outrage",
+        "form_change:coreenforcer",
+        "form_change:dragondance",
+        "form_change:extremespeed",
+        "form_change:thousandarrows",
+        "form_change:thousandwaves",
+        "tm:bind",
+        "tm:block",
+        "tm:bodyslam",
+        "tm:breakingswipe",
+        "tm:brickbreak",
+        "tm:bulldoze",
+        "tm:crunch",
+        "tm:dig",
+        "tm:dracometeor",
+        "tm:dragondance",
+        "tm:dragonpulse",
+        "tm:dragontail",
+        "tm:earthpower",
+        "tm:earthquake",
+        "tm:endure",
+        "tm:extremespeed",
+        "tm:facade",
+        "tm:focusblast",
+        "tm:gigaimpact",
+        "tm:grassknot",
+        "tm:haze",
+        "tm:highhorsepower",
+        "tm:hyperbeam",
+        "tm:hypervoice",
+        "tm:irontail",
+        "tm:outrage",
+        "tm:painsplit",
+        "tm:payback",
+        "tm:protect",
+        "tm:rest",
+        "tm:retaliate",
+        "tm:reversal",
+        "tm:rockslide",
+        "tm:safeguard",
+        "tm:sandstorm",
+        "tm:scaleshot",
+        "tm:scorchingsands",
+        "tm:shockwave",
+        "tm:skittersmack",
+        "tm:sleeptalk",
+        "tm:sludgewave",
+        "tm:spite",
+        "tm:stompingtantrum",
+        "tm:stoneedge",
+        "tm:substitute",
+        "tm:sunnyday",
+        "tm:superpower",
+        "tm:swift",
+        "tm:terablast",
+        "tm:zenheadbutt",
+        "tutor:bind",
+        "tutor:block",
+        "tutor:bulldoze",
+        "tutor:dracometeor",
+        "tutor:dragonpulse",
+        "tutor:earthpower",
+        "tutor:gigaimpact",
+        "tutor:highhorsepower",
+        "tutor:hyperbeam",
+        "tutor:hypervoice",
+        "tutor:irontail",
+        "tutor:outrage",
+        "tutor:painsplit",
+        "tutor:rest",
+        "tutor:rockslide",
+        "tutor:scaleshot",
+        "tutor:scorchingsands",
+        "tutor:shockwave",
+        "tutor:skittersmack",
+        "tutor:sleeptalk",
+        "tutor:spite",
+        "tutor:stompingtantrum",
+        "tutor:stoneedge",
+        "tutor:superpower",
+        "tutor:swift",
+        "tutor:zenheadbutt",
+        "legacy:confide",
+        "legacy:doubleteam",
+        "legacy:frustration",
+        "legacy:hiddenpower",
+        "legacy:return",
+        "legacy:rocksmash",
+        "legacy:round",
+        "legacy:secretpower",
+        "legacy:snore",
+        "legacy:strength",
+        "legacy:swagger",
+        "legacy:toxic"
+      ],
+      "evolutions": [
+        {
+          "id": "zygarde10_zygarde50",
+          "variant": "item_interact",
+          "result": "zygarde percent_cells=50",
+          "consumeHeldItem": false,
+          "learnableMoves": [],
+          "requirements": [
+            {
+              "variant": "level",
+              "minLevel": "50"
+            }
+          ],
+          "requiredContext": "minecraft:slime_block"
+        }
+      ],
+      "battleOnly": false
+    },
+    {
+      "name": "Complete",
+      "primaryType": "dragon",
+      "secondaryType": "ground",
+      "maleRatio": -1,
+      "height": 45,
+      "weight": 6100,
+      "baseScale": 0.9,
+      "hitbox": {
+        "width": 3.3,
+        "height": 6.5,
+        "fixed": false
+      },
+      "behaviour": {
+        "moving": {
+          "walk": {
+            "walkSpeed": 0.45
+          }
+        }
+      },
+      "pokedex": [
+        "cobblemon.species.zygarde-complete.desc"
+      ],
+      "labels": [
+        "gen7",
+        "legendary",
+        "restricted"
+      ],
+      "aspects": [
+        "complete-percent"
+      ],
+      "abilities": [
+        "powerconstruct",
+        "h:powerconstruct"
+      ],
+      "baseStats": {
+        "hp": 216,
+        "attack": 100,
+        "defence": 121,
+        "special_attack": 91,
+        "special_defence": 95,
+        "speed": 85
+      },
+      "baseExperienceYield": 354,
+      "moves": [
+        "1:bulldoze",
+        "1:dragonbreath",
+        "1:bite",
+        "1:bind",
+        "1:camouflage",
+        "1:thousandarrows",
+        "1:thousandwaves",
+        "1:coreenforcer",
+        "8:haze",
+        "16:dig",
+        "24:safeguard",
+        "32:crunch",
+        "40:dragonpulse",
+        "48:landswrath",
+        "56:glare",
+        "64:sandstorm",
+        "72:coil",
+        "80:earthquake",
+        "88:outrage",
+        "tm:bind",
+        "tm:block",
+        "tm:bodyslam",
+        "tm:breakingswipe",
+        "tm:brickbreak",
+        "tm:bulldoze",
+        "tm:crunch",
+        "tm:dig",
+        "tm:dracometeor",
+        "tm:dragondance",
+        "tm:dragonpulse",
+        "tm:dragontail",
+        "tm:earthpower",
+        "tm:earthquake",
+        "tm:endure",
+        "tm:extremespeed",
+        "tm:facade",
+        "tm:focusblast",
+        "tm:gigaimpact",
+        "tm:grassknot",
+        "tm:haze",
+        "tm:highhorsepower",
+        "tm:hyperbeam",
+        "tm:hypervoice",
+        "tm:irontail",
+        "tm:outrage",
+        "tm:painsplit",
+        "tm:payback",
+        "tm:protect",
+        "tm:rest",
+        "tm:retaliate",
+        "tm:reversal",
+        "tm:rockslide",
+        "tm:safeguard",
+        "tm:sandstorm",
+        "tm:scaleshot",
+        "tm:scorchingsands",
+        "tm:shockwave",
+        "tm:skittersmack",
+        "tm:sleeptalk",
+        "tm:sludgewave",
+        "tm:spite",
+        "tm:stompingtantrum",
+        "tm:stoneedge",
+        "tm:substitute",
+        "tm:sunnyday",
+        "tm:superpower",
+        "tm:swift",
+        "tm:terablast",
+        "tm:zenheadbutt",
+        "tutor:bind",
+        "tutor:block",
+        "tutor:bulldoze",
+        "tutor:dracometeor",
+        "tutor:dragonpulse",
+        "tutor:earthpower",
+        "tutor:gigaimpact",
+        "tutor:highhorsepower",
+        "tutor:hyperbeam",
+        "tutor:hypervoice",
+        "tutor:irontail",
+        "tutor:outrage",
+        "tutor:painsplit",
+        "tutor:rest",
+        "tutor:rockslide",
+        "tutor:scaleshot",
+        "tutor:scorchingsands",
+        "tutor:shockwave",
+        "tutor:skittersmack",
+        "tutor:sleeptalk",
+        "tutor:spite",
+        "tutor:stompingtantrum",
+        "tutor:stoneedge",
+        "tutor:superpower",
+        "tutor:swift",
+        "tutor:zenheadbutt"
+      ],
+      "evolutions": [
+        {
+          "id": "zygarde100_zygarde50",
+          "variant": "item_interact",
+          "result": "zygarde percent_cells=50",
+          "consumeHeldItem": false,
+          "learnableMoves": [],
+          "requirements": [
+            {
+              "variant": "level",
+              "minLevel": "1"
+            }
+          ],
+          "requiredContext": "minecraft:slime_block"
+        }
+      ],
+      "battleOnly": false
+    },
+    {
+      "name": "10%-C",
+      "primaryType": "dragon",
+      "secondaryType": "ground",
+      "maleRatio": -1,
+      "height": 12,
+      "weight": 335,
+      "baseScale": 0.75,
+      "hitbox": {
+        "width": 1.0,
+        "height": 1.55,
+        "fixed": false
+      },
+      "behaviour": {
+        "moving": {
+          "walk": {
+            "walkSpeed": 0.7
+          },
+          "swim": {
+            "avoidsWater": true
+          }
+        },
+        "combat": {
+          "willDefendSelf": true,
+          "willDefendOwner": true,
+          "willFlee": false
+        },
+        "resting": {
+          "drowsyChance": 0.0333,
+          "rouseChance": 0.0042
+        }
+      },
+      "pokedex": [
+        "cobblemon.species.zygarde-10.desc"
+      ],
+      "labels": [
+        "gen7",
+        "legendary",
+        "restricted"
+      ],
+      "aspects": [
+        "power-construct",
+        "10-percent"
+      ],
+      "baseStats": {
+        "hp": 54,
+        "attack": 100,
+        "defence": 71,
+        "special_attack": 61,
+        "special_defence": 85,
+        "speed": 115
+      },
+      "baseExperienceYield": 243,
+      "moves": [
+        "1:bulldoze",
+        "1:dragonbreath",
+        "1:bite",
+        "1:bind",
+        "1:camouflage",
+        "1:thousandarrows",
+        "1:thousandwaves",
+        "1:coreenforcer",
+        "8:haze",
+        "16:dig",
+        "24:safeguard",
+        "32:crunch",
+        "40:dragonpulse",
+        "48:landswrath",
+        "56:glare",
+        "64:sandstorm",
+        "72:coil",
+        "80:earthquake",
+        "88:outrage",
+        "form_change:coreenforcer",
+        "form_change:dragondance",
+        "form_change:extremespeed",
+        "form_change:thousandarrows",
+        "form_change:thousandwaves",
+        "tm:bind",
+        "tm:block",
+        "tm:bodyslam",
+        "tm:breakingswipe",
+        "tm:brickbreak",
+        "tm:bulldoze",
+        "tm:crunch",
+        "tm:dig",
+        "tm:dracometeor",
+        "tm:dragondance",
+        "tm:dragonpulse",
+        "tm:dragontail",
+        "tm:earthpower",
+        "tm:earthquake",
+        "tm:endure",
+        "tm:extremespeed",
+        "tm:facade",
+        "tm:focusblast",
+        "tm:gigaimpact",
+        "tm:grassknot",
+        "tm:haze",
+        "tm:highhorsepower",
+        "tm:hyperbeam",
+        "tm:hypervoice",
+        "tm:irontail",
+        "tm:outrage",
+        "tm:painsplit",
+        "tm:payback",
+        "tm:protect",
+        "tm:rest",
+        "tm:retaliate",
+        "tm:reversal",
+        "tm:rockslide",
+        "tm:safeguard",
+        "tm:sandstorm",
+        "tm:scaleshot",
+        "tm:scorchingsands",
+        "tm:shockwave",
+        "tm:skittersmack",
+        "tm:sleeptalk",
+        "tm:sludgewave",
+        "tm:spite",
+        "tm:stompingtantrum",
+        "tm:stoneedge",
+        "tm:substitute",
+        "tm:sunnyday",
+        "tm:superpower",
+        "tm:swift",
+        "tm:terablast",
+        "tm:zenheadbutt",
+        "tutor:bind",
+        "tutor:block",
+        "tutor:bulldoze",
+        "tutor:dracometeor",
+        "tutor:dragonpulse",
+        "tutor:earthpower",
+        "tutor:gigaimpact",
+        "tutor:highhorsepower",
+        "tutor:hyperbeam",
+        "tutor:hypervoice",
+        "tutor:irontail",
+        "tutor:outrage",
+        "tutor:painsplit",
+        "tutor:rest",
+        "tutor:rockslide",
+        "tutor:scaleshot",
+        "tutor:scorchingsands",
+        "tutor:shockwave",
+        "tutor:skittersmack",
+        "tutor:sleeptalk",
+        "tutor:spite",
+        "tutor:stompingtantrum",
+        "tutor:stoneedge",
+        "tutor:superpower",
+        "tutor:swift",
+        "tutor:zenheadbutt",
+        "legacy:confide",
+        "legacy:doubleteam",
+        "legacy:frustration",
+        "legacy:hiddenpower",
+        "legacy:return",
+        "legacy:rocksmash",
+        "legacy:round",
+        "legacy:secretpower",
+        "legacy:snore",
+        "legacy:strength",
+        "legacy:swagger",
+        "legacy:toxic"
+      ],
+      "evolutions": [],
+      "battleOnly": false,
+      "abilities": [
+        "powerconstruct",
+        "h:powerconstruct"
+      ]
+    },
+    {
+      "primaryType": "dragon",
+      "secondaryType": "ground",
+      "maleRatio": -1,
+      "height": 50,
+      "weight": 3050,
+      "baseScale": 0.9,
+      "hitbox": {
+        "width": 1.5,
+        "height": 4.0,
+        "fixed": false
+      },
+      "pokedex": [
+        "cobblemon.species.zygarde.desc"
+      ],
+      "labels": [
+        "gen6",
+        "legendary",
+        "restricted"
+      ],
+      "baseStats": {
+        "hp": 108,
+        "attack": 100,
+        "defence": 121,
+        "special_attack": 81,
+        "special_defence": 95,
+        "speed": 95
+      },
+      "behaviour": {
+        "moving": {
+          "walk": {
+            "walkSpeed": 0.25
+          },
+          "swim": {
+            "avoidsWater": true
+          },
+          "fly": {
+            "canFly": false
+          }
+        },
+        "combat": {
+          "willDefendSelf": true,
+          "willDefendOwner": true,
+          "willFlee": false
+        },
+        "resting": {
+          "drowsyChance": 0.0333,
+          "rouseChance": 0.0042
+        }
+      },
+      "baseExperienceYield": 300,
+      "moves": [
+        "1:bulldoze",
+        "1:dragonbreath",
+        "1:bite",
+        "1:bind",
+        "1:camouflage",
+        "1:thousandarrows",
+        "1:thousandwaves",
+        "1:coreenforcer",
+        "1:dragondance",
+        "8:haze",
+        "16:dig",
+        "24:safeguard",
+        "32:crunch",
+        "40:dragonpulse",
+        "48:landswrath",
+        "56:glare",
+        "64:sandstorm",
+        "72:coil",
+        "80:earthquake",
+        "88:extremespeed",
+        "tm:bind",
+        "tm:block",
+        "tm:bodyslam",
+        "tm:breakingswipe",
+        "tm:brickbreak",
+        "tm:bulldoze",
+        "tm:crunch",
+        "tm:dig",
+        "tm:dracometeor",
+        "tm:dragondance",
+        "tm:dragonpulse",
+        "tm:dragontail",
+        "tm:earthpower",
+        "tm:earthquake",
+        "tm:endure",
+        "tm:facade",
+        "tm:focusblast",
+        "tm:gigaimpact",
+        "tm:grassknot",
+        "tm:haze",
+        "tm:highhorsepower",
+        "tm:hyperbeam",
+        "tm:hypervoice",
+        "tm:irontail",
+        "tm:outrage",
+        "tm:painsplit",
+        "tm:payback",
+        "tm:protect",
+        "tm:rest",
+        "tm:retaliate",
+        "tm:reversal",
+        "tm:rockslide",
+        "tm:rocksmash",
+        "tm:safeguard",
+        "tm:sandstorm",
+        "tm:scaleshot",
+        "tm:scorchingsands",
+        "tm:shockwave",
+        "tm:skittersmack",
+        "tm:sleeptalk",
+        "tm:sludgewave",
+        "tm:spite",
+        "tm:stompingtantrum",
+        "tm:stoneedge",
+        "tm:strength",
+        "tm:substitute",
+        "tm:sunnyday",
+        "tm:superpower",
+        "tm:swift",
+        "tm:terablast",
+        "tm:zenheadbutt",
+        "tutor:bind",
+        "tutor:block",
+        "tutor:bulldoze",
+        "tutor:dracometeor",
+        "tutor:dragonpulse",
+        "tutor:earthpower",
+        "tutor:gigaimpact",
+        "tutor:highhorsepower",
+        "tutor:hyperbeam",
+        "tutor:hypervoice",
+        "tutor:irontail",
+        "tutor:outrage",
+        "tutor:painsplit",
+        "tutor:rest",
+        "tutor:rockslide",
+        "tutor:rocksmash",
+        "tutor:scaleshot",
+        "tutor:scorchingsands",
+        "tutor:shockwave",
+        "tutor:skittersmack",
+        "tutor:sleeptalk",
+        "tutor:spite",
+        "tutor:stompingtantrum",
+        "tutor:stoneedge",
+        "tutor:superpower",
+        "tutor:swift",
+        "tutor:zenheadbutt",
+        "legacy:confide",
+        "legacy:doubleteam",
+        "legacy:frustration",
+        "legacy:hiddenpower",
+        "legacy:return",
+        "legacy:round",
+        "legacy:secretpower",
+        "legacy:snore",
+        "legacy:swagger",
+        "legacy:toxic"
+      ],
+      "name": "50%-C",
+      "aspects": [
+        "50-percent",
+        "power-construct"
+      ],
+      "abilities": [
+        "powerconstruct",
+        "h:powerconstruct"
+      ],
+      "evolutions": [],
+      "battleOnly": false
+    },
+    {
+      "name": "Core",
+      "baseScale": 0.5,
+      "hitbox": {
+        "width": 1,
+        "height": 1,
+        "fixed": false
+      },
+      "aspects": [
+        "core-percent"
+      ],
+      "baseStats": {
+        "hp": 1,
+        "attack": 1,
+        "defence": 1,
+        "special_attack": 1,
+        "special_defence": 1,
+        "speed": 1
+      },
+      "moves": [
+        "1:bulldoze"
+      ],
+      "evolutions": [],
+      "battleOnly": true
+    }
+  ]
+}

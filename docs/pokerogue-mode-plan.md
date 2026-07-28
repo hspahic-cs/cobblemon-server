@@ -500,13 +500,17 @@ run length now come from the same place. Trainer waves every 5th, bosses every 1
 
 Three consequences, none of them blocking, all of them real:
 
-**Levels flatten for the last third.** Cobblemon's `maxPokemonLevel` is 100 and it is a **global**
-config value — the same class of lever as the gimmick booleans, so it cannot be raised for runs
-alone. Their curve passes 100 at about wave 138 (bosses around wave 120) and would reach 165 by
-wave 200. So waves ~138–200 are all level 100. That is roughly 30% of the run with no level
-progression, and difficulty across it has to come from team quality, EVs, held items, gimmicks
-and boss design instead. Defensible — a level-100 endgame where teams decide is what real
-Pokémon looks like — but it has to be designed rather than discovered.
+**Levels flatten for the last third, and that is accepted.** Cobblemon's `maxPokemonLevel` is 100
+and it is a **global** config value — the same class of lever as the gimmick booleans, so it
+cannot be raised for runs alone. Their curve passes 100 at about wave 138 (bosses around wave
+120) and would reach 165 by wave 200.
+
+**Decided 2026-07-28:** use PokéRogue's scaling verbatim up to level 100, then continue the run
+with levels pinned there. No retuning of the constants to fit 100 into 200 waves. So waves
+~138–200 are all level 100 — roughly 30% of the run with no level progression, and difficulty
+across it has to come from team quality, EVs, held items, gimmicks and boss design instead.
+Defensible: a level-100 endgame where teams decide is what real Pokémon looks like. But it has to
+be *designed* rather than discovered, and §5 keeps that open.
 
 **A run is a multi-session commitment.** Cobblemon battles are not browser battles: at a couple
 of minutes each, 200 waves is the better part of a day of play. Checkpointing (§2.3) already
@@ -518,6 +522,32 @@ of absence is a different act from expiring an abandoned ten-wave one.
 battles per run. Authored bands (§2.6) keep that from being 60 bespoke teams, but the roster
 still has to be big enough that a player meeting their 40th trainer has not seen it four times
 already.
+
+### 2.20 The payout is not currency
+
+**Chosen:** runs pay out in **non-currency rewards**, configurable as data. Contents are decided
+later; the shape is decided now.
+
+**Why:** §2.18 charges currency to enter, and the mode is supposed to be a money *sink*. If the
+payout were also currency, the sink only works when the average run loses money — which is a
+hard thing to make feel good, and the moment it tips the other way the roguelite becomes the
+best money loop on the server and starves the activities meant to feed it. Paying out in
+something that is not money keeps currency flow reliably negative while the reward still reads
+as generous, because nothing players are chasing is denominated in what they paid.
+
+**Two consequences for code already written:**
+
+1. **The payout stops needing an economy at all.** Granting configured rewards is something the
+   module can do by itself, which is a better standalone story than depending on a host to bank
+   an amount — a published build pays out properly with nothing registered.
+2. **The seam we need is the *inverse* of the one we built.** `RunPayoutProvider` exists and
+   takes an abstract amount; what is actually missing is a **charge** seam, because §2.18's
+   entry fee *is* currency and the module has no economy and must never grow one (§2.2). The
+   payout provider's shape should be revisited — resolving a configured payout table into
+   concrete grants, with the host hook demoted to an optional extra rather than the only route
+   out.
+
+**Format:** reuse §2.12's datapack convention rather than inventing a second one.
 
 ---
 
@@ -582,11 +612,14 @@ is no run loop, no battle, no command.
   the point — but it also means one perfect specimen passed around can water-mark a whole server.
   Counting only self-caught Pokémon keeps the mark personal at the cost of some of the trade
   incentive.
-- **What the payout is denominated in** (§2.18). If entry costs currency and the payout is also
-  currency, the sink only works when the average run loses money, which is a hard thing to make
-  feel good. Paying out in things that are *not* money — egg vouchers or gacha pulls, cosmetics,
-  profile titles, leaderboard standing, run-only unlocks — keeps the currency flow negative while
-  the reward still reads as generous. Needs a decision before the payout curve can be set.
+- **What the payout actually contains** — §2.20 settles that it is not currency and that it is
+  data-driven; the candidates raised were egg vouchers or gacha pulls, cosmetics, profile titles,
+  leaderboard standing and run-only unlocks.
+- **Party leveling.** The opponent curve is fixed (§2.19) but nothing says what level a run
+  starter begins at or how the party keeps pace across 200 waves. If levels come only from
+  rewards, difficulty is really a function of reward luck; if from battle EXP, the EXP gain has
+  to track a curve Cobblemon's own EXP tables were not built for. PokéRogue uses both. Cheap to
+  decide now, expensive to retrofit, since it changes what the reward table must express.
 - **Reward table contents and rarity curve** — the schema is buildable now (§2.12); the data is
   not blocking until balance.
 

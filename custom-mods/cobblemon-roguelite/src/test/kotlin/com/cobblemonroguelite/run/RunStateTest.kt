@@ -4,6 +4,7 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.resources.ResourceLocation
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -107,6 +108,20 @@ class RunStateTest {
         assertFalse(tag.contains("arenaSlot"))
         assertFalse(tag.contains("entry"))
         assertFalse(tag.contains("stampedTemplate"))
+    }
+
+    @Test
+    fun `toNbt carries the battle marker into the checkpoint`() {
+        val marker = RunBattleMarker(wave = 9, boot = UUID.randomUUID(), onField = listOf(UUID.randomUUID()))
+        val tag = RunState(seed = 1L, battle = marker).toNbt(RegistryAccess.EMPTY)
+        assertEquals(marker, RunBattleMarker.fromNbt(tag.getCompound("battle")))
+    }
+
+    @Test
+    fun `a run between waves writes no battle marker`() {
+        // Presence *is* the state — see [RunBattleMarker]. An always-written marker would make every
+        // login look like a disconnected battle and start killing Pokémon for it.
+        assertFalse(RunState(seed = 1L).toNbt(RegistryAccess.EMPTY).contains("battle"))
     }
 
     @Test

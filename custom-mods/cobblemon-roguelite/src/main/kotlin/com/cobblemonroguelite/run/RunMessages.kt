@@ -85,6 +85,42 @@ object RunMessages {
     fun waveUnavailable(wave: Int): Component =
         literal("Wave $wave cannot be started — run battles are not implemented on this server yet. Your run is safe.")
 
+    /**
+     * §2.10 on reconnect, and the one message in here that is not optional.
+     *
+     * A player who logs back in to a party one Pokémon short and no explanation has been handed a bug
+     * — permadeath they did not watch happen, from a rule nobody told them. So both branches say the
+     * *other* branch exists: the penalised player is told the server did not restart, and the player
+     * we interrupted is told they were not charged for it. That contrast is the rule, and it is what
+     * stops the penalty reading as a server that eats Pokémon at random.
+     */
+    fun interrupted(outcome: DisconnectOutcome): Component = when (outcome) {
+        is DisconnectOutcome.CleanResume -> Component.literal(
+            "The server restarted during your wave ${outcome.wave} battle. Nothing was lost — " +
+                "/roguelite resume to fight it again.",
+        ).withStyle(ChatFormatting.YELLOW)
+
+        is DisconnectOutcome.Penalised -> {
+            // The empty case is a real reconnect: everything that was out had already fainted, so the
+            // penalty found nothing. Saying "you lost nothing" beats saying nothing at all, which
+            // would leave them wondering what a mid-battle disconnect had cost them.
+            val head = if (outcome.killed.isEmpty()) {
+                "Your connection dropped during wave ${outcome.wave}. Nothing was left on the field to lose."
+            } else {
+                "Your connection dropped during wave ${outcome.wave}, so what you had out was lost for good: " +
+                    outcome.killed.joinToString(", ") + "."
+            }
+            val tail = when {
+                outcome.ended != null -> " That was your last Pokémon."
+                outcome.resumesAt != outcome.wave -> " Your run continues at wave ${outcome.resumesAt}."
+                else -> " Your run is still on wave ${outcome.wave}."
+            }
+            Component.literal(
+                head + tail + " Disconnecting mid-battle counts as yours; a server restart would not have.",
+            ).withStyle(ChatFormatting.RED)
+        }
+    }
+
     fun confirmAbandon(wave: Int, party: Int): Component = Component.literal(
         "Abandon your run at wave $wave? Your $party run Pokémon are destroyed and your entry fee is " +
             "not refunded. Type /roguelite abandon confirm.",

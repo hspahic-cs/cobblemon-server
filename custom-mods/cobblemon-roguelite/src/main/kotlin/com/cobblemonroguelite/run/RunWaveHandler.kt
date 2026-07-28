@@ -43,12 +43,16 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  * - **Drive the result back through [RunController]** — `waveCleared`, `pokemonFainted`,
  *   `waveLost` — rather than mutating [RunState] directly. The controller owns checkpointing and
  *   run end; a handler that advances the wave itself will produce runs that are not persisted.
+ * - **Report who is on the field**, via [RunController.battleFieldChanged], on every switch and
+ *   replacement. §2.10's disconnect penalty kills whatever the run says was out, and the controller
+ *   can only stamp the lead at [beginWave] — so a handler that never reports leaves the penalty
+ *   correct in size and wrong in aim, with nothing in the log to say so.
  *
- * ### What it must *not* do yet
+ * ### What it does not have to do
  *
- * §2.10's disconnect attribution — the boot-identity stamp on battle start and the on-field kills on
- * reconnect — is a separate piece of work and is not part of this interface's contract today. The
- * hook point is [RunController.reconcileOnLogin].
+ * The §2.10 marker itself. [RunController] stamps it around this call and clears it when the wave
+ * resolves — including when [beginWave] returns false — precisely so a handler cannot forget to, and
+ * so a battle that dies inside an implementation is still attributable.
  */
 fun interface RunWaveHandler {
 

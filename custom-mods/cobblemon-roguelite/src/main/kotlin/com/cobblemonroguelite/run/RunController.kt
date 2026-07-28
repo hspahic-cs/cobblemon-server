@@ -79,6 +79,48 @@ sealed interface ResumeResult {
 }
 
 /**
+ * What §2.10's attribution did to a run whose battle was interrupted. Null on the ordinary login.
+ *
+ * Surfaced to the caller instead of being logged and forgotten because a player who reconnects to a
+ * smaller party and no explanation has been handed a bug, not a penalty: the deterrent only works if
+ * they know the rule, and the rule only reads as fair if they are told the server *didn't* restart.
+ */
+sealed interface DisconnectOutcome {
+
+    /** The server restarted under them. The wave is theirs to fight again, unchanged. */
+    data class CleanResume(val wave: Int) : DisconnectOutcome
+
+    /**
+     * Their connection dropped mid-battle and the field paid for it.
+     *
+     * @property killed species names of what was taken, in party order — for the message, which has
+     *   to name them. Empty means the on-field Pokémon had already fainted before the drop, i.e. the
+     *   penalty found nothing left to take.
+     * @property resumesAt the wave the run now sits on: [wave] + 1 normally, or [wave] itself where
+     *   advancing would have walked the run off its own end. See [RunController.reconcileOnLogin].
+     * @property ended set when the penalty was the last of the party, in which case the run is over
+     *   and has already been paid out.
+     */
+    data class Penalised(
+        val wave: Int,
+        val killed: List<String>,
+        val resumesAt: Int,
+        val ended: RunEndReport?,
+    ) : DisconnectOutcome
+}
+
+/**
+ * What [RunController.reconcileOnLogin] found, and what it did about it.
+ *
+ * [status] is computed **after** any attribution, so a run wiped by the penalty reports as
+ * [RunStatus.None] rather than as a run with an empty party.
+ */
+data class LoginReconciliation(
+    val status: RunStatus,
+    val interrupted: DisconnectOutcome? = null,
+)
+
+/**
  * What a finished run paid, in enough detail to answer a dispute.
  *
  * The payout is the single channel out of a sealed run (§1.1), so every field here exists to make
@@ -217,11 +259,24 @@ object RunController {
                 when (val arena = RunArenas.enter(server, player, run)) {
                     is ArenaResult.Failure -> ResumeResult.ArenaUnavailable(arena.error)
                     is ArenaResult.Success -> {
+                        // Stamped *before* the handler is called, not after. A handler that blocks,
+                        // or that hands the battle to a thread and returns, can lose the player
+                        // between the two calls, and a battle nobody marked is a battle a player can
+                        // walk out of for free — which is the hole §2.10 exists to close.
+                        run.battle = RunBattleMarker(step.plan.wave, ServerBootId.current, openingField(run))
                         // Checkpointed because entering just wrote three fields — slot, entry point,
-                        // stamped template — and losing them costs the player their way home.
+                        // stamped template — and losing them costs the player their way home. The
+                        // marker rides along; it does not need its own flush (see [RunState.battle]).
                         store.checkpoint(server, player.uuid)
-                        if (RunWaves.begin(server, player, run, step.plan)) ResumeResult.WaveStarted(step.plan)
-                        else ResumeResult.WaveUnavailable(step.plan)
+                        if (RunWaves.begin(server, player, run, step.plan)) {
+                            ResumeResult.WaveStarted(step.plan)
+                        } else {
+                            // No battle started, so there is nothing to attribute. Cleared in memory
+                            // only: the stale copy on disk carries this boot's id, and the only way
+                            // to read that copy back is a restart, which resolves as a clean resume.
+                            run.battle = null
+                            ResumeResult.WaveUnavailable(step.plan)
+                        }
                     }
                 }
             }
@@ -242,6 +297,10 @@ object RunController {
     fun waveCleared(server: MinecraftServer, player: UUID): WaveStep? {
         val store = RunStore.of(server)
         val run = store.get(player) ?: return null
+        // The battle resolved, so the marker goes. Clearing on *every* exit from a battle is what
+        // keeps §2.10 from firing on people who did nothing wrong: a marker left behind by a won
+        // wave turns the player's next ordinary logout into a rage-quit.
+        run.battle = null
         val composition = RunSettings.composition
         val cleared = composition.planFor(run.wave, run.seed)
         if (cleared.kind == RunOpponent.BOSS) run.bossesCleared++
@@ -304,6 +363,9 @@ object RunController {
      */
     fun waveLost(server: MinecraftServer, player: UUID): RunEndReport? {
         val run = RunStore.of(server).get(player) ?: return null
+        // Same reason as [waveCleared]: the battle is over either way, and a marker that outlives it
+        // charges the player for a disconnect that never happened.
+        run.battle = null
         if (run.isWiped()) return endRun(server, player, RunEndCause.PARTY_WIPED)
         log.warn(
             "roguelite: {} lost wave {} with {} Pokémon still alive — run left in place",
@@ -379,17 +441,66 @@ object RunController {
     }
 
     /**
-     * Called when a player logs in. **Reconciliation hook point, not the reconciliation.**
+     * The Pokémon out at the start of a wave, as far as this layer can know it.
      *
-     * What it does today is re-establish where the player was, so a resumed session is not silent
-     * about a run in progress. What it deliberately does not do is §2.10's disconnect attribution:
-     * comparing a battle-in-progress marker's server boot identity against the current boot, and
-     * killing the Pokémon that were on the field if the drop was the player's own. That needs
-     * [RunState] to carry the marker, the boot identity and the on-field party, which is a schema
-     * change and a separate piece of work — and getting it half-right would either penalise players
-     * for our restarts or hand them a free escape from a losing battle.
+     * The party lead, because singles is what a wave is and the lead is what a singles battle opens
+     * with. It is a **placeholder for the truth**, not the truth: the moment the player switches, the
+     * field is something else, and only the battle layer knows that. [battleFieldChanged] is how it
+     * says so, and a handler that never calls it leaves the penalty landing on the lead rather than on
+     * whoever was actually out — the right *size* of loss aimed at the wrong Pokémon.
+     */
+    private fun openingField(run: RunState): List<UUID> = run.partySnapshot().take(1).map { it.uuid }
+
+    /**
+     * The battle layer reporting who is on the field now — §2.10's penalty is aimed by this.
      *
-     * It **does** do the arena half of the reconciliation, which is not §2.10 and is not optional: a
+     * Call it on every switch, faint-replacement and forced swap. Not calling it is not an error and
+     * has no visible symptom until somebody disconnects, which is exactly the sort of omission this
+     * module's warnings exist for: the penalty still takes one Pokémon, just not the one that was out.
+     *
+     * A no-op when no battle is marked, so a late report from a battle that already resolved cannot
+     * resurrect a marker and turn the player's next logout into a disconnect penalty.
+     *
+     * **Deliberately does not checkpoint.** A switch can happen every turn and a checkpoint serializes
+     * the whole party, and the disk copy of the marker is not what the attribution reads — see
+     * [RunState.battle].
+     */
+    fun battleFieldChanged(server: MinecraftServer, player: UUID, onField: List<Pokemon>) {
+        val run = RunStore.of(server).get(player) ?: return
+        val marker = run.battle ?: return
+        run.battle = marker.copy(onField = onField.map { it.uuid })
+    }
+
+    /**
+     * Called when a player logs in: §2.10's attribution, then the arena safety net.
+     *
+     * ### The attribution
+     *
+     * A run carrying a battle-in-progress marker ([RunBattleMarker]) was interrupted, and the marker's
+     * [ServerBootId] says by whom. A different boot means the server restarted under them and the
+     * wave is theirs to fight again untouched. The same boot means their connection went away, and
+     * the Pokémon that were on the field are killed — permadeath, through [RunState.kill], the same
+     * as if they had fainted. Neither side of that comparison is anything the player can reach, which
+     * is the whole reason it is the boot id being compared and not, say, a timestamp.
+     *
+     * **The run then continues at the next wave**, which is the half of the decision that makes the
+     * penalty a penalty rather than a rewind: leaving them on the same wave would let them re-fight it
+     * from the checkpoint, which is the retry exploit §2.3 hands to §2.10 to close.
+     *
+     * The one exception is a next wave that would not be a wave at all — the final wave, a lowered run
+     * length, the badge cap. Advancing there would end the run, and every one of those endings pays as
+     * a *completed* run (see [RunEndCause]), so pulling the plug on wave 200 would pay exactly like
+     * clearing it. So the advance only happens into a real fight; otherwise the run stays where it is
+     * and the ordinary resume path ends it properly, with the player present and the right cause.
+     *
+     * Killing may of course wipe the party, and that goes through [endRun] like any other wipe —
+     * payout, arena exit, store removal. A run left sitting at zero party members would be restored
+     * from its next checkpoint as no run at all ([RunState.fromNbt] discards an empty party), and the
+     * player would never be paid.
+     *
+     * ### The arena half
+     *
+     * Not §2.10 and not optional: a
      * player who logs in inside an arena with no run to be there for is in a void dimension with no
      * bed, no portal and nothing to fall onto, i.e. stuck permanently. That happens whenever a run
      * ends while its owner is offline — expiry, an operator clearing a run — because the teleport in
@@ -400,21 +511,103 @@ object RunController {
      * keeping a record of ended runs purely to hold one position, and the alternative — leaving them
      * in the void — is not a trade.
      *
-     * Returns the status so the caller can tell the player; sends nothing itself.
+     * Returns what happened so the caller can tell the player; sends nothing itself.
      */
-    fun reconcileOnLogin(server: MinecraftServer, player: ServerPlayer): RunStatus {
-        val status = status(server, player)
-        if (status is RunStatus.InProgress) {
-            // The seam. When §2.10 lands, this is where the marker is compared and the on-field
-            // Pokémon are killed before the player is offered the wave again.
-            log.debug("roguelite: {} logged in mid-run at wave {}", player.gameProfile.name, status.run.wave)
-            return status
+    fun reconcileOnLogin(server: MinecraftServer, player: ServerPlayer): LoginReconciliation {
+        val run = RunStore.of(server).get(player.uuid)
+        if (run != null) {
+            val interrupted = attributeInterruption(server, player, run)
+            // Status read *after* the attribution, never before: the penalty can move the wave and can
+            // end the run outright, and a status captured first would describe a run that is no longer
+            // there — including handing the login hook an InProgress holding an emptied party.
+            return LoginReconciliation(status(server, player), interrupted)
         }
+        val status = status(server, player)
         if (RunArenas.isInArena(player)) {
             log.info("roguelite: {} logged in inside an arena with no run — ejecting", player.gameProfile.name)
             RunArenas.eject(server, player, entry = null)
         }
-        return status
+        return LoginReconciliation(status)
+    }
+
+    /** §2.10, one login's worth. Null when there was no battle to attribute, which is most logins. */
+    private fun attributeInterruption(
+        server: MinecraftServer,
+        player: ServerPlayer,
+        run: RunState,
+    ): DisconnectOutcome? {
+        val party = run.partySnapshot()
+        val verdict = DisconnectAttribution.verdict(run.battle, ServerBootId.current, party.map { it.uuid })
+        return when (verdict) {
+            is DisconnectVerdict.NoBattle -> {
+                log.debug("roguelite: {} logged in mid-run at wave {}", player.gameProfile.name, run.wave)
+                null
+            }
+
+            is DisconnectVerdict.ServerRestarted -> {
+                // Cleared and checkpointed rather than left alone. The marker has served its purpose,
+                // and one that survives this login is a marker the *next* disconnect would compare
+                // against a boot that now matches — charging them for our restart, one login late.
+                run.battle = null
+                RunStore.of(server).checkpoint(server, player.uuid)
+                log.info(
+                    "roguelite: {} was mid-wave {} across a restart — resuming clean, no penalty",
+                    player.gameProfile.name, verdict.wave,
+                )
+                DisconnectOutcome.CleanResume(verdict.wave)
+            }
+
+            is DisconnectVerdict.PlayerDropped -> penalise(server, player, run, verdict)
+        }
+    }
+
+    private fun penalise(
+        server: MinecraftServer,
+        player: ServerPlayer,
+        run: RunState,
+        verdict: DisconnectVerdict.PlayerDropped,
+    ): DisconnectOutcome {
+        val store = RunStore.of(server)
+        val onField = verdict.casualties.toSet()
+        // The `kill` filter is not belt-and-braces: a Pokémon can have fainted between the drop and
+        // this login — a battle thread finishing its last turn into a disconnected player — and
+        // permadeath already took it. `kill` answers false there and it is reported as nothing,
+        // because telling somebody they lost the same Pokémon twice is how a correct penalty reads
+        // as a duplicate bug.
+        val killed = run.partySnapshot()
+            .filter { it.uuid in onField && run.kill(it) }
+            .map { it.species.name }
+        run.battle = null
+
+        if (run.isWiped()) {
+            // Through [endRun] and not by leaving the run sitting empty: the party-wipe payout, the
+            // arena exit and the removal from the store all live there, and a zero-party run would be
+            // silently discarded by the next load as "no run" — the player would simply never be paid.
+            val report = endRun(server, player.uuid, RunEndCause.PARTY_WIPED)
+            log.info(
+                "roguelite: {} dropped mid-wave {} — lost {} and wiped",
+                player.gameProfile.name, verdict.wave, killed,
+            )
+            return DisconnectOutcome.Penalised(verdict.wave, killed, run.wave, report)
+        }
+
+        // Advance only if the penalty actually took something. A drop that found nothing on the field
+        // left to take is not a penalty, and advancing on it would be a free wave skip — the exact
+        // trade §2.10 is meant to make unprofitable, handed over for nothing.
+        if (killed.isNotEmpty()) {
+            val next = RunProgress.nextStep(verdict.wave + 1, run.seed, RunSettings.composition, depthCapFor(player))
+            // Only into a real fight — see the class-level note on why an advance that would *end* the
+            // run is refused here and left to the resume path. And only forwards: a marker that
+            // somehow outlived a wave advance would otherwise move the run *back* to the wave it names,
+            // which is the retry exploit arriving through the door built to close it.
+            if (next is WaveStep.Fight && next.plan.wave > run.wave) run.wave = next.plan.wave
+        }
+        store.checkpoint(server, player.uuid)
+        log.info(
+            "roguelite: {} dropped mid-wave {} — lost {}, run continues at wave {}",
+            player.gameProfile.name, verdict.wave, killed, run.wave,
+        )
+        return DisconnectOutcome.Penalised(verdict.wave, killed, run.wave, null)
     }
 
     /** Null means no cap. Denied reads as depth zero, which [RunProgress] ends the run on. */

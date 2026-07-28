@@ -61,6 +61,15 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   transition can be detected by comparison rather than by remembering which band we were in — the
  *   template id is the thing that actually has to change, and reading the band boundary twice is how
  *   a re-tuned band list silently stops re-stamping.
+ * @property battle §2.10's battle-in-progress marker, or null between waves. Set when a wave battle
+ *   begins and cleared when it resolves, by [RunController] — see [RunBattleMarker].
+ *
+ *   Persisted, and note that the attribution never actually reads the persisted copy: a marker that
+ *   survived to disk and back has by definition crossed a restart, which is the branch that costs the
+ *   player nothing. It is written because a checkpoint that omitted it would describe a run as being
+ *   between waves when it is not, and every later reader of the file — an operator, a repair, a
+ *   future policy — would believe that. The live comparison works off the in-memory run, which
+ *   [RunStore] holds for the whole server lifetime and therefore across a player's disconnect.
  */
 data class RunState(
     var wave: Int = 1,
@@ -72,6 +81,7 @@ data class RunState(
     var arenaSlot: Int? = null,
     var entry: RunEntryPoint? = null,
     var stampedTemplate: ResourceLocation? = null,
+    var battle: RunBattleMarker? = null,
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
     fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
@@ -117,6 +127,7 @@ data class RunState(
         arenaSlot?.let { tag.putInt("arenaSlot", it) }
         entry?.let { tag.put("entry", it.toNbt()) }
         stampedTemplate?.let { tag.putString("stampedTemplate", it.toString()) }
+        battle?.let { tag.put("battle", it.toNbt()) }
         val list = ListTag()
         partySnapshot().forEach { list.add(it.saveToNBT(registryAccess)) }
         tag.put("party", list)
@@ -130,7 +141,7 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 3
+        const val SCHEMA_VERSION = 4
 
         private const val SCHEMA_KEY = "schemaVersion"
 
@@ -197,6 +208,9 @@ data class RunState(
                 // floor under the player.
                 stampedTemplate = tag.getString("stampedTemplate").takeIf { it.isNotEmpty() }
                     ?.let { ResourceLocation.tryParse(it) },
+                // Absent or unreadable both restore as "no battle", which costs the player nothing.
+                // See [RunBattleMarker.fromNbt] for why that is the only safe failure direction.
+                battle = if (tag.contains("battle")) RunBattleMarker.fromNbt(tag.getCompound("battle")) else null,
             )
         }
     }

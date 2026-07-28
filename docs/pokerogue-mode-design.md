@@ -365,9 +365,15 @@ covers hosts that refuse extra dimensions.
   before its player arrives must take a ticket. And the datapack convention works end to end on a
   real server: both registries registered with Cobblemon and each loaded its example table with
   zero rejected.
-- **Does Cobblemon *battle and capture* behave in there?** *Still unverified* — it needs a player
-  in the dimension, which console access cannot supply. `PokemonEntity` placement on a platform
-  over void is the specific risk.
+- **Does Cobblemon *battle and capture* behave in there? Verified on dev 2026-07-28: yes.** A
+  wild Pokémon spawned onto a platform in the arena, battled and was caught normally.
+  `PokemonEntity` placement over void — the specific risk — is not a problem.
+
+**The arena design is therefore fully verified.** Nothing in this section rests on an untested
+assumption any more: the dimension attaches to existing worlds, the void generator behaves,
+`power_spot` needs no block entity, chunks need tickets, and Cobblemon's battle and capture flow
+work inside it. What remains is implementation (the slot allocator, the template, the entry and
+exit paths), not discovery.
 - ~~**Does `mega_showdown:power_spot` work when placed programmatically?**~~ **Verified on dev
   2026-07-28: yes, and more cleanly than hoped.** `/setblock` placed one and Dynamax activated
   next to it. `/data get block` answered "block target is not an entity" — the block has **no

@@ -125,6 +125,13 @@ does nothing about re-fighting a *losing battle*: with checkpoints plus permadea
 plug mid-battle would rewind to the wave boundary with the party intact, making any losing
 battle re-fightable. Resolved in §2.10.
 
+**Open, and reopened by that resolution:** now that a drop gives the wave back rather than
+skipping it, dropping *is* a retry — one that costs a Pokémon. A player with a wide party can pay
+repeatedly to re-roll their opening against a boss, because the seed fixes the *opponent*, not
+the turn-by-turn RNG. That is a fair trade at one Pokémon a go and much better than the skip it
+replaced, but it is a retry channel that did not exist before and it wants looking at again once
+battles are real and the price can be felt rather than reasoned about.
+
 ### 2.10 Interrupted battles are attributed, not forfeited
 
 **Considered:** forfeit the run · rewind to the last milestone checkpoint · attribute the

@@ -1,0 +1,68 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not balance. The tiers, weights, wave bands and",
+    "rewards below were chosen to show one of each schema feature, not because any of them is a",
+    "good idea. Nothing in the mod rolls this table. Delete it, or shadow it from your own datapack",
+    "at data/cobblemon_roguelite/roguelite/reward_tables/example.json, and write your own tables at",
+    "data/<your-namespace>/roguelite/reward_tables/<name>.json.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
+    "unknown field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_tiers": "Picked first, by weight interpolated from the curve at the current wave. Omit the whole block for a flat table.",
+  "tiers": [
+    { "id": "common", "curve": [ { "wave": 1, "weight": 100 } ] },
+    { "id": "rare", "curve": [ { "wave": 1, "weight": 0 }, { "wave": 10, "weight": 25 } ] }
+  ],
+
+  "_entries": "Picked second, by flat weight within the chosen tier. min_wave/max_wave gate existence, not likelihood.",
+  "entries": [
+    {
+      "id": "example_ev_attack",
+      "tier": "common",
+      "weight": 1,
+      "reward": { "type": "ev", "stat": "attack", "amount": 10 }
+    },
+    {
+      "id": "example_level",
+      "tier": "common",
+      "weight": 1,
+      "reward": { "type": "level", "amount": 1 }
+    },
+    {
+      "id": "example_mint",
+      "tier": "rare",
+      "weight": 1,
+      "min_wave": 5,
+      "reward": { "type": "nature", "nature": "cobblemon:adamant" }
+    },
+    {
+      "id": "example_ability_patch",
+      "tier": "rare",
+      "weight": 1,
+      "_reward": "Omitting \"ability\" means the hidden ability, i.e. an ability patch.",
+      "reward": { "type": "ability" }
+    },
+    {
+      "id": "example_bag_item",
+      "tier": "common",
+      "weight": 1,
+      "max_wave": 20,
+      "_reward": "Bag items cover evolution items, healing, and anything else used from the run bag.",
+      "reward": { "type": "item", "item": "cobblemon:metal_coat", "count": 1 }
+    },
+    {
+      "id": "example_held_item",
+      "tier": "rare",
+      "weight": 1,
+      "reward": { "type": "held_item", "item": "cobblemon:leftovers" }
+    },
+    {
+      "id": "example_tm",
+      "tier": "rare",
+      "weight": 1,
+      "reward": { "type": "move", "move": "flamethrower" }
+    }
+  ]
+}

@@ -142,9 +142,10 @@ carrying the **server's boot identity**. On reconnect, compare it against the cu
 Neither side of that comparison is forgeable by the player, which is what makes it work.
 
 **Penalty:** the Pokémon that were **on the field** when the connection dropped are killed
-(permadeath, via `RunState.kill()`), and the run continues at the next wave. The player loses
-roughly what losing the battle would have cost them, so quitting buys nothing — without the
-run-ending harshness that would punish a bad home connection.
+(permadeath, via `RunState.kill()`), and the run stays on the same wave — the player still owes
+the fight they fled. That combination is what makes quitting cost more than fighting, without
+the run-ending harshness that would punish a bad home connection. (The wave originally advanced;
+see the resolved note below for why that inverted the incentive.)
 
 **Why not milestone rewind alone.** Rewinding to the last checkpoint every N waves was
 considered and kept only as persistence granularity, not as the deterrent: its cost depends
@@ -158,20 +159,16 @@ on-field Pokémon at the time of the last battle start.
 
 **Implemented 2026-07-28** (`run/ServerBootId`, `RunBattleMarker`, `DisconnectAttribution`).
 
-**Open — the penalty may be cheaper than losing, which inverts the incentive.** Losing a wave
-costs the whole party: permadeath takes each Pokémon as it faints, so a loss is a wipe and the
-run is over. Disconnecting costs **one** Pokémon *and skips the wave*. A player facing an
-unwinnable boss is therefore strictly better off pulling the plug than fighting — the opposite of
-what §2.10 set out to achieve.
+**Resolved 2026-07-28 — the penalty was cheaper than losing, which inverted the incentive.**
+Losing a wave costs the whole party: permadeath takes each Pokémon as it faints, so a loss is a
+wipe and the run is over. Disconnecting cost **one** Pokémon *and skipped the wave*, so a player
+facing an unwinnable boss was strictly better off pulling the plug than fighting — the opposite
+of what this decision set out to achieve.
 
-Three levers, all policy rather than code:
-
-1. **Do not advance the wave.** The disconnecting player loses a Pokémon and must still fight the
-   wave they fled. Cheapest fix, keeps the run alive, and removes the skip entirely — this is the
-   recommendation.
-2. Kill the whole field-eligible set rather than just what was out. Harsher, and hard to explain.
-3. Treat a player-side disconnect as a loss. Already rejected — it is the run-ending harshness
-   this decision exists to avoid.
+**Fix: a player-side disconnect no longer advances the wave.** The cost becomes one Pokémon *and*
+you still owe the fight you fled, which is no longer better than fighting it. Considered and
+rejected: killing the whole field-eligible set (harsher and hard to explain), and treating a drop
+as a loss (the run-ending harshness this decision exists to avoid).
 
 ### 2.11 No personal bag inside a run
 
@@ -631,6 +628,33 @@ the same wave band whose escalation §5 still lists as unresolved; they are one 
 **Watch:** Cobblemon species have different EXP growth rates, so a slow-growth species will lag a
 fast-growth one on identical EXP. That is true in PokéRogue too and is not inherently a bug, but
 it means the tuning target is a band, not a line.
+
+### 2.22 Pausing is a stated price, not a hidden one
+
+**Chosen:** a `/roguelite pause` command that always works, and whose job is to make sure a player
+is **never surprised by the disconnect penalty**.
+
+- **Between waves:** free. There is no battle in progress, the run is already checkpointed, and
+  leaving costs nothing. This is where most quits actually happen.
+- **Mid-battle:** the command states the price — *leaving now costs the Pokémon on the field* —
+  and asks for confirmation. Confirming, or simply dropping, costs the same. The command does not
+  avoid the penalty; it discloses it.
+
+**Why not a real pause mid-battle.** It would need the battle state, and there is no way to
+capture it. `ShowdownService` — Cobblemon's entire interface to the engine — is `openConnection`,
+`closeConnection`, `startBattle`, `endBattle`, `send` and registry data. No serialise, no
+restore, no `inputLog`, no readable or settable seed. Pokémon Showdown can itself replay a battle
+deterministically from an input log, so this is not impossible in principle, but reaching it
+means driving the bundle directly — which §2.4 already refused on its own merits.
+
+The other route, a lossy snapshot of party HP/status/PP with the wave restarted, was rejected on
+feel rather than cost: it silently drops stat boosts, hazards, weather and terrain counters,
+choice lock and Substitute, so it would sometimes favour the player and sometimes rob them,
+unpredictably. Not offering a restore is better than offering one that lies.
+
+**Why this matters beyond convenience:** it converts §2.10's penalty from something players
+discover by losing a Pokémon into a price they choose. The rule is unchanged; only its visibility
+is.
 
 ---
 

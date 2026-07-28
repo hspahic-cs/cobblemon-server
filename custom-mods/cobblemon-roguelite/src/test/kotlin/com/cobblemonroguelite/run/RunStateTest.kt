@@ -3,8 +3,10 @@ package com.cobblemonroguelite.run
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
+import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
 
@@ -82,6 +84,34 @@ class RunStateTest {
         // The distinction that matters: null means "no run", which the player can restart from.
         // A RunState with an empty party would read as an instant wipe and end the run for them.
         assertNull(RunState.fromNbt(RegistryAccess.EMPTY, checkpointTag(partySize = 0)))
+    }
+
+    @Test
+    fun `toNbt writes the arena fields`() {
+        val entry = RunEntryPoint(ResourceLocation.withDefaultNamespace("overworld"), 10.0, 64.0, -20.0, 45f, 5f)
+        val template = ResourceLocation.fromNamespaceAndPath("cobblemon_roguelite", "arena_late")
+        val tag = RunState(seed = 1L, arenaSlot = 7, entry = entry, stampedTemplate = template)
+            .toNbt(RegistryAccess.EMPTY)
+        assertEquals(7, tag.getInt("arenaSlot"))
+        assertEquals(entry, RunEntryPoint.fromNbt(tag.getCompound("entry")))
+        assertEquals(template.toString(), tag.getString("stampedTemplate"))
+    }
+
+    @Test
+    fun `an unassigned arena slot is absent from the tag, not written as zero`() {
+        // Zero is a valid slot, and [RunState.fromNbt] distinguishes the two by presence. A run
+        // written as "slot 0" when it never had one would be restored pointing at somebody else's
+        // arena, and the allocator — which derives occupancy from exactly this field — would believe
+        // it. The read side of that pair cannot be exercised here; see the class docs.
+        val tag = RunState(seed = 1L).toNbt(RegistryAccess.EMPTY)
+        assertFalse(tag.contains("arenaSlot"))
+        assertFalse(tag.contains("entry"))
+        assertFalse(tag.contains("stampedTemplate"))
+    }
+
+    @Test
+    fun `a slot of zero is written`() {
+        assertEquals(true, RunState(seed = 1L, arenaSlot = 0).toNbt(RegistryAccess.EMPTY).contains("arenaSlot"))
     }
 
     @Test

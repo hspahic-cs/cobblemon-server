@@ -146,6 +146,7 @@ object RunCommands {
             is ResumeResult.AwaitingStarter -> player.sendSystemMessage(RunMessages.offer(result.offer))
             is ResumeResult.WaveStarted -> Unit // the battle itself is the feedback
             is ResumeResult.WaveUnavailable -> player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave))
+            is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
             is ResumeResult.Ended -> player.sendSystemMessage(RunMessages.ended(result.report))
         }
         return 1
@@ -172,6 +173,7 @@ object RunCommands {
         // Passed through verbatim: the provider built it because only the provider can say what the
         // price is in.
         is RunStartRefusal.Charge -> refusal.reason
+        RunStartRefusal.NoArenaAvailable -> RunMessages.noArenaAvailable()
         RunStartRefusal.NoStartersAvailable -> RunMessages.noStarters()
     }
 }

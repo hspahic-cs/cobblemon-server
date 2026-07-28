@@ -27,6 +27,17 @@ interface RunStartContext {
     fun depthGate(): DepthGateResult
 
     /**
+     * Whether there is an arena free — §4's concurrency bound, through
+     * [com.cobblemonroguelite.arena.RunArenas.hasCapacity].
+     *
+     * A gate and not a later check, because the alternative is discovering the grid is full *after*
+     * the fee has been taken, and there is deliberately no refund seam (§2.16). It is also the only
+     * refusal here that is temporary and not the player's fault, which is why the wording it gets is
+     * "try again shortly" rather than "you cannot".
+     */
+    fun arenaAvailable(): Boolean
+
+    /**
      * §2.18's entry fee, through [com.cobblemonroguelite.integration.RunCharges].
      *
      * @param quoteOnly true to price the run without taking anything. **The non-quote call is where
@@ -61,6 +72,12 @@ sealed interface RunStartRefusal {
      * §2.18's gate is closed. [requires] is every advancement that would open it — any one is enough.
      */
     data class DepthLocked(val requires: List<ResourceLocation>) : RunStartRefusal
+
+    /**
+     * Every arena is in use. The only refusal here that resolves on its own, and the only one that is
+     * about the server rather than about the player.
+     */
+    data object NoArenaAvailable : RunStartRefusal
 
     /** The charge provider said no. [reason] is the provider's own message and is shown verbatim. */
     data class Charge(val reason: Component) : RunStartRefusal
@@ -107,12 +124,14 @@ sealed interface RunStartResult {
  *
  * 1. **Gate before fee.** A player who cannot start a run must not be charged for finding out. This
  *    is also the cheapest check, which is a coincidence and not the reason.
- * 2. **Fee before seed.** [com.cobblemonroguelite.integration.RunChargeProvider] states this as its
+ * 2. **Arena before fee**, for the same reason and a sharper one: a full grid is a refusal the
+ *    *server* caused, and charging for it would be charging a player for our concurrency limit.
+ * 3. **Fee before seed.** [com.cobblemonroguelite.integration.RunChargeProvider] states this as its
  *    own contract: a player must never see a starter offer they are then refused for.
- * 3. **Seed persisted before the offer is built.** §2.16, and the reason [PendingStart] exists.
- * 4. **Offer last**, because it is derived from the seed and nothing else derives from it.
+ * 4. **Seed persisted before the offer is built.** §2.16, and the reason [PendingStart] exists.
+ * 5. **Offer last**, because it is derived from the seed and nothing else derives from it.
  *
- * The quote path ([quote]) runs steps 1 and 2 with `quoteOnly`, and stops. It exists so a confirm
+ * The quote path ([quote]) runs steps 1 to 3 with `quoteOnly`, and stops. It exists so a confirm
  * prompt can name the price — a prompt that cannot is a prompt the player cannot decide from — and
  * it must not touch steps 3 to 5, since a quote that mints a seed would let a player re-quote until
  * they liked the draft.
@@ -125,6 +144,7 @@ object RunStart {
             is DepthGateResult.Denied -> return RunStartQuote.Refused(RunStartRefusal.DepthLocked(gate.requires))
             is DepthGateResult.Allowed -> Unit
         }
+        if (!ctx.arenaAvailable()) return RunStartQuote.Refused(RunStartRefusal.NoArenaAvailable)
         return when (val charge = ctx.charge(quoteOnly = true)) {
             is RunChargeResult.Refused -> RunStartQuote.Refused(RunStartRefusal.Charge(charge.reason))
             is RunChargeResult.Paid -> RunStartQuote.Priced(charge.detail)
@@ -144,6 +164,10 @@ object RunStart {
             is DepthGateResult.Denied -> return RunStartResult.Refused(RunStartRefusal.DepthLocked(gate.requires))
             is DepthGateResult.Allowed -> gate.maxWave
         }
+
+        // Re-asked rather than carried from the quote, and for a stronger reason than the gate is:
+        // between the price prompt and the confirm, another player may have taken the last slot.
+        if (!ctx.arenaAvailable()) return RunStartResult.Refused(RunStartRefusal.NoArenaAvailable)
 
         val charge = ctx.charge(quoteOnly = false)
         if (charge is RunChargeResult.Refused) {

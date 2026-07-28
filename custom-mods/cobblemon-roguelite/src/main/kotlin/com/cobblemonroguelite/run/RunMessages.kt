@@ -29,6 +29,21 @@ object RunMessages {
             refusal.requires.joinToString(", ") { it.toString() },
     )
 
+    /**
+     * The one refusal that is about the server and not the player, so it is the one that has to say
+     * "come back" rather than "you cannot". Nothing has been charged when this is shown.
+     */
+    fun noArenaAvailable(): Component =
+        literal("Every run arena is in use right now. Nothing has been taken — try again shortly.")
+
+    /**
+     * Said when the arena could not be built. Deliberately does not name the structure file: the
+     * player cannot fix it and the operator gets the path in the log, with the whole namespace.
+     */
+    fun arenaUnavailable(): Component = literal(
+        "Your run arena could not be prepared, so you have not been moved. Your run is safe — tell an operator.",
+    )
+
     fun noStarters(): Component = literal(
         "The starter pool is empty, so there is nothing to offer you. Your run is paid for and " +
             "waiting — tell an operator, then /roguelite resume.",

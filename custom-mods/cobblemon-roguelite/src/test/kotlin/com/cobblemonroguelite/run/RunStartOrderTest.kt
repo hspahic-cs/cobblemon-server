@@ -27,6 +27,7 @@ class RunStartOrderTest {
      */
     private class RecordingContext(
         private val gate: DepthGateResult = DepthGateResult.Allowed(null),
+        private val arenaFree: Boolean = true,
         private val quoteResult: RunChargeResult = RunChargeResult.Paid(),
         private val chargeResult: RunChargeResult = RunChargeResult.Paid(),
         private val offer: StarterOffer = StarterOffer(listOf(ResourceLocation.fromNamespaceAndPath("cobblemon", "bulbasaur"))),
@@ -39,6 +40,11 @@ class RunStartOrderTest {
         override fun depthGate(): DepthGateResult {
             calls += "gate"
             return gate
+        }
+
+        override fun arenaAvailable(): Boolean {
+            calls += "arena"
+            return arenaFree
         }
 
         override fun charge(quoteOnly: Boolean): RunChargeResult {
@@ -67,10 +73,10 @@ class RunStartOrderTest {
     }
 
     @Test
-    fun `begin runs gate, charge, mint, persist, offer in that order`() {
+    fun `begin runs gate, arena, charge, mint, persist, offer in that order`() {
         val ctx = RecordingContext()
         val result = RunStart.begin(ctx)
-        assertEquals(listOf("gate", "charge", "mint", "persist", "offer"), ctx.calls)
+        assertEquals(listOf("gate", "arena", "charge", "mint", "persist", "offer"), ctx.calls)
         assertIs<RunStartResult.OfferReady>(result)
         assertEquals(4242L, result.seed)
     }
@@ -88,7 +94,7 @@ class RunStartOrderTest {
     fun `a refused charge mints no seed`() {
         val ctx = RecordingContext(chargeResult = RunChargeResult.Refused(Component.literal("broke")))
         val result = RunStart.begin(ctx)
-        assertEquals(listOf("gate", "charge"), ctx.calls)
+        assertEquals(listOf("gate", "arena", "charge"), ctx.calls)
         assertEquals(null, ctx.persistedSeed)
         assertIs<RunStartResult.Refused>(result)
     }
@@ -106,7 +112,7 @@ class RunStartOrderTest {
         val ctx = RecordingContext()
         val quote = RunStart.quote(ctx)
         // "charge" absent is the free-allowance guarantee; "mint" absent is the anti-reroll one.
-        assertEquals(listOf("gate", "quote"), ctx.calls)
+        assertEquals(listOf("gate", "arena", "quote"), ctx.calls)
         assertEquals(null, ctx.persistedSeed)
         assertIs<RunStartQuote.Priced>(quote)
     }
@@ -116,6 +122,25 @@ class RunStartOrderTest {
         val ctx = RecordingContext(gate = DepthGateResult.Denied(listOf(bulbasaur)))
         assertIs<RunStartQuote.Refused>(RunStart.quote(ctx))
         assertEquals(listOf("gate"), ctx.calls)
+    }
+
+    @Test
+    fun `a full arena grid is refused before anything is charged`() {
+        // The refusal the server causes rather than the player: it must land before the fee, because
+        // there is no refund seam and "we were busy" is not something to bill someone for.
+        val ctx = RecordingContext(arenaFree = false)
+        val result = RunStart.begin(ctx)
+        assertEquals(listOf("gate", "arena"), ctx.calls)
+        assertIs<RunStartResult.Refused>(result)
+        assertEquals(RunStartRefusal.NoArenaAvailable, result.refusal)
+    }
+
+    @Test
+    fun `a quote on a full grid names the arena, not the price`() {
+        val ctx = RecordingContext(arenaFree = false)
+        val quote = RunStart.quote(ctx)
+        assertIs<RunStartQuote.Refused>(quote)
+        assertEquals(RunStartRefusal.NoArenaAvailable, quote.refusal)
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.cobblemonroguelite
 
+import com.cobblemonroguelite.arena.ArenaSpawnSuppressor
 import com.cobblemonroguelite.data.RogueliteData
 import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunLoginHooks
@@ -36,7 +37,14 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
         // CobblemonDataProvider, which keeps them in an unsynchronized LinkedHashSet that its own
         // parallel setup handler is populating at the same time — registering from the parallel
         // phase races that set, and the failure would be a datapack that silently never loads.
-        modBus.addListener<FMLCommonSetupEvent> { it.enqueueWork(RogueliteData::registerAll) }
+        modBus.addListener<FMLCommonSetupEvent> {
+            it.enqueueWork(RogueliteData::registerAll)
+            // Same phase and the same reason: Cobblemon's observables are plain lists behind no lock,
+            // and subscribing from the parallel body races every other mod doing the same. Unlike the
+            // registries this one has no visible failure if it loses — the subscription is simply
+            // dropped and wild Pokémon start appearing in arenas.
+            it.enqueueWork(ArenaSpawnSuppressor::register)
+        }
 
         // Game bus, not the mod bus: commands and player lifecycle are server-runtime events.
         NeoForge.EVENT_BUS.addListener<RegisterCommandsEvent> { RunCommands.register(it.dispatcher) }

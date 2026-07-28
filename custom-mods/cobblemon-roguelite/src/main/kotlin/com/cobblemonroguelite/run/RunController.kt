@@ -1,6 +1,9 @@
 package com.cobblemonroguelite.run
 
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemonroguelite.arena.ArenaFailure
+import com.cobblemonroguelite.arena.ArenaResult
+import com.cobblemonroguelite.arena.RunArenas
 import com.cobblemonroguelite.composition.WavePlan
 import com.cobblemonroguelite.data.payout.PayoutEntry
 import com.cobblemonroguelite.data.payout.PayoutTables
@@ -64,6 +67,14 @@ sealed interface ResumeResult {
 
     /** The wave could not be started. The run is untouched and still resumable — see [RunWaves]. */
     data class WaveUnavailable(val plan: WavePlan) : ResumeResult
+
+    /**
+     * The arena could not be made ready, so the player was **not** teleported and the run was not
+     * advanced. Separate from [WaveUnavailable] because the two need different things from an
+     * operator — a missing structure file versus an unimplemented battle — and because this one is
+     * the case where continuing anyway would drop somebody into a void dimension.
+     */
+    data class ArenaUnavailable(val failure: ArenaFailure) : ResumeResult
     data class Ended(val report: RunEndReport) : ResumeResult
 }
 
@@ -166,6 +177,22 @@ object RunController {
         // load path drops a pending start whose run already exists.
         store.start(player.uuid, run)
         store.clearPending(player.uuid)
+
+        // The arena is claimed here rather than at the first wave, because this is the moment the run
+        // becomes real and therefore the moment [RunStore] starts vouching for the slot being taken.
+        // Recorded before any teleport, so a run abandoned at wave 1 still returns them home.
+        run.entry = RunEntryPoint.of(player)
+        when (val arena = RunArenas.assign(server, run)) {
+            is ArenaResult.Success -> Unit
+            // Not fatal to the run and deliberately not a refusal: the fee is taken, the party
+            // exists, and the start gate already said there was a slot — so this is a server fault
+            // between the gate and here. The run stays resumable and [resume] tries the arena again,
+            // which is the only path that can succeed once an operator has fixed it.
+            is ArenaResult.Failure -> log.error(
+                "roguelite: {} started a run but got no arena ({}) — they will be told on resume",
+                player.gameProfile.name, arena.error,
+            )
+        }
         store.checkpoint(server, player.uuid)
         log.info("roguelite: {} started a run (seed={}, starter={})", player.gameProfile.name, run.seed, species)
         return StarterChoiceResult.Started(run)
@@ -181,9 +208,23 @@ object RunController {
 
         return when (val step = RunProgress.nextStep(run.wave, run.seed, RunSettings.composition, depthCapFor(player))) {
             is WaveStep.EndRun -> ResumeResult.Ended(endRun(server, player.uuid, step.cause))
-            is WaveStep.Fight ->
-                if (RunWaves.begin(server, player, run, step.plan)) ResumeResult.WaveStarted(step.plan)
-                else ResumeResult.WaveUnavailable(step.plan)
+            is WaveStep.Fight -> {
+                // Arena before battle, and a failure here stops the resume dead. The ordering is the
+                // decision: [RunArenas.enter] is what stamps the build for this wave band (§2.19) and
+                // what force-loads the chunks the wave will summon into, so a handler called first
+                // would be summoning into cold, empty void — which fails silently, the way the dev
+                // `setblock` did before it was given a chunk ticket.
+                when (val arena = RunArenas.enter(server, player, run)) {
+                    is ArenaResult.Failure -> ResumeResult.ArenaUnavailable(arena.error)
+                    is ArenaResult.Success -> {
+                        // Checkpointed because entering just wrote three fields — slot, entry point,
+                        // stamped template — and losing them costs the player their way home.
+                        store.checkpoint(server, player.uuid)
+                        if (RunWaves.begin(server, player, run, step.plan)) ResumeResult.WaveStarted(step.plan)
+                        else ResumeResult.WaveUnavailable(step.plan)
+                    }
+                }
+            }
         }
     }
 
@@ -310,6 +351,12 @@ object RunController {
         val wave = run?.wave ?: 1
         val outcome = cause.outcome
 
+        // Before the payout, because the payout can throw through a provider and a player left
+        // standing in a void arena is the worse of the two failures. The removal from the store has
+        // already freed the slot — occupancy is derived from active runs — so this is only the
+        // teleport, and it no-ops for a player who is offline or was never in there.
+        server.playerList.getPlayer(player)?.let { RunArenas.exit(server, it, run) }
+
         val tableId = run?.payoutTable ?: PayoutTables.DEFAULT_TABLE
         val table = PayoutTables[tableId]
         if (table == null) {
@@ -342,6 +389,17 @@ object RunController {
      * change and a separate piece of work — and getting it half-right would either penalise players
      * for our restarts or hand them a free escape from a losing battle.
      *
+     * It **does** do the arena half of the reconciliation, which is not §2.10 and is not optional: a
+     * player who logs in inside an arena with no run to be there for is in a void dimension with no
+     * bed, no portal and nothing to fall onto, i.e. stuck permanently. That happens whenever a run
+     * ends while its owner is offline — expiry, an operator clearing a run — because the teleport in
+     * [endRun] can only move a player who is connected.
+     *
+     * Note what is lost in that case: the return position lived on the [RunState] that just ended, so
+     * these players go to world spawn rather than to where they started. Preserving it would mean
+     * keeping a record of ended runs purely to hold one position, and the alternative — leaving them
+     * in the void — is not a trade.
+     *
      * Returns the status so the caller can tell the player; sends nothing itself.
      */
     fun reconcileOnLogin(server: MinecraftServer, player: ServerPlayer): RunStatus {
@@ -350,6 +408,11 @@ object RunController {
             // The seam. When §2.10 lands, this is where the marker is compared and the on-field
             // Pokémon are killed before the player is offered the wave again.
             log.debug("roguelite: {} logged in mid-run at wave {}", player.gameProfile.name, status.run.wave)
+            return status
+        }
+        if (RunArenas.isInArena(player)) {
+            log.info("roguelite: {} logged in inside an arena with no run — ejecting", player.gameProfile.name)
+            RunArenas.eject(server, player, entry = null)
         }
         return status
     }
@@ -379,6 +442,8 @@ object RunController {
 
         override fun depthGate(): DepthGateResult =
             RunSettings.current.depthGate.evaluate(VanillaAdvancements.of(player))
+
+        override fun arenaAvailable(): Boolean = RunArenas.hasCapacity(server)
 
         override fun charge(quoteOnly: Boolean) =
             if (quoteOnly) RunCharges.quote(server, player.uuid) else RunCharges.charge(server, player.uuid)

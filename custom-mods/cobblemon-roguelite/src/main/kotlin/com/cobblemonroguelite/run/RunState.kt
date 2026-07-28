@@ -48,6 +48,19 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   reload still changes what the entries pay. Pinning contents would mean copying the resolved
  *   table into every checkpoint and versioning it, which buys a guarantee nobody asked for against a
  *   change only an operator can make.
+ * @property arenaSlot the run's arena, as a grid index. **An index and not coordinates**, because the
+ *   coordinates are derived from it ([com.cobblemonroguelite.arena.ArenaLayout]) and a second copy of
+ *   a derived fact is a second thing that can be wrong. It is also what makes this store the
+ *   allocator's whole source of truth: a slot is occupied exactly when some active run says so, so a
+ *   crash cannot leave a slot leased to nobody. Null means no arena has been assigned yet — which is
+ *   a real state, since a run exists from the moment a starter is chosen and the assignment can fail.
+ * @property entry where the player came from, restored on run end and on an ejection. See
+ *   [RunEntryPoint].
+ * @property stampedTemplate which arena build is currently standing in [arenaSlot]. Persisted so a
+ *   restart mid-run does not re-stamp an arena that is already correct, and so §2.19's band
+ *   transition can be detected by comparison rather than by remembering which band we were in — the
+ *   template id is the thing that actually has to change, and reading the band boundary twice is how
+ *   a re-tuned band list silently stops re-stamping.
  */
 data class RunState(
     var wave: Int = 1,
@@ -56,6 +69,9 @@ data class RunState(
     val seed: Long,
     var bossesCleared: Int = 0,
     val payoutTable: ResourceLocation? = null,
+    var arenaSlot: Int? = null,
+    var entry: RunEntryPoint? = null,
+    var stampedTemplate: ResourceLocation? = null,
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
     fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
@@ -96,6 +112,11 @@ data class RunState(
         tag.putLong("seed", seed)
         tag.putInt("bossesCleared", bossesCleared)
         payoutTable?.let { tag.putString("payoutTable", it.toString()) }
+        // Absent rather than a sentinel for all three. `-1` would read back as a slot index in every
+        // arithmetic that touches it, and there is no coordinate that means "nowhere".
+        arenaSlot?.let { tag.putInt("arenaSlot", it) }
+        entry?.let { tag.put("entry", it.toNbt()) }
+        stampedTemplate?.let { tag.putString("stampedTemplate", it.toString()) }
         val list = ListTag()
         partySnapshot().forEach { list.add(it.saveToNBT(registryAccess)) }
         tag.put("party", list)
@@ -109,7 +130,7 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 2
+        const val SCHEMA_VERSION = 3
 
         private const val SCHEMA_KEY = "schemaVersion"
 
@@ -165,6 +186,16 @@ data class RunState(
                 // the default table at payout, which is a table the player might still be paid from,
                 // where discarding the checkpoint would cost them the whole run over a string.
                 payoutTable = tag.getString("payoutTable").takeIf { it.isNotEmpty() }
+                    ?.let { ResourceLocation.tryParse(it) },
+                // A run restored without its slot is not broken, it is unassigned: the next entry
+                // allocates one and stamps it. Restoring a *wrong* slot would be the bad outcome, so
+                // "absent" has to stay distinguishable from "zero", which is a valid index.
+                arenaSlot = if (tag.contains("arenaSlot")) tag.getInt("arenaSlot") else null,
+                entry = if (tag.contains("entry")) RunEntryPoint.fromNbt(tag.getCompound("entry")) else null,
+                // Deliberately dropped if unparseable rather than defaulted. A wrong value here says
+                // "the arena already has the right build in it" and would skip the stamp that puts a
+                // floor under the player.
+                stampedTemplate = tag.getString("stampedTemplate").takeIf { it.isNotEmpty() }
                     ?.let { ResourceLocation.tryParse(it) },
             )
         }

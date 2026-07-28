@@ -32,6 +32,14 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  * - **[WavePlan.catchable] is authoritative** (§2.14): wild waves are catchable, trainer and boss
  *   waves never are. Re-deriving it from the wave number in the battle layer is how a boss ends up
  *   in somebody's party.
+ * - **The arena is already prepared, and anything summoned into it needs the settle delay.**
+ *   [RunController.resume] calls [com.cobblemonroguelite.arena.RunArenas.enter] before this, so the
+ *   slot is stamped for the current wave band and its chunks hold a ticket by the time `beginWave` is
+ *   called. A handler that summons on a later tick — RCTmod's `summon_persistent` does — must call
+ *   [com.cobblemonroguelite.arena.RunArenas.prepare] again first and let
+ *   [com.cobblemonroguelite.arena.ArenaConfig.settleTicks] pass. Skipping the ticket is not a
+ *   theoretical hazard: a `setblock` into a cold arena was observed failing outright on dev, and the
+ *   in-code equivalent fails *silently*.
  * - **Drive the result back through [RunController]** — `waveCleared`, `pokemonFainted`,
  *   `waveLost` — rather than mutating [RunState] directly. The controller owns checkpointing and
  *   run end; a handler that advances the wave itself will produce runs that are not persisted.

@@ -1,5 +1,7 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemonroguelite.arena.ArenaConfig
+import com.cobblemonroguelite.arena.ArenaLayout
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.data.payout.PayoutTables
@@ -35,6 +37,10 @@ import net.minecraft.resources.ResourceLocation
  *   and read from there at run end — see that property for why a run pins it rather than re-reading
  *   this at the end of a multi-day run.
  * @property starterLevel §2.21. A run starter begins at 1 and levels on the curve by battle EXP.
+ * @property arena where runs are fought and how many can be fought at once. Unlike the rest of this
+ *   class its defaults are real rather than placeholders — the grid works out of the box — with the
+ *   single exception of [com.cobblemonroguelite.arena.ArenaTemplates.default], which names a build
+ *   nobody has made. See there for why that fails loudly instead of degrading.
  */
 data class RunConfig(
     val depthGate: RunDepthGate = RunDepthGate.UNGATED,
@@ -42,6 +48,7 @@ data class RunConfig(
     val payoutTable: ResourceLocation = PayoutTables.DEFAULT_TABLE,
     val starterPool: StarterPoolSource = PlaceholderStarterPoolSource,
     val starterLevel: Int = 1,
+    val arena: ArenaConfig = ArenaConfig(),
 ) {
     init {
         require(starterLevel >= 1) { "starterLevel must be at least 1, was $starterLevel" }
@@ -49,12 +56,16 @@ data class RunConfig(
 }
 
 /**
- * The live configuration and the one [WaveComposition] built from it.
+ * The live configuration and the two derived objects built from it.
  *
  * [composition] is rebuilt on [set] rather than on every read: it is stateless and shared by every
  * concurrent run (the class says so), so one instance per configuration is correct and constructing
  * one per wave would be pure waste. `@Volatile` for the same reason the integration seams are —
  * configuration arrives from another mod's setup thread and is read from the server thread.
+ *
+ * [arenaLayout] is here for the same reason and one sharper one: the arena spawn suppressor consults
+ * it on **every Cobblemon spawn on the server**, which is the hottest path this mod touches, and
+ * building a layout per spawn would put an allocation in it for no reason.
  */
 object RunSettings {
 
@@ -66,9 +77,14 @@ object RunSettings {
     var composition: WaveComposition = WaveComposition(current.composition)
         private set
 
+    @Volatile
+    var arenaLayout: ArenaLayout = current.arena.layout()
+        private set
+
     fun set(config: RunConfig) {
         current = config
         composition = WaveComposition(config.composition)
+        arenaLayout = config.arena.layout()
     }
 
     /** Restore the shipped defaults. For tests and for unloading a server-side integration. */

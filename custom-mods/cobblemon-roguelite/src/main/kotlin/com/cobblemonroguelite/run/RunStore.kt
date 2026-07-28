@@ -87,6 +87,17 @@ class RunStore private constructor(
     fun activeRuns(): Map<UUID, RunState> = runs.toMap()
 
     /**
+     * Snapshot of every paid start still waiting on a starter choice.
+     *
+     * Exists because arena capacity has to count them: a pending start is a run that has been paid
+     * for and will want a slot the moment the player picks, so treating the grid as free until the
+     * [RunState] exists is how a burst of starts all pass the capacity gate and one of them then
+     * cannot be given an arena — after being charged. See
+     * [com.cobblemonroguelite.arena.ArenaSlots.hasFreeSlot].
+     */
+    fun pendingStarts(): Map<UUID, PendingStart> = pending.toMap()
+
+    /**
      * Begin (or replace) a run. Replacing is deliberate: `/roguelite start` while a run is live is
      * an abandon-and-restart, and the caller is responsible for having confirmed that with the
      * player — the party it discards is unrecoverable.

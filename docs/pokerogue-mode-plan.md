@@ -491,6 +491,34 @@ where the payout currency question is open — because a run that returns more c
 costs is a faucet with extra steps, and would make the roguelite the best money loop on the
 server, starving the activities meant to feed it.
 
+### 2.19 A run is 200 waves, on PokéRogue's own level curve
+
+**Chosen:** 200 waves, matching PokéRogue's Classic length, explicitly *because* it is long
+enough to be an achievement rather than an afternoon. The level curve is therefore theirs
+literally — `1 + wave/2 + (wave/25)²`, boss waves ×1.2 — with no scaling, since the curve and the
+run length now come from the same place. Trainer waves every 5th, bosses every 10th (§2.14).
+
+Three consequences, none of them blocking, all of them real:
+
+**Levels flatten for the last third.** Cobblemon's `maxPokemonLevel` is 100 and it is a **global**
+config value — the same class of lever as the gimmick booleans, so it cannot be raised for runs
+alone. Their curve passes 100 at about wave 138 (bosses around wave 120) and would reach 165 by
+wave 200. So waves ~138–200 are all level 100. That is roughly 30% of the run with no level
+progression, and difficulty across it has to come from team quality, EVs, held items, gimmicks
+and boss design instead. Defensible — a level-100 endgame where teams decide is what real
+Pokémon looks like — but it has to be designed rather than discovered.
+
+**A run is a multi-session commitment.** Cobblemon battles are not browser battles: at a couple
+of minutes each, 200 waves is the better part of a day of play. Checkpointing (§2.3) already
+makes that survivable, but it changes what "a run" is socially — most runs will span days.
+Run expiry (§5) gets more delicate as a result: expiring someone's eight-hour run for a fortnight
+of absence is a different act from expiring an abandoned ten-wave one.
+
+**It sets the content scale.** 200 waves at those intervals is 40 trainer battles and 20 boss
+battles per run. Authored bands (§2.6) keep that from being 60 bespoke teams, but the roster
+still has to be big enough that a player meeting their 40th trainer has not seen it four times
+already.
+
 ---
 
 ## 3. Preliminary plan
@@ -544,13 +572,12 @@ is no run loop, no battle, no command.
   §2.14 settles *what* is catchable (wild only, never trainer-owned).
 - **Wave interval constants:** how often trainer and boss waves land, and the level-curve
   constants (§2.14 fixes the shape, not the numbers).
-- **Waves per run** — now blocking, because §2.14's level curve is being taken from PokéRogue and
-  theirs is a function of a 200-wave run. Their `1 + wave/2 + (wave/25)²` puts wave 10 at level 6
-  and only reaches level 100 around wave 130. Adopting their constants literally means either
-  running 200-wave runs or fighting level-6 opponents in a ten-wave slice. The fix that keeps
-  their pacing exactly is to feed the curve a *scaled* wave index — map our run length onto their
-  200 — so a 50-wave run compresses their curve 4× and feels the same shape at 4× the rate. That
-  needs a run length before it can be written down.
+- **How the last third of the run gets harder** (see §2.19) — levels are pinned at 100 from
+  roughly wave 138 on, so difficulty there has to come from team quality, EVs, held items,
+  gimmicks and boss design rather than from the curve.
+- **Arena slot policy for multi-session runs** (§2.19): whether a slot is released when a player
+  logs out mid-run and reacquired on return. At 200 waves most runs will span sessions, and
+  holding a slot for a player who is offline for a week starves `maxConcurrentRuns`.
 - **Do trade-ins update the IV high-water mark (§2.17)?** Counting them rewards trading, which is
   the point — but it also means one perfect specimen passed around can water-mark a whole server.
   Counting only self-caught Pokémon keeps the mark personal at the cost of some of the trade

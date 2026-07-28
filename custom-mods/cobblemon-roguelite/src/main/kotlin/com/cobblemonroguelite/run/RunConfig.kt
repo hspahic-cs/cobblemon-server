@@ -36,6 +36,11 @@ import net.minecraft.resources.ResourceLocation
  * @property payoutTable which table a run pays from. Copied onto [RunState.payoutTable] at run start
  *   and read from there at run end — see that property for why a run pins it rather than re-reading
  *   this at the end of a multi-day run.
+ * @property trainerRoster which roster a run's trainer and boss waves come from. Copied onto
+ *   [RunState.trainerRoster] at run start for the same reason, and it is the sharper case of the two:
+ *   a payout is re-read once at the end, whereas this would otherwise be re-read on every one of two
+ *   hundred waves, so an operator swapping rosters would change the ladder under a run halfway up it.
+ *   See [RunRosters].
  * @property starterLevel §2.21. A run starter begins at 1 and levels on the curve by battle EXP.
  * @property arena where runs are fought and how many can be fought at once. Unlike the rest of this
  *   class its defaults are real rather than placeholders — the grid works out of the box — with the
@@ -46,6 +51,7 @@ data class RunConfig(
     val depthGate: RunDepthGate = RunDepthGate.UNGATED,
     val composition: WaveCompositionConfig = WaveCompositionConfig(),
     val payoutTable: ResourceLocation = PayoutTables.DEFAULT_TABLE,
+    val trainerRoster: ResourceLocation = RunRosters.DEFAULT_ROSTER,
     val starterPool: StarterPoolSource = PlaceholderStarterPoolSource,
     val starterLevel: Int = 1,
     val arena: ArenaConfig = ArenaConfig(),

@@ -86,6 +86,17 @@ object RunMessages {
         literal("Wave $wave cannot be started — run battles are not implemented on this server yet. Your run is safe.")
 
     /**
+     * Said when the run's trainer roster is not loaded. Does not name the id, for
+     * [arenaUnavailable]'s reason — the player cannot fix a datapack and the operator has it in the
+     * log — and says *safe* rather than *error*, because the run genuinely is: it resumes untouched
+     * the moment the roster is back.
+     */
+    fun rosterUnavailable(): Component = literal(
+        "Your run's opponent roster is not loaded on this server, so the next wave cannot be built. " +
+            "Your run is safe — tell an operator, then /roguelite resume.",
+    )
+
+    /**
      * §2.10 on reconnect, and the one message in here that is not optional.
      *
      * A player who logs back in to a party one Pokémon short and no explanation has been handed a bug

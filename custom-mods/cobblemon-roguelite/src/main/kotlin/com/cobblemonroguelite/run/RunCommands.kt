@@ -157,6 +157,7 @@ object RunCommands {
             is ResumeResult.WaveStarted -> Unit // the battle itself is the feedback
             is ResumeResult.WaveUnavailable -> player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave))
             is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
+            is ResumeResult.RosterUnavailable -> player.sendSystemMessage(RunMessages.rosterUnavailable())
             is ResumeResult.Ended -> player.sendSystemMessage(RunMessages.ended(result.report))
         }
         return 1

@@ -48,6 +48,16 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   reload still changes what the entries pay. Pinning contents would mean copying the resolved
  *   table into every checkpoint and versioning it, which buys a guarantee nobody asked for against a
  *   change only an operator can make.
+ * @property trainerRoster which roster this run's trainer and boss waves are drawn from, pinned at
+ *   run start for [payoutTable]'s reason and resolved per wave for its caveat — see [RunRosters].
+ *   Null means no id was pinned, which after the v5 schema bump can only be a damaged or hand-edited
+ *   checkpoint; it is kept as a state rather than made a load failure because it resolves as
+ *   [RunRoster.Missing] and stops the run loudly, where discarding the checkpoint would cost the
+ *   player their party over one absent string.
+ * @property trainerMemory the recent-opponent window §2.19 asks for, so twenty trainer waves against
+ *   a small pool do not read as five. Persisted rather than recomputed because it is an input to
+ *   selection: a run that resumed with an empty memory would draw *different* trainers from the run
+ *   it was a moment ago, which is the resume guarantee inverted. See [RunTrainerMemory].
  * @property arenaSlot the run's arena, as a grid index. **An index and not coordinates**, because the
  *   coordinates are derived from it ([com.cobblemonroguelite.arena.ArenaLayout]) and a second copy of
  *   a derived fact is a second thing that can be wrong. It is also what makes this store the
@@ -78,6 +88,8 @@ data class RunState(
     val seed: Long,
     var bossesCleared: Int = 0,
     val payoutTable: ResourceLocation? = null,
+    val trainerRoster: ResourceLocation? = null,
+    val trainerMemory: RunTrainerMemory = RunTrainerMemory(),
     var arenaSlot: Int? = null,
     var entry: RunEntryPoint? = null,
     var stampedTemplate: ResourceLocation? = null,
@@ -122,6 +134,11 @@ data class RunState(
         tag.putLong("seed", seed)
         tag.putInt("bossesCleared", bossesCleared)
         payoutTable?.let { tag.putString("payoutTable", it.toString()) }
+        trainerRoster?.let { tag.putString("trainerRoster", it.toString()) }
+        // Skipped when empty, and note this is *not* the presence-is-state trick the battle marker
+        // and the arena slot use: absent and empty mean the same thing here, so the only thing being
+        // saved is bytes in a file that is written every wave.
+        if (!trainerMemory.isEmpty()) tag.put("trainerMemory", trainerMemory.toNbt())
         // Absent rather than a sentinel for all three. `-1` would read back as a slot index in every
         // arithmetic that touches it, and there is no coordinate that means "nowhere".
         arenaSlot?.let { tag.putInt("arenaSlot", it) }
@@ -141,7 +158,7 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 4
+        const val SCHEMA_VERSION = 5
 
         private const val SCHEMA_KEY = "schemaVersion"
 
@@ -198,6 +215,13 @@ data class RunState(
                 // where discarding the checkpoint would cost them the whole run over a string.
                 payoutTable = tag.getString("payoutTable").takeIf { it.isNotEmpty() }
                     ?.let { ResourceLocation.tryParse(it) },
+                // Same restore-as-null rule as the payout table, and a stronger case for it: an
+                // unreadable roster id resolves as "not loaded", which stops the run with the party
+                // intact and is repairable by an operator. Failing the load instead would delete the
+                // party outright, over a field the player has never seen.
+                trainerRoster = tag.getString("trainerRoster").takeIf { it.isNotEmpty() }
+                    ?.let { ResourceLocation.tryParse(it) },
+                trainerMemory = RunTrainerMemory.fromNbt(tag.getList("trainerMemory", 10 /* TAG_COMPOUND */)),
                 // A run restored without its slot is not broken, it is unassigned: the next entry
                 // allocates one and stamps it. Restoring a *wrong* slot would be the bad outcome, so
                 // "absent" has to stay distinguishable from "zero", which is a valid index.

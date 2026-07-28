@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.arena.ArenaFailure
 import com.cobblemonroguelite.arena.ArenaResult
 import com.cobblemonroguelite.arena.RunArenas
+import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WavePlan
 import com.cobblemonroguelite.data.payout.PayoutEntry
 import com.cobblemonroguelite.data.payout.PayoutTables
@@ -75,6 +76,14 @@ sealed interface ResumeResult {
      * the case where continuing anyway would drop somebody into a void dimension.
      */
     data class ArenaUnavailable(val failure: ArenaFailure) : ResumeResult
+
+    /**
+     * The run's pinned trainer roster is not loaded, so the wave could not be composed at all. Like
+     * [WaveUnavailable] the run is untouched and still resumable; unlike it, the fix is a datapack and
+     * not a build — see [RunRoster] for why this refuses rather than composing the wave without it.
+     */
+    data class RosterUnavailable(val rosterId: ResourceLocation?) : ResumeResult
+
     data class Ended(val report: RunEndReport) : ResumeResult
 }
 
@@ -170,7 +179,7 @@ object RunController {
         val run = store.get(player.uuid)
         if (run != null) {
             val cap = depthCapFor(player)
-            return RunStatus.InProgress(run, RunProgress.nextStep(run.wave, run.seed, RunSettings.composition, cap), cap)
+            return RunStatus.InProgress(run, nextStep(run, cap), cap)
         }
         val pending = store.pending(player.uuid) ?: return RunStatus.None
         return RunStatus.AwaitingStarter(pending, offerFactory().offerFor(player.uuid, pending.seed))
@@ -229,6 +238,10 @@ object RunController {
             party = mutableListOf(starter),
             seed = pending.seed,
             payoutTable = config.payoutTable,
+            // Pinned here and never re-read from config again, for the reason [RunConfig.trainerRoster]
+            // gives: two hundred waves is days of play, and an operator swapping rosters must not move
+            // a run that is already halfway up a ladder.
+            trainerRoster = config.trainerRoster,
         )
         // Order: create the run, then drop the pending start. The reverse leaves a crash between the
         // two costing the player their paid start entirely, where this way it costs nothing — the
@@ -264,8 +277,20 @@ object RunController {
                 ?.let { ResumeResult.AwaitingStarter(offerFactory().offerFor(player.uuid, it.seed)) }
                 ?: ResumeResult.NoRun
 
-        return when (val step = RunProgress.nextStep(run.wave, run.seed, RunSettings.composition, depthCapFor(player))) {
+        return when (val step = nextStep(run, depthCapFor(player))) {
             is WaveStep.EndRun -> ResumeResult.Ended(endRun(server, player.uuid, step.cause))
+            // Logged at ERROR because only an operator can act on it and nothing else will say so: the
+            // player sees a run that will not start, and the datapack that would explain it is the one
+            // that is missing.
+            is WaveStep.NoRoster -> {
+                log.error(
+                    "roguelite: {} cannot fight wave {} — trainer roster '{}' is not loaded, so the wave " +
+                        "cannot be composed (promotions are unknowable without it). The run is intact.",
+                    player.gameProfile.name, step.wave, step.rosterId,
+                )
+                ResumeResult.RosterUnavailable(step.rosterId)
+            }
+
             is WaveStep.Fight -> {
                 // Arena before battle, and a failure here stops the resume dead. The ordering is the
                 // decision: [RunArenas.enter] is what stamps the build for this wave band (§2.19) and
@@ -284,6 +309,11 @@ object RunController {
                         // stamped template — and losing them costs the player their way home. The
                         // marker rides along; it does not need its own flush (see [RunState.battle]).
                         store.checkpoint(server, player.uuid)
+                        // `step.trainer` is who this wave fights, already reconciled against fixed
+                        // encounters and this run's no-repeat window. It is passed no further today
+                        // only because [RunWaveHandler] does not yet take it; a handler that draws its
+                        // own trainer instead of taking this one will summon a different opponent from
+                        // the one the run planned, and the run's own log will disagree with the battle.
                         if (RunWaves.begin(server, player, run, step.plan)) {
                             ResumeResult.WaveStarted(step.plan)
                         } else {
@@ -318,17 +348,34 @@ object RunController {
         // wave turns the player's next ordinary logout into a rage-quit.
         run.battle = null
         val composition = RunSettings.composition
-        val cleared = composition.planFor(run.wave, run.seed)
-        if (cleared.kind == RunOpponent.BOSS) run.bossesCleared++
+        val roster = RunRosters.bind(run)
+        val cleared = clearedPlan(run, composition, roster)
+        // Through the roster's plan and not the composition's, so a promoted Elite Four wave counts as
+        // the boss battle it was fought as. §2.20's payout curves read this number.
+        if (cleared.plan.kind == RunOpponent.BOSS) run.bossesCleared++
+        // The one place the no-repeat window is written, and it is written for the wave that is now
+        // *finished*. Recording at the start of a wave instead would double-count a wave re-fought
+        // after §2.10's disconnect penalty, and recording on every plan would let `/roguelite status`
+        // change who the player is about to meet.
+        cleared.trainer?.let { run.trainerMemory.record(cleared.plan.wave, it.trainerId) }
 
         // The depth cap is re-read from the player, so a run cleared by a player who has since logged
         // out falls back to "no cap" for this one decision. That errs towards letting the run
         // continue, which the next resume re-checks with the player present.
         val cap = server.playerList.getPlayer(player)?.let { depthCapFor(it) }
-        val step = RunProgress.afterVictory(cleared, run.seed, composition, cap)
+        val step = RunProgress.afterVictory(cleared.plan, run.seed, composition, roster, run.trainerMemory, cap)
         return when (step) {
             is WaveStep.Fight -> {
                 run.wave = step.plan.wave
+                store.checkpoint(server, player)
+                step
+            }
+
+            // The next wave cannot be composed, but the win already happened: the wave advances and the
+            // refusal is the player's next resume, not this. Returning it unadvanced would make them
+            // fight a wave they have beaten once the operator fixes the datapack.
+            is WaveStep.NoRoster -> {
+                run.wave = cleared.plan.wave + 1
                 store.checkpoint(server, player)
                 step
             }
@@ -339,6 +386,43 @@ object RunController {
             }
         }
     }
+
+    /**
+     * The wave that was just won, re-composed.
+     *
+     * Re-composed rather than remembered because the handler reports a victory with a player id and
+     * nothing else; it gives the same answer the resume gave, because nothing between the two writes
+     * to [RunState.trainerMemory].
+     *
+     * **This is the one place a missing roster does not refuse**, and the asymmetry is deliberate. A
+     * refusal costs a player a wave they have not fought yet — nothing. Refusing *here* would cost them
+     * a wave they have already won, and would leave the run unable to advance past a fight it has
+     * already beaten. So the win is banked off the bare schedule, which loses only a promotion's boss
+     * count, and the ERROR names the roster so the operator sees the same fault the next resume will
+     * report to the player.
+     */
+    private fun clearedPlan(run: RunState, composition: WaveComposition, roster: RunRoster): WaveStep.Fight =
+        when (roster) {
+            is RunRoster.Loaded -> RunProgress.planFor(run.wave, run.seed, composition, roster, run.trainerMemory)
+            is RunRoster.Missing -> {
+                log.error(
+                    "roguelite: banking a win at wave {} with trainer roster '{}' not loaded — if that wave " +
+                        "was a promoted boss it will not be counted as one",
+                    run.wave, roster.id,
+                )
+                WaveStep.Fight(composition.planFor(run.wave, run.seed), trainer = null)
+            }
+        }
+
+    /** The run's own next step: pinned roster, this run's opponent memory, the player's depth cap. */
+    private fun nextStep(run: RunState, depthCap: Int?): WaveStep = RunProgress.nextStep(
+        wave = run.wave,
+        seed = run.seed,
+        composition = RunSettings.composition,
+        roster = RunRosters.bind(run),
+        memory = run.trainerMemory,
+        depthCap = depthCap,
+    )
 
     /**
      * Permadeath: [pokemon] is gone from the run for good (§2.13).

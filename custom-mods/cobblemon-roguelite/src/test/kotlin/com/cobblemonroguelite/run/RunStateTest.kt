@@ -125,6 +125,25 @@ class RunStateTest {
     }
 
     @Test
+    fun `toNbt pins the roster id and carries the opponent history`() {
+        // Both are inputs to what the *next* wave is, not just records of what happened, so a
+        // checkpoint that dropped either would resume a run that composes different waves from the
+        // one it saved — with nothing to say so.
+        val roster = ResourceLocation.fromNamespaceAndPath("test", "roster")
+        val memory = RunTrainerMemory().apply { record(5, ResourceLocation.fromNamespaceAndPath("test", "rival")) }
+        val tag = RunState(seed = 1L, trainerRoster = roster, trainerMemory = memory).toNbt(RegistryAccess.EMPTY)
+        assertEquals(roster.toString(), tag.getString("trainerRoster"))
+        assertEquals(memory, RunTrainerMemory.fromNbt(tag.getList("trainerMemory", 10)))
+    }
+
+    @Test
+    fun `an empty opponent history is left out of the tag`() {
+        // Unlike the arena slot and the battle marker, absent and empty mean the same thing here —
+        // this is bytes in a file written every wave, not a state distinction.
+        assertFalse(RunState(seed = 1L).toNbt(RegistryAccess.EMPTY).contains("trainerMemory"))
+    }
+
+    @Test
     fun `a slot of zero is written`() {
         assertEquals(true, RunState(seed = 1L, arenaSlot = 0).toNbt(RegistryAccess.EMPTY).contains("arenaSlot"))
     }

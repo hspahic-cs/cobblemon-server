@@ -411,27 +411,43 @@ config surface, compatibility across Cobblemon bumps, docs, support — that the
 first. This decision only keeps the option open. The mod is licensed All Rights Reserved until
 that call is made, and it is not published under the PokéRogue name.
 
-### 2.16 The run seed is minted once, and a restart reuses it
+### 2.16 The seed fixes a run in progress; the entry fee prices restarting
 
-**Chosen:** when a run starts, mint one seed and derive **everything** from it — the starter
-offer, every wave's species and level, reward draws. Abandoning and restarting reuses the same
-seed, so the restarted run is identical.
+**Chosen:** every run start mints a **new** seed — including a start that follows an abandon —
+and **everything** in that run derives from it: the starter offer, every wave's species and
+level, reward draws. The seed is persisted at run start, before anything derived from it is
+shown.
 
-**Why this is the whole anti-reroll mechanism.** Every reroll exploit in this design is the same
-exploit wearing different clothes: quit, come back, get a different outcome. Pinning individual
-draws closes them one at a time and only the ones we thought of. Fixing the seed at run start
-closes the category — there is nothing to reroll, because a restart is the same run.
+**What this protects, and what it deliberately does not.** The seed exists so a run *in
+progress* cannot change under the player: leaving the server and coming back must return the
+same starter offer, the same wave 7 opponent, the same everything. That is a correctness
+property, and it is what the seed is for.
 
-**A new seed is minted only when a run *ends*** — cleared or wiped — never on abandon. This is
-the load-bearing half: if a fresh seed were minted per `/roguelite start`, abandon-and-restart
-would be the reroll it is supposed to prevent. It also means a player who dislikes their draft
-gains nothing by walking away, which is why this, and not the entry fee, is the actual answer to
-§5's "what stops abandon-and-restart from rerolling a bad draft".
+It is **not** the anti-reroll mechanism. Abandoning a run and starting a fresh one gives a
+genuinely different run, on purpose — a player who dislikes their draft should be able to walk
+away rather than being locked into a run they do not want to play. **The entry fee is what
+prices that**, which is the whole reason §2.18 charges one.
+
+**Consequence — the free allowance must be consumed at run *start*.** If a free daily or weekly
+run is only consumed on completion, it is an unlimited free reroll: start, dislike the draft,
+abandon, start again. Charging the allowance at the door costs an honest player nothing and
+closes the loop entirely.
+
+**Consequence — a rich player can still reroll**, at the fee, repeatedly. That is accepted: the
+fee is a throttle rather than a wall, and it only has to make rerolling less attractive than
+playing. It does mean the fee cannot be trivial relative to what players hold.
 
 **Consequence:** anything generated must be *derivable* from `(seed, wave)` or *persisted*.
 Cobblemon's own unseeded RNG inside `PokemonProperties.create()` — IVs, nature, gender, shiny,
 ability — satisfies neither today, so those values must be written into the properties string
 rather than left to roll. See §2.17 for where the IV floor comes from.
+
+**Rates, decided 2026-07-28: match PokéRogue.** Shiny **1/1024** (their `BASE_SHINY_CHANCE = 64`,
+under a notation where chance is x/65536) and hidden ability **1/256**
+(`BASE_HIDDEN_ABILITY_RATE`). Note our overworld runs `shinyRate: 8192`, so run shinies are eight
+times more common than server ones — accepted deliberately, since a run shiny cannot leave the
+run and costs the economy nothing. Their shiny *variant* palette tiers have no Cobblemon
+equivalent and are not modelled.
 
 ### 2.17 IV floors come from a personal high-water mark, not current possession
 
@@ -528,10 +544,13 @@ is no run loop, no battle, no command.
   §2.14 settles *what* is catchable (wild only, never trainer-owned).
 - **Wave interval constants:** how often trainer and boss waves land, and the level-curve
   constants (§2.14 fixes the shape, not the numbers).
-- **Shiny rate and hidden-ability rate inside runs.** PokéRogue uses 1/1024 shiny and 1/256
-  hidden ability; our server runs 1/8192 shiny. Run shinies do not persist, so they cost the
-  economy nothing — the question is whether making them eight times more common inside runs
-  devalues the overworld ones.
+- **Waves per run** — now blocking, because §2.14's level curve is being taken from PokéRogue and
+  theirs is a function of a 200-wave run. Their `1 + wave/2 + (wave/25)²` puts wave 10 at level 6
+  and only reaches level 100 around wave 130. Adopting their constants literally means either
+  running 200-wave runs or fighting level-6 opponents in a ten-wave slice. The fix that keeps
+  their pacing exactly is to feed the curve a *scaled* wave index — map our run length onto their
+  200 — so a 50-wave run compresses their curve 4× and feels the same shape at 4× the rate. That
+  needs a run length before it can be written down.
 - **Do trade-ins update the IV high-water mark (§2.17)?** Counting them rewards trading, which is
   the point — but it also means one perfect specimen passed around can water-mark a whole server.
   Counting only self-caught Pokémon keeps the mark personal at the cost of some of the trade

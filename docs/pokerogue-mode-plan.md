@@ -530,10 +530,16 @@ makes that survivable, but it changes what "a run" is socially — most runs wil
 Run expiry (§5) gets more delicate as a result: expiring someone's eight-hour run for a fortnight
 of absence is a different act from expiring an abandoned ten-wave one.
 
-**It sets the content scale.** 200 waves at those intervals is 40 trainer battles and 20 boss
-battles per run. Authored bands (§2.6) keep that from being 60 bespoke teams, but the roster
-still has to be big enough that a player meeting their 40th trainer has not seen it four times
-already.
+**It sets the content scale — 40 non-wild encounters, not 60.** An earlier draft of this section
+said "40 trainer battles and 20 boss battles", double-counting: 200/5 = 40 already *contains* the
+twenty multiples of ten. With bosses winning the collision, a 200-wave run is **20 boss + 20
+trainer + 160 wild**. Authored bands (§2.6) keep that from being 40 bespoke teams, but the roster
+still has to be big enough that a player meeting their twentieth trainer has not seen it four
+times already.
+
+If 60 non-wild waves was actually wanted, the boss interval has to sit *between* trainer slots
+(trainer every 5, boss every 7, say) rather than dividing them. That is a content call and it
+doubles the roster requirement.
 
 ### 2.20 The payout is not currency
 
@@ -649,7 +655,15 @@ is no run loop, no battle, no command.
   constants (§2.14 fixes the shape, not the numbers).
 - **How the last third of the run gets harder** (see §2.19) — levels are pinned at 100 from
   roughly wave 138 on, so difficulty there has to come from team quality, EVs, held items,
-  gimmicks and boss design rather than from the curve.
+  gimmicks and boss design rather than from the curve. §2.21 makes this sharper: EXP rewards are
+  dead weight past the cap too, so the reward table has to change character over the same band.
+- **The E4 and champion schedule does not fit a fixed boss interval.** §2.7 puts them at waves
+  182/184/186/188 and 190, which are not multiples of ten — a single "boss every 10th" rule
+  cannot express them. It needs either an explicit authored-wave list or a fixed-encounter
+  override layer sitting above the interval rule. The composition layer is shaped to accept one;
+  nothing has decided what it looks like.
+- **Should "boss" and "leader" be distinct encounter kinds?** Currently every tenth wave is one
+  kind. Gym leaders, rivals, the E4 and the champion may want different treatment.
 - **Arena slot policy for multi-session runs** (§2.19): whether a slot is released when a player
   logs out mid-run and reacquired on return. At 200 waves most runs will span sessions, and
   holding a slot for a player who is offline for a week starves `maxConcurrentRuns`.

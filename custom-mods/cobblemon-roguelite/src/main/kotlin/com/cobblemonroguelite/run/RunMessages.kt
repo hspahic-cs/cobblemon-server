@@ -110,15 +110,66 @@ object RunMessages {
                 "Your connection dropped during wave ${outcome.wave}, so what you had out was lost for good: " +
                     outcome.killed.joinToString(", ") + "."
             }
+            // "Still on" and not "continues at": the wave is not skipped, and a player who is not told
+            // that will assume the Pokémon bought them the fight. It did not — that is the entire
+            // reason the penalty stopped advancing the run.
             val tail = when {
                 outcome.ended != null -> " That was your last Pokémon."
-                outcome.resumesAt != outcome.wave -> " Your run continues at wave ${outcome.resumesAt}."
-                else -> " Your run is still on wave ${outcome.wave}."
+                outcome.resumesAt != outcome.wave -> " Your run stands at wave ${outcome.resumesAt}."
+                else -> " Your run is still on wave ${outcome.wave} — that fight is still ahead of you."
             }
             Component.literal(
                 head + tail + " Disconnecting mid-battle counts as yours; a server restart would not have.",
             ).withStyle(ChatFormatting.RED)
         }
+    }
+
+    /**
+     * §2.22's whole point: the disconnect penalty stated *before* it is paid rather than discovered
+     * by paying it.
+     *
+     * ### Why nothing here names a Pokémon
+     *
+     * It would be the wrong one. Until the wave handler reports switches through
+     * [RunController.battleFieldChanged], the marker still holds the party lead that
+     * [RunController] stamped at the start of the battle — the right *size* of loss aimed at the
+     * wrong Pokémon (see [RunWaveHandler]). A warning that names it would be confidently wrong for
+     * every player who has switched, and a wrong name in a warning about permadeath is worse than no
+     * name: it is the one detail they would check it against. "What you have out" is true either way,
+     * and stays true when the handler lands.
+     *
+     * The alternative — naming it only when the marker is known-current — needs the marker to carry
+     * whether it has ever been reported, i.e. persisted state added for a cosmetic gain, and it would
+     * still be silent for exactly the builds where it is wrong.
+     */
+    fun pause(advice: PauseAdvice): Component = when (advice) {
+        // The one case that says "start one": a player who asks whether it is safe to leave and has
+        // no run is usually asking the wrong command, not planning to log off.
+        PauseAdvice.NoRun -> noRun()
+
+        PauseAdvice.StarterPending -> literal(
+            "No battle in progress. Your paid start is saved and your starter offer will be waiting — " +
+                "log off whenever you like.",
+        )
+
+        is PauseAdvice.BetweenWaves -> literal(
+            "Safe to leave. No battle is in progress and your run is saved at wave ${advice.wave} — " +
+                "nothing is lost by logging off now.",
+        )
+
+        // Red, and it says "does not" twice on purpose. A command called `pause` invites the reading
+        // that using it makes leaving safe, and that reading costs a Pokémon.
+        is PauseAdvice.MidBattle -> Component.literal(
+            "You are mid-battle on wave ${advice.wave}. Leaving now — logging out, or your connection " +
+                "dropping — kills what you have out on the field, for good. This command does not stop " +
+                "that and does not pause the battle. Type /roguelite pause confirm if you understand.",
+        ).withStyle(ChatFormatting.RED)
+
+        is PauseAdvice.MidBattleAcknowledged -> Component.literal(
+            "Understood. Nothing has been taken and your wave ${advice.wave} battle is still live — the " +
+                "price is charged when you actually leave, not for saying so. Finish the battle and it " +
+                "costs nothing.",
+        ).withStyle(ChatFormatting.YELLOW)
     }
 
     fun confirmAbandon(wave: Int, party: Int): Component = Component.literal(

@@ -96,8 +96,11 @@ sealed interface DisconnectOutcome {
      * @property killed species names of what was taken, in party order — for the message, which has
      *   to name them. Empty means the on-field Pokémon had already fainted before the drop, i.e. the
      *   penalty found nothing left to take.
-     * @property resumesAt the wave the run now sits on: [wave] + 1 normally, or [wave] itself where
-     *   advancing would have walked the run off its own end. See [RunController.reconcileOnLogin].
+     * @property resumesAt the wave the run now sits on. Since a drop no longer moves a run
+     *   ([RunController.reconcileOnLogin]) this is [wave] in every ordinary case, and it is kept as a
+     *   separate field because it is read off the run rather than off the marker: the two differing
+     *   means a marker outlived a wave advance, and in that case the wave the player is *told* to go
+     *   back to must be the run's, not the marker's.
      * @property ended set when the penalty was the last of the party, in which case the run is over
      *   and has already been paid out.
      */
@@ -171,6 +174,19 @@ object RunController {
         }
         val pending = store.pending(player.uuid) ?: return RunStatus.None
         return RunStatus.AwaitingStarter(pending, offerFactory().offerFor(player.uuid, pending.seed))
+    }
+
+    /**
+     * §2.22: what leaving right now would cost. Reads; writes nothing, ends nothing, takes nothing.
+     *
+     * Goes through the store rather than through [status] on purpose. [status] composes the next
+     * wave, which is work this question does not need and, more to the point, is a different fact:
+     * pausing is about the battle that is open *now*, and the only thing that knows about it is the
+     * marker.
+     */
+    fun pause(server: MinecraftServer, player: ServerPlayer, confirmed: Boolean): PauseAdvice {
+        val store = RunStore.of(server)
+        return RunPause.advise(store.get(player.uuid), store.pending(player.uuid) != null, confirmed)
     }
 
     /** Price a run for a confirmation prompt. Takes nothing; consumes no free allowance. */
@@ -483,15 +499,16 @@ object RunController {
      * as if they had fainted. Neither side of that comparison is anything the player can reach, which
      * is the whole reason it is the boot id being compared and not, say, a timestamp.
      *
-     * **The run then continues at the next wave**, which is the half of the decision that makes the
-     * penalty a penalty rather than a rewind: leaving them on the same wave would let them re-fight it
-     * from the checkpoint, which is the retry exploit §2.3 hands to §2.10 to close.
+     * **The run stays on the wave it was interrupted on.** This is the half of the decision that has
+     * to be weighed against what *losing* costs, and losing costs everything: permadeath takes each
+     * Pokémon as it faints, so a lost wave is a wipe and the run is over. A penalty that took one
+     * Pokémon and skipped the wave was therefore cheaper than the fight it was meant to deter —
+     * anyone facing a boss they could not beat was better off pulling the plug. Keeping the run where
+     * it is makes the price one Pokémon *and* the fight still owed, which no longer beats fighting.
      *
-     * The one exception is a next wave that would not be a wave at all — the final wave, a lowered run
-     * length, the badge cap. Advancing there would end the run, and every one of those endings pays as
-     * a *completed* run (see [RunEndCause]), so pulling the plug on wave 200 would pay exactly like
-     * clearing it. So the advance only happens into a real fight; otherwise the run stays where it is
-     * and the ordinary resume path ends it properly, with the player present and the right cause.
+     * It does mean the interrupted wave is re-fought from the checkpoint, which is the retry §2.3
+     * hands to §2.10 — but re-fighting it a Pokémon down, having paid for the privilege, is not the
+     * free retry that exploit is about.
      *
      * Killing may of course wipe the party, and that goes through [endRun] like any other wipe —
      * payout, arena exit, store removal. A run left sitting at zero party members would be restored
@@ -591,20 +608,15 @@ object RunController {
             return DisconnectOutcome.Penalised(verdict.wave, killed, run.wave, report)
         }
 
-        // Advance only if the penalty actually took something. A drop that found nothing on the field
-        // left to take is not a penalty, and advancing on it would be a free wave skip — the exact
-        // trade §2.10 is meant to make unprofitable, handed over for nothing.
-        if (killed.isNotEmpty()) {
-            val next = RunProgress.nextStep(verdict.wave + 1, run.seed, RunSettings.composition, depthCapFor(player))
-            // Only into a real fight — see the class-level note on why an advance that would *end* the
-            // run is refused here and left to the resume path. And only forwards: a marker that
-            // somehow outlived a wave advance would otherwise move the run *back* to the wave it names,
-            // which is the retry exploit arriving through the door built to close it.
-            if (next is WaveStep.Fight && next.plan.wave > run.wave) run.wave = next.plan.wave
-        }
+        // The wave is deliberately not touched — see [reconcileOnLogin] for why skipping it made
+        // quitting cheaper than fighting. Two guards went with the advance and are gone rather than
+        // left standing: "only when something was killed" and "only into a real fight, never into an
+        // ending". Both existed solely to bound the mutation, and with no mutation there is nothing
+        // for them to bound — a run that is now over stays where it is and the ordinary resume path
+        // ends it with the player present and the right cause, which is what they were protecting.
         store.checkpoint(server, player.uuid)
         log.info(
-            "roguelite: {} dropped mid-wave {} — lost {}, run continues at wave {}",
+            "roguelite: {} dropped mid-wave {} — lost {}, run still owes wave {}",
             player.gameProfile.name, verdict.wave, killed, run.wave,
         )
         return DisconnectOutcome.Penalised(verdict.wave, killed, run.wave, null)

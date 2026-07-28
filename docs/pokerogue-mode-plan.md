@@ -652,6 +652,24 @@ feel rather than cost: it silently drops stat boosts, hazards, weather and terra
 choice lock and Substitute, so it would sometimes favour the player and sometimes rob them,
 unpredictably. Not offering a restore is better than offering one that lies.
 
+**Decided 2026-07-28 — the cases the decision above did not name.**
+
+- **No run at all:** it answers, it does not refuse. "Unknown command" or a silent no-op leaves a
+  player unable to tell whether they have no run or whether pause does not work here, and those
+  imply opposite things about logging off. A paid start with no starter picked is likewise free —
+  there is no party to lose.
+- **Confirming mid-battle acknowledges and nothing more.** It does not charge the penalty early
+  (that punishes a player who read the warning and stayed) and it does not clear the marker (which
+  would make the drop that follows *free* — §2.10's hole, opened by the command that explains it).
+  Nor does it end the battle: a clean forfeit is a separate decision that would need §2.10's price
+  argued again, and there is no live battle to end until `RunWaves` is implemented.
+- **The warning names no Pokémon.** Until the wave handler reports switches through
+  `battleFieldChanged`, the marker still holds the party *lead*, so a named Pokémon would be
+  confidently wrong for anyone who has switched — and it is the one detail a player would check the
+  warning against. "What you have out" is true either way.
+
+**Implemented 2026-07-28** (`run/RunPause`, `/roguelite pause [confirm]`).
+
 **Why this matters beyond convenience:** it converts §2.10's penalty from something players
 discover by losing a Pokémon into a price they choose. The rule is unchanged; only its visibility
 is.

@@ -19,7 +19,10 @@ import net.minecraft.server.level.ServerPlayer
  * second bare `/roguelite abandon` go through — is state that can be stale, and the failure mode is
  * a player who typed the command twice for an unrelated reason destroying a run they meant to keep.
  * A literal cannot mis-fire: the only way to reach the destructive branch is to have typed the word
- * `confirm`. The same shape guards `start`, where the first call is also what prints the price.
+ * `confirm`. The same shape guards `start`, where the first call is also what prints the price, and
+ * `pause` — which is the odd one out in that its confirm branch destroys nothing and changes nothing.
+ * It uses the shape anyway so that "the second line is the one that counts" holds everywhere, rather
+ * than being a rule with an exception the player has to learn.
  *
  * ### Every command is player-only
  *
@@ -56,6 +59,13 @@ object RunCommands {
                 )
                 .then(Commands.literal("status").executes { player(it)?.let(::status) ?: 0 })
                 .then(Commands.literal("resume").executes { player(it)?.let(::resume) ?: 0 })
+                .then(
+                    // §2.22. The confirm branch is the same shape as `abandon`'s and does none of the
+                    // same work: it acknowledges a price, it does not pay one. See [RunPause].
+                    Commands.literal("pause")
+                        .executes { player(it)?.let { p -> pause(p, confirmed = false) } ?: 0 }
+                        .then(Commands.literal("confirm").executes { player(it)?.let { p -> pause(p, confirmed = true) } ?: 0 }),
+                )
                 .then(
                     Commands.literal("abandon")
                         .executes { player(it)?.let(::warnAbandon) ?: 0 }
@@ -149,6 +159,16 @@ object RunCommands {
             is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
             is ResumeResult.Ended -> player.sendSystemMessage(RunMessages.ended(result.report))
         }
+        return 1
+    }
+
+    /**
+     * Always succeeds, including with no run at all. It reports a fact rather than performing an
+     * action, and a failure code on a question the player is entitled to ask would make the command
+     * look broken in exactly the case where the answer is the reassuring one.
+     */
+    private fun pause(player: ServerPlayer, confirmed: Boolean): Int {
+        player.sendSystemMessage(RunMessages.pause(RunController.pause(player.server, player, confirmed)))
         return 1
     }
 

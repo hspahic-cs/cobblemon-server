@@ -15,9 +15,11 @@ import java.util.UUID
  * makes quitting a losing battle free.
  *
  * @property wave the wave that was interrupted, kept so the player can be told what they dropped out
- *   of. [RunState.wave] is not a substitute — the penalty advances it (see
- *   [RunController.reconcileOnLogin]), so by the time anyone reads the message it names a different
- *   wave.
+ *   of. [RunState.wave] normally agrees with it and is still not a substitute: this one is the wave
+ *   the battle was *for*, fixed when the battle began, and anything that moves the run afterwards —
+ *   a future between-wave step, a repair, an operator — makes them disagree without making either
+ *   wrong. Reading the run's wave for the message would then describe the fight the player is about
+ *   to have rather than the one they dropped out of.
  * @property boot the [ServerBootId] of the process that started the battle. The comparison this
  *   exists for is in [DisconnectAttribution].
  * @property onField the Pokémon that were out when we last heard. **UUIDs, not indices or names**:

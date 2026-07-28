@@ -1,4 +1,4 @@
-package com.cobblemonbridge.roguelite
+package com.cobblemonroguelite.run
 
 import com.cobblemon.mod.common.pokemon.Pokemon
 import net.minecraft.core.RegistryAccess
@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import org.slf4j.LoggerFactory
 
-private val log = LoggerFactory.getLogger("cobblemon_bridge/roguelite/run")
+private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
 
 /**
  * A single PokéRogue-mode run.
@@ -17,12 +17,10 @@ private val log = LoggerFactory.getLogger("cobblemon_bridge/roguelite/run")
  * botched restore can cost anyone their actual Pokémon. Battles are handed a synthetic
  * party store built from [party], the same way `RankedBattle.buildTempParty()` does it.
  *
- * Runs are checkpointable (design decision 2): [toNbt] writes the whole run — party
- * included — into player NBT, which the server saves on the regular tick and on logout, so
- * a run survives disconnect, clean restart, and crash. This is the same mechanism
- * `TowerGauntletHook.persist()` uses; the tower only needs a `Set<UUID>` party snapshot
- * because it battles the player's real party, whereas we must serialize the Pokémon
- * themselves.
+ * Runs are checkpointable (design decision 2): [toNbt] writes the whole run — party included —
+ * and [RunStore] persists it as world save data, so a run survives disconnect, clean restart,
+ * and crash. Note this is *not* the player-NBT mechanism the battle tower uses; see [RunStore]
+ * for why that one would delete a run party on any in-world death.
  *
  * @property wave the wave about to be fought (1-based). Incremented on victory.
  * @property party the live run party. Permadeath removes entries; order is party order.
@@ -47,6 +45,11 @@ data class RunState(
      *
      * Permadeath is enforced here rather than by inspecting HP at battle end, because a
      * revive used mid-battle legitimately brings a Pokémon back and must not count.
+     *
+     * **Identity contract.** Matching is by UUID, so whatever the battle is handed must preserve
+     * it. `Pokemon.clone()` defaults to `newUUID = true`, which would make every call here a
+     * silent no-op and permadeath would simply never fire — pass `clone(newUUID = false)`, or
+     * hand the run Pokémon over uncloned.
      */
     fun kill(pokemon: Pokemon): Boolean = party.removeIf { it.uuid == pokemon.uuid }
 

@@ -1,0 +1,42 @@
+modLoader = "kotlinforforge"
+loaderVersion = "[5,)"
+# Revisit before any public release. "All Rights Reserved" is the safe default while the mode is
+# server-internal — it can be loosened later, whereas a permissive licence cannot be taken back.
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "cobblemon_roguelite"
+version = "${version}"
+displayName = "Cobblemon Roguelite"
+description = "A run-based roguelite mode for Cobblemon: draft a team, fight escalating waves, pick rewards between fights, lose the run on a wipe. Runs are self-contained — nothing caught inside a run leaves it."
+authors = "almutwakel"
+# No dist restriction: this is server-side logic with no client classes, so it loads on both
+# sides and works in single-player as well as on a dedicated server. IGNORE_ALL_VERSION skips the
+# version handshake so vanilla clients can still connect to a server running it.
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.cobblemon_roguelite]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemon_roguelite]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "[5,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.cobblemon_roguelite]]
+modId = "cobblemon"
+type = "required"
+versionRange = "[1.7.1,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# Soft dependencies, declared as the mode grows into them — all optional by design:
+#   rctmod         — authored boss/wave trainers and their AI types
+#   mega_showdown  — Tera/Dynamax gimmick waves; absent means the gimmick ladder stays off
+# Neither is required to load, and neither may become `required` without re-checking its licence.

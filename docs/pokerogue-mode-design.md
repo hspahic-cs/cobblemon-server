@@ -258,10 +258,13 @@ covers hosts that refuse extra dimensions.
   midnight rotation, plus a settle delay because `summon_persistent` materialises on a later
   tick). Whether our summon ordering needs the same treatment is unknown until the wave loop
   exists.
-- **One room for the whole run, or a room per wave band?** The recommendation gives a run one
-  arena for its duration. PokéRogue's changing biomes are a real part of its texture, and
-  re-stamping a different template at band boundaries is nearly free given the machinery. That is
-  a content call, not an architecture one.
+- ~~**One room for the whole run, or a room per wave band?**~~ **Decided 2026-07-27: re-stamp per
+  wave band**, for the aesthetic — a run that visibly changes scenery as it deepens reads better
+  than one room for fifty waves, and the machinery makes it nearly free. The slot stays allocated
+  for the whole run; only the template stamped into it changes at band boundaries. Which templates
+  and how many bands are still a content call. Note this makes stamp-on-assignment (above) the
+  rule for *every* stamp, not just the first: a band transition re-stamps and sweeps the same way,
+  so a crash mid-transition is no different from a crash mid-run.
 - **Does Cobblemon behave in a void-biome dimension?** *Unverified.* Battle flow, capture flow and
   `PokemonEntity` placement on a floating platform have not been tested there. This is the single
   biggest unknown in the section and it is dev-VM-testable as soon as there is a run loop.

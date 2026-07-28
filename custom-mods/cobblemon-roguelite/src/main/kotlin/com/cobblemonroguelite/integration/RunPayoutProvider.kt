@@ -7,25 +7,33 @@ import java.util.UUID
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/integration")
 
 /**
- * What a finished run is worth, in the two units the plan names (§2.2: "payout in currency/BP").
+ * What a finished run is worth, as **one abstract amount**.
  *
- * The amounts arrive here **already decided** by the module's reward table (§2.12). A provider is
+ * The amount arrives here **already decided** by the module's reward table (§2.12). A provider is
  * transport, not policy: a server plugging in its own economy gets to choose where the payment
  * lands, not what a run pays. Keeping the split on that line is what lets a published build with
  * no provider registered still run the identical reward table and still show the player a total —
  * it just has nowhere to bank it.
  *
- * Both fields are independent because our two currencies are (server money and ranked BP live in
- * different systems entirely). A provider that can only pay one of them should credit that one and
- * ignore the other rather than reject the payout; dropping half a payout is recoverable by an op,
- * dropping all of it because BP was unsupported is not obvious to anyone.
+ * ### Why one unit and not "currency + BP"
+ *
+ * The plan says "payout in currency/BP" (§2.2), which describes *our server's* two currencies —
+ * and BP is a ranked-battle currency, belonging to a mod this one deliberately does not know
+ * exists (§2.9). Modelling it here would ship a field that means nothing on any server but ours,
+ * and would quietly make the module's vocabulary server-specific at the exact seam whose whole job
+ * is to keep it general.
+ *
+ * So the module emits one number and the host decides what it buys. Paying a run out in ranked BP
+ * remains entirely possible — it is a choice the `cobblemon-bridge` implementation makes, not a
+ * concept this module has to carry. Splitting across several currencies, weighting them, or
+ * ignoring the amount altogether are all equally available to a provider, and none of them require
+ * a change here.
  */
 data class RunPayout(
-    val currency: Int = 0,
-    val battlePoints: Int = 0,
+    val amount: Int = 0,
 ) {
     /** True when there is nothing to bank — callers may skip the provider round-trip entirely. */
-    fun isEmpty(): Boolean = currency <= 0 && battlePoints <= 0
+    fun isEmpty(): Boolean = amount <= 0
 }
 
 /**
@@ -83,8 +91,8 @@ object RunPayouts {
     /** Drops everything handed to it. See the class docs for why this is the shipped default. */
     val NONE = RunPayoutProvider { _, player, payout ->
         log.info(
-            "roguelite: no payout provider registered — dropping {} currency / {} BP for {}",
-            payout.currency, payout.battlePoints, player,
+            "roguelite: no payout provider registered — dropping payout of {} for {}",
+            payout.amount, player,
         )
         false
     }

@@ -149,6 +149,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         CommandAliases.register(event.dispatcher)
         com.cobblemonbridge.commands.VersionCommand.register(event.dispatcher)  // /version — deployed modpack version
         WildCommand.register(event.dispatcher)
+        com.cobblemonbridge.commands.BattleSpeedCommand.register(event.dispatcher)  // /battlespeed — server-wide battle pacing
         com.cobblemonbridge.commands.TestTeamCommand.register(event.dispatcher)  // dev: give a preset competitive team
         GymTpCommands.register(event.dispatcher)
         SpawnCommands.register(event.dispatcher)
@@ -173,6 +174,7 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
         com.cobblemonbridge.tower.TowerManager.init()
         com.cobblemonbridge.battle.GymReturnHook.init()
         WildCommand.init()
+        com.cobblemonbridge.battle.BattleSpeed.init()
         HologramCommands.init()
         LegendaryMonumentLock.init()
         com.cobblemonbridge.profile.FavoriteTracker.init()

@@ -44,7 +44,7 @@ What exists today. Nothing is wired to a battle yet.
 
 | Package | Holds |
 | --- | --- |
-| `run/` | `RunState` (the run model, NBT round-tripping, permadeath) and `RunStore` (every active run, as world save data) |
+| `run/` | The run model and its lifecycle: `RunState` / `RunStore` (NBT round-tripping, permadeath, world save data), `RunStart` (the start *order*), `RunProgress` (between-wave decisions), `RunDepthGate` (§2.18's badge gate), `RunController` (the wiring), `RunCommands`, and `RunWaves` — the wave-battle seam, which nothing implements |
 | `integration/` | Host seams: `RunCharges` (entry fee), `RunPayouts` (optional bonus on top of the payout), `RunBattleAi` (opponent AI). Each has a working default so the mod runs standalone |
 | `data/` | `RogueliteDataRegistry`, the datapack convention: `data/<ns>/roguelite/<folder>/<name>.json` |
 | `data/reward/` | Between-wave reward tables — a weighted draw, because variance inside a run is the point |
@@ -162,6 +162,22 @@ The payout being auditable is the whole reason it is not a draw. It is also why 
 sealed to items with no command kind: a `"run": "/give …"` field would let a datapack pay
 currency or permissions, leaving the isolation contract enforced by whatever an owner typed into
 JSON rather than by the code.
+
+### Which table a run pays from is pinned at run start
+
+`RunState.payoutTable` is written when the run is created, from `RunConfig.payoutTable`, and read
+back at run end. The alternative — read the live config when the run finishes — was rejected
+because §2.19 makes a run a multi-session commitment: an owner retuning between somebody's wave 3
+and their wave 200 would change what an in-flight run pays, invisibly, which is the same class of
+"a run in progress changed under the player" the seed exists to prevent.
+
+What it pins is the table **id**, not the table **contents**. A datapack reload still changes what
+the entries pay. Freezing contents would mean copying the resolved table into every checkpoint and
+versioning it — a guarantee nobody asked for, against a change only an operator can make.
+
+A run started before any table was configured stores null and falls back to
+`PayoutTables.DEFAULT_TABLE` at the end, which is also the shipped state: nothing ships at that id
+(§2.20 deferred the contents), so a finished run today resolves an empty payout and logs the miss.
 
 ### Money in, items out
 

@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
+import net.minecraft.resources.ResourceLocation
 import org.slf4j.LoggerFactory
 
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
@@ -35,6 +36,18 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   on the server the identical run, and nothing about that failure is visible in play until two
  *   players compare notes. Making it a required argument turns it into a compile error instead.
  * @property bossesCleared count of fixed boss trainers beaten, for payout curves.
+ * @property payoutTable which payout table this run pays from, pinned at run start rather than read
+ *   from live config at run end. A run is a multi-session commitment (§2.19 puts it at days), so an
+ *   operator retuning between somebody's wave 3 and their wave 200 would otherwise change what an
+ *   in-flight run pays — the same class of "a run in progress changed under the player" the seed
+ *   exists to prevent (§2.16), except this one is invisible until the payout lands. Null means the
+ *   run was started before a table was configured and falls back to [com.cobblemonroguelite.data.payout.PayoutTables.DEFAULT_TABLE]
+ *   at end.
+ *
+ *   Note what this pins and what it cannot: the table *id*, not the table *contents*. A datapack
+ *   reload still changes what the entries pay. Pinning contents would mean copying the resolved
+ *   table into every checkpoint and versioning it, which buys a guarantee nobody asked for against a
+ *   change only an operator can make.
  */
 data class RunState(
     var wave: Int = 1,
@@ -42,6 +55,7 @@ data class RunState(
     var credits: Int = 0,
     val seed: Long,
     var bossesCleared: Int = 0,
+    val payoutTable: ResourceLocation? = null,
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
     fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
@@ -81,6 +95,7 @@ data class RunState(
         tag.putInt("credits", credits)
         tag.putLong("seed", seed)
         tag.putInt("bossesCleared", bossesCleared)
+        payoutTable?.let { tag.putString("payoutTable", it.toString()) }
         val list = ListTag()
         partySnapshot().forEach { list.add(it.saveToNBT(registryAccess)) }
         tag.put("party", list)
@@ -94,7 +109,7 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 1
+        const val SCHEMA_VERSION = 2
 
         private const val SCHEMA_KEY = "schemaVersion"
 
@@ -146,6 +161,11 @@ data class RunState(
                 credits = tag.getInt("credits"),
                 seed = tag.getLong("seed"),
                 bossesCleared = tag.getInt("bossesCleared"),
+                // An unparseable id restores as null rather than failing the run: null falls back to
+                // the default table at payout, which is a table the player might still be paid from,
+                // where discarding the checkpoint would cost them the whole run over a string.
+                payoutTable = tag.getString("payoutTable").takeIf { it.isNotEmpty() }
+                    ?.let { ResourceLocation.tryParse(it) },
             )
         }
     }

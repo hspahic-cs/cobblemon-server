@@ -45,9 +45,43 @@ class RunStore private constructor(
 
     private val runs = ConcurrentHashMap<UUID, RunState>()
 
+    /**
+     * Seeds minted for runs whose starter has not been picked yet. Kept beside [runs] rather than as
+     * a half-built [RunState] because a run with no party is not a state [RunState.fromNbt] will
+     * restore — it discards an empty party on purpose, since an empty party reads as an instant
+     * wipe. See [PendingStart] for why this has to reach disk at all.
+     */
+    private val pending = ConcurrentHashMap<UUID, PendingStart>()
+
     fun get(player: UUID): RunState? = runs[player]
 
     fun hasRun(player: UUID): Boolean = runs.containsKey(player)
+
+    fun pending(player: UUID): PendingStart? = pending[player]
+
+    /**
+     * Record a minted seed before the starter offer is shown, and flush it.
+     *
+     * Flushes for the same reason [end] does rather than the softer one [checkpoint] does: the
+     * window this closes is measured against a player who is *looking at the offer screen*, i.e.
+     * exactly the moment they might quit. Leaving the write to the next autosave leaves the seed
+     * re-rollable for as long as that takes, which is the thing §2.16 wrote the seed down to prevent.
+     */
+    fun beginPending(server: MinecraftServer, player: UUID, start: PendingStart): PendingStart {
+        pending[player] = start
+        setDirty()
+        flush(server, player)
+        return start
+    }
+
+    /**
+     * Drop a pending start — because the starter was chosen, or because the player walked away.
+     *
+     * Not flushed. A stale pending start that survives a crash costs the player nothing: they are
+     * shown the offer again, from the same seed, which is where they already were. The flush on
+     * [beginPending] is what matters; this one is only bookkeeping.
+     */
+    fun clearPending(player: UUID): PendingStart? = pending.remove(player)?.also { setDirty() }
 
     /** Snapshot of every active run, for op tooling and shutdown accounting. */
     fun activeRuns(): Map<UUID, RunState> = runs.toMap()
@@ -120,6 +154,9 @@ class RunStore private constructor(
                 .onFailure { log.error("roguelite: failed to serialize run for {} — it will be lost", uuid, it) }
         }
         tag.put(RUNS_KEY, all)
+        val allPending = CompoundTag()
+        pending.forEach { (uuid, start) -> allPending.put(uuid.toString(), start.toNbt()) }
+        tag.put(PENDING_KEY, allPending)
         return tag
     }
 
@@ -127,6 +164,7 @@ class RunStore private constructor(
         /** File name under `<world>/data/`. Names this mod, not the one this code started in. */
         const val DATA_NAME = "cobblemon_roguelite_runs"
         private const val RUNS_KEY = "runs"
+        private const val PENDING_KEY = "pendingStarts"
 
         /**
          * The store for this server, created on first use. [DimensionDataStorage.computeIfAbsent]
@@ -159,7 +197,19 @@ class RunStore private constructor(
                     .getOrNull()
                 if (run != null) store.runs[uuid] = run
             }
-            log.info("roguelite: loaded {} active run(s)", store.runs.size)
+            val allPending = tag.getCompound(PENDING_KEY)
+            for (key in allPending.allKeys) {
+                val uuid = runCatching { UUID.fromString(key) }.getOrNull() ?: continue
+                // A pending start whose run already exists is a crash between "starter chosen" and
+                // "pending cleared". The run wins: it was built from this very seed, and re-offering
+                // a starter to someone who has one would give them a second party member for free.
+                if (store.runs.containsKey(uuid)) continue
+                PendingStart.fromNbt(allPending.getCompound(key))?.let { store.pending[uuid] = it }
+            }
+            log.info(
+                "roguelite: loaded {} active run(s), {} awaiting a starter",
+                store.runs.size, store.pending.size,
+            )
             return store
         }
     }

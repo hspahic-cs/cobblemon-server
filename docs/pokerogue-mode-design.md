@@ -351,9 +351,23 @@ covers hosts that refuse extra dimensions.
   and how many bands are still a content call. Note this makes stamp-on-assignment (above) the
   rule for *every* stamp, not just the first: a band transition re-stamps and sweeps the same way,
   so a crash mid-transition is no different from a crash mid-run.
-- **Does Cobblemon behave in a void-biome dimension?** *Unverified.* Battle flow, capture flow and
-  `PokemonEntity` placement on a floating platform have not been tested there. This is the single
-  biggest unknown in the section and it is dev-VM-testable as soon as there is a run loop.
+- **The dimension itself: verified on dev 2026-07-28.** The `dimension_type` + `dimension` pair
+  shipped in the mod's `data/` registered with no owner action and **attached to the existing dev
+  world** — which was the claim taken on faith from reading `WorldDimensions.bake`, and is the one
+  that would have been expensive to be wrong about. `execute in cobblemon_roguelite:arena`
+  resolves, `/opt/cobblemon-dev/world/dimensions/cobblemon_roguelite/arena/` was created on first
+  access, a `setblock` at `0 64 0` took, and `0 60 0` is air — the void generator does nothing, as
+  intended.
+
+  Two incidentals confirmed at the same time. Chunks in the arena are **not loaded without a
+  player**: the first `setblock` failed with "That position is not loaded" and needed
+  `forceload add`, exactly the chunk-ticket caveat noted above — so anything placing an arena
+  before its player arrives must take a ticket. And the datapack convention works end to end on a
+  real server: both registries registered with Cobblemon and each loaded its example table with
+  zero rejected.
+- **Does Cobblemon *battle and capture* behave in there?** *Still unverified* — it needs a player
+  in the dimension, which console access cannot supply. `PokemonEntity` placement on a platform
+  over void is the specific risk.
 - ~~**Does `mega_showdown:power_spot` work when placed programmatically?**~~ **Verified on dev
   2026-07-28: yes, and more cleanly than hoped.** `/setblock` placed one and Dynamax activated
   next to it. `/data get block` answered "block target is not an entity" — the block has **no

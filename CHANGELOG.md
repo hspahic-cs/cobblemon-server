@@ -12,6 +12,31 @@ root README.
 
 ## [Unreleased]
 
+## [0.32.0] - 2026-07-28
+
+### Added
+- **Configurable battle speed (`/battlespeed`).** Server-wide multiplier on how fast battles play
+  out — `1.0` is stock Cobblemon, `2.0` halves every pause. Op-only, changes apply mid-battle, and
+  the value persists to `config/cobblemon-bridge/runtime/battle_speed.json`.
+
+  All battle pacing in Cobblemon 1.7.3 is server-side and funnels through two places, so the
+  bridge scales both with the same multiplier:
+  - `WaitDispatch(seconds)` — every fixed pause in the battle flow (send-out, faints, ability
+    pop-ups, win banner). `PokemonBattle.tick()` drains its dispatch deque in a loop rather than
+    one per tick, so shortened delays genuinely run back-to-back.
+  - `SchedulingFunctionsKt.delayedFuture(seconds)` inside the seven action-effect keyframes —
+    move animation pacing. Scaled alongside the flow so the interpreter doesn't just arrive at
+    each animation sooner and then wait out an unshortened timeline.
+
+  Nothing about battle *logic* changes — turn order, damage and RNG are untouched. Because the
+  client's Bedrock model animations still play at their authored rate, past roughly 2x moves
+  start visibly clipping into each other; 1.5–2.0 is the usable band and the command warns above
+  2x. Both mixins are `require = 0`, so a future Cobblemon refactor degrades to stock pacing
+  instead of failing the mixin apply on boot; `/battlespeed` with no argument reports whether the
+  hooks are live.
+
+  Ranked note: the time bank counts real seconds, so faster battles mean more turns per bank.
+
 ## [0.31.2] - 2026-07-26
 
 ### Fixed

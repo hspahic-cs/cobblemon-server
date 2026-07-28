@@ -354,9 +354,11 @@ covers hosts that refuse extra dimensions.
 - **Does Cobblemon behave in a void-biome dimension?** *Unverified.* Battle flow, capture flow and
   `PokemonEntity` placement on a floating platform have not been tested there. This is the single
   biggest unknown in the section and it is dev-VM-testable as soon as there is a run loop.
-- **Does `mega_showdown:power_spot` work when placed programmatically?** *Unverified* — no source
-  available. If it needs a block entity, a multiblock, or an activation step, template placement
-  may not be enough.
+- ~~**Does `mega_showdown:power_spot` work when placed programmatically?**~~ **Verified on dev
+  2026-07-28: yes, and more cleanly than hoped.** `/setblock` placed one and Dynamax activated
+  next to it. `/data get block` answered "block target is not an entity" — the block has **no
+  block entity at all**, so there is no multiblock, no activation step and no NBT to reproduce.
+  A `StructureTemplate` stamp is therefore sufficient, and the confinement plan holds as written.
 - **Slot reuse vs. region-file growth over long uptimes.** Bounded by `maxConcurrentRuns` in
   theory; not measured.
 - **Run expiry is a prerequisite, not an extra.** Plan §5 already lists it as open. It is what

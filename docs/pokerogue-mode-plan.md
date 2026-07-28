@@ -411,6 +411,70 @@ config surface, compatibility across Cobblemon bumps, docs, support — that the
 first. This decision only keeps the option open. The mod is licensed All Rights Reserved until
 that call is made, and it is not published under the PokéRogue name.
 
+### 2.16 The run seed is minted once, and a restart reuses it
+
+**Chosen:** when a run starts, mint one seed and derive **everything** from it — the starter
+offer, every wave's species and level, reward draws. Abandoning and restarting reuses the same
+seed, so the restarted run is identical.
+
+**Why this is the whole anti-reroll mechanism.** Every reroll exploit in this design is the same
+exploit wearing different clothes: quit, come back, get a different outcome. Pinning individual
+draws closes them one at a time and only the ones we thought of. Fixing the seed at run start
+closes the category — there is nothing to reroll, because a restart is the same run.
+
+**A new seed is minted only when a run *ends*** — cleared or wiped — never on abandon. This is
+the load-bearing half: if a fresh seed were minted per `/roguelite start`, abandon-and-restart
+would be the reroll it is supposed to prevent. It also means a player who dislikes their draft
+gains nothing by walking away, which is why this, and not the entry fee, is the actual answer to
+§5's "what stops abandon-and-restart from rerolling a bad draft".
+
+**Consequence:** anything generated must be *derivable* from `(seed, wave)` or *persisted*.
+Cobblemon's own unseeded RNG inside `PokemonProperties.create()` — IVs, nature, gender, shiny,
+ability — satisfies neither today, so those values must be written into the properties string
+rather than left to roll. See §2.17 for where the IV floor comes from.
+
+### 2.17 IV floors come from a personal high-water mark, not current possession
+
+**Considered:** IVs rolled uniformly and pinned by seed · scan the player's current party and PC
+for their best of that species · track the best IVs the player has **ever** held, per species.
+
+**Chosen:** the high-water mark.
+
+**Why not scanning current possession:** it silently makes hoarding the optimal play. A player
+who trades away a 6IV specimen would *lose* run power for having done so, and the server wants a
+trade economy, not six hundred boxes of insurance. A high-water mark is kept once earned, so
+trading a Pokémon away costs nothing.
+
+**Why not Unchained catch streaks** (considered and rejected): streaks are per-species and do not
+carry across species, so they measure recent grinding rather than a collection, and they would
+reward repetition of one species over breadth.
+
+**Mechanism:** per-player, per-species record of the best IVs ever held. Unlike §2.15's Pokédex
+gating this *is* new persistent state — Cobblemon's Pokédex stores forms, genders and shiny
+states, not IVs — but it is module-internal and small.
+
+**Seed it with a one-time backfill.** On a player's first contact with the system, scan their
+current party and PC to establish the marks, then let ongoing tracking take over. Without this,
+launch day resets every veteran to zero and the feature reads as a punishment for having played
+before it existed.
+
+### 2.18 Depth is gated on badges; entry costs currency
+
+**Chosen:** how deep a run may go is gated on the **first ten gym badges** (`gym_01`–`gym_10`).
+E4 clears are deliberately *not* part of the gate. Starting a run costs currency.
+
+**Why badges:** it is the most Pokémon-canonical progression gate there is, it points players at
+content that already exists, and it costs almost nothing to implement — gym progress is stored as
+**vanilla advancements** (`GymPrereqHook` reads `player.advancements.getOrStartProgress(...)`),
+so the module can read it without importing anything of ours. The clean shape is a **configured
+list of advancement ids**: we point it at our ten gyms, and a published build lets an owner point
+it at whatever their server uses.
+
+**Why an entry fee:** the mode should be a money *sink*. That constrains the payout — see §5,
+where the payout currency question is open — because a run that returns more currency than it
+costs is a faucet with extra steps, and would make the roguelite the best money loop on the
+server, starving the activities meant to feed it.
+
 ---
 
 ## 3. Preliminary plan
@@ -464,6 +528,19 @@ is no run loop, no battle, no command.
   §2.14 settles *what* is catchable (wild only, never trainer-owned).
 - **Wave interval constants:** how often trainer and boss waves land, and the level-curve
   constants (§2.14 fixes the shape, not the numbers).
+- **Shiny rate and hidden-ability rate inside runs.** PokéRogue uses 1/1024 shiny and 1/256
+  hidden ability; our server runs 1/8192 shiny. Run shinies do not persist, so they cost the
+  economy nothing — the question is whether making them eight times more common inside runs
+  devalues the overworld ones.
+- **Do trade-ins update the IV high-water mark (§2.17)?** Counting them rewards trading, which is
+  the point — but it also means one perfect specimen passed around can water-mark a whole server.
+  Counting only self-caught Pokémon keeps the mark personal at the cost of some of the trade
+  incentive.
+- **What the payout is denominated in** (§2.18). If entry costs currency and the payout is also
+  currency, the sink only works when the average run loses money, which is a hard thing to make
+  feel good. Paying out in things that are *not* money — egg vouchers or gacha pulls, cosmetics,
+  profile titles, leaderboard standing, run-only unlocks — keeps the currency flow negative while
+  the reward still reads as generous. Needs a decision before the payout curve can be set.
 - **Reward table contents and rarity curve** — the schema is buildable now (§2.12); the data is
   not blocking until balance.
 

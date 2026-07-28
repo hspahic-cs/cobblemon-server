@@ -121,6 +121,10 @@ class JsonView internal constructor(
 
     fun optionalObjectList(key: String): List<JsonView>? = objectList(key, required = false)
 
+    fun requireStringList(key: String): List<String>? = stringList(key, required = true)
+
+    fun optionalStringList(key: String): List<String>? = stringList(key, required = false)
+
     /**
      * Report any field left untouched by the reads above. Call this **after** every read on this
      * object, including the optional ones — an optional field that was never asked for looks exactly
@@ -208,6 +212,36 @@ class JsonView internal constructor(
         // are already named in the log, and rejecting the whole list would hide the good entries
         // behind one bad one.
         return views
+    }
+
+    /**
+     * A list of plain strings — an enum-ish field such as a set of run outcomes.
+     *
+     * Unlike [objectList], one bad member fails the **whole list** rather than being dropped from
+     * it. A list of strings is normally a *set of conditions*, and silently returning the members
+     * that happened to parse would narrow the condition to something the author did not write, which
+     * is the failure this reader exists to prevent. A list of objects has no equivalent risk: its
+     * members are independent entries, and the survivors still mean what they say.
+     */
+    private fun stringList(key: String, required: Boolean): List<String>? {
+        val element = raw(key, required) ?: return null
+        val array = element as? JsonArray
+        if (array == null) {
+            problem(key, "expected a list, found ${describe(element)}")
+            return null
+        }
+        var ok = true
+        val values = mutableListOf<String>()
+        array.forEachIndexed { index, item ->
+            val primitive = item as? JsonPrimitive
+            if (primitive == null || !primitive.isString) {
+                problems.add("${pathOf(key)}[$index]", "expected a string, found ${describe(item)}")
+                ok = false
+            } else {
+                values += primitive.asString
+            }
+        }
+        return if (ok) values else null
     }
 
     /**

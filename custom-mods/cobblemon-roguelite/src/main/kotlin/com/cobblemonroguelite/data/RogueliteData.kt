@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.data
 
 import com.cobblemon.mod.common.data.CobblemonDataProvider
+import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
 import org.slf4j.LoggerFactory
 
@@ -49,6 +50,7 @@ object RogueliteData {
      */
     fun registerAll() {
         CobblemonDataProvider.register(RewardTables, reloadable = true)
+        CobblemonDataProvider.register(PayoutTables, reloadable = true)
         log.info("roguelite: datapack registries registered — tables load from data/<namespace>/{}/", RogueliteDataRegistry.ROOT)
     }
 }

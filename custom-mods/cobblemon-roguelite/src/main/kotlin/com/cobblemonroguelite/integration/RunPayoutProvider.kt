@@ -1,5 +1,8 @@
 package com.cobblemonroguelite.integration
 
+import com.cobblemonroguelite.data.payout.PayoutGrant
+import com.cobblemonroguelite.data.payout.RunOutcome
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import org.slf4j.LoggerFactory
 import java.util.UUID
@@ -7,92 +10,106 @@ import java.util.UUID
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/integration")
 
 /**
- * What a finished run is worth, as **one abstract amount**.
+ * What a finished run came to, handed to a host that wants to add something of its own.
  *
- * The amount arrives here **already decided** by the module's reward table (§2.12). A provider is
- * transport, not policy: a server plugging in its own economy gets to choose where the payment
- * lands, not what a run pays. Keeping the split on that line is what lets a published build with
- * no provider registered still run the identical reward table and still show the player a total —
- * it just has nowhere to bank it.
+ * ### Why this is a summary and not an amount
  *
- * ### Why one unit and not "currency + BP"
+ * It used to be a single abstract `Int` that a host banked, on the theory that the payout was one
+ * metered channel and a provider was the only way through it. §2.20 removed that theory: the payout
+ * is **not currency**, it is items resolved from a datapack table
+ * ([com.cobblemonroguelite.data.payout.PayoutTables]), and the module hands those over itself. An
+ * abstract amount now describes nothing the module actually pays — it would be a number invented at
+ * the seam, denominated in a unit no table names.
  *
- * The plan says "payout in currency/BP" (§2.2), which describes *our server's* two currencies —
- * and BP is a ranked-battle currency, belonging to a mod this one deliberately does not know
- * exists (§2.9). Modelling it here would ship a field that means nothing on any server but ours,
- * and would quietly make the module's vocabulary server-specific at the exact seam whose whole job
- * is to keep it general.
+ * So what crosses here is a *description of the run that just ended*: how it ended, how deep it got,
+ * and what the module already granted. That is the minimum a host needs to price a bonus of its own
+ * without this module knowing what the bonus is.
  *
- * So the module emits one number and the host decides what it buys. Paying a run out in ranked BP
- * remains entirely possible — it is a choice the `cobblemon-bridge` implementation makes, not a
- * concept this module has to carry. Splitting across several currencies, weighting them, or
- * ignoring the amount altogether are all equally available to a provider, and none of them require
- * a change here.
+ * [granted] is included rather than left out because a host that wants to top up "one dollar per
+ * item the run paid" can, and because a provider that logs payouts for audit gets the whole picture
+ * from one call rather than having to shadow the table.
  */
 data class RunPayout(
-    val amount: Int = 0,
-) {
-    /** True when there is nothing to bank — callers may skip the provider round-trip entirely. */
-    fun isEmpty(): Boolean = amount <= 0
-}
+    val outcome: RunOutcome,
+    val wave: Int,
+    val table: ResourceLocation?,
+    val granted: List<PayoutGrant> = emptyList(),
+)
 
 /**
- * The single channel by which value leaves a run.
+ * An **optional** extra on top of the payout the module already made.
  *
- * §1.1 seals a run on every axis but this one: party, catches, inventory, and gimmicks all die
- * with the run, and the payout is the one deliberate hole. That makes this interface the whole
- * audit surface for "what can a run give a player" — if something else in this module ever hands
- * a player a real reward without going through here, the isolation contract has been broken and
- * this file will not show it.
+ * ### What this is no longer
  *
- * Implemented in `cobblemon-bridge` against our economy. Never implemented here: the module has no
- * economy of its own and must not grow one, because a mod that mints currency by itself is exactly
- * the faucet §2.2 refuses.
+ * This is not the route by which value leaves a run any more, and treating it as one is the mistake
+ * this paragraph exists to prevent. §1.1 still seals a run on every axis but the payout, and the
+ * payout is still the audit surface — it just lives in
+ * [com.cobblemonroguelite.data.payout.PayoutTable] now, where it is data an owner can read, rather
+ * than in whatever a third-party provider decided to do with a number. Anything registered here is
+ * *additional*: our currency, ranked BP, a title, an advancement.
+ *
+ * ### Why the module cannot just do this part too
+ *
+ * §2.2: this module has no economy and must never grow one, because a mod that mints currency by
+ * itself is the faucet the whole design refuses. A host that wants a run to pay currency is making
+ * that decision for its own server, with its own faucet accounting, and that is exactly the kind of
+ * decision that belongs on the other side of an interface (§2.9).
+ *
+ * Note the asymmetry with [RunCharges] and that it is deliberate: money may enter through the charge
+ * seam by default and may not leave through this one by default. A published build with nothing
+ * registered plays a full run and pays a full payout; it just does not move any currency in either
+ * direction, which is the correct behaviour for a mod that does not know what currency is.
  */
 fun interface RunPayoutProvider {
 
     /**
-     * Bank [payout] for [player]. Returns true if anything was actually credited.
+     * Add whatever this host pays on top of [payout]. Returns true if anything was actually granted.
      *
-     * Called at run end from the server thread. The player may be **offline** by then — a run can
-     * end on a disconnect-timeout path — so implementations must resolve by UUID and must not
-     * assume a live `ServerPlayer` exists.
+     * Called at run end from the server thread, **after** the module's own grants have been handed
+     * over — so a provider can assume the table payout happened and does not have to reproduce it.
+     * The player may be **offline** by then (a run can end on a disconnect-timeout path), so
+     * implementations must resolve by UUID and must not assume a live `ServerPlayer` exists.
      */
     fun pay(server: MinecraftServer, player: UUID, payout: RunPayout): Boolean
 }
 
 /**
- * The registered payout destination, defaulting to nowhere.
+ * The registered bonus payout hook, defaulting to nothing.
  *
- * ### Why the default is a no-op rather than an error
+ * ### Why the default is a no-op, and why that is now uncontroversial
  *
- * The module has to be independently shippable (§1.2, §2.9), which means the *only* configuration
- * a standalone install has is the one it ships with. If an unregistered payout threw or refused to
- * end the run, the published mod would be broken out of the box for everyone who is not us. So the
- * default swallows the payout and says so once in the log; runs still start, still finish, and
- * still report their earnings — they simply do not bank anywhere.
+ * It used to be a compromise: with the payout modelled as an amount only a host could bank, an
+ * unregistered provider meant a run that finished and paid nothing, and the no-op was chosen only
+ * because throwing would have been worse. Under §2.20 there is nothing to compromise about. The
+ * module resolves and grants the payout table by itself, so a published build with no provider
+ * registered pays out *fully*; this seam adds a server's own extras or adds nothing.
+ *
+ * That also changes what the absence deserves in the log. Dropping a payout was worth an INFO line
+ * every time it happened; declining to add a bonus that no one configured is the ordinary state of
+ * every install that is not ours, and logging it per run would be noise around the one message that
+ * matters (what the run actually paid, which the run-end path writes).
  *
  * ### Threading
  *
  * [register] is expected exactly once, during another mod's setup, before any run exists. Reads
  * happen at run end on the server thread. The field is `@Volatile` anyway because "before any run
- * exists" is a convention we cannot enforce across mods, and a stale read would silently pay into
- * the no-op after a provider had been installed.
+ * exists" is a convention we cannot enforce across mods, and a stale read would silently skip a
+ * provider that had been installed.
  *
  * ### Registering twice
  *
  * Last writer wins and the replacement is logged at WARN. We do not reject the second call: an op
  * reloading a server-side integration is a legitimate reason to re-register, and a hard failure
  * there would take down the mode over a swap that is harmless. The WARN exists so that two mods
- * fighting over the seam shows up in the log rather than as mysteriously missing payouts.
+ * fighting over the seam shows up in the log rather than as mysteriously missing bonuses.
  */
 object RunPayouts {
 
-    /** Drops everything handed to it. See the class docs for why this is the shipped default. */
+    /** Adds nothing. See the class docs for why this is the shipped default and why it is quiet. */
     val NONE = RunPayoutProvider { _, player, payout ->
-        log.info(
-            "roguelite: no payout provider registered — dropping payout of {} for {}",
-            payout.amount, player,
+        log.debug(
+            "roguelite: no bonus payout provider registered — run for {} pays its table only ({} grant(s))",
+            player, payout.granted.size,
         )
         false
     }
@@ -100,7 +117,7 @@ object RunPayouts {
     @Volatile
     private var provider: RunPayoutProvider = NONE
 
-    /** The active provider. Exposed mainly so callers can tell "will pay" from "will drop". */
+    /** The active provider. Exposed mainly so callers can tell "will add" from "will not". */
     val current: RunPayoutProvider get() = provider
 
     fun isRegistered(): Boolean = provider !== NONE
@@ -109,7 +126,7 @@ object RunPayouts {
         val previous = this.provider
         if (previous !== NONE) {
             log.warn(
-                "roguelite: payout provider {} replaced by {} — only the latter will be paid",
+                "roguelite: bonus payout provider {} replaced by {} — only the latter will be paid",
                 previous.javaClass.name, provider.javaClass.name,
             )
         }
@@ -122,17 +139,16 @@ object RunPayouts {
     }
 
     /**
-     * Pay [payout] through the active provider. Returns true if it was credited.
+     * Offer [payout] to the active provider. Returns true if it granted anything extra.
      *
      * A provider throwing is contained here rather than propagated. The caller is the run-end path,
      * which also tears the run down; letting a third-party economy exception escape would leave the
      * run half-ended — party already discarded, state still in [com.cobblemonroguelite.run.RunStore]
-     * — which is worse for the player than an unpaid run.
+     * — which is worse for the player than a missing bonus. It is safe to swallow precisely because
+     * the real payout has already been handed over by the time this is called.
      */
-    fun pay(server: MinecraftServer, player: UUID, payout: RunPayout): Boolean {
-        if (payout.isEmpty()) return false
-        return runCatching { provider.pay(server, player, payout) }
-            .onFailure { log.error("roguelite: payout provider failed for {} — run pays nothing", player, it) }
+    fun pay(server: MinecraftServer, player: UUID, payout: RunPayout): Boolean =
+        runCatching { provider.pay(server, player, payout) }
+            .onFailure { log.error("roguelite: bonus payout provider failed for {} — run pays its table only", player, it) }
             .getOrDefault(false)
-    }
 }

@@ -156,6 +156,23 @@ as an exploit, which attribution avoids.
 **Consequence:** `RunState` must carry the battle-in-progress marker, the boot identity, and the
 on-field Pokémon at the time of the last battle start.
 
+**Implemented 2026-07-28** (`run/ServerBootId`, `RunBattleMarker`, `DisconnectAttribution`).
+
+**Open — the penalty may be cheaper than losing, which inverts the incentive.** Losing a wave
+costs the whole party: permadeath takes each Pokémon as it faints, so a loss is a wipe and the
+run is over. Disconnecting costs **one** Pokémon *and skips the wave*. A player facing an
+unwinnable boss is therefore strictly better off pulling the plug than fighting — the opposite of
+what §2.10 set out to achieve.
+
+Three levers, all policy rather than code:
+
+1. **Do not advance the wave.** The disconnecting player loses a Pokémon and must still fight the
+   wave they fled. Cheapest fix, keeps the run alive, and removes the skip entirely — this is the
+   recommendation.
+2. Kill the whole field-eligible set rather than just what was out. Harsher, and hard to explain.
+3. Treat a player-side disconnect as a loss. Already rejected — it is the run-ending harshness
+   this decision exists to avoid.
+
 ### 2.11 No personal bag inside a run
 
 **Chosen:** players may not use their own items inside the mode. The run bag is exclusively

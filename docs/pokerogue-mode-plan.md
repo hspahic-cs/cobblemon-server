@@ -38,6 +38,11 @@ every axis, not just the obvious one:
 | Gimmicks | Tera/Dynamax exist inside a run and nowhere else | §2.5 |
 | Economy | **One metered channel out: the currency/BP payout.** Deliberate, not an exception | §2.2 |
 
+**Isolation is one-directional.** It governs what *leaves* a run, not what enters. Information
+may flow inward — §2.15 gates the starter offer on the player's server Pokédex — because that
+duplicates nothing and moves no value out. A run's possibility space depending on server history
+is a feature; a run's contents reaching the server is not.
+
 ### 1.2 Possible publication
 
 The mode may eventually be published for other players and servers to use, if it turns out
@@ -190,6 +195,67 @@ players converge on the same picks.
 catch-into-run-party is not an enhancement, it is the party system; the vertical slice cannot
 ship without it. §3 is updated accordingly.
 
+### 2.14 Wave composition: mostly wild, trainers at intervals
+
+**Chosen:** mirror PokéRogue's structure — most waves are **wild encounters**, a **trainer**
+battle at a regular interval (theirs: every 5th wave), and a **boss or leader** at a wider one
+(theirs: every 10th). **Wild Pokémon are catchable; trainer-owned Pokémon never are.**
+
+**Why this forced a revision of §2.6.** That decision made every opponent an authored RCT
+trainer. Under §2.13 catching is the party system — so if most waves are trainers, almost
+nothing is catchable and the party cannot grow. The two decisions could not both stand. The
+split resolves it:
+
+| Wave type | Built as | Catchable | Level scaling |
+| --- | --- | --- | --- |
+| Wild (most) | Runtime-generated wild Pokémon, Cobblemon's own battle + capture flow | Yes | Trivial — set at spawn |
+| Trainer (interval) | Authored RCT trainer | No | Runtime level mutation (task #1) |
+| Boss (wider interval) | Authored RCT trainer | No | Runtime level mutation, plus a boss multiplier |
+
+**This de-risks the RCT decision.** Wild-wave scaling does not depend on NPC-side level mutation
+working at all, so if that spike fails only the trainer waves are affected — and those can fall
+back to fixed-level authored bands per segment. RCT stops being load-bearing for the whole mode.
+
+**Level curve — ours, not theirs.** PokéRogue derives enemy level from the wave index as a
+linear term plus a quadratic tail, with a multiplier on boss waves and a Gaussian jitter that
+narrows as waves deepen. The *shape* ports; the constants do not, because that curve is tuned
+for a 200-wave run and would have our ~10-wave slice fighting level 6 Pokémon. Constants live in
+the config table.
+
+### 2.15 Meta-progression is gated on the server Pokédex
+
+**Considered:** catching a species *inside a run* unlocks it for later runs · catching a species
+**on the server** unlocks it for runs · no meta-progression.
+
+**Chosen:** the server Pokédex. Species the player has **caught on the server** become available
+in the starter offer.
+
+**Why:** it ties the server's existing progression to the mode's replayability in the direction
+that benefits both — overworld catching earns run variety, and the run mode gives ordinary
+catching a purpose beyond collection. The run-internal alternative is self-contained but makes
+the mode a closed loop that the rest of the server never touches.
+
+**Mechanism:** Cobblemon already maintains a per-player `PokedexManager` with `NONE` /
+`ENCOUNTERED` / `CAUGHT` per species, readable server-side. We read `CAUGHT`; no new tracking is
+needed, and because the Pokédex is a Cobblemon feature rather than ours, this survives
+publication and works in single-player.
+
+**Two constraints this must respect:**
+
+- **A baseline pool is mandatory.** A new player has caught almost nothing, so a purely
+  dex-gated offer makes the mode worst exactly when someone first tries it. There must be an
+  always-available starter set with dex unlocks layered on top.
+- **Unlocking is not power.** The dex decides *which* species can appear, never how strong the
+  offer is. Offer weighting and tiering stay independent, or a player who has caught a
+  pseudo-legendary gets one handed to them at wave 1.
+
+**Note the separation:** in-run catching builds the *run party* (§2.13); server catching builds
+the *starter pool*. Catching inside a run does not unlock anything, which keeps "nothing leaves
+the run" intact.
+
+**Positioning consequence, deliberate:** this makes the roguelite a reward for overworld play
+rather than a standalone attraction. That is the point of the decision, but it is a choice.
+
 ### 2.4 Stacking modifiers are reshaped, not reproduced
 
 **Considered:** patch Cobblemon's Showdown bundle to support stacking modifiers · express the
@@ -253,7 +319,8 @@ anyone losing access to something they use.
 **Considered:** (A) authored RCT trainer JSONs · (B) opponent teams built in Kotlin as synthetic
 party stores, driving the battle directly.
 
-**Chosen:** A, for bosses certainly (§2.7) and probably for wave opponents too.
+**Chosen:** A — but for **trainer and boss waves only**. §2.14 makes most waves wild encounters,
+which are not trainers at all and take a separate path. Revised 2026-07-27, see §2.14.
 
 **Why the earlier reasoning was wrong.** B was originally chosen because "RCT trainers are
 datapack JSON and cannot express a team scaled at runtime". They can.
@@ -367,10 +434,10 @@ is no run loop, no battle, no command.
 
 ## 4. Risks
 
-- **Replayability is unaddressed.** It is now a stated goal (§1) and there is no mechanism for
-  it — a seed and a linear wave ladder produce a similar run every time. Variance sources and
-  possible meta-progression are open (§5) and this is the risk most likely to make the mode
-  land flat.
+- **Replayability rests on one mechanism.** §2.15's dex-gated starter pool is currently the only
+  answer to "why start run #12", and it is front-loaded: it varies what a run *starts* with, not
+  what happens during one. Reward paths, branching and run modifiers are still open (§5). This
+  remains the risk most likely to make the mode land flat.
 - **Reimplementation cost.** §2.1: the tower scaffolding cannot be imported.
 - **World isolation.** Runs need arenas that are actually isolated, and for a published mod they
   cannot be hand-placed builds on our server. Structures, a dedicated dimension, or config.
@@ -390,17 +457,20 @@ is no run loop, no battle, no command.
   a player mid-run may see their real party while battling with run mons. Needs checking on dev;
   the answer decides whether phase 1 needs a custom GUI. Now sharper than before: under §2.13 the
   party changes *during* a run as the player catches, so whatever shows it has to stay live.
-- **Starter offer:** which species are offered, how many are shown, and how the offer is
-  weighted (§2.13 fixes the structure, not the contents).
-- **Catch rules inside a run:** what is catchable, at what rate, and whether balls are a reward
-  or unlimited. §2.13 makes this the party system, so it is now phase-1 critical.
+- **Starter offer:** the **baseline pool** every player starts with regardless of Pokédex
+  (§2.15 makes this mandatory, not optional), how many species are shown per offer, and how the
+  offer is weighted. §2.13 and §2.15 fix the structure; the contents are open.
+- **Catch rules inside a run:** catch rate, and whether balls are earned/purchased or unlimited.
+  §2.14 settles *what* is catchable (wild only, never trainer-owned).
+- **Wave interval constants:** how often trainer and boss waves land, and the level-curve
+  constants (§2.14 fixes the shape, not the numbers).
 - **Reward table contents and rarity curve** — the schema is buildable now (§2.12); the data is
   not blocking until balance.
 
 ### Blocking phase 2
 
-- **Replayability model** (§4): what varies between runs — starters, reward paths, branching
-  routes — and whether cross-run unlocks are in scope (§2.2).
+- **Replayability model** beyond §2.15's dex unlocks: what else varies between runs — reward
+  paths, branching routes, run modifiers.
 - **Boss roster:** who they are, at what intervals.
 - Waves per run; milestone checkpoint interval (§2.10 keeps milestones as persistence
   granularity — how coarse is still open).

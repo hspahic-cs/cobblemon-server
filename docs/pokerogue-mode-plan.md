@@ -33,7 +33,7 @@ every axis, not just the obvious one:
 | Party | Run party lives in our own store; the player's real party is never touched | §2.2 |
 | Progression | Levels, EVs, evolutions gained in a run die with it | §2.2 |
 | Catches | Nothing caught in a run leaves it | §2.2 |
-| Inventory | **Open** — the player's own potions and revives must not trivialise permadeath | §5 |
+| Inventory | No personal bag inside a run; run-granted items only | §2.11 |
 | World | Runs happen in run arenas, not in the shared world | §4 |
 | Gimmicks | Tera/Dynamax exist inside a run and nowhere else | §2.5 |
 | Economy | **One metered channel out: the currency/BP payout.** Deliberate, not an exception | §2.2 |
@@ -115,12 +115,80 @@ runs.
 **Consequence 1 — reroll.** Checkpointing is a reroll exploit unless wave generation is seeded.
 The run carries a `seed` for exactly this reason.
 
-**Consequence 2 — retry, and it is the larger one.** The seed prevents rerolling *opponents*.
-It does nothing about re-fighting a *losing battle*: with checkpoints plus permadeath, pulling
-the plug mid-battle rewinds to the wave boundary with the party intact. Any run-based mode with
-stakes has to commit the battle at its start — checkpoint with a `battleInProgress` flag before
-the first turn, and resolve an interrupted battle as a loss rather than replaying it. **Open,
-and it changes what `RunState` carries, so it is phase-1 blocking.**
+**Consequence 2 — retry, and it is the larger one.** The seed prevents rerolling *opponents*. It
+does nothing about re-fighting a *losing battle*: with checkpoints plus permadeath, pulling the
+plug mid-battle would rewind to the wave boundary with the party intact, making any losing
+battle re-fightable. Resolved in §2.10.
+
+### 2.10 Interrupted battles are attributed, not forfeited
+
+**Considered:** forfeit the run · rewind to the last milestone checkpoint · attribute the
+disconnect and penalise only the player's own drops.
+
+**Chosen:** attribution. **A disconnect never ends the run.**
+
+**Mechanism.** When a wave battle starts, stamp the run with a battle-in-progress marker
+carrying the **server's boot identity**. On reconnect, compare it against the current boot:
+
+- **The server restarted** since the marker was written → the interruption was not the player's
+  doing → clean resume of the wave, no penalty.
+- **The server is still on the same boot** → the player's connection dropped → penalty.
+
+Neither side of that comparison is forgeable by the player, which is what makes it work.
+
+**Penalty:** the Pokémon that were **on the field** when the connection dropped are killed
+(permadeath, via `RunState.kill()`), and the run continues at the next wave. The player loses
+roughly what losing the battle would have cost them, so quitting buys nothing — without the
+run-ending harshness that would punish a bad home connection.
+
+**Why not milestone rewind alone.** Rewinding to the last checkpoint every N waves was
+considered and kept only as persistence granularity, not as the deterrent: its cost depends
+entirely on where in the cycle the player is. Nineteen waves in with milestones every ten costs
+nine waves; eleven waves in costs one. The cheapest moment to rage-quit would be immediately
+after a checkpoint, and players would find it. It also punishes a genuine crash exactly as hard
+as an exploit, which attribution avoids.
+
+**Consequence:** `RunState` must carry the battle-in-progress marker, the boot identity, and the
+on-field Pokémon at the time of the last battle start.
+
+### 2.11 No personal bag inside a run
+
+**Chosen:** players may not use their own items inside the mode. The run bag is exclusively
+run-granted.
+
+**Why:** a player's own potions and revives make permadeath negotiable and bypass the reward
+loop entirely — the isolation contract (§1.1) is meaningless if healing is unlimited and
+externally supplied.
+
+**Mechanism:** reject bag-item actions outright for run battles. There is no format-level
+switch — `BagItem.canUse` is per-item — so this is enforced at the action layer. A blanket
+rejection is simpler than a per-item allowlist, and is what the decision permits.
+
+### 2.12 The reward table is fully configurable
+
+**Chosen:** rewards are **data**, not code. Contents and rarity curve are decided later and are
+expected to change often.
+
+**Format: a datapack**, not a config file, so tables are reloadable and so a server owner running
+a published build can write their own without touching the jar (§1.2).
+
+### 2.13 Starter draft: one starter from an offer, party grown by catching
+
+**Considered:** points budget · random offers, pick one, repeat · single starter plus in-run
+recruitment · prebuilt archetype packs · snake draft · egg/gacha draft.
+
+**Chosen:** a combination of *random offers* and *build by catching* — the player picks a single
+starter from a small randomised offer, and the party grows through the run by catching.
+
+**Why:** it carries the most run-to-run variance of the options while keeping player agency at
+the moment of choice, and it makes **catching the engine of the run** rather than a side
+feature — the most Cobblemon-native of the structures considered, which is the bar set in §1.
+The points-budget alternative is the most expressive but the least replayable, since strong
+players converge on the same picks.
+
+**Consequence — this moves catching into phase 1.** With a party that starts at one Pokémon,
+catch-into-run-party is not an enhancement, it is the party system; the vertical slice cannot
+ship without it. §3 is updated accordingly.
 
 ### 2.4 Stacking modifiers are reshaped, not reproduced
 
@@ -280,12 +348,14 @@ that call is made, and it is not published under the PokéRogue name.
 
 ## 3. Preliminary plan
 
-**Phase 1 — vertical slice.** Starter draft, ~10 waves, reward picks, permadeath, checkpoint and
-resume, run party in its own store. Deliberately de-risks the unknowns: run-store lifecycle,
-runtime-scaled RCT opponents, and the run loop reimplemented free of the tower.
+**Phase 1 — vertical slice.** Starter offer, ~10 waves, **catch-into-run-party**, reward picks,
+permadeath, checkpoint and resume with disconnect attribution, run party in its own store.
+Deliberately de-risks the unknowns: run-store lifecycle, runtime-scaled RCT opponents, and the
+run loop reimplemented free of the tower. Catching is in this phase because §2.13 makes it the
+party system, not an enhancement.
 
-**Phase 2 — full mode.** Boss trainers, run variance and branching, catch-into-run-party,
-concurrent runs and arena instancing, gimmick confinement.
+**Phase 2 — full mode.** Boss trainers, run variance and branching, concurrent runs and arena
+instancing, gimmick confinement.
 
 **Phase 3 — balance.** Content and tuning.
 
@@ -316,24 +386,27 @@ is no run loop, no battle, no command.
 
 ### Blocking phase 1
 
-- **Interrupted battles** (§2.3). Does disconnecting mid-battle forfeit the run, forfeit the
-  wave, or resume? Changes `RunState`.
-- **The player's bag.** Can a player use their own potions, revives, and berries inside a run?
-  If yes, permadeath is negotiable and the reward loop is bypassed. There is no format-level
-  switch for this — `BagItem.canUse` is per-item — so the lever is rejecting bag-item actions in
-  run battles, which has to be deliberate.
 - **Run-party visibility.** Cobblemon's party HUD reads Cobblemon storage, not our run store, so
   a player mid-run may see their real party while battling with run mons. Needs checking on dev;
-  the answer decides whether phase 1 needs a custom GUI.
-- **Starter draft:** pool, budget, party size.
-- **Reward table** contents and rarity curve.
+  the answer decides whether phase 1 needs a custom GUI. Now sharper than before: under §2.13 the
+  party changes *during* a run as the player catches, so whatever shows it has to stay live.
+- **Starter offer:** which species are offered, how many are shown, and how the offer is
+  weighted (§2.13 fixes the structure, not the contents).
+- **Catch rules inside a run:** what is catchable, at what rate, and whether balls are a reward
+  or unlimited. §2.13 makes this the party system, so it is now phase-1 critical.
+- **Reward table contents and rarity curve** — the schema is buildable now (§2.12); the data is
+  not blocking until balance.
 
 ### Blocking phase 2
 
 - **Replayability model** (§4): what varies between runs — starters, reward paths, branching
   routes — and whether cross-run unlocks are in scope (§2.2).
 - **Boss roster:** who they are, at what intervals.
-- Waves per run; checkpoint granularity.
+- Waves per run; milestone checkpoint interval (§2.10 keeps milestones as persistence
+  granularity — how coarse is still open).
+- **Run expiry.** Runs checkpoint indefinitely and nothing voids an abandoned one, so world save
+  data accumulates dead runs forever. The tower voids on daily rotation; this has no equivalent.
+  Likely a configurable expiry after some period offline.
 - Escalation ladder: which wave bands unlock Mega / Tera / Dynamax / legendaries.
 - Entry gating: what starting a run costs, and what stops abandon-and-restart from rerolling a
   bad draft.

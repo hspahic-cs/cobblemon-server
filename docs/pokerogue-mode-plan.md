@@ -351,12 +351,24 @@ for this mode** as RCT trainers.
 leaders and E4 are content players already fight, and recycling them makes the mode a rerun
 rather than its own thing.
 
-**Rejected — transcribing PokéRogue's rosters.** Their code is **AGPL-3.0-only** and their docs
-are **CC-BY-NC-SA-4.0**. Transcribing team compositions was a tolerable shortcut while the mode
-was server-internal; under §1.2 it becomes a published derivative. It is also a poor fit: their
-parties are seeded and tiered rather than fixed, and their schedule (E4 at waves 182–188,
-champion at 190) doesn't transfer to runs an order of magnitude shorter. What ports is the
-**pattern**, not the data.
+**Revised 2026-07-28 — use PokéRogue's teams, but do not ship them.** The earlier rejection of
+transcribing their rosters rested on two arguments, and §2.19 dissolved one of them: at 200 waves
+their schedule (E4 at waves 182–188, champion at 190) now lands *exactly*, because we adopted
+their run length. What remains is the licensing argument, and it only bites on distribution —
+their code is **AGPL-3.0-only**, their docs and assets **CC-BY-NC-SA-4.0**.
+
+Because the roster is **data**, that splits cleanly:
+
+- **Our server** uses PokéRogue-derived rosters, transcribed into our own trainer format and kept
+  in a server-side datapack. Nothing is vendored into this repo's mod source.
+- **A published build** ships the schema and a neutral, authored default roster — never the
+  transcribed one. The mod stays distributable; the transcription stays private server content.
+
+**Still true, and it limits what "the same teams" can mean:** their parties are not fixed lists.
+Generation is seeded and tiered — signature species plus filtered pools plus wave-dependent
+templates — so a leader's team varies by wave and by run. Transcribing produces *a* plausible
+team for a leader, not *the* team. What ports faithfully is the pattern; what ports literally is
+a snapshot of it.
 
 ### 2.8 AI: design for what ships, not for our bridge
 
@@ -548,6 +560,29 @@ as generous, because nothing players are chasing is denominated in what they pai
    out.
 
 **Format:** reuse §2.12's datapack convention rather than inventing a second one.
+
+### 2.21 The party starts at level 1 and levels on PokéRogue's curve
+
+**Chosen:** run starters begin at **level 1**, and the party's progression follows PokéRogue's
+scaling — the same curve the opponents are on (§2.19). A level-1 starter against a wave-1
+opponent is consistent, since the curve puts wave 1 at roughly level 1.
+
+**Why it matters that this was decided:** the opponent curve alone does not describe difficulty.
+If the party lagged the curve, every wave would get harder than intended; if it outran the curve,
+the run would trivialise. Tying both to the same scaling is what makes the difficulty a designed
+quantity rather than an emergent one.
+
+**Open, and it is an implementation fork with a real feel difference:**
+
+- **Battle EXP** (PokéRogue's own mechanism) is faithful and preserves a texture worth having: a
+  freshly caught Pokémon joins *behind* the curve and has to be brought up, which is a real cost
+  to catching mid-run and makes the party-building decision interesting. It needs EXP gain tuned
+  to track a curve Cobblemon's EXP tables were not designed for, and it can drift.
+- **Setting levels to the curve** is deterministic and cannot drift, but it erases that texture:
+  a newly caught Pokémon would arrive already at parity, so catching costs nothing.
+
+The sub-question either way: **what level does a mid-run catch join at** — its encounter level,
+or the party's? That single answer decides whether catching is a trade-off or a free upgrade.
 
 ---
 

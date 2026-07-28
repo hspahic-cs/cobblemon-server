@@ -572,17 +572,27 @@ If the party lagged the curve, every wave would get harder than intended; if it 
 the run would trivialise. Tying both to the same scaling is what makes the difficulty a designed
 quantity rather than an emergent one.
 
-**Open, and it is an implementation fork with a real feel difference:**
+**Decided: battle EXP**, PokéRogue's own mechanism, rather than setting levels to the curve.
+Levels are earned, not assigned, so the party can run ahead of or behind the curve depending on
+how the run has gone. **A Pokémon caught mid-run joins at its own encounter level**, not at the
+party's.
 
-- **Battle EXP** (PokéRogue's own mechanism) is faithful and preserves a texture worth having: a
-  freshly caught Pokémon joins *behind* the curve and has to be brought up, which is a real cost
-  to catching mid-run and makes the party-building decision interesting. It needs EXP gain tuned
-  to track a curve Cobblemon's EXP tables were not designed for, and it can drift.
-- **Setting levels to the curve** is deterministic and cannot drift, but it erases that texture:
-  a newly caught Pokémon would arrive already at parity, so catching costs nothing.
+**Consequence — this only creates a catch-up cost if the party outpaces the curve, so EXP must
+be tuned so that it does.** A wild encounter at wave N is generated *at* the curve level for wave
+N (§2.14), so a fresh catch joins at parity with the curve, not behind it. It is behind the
+*party* only to the extent the party has pulled ahead by fighting. If EXP were tuned so the party
+tracks the curve exactly, a mid-run catch would arrive at parity and cost nothing — which is
+precisely the outcome this decision was meant to avoid. Tuning the party modestly ahead of the
+curve is what makes catching a trade-off, and it is also what makes a 200-wave run winnable.
 
-The sub-question either way: **what level does a mid-run catch join at** — its encounter level,
-or the party's? That single answer decides whether catching is a trade-off or a free upgrade.
+**Consequence — EXP stops mattering at the cap.** The party reaches level 100 at roughly the same
+point the opponents do (§2.19, around wave 138). From there EXP rewards are dead weight and the
+reward table has to shift entirely onto EVs, held items, ability patches and gimmicks. That is
+the same wave band whose escalation §5 still lists as unresolved; they are one problem.
+
+**Watch:** Cobblemon species have different EXP growth rates, so a slow-growth species will lag a
+fast-growth one on identical EXP. That is true in PokéRogue too and is not inherently a bug, but
+it means the tuning target is a band, not a line.
 
 ---
 

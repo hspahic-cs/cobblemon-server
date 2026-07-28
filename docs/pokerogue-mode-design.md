@@ -107,6 +107,172 @@ the fantasy across two supported mechanisms:
 Not reachable: passive auto-triggering modifiers (auto-berry at 50%, Multi Lens extra hits).
 Those get expressed as mechanism 1 instead.
 
+### Run arenas
+
+Plan §1.1 says runs happen in run arenas, not in the shared world; §2.5 needs somewhere to put
+`power_spot` blocks that isn't the shared world; §4 says N concurrent runs need instancing. Those
+are one problem. Plan §1.2 constrains the answer: the mode ships as a standalone mod, so the
+arena cannot be a hand-built place on our server, cannot use our warp system, and has to work in
+single-player on a world the mod has never seen.
+
+**Decided: one static, mod-declared arena dimension, instanced by a coordinate slot grid, with a
+config override for owners who want their own arenas.** Reasoning below.
+
+#### Options considered
+
+**A — a dimension created dynamically per run.** One `ServerLevel` per run, registered at run
+start, unregistered at run end.
+
+This *is* possible on NeoForge 1.21.1 — more so than expected, so it was checked rather than
+dismissed. `MappedRegistry.unfreeze()` is public, `MinecraftServer.forgeGetWorldMap()` and
+`markWorldsDirty()` both survive in 1.21.1 (marked "Forge Internal use Only", not removed), and
+`createLevels` posts `LevelEvent.Load`, so the whole Infiniverse-shaped recipe is reachable
+without reflection. Feasibility is not the objection.
+
+The objections are cost and blast radius. Every level ticks every server tick, carries its own
+chunk source, entity storage and POI storage, and gets its own region directory on disk — so N
+runs is N ticking worlds. Constructing a `ServerLevel` by hand means reproducing `createLevels`'
+argument list (`DerivedLevelData`, shared `RandomSequences`, the world-border delegate listener)
+and keeping it correct across Minecraft bumps. Unregistering a level while anything still
+references it is the genuinely dangerous part, and deleting its region directory afterwards is
+manual work on a live server. Worst, `WorldGenSettings` is encoded from the dimension registry at
+save time, so runtime-registered stems can be **baked into `level.dat`** — a published mod that
+accretes one dead dimension entry per run ever started, on someone else's world, is not a thing
+to ship. *Unverified:* whether the baking actually happens on a normal save path, or only on
+world creation. It did not need resolving, because the cost argument already loses.
+
+**B — one static dimension declared by the mod, instanced by coordinates.** A
+`dimension_type` + `dimension` JSON pair in the mod's own `data/`, a void flat generator, and a
+grid of arena slots inside it. Chosen; detail below.
+
+**C — a generated structure placed in the existing world.** No dimension, arena stamped
+somewhere far out in the overworld.
+
+Rejected. It fails the isolation contract at the first hop: the arena is somewhere players can
+walk to, mine, grief and log out in, and other players are in the same world. It has to find
+empty land on a world the mod did not generate, which cannot be guaranteed; it collides with
+claim/protection mods and, on our server specifically, with the wilderness prune box. It buys
+nothing that B doesn't, since concurrency still needs a coordinate grid.
+
+**D — config-declared arena coordinates the owner builds by hand.** This is what the tower does
+today (`/tower setfloor`, positions in `TowerStore`) and what our `multiworld:arena*` dimensions
+are.
+
+Rejected *as the default*, kept as an override. It is the best-looking option and the worst
+default: it requires manual setup before the mode works at all, which is hostile for a published
+mod and unusable in single-player; N concurrent runs means N hand-built arenas configured up
+front; there is nothing to guarantee a `power_spot` was placed; and cleanup of an abandoned arena
+is a human with a command. As an *override* it is exactly right — see "Owner override" below.
+
+**E — a custom `ChunkGenerator` that emits the arena at every slot.** A refinement of B rather
+than a rival: the arena becomes a property of the terrain, so there is no placement step, no
+re-stamping, and a deleted region file regenerates identically. Costs a `ChunkGenerator`
+implementation plus codec registration, and gives up datapack-overridable arena builds. Worth
+revisiting if template stamping turns out to be the annoying part; not worth it first.
+
+**F — no arena; battle where the player stands, in a "run bubble".** Cobblemon battles do not
+strictly need a stage. Rejected: it is the one option that plainly violates §1.1, and it leaves
+`power_spot` with nowhere to live that isn't the shared world.
+
+#### The recommendation in detail
+
+**The dimension.** `data/cobblemon_roguelite/dimension_type/arena.json` and
+`data/cobblemon_roguelite/dimension/arena.json`, shipped in the mod jar. NeoForge loads every
+mod's `data/` as an always-on server datapack (`ResourcePackLoader`, `PackType.SERVER_DATA`), so
+this needs no owner action and works in single-player.
+
+It also lands on **existing** worlds, which was the thing worth verifying:
+`WorldDimensions.bake` unions the datapack `LevelStem` registry with the world's saved dimension
+map, so installing the mod into a world in progress adds the dimension on next load. Generator is
+`minecraft:flat` with `layers: []`, `lakes: false`, `features: false`,
+`structure_overrides: []`, biome `minecraft:the_void` — nothing generates, and nothing but our
+own placement exists in it.
+
+The `dimension_type` does real work here. `monster_spawn_light_level: 0` plus
+`monster_spawn_block_light_limit: 0` kills vanilla hostile spawning; `has_raids: false`,
+`piglin_safe: true`, `bed_works: false`, `respawn_anchor_works: false`; `fixed_time` locks the
+arena to daylight if we want it. All confirmed present in 1.21.1's `DimensionType` codec.
+
+Cobblemon's own spawner is not covered by any of that — it is player-driven and does not consult
+dimension type. Cobblemon has **no global dimension blacklist** (`SpawningCondition` has a
+per-spawn-detail `dimensions` allowlist, which is the wrong direction for us). The lever is
+`CobblemonEvents.ENTITY_SPAWN`, which is a `CancelableObservable` — cancel any natural spawn whose
+level is the arena dimension. Cheap and total. *Unverified:* whether the void biome would produce
+any Cobblemon spawns at all; the cancel is belt-and-braces either way.
+
+**Instancing.** A slot grid. Slot *n* maps to a fixed `(x, z)` by `x = (n % width) * spacing`,
+`z = (n / width) * spacing`, spacing configurable and defaulting to something comfortably past
+max render distance (32 chunks = 512 blocks), so 1024. Slots are allocated at run start,
+recorded on `RunState`, and released on run end or expiry. `RunStore` already enumerates every
+active run, so it is the allocator's source of truth — no second registry to keep consistent.
+`maxConcurrentRuns` is a config bound, and because slots are *reused*, disk growth is bounded by
+that number rather than by runs ever played. That bound is the main practical advantage over
+option A.
+
+**The arena itself.** A `StructureTemplate` from `data/cobblemon_roguelite/structure/*.nbt` —
+1.21.1's structure resource directory is `structure`, singular — placed at the slot on
+assignment. Shipping it as a datapack structure means a server owner can replace the arena build
+without touching the jar, matching the reward-table decision (§2.12).
+
+**Stamp on assignment, not on release.** Re-place the template and sweep entities in the slot box
+when the slot is handed out. Doing it on release means a crash between run-end and cleanup leaves
+a dirty arena for the next player; doing it on assignment makes cleanup idempotent and
+crash-proof, which is the same reasoning §2.10 applies to interrupted battles.
+
+**Getting in and out.** Store the entry point — dimension, position, rotation — on `RunState`
+before the first teleport, and return the player to it on completion, wipe, or abandon. On login
+inside the arena dimension: if the player has an active run, resume it (§2.10 decides whether
+that costs them anything); if they do not, eject to the stored entry point, falling back to world
+spawn if that dimension is gone. Without that reconciliation the arena is a void trap for anyone
+whose run was voided while they were offline.
+
+**Server restart mid-run is the option's best property.** The dimension is declared statically,
+so it exists on every boot with nothing to recreate and no ordering hazard between our mod's
+startup and player login. The slot assignment is persisted in `RunStore` alongside the rest of
+the run. Nothing about the arena has to survive a restart *as state*, because it is derived: slot
+index in, coordinates out. Option A has to rebuild a live `ServerLevel` before the first player
+logs in or the player is silently dumped in the overworld.
+
+**Uninstalling the mod is survivable, which matters for publication.** If the dimension
+disappears, `PlayerList` logs `Unknown respawn dimension …, defaulting to overworld` and places
+the player in the overworld rather than failing; and NeoForge patches the saved dimension map to
+use `LenientUnboundedMapCodec`, which drops entries it cannot decode instead of failing the whole
+`level.dat` parse. A player who removes the mod mid-run loses the run, not the save.
+
+**Gimmick confinement falls out of it.** `power_spot` goes in the arena template, placed only if
+Mega Showdown is loaded (registry lookup by id, soft dependency preserved — see below). Because
+slots are 1024 apart and `powerSpotRange` is 20, no arena's power spot can reach another's, and
+none of them can reach the shared world.
+
+**Owner override.** Config: `arena.dimension` (default ours), `arena.template`, `arena.spacing`,
+`arena.maxConcurrentRuns`, and an explicit list of arena origins that, when set, replaces the
+slot grid. That is option D as a first-class configuration rather than the default — it lets our
+own server point the mode at hand-built `multiworld:` arenas later without a code change, and it
+covers hosts that refuse extra dimensions.
+
+#### Open questions this leaves
+
+- **Chunk tickets.** A present player keeps the arena loaded, so no forced chunks are needed for
+  the common path. If an RCT trainer has to be summoned *before* the player arrives, the arena
+  chunks need a brief force-load first — the tower hit exactly this (`forceload add` before the
+  midnight rotation, plus a settle delay because `summon_persistent` materialises on a later
+  tick). Whether our summon ordering needs the same treatment is unknown until the wave loop
+  exists.
+- **One room for the whole run, or a room per wave band?** The recommendation gives a run one
+  arena for its duration. PokéRogue's changing biomes are a real part of its texture, and
+  re-stamping a different template at band boundaries is nearly free given the machinery. That is
+  a content call, not an architecture one.
+- **Does Cobblemon behave in a void-biome dimension?** *Unverified.* Battle flow, capture flow and
+  `PokemonEntity` placement on a floating platform have not been tested there. This is the single
+  biggest unknown in the section and it is dev-VM-testable as soon as there is a run loop.
+- **Does `mega_showdown:power_spot` work when placed programmatically?** *Unverified* — no source
+  available. If it needs a block entity, a multiblock, or an activation step, template placement
+  may not be enough.
+- **Slot reuse vs. region-file growth over long uptimes.** Bounded by `maxConcurrentRuns` in
+  theory; not measured.
+- **Run expiry is a prerequisite, not an extra.** Plan §5 already lists it as open. It is what
+  frees slots, so the grid silently fills up without it.
+
 ### Gimmick confinement
 
 Mega Showdown implements Tera/Dynamax **mod-side with items and world state**, so
@@ -120,7 +286,9 @@ Actual gates: Dynamax = `dynamax_band` + within `powerSpotRange: 20` of a
 Confinement plan:
 
 - Craft-ban `power_spot`, `dynamax_band`, `tera_orb` via `server-craft-bans`.
-- Keep `dynamaxAnywhere: false`; place `power_spot` blocks in run arenas only.
+- Keep `dynamaxAnywhere: false`; place `power_spot` blocks in run arenas only — in the arena
+  template, so every slot gets one and nothing outside the arena dimension does
+  ([Run arenas](#run-arenas)).
 - Issue run-scoped orb/band on entry, revoke on exit **and** on login, from the mode's own
   interrupted-run reconciliation (covers crash-mid-run leakage). `TowerGauntletHook` does this
   for the tower and is worth reading, but cannot be reused — plan §2.9.
@@ -150,8 +318,9 @@ copy to keep current.
 
 ## Risks
 
-- **Concurrency:** N simultaneous runs need instanced arenas. The tower's per-floor teleport
-  is the starting point.
+- **Concurrency:** N simultaneous runs need instanced arenas. Addressed by
+  [Run arenas](#run-arenas) — a mod-declared arena dimension with a coordinate slot grid. The
+  tower's per-floor teleport is prior art, not the mechanism.
 - **Test loop:** no working local dev server for these mods; everything is runtime-tested on
   the dev VM. This sets iteration cadence more than code volume does.
 - **Craft-ban sequencing:** shipping the craft-bans before the mode exists removes Tera and

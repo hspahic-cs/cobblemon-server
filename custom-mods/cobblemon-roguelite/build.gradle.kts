@@ -30,6 +30,12 @@ neoForge {
             sourceSet(sourceSets.main.get())
         }
     }
+
+    // Unit tests touch Minecraft types directly (CompoundTag, RegistryAccess), and moddev puts the
+    // modding classpath on `main` only — without this the test source set does not compile at all.
+    // Deliberately not `unitTest.enable()`: that boots FML around the tests, which we do not need
+    // and which would make a plain JUnit run depend on the whole mod loader coming up.
+    addModdingDependenciesTo(sourceSets.test.get())
 }
 
 dependencies {

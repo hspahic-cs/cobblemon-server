@@ -36,7 +36,8 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/store")
  * [RunState] is mutable and handed out by reference, so mutations made by callers cannot mark this
  * store dirty on their own. Callers must call [checkpoint] at run-progress boundaries — the same
  * contract as `TowerGauntletHook.persist()`. [checkpoint] also flushes to disk, so a crash costs at
- * most the wave in progress rather than everything since the last autosave.
+ * most the wave in progress rather than everything since the last autosave. [end] flushes too, and
+ * for a sharper reason: see there.
  */
 class RunStore private constructor(
     private val registryAccess: RegistryAccess,
@@ -66,10 +67,20 @@ class RunStore private constructor(
      * End a run and return it so the caller can pay out. The run party dies with it (decision 1);
      * there is no archive, because a retained party would be a legendary faucet the moment anyone
      * found a way to read it back out.
+     *
+     * Flushes for a harder reason than [checkpoint] does. The removal is the *only* record that a
+     * run was completed and paid out; the payout itself lands in the economy, which has its own
+     * persistence. Leaving the removal to the next autosave means a crash in that window restores
+     * the run at its last checkpoint with the reward already banked — the player finishes it again
+     * and gets paid twice, and repeatably, since the crash window is the same every time.
+     *
+     * Call this on the server thread, where the flush runs inline and is done before the payout is
+     * made. Called off-thread it is only queued (see [flush]), which reopens that window a tick.
      */
-    fun end(player: UUID): RunState? {
-        val run = runs.remove(player)
-        if (run != null) setDirty()
+    fun end(server: MinecraftServer, player: UUID): RunState? {
+        val run = runs.remove(player) ?: return null
+        setDirty()
+        flush(server, player)
         return run
     }
 
@@ -81,10 +92,25 @@ class RunStore private constructor(
     fun checkpoint(server: MinecraftServer, player: UUID) {
         if (!runs.containsKey(player)) return
         setDirty()
-        // SavedData alone only reaches disk on the autosave tick. Flush now so a crash mid-run
-        // rewinds by one wave at worst. DimensionDataStorage.save() writes only dirty entries.
-        runCatching { server.overworld().dataStorage.save() }
-            .onFailure { log.warn("roguelite: checkpoint flush failed for {}", player, it) }
+        flush(server, player)
+    }
+
+    /**
+     * SavedData alone only reaches disk on the autosave tick; this writes it now, so a crash costs
+     * a wave at worst. `DimensionDataStorage.save()` writes only dirty entries.
+     *
+     * On the server thread, always. Callers reach us from battle hooks, and ours answer
+     * asynchronously (the AI bridge replies off-thread), so an inline `save()` can run concurrently
+     * with the world autosave already walking the same `DimensionDataStorage` — two writers, one
+     * file, and the loser is a truncated run file that reads back as "no run". `execute` runs the
+     * block inline when we are already on the server thread, so the common path pays nothing for
+     * this; off-thread callers get the write ordered against the autosave instead of racing it.
+     */
+    private fun flush(server: MinecraftServer, player: UUID) {
+        server.execute {
+            runCatching { server.overworld().dataStorage.save() }
+                .onFailure { log.warn("roguelite: checkpoint flush failed for {}", player, it) }
+        }
     }
 
     override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
@@ -98,8 +124,8 @@ class RunStore private constructor(
     }
 
     companion object {
-        /** File name under `<world>/data/`. */
-        const val DATA_NAME = "cobblemon_bridge_roguelite_runs"
+        /** File name under `<world>/data/`. Names this mod, not the one this code started in. */
+        const val DATA_NAME = "cobblemon_roguelite_runs"
         private const val RUNS_KEY = "runs"
 
         /**

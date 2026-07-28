@@ -24,21 +24,42 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *
  * @property wave the wave about to be fought (1-based). Incremented on victory.
  * @property party the live run party. Permadeath removes entries; order is party order.
+ *   **Mutated from battle threads.** The monitor is the list object itself: everything in this
+ *   class touches it under `synchronized(party)`, and anything outside that has to reach the
+ *   raw list must take the same lock. Readers should prefer [partySnapshot].
  * @property credits run-scoped currency, spent in the between-wave shop. Converted to
  *   server currency at run end — it is never itself a server balance.
  * @property seed fixes wave generation so a resumed run rolls the same opponents it would
  *   have rolled before the disconnect. Per-wave draws use `seed` combined with [wave].
+ *   Deliberately has **no default**: a caller that forgot to supply one would hand every player
+ *   on the server the identical run, and nothing about that failure is visible in play until two
+ *   players compare notes. Making it a required argument turns it into a compile error instead.
  * @property bossesCleared count of fixed boss trainers beaten, for payout curves.
  */
 data class RunState(
     var wave: Int = 1,
     val party: MutableList<Pokemon> = mutableListOf(),
     var credits: Int = 0,
-    val seed: Long = 0L,
+    val seed: Long,
     var bossesCleared: Int = 0,
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
-    fun isWiped(): Boolean = party.isEmpty()
+    fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
+
+    /**
+     * The party as it stood at one instant, safe to iterate off the thread that owns the battle.
+     *
+     * A defensive copy taken under the lock, rather than a synchronized list wrapper: a wrapper
+     * makes each individual call atomic but leaves *iteration* — which is what [toNbt] and the
+     * world autosave do — needing an explicit lock anyway, and holding the monitor across six
+     * `saveToNBT` calls would stall the battle thread that is trying to report a faint. Copying
+     * six references costs nothing and the lock is held for exactly that long.
+     *
+     * This makes the list safe to walk; it does not make the Pokémon in it immutable, so a
+     * snapshot taken mid-battle can still serialize a Pokémon whose HP is being written. That is
+     * why checkpoints are taken at wave boundaries and not per-turn.
+     */
+    fun partySnapshot(): List<Pokemon> = synchronized(party) { party.toList() }
 
     /**
      * Drop a fainted Pokémon from the run for good. Returns true if it was present.
@@ -51,21 +72,32 @@ data class RunState(
      * silent no-op and permadeath would simply never fire — pass `clone(newUUID = false)`, or
      * hand the run Pokémon over uncloned.
      */
-    fun kill(pokemon: Pokemon): Boolean = party.removeIf { it.uuid == pokemon.uuid }
+    fun kill(pokemon: Pokemon): Boolean = synchronized(party) { party.removeIf { it.uuid == pokemon.uuid } }
 
     fun toNbt(registryAccess: RegistryAccess): CompoundTag {
         val tag = CompoundTag()
+        tag.putInt(SCHEMA_KEY, SCHEMA_VERSION)
         tag.putInt("wave", wave)
         tag.putInt("credits", credits)
         tag.putLong("seed", seed)
         tag.putInt("bossesCleared", bossesCleared)
         val list = ListTag()
-        party.forEach { list.add(it.saveToNBT(registryAccess)) }
+        partySnapshot().forEach { list.add(it.saveToNBT(registryAccess)) }
         tag.put("party", list)
         return tag
     }
 
     companion object {
+        /**
+         * Bump whenever the shape or the *meaning* of anything [toNbt] writes changes — a renamed
+         * key, a changed unit, a field that starts counting from something else. Without this a
+         * format change reads old saves as if they were new ones and silently resumes runs with
+         * wrong values, which is the one failure mode a checkpoint must never have.
+         */
+        const val SCHEMA_VERSION = 1
+
+        private const val SCHEMA_KEY = "schemaVersion"
+
         /**
          * Rebuild a run from its checkpoint. Returns null if the snapshot is unusable, which
          * the caller must treat as "no run" rather than "empty run" — an empty party would
@@ -76,6 +108,22 @@ data class RunState(
          * player than losing the run, and a Cobblemon version bump is the likely cause.
          */
         fun fromNbt(registryAccess: RegistryAccess, tag: CompoundTag): RunState? {
+            val version = tag.getInt(SCHEMA_KEY)
+            if (version != SCHEMA_VERSION) {
+                // Refusal is the safe half of a migration path. A tag stamped with a version we do
+                // not know is a tag whose fields we cannot claim to understand, and a half-parsed
+                // run — right party, wrong wave — is worse than no run, because it does not
+                // announce itself: the player just keeps playing a run that is quietly wrong.
+                // An absent key reads as 0, i.e. a pre-versioning checkpoint, and is refused for
+                // the same reason. When the format does change, migrate below-version tags here
+                // and keep the refusal for above-version ones — those are a downgraded server
+                // reading a save it has no way to represent.
+                log.warn(
+                    "roguelite: checkpoint schema v{} is not v{} — discarding run (no migration path)",
+                    version, SCHEMA_VERSION,
+                )
+                return null
+            }
             val wave = tag.getInt("wave")
             if (wave < 1) {
                 log.warn("roguelite: checkpoint has wave={} — discarding", wave)

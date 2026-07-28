@@ -1,7 +1,8 @@
-# PokéRogue Mode — Design
+# Roguelite Mode — Design
 
-A run-based roguelite mode for the server, inspired by [PokéRogue](https://pokerogue.net/).
-Built on our existing tower code in `cobblemon-bridge`.
+A run-based roguelite mode, inspired by [PokéRogue](https://pokerogue.net/), built as the
+standalone mod `custom-mods/cobblemon-roguelite`. It depends on Cobblemon and nothing else of
+ours (plan §2.9).
 
 > **Start with [`pokerogue-mode-plan.md`](./pokerogue-mode-plan.md)** — it holds the intent,
 > the decisions and the reasoning behind them, and the phased plan. This document is the
@@ -30,14 +31,32 @@ What we already own covers most of the scaffolding:
 > The table above is a guide to prior art worth reading before reimplementing, and to the
 > integrations that belong behind an interface.
 
-## Locked decisions
+## Decisions
 
-1. **Run-caught Pokémon do not persist.** Runs are self-contained; payout is currency/BP.
-   This keeps the mode from becoming a legendary/shiny faucet that moves the server economy.
-2. **Checkpointing is supported.** A run survives across sessions.
-3. **Tera and Dynamax are enabled inside the run only**, gated physically (see below).
-4. **The battle AI is being rewritten.** Design assumes an AI that can use gimmicks; do not
-   build the ladder around today's AI limits.
+The decision record lives in [`pokerogue-mode-plan.md`](./pokerogue-mode-plan.md) §2 and is the
+authority — it is kept current and there are now twenty-odd entries, several of which reverse
+earlier ones. This document does not restate them; where a section here depends on a decision it
+cites the section number.
+
+## Module layout
+
+What exists today. Nothing is wired to a battle yet.
+
+| Package | Holds |
+| --- | --- |
+| `run/` | `RunState` (the run model, NBT round-tripping, permadeath) and `RunStore` (every active run, as world save data) |
+| `integration/` | Host seams: `RunCharges` (entry fee), `RunPayouts` (optional bonus on top of the payout), `RunBattleAi` (opponent AI). Each has a working default so the mod runs standalone |
+| `data/` | `RogueliteDataRegistry`, the datapack convention: `data/<ns>/roguelite/<folder>/<name>.json` |
+| `data/reward/` | Between-wave reward tables — a weighted draw, because variance inside a run is the point |
+| `data/payout/` | End-of-run payout tables — a deterministic filter, because the payout is the audited channel out and two identical runs must pay identically |
+| `wave/` | Deterministic `(seed, wave)` → wild species and level; the shared level curve |
+| `starter/` | The Pokédex-gated starter offer |
+| `composition/` | Wave number → encounter kind, level and reward table id |
+
+Two conventions worth knowing before adding to it. Everything data-driven goes through
+`RogueliteDataRegistry` rather than a second loader. And anything server-specific — our economy,
+our arenas, the poke-engine AI bridge — is registered *into* the module through `integration/`,
+never compiled against; nothing here may import `com.cobblemonbridge`.
 
 ## Architecture
 
@@ -58,34 +77,49 @@ Pokémon over uncloned.
 This removes the largest correctness risk in the whole design: no crash, restart, or botched
 restore can cost a player their real Pokémon.
 
-### Wave generation
+### Wave composition — two paths, not one
 
-**Decided: authored RCT trainers, scaled at runtime** (plan §2.6, revised 2026-07-27). The
-earlier decision — building opponent teams in Kotlin and driving the battle directly — rested on
-the claim that RCT teams cannot be scaled at runtime. They can:
-`GymBattleAdjustHook.applyToBattle` already mutates `bp.effectedPokemon.level` at
-`BattleStartedEvent.Pre`, today for the player's side under gym level caps. The same shape
-applied to the NPC actor scales an authored team to any wave level.
+A run is **200 waves** (plan §2.19) and they are not all the same kind of thing (§2.14). The
+split is what makes catching possible at all: §2.13 makes catching the party system, and
+trainer-owned Pokémon are never catchable, so a run of pure trainer battles could not grow a
+party.
 
-This buys trainer skins, names, dialogue, summon/cleanup machinery, and per-trainer AI
-configuration for free, and avoids a bespoke battle driver.
+| Kind | Count in a run | Built as | Catchable | Levels |
+| --- | --- | --- | --- | --- |
+| Wild | 160 | Runtime-generated, on Cobblemon's own wild-battle and capture flow | Yes | Set at spawn |
+| Trainer | 20 | Authored RCT trainer | No | Mutated at battle start |
+| Boss | 20 | Authored RCT trainer | No | Same, plus the ×1.2 boss multiplier |
 
-Level scaling does **not** scale movesets, EVs, or held items, so the ladder wants a few authored
-bands (early/mid/late) with level smoothing difficulty *within* a band, rather than one team
-stretched across the whole run.
+`composition/WaveComposition` owns which is which. It is a pure function of wave number and
+config — deliberately *not* of the seed, since which wave is a boss must not vary between runs —
+and it returns the level by delegating to the shared curve rather than reimplementing it.
 
-*Unverified:* NPC-side level mutation is proven for the player side only. Confirm on the dev VM
-before committing to it.
+**The level curve is PokéRogue's, verbatim**: `1 + wave/2 + (wave/25)²`, bosses ×1.2, with a
+jitter that narrows as waves deepen. It clamps at 100, because Cobblemon's `maxPokemonLevel` is
+100 and global — so from about wave 138 (bosses ~120) the last third of a run is flat, and its
+difficulty has to come from teams, EVs, items and gimmicks instead (§2.19).
 
-### Fixed boss trainers
+**Trainer-side level mutation is still unverified.** `GymBattleAdjustHook.applyToBattle` proves
+the shape by mutating `bp.effectedPokemon.level` at `BattleStartedEvent.Pre`, but only for the
+*player's* side under gym level caps. If it fails on the NPC side, only the 40 trainer and boss
+waves are affected — wild waves set their level at spawn and do not depend on it — and those fall
+back to fixed-level authored bands. That asymmetry is why the split de-risks the RCT decision
+rather than just complicating it.
 
-Every N waves the run serves a **fixed trainer with an authored team**, distinct from the scaled
-wave opponents. These are authored specifically for this mode, as RCT trainers.
+Level scaling does **not** scale movesets, EVs or held items, so trainer and boss waves want a
+few authored bands rather than one team stretched across 200 waves.
 
-Rejected: reusing our own `gym_01`–`gym_24`, which players already fight, and transcribing
-PokéRogue's rosters, which becomes a published derivative under plan §1.2. PokéRogue code is
-AGPL-3.0-only and its docs/assets are CC-BY-NC-SA-4.0 — no source is vendored here, and their
-behaviour is described in our own words. What ports is the **pattern**, not the data.
+### Boss trainers
+
+Bosses are authored trainers, distinct from the scaled wave opponents, and they follow
+PokéRogue's rosters — transcribed into our own trainer format as **server-side datapack content
+only**. A published build ships the schema and a neutral authored default instead; nothing is
+vendored into mod source either way (plan §2.7, and note the licence reasoning there).
+
+**Their schedule does not fit the interval rule.** PokéRogue puts the E4 at waves 182/184/186/188
+and the champion at 190 — none of them multiples of ten. A single "boss every 10th wave" cannot
+express that, so it needs an explicit authored-wave list or a fixed-encounter override above the
+interval rule. `WaveComposition` is shaped to accept one; nothing has designed it yet.
 
 ### Rewards — two mechanisms, no Showdown fork
 
@@ -106,6 +140,42 @@ the fantasy across two supported mechanisms:
 
 Not reachable: passive auto-triggering modifiers (auto-berry at 50%, Multi Lens extra hits).
 Those get expressed as mechanism 1 instead.
+
+**Rewards past the level cap.** The party levels by battle EXP on the same curve as the opponents
+(§2.21) and hits 100 at roughly the same wave they do. From about wave 138 an EXP or level reward
+is dead weight, so the table has to change character over that band — EVs, held items, ability
+patches, gimmicks. That is the same band whose escalation §5 lists as unresolved; it is one
+problem, not two.
+
+### Rewards vs payout — two tables, deliberately different
+
+They look alike and behave oppositely, so the distinction is worth stating once:
+
+| | Reward tables (`data/reward/`) | Payout tables (`data/payout/`) |
+| --- | --- | --- |
+| When | Between waves, inside a run | Once, at run end |
+| Selection | **Weighted draw** — variance inside a run is the point | **Deterministic filter** — two identical runs must pay identically |
+| Pays | Run-scoped state that dies with the run | Real items that leave the run |
+| Why | Roguelite texture | The single audited channel out of a sealed run (§1.1) |
+
+The payout being auditable is the whole reason it is not a draw. It is also why `PayoutGrant` is
+sealed to items with no command kind: a `"run": "/give …"` field would let a datapack pay
+currency or permissions, leaving the isolation contract enforced by whatever an owner typed into
+JSON rather than by the code.
+
+### Money in, items out
+
+Entry costs currency and the payout is not currency (plan §2.18, §2.20). That asymmetry shapes
+the seams: the module grants payout items *itself*, so a published build pays out correctly with
+nothing registered — but it has no economy and must never grow one, so charging goes through
+`integration/RunCharges`.
+
+Two defaults, both failing toward "the mode is playable": an unregistered charge provider means
+runs are **free** (refusing would make a standalone install unplayable, and free is the only
+coherent price where no currency exists), and an unregistered payout provider adds **nothing** on
+top of the table the module already paid. The first has a real cost on our server — a forgotten
+registration silently makes runs free and reopens the reroll loop — so it warns once and exposes
+`isRegistered()` for a boot-time assertion. Wire that assertion when we deploy.
 
 ### Run arenas
 

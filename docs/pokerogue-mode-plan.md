@@ -604,6 +604,20 @@ is no run loop, no battle, no command.
 - Entry gating: what starting a run costs, and what stops abandon-and-restart from rerolling a
   bad draft.
 
+### Parked — deliberately out of scope for this work
+
+- **Battle speed.** 200 waves makes Cobblemon's battle pacing worth attacking, and a fair amount
+  of it is fixed per battle (start, send-out, faint, end) rather than per turn, so it is paid 200
+  times regardless of how short a fight is. Findings, so they are not rediscovered: there is **no
+  config lever** — Cobblemon exposes only `walkingInBattleAnimations` and `animateBattleTiles`,
+  both already false on our server. The delays are hardcoded across ~30 sites (fifteen at 1.5s,
+  six at 2s, one at 2.5s, some `WaitDispatch`), all funnelling through
+  `PokemonBattle.dispatchWaiting(delaySeconds)`, which is server-side and therefore mixin-able
+  with no client mod. About twenty further waits are `UntilDispatch`, which block on a condition
+  rather than a timer and set a floor a multiplier cannot get under.
+  **Decided 2026-07-28: separate PR, and probably server-wide rather than run-only.** Not part of
+  this mode's work.
+
 ### Blocking publication only
 
 - Whether to publish at all, and under what licence and name (§2.9).

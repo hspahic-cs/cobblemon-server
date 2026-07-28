@@ -310,11 +310,11 @@ object RunController {
                         // marker rides along; it does not need its own flush (see [RunState.battle]).
                         store.checkpoint(server, player.uuid)
                         // `step.trainer` is who this wave fights, already reconciled against fixed
-                        // encounters and this run's no-repeat window. It is passed no further today
-                        // only because [RunWaveHandler] does not yet take it; a handler that draws its
-                        // own trainer instead of taking this one will summon a different opponent from
-                        // the one the run planned, and the run's own log will disagree with the battle.
-                        if (RunWaves.begin(server, player, run, step.plan)) {
+                        // encounters and this run's no-repeat window, and it is handed straight to the
+                        // handler. A handler that drew its own instead would summon a different
+                        // opponent from the one the run planned, and the run's own log — including the
+                        // no-repeat memory — would describe a battle that never happened.
+                        if (RunWaves.begin(server, player, run, step.plan, step.trainer)) {
                             ResumeResult.WaveStarted(step.plan)
                         } else {
                             // No battle started, so there is nothing to attribute. Cleared in memory

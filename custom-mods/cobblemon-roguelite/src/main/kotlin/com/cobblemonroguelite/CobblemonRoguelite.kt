@@ -1,6 +1,7 @@
 package com.cobblemonroguelite
 
 import com.cobblemonroguelite.arena.ArenaSpawnSuppressor
+import com.cobblemonroguelite.battle.RunWaveBattles
 import com.cobblemonroguelite.data.RogueliteData
 import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunLoginHooks
@@ -22,17 +23,18 @@ import org.slf4j.LoggerFactory
  * through an interface declared here and implemented in `cobblemon-bridge`, so the mode stays
  * buildable and shippable on its own. Nothing in here may import `com.cobblemonbridge`.
  *
- * The run lifecycle is wired: a run can be started, resumed, checkpointed, abandoned and paid out.
- * The **battle is not** — [com.cobblemonroguelite.run.RunWaves] is the seam and nothing implements
- * it, so `/roguelite resume` reaches a wave and stops there. That is deliberate: the arena work it
- * depends on is blocked, and a placeholder battle that counted waves as won would let a run be
- * walked to the payout.
+ * The run lifecycle is wired, and so is the battle: [com.cobblemonroguelite.battle.RunWaveBattles]
+ * fills [com.cobblemonroguelite.run.RunWaves] and fights §2.14's wild waves in full. Its trainer and
+ * boss waves are not fought here and cannot be — those are authored RCT trainers and RCT's licence is
+ * unverified (§1.2), so they go out through
+ * [com.cobblemonroguelite.integration.RunTrainerBattles], whose default refuses rather than counting
+ * the wave as won.
  */
 @Mod(CobblemonRoguelite.MOD_ID)
 class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
 
     init {
-        logger.info("Cobblemon Roguelite initializing (run lifecycle wired; wave battles not implemented)")
+        logger.info("Cobblemon Roguelite initializing (run lifecycle and wild wave battles wired)")
         // enqueueWork, NOT the parallel body of common setup. Our registries land in Cobblemon's
         // CobblemonDataProvider, which keeps them in an unsynchronized LinkedHashSet that its own
         // parallel setup handler is populating at the same time — registering from the parallel
@@ -44,6 +46,11 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
             // registries this one has no visible failure if it loses — the subscription is simply
             // dropped and wild Pokémon start appearing in arenas.
             it.enqueueWork(ArenaSpawnSuppressor::register)
+            // Same phase, same race, and one extra reason: this subscribes to four of Cobblemon's
+            // battle observables, and a subscription dropped by that race would be a wave whose
+            // faints, result and on-field Pokémon are never reported — a run that fights and never
+            // finishes, with nothing in the log to say why.
+            it.enqueueWork(RunWaveBattles::install)
         }
 
         // Game bus, not the mod bus: commands and player lifecycle are server-runtime events.

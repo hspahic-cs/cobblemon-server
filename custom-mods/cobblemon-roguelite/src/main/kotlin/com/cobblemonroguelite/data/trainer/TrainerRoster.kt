@@ -1,0 +1,426 @@
+package com.cobblemonroguelite.data.trainer
+
+import com.cobblemonroguelite.composition.WaveComposition
+import com.cobblemonroguelite.composition.WaveCompositionConfig
+import com.cobblemonroguelite.composition.WavePlan
+import com.cobblemonroguelite.integration.RunOpponent
+import com.cobblemonroguelite.wave.WaveDrawStream
+import com.cobblemonroguelite.wave.WaveRandom
+import net.minecraft.resources.ResourceLocation
+
+/**
+ * One wave range and the authored trainers that may be met inside it.
+ *
+ * ### Why bands exist at all, now that runtime level scaling works
+ *
+ * Not for levels. Forcing an RCT trainer's team to the wave level at `BattleStartedEvent.Pre` is
+ * verified on dev (§2.6), so one team could be stretched from wave 1 to wave 200 and always arrive
+ * at the right level. What that setter does *not* scale is **movesets, EVs and held items** — it
+ * moves a number and nothing else. A team authored for wave 10 therefore turns up at wave 150 at
+ * level 100 still running its wave-10 moves on empty EV spreads, which reads to the player as a
+ * level-100 opponent that cannot fight. Bands are the unit at which that content gets re-authored,
+ * and that is the *only* reason this layer has wave ranges in it.
+ *
+ * A band consequently carries **no level of its own**. One added here would silently compete with
+ * [com.cobblemonroguelite.wave.WaveLevelCurve], and a run's difficulty would stop being the single
+ * function of wave index that [WaveComposition] exists to keep it.
+ *
+ * @property id an author-facing name, used only in validation messages and logs. It is what tells
+ *   someone reading `no boss band covers wave 150` which of their bands to widen.
+ * @property kind which wave kind this band serves. Required, and deliberately not nullable the way
+ *   [com.cobblemonroguelite.composition.RewardBand.kind] is: reward routing is first-match-wins with
+ *   no obligation to cover anything, whereas these bands must tile the trainer waves and the boss
+ *   waves *separately*, and a band matching "either kind" makes both the overlap check and the gap
+ *   check impossible to state, let alone report usefully.
+ * @property maxWave inclusive, null for open-ended — the same convention as `RewardBand` and
+ *   `RewardEntry`, because an author meets all three.
+ * @property trainers ids of authored trainers, in the order written.
+ *
+ *   **Editing a pool re-points runs already in progress.** Selection scales a uniform draw by the
+ *   pool size and indexes into this list, so *any* edit — appending included, since it changes the
+ *   size — moves which trainer some future wave of an existing run will meet. Appending is not the
+ *   safe operation it looks like, and this is stated because it looks like one.
+ *
+ *   That is the same class of thing as editing a reward table mid-run and is accepted for the same
+ *   reason: the alternative is snapshotting every pool into every run's save data, which is state we
+ *   would then have to version. What it does *not* do is break a run — the draw stays deterministic
+ *   from the checkpoint onward, it just answers from the new pool.
+ *
+ *   A repeated id is legal and is the pool's only weighting mechanism — listing a trainer twice
+ *   doubles its share. That is deliberate rather than a `weight` field: a weight invites per-trainer
+ *   tuning inside a structure whose entire job is "which one", and pools this small say the same
+ *   thing by repetition without a second number to keep consistent.
+ */
+data class TrainerBand(
+    val id: String,
+    val kind: RunOpponent,
+    val minWave: Int,
+    val maxWave: Int? = null,
+    val trainers: List<ResourceLocation>,
+) {
+    init {
+        require(minWave >= 1) { "minWave must be at least 1, was $minWave" }
+        require(maxWave == null || maxWave >= minWave) {
+            "maxWave ($maxWave) is before minWave ($minWave), so this band could never match"
+        }
+        require(kind != RunOpponent.WILD) { "a wild wave has no authored trainer; bands are trainer or boss only" }
+    }
+
+    fun covers(wave: Int): Boolean = wave >= minWave && (maxWave == null || wave <= maxWave)
+
+    /** For validation messages — `waves 60-119` or `waves 120+`. */
+    internal fun rangeText(): String = if (maxWave == null) "waves $minWave+" else "waves $minWave-$maxWave"
+}
+
+/**
+ * One wave pinned to one trainer, beating whatever the bands and the interval schedule would say.
+ *
+ * ### Why this is not just "a band of width one"
+ *
+ * Because the waves it has to reach are not trainer waves. PokéRogue's Elite Four sit at waves
+ * 182/184/186/188 with the champion at 190 (§2.7), and under a 5/10 schedule *four of those five are
+ * ordinary wild waves* — not boss waves, not even trainer waves. A band cannot serve a wave the
+ * schedule never routes to it, so expressing that ladder needs a mechanism that overrides the
+ * schedule itself rather than one that decorates it.
+ *
+ * ### Why [kind] is optional, and what the two cases mean
+ *
+ * They are different intentions and they must not share a spelling:
+ *
+ * - **Omitted** — replace *this* wave's trainer, leaving the schedule alone. Only meaningful on a
+ *   wave the schedule already makes TRAINER or BOSS; on a wild wave it would silently never fire,
+ *   so [TrainerRoster.validate] reports it. This is the common case (pin a specific rival to wave
+ *   50) and the one where a typo'd wave number is otherwise invisible.
+ * - **Declared** — *promote* this wave to that kind, and fight this trainer. This is the E4 case,
+ *   and it is opt-in precisely so that writing 183 instead of 182 is still an error rather than a
+ *   feature. Declaring the kind is the author stating they know the wave is not scheduled as one.
+ *
+ * Promotion is not free and is not applied here: a promoted wave is no longer catchable, and a wave
+ * promoted to BOSS wants the ×1.2 multiplier. [TrainerRoster.planFor] applies both. A caller that
+ * plans waves through [WaveComposition] alone and only asks this class "who do I fight" will hand a
+ * player a catchable Elite Four member at a non-boss level.
+ */
+data class FixedEncounter(
+    val wave: Int,
+    val trainerId: ResourceLocation,
+    val kind: RunOpponent? = null,
+) {
+    init {
+        require(wave >= 1) { "wave is 1-based, got $wave" }
+        require(kind != RunOpponent.WILD) { "promoting a wave to WILD would mean 'fight nothing'; omit kind instead" }
+    }
+}
+
+/** Where a [TrainerPick] came from. Carried so a log line can say *why* wave 182 was that trainer. */
+enum class TrainerPickSource { BAND, FIXED }
+
+/**
+ * The answer to "who does wave N fight".
+ *
+ * A trainer **id**, never a trainer. Resolving it — and summoning the NPC — happens behind
+ * [com.cobblemonroguelite.run.RunWaveHandler], on the far side of RCTmod's soft dependency
+ * (§1.2/§2.6: their licence is unverified, so nothing in this module may compile against `rctapi`).
+ * Keeping the roster at the id level is what lets this whole layer be unit-tested with no server, no
+ * RCT and no datapack — and what keeps a licence question from reaching into the run loop.
+ *
+ * Nothing here can tell you whether the id names a trainer that exists. It cannot: the only registry
+ * that knows is RCT's, which this module is not allowed to see. An id naming nothing is therefore a
+ * *summon-time* failure, reported by the layer that tried to summon it.
+ */
+data class TrainerPick(
+    val trainerId: ResourceLocation,
+    val source: TrainerPickSource,
+    /** Band this came from, or null for a fixed encounter. */
+    val bandId: String?,
+)
+
+/**
+ * Which authored trainer a trainer or boss wave fights.
+ *
+ * ### Two mechanisms, and the override has to win
+ *
+ * [bands] are the standing rule: a wave range holds a pool, and a wave draws from it. [fixed] is the
+ * exception, checked first — see [FixedEncounter] for why a schedule this mode is aimed at cannot be
+ * written without it.
+ *
+ * **The schedule itself is not authored here.** This ships the mechanism and one obvious example;
+ * which trainer sits at which wave is content, and §2.7 keeps the transcribed roster out of the mod
+ * entirely — our server's lives in a server-side datapack, a published build ships a neutral one.
+ *
+ * ### Selection is a function of (seed, wave), like everything else a run rolls
+ *
+ * Same guarantee as wild species and the starter offer (§2.3): pulling the plug must not reroll the
+ * opponent. A run checkpointed at wave 44 and resumed a week later meets the same trainer at wave
+ * 45 — on a different JVM, after a mod update — because the draw is [WaveRandom] over a salted
+ * stream and not a `Random()` at summon time. The failure that prevents is not theoretical: an
+ * opponent rolled at summon time is rerollable by disconnecting on the loading screen, which is the
+ * exploit the run seed exists to close.
+ *
+ * The draw takes the seed and the wave and *nothing else*: not the player, not the party, not the
+ * previous trainer. That last omission is the notable one — nothing stops waves 45 and 50 drawing
+ * the same trainer, because avoiding it needs per-run memory of who has been met, which is run state
+ * and belongs in `run/`. §2.19 makes it a real content concern (20 trainer waves against a small
+ * pool means visible repeats), so it is named here rather than quietly left.
+ *
+ * @property authoredFor the schedule this roster was written against, used by [validate] to work out
+ *   which waves it is obliged to cover. It is **not** the schedule a run uses — that is the run's
+ *   own [WaveCompositionConfig] — which is why [validate] takes a composition and this is only its
+ *   default. When the two disagree the run's is the truth, and re-running [validate] against the
+ *   live config is how that gets said out loud.
+ */
+data class TrainerRoster(
+    val id: ResourceLocation,
+    val authoredFor: WaveCompositionConfig,
+    val bands: List<TrainerBand>,
+    val fixed: Map<Int, FixedEncounter>,
+) {
+
+    /**
+     * Who [wave] fights, or null when this roster serves it nothing.
+     *
+     * Null covers three cases the caller cannot distinguish: the wave is wild and wants no trainer,
+     * no band covers it (a roster hole — [validate] said so at load), or a covering band's pool is
+     * empty (rejected at parse, so only reachable from a roster built in code). All three mean "do
+     * not summon a trainer", which is the only decision the caller has to make.
+     *
+     * [kind] is the wave's kind *as the run sees it*. Pass [effectiveKind]'s answer, not
+     * [WaveComposition.kindOf]'s, if promotions are in play — though a promoted wave resolves
+     * through [fixed] before [kind] is looked at, so the common path is forgiving.
+     */
+    fun pickFor(wave: Int, kind: RunOpponent, seed: Long): TrainerPick? {
+        require(wave >= 1) { "wave is 1-based, got $wave" }
+
+        val override = fixed[wave]
+        // An override with no declared kind only replaces the trainer on a wave that was already
+        // going to be one; on a wild wave it does nothing, matching exactly what validate() warns
+        // about. Firing it anyway would make the validator a liar and would promote waves the author
+        // never asked to promote.
+        if (override != null && (override.kind != null || kind != RunOpponent.WILD)) {
+            return TrainerPick(override.trainerId, TrainerPickSource.FIXED, bandId = null)
+        }
+
+        if (kind == RunOpponent.WILD) return null
+        val band = bandFor(wave, kind) ?: return null
+        if (band.trainers.isEmpty()) return null
+
+        val rng = WaveRandom.forDraw(seed, wave, WaveDrawStream.TRAINER)
+        // Truncating a uniform double rather than taking a modulo of nextLong: modulo of a 64-bit
+        // draw is biased toward low indices for any pool size that does not divide 2^64 — invisible
+        // in play, and wrong in the one test that counts. coerceAtMost only guards the 0.9999… case.
+        val index = (rng.nextDouble() * band.trainers.size).toInt().coerceAtMost(band.trainers.lastIndex)
+        return TrainerPick(band.trainers[index], TrainerPickSource.BAND, band.id)
+    }
+
+    /** Just the id, for callers that do not care where it came from. */
+    fun trainerFor(wave: Int, kind: RunOpponent, seed: Long): ResourceLocation? =
+        pickFor(wave, kind, seed)?.trainerId
+
+    /**
+     * The band serving [wave], or null for a hole.
+     *
+     * First match wins, so an author reads precedence top-down the way they do in
+     * [com.cobblemonroguelite.composition.RewardRouting] — but unlike reward routing, overlapping
+     * bands are a *validation error* rather than a resolution rule. Two bands covering one wave means
+     * the second one's pool silently never appears there, which is indistinguishable from having
+     * authored it correctly until somebody counts.
+     */
+    fun bandFor(wave: Int, kind: RunOpponent): TrainerBand? =
+        bands.firstOrNull { it.kind == kind && it.covers(wave) }
+
+    fun isFixed(wave: Int): Boolean = fixed.containsKey(wave)
+
+    /**
+     * The kind [wave] actually is once promotions are applied, given what the schedule said.
+     *
+     * Exists because [WaveComposition] cannot answer it: the composition is a pure function of wave
+     * number and config and knows nothing about datapack content, which is right — which waves are
+     * bosses must not depend on which roster a server happens to have loaded. So the promotion is
+     * resolved here, at the point where both facts are available.
+     */
+    fun effectiveKind(wave: Int, scheduled: RunOpponent): RunOpponent = fixed[wave]?.kind ?: scheduled
+
+    /**
+     * [WaveComposition.planFor] with this roster's promotions applied.
+     *
+     * Provided because promotion has three consequences and missing any one of them is a silent bug:
+     * the kind changes, the wave stops being catchable (§2.14 — a catchable Elite Four member ends
+     * up in someone's party), and a wave promoted to BOSS wants the ×1.2 level multiplier that
+     * [WaveComposition] only applies to waves it *knows* are bosses. Leaving the caller to reassemble
+     * that from [effectiveKind] would work exactly until one of the three was forgotten.
+     *
+     * The level is re-derived from the same curve on the same `(seed, wave, LEVEL)` stream, so a
+     * promoted wave's level is what that wave would have been had the schedule made it a boss —
+     * not a second opinion about it.
+     *
+     * The reward table is left as the composition routed it. Routing rewards by *scheduled* kind
+     * when a wave has been promoted is arguably wrong, but reward routing is §2.12's owner's call and
+     * silently re-pointing their table from here would be a balance change made by a roster file.
+     */
+    fun planFor(wave: Int, seed: Long, composition: WaveComposition): WavePlan {
+        val base = composition.planFor(wave, seed)
+        val kind = effectiveKind(wave, base.kind)
+        if (kind == base.kind) return base
+        return base.copy(
+            kind = kind,
+            level = composition.config.curve.levelFor(
+                wave = wave,
+                boss = kind == RunOpponent.BOSS,
+                rng = WaveRandom.forDraw(seed, wave, WaveDrawStream.LEVEL),
+            ),
+            catchable = kind == RunOpponent.WILD,
+        )
+    }
+
+    /**
+     * Everything wrong with this roster *as a schedule*, one message per problem, empty when sound.
+     *
+     * ### Why this runs at load and not at the wave
+     *
+     * A roster hole is invisible until a run reaches it. Discovering at wave 147 — hours into
+     * somebody's multi-session run (§2.19) — that no band covers wave 150 costs a player their run
+     * and costs the operator a bug report with no reproduction. All of it is decidable from the file
+     * plus the schedule, so it gets decided the moment the file is read.
+     *
+     * ### Why it takes a composition instead of just reading [authoredFor]
+     *
+     * Because the two can differ, and the difference is the interesting case. The intervals are a
+     * live tuning dial ([WaveCompositionConfig] is explicit that they will be retuned against real
+     * play), so an operator moving the boss interval from 10 to 7 changes which waves need a boss
+     * roster and can open a hole in a file nobody edited. Re-running this against the live config
+     * turns that into a startup message; validating only against [authoredFor] would check the
+     * roster against assumptions nobody is using any more and report clean.
+     *
+     * Messages name the band or the wave and say what breaks, not what the rule is: the reader has
+     * the file open and needs to know which line to change.
+     */
+    fun validate(composition: WaveComposition = WaveComposition(authoredFor)): List<String> {
+        val problems = mutableListOf<String>()
+
+        bands.filter { it.trainers.isEmpty() }.forEach {
+            problems += "band '${it.id}' (${it.kind.name.lowercase()}, ${it.rangeText()}) has no trainers, " +
+                "so a wave landing in it would have nothing to fight"
+        }
+
+        for (kind in listOf(RunOpponent.TRAINER, RunOpponent.BOSS)) {
+            reportOverlaps(kind, bands.filter { it.kind == kind }, problems)
+            reportGaps(kind, composition, problems)
+        }
+        reportFixedProblems(composition, problems)
+        return problems
+    }
+
+    /**
+     * Two bands of one kind covering a common wave.
+     *
+     * Reported per pair rather than per wave: an author who wrote `1-60` and `50-120` has made one
+     * mistake, and sixty lines about it would bury every other problem in the file.
+     */
+    private fun reportOverlaps(kind: RunOpponent, ofKind: List<TrainerBand>, problems: MutableList<String>) {
+        for (i in ofKind.indices) {
+            for (j in i + 1 until ofKind.size) {
+                val a = ofKind[i]
+                val b = ofKind[j]
+                val from = maxOf(a.minWave, b.minWave)
+                val to = when {
+                    a.maxWave == null && b.maxWave == null -> null
+                    a.maxWave == null -> b.maxWave
+                    b.maxWave == null -> a.maxWave
+                    else -> minOf(a.maxWave, b.maxWave)
+                }
+                if (to != null && to < from) continue
+                problems += "${kind.name.lowercase()} bands '${a.id}' (${a.rangeText()}) and '${b.id}' " +
+                    "(${b.rangeText()}) both cover ${rangeText(from, to)}, where '${b.id}' can never be " +
+                    "drawn — the first matching band wins"
+            }
+        }
+    }
+
+    /**
+     * Waves of [kind] this roster cannot answer for.
+     *
+     * Only waves the schedule actually produces are required, which is why this needs the composition
+     * and not just a run length: demanding a boss band over waves 1-9 under a boss interval of 10
+     * would force an author to write a pool that can never be drawn, and content written to satisfy
+     * a validator is content nobody checks.
+     *
+     * A fixed encounter counts as coverage. Wave 190 needing no band is the whole point of the
+     * override, and calling it a gap would make the E4 schedule unauthorable without writing filler
+     * bands around it.
+     */
+    private fun reportGaps(kind: RunOpponent, composition: WaveComposition, problems: MutableList<String>) {
+        // Adjacency is measured in this list, not in wave numbers. The spacing between waves of one
+        // kind is not the interval that produced them — under 5/10 the trainer waves are 5, 15, 25,
+        // ten apart, because every other multiple of five is taken by a boss. Grouping by a fixed
+        // step therefore reports one missing band as fifteen separate gaps, which is how a real
+        // problem ends up scrolled off the top of a log.
+        val qualifying = (1..composition.config.runLength).filter { composition.kindOf(it) == kind }
+        val uncovered = qualifying.indices.filter { i ->
+            val wave = qualifying[i]
+            !isFixed(wave) && bandFor(wave, kind) == null
+        }
+        if (uncovered.isEmpty()) return
+
+        var start = 0
+        while (start < uncovered.size) {
+            var end = start
+            while (end + 1 < uncovered.size && uncovered[end + 1] == uncovered[end] + 1) end++
+            val from = qualifying[uncovered[start]]
+            val to = qualifying[uncovered[end]]
+            problems += "no ${kind.name.lowercase()} band covers ${rangeText(from, to)} — " +
+                "a run reaching wave $from would have no opponent"
+            start = end + 1
+        }
+    }
+
+    /**
+     * Fixed encounters that can never fire.
+     *
+     * The undeclared-kind-on-a-wild-wave case is the one that earns this method. An author
+     * transcribing a ladder writes 182, 184, 186, 188, 190; a typo'd 183 looks exactly like the four
+     * correct entries around it and would simply never happen, in a part of the run almost nobody
+     * reaches to notice. Naming the nearest waves that *would* fire turns a silent no-op into a
+     * one-character fix.
+     *
+     * A declared kind that contradicts the schedule is reported too, at the one place it is
+     * destructive: overriding a boss wave down to a plain trainer deletes a boss from the run, and
+     * the count of boss battles is the thing §2.19 sizes the whole roster against.
+     */
+    private fun reportFixedProblems(composition: WaveComposition, problems: MutableList<String>) {
+        val config = composition.config
+        fixed.values.sortedBy { it.wave }.forEach { entry ->
+            val wave = entry.wave
+            if (wave > config.runLength) {
+                problems += "fixed encounter at wave $wave is past the end of the run " +
+                    "(run_length=${config.runLength}) and can never fire"
+                return@forEach
+            }
+            val scheduled = composition.kindOf(wave)
+            when {
+                entry.kind == null && scheduled == RunOpponent.WILD ->
+                    problems += "fixed encounter at wave $wave can never fire: wave $wave is a wild wave under " +
+                        "this schedule (trainer every ${config.trainerInterval}, boss every ${config.bossInterval}). " +
+                        "Give it \"kind\" to promote the wave, or move it to ${nearestServedWaves(composition, wave)}"
+
+                entry.kind == RunOpponent.TRAINER && scheduled == RunOpponent.BOSS ->
+                    problems += "fixed encounter at wave $wave overrides a boss wave down to a trainer wave, " +
+                        "which removes a boss from the run — omit \"kind\" to keep it a boss battle"
+            }
+        }
+    }
+
+    /** The trainer/boss waves either side of [wave], for the "did you mean" half of a gap message. */
+    private fun nearestServedWaves(composition: WaveComposition, wave: Int): String {
+        val runLength = composition.config.runLength
+        val below = (wave - 1 downTo 1).firstOrNull { composition.kindOf(it) != RunOpponent.WILD }
+        val above = (wave + 1..runLength).firstOrNull { composition.kindOf(it) != RunOpponent.WILD }
+        return listOfNotNull(below, above).joinToString(" or ") { "wave $it" }.ifEmpty { "a trainer or boss wave" }
+    }
+
+    companion object {
+        internal fun rangeText(from: Int, to: Int?): String = when {
+            to == null -> "waves $from+"
+            to == from -> "wave $from"
+            else -> "waves $from-$to"
+        }
+    }
+}

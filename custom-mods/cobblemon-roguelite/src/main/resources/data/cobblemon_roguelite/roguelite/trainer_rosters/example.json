@@ -1,0 +1,114 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not content. The band edges and the two fixed",
+    "encounters below exist to show one of each schema feature; the trainer ids name NOTHING and",
+    "are not meant to. Which trainers a run fights, and where they sit, is server content (plan",
+    "§2.7 keeps a transcribed roster out of the mod entirely), so no roster ships loaded.",
+    "",
+    "Write your own at data/<your-namespace>/roguelite/trainer_rosters/<name>.json, or shadow this",
+    "path from your own datapack to delete this example. ops/gen_roguelite_roster.py generates and",
+    "validates these files without booting a server, and can cross-check the ids against an RCT",
+    "trainer datapack - which this mod cannot do, since it never sees RCT's registry.",
+    "",
+    "A roster holds trainer IDS ONLY. No teams, no species, no levels: teams are authored as RCT",
+    "trainers in their own datapack, and the level comes from the wave curve at battle start.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
+    "unknown field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_authored_for": [
+    "The schedule this roster's coverage is checked against. Optional - these ARE the defaults, and",
+    "are spelled out here only because the block is easy to miss. Change them if your run config",
+    "differs, or the loader will report holes for waves you will never reach (or miss real ones)."
+  ],
+  "authored_for": { "run_length": 200, "trainer_interval": 5, "boss_interval": 10 },
+
+  "_bands": [
+    "Bands are NOT about levels - level scaling is applied to whatever trainer turns up. They exist",
+    "because scaling a team's level does not scale its MOVES, EVs or held items, so a team authored",
+    "for wave 10 fights like a wave-10 team at wave 150 no matter what level it arrives at.",
+    "",
+    "Trainer bands and boss bands are checked separately, and each set must cover every wave of its",
+    "kind in 1..run_length with no gaps and no overlaps. A trainer is drawn from the covering band's",
+    "pool by a seeded draw on (run seed, wave), so a resumed run meets the same trainer.",
+    "",
+    "EDITING A POOL RE-POINTS RUNS ALREADY IN PROGRESS, appending included - the draw is scaled by",
+    "the pool size, so adding a trainer moves which one some later wave of an existing run will",
+    "meet. It does not break those runs; they stay deterministic, they just answer from the new",
+    "pool. Listing an id twice doubles its share - that is the only weighting mechanism, and the",
+    "absence of a weight field is deliberate."
+  ],
+  "bands": [
+    {
+      "id": "example_trainer_early",
+      "kind": "trainer",
+      "min_wave": 1,
+      "max_wave": 60,
+      "trainers": [ "cobblemon_roguelite:example_trainer_a", "cobblemon_roguelite:example_trainer_b" ]
+    },
+    {
+      "id": "example_trainer_mid",
+      "kind": "trainer",
+      "min_wave": 61,
+      "max_wave": 130,
+      "trainers": [ "cobblemon_roguelite:example_trainer_c" ]
+    },
+    {
+      "id": "example_trainer_late",
+      "_max_wave": "Omitted, so this band is open-ended. Level flattens at 100 from about wave 138, so the last band is where difficulty has to come from the team rather than the curve.",
+      "kind": "trainer",
+      "min_wave": 131,
+      "trainers": [ "cobblemon_roguelite:example_trainer_d" ]
+    },
+    {
+      "id": "example_boss_early",
+      "kind": "boss",
+      "min_wave": 1,
+      "max_wave": 60,
+      "trainers": [ "cobblemon_roguelite:example_boss_a" ]
+    },
+    {
+      "id": "example_boss_mid",
+      "kind": "boss",
+      "min_wave": 61,
+      "max_wave": 130,
+      "trainers": [ "cobblemon_roguelite:example_boss_b" ]
+    },
+    {
+      "id": "example_boss_late",
+      "kind": "boss",
+      "min_wave": 131,
+      "trainers": [ "cobblemon_roguelite:example_boss_c" ]
+    }
+  ],
+
+  "_fixed": [
+    "Fixed encounters beat the bands AND the interval schedule. Two forms, and they mean different",
+    "things:",
+    "",
+    "  no \"kind\"  - replace the trainer on a wave that is ALREADY a trainer or boss wave. On a wild",
+    "               wave it would never fire, so the loader reports it: that is what catches a wave",
+    "               number typed one digit wrong.",
+    "  \"kind\"     - PROMOTE this wave to a trainer or boss wave and fight this trainer. This is how",
+    "               a ladder lands on waves the interval cannot reach, and declaring the kind is you",
+    "               saying you know the wave is not scheduled as one. A promoted wave is not",
+    "               catchable, and a promotion to boss takes the boss level multiplier.",
+    "",
+    "The two entries below are examples of each form, NOT a schedule. Authoring the schedule is a",
+    "content decision and is deliberately left undone."
+  ],
+  "fixed": [
+    {
+      "_note": "Wave 50 is already a boss wave, so this only pins WHICH boss.",
+      "wave": 50,
+      "trainer": "cobblemon_roguelite:example_fixed_rival"
+    },
+    {
+      "_note": "Wave 182 is a wild wave under 5/10. \"kind\" promotes it - without that this entry would never fire.",
+      "wave": 182,
+      "kind": "boss",
+      "trainer": "cobblemon_roguelite:example_fixed_late_boss"
+    }
+  ]
+}

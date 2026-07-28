@@ -3,6 +3,7 @@ package com.cobblemonroguelite.data
 import com.cobblemon.mod.common.data.CobblemonDataProvider
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
+import com.cobblemonroguelite.data.trainer.TrainerRosters
 import org.slf4j.LoggerFactory
 
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/data")
@@ -51,6 +52,11 @@ object RogueliteData {
     fun registerAll() {
         CobblemonDataProvider.register(RewardTables, reloadable = true)
         CobblemonDataProvider.register(PayoutTables, reloadable = true)
+        // Reloadable like the rest, with one consequence worth knowing: editing a roster mid-run
+        // changes who an in-flight run meets at waves it has not reached yet, the same way editing
+        // a reward table changes what it rolls next. Bands and pools are ordered, and selection
+        // indexes into them — see TrainerBand.trainers.
+        CobblemonDataProvider.register(TrainerRosters, reloadable = true)
         log.info("roguelite: datapack registries registered — tables load from data/<namespace>/{}/", RogueliteDataRegistry.ROOT)
     }
 }

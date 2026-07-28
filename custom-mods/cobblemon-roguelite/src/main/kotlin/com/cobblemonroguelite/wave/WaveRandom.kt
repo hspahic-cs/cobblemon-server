@@ -27,6 +27,16 @@ enum class WaveDrawStream(internal val salt: Long) {
      * [WildEncounter.variantSeed] for why those need a seeded stream at all.
      */
     VARIANT(0x5641_5249_414E_5403L),
+
+    /**
+     * Which authored trainer a trainer or boss wave draws from its roster band — see
+     * [com.cobblemonroguelite.data.trainer.TrainerRoster].
+     *
+     * Appended rather than slotted in beside [SPECIES], per this enum's own rule: a run checkpointed
+     * before rosters existed resumes with the same wild species and levels it had, because nothing
+     * above this line moved.
+     */
+    TRAINER(0x5452_4149_4E45_5204L),
 }
 
 /**

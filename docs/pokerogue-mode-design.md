@@ -3,6 +3,10 @@
 A run-based roguelite mode for the server, inspired by [PokéRogue](https://pokerogue.net/).
 Built on our existing tower code in `cobblemon-bridge`.
 
+> **Start with [`pokerogue-mode-plan.md`](./pokerogue-mode-plan.md)** — it holds the intent,
+> the decisions and the reasoning behind them, and the phased plan. This document is the
+> *how*: the architecture those decisions imply.
+
 ## Why not the CurseForge mod
 
 The [Cobblemon Battle Tower](https://www.curseforge.com/minecraft/mc-mods/cobblemon-battle-tower)

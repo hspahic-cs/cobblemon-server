@@ -338,9 +338,24 @@ authored at L15 and stretched to L60 still runs L15 moves. So the ladder wants a
 authored bands (early/mid/late) with level scaling smoothing difficulty *within* each band,
 rather than one team stretched across the whole run.
 
-**Unverified:** NPC-side level mutation is proven for the player side only. It must be confirmed
-on the dev VM before the plan commits to it. **Also unverified: RCT's license**, which must be
-checked before it becomes anything more than a soft dependency (§1.2).
+**Verified on dev 2026-07-28.** A probe against a live RCT trainer (Bird Keeper Roger, L63/L64)
+forced every opponent Pokémon to L50 at `BattleStartedEvent.Pre`; the battle displayed L50, and a
+recheck three seconds in still read L50, so **RCT does not re-derive its team after the event**.
+Stats rescaled correctly with the level.
+
+Two findings that make this cheaper than designed. The NPC team is a `safeCopyOf` **battle
+clone** — `clonedFromOriginal=true`, `originalLevel=63->63` — so the authored trainer is never
+touched and the NPC path needs **none** of `GymBattleAdjustHook`'s NBT restore machinery, which
+exists only because the player's side aliases the real Pokémon. And the timing is structural, not
+lucky: `startBattle` posts `BATTLE_STARTED_PRE` and only then calls `startShowdown`, which packs
+the team by reading `effectedPokemon` fresh, so every Pre subscriber has run before the engine
+sees a team.
+
+*Still to check:* only downward scaling (63 → 50) was exercised, and a ladder needs upward. Same
+mechanism, but the setter clamps at `maxPokemonLevel`.
+
+**Unverified: RCT's license**, which must be checked before it becomes anything more than a soft
+dependency (§1.2).
 
 ### 2.7 Boss trainers are dedicated authored trainers
 

@@ -99,12 +99,18 @@ jitter that narrows as waves deepen. It clamps at 100, because Cobblemon's `maxP
 100 and global — so from about wave 138 (bosses ~120) the last third of a run is flat, and its
 difficulty has to come from teams, EVs, items and gimmicks instead (§2.19).
 
-**Trainer-side level mutation is still unverified.** `GymBattleAdjustHook.applyToBattle` proves
-the shape by mutating `bp.effectedPokemon.level` at `BattleStartedEvent.Pre`, but only for the
-*player's* side under gym level caps. If it fails on the NPC side, only the 40 trainer and boss
-waves are affected — wild waves set their level at spawn and do not depend on it — and those fall
-back to fixed-level authored bands. That asymmetry is why the split de-risks the RCT decision
-rather than just complicating it.
+**Trainer-side level mutation: verified on dev 2026-07-28.** Forcing a live RCT trainer's team to
+L50 at `BattleStartedEvent.Pre` worked — the battle showed L50, stats rescaled, and a recheck
+three seconds later still read L50, so RCT does not re-derive its team afterwards.
+
+The timing is structural rather than lucky: `startBattle` posts `BATTLE_STARTED_PRE` and only
+then calls `startShowdown`, which packs the team by reading `effectedPokemon` fresh. Every Pre
+subscriber has run before the engine is handed anything.
+
+It is also simpler than assumed. The NPC team is a `safeCopyOf` battle clone, so mutating it
+never touches the authored trainer and needs **no** restore machinery —
+`GymBattleAdjustHook`'s NBT save/restore exists only because `playerOwned()` makes
+`effectedPokemon === originalPokemon` on the player's side.
 
 Level scaling does **not** scale movesets, EVs or held items, so trainer and boss waves want a
 few authored bands rather than one team stretched across 200 waves.

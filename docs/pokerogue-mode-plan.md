@@ -1351,6 +1351,36 @@ union.** Brock's four are Rock/Ground, Rock/Ground, Rock/Water and Rock/Flying; 
 is **Rock**, which is exactly what a Brock filler should be. A union is a superset of every
 theme a leader touches, which is the opposite of a theme.
 
+### 2.39 Mirror their content by default; author only what they cannot have
+
+**Standing rule:** where PokéRogue has a table, we extract it. Authoring from scratch is reserved
+for things their game has no equivalent of. Earlier sections framed much of this as content to
+write, which overstated the work considerably.
+
+**Extracted from PokéRogue** (server-side datapack content only, never shipped — §2.7): per-species
+starter costs · candy prices and friendship caps · **reward tables and the rarity curve**
+(`init-modifier-pools.ts` carries tiered pools with weights) · **boss shield counts** (≥1, +1 at
+level 100+, +1 at BST ≥670) · **shop stock, prices and money per battle** · **trainer held-item
+tiers** (`genModifiers`, scaled by trainer strength) · the E4 and champion schedule and teams ·
+the escalation ladder, mostly — leader Tera from wave 100, Mega Rayquaza on the final rival · the
+biome list and its transition graph · the baseline starter set · trainer band edges, derivable
+from their region ordering.
+
+**Ours, because they have no equivalent:** the biome → **Minecraft biome** mapping · arena block
+palettes · egg payout bands (our gacha) · the entry fee. Four things, two of them Minecraft-shaped
+and two economic.
+
+**Rivals are mirrored too**, as their own encounter kind (§2.36): waves 8/25/55/95/145/195, the
+same character across a run, regional starter plus regional bird, gaining a Pokémon each meeting,
+ending on Rayquaza. That needs run state remembering which rival and what they have gained — a
+run-long thread rather than a boss.
+
+**Why this is safe and why it is bounded.** Extraction reads their data at build time and emits
+our format; nothing is vendored, and the output never enters the jar. The licence line from §2.7
+is unchanged — transcription is private server content, and a published build ships neutral
+defaults. What extraction cannot give us is anything Minecraft-shaped, which is exactly the list
+above.
+
 ---
 
 ## 3. Preliminary plan

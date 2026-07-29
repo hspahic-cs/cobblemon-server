@@ -3,6 +3,7 @@ package com.cobblemonroguelite
 import com.cobblemonroguelite.arena.ArenaSpawnSuppressor
 import com.cobblemonroguelite.battle.RunWaveBattles
 import com.cobblemonroguelite.data.RogueliteData
+import com.cobblemonroguelite.payout.PendingPayoutHooks
 import com.cobblemonroguelite.progression.ProgressionHooks
 import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunLoginHooks
@@ -62,6 +63,11 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
         // the store is world save data; without it selection quietly stays at base prices and base IVs,
         // which plays correctly and is why this cannot fail loudly. See [ProgressionHooks].
         NeoForge.EVENT_BUS.register(ProgressionHooks)
+        // Payouts owed to players who were offline when their run ended (§2.10 can wipe a party while
+        // its owner is disconnected). Must be registered even on a server where nothing ever ends a
+        // run offline: the debt is written to world save data, so an unregistered listener is not
+        // "the feature is off", it is a file that fills up and is never read.
+        NeoForge.EVENT_BUS.register(PendingPayoutHooks)
     }
 
     companion object {

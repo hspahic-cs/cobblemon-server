@@ -1,6 +1,12 @@
 {
   "_comment": "Explicit tier pins. These WIN over the category rules in build_tiers.py. Put judgment calls here rather than contorting a rule. Format: '<item id>': [tier, 'why'].",
 
+  "_keys": "Gacha crate keys. These are VANILLA items carrying a custom_data{gacha_key} tag (see custom-mods/cobblemon-gacha/.../KeyItems.kt) — an untagged one will not open a crate, so they are tiered as their own entries rather than as the base item.",
+  "gacha:common_key": [0, "Common Crate key — minecraft:trial_key + gacha_key tag"],
+  "gacha:rare_key": [2, "Rare Crate key — minecraft:ominous_trial_key + gacha_key tag"],
+  "gacha:ultra_key": [3, "Ultra Crate key — minecraft:nether_star + gacha_key tag. Not obtainable outside quests and events."],
+  "gacha:pokemon_key": [2, "Pokemon Crate key — minecraft:turtle_egg + gacha_key tag"],
+
   "_T5_mythic": "Gates a box legendary/mythical, or is a guaranteed-catch. Should never be a routine reward.",
   "legendarymonuments:azure_flute": [5, "Opens the Hall of Origin — ARCEUS. Ultra crate jackpot at 0.8%."],
   "minecraft:totem_of_undying": [5, "Zacian summon gate. Ultra crate 1.6% is the only intended source."],
@@ -74,7 +80,7 @@
   "cobblemon:dream_ball": [2, "Specialty ball — Hidden Ability transfer"],
   "minecraft:beacon": [2, "$50,000 — the single most expensive market item"],
   "minecraft:enchanted_golden_apple": [2, "Vanilla chase item"],
-  "minecraft:nether_star": [4, "Wither drop — treat as legendary-scale"],
+  "minecraft:nether_star": [3, "Base item for the Ultra Crate key — awarding one reads as awarding a key, even though an untagged star will not open a crate"],
   "minecraft:elytra": [2, "Vanilla chase item"],
   "minecraft:heart_of_the_sea": [2, "Vanilla chase item"],
   "legendarymonuments:golem_scrap": [2, "Golem crafting material — a component, not a gate"],

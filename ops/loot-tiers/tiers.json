@@ -18067,6 +18067,74 @@
       ]
     },
     {
+      "id": "gacha:common_key",
+      "status": null,
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Common Crate key \u2014 minecraft:trial_key + gacha_key tag",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Jackpot band, 0.5%",
+          "rate": 0.5
+        }
+      ]
+    },
+    {
+      "id": "gacha:pokemon_key",
+      "status": null,
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Pokemon Crate key \u2014 minecraft:turtle_egg + gacha_key tag",
+      "assignedBy": "override",
+      "sources": []
+    },
+    {
+      "id": "gacha:rare_key",
+      "status": null,
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Rare Crate key \u2014 minecraft:ominous_trial_key + gacha_key tag",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Jackpot band, 0.5%",
+          "rate": 0.5
+        },
+        {
+          "source": "crate:rare",
+          "detail": "Jackpot band, 1.4%",
+          "rate": 1.4
+        }
+      ]
+    },
+    {
+      "id": "gacha:ultra_key",
+      "status": null,
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Ultra Crate key \u2014 minecraft:nether_star + gacha_key tag. Not obtainable outside quests and events.",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "Jackpot band, 0.7%",
+          "rate": 0.7
+        },
+        {
+          "source": "crate:ultra",
+          "detail": "Jackpot band, 0.8%",
+          "rate": 0.8
+        }
+      ]
+    },
+    {
       "id": "legendarymonuments:ancient_rubble_ore",
       "status": null,
       "tier": 2,
@@ -25211,10 +25279,10 @@
     {
       "id": "minecraft:nether_star",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Wither drop \u2014 treat as legendary-scale",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Base item for the Ultra Crate key \u2014 awarding one reads as awarding a key, even though an untagged star will not open a crate",
       "assignedBy": "override",
       "sources": []
     },

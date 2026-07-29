@@ -74,7 +74,7 @@ TIER_BLURB = {
 }
 
 # Namespaces we tier individually. simpletms is collapsed (see TM_* below).
-NAMESPACES = ("cobblemon", "mega_showdown", "legendarymonuments", "minecraft")
+NAMESPACES = ("cobblemon", "mega_showdown", "legendarymonuments", "minecraft", "gacha")
 
 # ---------------------------------------------------------------- category rules
 # (regex over the item id, tier, rationale). First match wins, so order matters:
@@ -214,6 +214,13 @@ def collect_evidence() -> dict[str, list[dict]]:
                 # Missing the plural form silently drops whole categories -- the
                 # evolution stones, nature mints and most Z-crystals all live in
                 # random_item bundles.
+                if it.get("type") == "gacha_key" and it.get("tier"):
+                    ev[f"gacha:{it['tier']}_key"].append({
+                        "source": f"crate:{crate.lower()}",
+                        "detail": f"{e.get('lootTier','?')} band, {e.get('weightPct')}%",
+                        "rate": e.get("weightPct"),
+                    })
+                    continue
                 ids = [it["id"]] if isinstance(it.get("id"), str) else []
                 ids += [i for i in (it.get("ids") or []) if isinstance(i, str)]
                 bundle = len(ids) > 1

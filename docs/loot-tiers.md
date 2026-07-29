@@ -31,7 +31,7 @@ with what already exists.
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 | **TX** | Disabled | Never award. Two different situations live here, and the per-item status says which: **not obtainable** (recipe banned and/or stripped from loot — if one of these is still dropping, that's a bug to fix, not a tier to change), or **banned to use** (freely obtainable, but the mechanic is disabled and using it is a bannable offence, so the item is worthless as a reward). |
 
-1171 items tiered — T5: 4, T4: 39, T3: 118, T2: 218, T1: 540, T0: 158, TX: 94.
+1175 items tiered — T5: 4, T4: 38, T3: 120, T2: 220, T1: 540, T0: 159, TX: 94.
 
 ## Picking a reward
 
@@ -102,7 +102,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:rusted_shield` | Zamazenta-Crowned gate. Craft banned — intended to be chest loot instead. NOT YET PLACED IN ANY CHEST. | *not currently granted anywhere* |
 | `mega_showdown:rusted_sword` | Zacian-Crowned gate. Craft banned (was iron_sword + netherite_scrap + fire_charge, far too cheap) — intended to be chest loot instead. NOT YET PLACED IN ANY CHEST. | *not currently granted anywhere* |
 | `mega_showdown:zygarde_core` | Zygarde assembly core | `crate:rare` 2.9%; `loot:legendarymonuments/chests/regigigas_chest` 16.94%; `loot:legendarymonuments/chests/registeel_chest` 6.87% |
-| `minecraft:nether_star` | Wither drop — treat as legendary-scale | *not currently granted anywhere* |
 
 ## T3 — Epic
 
@@ -138,6 +137,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:tough_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:tr_voucher` | Redeems for a TR | `crate:rare` 3.9% |
 | `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +3 more |
+| `gacha:ultra_key` | Ultra Crate key — minecraft:nether_star + gacha_key tag. Not obtainable outside quests and events. | `crate:rare` 0.7%; `crate:ultra` 0.8% |
 | `legendarymonuments:azelf_fang` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
 | `legendarymonuments:darkstone_shard` | 9 craft into a T4 Dark Stone | `loot:legendarymonuments/chests/bell_tower_chest` 9.07%; `loot:legendarymonuments/chests/liberty_island_chest` 12.32%; `loot:legendarymonuments/chests/lugia_temple_chest` 20.5% |
 | `legendarymonuments:distortion_button` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_button` 100.0%; `craft` |
@@ -228,6 +228,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:lustrous_orb` | Origin-forme held item | `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
 | `mega_showdown:mega_stone` | Mega evolution enabler | `crate:common` 1.9% |
 | `mega_showdown:zygarde_cell` | Zygarde assembly component | `loot:legendarymonuments/chests/dragoeleki_chest` 32.01%; `loot:legendarymonuments/chests/regice_chest` 41.11%; `loot:legendarymonuments/chests/regigigas_chest` 16.94% +7 more |
+| `minecraft:nether_star` | Base item for the Ultra Crate key — awarding one reads as awarding a key, even though an untagged star will not open a crate | *not currently granted anywhere* |
 
 ## T2 — Rare
 
@@ -287,6 +288,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:throat_spray` | Premium competitive held item | `craft`; `market` |
 | `cobblemon:weakness_policy` | Premium competitive held item | `mod:cobblemon/blocks/weakness_policy`; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
 | `cobblemon:whipped_dream` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
+| `gacha:pokemon_key` | Pokemon Crate key — minecraft:turtle_egg + gacha_key tag | *not currently granted anywhere* |
+| `gacha:rare_key` | Rare Crate key — minecraft:ominous_trial_key + gacha_key tag | `crate:common` 0.5%; `crate:rare` 1.4% |
 | `legendarymonuments:ancient_rubble_ore` | Ore block, mid-tier crafting material | `loot:legendarymonuments/chests/regigigas_chest` 16.94%; `mod:legendarymonuments/blocks/ancient_rubble_ore` 100.0% |
 | `legendarymonuments:distortion_pressure_plate` | Arceus plate / type booster | `mod:legendarymonuments/blocks/distortion_pressure_plate` 100.0%; `craft` |
 | `legendarymonuments:dragon_golem_ingot` | Golem crafting material | `craft` |
@@ -1074,6 +1077,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:ultra_ball` | Basic ball | `crate:common` 3.1%; `mod:mega_showdown/chests/observatory_barrel` 33.33%; `mod:cobblemon/sets/any_common_pokeball` +3 more |
 | `cobblemon:water_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobbleworkers/archaeology_treasure` 3.45% +5 more |
 | `cobblemon:water_stone_block` | Evolution stone | `mod:cobblemon/blocks/water_stone_block` 100.0%; `craft` |
+| `gacha:common_key` | Common Crate key — minecraft:trial_key + gacha_key tag | `crate:common` 0.5% |
 | `minecraft:apple` | Vanilla bulk material | `loot:rctmod/generic/uncommon/nature` |
 | `minecraft:arrow` | Vanilla item | `market` |
 | `minecraft:axolotl_bucket` | Vanilla item | `loot:legendarymonuments/chests/liberty_island_chest` 39.31%; `loot:legendarymonuments/chests/lugia_temple_chest` 20.5%; `market` |

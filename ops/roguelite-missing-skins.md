@@ -68,6 +68,23 @@ the source asks for attribution — the source page for each is recorded below.
 
 ## Still needed — 26 re-downloads
 
+### The fast way: do all 26 at once
+
+Open any planetminecraft page, open the browser console (⌘⌥J), and paste
+**`ops/fetch-missing-skins.js`**. It downloads all 26 with the right filenames, skips
+anything that comes back as a page rather than an image, and prints what succeeded. Chrome
+asks once to allow multiple downloads. Then move them into `ops/skin-staging/` and run the
+installer.
+
+Regenerate the snippet after editing the table below:
+
+    python3 ops/gen_skin_fetch_snippet.py
+
+It has to run *on* the planetminecraft origin — the fetch needs the site's own cookies,
+which is what separates it from the automated request the WAF rejects.
+
+### Or one at a time
+
 Direct download links, extracted from the pages that were saved last time. Filename on the
 left is what to save it as in `ops/skin-staging/`.
 

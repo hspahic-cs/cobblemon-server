@@ -1,0 +1,7146 @@
+{
+"_comment": "Loot tables harvested from the MOD JARS (not our overrides). Without this, evidence only covers tables we override, and items sourced from ruins/archaeology/trainer loot look like they have no source at all. Tables we override are skipped at build time so ours win. Refresh with ops/loot-tiers/refresh_registry.sh",
+"_tables_scanned": 1577,
+"sources": {
+"cobblemon:ability_capsule": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 71.41
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "rctmod/generic/epic/training",
+"r": null
+}
+],
+"cobblemon:ability_patch": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 5.69
+},
+{
+"t": "rctmod/generic/epic/training",
+"r": null
+}
+],
+"cobblemon:ability_shield": [
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/fallen_statue_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_lush",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_rooted",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+}
+],
+"cobblemon:absorb_bulb": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:adamant_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:aguav_berry": [
+{
+"t": "cobblemon/blocks/aguav_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:air_balloon": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:ancient_azure_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_citrine_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_feather_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_gigaton_ball": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 40.83
+},
+{
+"t": "rctmod/generic/epic/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_great_ball": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 32.32
+},
+{
+"t": "rctmod/generic/rare/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_heavy_ball": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 40.83
+},
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_ivory_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_jet_ball": [
+{
+"t": "rctmod/generic/epic/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_leaden_ball": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 40.83
+},
+{
+"t": "rctmod/generic/rare/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_origin_ball": [
+{
+"t": "rctmod/generic/legendary/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/legendary/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_poke_ball": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 48.39
+},
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_roseate_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_slate_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_ultra_ball": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 22.75
+},
+{
+"t": "rctmod/generic/epic/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_verdant_ball": [
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:ancient_wing_ball": [
+{
+"t": "mega_showdown/chests/observatory_dome_chest",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:antidote": [
+{
+"t": "cobblemon/blocks/antidote",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:apicot_berry": [
+{
+"t": "cobblemon/blocks/apicot_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:apricorn_button": [
+{
+"t": "cobblemon/blocks/apricorn_button",
+"r": null
+}
+],
+"cobblemon:apricorn_door": [
+{
+"t": "cobblemon/blocks/apricorn_door",
+"r": null
+}
+],
+"cobblemon:apricorn_fence": [
+{
+"t": "cobblemon/blocks/apricorn_fence",
+"r": null
+}
+],
+"cobblemon:apricorn_fence_gate": [
+{
+"t": "cobblemon/blocks/apricorn_fence_gate",
+"r": null
+}
+],
+"cobblemon:apricorn_hanging_sign": [
+{
+"t": "cobblemon/blocks/apricorn_hanging_sign",
+"r": null
+},
+{
+"t": "cobblemon/blocks/apricorn_wall_hanging_sign",
+"r": null
+}
+],
+"cobblemon:apricorn_log": [
+{
+"t": "cobblemon/blocks/apricorn_log",
+"r": 100.0
+},
+{
+"t": "botanypots/cobblemon/crop/apricorn_log",
+"r": null
+}
+],
+"cobblemon:apricorn_planks": [
+{
+"t": "cobblemon/blocks/apricorn_planks",
+"r": 100.0
+}
+],
+"cobblemon:apricorn_pressure_plate": [
+{
+"t": "cobblemon/blocks/apricorn_pressure_plate",
+"r": null
+}
+],
+"cobblemon:apricorn_sign": [
+{
+"t": "cobblemon/blocks/apricorn_sign",
+"r": null
+},
+{
+"t": "cobblemon/blocks/apricorn_wall_sign",
+"r": null
+}
+],
+"cobblemon:apricorn_slab": [
+{
+"t": "cobblemon/blocks/apricorn_slab",
+"r": null
+}
+],
+"cobblemon:apricorn_stairs": [
+{
+"t": "cobblemon/blocks/apricorn_stairs",
+"r": null
+}
+],
+"cobblemon:apricorn_trapdoor": [
+{
+"t": "cobblemon/blocks/apricorn_trapdoor",
+"r": null
+}
+],
+"cobblemon:apricorn_wood": [
+{
+"t": "cobblemon/blocks/apricorn_wood",
+"r": 100.0
+}
+],
+"cobblemon:armor_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/armor_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_powdered_deposit",
+"r": null
+}
+],
+"cobblemon:aspear_berry": [
+{
+"t": "cobblemon/blocks/aspear_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:assault_vest": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:auspicious_armor": [
+{
+"t": "cobblemon/injection/chests/bastion_bridge",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/bastion_hoglin_stable",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/bastion_other",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/bastion_treasure",
+"r": 100.0
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:automaton_armor_trim_smithing_template": [
+{
+"t": "cobblemon/ruins/gilded_chests/ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/rare/automaton_armor_trim_smithing_template",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_armor_trim",
+"r": null
+},
+{
+"t": "rctmod/generic/legendary/archeology",
+"r": null
+}
+],
+"cobblemon:awakening": [
+{
+"t": "cobblemon/blocks/awakening",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:azure_ball": [
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 78.89
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 14.29
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/common/pokeballs",
+"r": null
+}
+],
+"cobblemon:azure_rod": [
+{
+"t": "rctmod/generic/epic/fishing",
+"r": null
+}
+],
+"cobblemon:babiri_berry": [
+{
+"t": "cobblemon/blocks/babiri_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:beast_ball": [
+{
+"t": "rctmod/generic/legendary/pokeballs",
+"r": null
+}
+],
+"cobblemon:belue_berry": [
+{
+"t": "cobblemon/blocks/belue_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:berry_juice": [
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:berry_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:big_root": [
+{
+"t": "cobblemon/blocks/big_root",
+"r": 100.0
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+}
+],
+"cobblemon:binding_band": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:black_apricorn": [
+{
+"t": "cobblemon/blocks/black_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:black_apricorn_seed": [
+{
+"t": "cobblemon/blocks/black_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/black_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/potted_black_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:black_augurite": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sandy_den",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:black_belt": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:black_gilded_chest": [
+{
+"t": "cobblemon/blocks/black_gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:black_glasses": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:black_plaque": [
+{
+"t": "cobblemon/blocks/black_plaque",
+"r": null
+}
+],
+"cobblemon:black_sludge": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:black_tumblestone": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/rare/black_tumblestone",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/archeology",
+"r": null
+}
+],
+"cobblemon:black_tumblestone_brick_slab": [
+{
+"t": "cobblemon/blocks/black_tumblestone_brick_slab",
+"r": null
+}
+],
+"cobblemon:black_tumblestone_brick_stairs": [
+{
+"t": "cobblemon/blocks/black_tumblestone_brick_stairs",
+"r": 100.0
+}
+],
+"cobblemon:black_tumblestone_brick_wall": [
+{
+"t": "cobblemon/blocks/black_tumblestone_brick_wall",
+"r": 100.0
+}
+],
+"cobblemon:black_tumblestone_bricks": [
+{
+"t": "cobblemon/blocks/black_tumblestone_bricks",
+"r": 100.0
+}
+],
+"cobblemon:blue_apricorn": [
+{
+"t": "cobblemon/blocks/blue_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:blue_apricorn_seed": [
+{
+"t": "cobblemon/blocks/blue_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/blue_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/potted_blue_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:blue_gilded_chest": [
+{
+"t": "cobblemon/blocks/blue_gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:blue_mint_leaf": [
+{
+"t": "cobblemon/blocks/blue_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/blue_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:blue_mint_seeds": [
+{
+"t": "cobblemon/blocks/blue_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/blue_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/blue_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/blue_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:blue_plaque": [
+{
+"t": "cobblemon/blocks/blue_plaque",
+"r": null
+}
+],
+"cobblemon:bluk_berry": [
+{
+"t": "cobblemon/blocks/bluk_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:blunder_policy": [
+{
+"t": "cobblemon/blocks/blunder_policy",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:bold_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:brave_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:bright_powder": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:brown_plaque": [
+{
+"t": "cobblemon/blocks/brown_plaque",
+"r": null
+}
+],
+"cobblemon:bug_gem": [
+{
+"t": "cobblemon/ruins/common/rooted_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:burn_heal": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 40.83
+},
+{
+"t": "cobblemon/blocks/burn_heal",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:bygone_sherd": [
+{
+"t": "cobblemon/ruins/common/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/fallen_statue_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_deserted",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+}
+],
+"cobblemon:calcium": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:calm_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:campfire_pot_black": [
+{
+"t": "cobblemon/blocks/campfire_pot_black",
+"r": 100.0
+}
+],
+"cobblemon:campfire_pot_blue": [
+{
+"t": "cobblemon/blocks/campfire_pot_blue",
+"r": 100.0
+}
+],
+"cobblemon:campfire_pot_green": [
+{
+"t": "cobblemon/blocks/campfire_pot_green",
+"r": 100.0
+}
+],
+"cobblemon:campfire_pot_pink": [
+{
+"t": "cobblemon/blocks/campfire_pot_pink",
+"r": 100.0
+}
+],
+"cobblemon:campfire_pot_red": [
+{
+"t": "cobblemon/blocks/campfire_pot_red",
+"r": 100.0
+}
+],
+"cobblemon:campfire_pot_white": [
+{
+"t": "cobblemon/blocks/campfire_pot_white",
+"r": 100.0
+}
+],
+"cobblemon:campfire_pot_yellow": [
+{
+"t": "cobblemon/blocks/campfire_pot_yellow",
+"r": 100.0
+}
+],
+"cobblemon:capture_sherd": [
+{
+"t": "cobblemon/ruins/common/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_deserted",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+}
+],
+"cobblemon:carbos": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 4.74
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:careful_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:cell_battery": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 25.55
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:charcoal_stick": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_spruce_tree",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:charti_berry": [
+{
+"t": "cobblemon/blocks/charti_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:cheri_berry": [
+{
+"t": "cobblemon/blocks/cheri_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:chesto_berry": [
+{
+"t": "cobblemon/blocks/chesto_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:chilan_berry": [
+{
+"t": "cobblemon/blocks/chilan_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:chipped_pot": [
+{
+"t": "cobblemon/ruins/uncommon/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/rooted_arch_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:chiseled_black_tumblestone_bricks": [
+{
+"t": "cobblemon/blocks/chiseled_black_tumblestone_bricks",
+"r": 100.0
+}
+],
+"cobblemon:chiseled_polished_black_tumblestone": [
+{
+"t": "cobblemon/blocks/chiseled_polished_black_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:chiseled_polished_sky_tumblestone": [
+{
+"t": "cobblemon/blocks/chiseled_polished_sky_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:chiseled_polished_tumblestone": [
+{
+"t": "cobblemon/blocks/chiseled_polished_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:chiseled_sky_tumblestone_bricks": [
+{
+"t": "cobblemon/blocks/chiseled_sky_tumblestone_bricks",
+"r": 100.0
+}
+],
+"cobblemon:chiseled_tumblestone_bricks": [
+{
+"t": "cobblemon/blocks/chiseled_tumblestone_bricks",
+"r": 100.0
+}
+],
+"cobblemon:choice_band": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:choice_scarf": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:choice_specs": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:chople_berry": [
+{
+"t": "cobblemon/blocks/chople_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:citrine_ball": [
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 14.29
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/common/pokeballs",
+"r": null
+}
+],
+"cobblemon:citrine_rod": [
+{
+"t": "rctmod/generic/epic/fishing",
+"r": null
+}
+],
+"cobblemon:claw_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/claw_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+}
+],
+"cobblemon:cleanse_tag": [
+{
+"t": "cobblemon/blocks/cleanse_tag",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/sol_henge_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:clear_amulet": [
+{
+"t": "mega_showdown/sets/any_showdown_held_item",
+"r": null
+}
+],
+"cobblemon:clever_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:clover_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:coarse_mulch": [
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:coba_berry": [
+{
+"t": "cobblemon/blocks/coba_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:colbur_berry": [
+{
+"t": "cobblemon/blocks/colbur_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:cornn_berry": [
+{
+"t": "cobblemon/blocks/cornn_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:cover_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/cover_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_preserved_skeleton",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_submerged_impact",
+"r": null
+}
+],
+"cobblemon:covert_cloak": [
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_frozen",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_sunscorched",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/luna_henge_ruins",
+"r": null
+}
+],
+"cobblemon:cracked_pot": [
+{
+"t": "cobblemon/ruins/uncommon/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/rooted_arch_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:custap_berry": [
+{
+"t": "cobblemon/blocks/custap_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:cyan_mint_leaf": [
+{
+"t": "cobblemon/blocks/cyan_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/cyan_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:cyan_mint_seeds": [
+{
+"t": "cobblemon/blocks/cyan_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/cyan_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/cyan_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/cyan_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:cyan_plaque": [
+{
+"t": "cobblemon/blocks/cyan_plaque",
+"r": null
+}
+],
+"cobblemon:damp_rock": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 26.55
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+}
+],
+"cobblemon:dark_gem": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "mega_showdown/archaeology/ruins",
+"r": 21.74
+},
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 20.0
+},
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 18.75
+},
+{
+"t": "cobblemon/ruins/common/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/luna_henge_ruins",
+"r": null
+}
+],
+"cobblemon:dawn_stone": [
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 12.5
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_frozen",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_lush",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_evo_stone",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/evolution",
+"r": null
+}
+],
+"cobblemon:dawn_stone_block": [
+{
+"t": "cobblemon/blocks/dawn_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:deep_sea_scale": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fishing/pokerod_treasure",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_preserved_skeleton",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_submerged_impact",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_submerged_spike",
+"r": null
+}
+],
+"cobblemon:deep_sea_tooth": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fishing/pokerod_treasure",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_preserved_skeleton",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_submerged_impact",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_submerged_spike",
+"r": null
+}
+],
+"cobblemon:destiny_knot": [
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_frozen",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_temperate",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_ancient_held_item",
+"r": null
+}
+],
+"cobblemon:dire_hit": [
+{
+"t": "cobblemon/blocks/dire_hit",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:display_case": [
+{
+"t": "cobblemon/blocks/display_case",
+"r": null
+}
+],
+"cobblemon:dive_ball": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 56.26
+},
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 39.28
+},
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 33.33
+},
+{
+"t": "cobblemon/shipwreck_coves/fishing_boats/fishing_boat",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/lesser_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:dive_rod": [
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 12.3
+},
+{
+"t": "rctmod/generic/legendary/fishing",
+"r": null
+}
+],
+"cobblemon:dome_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/dome_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_rooted_pit",
+"r": null
+}
+],
+"cobblemon:dome_sherd": [
+{
+"t": "cobblemon/ruins/common/luna_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/mossy_oubliette_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_frozen",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+}
+],
+"cobblemon:dragon_fang": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 25.55
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+}
+],
+"cobblemon:dragon_gem": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 64.08
+},
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 20.0
+},
+{
+"t": "cobblemon/ruins/common/toppled_pillars_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/lesser_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:dragon_scale": [
+{
+"t": "cobblemon/fishing/pokerod_treasure",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/big_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:dream_ball": [
+{
+"t": "rctmod/generic/legendary/pokeballs",
+"r": null
+}
+],
+"cobblemon:dubious_disc": [
+{
+"t": "rctmod/generic/legendary/evolution",
+"r": null
+}
+],
+"cobblemon:durin_berry": [
+{
+"t": "cobblemon/blocks/durin_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:dusk_ball": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 65.79
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:dusk_stone": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_rooted",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_evo_stone",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/evolution",
+"r": null
+}
+],
+"cobblemon:dusk_stone_block": [
+{
+"t": "cobblemon/blocks/dusk_stone_block",
+"r": 100.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 2.01
+}
+],
+"cobblemon:eggant_berry": [
+{
+"t": "cobblemon/blocks/eggant_berry",
+"r": 100.0
+}
+],
+"cobblemon:eject_button": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:eject_pack": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:electirizer": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:electric_gem": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 64.08
+},
+{
+"t": "cobblemon/ruins/common/unstable_cave_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:electric_seed": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 25.55
+}
+],
+"cobblemon:elixir": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_normal",
+"r": 59.04
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "cobblemon/blocks/elixir",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+}
+],
+"cobblemon:energy_root": [
+{
+"t": "cobblemon/blocks/energy_root",
+"r": 100.0
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+}
+],
+"cobblemon:enigma_berry": [
+{
+"t": "cobblemon/blocks/enigma_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:ether": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_normal",
+"r": 59.04
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/blocks/ether",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+}
+],
+"cobblemon:everstone": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+}
+],
+"cobblemon:eviolite": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:exp_candy_l": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 52.3
+},
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 30.07
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 6.92
+},
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 4.94
+},
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 4.74
+}
+],
+"cobblemon:exp_candy_m": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/ominous",
+"r": 91.22
+},
+{
+"t": "cobblemon/shipwreck_coves/spawners/normal",
+"r": 70.37
+},
+{
+"t": "mega_showdown/chests/observatory_barrel_2",
+"r": 69.35
+},
+{
+"t": "mega_showdown/chests/observatory_chest",
+"r": 66.17
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 19.41
+}
+],
+"cobblemon:exp_candy_s": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 93.6
+},
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 78.89
+},
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 71.41
+},
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 65.79
+},
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 64.08
+},
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 56.26
+}
+],
+"cobblemon:exp_candy_xl": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 11.24
+},
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 1.62
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 1.13
+},
+{
+"t": "rctmod/generic/legendary/medicine",
+"r": null
+}
+],
+"cobblemon:exp_candy_xs": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 90.21
+},
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 74.64
+},
+{
+"t": "mega_showdown/chests/observatory_chest",
+"r": 66.17
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "cobblemon/sets/any_exp_candy",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+}
+],
+"cobblemon:exp_share": [
+{
+"t": "rctmod/generic/legendary/training",
+"r": null
+}
+],
+"cobblemon:expert_belt": [
+{
+"t": "cobblemon/sets/any_ancient_held_item",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:fairy_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 29.23
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_spruce_tree",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:fairy_gem": [
+{
+"t": "cobblemon/ruins/common/toppled_pillars_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:fast_ball": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 64.08
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:fighting_gem": [
+{
+"t": "cobblemon/ruins/common/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:figy_berry": [
+{
+"t": "cobblemon/blocks/figy_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:fine_remedy": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/pots/ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_natural_heal_item",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:fire_gem": [
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 39.28
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 29.23
+},
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 12.5
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "cobblemon/ruins/common/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/deserted_town_center_ruins",
+"r": null
+}
+],
+"cobblemon:fire_stone": [
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 12.5
+},
+{
+"t": "cobblemon/sets/any_evo_stone",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/evolution",
+"r": null
+}
+],
+"cobblemon:fire_stone_block": [
+{
+"t": "cobblemon/blocks/fire_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:flame_orb": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:float_stone": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:flower_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:flying_gem": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 29.23
+},
+{
+"t": "cobblemon/ruins/common/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:focus_band": [
+{
+"t": "cobblemon/sets/any_ancient_held_item",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:focus_sash": [
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/fallen_statue_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_deserted",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_lush",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_temperate",
+"r": null
+}
+],
+"cobblemon:fossil_analyzer": [
+{
+"t": "cobblemon/blocks/fossil_analyzer",
+"r": null
+}
+],
+"cobblemon:fossilized_bird": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/bird_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/rare/galar_top_fossils",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+}
+],
+"cobblemon:fossilized_dino": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/dino_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/rare/galar_top_fossils",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+}
+],
+"cobblemon:fossilized_drake": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/drake_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/rare/galar_bottom_fossils",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+}
+],
+"cobblemon:fossilized_fish": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/fish_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/rare/galar_bottom_fossils",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+}
+],
+"cobblemon:friend_ball": [
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:full_heal": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_ominous",
+"r": 67.23
+},
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_normal",
+"r": 59.04
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/blocks/full__heal",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+}
+],
+"cobblemon:full_restore": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "cobblemon/blocks/full_restore",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/medicine",
+"r": null
+}
+],
+"cobblemon:galarica_cuff": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:galarica_nuts": [
+{
+"t": "cobblemon/blocks/galarica_nut_bush",
+"r": null
+},
+{
+"t": "cobblemon/blocks/galarica_nut_bush",
+"r": null
+}
+],
+"cobblemon:galarica_wreath": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:ganlon_berry": [
+{
+"t": "cobblemon/blocks/ganlon_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:genius_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:gentle_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:ghost_gem": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 20.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/common/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/lesser_treasure",
+"r": null
+}
+],
+"cobblemon:gilded_chest": [
+{
+"t": "cobblemon/blocks/gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:grass_gem": [
+{
+"t": "cobblemon/ruins/common/rooted_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:gray_plaque": [
+{
+"t": "cobblemon/blocks/gray_plaque",
+"r": null
+}
+],
+"cobblemon:great_ball": [
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 74.64
+},
+{
+"t": "mega_showdown/chests/observatory_barrel",
+"r": 33.33
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:green_apricorn": [
+{
+"t": "cobblemon/blocks/green_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:green_apricorn_seed": [
+{
+"t": "cobblemon/blocks/green_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/green_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/potted_green_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:green_gilded_chest": [
+{
+"t": "cobblemon/blocks/green_gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:green_mint_leaf": [
+{
+"t": "cobblemon/blocks/green_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/green_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:green_mint_seeds": [
+{
+"t": "cobblemon/blocks/green_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/green_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/green_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/green_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:green_plaque": [
+{
+"t": "cobblemon/blocks/green_plaque",
+"r": null
+}
+],
+"cobblemon:grepa_berry": [
+{
+"t": "cobblemon/blocks/grepa_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:grip_claw": [
+{
+"t": "mega_showdown/sets/any_showdown_held_item",
+"r": null
+}
+],
+"cobblemon:ground_gem": [
+{
+"t": "cobblemon/ruins/common/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/fallen_statue_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:growth_mulch": [
+{
+"t": "rctmod/generic/common/nature",
+"r": null
+}
+],
+"cobblemon:guard_spec": [
+{
+"t": "cobblemon/blocks/guard_spec",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:haban_berry": [
+{
+"t": "cobblemon/blocks/haban_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:hard_stone": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 65.79
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:hasty_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:heal_ball": [
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:heal_powder": [
+{
+"t": "cobblemon/ruins/pots/ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_natural_heal_item",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+}
+],
+"cobblemon:healing_machine": [
+{
+"t": "cobblemon/blocks/healing_machine",
+"r": null
+}
+],
+"cobblemon:health_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:hearty_grain_bale": [
+{
+"t": "cobblemon/blocks/hearty_grain_bale",
+"r": 100.0
+}
+],
+"cobblemon:hearty_grains": [
+{
+"t": "cobblemon/blocks/hearty_grains",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/hearty_grains",
+"r": 100.0
+}
+],
+"cobblemon:heat_rock": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 26.55
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+}
+],
+"cobblemon:heavy_ball": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 71.41
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:heavy_duty_boots": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:helix_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 6.25
+},
+{
+"t": "cobblemon/fossils/rare/helix_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+}
+],
+"cobblemon:helix_sherd": [
+{
+"t": "cobblemon/ruins/common/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/fallen_statue_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/sol_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/toppled_pillars_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/fallen_statue_ruins",
+"r": null
+}
+],
+"cobblemon:hondew_berry": [
+{
+"t": "cobblemon/blocks/hondew_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:hopo_berry": [
+{
+"t": "cobblemon/blocks/hopo_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:hp_up": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:humid_mulch": [
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:hyper_potion": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_normal",
+"r": 59.04
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 22.75
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/blocks/hyper_potion",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+}
+],
+"cobblemon:iapapa_berry": [
+{
+"t": "cobblemon/blocks/iapapa_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:ice_gem": [
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 78.89
+},
+{
+"t": "cobblemon/ruins/common/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:ice_heal": [
+{
+"t": "cobblemon/blocks/ice_heal",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:ice_stone": [
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 35.54
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_powdered_deposit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_preserved_skeleton",
+"r": null
+}
+],
+"cobblemon:ice_stone_block": [
+{
+"t": "cobblemon/blocks/ice_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:icy_rock": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_powdered_deposit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_preserved_skeleton",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_spruce_tree",
+"r": null
+}
+],
+"cobblemon:impish_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:iron": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 30.07
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:iron_ball": [
+{
+"t": "cobblemon/sets/any_ancient_held_item",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:jaboca_berry": [
+{
+"t": "cobblemon/blocks/jaboca_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:jaw_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/jaw_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sunscorched_den",
+"r": null
+}
+],
+"cobblemon:jolly_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:kasib_berry": [
+{
+"t": "cobblemon/blocks/kasib_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:kebia_berry": [
+{
+"t": "cobblemon/blocks/kebia_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:kee_berry": [
+{
+"t": "cobblemon/blocks/kee_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:kelpsy_berry": [
+{
+"t": "cobblemon/blocks/kelpsy_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:kings_rock": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 26.55
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fishing/pokerod_treasure",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/decaying_crypt_ruins",
+"r": null
+}
+],
+"cobblemon:lagging_tail": [
+{
+"t": "mega_showdown/sets/any_showdown_held_item",
+"r": null
+}
+],
+"cobblemon:lansat_berry": [
+{
+"t": "cobblemon/blocks/lansat_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:lax_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:leaf_stone": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_oak_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_suspicious_mound",
+"r": null
+}
+],
+"cobblemon:leaf_stone_block": [
+{
+"t": "cobblemon/blocks/leaf_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:leek_and_potato_stew": [
+{
+"t": "rctmod/generic/common/diverse",
+"r": null
+}
+],
+"cobblemon:leftovers": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:leppa_berry": [
+{
+"t": "cobblemon/blocks/leppa_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:level_ball": [
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:liechi_berry": [
+{
+"t": "cobblemon/blocks/liechi_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:life_orb": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:light_ball": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:light_blue_plaque": [
+{
+"t": "cobblemon/blocks/light_blue_plaque",
+"r": null
+}
+],
+"cobblemon:light_gray_plaque": [
+{
+"t": "cobblemon/blocks/light_gray_plaque",
+"r": null
+}
+],
+"cobblemon:lime_plaque": [
+{
+"t": "cobblemon/blocks/lime_plaque",
+"r": null
+}
+],
+"cobblemon:link_cable": [
+{
+"t": "cobblemon/injection/chests/ancient_city",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/end_city_treasure",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/igloo_chest",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/pillager_outpost",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/stronghold_corridor",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/village_house",
+"r": 100.0
+}
+],
+"cobblemon:loaded_dice": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:loamy_mulch": [
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:lonely_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:love_ball": [
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:love_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:lucky_egg": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+},
+{
+"t": "rctmod/generic/epic/training",
+"r": null
+}
+],
+"cobblemon:lum_berry": [
+{
+"t": "cobblemon/blocks/lum_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:lure_ball": [
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 33.33
+},
+{
+"t": "cobblemon/shipwreck_coves/fishing_boats/fishing_boat",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/lesser_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:lure_rod": [
+{
+"t": "rctmod/generic/legendary/fishing",
+"r": null
+}
+],
+"cobblemon:luxury_ball": [
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:magenta_plaque": [
+{
+"t": "cobblemon/blocks/magenta_plaque",
+"r": null
+}
+],
+"cobblemon:magmarizer": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:magnet": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 30.07
+},
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 25.55
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:mago_berry": [
+{
+"t": "cobblemon/blocks/mago_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:magost_berry": [
+{
+"t": "cobblemon/blocks/magost_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:malicious_armor": [
+{
+"t": "cobblemon/injection/chests/nether_bridge",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:maranga_berry": [
+{
+"t": "cobblemon/blocks/maranga_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:master_ball": [
+{
+"t": "rctmod/generic/legendary/masterball",
+"r": null
+},
+{
+"t": "rctmod/generic/unique/pokeballs",
+"r": null
+}
+],
+"cobblemon:masterpiece_teacup": [
+{
+"t": "cobblemon/ruins/uncommon/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/toppled_pillars_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:max_elixir": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_ominous",
+"r": 67.23
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "cobblemon/blocks/max_elixir",
+"r": null
+},
+{
+"t": "rctmod/generic/legendary/medicine",
+"r": null
+}
+],
+"cobblemon:max_ether": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_ominous",
+"r": 67.23
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/blocks/max_ether",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/medicine",
+"r": null
+}
+],
+"cobblemon:max_potion": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_ominous",
+"r": 67.23
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "cobblemon/blocks/max_potion",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/medicine",
+"r": null
+}
+],
+"cobblemon:max_revive": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_ominous",
+"r": 67.23
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "rctmod/generic/legendary/medicine",
+"r": null
+}
+],
+"cobblemon:medicinal_brew": [
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+}
+],
+"cobblemon:medicinal_leek": [
+{
+"t": "cobblemon/blocks/medicinal_leek",
+"r": null
+},
+{
+"t": "cobblemon/blocks/medicinal_leek",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:mental_herb": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_hydrothermal_vents",
+"r": null
+}
+],
+"cobblemon:metal_coat": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 71.41
+},
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:metal_powder": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:micle_berry": [
+{
+"t": "cobblemon/blocks/micle_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:mild_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:miracle_seed": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:mirror_herb": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_frozen_pond",
+"r": null
+}
+],
+"cobblemon:modest_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:monitor": [
+{
+"t": "cobblemon/blocks/monitor",
+"r": null
+}
+],
+"cobblemon:moon_ball": [
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:moon_stone": [
+{
+"t": "cobblemon/sets/any_evo_stone",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/evolution",
+"r": null
+}
+],
+"cobblemon:moon_stone_block": [
+{
+"t": "cobblemon/blocks/moon_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:mulch_base": [
+{
+"t": "rctmod/generic/common/nature",
+"r": null
+}
+],
+"cobblemon:muscle_band": [
+{
+"t": "rctmod/generic/legendary/training",
+"r": null
+}
+],
+"cobblemon:muscle_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:mystic_water": [
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/big_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:naive_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:nanab_berry": [
+{
+"t": "cobblemon/blocks/nanab_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:naughty_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:nest_ball": [
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:net_ball": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 56.26
+},
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 33.33
+},
+{
+"t": "cobblemon/shipwreck_coves/fishing_boats/fishing_boat",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/lesser_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:net_rod": [
+{
+"t": "rctmod/generic/legendary/fishing",
+"r": null
+}
+],
+"cobblemon:never_melt_ice": [
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 35.54
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_spruce_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_powdered_deposit",
+"r": null
+}
+],
+"cobblemon:nomel_berry": [
+{
+"t": "cobblemon/blocks/nomel_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:normal_gem": [
+{
+"t": "mega_showdown/chests/observatory_barrel_3",
+"r": 59.22
+},
+{
+"t": "cobblemon/ruins/common/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:nostalgic_sherd": [
+{
+"t": "cobblemon/ruins/common/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/rooted_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/stonjourner_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+}
+],
+"cobblemon:occa_berry": [
+{
+"t": "cobblemon/blocks/occa_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:old_amber_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/old_amber_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_spruce_tree",
+"r": null
+}
+],
+"cobblemon:oran_berry": [
+{
+"t": "cobblemon/blocks/oran_berry",
+"r": 100.0
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/berries",
+"r": null
+}
+],
+"cobblemon:orange_plaque": [
+{
+"t": "cobblemon/blocks/orange_plaque",
+"r": null
+}
+],
+"cobblemon:oval_stone": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:pamtre_berry": [
+{
+"t": "cobblemon/blocks/pamtre_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:paralyze_heal": [
+{
+"t": "cobblemon/blocks/paralyze_heal",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:park_ball": [
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:passho_berry": [
+{
+"t": "cobblemon/blocks/passho_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:pasture": [
+{
+"t": "cobblemon/blocks/pasture",
+"r": null
+}
+],
+"cobblemon:payapa_berry": [
+{
+"t": "cobblemon/blocks/payapa_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:pc": [
+{
+"t": "cobblemon/blocks/pc",
+"r": null
+}
+],
+"cobblemon:peat_block": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_lush_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_rooted_pit",
+"r": null
+}
+],
+"cobblemon:peat_mulch": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:pecha_berry": [
+{
+"t": "cobblemon/blocks/pecha_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:pep_up_flower": [
+{
+"t": "cobblemon/blocks/revival_herb",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/pep_up_flower",
+"r": null
+},
+{
+"t": "cobblemon/blocks/potted_pep_up_flower",
+"r": null
+},
+{
+"t": "rctmod/generic/common/nature",
+"r": null
+}
+],
+"cobblemon:persim_berry": [
+{
+"t": "cobblemon/blocks/persim_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:petaya_berry": [
+{
+"t": "cobblemon/blocks/petaya_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:pinap_berry": [
+{
+"t": "cobblemon/blocks/pinap_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:pink_apricorn": [
+{
+"t": "cobblemon/blocks/pink_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:pink_apricorn_seed": [
+{
+"t": "cobblemon/blocks/pink_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/pink_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/potted_pink_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:pink_gilded_chest": [
+{
+"t": "cobblemon/blocks/pink_gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:pink_mint_leaf": [
+{
+"t": "cobblemon/blocks/pink_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/pink_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:pink_mint_seeds": [
+{
+"t": "cobblemon/blocks/pink_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/pink_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/pink_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/pink_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:pink_plaque": [
+{
+"t": "cobblemon/blocks/pink_plaque",
+"r": null
+}
+],
+"cobblemon:plume_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/plume_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_rooted_pit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_spruce_tree",
+"r": null
+}
+],
+"cobblemon:poison_barb": [
+{
+"t": "cobblemon/ruins/common/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/mossy_oubliette_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/unstable_cave_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:poison_gem": [
+{
+"t": "cobblemon/ruins/common/mossy_oubliette_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:poke_ball": [
+{
+"t": "mega_showdown/chests/observatory_barrel",
+"r": 33.33
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 21.43
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/common/pokeballs",
+"r": null
+}
+],
+"cobblemon:poke_rod": [
+{
+"t": "rctmod/generic/epic/fishing",
+"r": null
+}
+],
+"cobblemon:pokerod_smithing_template": [
+{
+"t": "cobblemon/injection/gameplay/fishing/treasure",
+"r": 100.0
+},
+{
+"t": "cobblemon/shipwreck_coves/fishing_boats/fishing_boat",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/big_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/legendary/fishing",
+"r": null
+}
+],
+"cobblemon:polished_black_tumblestone": [
+{
+"t": "cobblemon/blocks/polished_black_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:polished_black_tumblestone_slab": [
+{
+"t": "cobblemon/blocks/polished_black_tumblestone_slab",
+"r": null
+}
+],
+"cobblemon:polished_black_tumblestone_stairs": [
+{
+"t": "cobblemon/blocks/polished_black_tumblestone_stairs",
+"r": 100.0
+}
+],
+"cobblemon:polished_black_tumblestone_wall": [
+{
+"t": "cobblemon/blocks/polished_black_tumblestone_wall",
+"r": 100.0
+}
+],
+"cobblemon:polished_sky_tumblestone": [
+{
+"t": "cobblemon/blocks/polished_sky_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:polished_sky_tumblestone_slab": [
+{
+"t": "cobblemon/blocks/polished_sky_tumblestone_slab",
+"r": null
+}
+],
+"cobblemon:polished_sky_tumblestone_stairs": [
+{
+"t": "cobblemon/blocks/polished_sky_tumblestone_stairs",
+"r": 100.0
+}
+],
+"cobblemon:polished_sky_tumblestone_wall": [
+{
+"t": "cobblemon/blocks/polished_sky_tumblestone_wall",
+"r": 100.0
+}
+],
+"cobblemon:polished_tumblestone": [
+{
+"t": "cobblemon/blocks/polished_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:polished_tumblestone_slab": [
+{
+"t": "cobblemon/blocks/polished_tumblestone_slab",
+"r": null
+}
+],
+"cobblemon:polished_tumblestone_stairs": [
+{
+"t": "cobblemon/blocks/polished_tumblestone_stairs",
+"r": 100.0
+}
+],
+"cobblemon:polished_tumblestone_wall": [
+{
+"t": "cobblemon/blocks/polished_tumblestone_wall",
+"r": 100.0
+}
+],
+"cobblemon:pomeg_berry": [
+{
+"t": "cobblemon/blocks/pomeg_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:potion": [
+{
+"t": "cobblemon/blocks/potion",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:power_anklet": [
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:power_band": [
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:power_belt": [
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:power_bracer": [
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:power_herb": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_hydrothermal_vents",
+"r": null
+}
+],
+"cobblemon:power_lens": [
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:power_weight": [
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:pp_max": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 1.87
+},
+{
+"t": "rctmod/generic/epic/medicine",
+"r": null
+}
+],
+"cobblemon:pp_up": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+}
+],
+"cobblemon:premier_ball": [
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 7.14
+},
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:prism_scale": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fishing/pokerod_treasure",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_preserved_skeleton",
+"r": null
+}
+],
+"cobblemon:protector": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 65.79
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/fallen_statue_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_sunscorched",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+}
+],
+"cobblemon:protein": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 4.94
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+}
+],
+"cobblemon:psychic_gem": [
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 39.28
+},
+{
+"t": "cobblemon/ruins/common/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/luna_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/sol_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:purple_plaque": [
+{
+"t": "cobblemon/blocks/purple_plaque",
+"r": null
+}
+],
+"cobblemon:qualot_berry": [
+{
+"t": "cobblemon/blocks/qualot_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:quick_ball": [
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:quick_claw": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:quick_powder": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:quiet_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:rabuta_berry": [
+{
+"t": "cobblemon/blocks/rabuta_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:rare_candy": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "cobblemon/ruins/gilded_chests/ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/medicine",
+"r": null
+}
+],
+"cobblemon:rash_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:rawst_berry": [
+{
+"t": "cobblemon/blocks/rawst_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:razor_claw": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:razor_fang": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sandy_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sunscorched_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sunscorched_remains",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:razz_berry": [
+{
+"t": "cobblemon/blocks/razz_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:reaper_cloth": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:red_apricorn": [
+{
+"t": "cobblemon/blocks/red_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:red_apricorn_seed": [
+{
+"t": "cobblemon/blocks/red_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/potted_red_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/red_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:red_card": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:red_mint_leaf": [
+{
+"t": "cobblemon/blocks/red_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/red_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:red_mint_seeds": [
+{
+"t": "cobblemon/blocks/red_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/red_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/red_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/red_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:red_plaque": [
+{
+"t": "cobblemon/blocks/red_plaque",
+"r": null
+}
+],
+"cobblemon:relaxed_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:relic_coin": [
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 100.0
+},
+{
+"t": "mega_showdown/chests/observatory_barrel",
+"r": 99.49
+},
+{
+"t": "mega_showdown/chests/observatory_barrel_3",
+"r": 99.49
+},
+{
+"t": "mega_showdown/chests/observatory_barrel_2",
+"r": 95.87
+},
+{
+"t": "mega_showdown/chests/observatory_chest",
+"r": 94.5
+},
+{
+"t": "cobblemon/shipwreck_coves/spawners/ominous",
+"r": 91.22
+}
+],
+"cobblemon:relic_coin_pouch": [
+{
+"t": "cobblemon/blocks/relic_coin_pouch",
+"r": 50.0
+},
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 35.54
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 32.32
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 29.23
+},
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 26.55
+},
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 25.55
+}
+],
+"cobblemon:relic_coin_sack": [
+{
+"t": "cobblemon/blocks/relic_coin_sack",
+"r": 50.0
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+}
+],
+"cobblemon:remedy": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/pots/ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_natural_heal_item",
+"r": null
+},
+{
+"t": "cobblemon/villages/village_pokecenters",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:repeat_ball": [
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:resist_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:restoration_tank": [
+{
+"t": "cobblemon/blocks/restoration_tank",
+"r": null
+}
+],
+"cobblemon:revival_herb": [
+{
+"t": "cobblemon/blocks/revival_herb",
+"r": 100.0
+},
+{
+"t": "cobblemon/sets/any_natural_heal_item",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:revive": [
+{
+"t": "cobblemon/shipwreck_coves/spawners/extra_normal",
+"r": 59.04
+},
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 32.32
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+}
+],
+"cobblemon:ribbon_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:rich_mulch": [
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:rindo_berry": [
+{
+"t": "cobblemon/blocks/rindo_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:ring_target": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:roasted_leek": [
+{
+"t": "rctmod/generic/common/diverse",
+"r": null
+}
+],
+"cobblemon:rock_gem": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 65.79
+},
+{
+"t": "cobblemon/ruins/common/decaying_crypt_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/luna_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/sol_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/stonjourner_henge_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+}
+],
+"cobblemon:rocky_helmet": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:root_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/root_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_hydrothermal_vents",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_rooted_pit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sandy_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_submerged_impact",
+"r": null
+}
+],
+"cobblemon:roseate_ball": [
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 14.29
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/common/pokeballs",
+"r": null
+}
+],
+"cobblemon:roseate_rod": [
+{
+"t": "rctmod/generic/epic/fishing",
+"r": null
+}
+],
+"cobblemon:roseli_berry": [
+{
+"t": "cobblemon/blocks/roseli_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:rowap_berry": [
+{
+"t": "cobblemon/blocks/rowap_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:saccharine_button": [
+{
+"t": "cobblemon/blocks/saccharine_button",
+"r": null
+}
+],
+"cobblemon:saccharine_door": [
+{
+"t": "cobblemon/blocks/saccharine_door",
+"r": null
+}
+],
+"cobblemon:saccharine_fence": [
+{
+"t": "cobblemon/blocks/saccharine_fence",
+"r": null
+}
+],
+"cobblemon:saccharine_fence_gate": [
+{
+"t": "cobblemon/blocks/saccharine_fence_gate",
+"r": null
+}
+],
+"cobblemon:saccharine_hanging_sign": [
+{
+"t": "cobblemon/blocks/saccharine_hanging_sign",
+"r": null
+},
+{
+"t": "cobblemon/blocks/saccharine_wall_hanging_sign",
+"r": null
+}
+],
+"cobblemon:saccharine_log": [
+{
+"t": "cobblemon/blocks/saccharine_log",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/saccharine_log_slathered",
+"r": 100.0
+}
+],
+"cobblemon:saccharine_planks": [
+{
+"t": "cobblemon/blocks/saccharine_planks",
+"r": 100.0
+}
+],
+"cobblemon:saccharine_pressure_plate": [
+{
+"t": "cobblemon/blocks/saccharine_pressure_plate",
+"r": null
+}
+],
+"cobblemon:saccharine_sapling": [
+{
+"t": "cobblemon/blocks/potted_saccharine_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/saccharine_sapling",
+"r": null
+}
+],
+"cobblemon:saccharine_sign": [
+{
+"t": "cobblemon/blocks/saccharine_sign",
+"r": null
+},
+{
+"t": "cobblemon/blocks/saccharine_wall_sign",
+"r": null
+}
+],
+"cobblemon:saccharine_slab": [
+{
+"t": "cobblemon/blocks/saccharine_slab",
+"r": null
+}
+],
+"cobblemon:saccharine_stairs": [
+{
+"t": "cobblemon/blocks/saccharine_stairs",
+"r": null
+}
+],
+"cobblemon:saccharine_trapdoor": [
+{
+"t": "cobblemon/blocks/saccharine_trapdoor",
+"r": null
+}
+],
+"cobblemon:saccharine_wood": [
+{
+"t": "cobblemon/blocks/saccharine_wood",
+"r": 100.0
+}
+],
+"cobblemon:sachet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:safari_ball": [
+{
+"t": "rctmod/generic/uncommon/pokeballs",
+"r": null
+}
+],
+"cobblemon:safety_goggles": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:sail_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/sail_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_frozen_spike",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_powdered_deposit",
+"r": null
+}
+],
+"cobblemon:salac_berry": [
+{
+"t": "cobblemon/blocks/salac_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:sandy_mulch": [
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 18.75
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:sassy_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:serious_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:sharp_beak": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:shell_bell": [
+{
+"t": "cobblemon/ruins/uncommon/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/rooted_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/stonjourner_henge_ruins",
+"r": null
+}
+],
+"cobblemon:shiny_stone": [
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_deserted",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_temperate",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_evo_stone",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/evolution",
+"r": null
+}
+],
+"cobblemon:shiny_stone_block": [
+{
+"t": "cobblemon/blocks/shiny_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:shuca_berry": [
+{
+"t": "cobblemon/blocks/shuca_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:silk_scarf": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 52.3
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:silver_powder": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:sitrus_berry": [
+{
+"t": "cobblemon/blocks/sitrus_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:skull_fossil": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 6.67
+},
+{
+"t": "cobblemon/fossils/rare/skull_fossil",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_birch_tree",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_mud_pit",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_oak_tree",
+"r": null
+}
+],
+"cobblemon:sky_tumblestone": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/rare/sky_tumblestone",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/archeology",
+"r": null
+}
+],
+"cobblemon:sky_tumblestone_brick_slab": [
+{
+"t": "cobblemon/blocks/sky_tumblestone_brick_slab",
+"r": null
+}
+],
+"cobblemon:sky_tumblestone_brick_stairs": [
+{
+"t": "cobblemon/blocks/sky_tumblestone_brick_stairs",
+"r": 100.0
+}
+],
+"cobblemon:sky_tumblestone_brick_wall": [
+{
+"t": "cobblemon/blocks/sky_tumblestone_brick_wall",
+"r": 100.0
+}
+],
+"cobblemon:sky_tumblestone_bricks": [
+{
+"t": "cobblemon/blocks/sky_tumblestone_bricks",
+"r": 100.0
+}
+],
+"cobblemon:slate_ball": [
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 14.29
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/common/pokeballs",
+"r": null
+}
+],
+"cobblemon:slate_rod": [
+{
+"t": "rctmod/generic/epic/fishing",
+"r": null
+}
+],
+"cobblemon:small_budding_sky_tumblestone": [
+{
+"t": "rctmod/generic/common/archeology",
+"r": null
+},
+{
+"t": "rctmod/generic/legendary/archeology",
+"r": null
+}
+],
+"cobblemon:smoke_ball": [
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_rooted",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:smooth_black_tumblestone": [
+{
+"t": "cobblemon/blocks/smooth_black_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:smooth_black_tumblestone_slab": [
+{
+"t": "cobblemon/blocks/smooth_black_tumblestone_slab",
+"r": null
+}
+],
+"cobblemon:smooth_black_tumblestone_stairs": [
+{
+"t": "cobblemon/blocks/smooth_black_tumblestone_stairs",
+"r": 100.0
+}
+],
+"cobblemon:smooth_rock": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 26.55
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sandy_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sunscorched_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/uncommon/prehistoric_sunscorched_remains",
+"r": null
+}
+],
+"cobblemon:smooth_sky_tumblestone": [
+{
+"t": "cobblemon/blocks/smooth_sky_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:smooth_sky_tumblestone_slab": [
+{
+"t": "cobblemon/blocks/smooth_sky_tumblestone_slab",
+"r": null
+}
+],
+"cobblemon:smooth_sky_tumblestone_stairs": [
+{
+"t": "cobblemon/blocks/smooth_sky_tumblestone_stairs",
+"r": 100.0
+}
+],
+"cobblemon:smooth_tumblestone": [
+{
+"t": "cobblemon/blocks/smooth_tumblestone",
+"r": 100.0
+}
+],
+"cobblemon:smooth_tumblestone_slab": [
+{
+"t": "cobblemon/blocks/smooth_tumblestone_slab",
+"r": null
+}
+],
+"cobblemon:smooth_tumblestone_stairs": [
+{
+"t": "cobblemon/blocks/smooth_tumblestone_stairs",
+"r": 100.0
+}
+],
+"cobblemon:soft_sand": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:soothe_bell": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+},
+{
+"t": "rctmod/generic/rare/training",
+"r": null
+}
+],
+"cobblemon:spell_tag": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/blocks/spell_tag",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/luna_henge_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:spelon_berry": [
+{
+"t": "cobblemon/blocks/spelon_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:sport_ball": [
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:star_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:starf_berry": [
+{
+"t": "cobblemon/blocks/starf_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:steel_gem": [
+{
+"t": "legendarymonuments/chests/heatran_cave_chest",
+"r": 12.01
+},
+{
+"t": "cobblemon/ruins/common/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:sticky_barb": [
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:strawberry_sweet": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:stripped_apricorn_log": [
+{
+"t": "cobblemon/blocks/stripped_apricorn_log",
+"r": 100.0
+}
+],
+"cobblemon:stripped_apricorn_wood": [
+{
+"t": "cobblemon/blocks/stripped_apricorn_wood",
+"r": 100.0
+}
+],
+"cobblemon:stripped_saccharine_log": [
+{
+"t": "cobblemon/blocks/stripped_saccharine_log",
+"r": 100.0
+}
+],
+"cobblemon:stripped_saccharine_wood": [
+{
+"t": "cobblemon/blocks/stripped_saccharine_wood",
+"r": 100.0
+}
+],
+"cobblemon:sun_stone": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_sandy_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_sunscorched_den",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_sunscorched_remains",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_sunscorched",
+"r": null
+}
+],
+"cobblemon:sun_stone_block": [
+{
+"t": "cobblemon/blocks/sun_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:super_potion": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/blocks/super_potion",
+"r": null
+},
+{
+"t": "rctmod/generic/common/medicine",
+"r": null
+}
+],
+"cobblemon:superb_remedy": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/sets/any_natural_heal_item",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/medicine",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:surprise_mulch": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:suspicious_sherd": [
+{
+"t": "cobblemon/ruins/common/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/unstable_cave_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/gimmi_tower_junk",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/luna_henge_ruins",
+"r": null
+}
+],
+"cobblemon:sweet_apple": [
+{
+"t": "mega_showdown/archaeology/observatory_sus",
+"r": 18.75
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:swift_feather": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 61.0
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "rctmod/generic/uncommon/training",
+"r": null
+}
+],
+"cobblemon:tamato_berry": [
+{
+"t": "cobblemon/blocks/tamato_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:tanga_berry": [
+{
+"t": "cobblemon/blocks/tanga_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:tart_apple": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:tatami_block": [
+{
+"t": "cobblemon/blocks/tatami_block",
+"r": 100.0
+}
+],
+"cobblemon:tatami_mat": [
+{
+"t": "cobblemon/blocks/tatami_mat",
+"r": 100.0
+}
+],
+"cobblemon:thunder_stone": [
+{
+"t": "cobblemon/sets/any_evo_stone",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/evolution",
+"r": null
+}
+],
+"cobblemon:thunder_stone_block": [
+{
+"t": "cobblemon/blocks/thunder_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:timer_ball": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 93.6
+},
+{
+"t": "rctmod/generic/epic/pokeballs",
+"r": null
+}
+],
+"cobblemon:timid_mint": [
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:touga_berry": [
+{
+"t": "cobblemon/blocks/touga_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/berries",
+"r": null
+}
+],
+"cobblemon:toxic_orb": [
+{
+"t": "rctmod/generic/legendary/battle",
+"r": null
+}
+],
+"cobblemon:tumblestone": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+},
+{
+"t": "cobblemon/ruins/rare/tumblestone",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/archeology",
+"r": null
+}
+],
+"cobblemon:tumblestone_brick_slab": [
+{
+"t": "cobblemon/blocks/tumblestone_brick_slab",
+"r": null
+}
+],
+"cobblemon:tumblestone_brick_stairs": [
+{
+"t": "cobblemon/blocks/tumblestone_brick_stairs",
+"r": 100.0
+}
+],
+"cobblemon:tumblestone_brick_wall": [
+{
+"t": "cobblemon/blocks/tumblestone_brick_wall",
+"r": 100.0
+}
+],
+"cobblemon:tumblestone_bricks": [
+{
+"t": "cobblemon/blocks/tumblestone_bricks",
+"r": 100.0
+}
+],
+"cobblemon:twisted_spoon": [
+{
+"t": "cobblemon/ruins/uncommon/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_town_center_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/rooted_arch_ruins",
+"r": null
+}
+],
+"cobblemon:ultra_ball": [
+{
+"t": "mega_showdown/chests/observatory_barrel",
+"r": 33.33
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/rare/pokeballs",
+"r": null
+}
+],
+"cobblemon:unremarkable_teacup": [
+{
+"t": "cobblemon/ruins/uncommon/crumbling_arch_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/deserted_house_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/hidden_bunker_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/uncommon/toppled_pillars_ruins",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:upgrade": [
+{
+"t": "rctmod/generic/legendary/evolution",
+"r": null
+}
+],
+"cobblemon:verdant_ball": [
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": 14.29
+},
+{
+"t": "cobblemon/sets/any_common_pokeball",
+"r": null
+},
+{
+"t": "rctmod/generic/common/pokeballs",
+"r": null
+}
+],
+"cobblemon:verdant_rod": [
+{
+"t": "rctmod/generic/epic/fishing",
+"r": null
+}
+],
+"cobblemon:vivichoke": [
+{
+"t": "cobblemon/blocks/vivichoke_seeds",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:vivichoke_dip": [
+{
+"t": "rctmod/generic/rare/diverse",
+"r": null
+}
+],
+"cobblemon:vivichoke_seeds": [
+{
+"t": "cobblemon/blocks/vivichoke_seeds",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/jungle_temple",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/shipwreck_supply",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": 100.0
+},
+{
+"t": "cobblemon/injection/chests/village_house",
+"r": 100.0
+}
+],
+"cobblemon:wacan_berry": [
+{
+"t": "cobblemon/blocks/wacan_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:water_gem": [
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 20.0
+},
+{
+"t": "cobblemon/ruins/common/deserted_tower_ruins",
+"r": null
+},
+{
+"t": "cobblemon/ruins/common/mossy_oubliette_ruins",
+"r": null
+},
+{
+"t": "cobblemon/sets/any_type_gem",
+"r": null
+},
+{
+"t": "cobblemon/shipwreck_coves/gilded_chests/lesser_treasure",
+"r": null
+},
+{
+"t": "rctmod/generic/uncommon/battle",
+"r": null
+}
+],
+"cobblemon:water_stone": [
+{
+"t": "cobbleworkers/dive_treasure",
+"r": 20.0
+},
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_mossy_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_mud_pit",
+"r": null
+}
+],
+"cobblemon:water_stone_block": [
+{
+"t": "cobblemon/blocks/water_stone_block",
+"r": 100.0
+}
+],
+"cobblemon:watmel_berry": [
+{
+"t": "cobblemon/blocks/watmel_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:weakness_policy": [
+{
+"t": "cobblemon/blocks/weakness_policy",
+"r": null
+},
+{
+"t": "rctmod/generic/epic/battle",
+"r": null
+}
+],
+"cobblemon:wepear_berry": [
+{
+"t": "cobblemon/blocks/wepear_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/berries",
+"r": null
+}
+],
+"cobblemon:whipped_dream": [
+{
+"t": "rctmod/generic/epic/evolution",
+"r": null
+}
+],
+"cobblemon:white_apricorn": [
+{
+"t": "cobblemon/blocks/white_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:white_apricorn_seed": [
+{
+"t": "cobblemon/blocks/white_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/potted_white_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/white_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:white_gilded_chest": [
+{
+"t": "cobblemon/blocks/white_gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:white_herb": [
+{
+"t": "cobbleworkers/archaeology_treasure",
+"r": 3.45
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_dripstone_oasis",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_enhydro_agate",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_eroded_pillar",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_frozen_pond",
+"r": null
+},
+{
+"t": "cobblemon/fossils/common/prehistoric_hydrothermal_vents",
+"r": null
+}
+],
+"cobblemon:white_mint_leaf": [
+{
+"t": "cobblemon/blocks/white_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/white_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/uncommon/nature",
+"r": null
+}
+],
+"cobblemon:white_mint_seeds": [
+{
+"t": "cobblemon/blocks/white_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/white_mint",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/white_mint",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/nature",
+"r": null
+}
+],
+"cobblemon:white_plaque": [
+{
+"t": "cobblemon/blocks/white_plaque",
+"r": null
+}
+],
+"cobblemon:wiki_berry": [
+{
+"t": "cobblemon/blocks/wiki_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/legendary/berries",
+"r": null
+}
+],
+"cobblemon:wise_glasses": [
+{
+"t": "rctmod/generic/rare/battle",
+"r": null
+}
+],
+"cobblemon:x_accuracy": [
+{
+"t": "cobblemon/blocks/x_accuracy",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:x_attack": [
+{
+"t": "cobblemon/blocks/x_attack",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:x_defence": [
+{
+"t": "cobblemon/blocks/x_defence",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:x_special_attack": [
+{
+"t": "cobblemon/blocks/x_special_attack",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:x_special_defence": [
+{
+"t": "cobblemon/blocks/x_special_defence",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:x_speed": [
+{
+"t": "cobblemon/blocks/x_speed",
+"r": null
+},
+{
+"t": "rctmod/generic/common/battle",
+"r": null
+}
+],
+"cobblemon:yache_berry": [
+{
+"t": "cobblemon/blocks/yache_berry",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/epic/berries",
+"r": null
+}
+],
+"cobblemon:yellow_apricorn": [
+{
+"t": "cobblemon/blocks/yellow_apricorn",
+"r": 100.0
+},
+{
+"t": "rctmod/generic/rare/nature",
+"r": null
+}
+],
+"cobblemon:yellow_apricorn_seed": [
+{
+"t": "cobblemon/blocks/yellow_apricorn",
+"r": 100.0
+},
+{
+"t": "cobblemon/blocks/potted_yellow_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/blocks/yellow_apricorn_sapling",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/abandoned_mineshaft",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/simple_dungeon",
+"r": null
+},
+{
+"t": "cobblemon/injection/chests/spawn_bonus_chest",
+"r": null
+}
+],
+"cobblemon:yellow_gilded_chest": [
+{
+"t": "cobblemon/blocks/yellow_gilded_chest",
+"r": 100.0
+}
+],
+"cobblemon:yellow_plaque": [
+{
+"t": "cobblemon/blocks/yellow_plaque",
+"r": null
+}
+],
+"cobblemon:zinc": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+},
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 6.92
+},
+{
+"t": "rctmod/generic/uncommon/medicine",
+"r": null
+}
+],
+"legendarymonuments:ancient_rubble_ore": [
+{
+"t": "legendarymonuments/blocks/ancient_rubble_ore",
+"r": 100.0
+},
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 11.24
+}
+],
+"legendarymonuments:celestica_flute": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 1.01
+}
+],
+"legendarymonuments:darkstone_shard": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 19.41
+},
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 12.3
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+}
+],
+"legendarymonuments:distortion_button": [
+{
+"t": "legendarymonuments/blocks/distortion_button",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_cobblestone": [
+{
+"t": "legendarymonuments/blocks/distortion_cobblestone",
+"r": null
+}
+],
+"legendarymonuments:distortion_cobblestone_bricks": [
+{
+"t": "legendarymonuments/blocks/distortion_cobblestone_bricks",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_cobblestone_bricks_slab": [
+{
+"t": "legendarymonuments/blocks/distortion_cobblestone_bricks_slab",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_cobblestone_bricks_stairs": [
+{
+"t": "legendarymonuments/blocks/distortion_cobblestone_bricks_stairs",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_cobblestone_bricks_wall": [
+{
+"t": "legendarymonuments/blocks/distortion_cobblestone_bricks_wall",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_crystal": [
+{
+"t": "legendarymonuments/blocks/distortion_crystal",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_crystal_block": [
+{
+"t": "legendarymonuments/blocks/distortion_crystal_block",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_deepslate": [
+{
+"t": "legendarymonuments/blocks/distortion_deepslate",
+"r": null
+}
+],
+"legendarymonuments:distortion_deepslate_bricks": [
+{
+"t": "legendarymonuments/blocks/distortion_deepslate_bricks",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_deepslate_bricks_slab": [
+{
+"t": "legendarymonuments/blocks/distortion_deepslate_bricks_slab",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_deepslate_bricks_stairs": [
+{
+"t": "legendarymonuments/blocks/distortion_deepslate_bricks_stairs",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_deepslate_bricks_wall": [
+{
+"t": "legendarymonuments/blocks/distortion_deepslate_bricks_wall",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_door": [
+{
+"t": "legendarymonuments/blocks/distortion_door",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_fence": [
+{
+"t": "legendarymonuments/blocks/distortion_fence",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_fence_gate": [
+{
+"t": "legendarymonuments/blocks/distortion_fence_gate",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_hanging_sign": [
+{
+"t": "legendarymonuments/blocks/distortion_hanging_sign",
+"r": 100.0
+},
+{
+"t": "legendarymonuments/blocks/distortion_wall_hanging_sign",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_log": [
+{
+"t": "legendarymonuments/blocks/distortion_log",
+"r": null
+}
+],
+"legendarymonuments:distortion_planks": [
+{
+"t": "legendarymonuments/blocks/distortion_planks",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_pressure_plate": [
+{
+"t": "legendarymonuments/blocks/distortion_pressure_plate",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_sapling": [
+{
+"t": "legendarymonuments/blocks/distortion_sapling",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_sign": [
+{
+"t": "legendarymonuments/blocks/distortion_sign",
+"r": 100.0
+},
+{
+"t": "legendarymonuments/blocks/distortion_wall_sign",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_slab": [
+{
+"t": "legendarymonuments/blocks/distortion_slab",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_stairs": [
+{
+"t": "legendarymonuments/blocks/distortion_stairs",
+"r": 100.0
+}
+],
+"legendarymonuments:distortion_stone": [
+{
+"t": "legendarymonuments/blocks/distortion_stone",
+"r": null
+}
+],
+"legendarymonuments:distortion_trapdoor": [
+{
+"t": "legendarymonuments/blocks/distortion_trapdoor",
+"r": 100.0
+}
+],
+"legendarymonuments:dragon_golem_block": [
+{
+"t": "legendarymonuments/blocks/dragon_golem_block",
+"r": null
+}
+],
+"legendarymonuments:dream_catcher": [
+{
+"t": "legendarymonuments/blocks/dream_catcher",
+"r": 100.0
+}
+],
+"legendarymonuments:electric_golem_block": [
+{
+"t": "legendarymonuments/blocks/electric_golem_block",
+"r": null
+}
+],
+"legendarymonuments:galar_particle_block": [
+{
+"t": "legendarymonuments/blocks/galar_particle_block",
+"r": null
+}
+],
+"legendarymonuments:galarian_torch": [
+{
+"t": "legendarymonuments/blocks/galarian_torch",
+"r": null
+},
+{
+"t": "legendarymonuments/blocks/galarian_wall_torch",
+"r": null
+}
+],
+"legendarymonuments:galarian_urn_of_embers_block": [
+{
+"t": "legendarymonuments/blocks/galarian_urn_of_embers_block",
+"r": null
+}
+],
+"legendarymonuments:galarian_urn_of_frost_block": [
+{
+"t": "legendarymonuments/blocks/galarian_urn_of_frost_block",
+"r": null
+}
+],
+"legendarymonuments:galarian_urn_of_storms_block": [
+{
+"t": "legendarymonuments/blocks/galarian_urn_of_storms_block",
+"r": null
+}
+],
+"legendarymonuments:golem_scrap": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 2.01
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 1.87
+}
+],
+"legendarymonuments:griseous_key": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 10.77
+}
+],
+"legendarymonuments:ice_golem_block": [
+{
+"t": "legendarymonuments/blocks/ice_golem_block",
+"r": null
+}
+],
+"legendarymonuments:lightstone_shard": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 19.41
+},
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 12.3
+},
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+}
+],
+"legendarymonuments:meltan_box": [
+{
+"t": "legendarymonuments/blocks/meltan_box",
+"r": null
+}
+],
+"legendarymonuments:old_sea_map": [
+{
+"t": "legendarymonuments/chests/liberty_island_chest",
+"r": 12.3
+}
+],
+"legendarymonuments:origin_block": [
+{
+"t": "legendarymonuments/blocks/origin_block",
+"r": 100.0
+}
+],
+"legendarymonuments:origin_ingot": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 1.01
+}
+],
+"legendarymonuments:rock_golem_block": [
+{
+"t": "legendarymonuments/blocks/rock_golem_block",
+"r": null
+}
+],
+"legendarymonuments:sandstone_pressure_plate": [
+{
+"t": "legendarymonuments/blocks/sandstone_pressure_plate",
+"r": 100.0
+}
+],
+"legendarymonuments:steel_golem_block": [
+{
+"t": "legendarymonuments/blocks/steel_golem_block",
+"r": null
+}
+],
+"legendarymonuments:suitcase_block": [
+{
+"t": "legendarymonuments/blocks/suitcase_block",
+"r": 100.0
+}
+],
+"legendarymonuments:urn_of_embers_block": [
+{
+"t": "legendarymonuments/blocks/urn_of_embers_block",
+"r": null
+}
+],
+"legendarymonuments:urn_of_frost_block": [
+{
+"t": "legendarymonuments/blocks/urn_of_frost_block",
+"r": null
+}
+],
+"legendarymonuments:urn_of_storms_block": [
+{
+"t": "legendarymonuments/blocks/urn_of_storms_block",
+"r": null
+}
+],
+"mega_showdown:adamant_crystal": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 1.01
+}
+],
+"mega_showdown:adamant_orb": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+}
+],
+"mega_showdown:adrenaline_orb": [
+{
+"t": "mega_showdown/sets/any_showdown_held_item",
+"r": null
+}
+],
+"mega_showdown:blue_orb": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 2.64
+}
+],
+"mega_showdown:chiseled_mega_meteorid_block": [
+{
+"t": "mega_showdown/blocks/chiseled_mega_meteorid_block",
+"r": null
+}
+],
+"mega_showdown:chiseled_mega_meteorid_brick": [
+{
+"t": "mega_showdown/blocks/chiseled_mega_meteorid_brick",
+"r": null
+}
+],
+"mega_showdown:deoxys_meteorite": [
+{
+"t": "mega_showdown/blocks/deoxys_meteorite",
+"r": null
+}
+],
+"mega_showdown:dormant_crystal": [
+{
+"t": "mega_showdown/blocks/dormant_crystal",
+"r": null
+}
+],
+"mega_showdown:dragon_tera_shard": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 64.08
+}
+],
+"mega_showdown:dragonium_z": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 4.74
+}
+],
+"mega_showdown:electric_tera_shard": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 64.08
+}
+],
+"mega_showdown:electrium_z": [
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 4.74
+}
+],
+"mega_showdown:fire_tera_shard": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 29.23
+}
+],
+"mega_showdown:firium_z": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 8.73
+}
+],
+"mega_showdown:ghost_memory": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+}
+],
+"mega_showdown:ghost_tera_shard": [
+{
+"t": "legendarymonuments/chests/turnback_cave_chest",
+"r": 31.99
+},
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 9.76
+}
+],
+"mega_showdown:ghostium_z": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 2.01
+}
+],
+"mega_showdown:gracidea_flower": [
+{
+"t": "mega_showdown/blocks/gracidea_flower",
+"r": null
+},
+{
+"t": "mega_showdown/blocks/potted_gracidea",
+"r": null
+}
+],
+"mega_showdown:griseous_core": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 1.01
+}
+],
+"mega_showdown:griseous_orb": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+}
+],
+"mega_showdown:ice_tera_shard": [
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 78.89
+}
+],
+"mega_showdown:keystone_block": [
+{
+"t": "mega_showdown/blocks/keystone_block",
+"r": null
+}
+],
+"mega_showdown:lustrous_globe": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 1.01
+}
+],
+"mega_showdown:lustrous_orb": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 4.97
+}
+],
+"mega_showdown:max_mushroom": [
+{
+"t": "mega_showdown/blocks/max_mushroom",
+"r": null
+},
+{
+"t": "mega_showdown/blocks/max_mushroom",
+"r": null
+}
+],
+"mega_showdown:mega_meteorid_block": [
+{
+"t": "mega_showdown/chests/observatory_barrel",
+"r": 59.22
+},
+{
+"t": "mega_showdown/chests/observatory_barrel_3",
+"r": 59.22
+},
+{
+"t": "mega_showdown/archaeology/ruins",
+"r": 4.35
+},
+{
+"t": "mega_showdown/blocks/mega_meteorid_block",
+"r": null
+}
+],
+"mega_showdown:mega_meteorid_brick": [
+{
+"t": "mega_showdown/blocks/mega_meteorid_brick",
+"r": null
+}
+],
+"mega_showdown:mega_meteorid_radiated_block": [
+{
+"t": "mega_showdown/blocks/mega_meteorid_radiated_block",
+"r": null
+}
+],
+"mega_showdown:normal_tera_shard": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 93.6
+}
+],
+"mega_showdown:pedestal": [
+{
+"t": "mega_showdown/blocks/pedestal",
+"r": null
+}
+],
+"mega_showdown:polished_mega_meteorid_block": [
+{
+"t": "mega_showdown/blocks/polished_mega_meteorid_block",
+"r": null
+}
+],
+"mega_showdown:power_spot": [
+{
+"t": "mega_showdown/blocks/power_spot",
+"r": null
+}
+],
+"mega_showdown:reassembly_unit": [
+{
+"t": "mega_showdown/blocks/reassembly_unit",
+"r": null
+}
+],
+"mega_showdown:red_orb": [
+{
+"t": "legendarymonuments/chests/bell_tower_chest",
+"r": 1.13
+}
+],
+"mega_showdown:rock_tera_shard": [
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 65.79
+}
+],
+"mega_showdown:rotom_fan": [
+{
+"t": "mega_showdown/blocks/rotom_fan",
+"r": null
+}
+],
+"mega_showdown:rotom_fridge": [
+{
+"t": "mega_showdown/blocks/rotom_fridge",
+"r": null
+}
+],
+"mega_showdown:rotom_mow": [
+{
+"t": "mega_showdown/blocks/rotom_mow",
+"r": null
+}
+],
+"mega_showdown:rotom_oven": [
+{
+"t": "mega_showdown/blocks/rotom_oven",
+"r": null
+}
+],
+"mega_showdown:rotom_washing_machine": [
+{
+"t": "mega_showdown/blocks/rotom_washing_machine",
+"r": null
+}
+],
+"mega_showdown:soul_dew": [
+{
+"t": "mega_showdown/sets/any_showdown_held_item",
+"r": null
+}
+],
+"mega_showdown:sparkling_stone_dark": [
+{
+"t": "mega_showdown/archaeological_site/archaeological_site_rare",
+"r": 16.67
+}
+],
+"mega_showdown:sparkling_stone_light": [
+{
+"t": "mega_showdown/archaeological_site/archaeological_site_rare",
+"r": 83.33
+}
+],
+"mega_showdown:spooky_plate": [
+{
+"t": "legendarymonuments/chests/turnback_cave_vault",
+"r": 2.01
+}
+],
+"mega_showdown:steel_memory": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 5.69
+}
+],
+"mega_showdown:steel_tera_shard": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 71.41
+}
+],
+"mega_showdown:steelium_z": [
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 5.69
+}
+],
+"mega_showdown:water_tera_shard": [
+{
+"t": "legendarymonuments/chests/lugia_temple_chest",
+"r": 56.26
+}
+],
+"mega_showdown:zygarde_cell": [
+{
+"t": "mega_showdown/chests/observatory_barrel_3",
+"r": 100.0
+},
+{
+"t": "legendarymonuments/chests/regice_chest",
+"r": 35.54
+},
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 30.07
+},
+{
+"t": "legendarymonuments/chests/regirock_chest",
+"r": 26.55
+},
+{
+"t": "legendarymonuments/chests/dragoeleki_chest",
+"r": 25.55
+},
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 11.24
+}
+],
+"mega_showdown:zygarde_core": [
+{
+"t": "legendarymonuments/chests/regigigas_chest",
+"r": 11.24
+},
+{
+"t": "legendarymonuments/chests/registeel_chest",
+"r": 5.69
+}
+]
+}
+}

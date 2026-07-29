@@ -7,7 +7,7 @@
         {
           "type": "minecraft:item",
           "name": "cobblemon:relic_coin",
-          "weight": 80,
+          "weight": 160,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -21,112 +21,112 @@
         {
           "type": "minecraft:item",
           "name": "cobblemon:exp_candy_xs",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:fairy_feather",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:raw_gold",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:experience_bottle",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:clever_feather",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:swift_feather",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:health_feather",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:muscle_feather",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:resist_feather",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:genius_feather",
-          "weight": 80
+          "weight": 160
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:fire_gem",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:flying_gem",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:exp_candy_s",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:exp_candy_m",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:auspicious_armor",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:soothe_bell",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:relic_coin_sack",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "cobblemon:lucky_egg",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "legendarymonuments:lightstone_shard",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:emerald",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:golden_carrot",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "legendarymonuments:darkstone_shard",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
@@ -136,52 +136,42 @@
         {
           "type": "minecraft:item",
           "name": "cobblemon:relic_coin_pouch",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:golden_apple",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:torchflower",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:enchanted_golden_apple",
-          "weight": 2
+          "weight": 4
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:turtle_egg",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:sniffer_egg",
-          "weight": 8
-        },
-        {
-          "type": "minecraft:item",
-          "name": "mega_showdown:firium_z",
-          "weight": 8
+          "weight": 16
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:gold_ingot",
-          "weight": 30
-        },
-        {
-          "type": "minecraft:item",
-          "name": "mega_showdown:fire_tera_shard",
-          "weight": 30
+          "weight": 60
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond",
-          "weight": 8,
+          "weight": 16,
           "conditions": []
         }
       ],

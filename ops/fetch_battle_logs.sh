@@ -11,7 +11,7 @@
 #     ops/poke-engine-bridge/replay.py battle-logs/pod-0/<battle_id>.jsonl --list
 set -euo pipefail
 
-CONTROL_PLANE=${CONTROL_PLANE:-sysops@192.168.1.101}
+CONTROL_PLANE=${CONTROL_PLANE:?set CONTROL_PLANE to the k8s control-plane user@host}
 NS=poke-engine-bridge
 OUT=${1:-battle-logs}
 

@@ -6,21 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mega_showdown:ghost_tera_shard",
-          "weight": 100,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 4
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "cobblemon:ghost_gem",
           "weight": 100
         },

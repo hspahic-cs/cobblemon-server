@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.data.trainer
 
+import com.cobblemonroguelite.boss.BossShields
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.integration.RunOpponent
@@ -8,6 +9,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -368,5 +370,195 @@ class TrainerTeamGeneratorTest {
         val late = TeamGenerationRules(partySizes = listOf(PartySizeTier(50, 6), PartySizeTier(100, 5)))
         assertEquals(5, late.partySizeFor(1))
         assertNotEquals(6, late.partySizeFor(1))
+    }
+
+    // ─── boss shields (§2.32) ──────────────────────────────────────────────
+
+    /**
+     * The ramp used throughout: unshielded until 50, then 2, then 3 from 100, then 4 across the
+     * front two from 150. Deliberately written out of order — the answer must not depend on it.
+     */
+    private val shieldRules = TeamGenerationRules(
+        partySizes = listOf(PartySizeTier(1, 4), PartySizeTier(60, 5), PartySizeTier(120, 6)),
+        bossShields = listOf(
+            BossShieldTier(minWave = 100, shields = 3),
+            BossShieldTier(minWave = 150, shields = 4, members = 2),
+            BossShieldTier(minWave = 50, shields = 2),
+        ),
+    )
+
+    private fun team(wave: Int, boss: Boolean, rules: TeamGenerationRules = shieldRules) =
+        TrainerTeamGenerator.generate(brock, wave = wave, level = 60, boss = boss, seed = 11L, rules = rules)
+
+    /**
+     * Shields are a boss-wave property and nothing else.
+     *
+     * A `min_wave` low enough to cover the ordinary trainer waves must still not shield them: §2.14's
+     * schedule is the only thing allowed to decide which waves are bosses, and a shielded wave-55
+     * Youngster would be a difficulty spike an operator did not write.
+     */
+    @Test
+    fun `only boss waves are shielded`() {
+        assertEquals(listOf(0, 0, 0, 0), team(wave = 55, boss = false).members.map { it.shields })
+        assertEquals(listOf(2, 0, 0, 0), team(wave = 55, boss = true).members.map { it.shields })
+    }
+
+    /** No tiers declared is the shipped default, and it means bosses that hit hard and nothing more. */
+    @Test
+    fun `a roster with no shield tiers shields nothing`() {
+        val bare = TeamGenerationRules()
+        assertTrue(team(wave = 200, boss = true, rules = bare).members.all { it.shields == 0 })
+    }
+
+    /** Below every threshold is unshielded, not shielded-by-the-nearest-tier. */
+    @Test
+    fun `waves below the first tier are unshielded`() {
+        assertTrue(team(wave = 49, boss = true).members.all { it.shields == 0 })
+    }
+
+    /**
+     * Highest passed threshold wins, regardless of written order — the same reading
+     * [PartySizeTier] gets, and for the same reason: "how deep am I" is the only sane way to read a
+     * difficulty ramp.
+     */
+    @Test
+    fun `the deepest passed tier wins whatever order it was written in`() {
+        assertEquals(2, team(wave = 50, boss = true).members.first().shields)
+        assertEquals(2, team(wave = 99, boss = true).members.first().shields)
+        assertEquals(3, team(wave = 100, boss = true).members.first().shields)
+        assertEquals(4, team(wave = 150, boss = true).members.first().shields)
+        assertEquals(4, team(wave = 200, boss = true).members.first().shields)
+    }
+
+    /**
+     * Shields land on the **front** of the party.
+     *
+     * Front because §2.30 keeps signature slots in written order precisely so slot one can be the
+     * ace — where PokéRogue puts a leader's Terastallised signature Pokémon.
+     */
+    @Test
+    fun `shields are applied from the front of the party`() {
+        val late = team(wave = 150, boss = true).members.map { it.shields }
+        assertEquals(listOf(4, 4, 0, 0, 0, 0), late)
+    }
+
+    /** A tier asking for more shielded Pokémon than the band's party size gets the party, not a crash. */
+    @Test
+    fun `more shielded members than the party has is clamped`() {
+        val greedy = TeamGenerationRules(
+            partySizes = listOf(PartySizeTier(1, 4)),
+            bossShields = listOf(BossShieldTier(minWave = 1, shields = 2, members = 99)),
+        )
+        assertEquals(listOf(2, 2, 2, 2), team(wave = 10, boss = true, rules = greedy).members.map { it.shields })
+    }
+
+    /**
+     * A shield count above the number of shipped scripts is clamped rather than emitted.
+     *
+     * The roster loader reports this as a problem at load time; this is the last line of defence,
+     * and the reason it exists is that the alternative is not a crash. An id like `bossshield8`
+     * resolves to no Showdown item at all, so the boss fights completely unshielded and *nothing
+     * logs* — from Cobblemon's side, a Pokémon holding an unknown item is ordinary.
+     */
+    @Test
+    fun `a shield count past the shipped scripts is clamped, not emitted`() {
+        val overreach = TeamGenerationRules(
+            bossShields = listOf(BossShieldTier(minWave = 1, shields = BossShields.MAX_SHIELDS + 3)),
+        )
+        val member = team(wave = 10, boss = true, rules = overreach).members.first()
+        assertEquals(BossShields.MAX_SHIELDS, member.shields)
+        assertTrue(member.propertiesString().contains(BossShields.showdownId(BossShields.MAX_SHIELDS)))
+    }
+
+    /**
+     * The shield takes the item slot outright.
+     *
+     * §2.32's budget: a Pokémon holds one item and the shields *are* this boss's power. Keeping the
+     * rolled Leftovers instead would give the boss the item and not the mechanic, which is the
+     * failure nobody would notice from the outside.
+     */
+    @Test
+    fun `shields displace a rolled held item`() {
+        val both = TeamGenerationRules(
+            partySizes = listOf(PartySizeTier(1, 4)),
+            heldItems = listOf(
+                HeldItemTier(
+                    minWave = 1,
+                    chance = 1.0,
+                    items = listOf(HeldItemChoice(ResourceLocation.fromNamespaceAndPath("cobblemon", "leftovers"))),
+                ),
+            ),
+            bossShields = listOf(BossShieldTier(minWave = 1, shields = 3)),
+        )
+        val members = team(wave = 10, boss = true, rules = both).members
+
+        val ace = members.first()
+        assertEquals(3, ace.shields)
+        // The roll still happened and is still recorded — it just lost the slot. Suppressing the
+        // draw instead would make turning shields on re-roll every other member's item.
+        assertNotNull(ace.heldItem)
+        assertFalse(ace.propertiesString().contains("held_item=cobblemon:leftovers"), ace.propertiesString())
+        assertTrue(ace.propertiesString().contains("bossshield3"), ace.propertiesString())
+
+        // Everyone behind the ace keeps their ordinary item.
+        val rest = members.drop(1)
+        assertTrue(rest.all { it.shields == 0 })
+        assertTrue(rest.all { it.propertiesString().contains("held_item=cobblemon:leftovers") })
+    }
+
+    /**
+     * The properties string a shielded boss is actually built from.
+     *
+     * Asserted whole because every part of it is load-bearing and each fails silently on its own:
+     * the species and level decide the moveset, and the item fragment must survive a parser that
+     * splits on spaces first and on the first `=` second.
+     */
+    @Test
+    fun `a shielded member's properties string carries the shield item`() {
+        val ace = team(wave = 100, boss = true).members.first()
+        assertEquals(
+            "species=cobblemon:steelix level=60 " + BossShields.heldItemProperty(3),
+            ace.propertiesString(),
+        )
+        // Space-separated tokens: species, level, held_item. A fourth would mean the fragment split.
+        assertEquals(3, ace.propertiesString().split(' ').size, ace.propertiesString())
+    }
+
+    /**
+     * Turning shields on does not disturb anything else about the team.
+     *
+     * The reason there is no new [com.cobblemonroguelite.wave.WaveDrawStream] constant for shields:
+     * the count is a step function of the wave and consumes no draws at all, so adding, removing or
+     * re-tuning a tier cannot move a species or an item roll in a run already in flight. That is a
+     * property of the implementation rather than of the data, so it is worth pinning.
+     */
+    @Test
+    fun `adding a shield tier does not move any other roll`() {
+        val without = TeamGenerationRules(partySizes = shieldRules.partySizes)
+        for (wave in listOf(10, 50, 100, 150, 200)) {
+            val bare = team(wave, boss = true, rules = without)
+            val shielded = team(wave, boss = true, rules = shieldRules)
+            assertEquals(
+                bare.members.map { it.species to it.heldItem },
+                shielded.members.map { it.species to it.heldItem },
+                "wave $wave: the shield tier changed which Pokémon or items were drawn",
+            )
+        }
+    }
+
+    /** Shields are part of the team, so a regenerated team has to reproduce them too. */
+    @Test
+    fun `shields regenerate identically for the same seed and wave`() {
+        assertEquals(
+            team(wave = 150, boss = true).members.map { it.shields },
+            team(wave = 150, boss = true).members.map { it.shields },
+        )
+    }
+
+    /** The wave log has to say what the boss is holding, not what it would have held. */
+    @Test
+    fun `describe names the shields rather than the item they displaced`() {
+        val described = team(wave = 100, boss = true).describe()
+        assertTrue(described.contains("shield×3"), described)
     }
 }

@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.data.trainer
 
+import com.cobblemonroguelite.boss.BossShields
 import net.minecraft.resources.ResourceLocation
 
 /**
@@ -36,11 +37,22 @@ data class TeamSpecies(
      * that — level-scaling it moves a number and leaves a wave-10 moveset on a level-100 Pokémon
      * (§2.30's whole argument).
      */
-    fun propertiesString(level: Int, heldItem: ResourceLocation? = null): String = buildString {
+    fun propertiesString(
+        level: Int,
+        heldItem: ResourceLocation? = null,
+        shields: Int = 0,
+    ): String = buildString {
         append("species=").append(id)
         properties?.takeIf { it.isNotBlank() }?.let { append(' ').append(it.trim()) }
         append(" level=").append(level)
-        heldItem?.let { append(" held_item=").append(it) }
+        // Shields win the item slot outright, and that is the decision rather than a precedence
+        // accident (§2.32). A Pokémon holds one item; the shields ARE this boss's power, so they
+        // are what the budget is spent on. Silently keeping the rolled Leftovers instead would give
+        // a boss the item and not the mechanic, which is the failure nobody would notice.
+        when {
+            shields > 0 -> append(' ').append(BossShields.heldItemProperty(shields))
+            heldItem != null -> append(" held_item=").append(heldItem)
+        }
     }
 }
 

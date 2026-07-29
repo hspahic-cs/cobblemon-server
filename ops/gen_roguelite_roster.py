@@ -67,7 +67,19 @@ ID_RE = re.compile(r"^(?:[a-z0-9_.-]+:)?[a-z0-9_.\-/]+$")
 BAND_FIELDS = {"id", "kind", "min_wave", "max_wave", "trainers"}
 FIXED_FIELDS = {"wave", "kind", "trainer"}
 SCHEDULE_FIELDS = {"run_length", "trainer_interval", "boss_interval"}
-ROSTER_FIELDS = {"authored_for", "bands", "fixed"}
+ROSTER_FIELDS = {"authored_for", "bands", "fixed", "generated", "generation"}
+# §2.30's generated teams. The blocks are written by ops/gen_pokerogue_roster.py, not by hand, so what
+# is checked here is the join and the shape — the things a hand edit breaks — rather than every value.
+ENTRY_FIELDS = {"trainer", "signature", "filler"}
+SLOT_FIELDS = {"alternatives"}
+ALTERNATIVE_FIELDS = {"line", "weight"}
+GENERATION_FIELDS = {"party_size", "evolution", "held_items", "boss_shields"}
+BOSS_SHIELD_FIELDS = {"min_wave", "shields", "members"}
+# §2.32: one held-item script ships per shield count, so this ceiling is not taste. A higher number
+# is a Showdown item id that does not exist — the boss holds nothing, fights unshielded, and NOTHING
+# logs, because a Pokemon holding an unknown item is ordinary from Cobblemon's side. Must stay in
+# step with BossShields.MAX_SHIELDS and with the boss_shield_*.js files beside it.
+MAX_BOSS_SHIELDS = 5
 
 
 # ---------------------------------------------------------------- validation
@@ -214,7 +226,122 @@ def validate_roster(path: str, doc: dict, trainer_ids: set[str] | None) -> Probl
     check_overlaps(parsed, problems)
     check_gaps(parsed, by_wave, run_length, trainer_interval, boss_interval, problems)
     check_fixed(by_wave, run_length, trainer_interval, boss_interval, problems)
+    named = {tid for band in parsed for tid in band["trainers"]} | {e["trainer"] for e in by_wave.values()}
+    check_generated(doc, named, problems)
     return problems
+
+
+def check_generated(doc: dict, named: set, problems: Problems) -> None:
+    """The `generated` and `generation` blocks — §2.30's teams-are-generated half of the format.
+
+    Mirrors the mod's own rules, and the one worth having outside the game is the JOIN: a generated
+    entry is tied to a fight by trainer id, so `rgl_brock` in the entries and `rgl_borck` in a band
+    is a roster that loads, runs, and fights the trainer's authored placeholder team forever. Nothing
+    downstream can see that — the id resolves and the battle starts — so only this comparison can.
+    """
+    entries = doc.get("generated", [])
+    if not isinstance(entries, list):
+        problems.add("generated", "expected a list")
+        entries = []
+
+    seen: set = set()
+    for index, entry in enumerate(entries):
+        where = f"generated[{index}]"
+        if not isinstance(entry, dict):
+            problems.add(where, "expected an object")
+            continue
+        unknown_fields(entry, ENTRY_FIELDS, where, problems)
+        trainer = entry.get("trainer")
+        check_id(trainer, f"{where}.trainer", None, problems)
+        if isinstance(trainer, str):
+            if trainer in seen:
+                problems.add(f"{where}.trainer", f"trainer '{trainer}' already has a generated entry")
+            seen.add(trainer)
+            if trainer not in named:
+                problems.add(
+                    f"{where}.trainer",
+                    f"'{trainer}' is never fought: no band lists it and no fixed encounter names it, "
+                    f"so its signature species do nothing — check the spelling against the band pools",
+                )
+        signature = entry.get("signature")
+        if not isinstance(signature, list) or not signature:
+            problems.add(
+                f"{where}.signature",
+                "must name at least one slot — for an AUTHORED fight, delete this entry and leave "
+                "the id in its band",
+            )
+            continue
+        for kind in ("signature", "filler"):
+            for slot_index, slot in enumerate(entry.get(kind) or []):
+                check_slot(slot, f"{where}.{kind}[{slot_index}]", problems)
+
+    generation = doc.get("generation")
+    if generation is None:
+        return
+    if not isinstance(generation, dict):
+        problems.add("generation", "expected an object")
+        return
+    unknown_fields(generation, GENERATION_FIELDS, "generation", problems)
+    for index, tier in enumerate(generation.get("party_size") or []):
+        size = tier.get("size") if isinstance(tier, dict) else None
+        if not isinstance(size, int) or not 1 <= size <= 6:
+            # Cobblemon's own party limit. A 7 loads and is silently truncated wherever the team is
+            # built, which is a difficulty change nobody wrote down.
+            problems.add(f"generation.party_size[{index}].size", f"must be 1..6, was {size!r}")
+    for index, tier in enumerate(generation.get("held_items") or []):
+        chance = tier.get("chance") if isinstance(tier, dict) else None
+        if not isinstance(chance, (int, float)) or not 0.0 <= chance <= 1.0:
+            problems.add(f"generation.held_items[{index}].chance", f"must be between 0 and 1, was {chance!r}")
+        if not tier.get("items"):
+            problems.add(f"generation.held_items[{index}].items", "a tier with no items never places anything")
+    for index, tier in enumerate(generation.get("boss_shields") or []):
+        at = f"generation.boss_shields[{index}]"
+        if not isinstance(tier, dict):
+            problems.add(at, "expected an object")
+            continue
+        unknown_fields(tier, BOSS_SHIELD_FIELDS, at, problems)
+        shields = tier.get("shields")
+        if not isinstance(shields, int) or not 1 <= shields <= MAX_BOSS_SHIELDS:
+            problems.add(
+                f"{at}.shields",
+                f"must be 1..{MAX_BOSS_SHIELDS}, was {shields!r} — there is one held-item script per "
+                "shield count, so a higher number is an item Showdown does not have and the boss "
+                "would fight with no shields at all",
+            )
+        members = tier.get("members", 1)
+        if not isinstance(members, int) or members < 1:
+            problems.add(f"{at}.members", f"must be at least 1, was {members!r} — omit the tier for an unshielded boss")
+
+
+def check_slot(slot, where: str, problems: Problems) -> None:
+    """One party slot: its alternatives, and each alternative's evolution line."""
+    if not isinstance(slot, dict):
+        problems.add(where, "expected an object")
+        return
+    unknown_fields(slot, SLOT_FIELDS, where, problems)
+    alternatives = slot.get("alternatives")
+    if not isinstance(alternatives, list) or not alternatives:
+        problems.add(f"{where}.alternatives", "a slot with no alternatives can never be filled")
+        return
+    for index, alternative in enumerate(alternatives):
+        at = f"{where}.alternatives[{index}]"
+        if not isinstance(alternative, dict):
+            problems.add(at, "expected an object")
+            continue
+        unknown_fields(alternative, ALTERNATIVE_FIELDS, at, problems)
+        line = alternative.get("line")
+        if not isinstance(line, list) or not line:
+            problems.add(f"{at}.line", "must name at least one species, base form first")
+            continue
+        for stage_index, stage in enumerate(line):
+            # A stage is a properties fragment — `cobblemon:corsola galarian` — and only the first
+            # token is an id. The rest is Cobblemon's grammar and is deliberately not parsed here.
+            head = stage.split()[0] if isinstance(stage, str) and stage.strip() else stage
+            if not isinstance(head, str) or not ID_RE.match(head):
+                problems.add(f"{at}.line[{stage_index}]", f"{stage!r} is not a valid species id")
+        weight = alternative.get("weight", 1.0)
+        if not isinstance(weight, (int, float)) or weight < 0:
+            problems.add(f"{at}.weight", f"must not be negative, was {weight!r}")
 
 
 def check_id(value, where: str, trainer_ids: set[str] | None, problems: Problems) -> None:

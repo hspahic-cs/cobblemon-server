@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.data.trainer
 
+import com.cobblemonroguelite.boss.BossShields
 import com.cobblemonroguelite.wave.WaveDrawStream
 import com.cobblemonroguelite.wave.WaveRandom
 import net.minecraft.resources.ResourceLocation
@@ -17,8 +18,9 @@ data class GeneratedMember(
     val species: TeamSpecies,
     val level: Int,
     val heldItem: ResourceLocation? = null,
+    val shields: Int = 0,
 ) {
-    fun propertiesString(): String = species.propertiesString(level, heldItem)
+    fun propertiesString(): String = species.propertiesString(level, heldItem, shields)
 }
 
 /**
@@ -35,7 +37,15 @@ data class GeneratedTeam(val members: List<GeneratedMember>) {
 
     /** For the log line that says what a wave actually summoned, without dumping properties strings. */
     fun describe(): String = members.joinToString(", ") { member ->
-        member.species.id.path + (member.heldItem?.let { " @${it.path}" } ?: "")
+        val item = when {
+            // Shown as the shield rather than as the item it displaced, because that is what the
+            // Pokémon will actually be holding — a log line saying `@leftovers` for a Pokémon that
+            // is carrying shields is the sort of thing that costs an hour during an incident.
+            member.shields > 0 -> " @shield×${member.shields}"
+            member.heldItem != null -> " @${member.heldItem.path}"
+            else -> ""
+        }
+        member.species.id.path + item
     }
 }
 
@@ -77,8 +87,8 @@ object TrainerTeamGenerator {
      *   to every member: the bridge forces the opponent team to this level anyway, and writing it into
      *   the properties string is what makes Cobblemon derive the moveset *for that level* — the whole
      *   reason generation replaces authoring.
-     * @param boss whether this wave is a boss wave **as the run sees it**, promotions included. Only
-     *   held items read it; the level multiplier is already in [level].
+     * @param boss whether this wave is a boss wave **as the run sees it**, promotions included. Read
+     *   by held items and by §2.32's shields; the level multiplier is already in [level].
      */
     fun generate(
         entry: TrainerEntry,
@@ -100,9 +110,44 @@ object TrainerTeamGenerator {
         val species = slots.map { slot -> pickAlternative(slot, rng).stageAt(stageIndex) }
 
         val items = heldItems(species.size, wave, boss, seed, rules)
+        val shields = bossShields(species.size, wave, boss, rules)
         return GeneratedTeam(
-            species.mapIndexed { index, member -> GeneratedMember(member, level, items[index]) },
+            species.mapIndexed { index, member ->
+                GeneratedMember(member, level, items[index], shields[index])
+            },
         )
+    }
+
+    /**
+     * How many §2.32 shields each party member carries, most of them none.
+     *
+     * **Not a draw, and deliberately so.** Every other per-member decision here goes through a
+     * seeded stream; this one is a pure step function of the wave. Two reasons, and the second is
+     * the load-bearing one:
+     *
+     * - A boss's shields are the thing that makes the wave read as a boss. Rolling them would make
+     *   wave 100 a wall for one player and a speed bump for the next, on a schedule that §2.14
+     *   deliberately keeps identical for everybody.
+     * - Because it takes no draws, adding, removing or re-tuning a shield tier **cannot move any
+     *   other roll**. There is no new [WaveDrawStream] constant for the same reason: the stream
+     *   enum is part of the save format, and this needed nothing from it.
+     *
+     * Applied from the front of the party, which is the ace end — see [BossShieldTier.members].
+     */
+    private fun bossShields(
+        members: Int,
+        wave: Int,
+        boss: Boolean,
+        rules: TeamGenerationRules,
+    ): List<Int> {
+        val tier = rules.bossShieldsFor(wave, boss) ?: return List(members) { 0 }
+        // Clamped rather than refused. A roster asking for eight shields is a mistake, but the
+        // alternative to clamping is a boss holding an item Showdown has never heard of, which
+        // fights with no shields at all and logs nothing — a worse answer to the same typo. The
+        // roster loader reports it as a problem at load time; this is the last line of defence.
+        val shields = tier.shields.coerceAtMost(BossShields.MAX_SHIELDS)
+        val shielded = tier.members.coerceAtMost(members)
+        return List(members) { index -> if (index < shielded) shields else 0 }
     }
 
     /**

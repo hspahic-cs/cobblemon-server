@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.data.trainer
 
+import com.cobblemonroguelite.boss.BossShields
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.data.DataProblems
 import com.cobblemonroguelite.data.JsonView
@@ -388,6 +389,7 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
         val sizeViews = view.optionalObjectList("party_size")
         val evolutionView = view.optionalObject("evolution")
         val itemViews = view.optionalObjectList("held_items")
+        val shieldViews = view.optionalObjectList("boss_shields")
         view.expectNoUnknownKeys()
 
         var ok = true
@@ -439,12 +441,57 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
             if (tier == null) ok = false else tiers += tier
         }
 
+        val shields = mutableListOf<BossShieldTier>()
+        shieldViews?.forEach { tierView ->
+            val tier = parseBossShieldTier(tierView)
+            if (tier == null) ok = false else shields += tier
+        }
+
         if (!ok) return null
         return TeamGenerationRules(
             partySizes = sizes.ifEmpty { TeamGenerationRules.DEFAULT_PARTY_SIZES },
             evolution = evolution,
             heldItems = tiers,
+            bossShields = shields,
         )
+    }
+
+    /**
+     * One §2.32 shield tier.
+     *
+     * The `shields` bound is checked here rather than left to the clamp in
+     * [TrainerTeamGenerator.generate] because the two failures are not the same failure. A clamp
+     * keeps the run playable; this tells the operator that the number they wrote is not the number
+     * they will get, at load time, while they are still looking at the file. Without it a roster
+     * asking for eight shields is silently a roster asking for five.
+     */
+    private fun parseBossShieldTier(view: JsonView): BossShieldTier? {
+        val minWave = view.optionalInt("min_wave") ?: 1
+        val shields = view.requireInt("shields")
+        val members = view.optionalInt("members") ?: 1
+        view.expectNoUnknownKeys()
+
+        var ok = true
+        if (minWave < 1) {
+            view.problem("min_wave", "must be at least 1, was $minWave")
+            ok = false
+        }
+        if (shields != null && shields !in 1..BossShields.MAX_SHIELDS) {
+            view.problem(
+                "shields",
+                "must be 1..${BossShields.MAX_SHIELDS}, was $shields — there is one held-item script " +
+                    "per shield count, so a higher number is an item Showdown does not have and the " +
+                    "boss would fight with no shields at all",
+            )
+            ok = false
+        }
+        if (members < 1) {
+            view.problem("members", "must be at least 1, was $members — omit the tier for an unshielded boss")
+            ok = false
+        }
+
+        if (!ok || shields == null) return null
+        return BossShieldTier(minWave, shields, members)
     }
 
     private fun parseHeldItemTier(view: JsonView): HeldItemTier? {

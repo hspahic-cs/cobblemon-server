@@ -2,6 +2,7 @@ package com.cobblemonroguelite
 
 import com.cobblemonroguelite.arena.ArenaSpawnSuppressor
 import com.cobblemonroguelite.battle.RunWaveBattles
+import com.cobblemonroguelite.boss.BossShieldBattle
 import com.cobblemonroguelite.data.RogueliteData
 import com.cobblemonroguelite.payout.PendingPayoutHooks
 import com.cobblemonroguelite.progression.CandyCommands
@@ -54,6 +55,12 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
             // faints, result and on-field Pokémon are never reported — a run that fights and never
             // finishes, with nothing in the log to say why.
             it.enqueueWork(RunWaveBattles::install)
+            // Same phase, same race, and the failure mode is the loud one. This claims a Showdown
+            // protocol id in Cobblemon's interpreter (§2.32's boss shields talk to the player
+            // through it). A dropped registration does not silence the messages — it makes
+            // Cobblemon broadcast them as raw red chat, pipes and all, which looks to a player like
+            // the mod crashing every time a boss takes a hit.
+            it.enqueueWork(BossShieldBattle::install)
         }
 
         // Game bus, not the mod bus: commands and player lifecycle are server-runtime events.

@@ -105,6 +105,41 @@ data class HeldItemTier(
 }
 
 /**
+ * How many PokéRogue-style shields a boss wave's Pokémon carry, from [minWave] onward.
+ *
+ * §2.32's mechanic: the holder's HP is divided into `shields + 1` chunks, a hit may never carry it
+ * past a chunk boundary, and each break boosts a random stat. It rides on the held item slot, so a
+ * shielded Pokémon holds nothing else — see [TeamSpecies.propertiesString].
+ *
+ * ### Why this is data, and why it ships empty
+ *
+ * The same argument [HeldItemTier] makes. *That* bosses can be shielded is the mechanism and it
+ * ships; *which* bosses, from which wave, with how many, is a difficulty curve, and a curve chosen
+ * by whoever wrote the mod rather than by whoever runs the server is a balance decision made in the
+ * wrong place. With no tiers declared, boss waves are ordinary trainer waves that hit harder,
+ * which is a visible and honest default rather than a silent one.
+ *
+ * Matched like [PartySizeTier] and not like [HeldItemTier]: highest passed threshold wins,
+ * regardless of written order, because "how deep am I" is the only sane reading of a difficulty
+ * ramp. Boss waves only — an unshielded ordinary trainer is the point of the distinction.
+ *
+ * @property shields 1..[com.cobblemonroguelite.boss.BossShields.MAX_SHIELDS]. The ceiling is not a
+ *   taste judgement: there is one datapack JS file per count, so a number above it produces a held
+ *   item id Showdown has never heard of and the boss silently fights with no shields at all.
+ * @property members how many of the team, **taken from the front**, are shielded. Front because
+ *   §2.30 keeps signature slots in written order precisely so that slot one can be the ace, which
+ *   is where PokéRogue puts a leader's Terastallised signature Pokémon. One by default: a whole
+ *   team of shielded Pokémon is not a harder fight so much as a longer one.
+ */
+data class BossShieldTier(val minWave: Int, val shields: Int, val members: Int = 1) {
+    init {
+        require(minWave >= 1) { "minWave is 1-based, was $minWave" }
+        require(shields >= 1) { "shields must be at least 1, was $shields" }
+        require(members >= 1) { "members must be at least 1, was $members" }
+    }
+}
+
+/**
  * Everything a roster needs to turn a [TrainerEntry] into a team, other than the seed and the wave.
  *
  * ### Why it lives on the roster and not in [com.cobblemonroguelite.run.RunConfig]
@@ -126,10 +161,14 @@ data class TeamGenerationRules(
     val partySizes: List<PartySizeTier> = DEFAULT_PARTY_SIZES,
     val evolution: EvolutionSchedule = EvolutionSchedule(),
     val heldItems: List<HeldItemTier> = emptyList(),
+    val bossShields: List<BossShieldTier> = emptyList(),
 ) {
 
     /** Sorted once here rather than on every wave — the answer must not depend on written order. */
     private val orderedSizes = partySizes.sortedByDescending { it.minWave }
+
+    /** Same treatment, same reason. See [BossShieldTier]. */
+    private val orderedShields = bossShields.sortedByDescending { it.minWave }
 
     /**
      * How many Pokémon a trainer met at [wave] brings.
@@ -147,6 +186,17 @@ data class TeamGenerationRules(
     /** The tier serving [wave], first match wins, or null when nothing does — i.e. no held items. */
     fun heldItemsFor(wave: Int, boss: Boolean): HeldItemTier? =
         heldItems.firstOrNull { it.covers(wave, boss) }
+
+    /**
+     * The shield tier a boss met at [wave] uses, or null for no shields.
+     *
+     * Null on every non-boss wave whatever the tiers say, so an operator cannot accidentally shield
+     * the ordinary trainer waves by writing a low `min_wave` — the mechanic is what makes a boss
+     * wave a boss wave, and §2.14's schedule is the only thing allowed to decide which waves those
+     * are.
+     */
+    fun bossShieldsFor(wave: Int, boss: Boolean): BossShieldTier? =
+        if (!boss) null else orderedShields.firstOrNull { wave >= it.minWave }
 
     companion object {
         /** §2.30: 4 early, 5 mid, 6 late. The edges are tuning, the shape is the decision. */

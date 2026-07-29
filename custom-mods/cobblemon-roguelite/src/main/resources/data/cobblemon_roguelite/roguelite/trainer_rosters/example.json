@@ -176,7 +176,19 @@
     "held_items: WHICH items is content, so nothing ships. With no tiers, generated trainers hold",
     "nothing. 'chance' is per Pokemon; 'count' is how many draws one Pokemon gets (Cobblemon holds",
     "ONE item - the extra draws buy a higher hit rate, not a stack); 'boss' filters by wave kind and",
-    "may be omitted to match both. The two tiers below are an example of the shape."
+    "may be omitted to match both. The two tiers below are an example of the shape.",
+    "",
+    "boss_shields: PokeRogue's segmented boss HP bar. 'shields' shields split the Pokemon's HP into",
+    "shields+1 chunks; no single hit may carry it past a chunk boundary, and each break raises a",
+    "random stat one stage. Boss waves ONLY, whatever min_wave says. Ships empty for the same reason",
+    "held_items does - which waves are walls is a difficulty curve, and that belongs to the server.",
+    "",
+    "It costs the held item slot: a shielded Pokemon carries no other item, because the shields ARE",
+    "its power. 'shields' is 1..5 and the ceiling is not taste - there is one held-item script per",
+    "count, so a 6 is an item Showdown does not have and the boss would fight unshielded. 'members'",
+    "is how many of the party are shielded, counted from the FRONT (signature slot one, which is",
+    "where PokeRogue puts a leader's ace). Unlike everything else here it is NOT a seeded draw:",
+    "wave 100 must be the same wall for everybody."
   ],
   "generation": {
     "party_size": [
@@ -203,6 +215,16 @@
         "chance": 0.2,
         "items": [ { "item": "cobblemon:oran_berry" } ]
       }
+    ],
+    "_boss_shields": [
+      "EXAMPLE. Highest passed min_wave wins, so the order written here does not decide anything.",
+      "This ramp gives the first shielded boss at wave 50 and the last at 150, which is roughly",
+      "PokeRogue's own shape at our run length."
+    ],
+    "boss_shields": [
+      { "min_wave": 50, "shields": 2 },
+      { "min_wave": 100, "shields": 3 },
+      { "min_wave": 150, "shields": 4, "members": 2 }
     ]
   }
 }

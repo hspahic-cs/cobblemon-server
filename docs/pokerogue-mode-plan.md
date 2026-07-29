@@ -609,14 +609,22 @@ power for having done so, and the server wants a trade economy rather than boxes
 carry across species, so they measure recent grinding rather than a collection, and they would
 reward repetition of one species over breadth.
 
-**Mechanism:** per-player, per-species record of the best IVs ever held. Unlike §2.15's Pokédex
-gating this *is* new persistent state — Cobblemon's Pokédex stores forms, genders and shiny
-states, not IVs — but it is module-internal and small.
+**Mechanism:** per-player, per-species record, in its own save file separate from runs. This *is*
+new persistent state — Cobblemon's Pokédex stores forms, genders and shiny states, not IVs — but
+it is module-internal and small.
 
-**Seed it with a one-time backfill.** On a player's first contact with the system, scan their
-current party and PC to establish the marks, then let ongoing tracking take over. Without this,
-launch day resets every veteran to zero and the feature reads as a punishment for having played
-before it existed.
+**Floors rise per stat, not as a spread.** A "best spread" has no total order, and per-stat max
+is monotone, so a catch can never cost a player a floor they already had.
+
+**No backfill.** An earlier draft called for scanning each player's party and PC once to seed
+their marks, so launch day would not reset every veteran to zero. Moving the source inside runs
+removed the need: everyone starts at base 10 regardless of history, which is simpler and touches
+real storage not at all.
+
+**Open — which species gets the credit.** PokéRogue credits the line root, so a caught Charizard
+candies Charmander. The literal reading of this section credits the species actually caught,
+which is defensible since §2.15 lets a player start as any species they have caught on the
+server. Both are implemented; the switch is one assignment, but it is **not retroactive**.
 
 ### 2.18 Depth is gated on badges; entry costs currency
 
@@ -850,9 +858,14 @@ is no run loop, no battle, no command.
   a player mid-run may see their real party while battling with run mons. Needs checking on dev;
   the answer decides whether phase 1 needs a custom GUI. Now sharper than before: under §2.13 the
   party changes *during* a run as the player catches, so whatever shows it has to stay live.
-- **Starter offer:** the **baseline pool** every player starts with regardless of Pokédex
-  (§2.15 makes this mandatory, not optional), how many species are shown per offer, and how the
-  offer is weighted. §2.13 and §2.15 fix the structure; the contents are open.
+- **Starter contents:** the **baseline pool** every player can start with regardless of Pokédex
+  (§2.15 makes this mandatory, not optional), and the per-species **cost table**. "How many are
+  shown" and "how the offer is weighted" are dissolved by §2.13's budget — the catalogue is every
+  eligible species, priced, and the player chooses.
+- **Candy prices and friendship rate.** Passive unlock and cost reductions default to PokéRogue's
+  reference numbers (40, and 20/50); eggs are deliberately **unpriced and refused** rather than
+  given a number nobody chose. Friendship is a placeholder flat threshold — PokéRogue scales it
+  by starter cost, which is the same balance judgement §2.13 keeps server-side.
 - **Catch rules inside a run:** catch rate, and whether balls are earned/purchased or unlimited.
   §2.14 settles *what* is catchable (wild only, never trainer-owned).
 - **Wave interval constants:** how often trainer and boss waves land, and the level-curve

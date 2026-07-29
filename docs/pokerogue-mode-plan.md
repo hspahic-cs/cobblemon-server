@@ -939,6 +939,37 @@ exactly as PokéRogue does, without ever needing a second ability slot.
 **Name it what it is.** "Passive" describes a mechanic we are not building, and the term would
 mislead anyone arriving from PokéRogue.
 
+### 2.28 Content decisions, 2026-07-29
+
+**Baseline starter pool: the classic starter Pokémon.** Every player can pick from them regardless
+of their Pokédex, which is what §2.15 requires a baseline to do — a new player must get a real
+choice, not an empty catalogue. Their server Pokédex widens it from there.
+
+**Entry fee: a flat 5,000.** Not scaled by depth tier. Simple to explain, and §2.16 only asks that
+the fee be non-trivial relative to what players hold, since it is what prices an abandon-and-restart.
+
+**Payout: Poké eggs, tiered by depth.** Eggs are exactly the shape §2.20 asked for — valuable,
+wanted, and *not currency*, so the entry fee stays a real sink. They also feed the gacha, which
+is a system the mode already wanted to point players at.
+
+**Determinism is preserved, and the difficulty does the gating.** §2.20 makes the payout a
+deterministic filter rather than a draw, so "you cannot get an ultra-rare every time" is achieved
+by *depth bands* rather than randomness: an ultra-tier egg sits behind a wave nobody reaches
+casually. Two identical runs still pay identically, which is what keeps the payout auditable.
+Note the egg tables themselves are our server's gacha content, so they are server-side datapack
+data; a published build ships something else.
+
+**Candy prices: PokéRogue's, which are per-tier and inverse.** Their `allStarterCandyCosts` is
+indexed by starter cost 1–10: a **1-cost** species needs **40** candy for its unlock and reductions
+at 25/60, while a **10-cost** species needs only **10** and 5/15. That is deliberate on their part —
+you catch cheap species constantly and expensive ones rarely, so the price compensates for the
+rate candy accrues.
+
+**This corrects what we shipped.** Our default is a *flat* 40 with reductions at 20/50, which
+overcharges strong species and undercharges weak ones — the opposite of the intent. The same file
+carries friendship caps scaling 25–600 by cost, against our flat 150 placeholder; both are the
+`friendshipThresholdByCost` seam that was left empty for exactly this.
+
 ---
 
 ## 3. Preliminary plan

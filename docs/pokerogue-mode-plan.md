@@ -38,10 +38,17 @@ every axis, not just the obvious one:
 | Gimmicks | Tera/Dynamax exist inside a run and nowhere else | §2.5 |
 | Economy | **One metered channel out: the currency/BP payout.** Deliberate, not an exception | §2.2 |
 
-**Isolation is one-directional.** It governs what *leaves* a run, not what enters. Information
-may flow inward — §2.15 gates the starter offer on the player's server Pokédex — because that
-duplicates nothing and moves no value out. A run's possibility space depending on server history
-is a feature; a run's contents reaching the server is not.
+**Isolation governs value, not information** (restated 2026-07-28; it was previously
+"one-directional"). Nothing of *value* leaves a run — no Pokémon, no items, no currency beyond
+the metered payout. **Progression does flow both ways**, and deliberately:
+
+- *Inward:* the species a player may start with are gated on their server Pokédex (§2.15).
+- *Outward:* catching inside a run earns candy and raises that species' IV floor for future runs
+  (§2.13, §2.17).
+
+That is a change from the original stance, which forbade an in-run catch from unlocking anything.
+The economic argument is untouched — candy and IV floors duplicate no Pokémon and mint no
+currency — but the contract is now "value is sealed", not "nothing gets out".
 
 ### 1.2 Possible publication
 
@@ -203,14 +210,25 @@ a published build can write their own without touching the jar (§1.2).
 **Considered:** points budget · random offers, pick one, repeat · single starter plus in-run
 recruitment · prebuilt archetype packs · snake draft · egg/gacha draft.
 
-**Chosen:** a combination of *random offers* and *build by catching* — the player picks a single
-starter from a small randomised offer, and the party grows through the run by catching.
+**Chosen, revised 2026-07-28: a 10-point budget, mirroring PokéRogue.** Every startable species
+has a point cost; the player spends up to **10 points** on a starting team. The earlier decision —
+one starter from a small randomised offer — is superseded.
 
-**Why:** it carries the most run-to-run variance of the options while keeping player agency at
-the moment of choice, and it makes **catching the engine of the run** rather than a side
-feature — the most Cobblemon-native of the structures considered, which is the bar set in §1.
-The points-budget alternative is the most expressive but the least replayable, since strong
-players converge on the same picks.
+**Why the budget rather than the offer:** the cost *is* the balance statement. PokéRogue prices a
+species by how strong it actually is in play, not by rarity or stage — Torchic costs 4 because
+Speed Boost is genuinely that good. A budget therefore encodes power in a way a random offer
+cannot, and it turns team-building into the first real decision of a run.
+
+**A team, but rarely six.** With costs in the 3–6 range, 10 points buys two or three Pokémon, not
+a full party. So catching is *still* how a party gets to six — the earlier decision's substance
+survives, it just no longer starts at exactly one.
+
+**Costs mirror PokéRogue's**, per species, because they carry that balance judgement. See the
+licensing note in §2.7: their cost table is **their data**, so it is transcribed into server-side
+datapack content and never shipped in a published build, which needs derived defaults instead
+(base stat total or evolution stage would do).
+
+**Legendaries are excluded outright** — too strong, at any price.
 
 **Consequence — this moves catching into phase 1.** With a party that starts at one Pokémon,
 catch-into-run-party is not an enhancement, it is the party system; the vertical slice cannot
@@ -317,9 +335,17 @@ publication and works in single-player.
   offer is. Offer weighting and tiering stay independent, or a player who has caught a
   pseudo-legendary gets one handed to them at wave 1.
 
-**Note the separation:** in-run catching builds the *run party* (§2.13); server catching builds
-the *starter pool*. Catching inside a run does not unlock anything, which keeps "nothing leaves
-the run" intact.
+**Note the separation, revised 2026-07-28:** server catching decides **which** species you may
+start with; in-run catching decides **how good they are** — candy toward passives and cost
+reductions, and the IV floor (§2.13, §2.17). Access is a server achievement, quality is a run
+achievement.
+
+The original clause here said an in-run catch unlocks nothing at all. That is no longer true, and
+§1.1 is restated accordingly: value is sealed, progression is not.
+
+**Candy mirrors PokéRogue's sources:** one per catch of that species, more for shinies (theirs is
+5/10/20 by variant tier), plus friendship thresholds earned in battle. Spent on passive unlocks,
+cost reductions, and eggs.
 
 **Positioning consequence, deliberate:** this makes the roguelite a reward for overworld play
 rather than a standalone attraction. That is the point of the decision, but it is a choice.
@@ -561,12 +587,23 @@ equivalent and are not modelled.
 **Considered:** IVs rolled uniformly and pinned by seed · scan the player's current party and PC
 for their best of that species · track the best IVs the player has **ever** held, per species.
 
-**Chosen:** the high-water mark.
+**Chosen, revised 2026-07-28: the mark is earned INSIDE runs, not on the server.** Every species
+starts at a flat **base 10 IVs**, and the best IVs of that species *caught during a run* become
+its floor for future runs.
 
-**Why not scanning current possession:** it silently makes hoarding the optimal play. A player
-who trades away a 6IV specimen would *lose* run power for having done so, and the server wants a
-trade economy, not six hundred boxes of insurance. A high-water mark is kept once earned, so
-trading a Pokémon away costs nothing.
+This supersedes sourcing the floor from server catches. The reason is the same one behind §2.13's
+budget: the roguelite's own progression should be earned by playing the roguelite. The server
+Pokédex still decides **which** species you may start with (§2.15) — access is a server
+achievement, quality is a run achievement, and the two no longer do the same job.
+
+**Two earlier conclusions fall away with it.** The trade-in question — whether a traded Pokémon
+raises the mark — is moot, since the server is no longer the source. And the one-time backfill
+scan of a player's party and PC is unnecessary: everyone starts at base 10 regardless of history,
+which is simpler and needs no new tracking of real storage at all.
+
+**Why not scanning current possession** (considered when the mark was server-sourced): it
+silently makes hoarding optimal, since a player who traded away a 6IV specimen would *lose* run
+power for having done so, and the server wants a trade economy rather than boxes of insurance.
 
 **Why not Unchained catch streaks** (considered and rejected): streaks are per-species and do not
 carry across species, so they measure recent grinding rather than a collection, and they would

@@ -812,9 +812,16 @@ policing.
 - **Expiry pays nothing.** Someone who has not touched a run in six months is not owed a payout,
   and paying one would land on an absent player anyway.
 
-**Consequence for the arena work:** `RunArenas` currently allocates a slot for the run's duration.
-It needs to release on logout and reacquire on login. Until that lands, `maxConcurrentRuns`
-throttles *concurrent players*, not concurrent runs, which is a much tighter bound than intended.
+**Implemented 2026-07-29.** A slot is leased for a *session*: logout releases it, the next resume
+reacquires. Expiry is depth-scaled from 7 days below wave 10 to 180 at wave 100+, activity means
+a wave started or cleared, and the sweep runs at server start rather than lazily on login —
+a lazy check would keep exactly the runs the feature exists to remove.
+
+**One consequence worth knowing:** the lease fields (slot, stamped template, painted biome) are
+deliberately **not persisted**. That is what makes a crash safe — the process reloads with an
+empty grid rather than slots leased to disconnected players. Persisting them had the worse
+failure of the two, since a restored slot that had since been reassigned puts two players in one
+arena.
 
 ### 2.24 Biomes: the arena becomes the place you are
 

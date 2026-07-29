@@ -1,6 +1,6 @@
 {
   "pack": {
     "pack_format": 48,
-    "description": "Strips Cobblemon EXP candies from worldgen chest loot. Overrides cobblemon:sets/any_exp_candy with an empty pool (covers all chests that reference the set) and surgically removes inline exp_candy entries from mega_showdown chests."
+    "description": "Legendary Monuments chest loot overrides. Strips Cobblemon EXP candies (empty cobblemon:sets/any_exp_candy + surgical inline removals) and holds artifact rarity in line with the Ultra crate: Totem removed, red/blue orb and the Origin cores/orbs nerfed. See README.md."
   }
 }

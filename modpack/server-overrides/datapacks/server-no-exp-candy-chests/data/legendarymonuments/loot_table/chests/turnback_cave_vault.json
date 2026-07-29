@@ -1,0 +1,373 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 3,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:relic_coin",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:dusk_ball",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 5
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:dusk_stone",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:ghost_memory",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:spell_tag",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:ghost_gem",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:ghost_tera_shard",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 6
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:max_ether",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:full_heal",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 8
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:ether",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:super_potion",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:hyper_potion",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:revive",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:copper_ingot",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:remedy",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:fine_remedy",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:superb_remedy",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:tumblestone",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 16
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:black_tumblestone",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 16
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:sky_tumblestone",
+          "weight": 100,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 16
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:griseous_orb",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:adamant_orb",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:lustrous_orb",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:relic_coin_pouch",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:zygarde_cell",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:max_potion",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:max_elixir",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:full_restore",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:max_revive",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:rare_candy",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 5
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:elixir",
+          "weight": 50,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 3
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:reaper_cloth",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "legendarymonuments:golem_scrap",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 2
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:ghostium_z",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:enchanted_golden_apple",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:spooky_plate",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:dusk_stone_block",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:griseous_core",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:adamant_crystal",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:lustrous_globe",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "legendarymonuments:celestica_flute",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "legendarymonuments:origin_ingot",
+          "weight": 10
+        }
+      ]
+    }
+  ]
+}

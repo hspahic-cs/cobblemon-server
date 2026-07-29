@@ -13,6 +13,23 @@ root README.
 ## [Unreleased]
 
 ### Changed
+- **Monument artifact rarity brought in line with the Ultra crate.** All figures
+  are per chest opened (these pools roll 3–14 times, so per-roll weights
+  understate real supply):
+  - Origin-forme held items `griseous_orb` / `adamant_orb` / `lustrous_orb`:
+    **4.97% → 0.53%** each.
+  - Origin-forme unlocks `griseous_core` / `adamant_crystal` / `lustrous_globe`:
+    **1.01% → 0.11%** each.
+  - `blue_orb` (Primal Kyogre): **2.64% → 0.53%**. It sat untouched at 2.4× the
+    rate of its already-nerfed Groudon counterpart; `red_orb` also moved
+    **1.14% → 0.57%** so the two Primals now match.
+
+  `turnback_cave_vault` and `lugia_temple_chest` were previously un-overridden
+  upstream defaults; both are now ours. Freed weight spreads proportionally
+  across each pool's existing lower-tier entries — no entries added or removed.
+  Since `red_orb`/`blue_orb` were already at `weight: 1`, their nerf is expressed
+  by scaling every *other* entry up instead. See the new datapack README.
+
 - **Repo + VM cleanup (no gameplay impact).** Removed two junk tracked files (a
   shell-mishap artifact from #56 and an empty `.Rhistory`) and the obsolete
   `docs/gym-ai-beta-test.md`, which targeted 0.8.1 and was an orphan page — in

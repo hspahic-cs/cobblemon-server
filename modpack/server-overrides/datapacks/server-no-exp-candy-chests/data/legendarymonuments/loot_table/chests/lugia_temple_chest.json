@@ -1,0 +1,112 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 14,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:water_tera_shard",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:exp_candy_xs",
+          "weight": 400
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:net_ball",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:exp_candy_s",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:dive_ball",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:exp_candy_m",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "legendarymonuments:lightstone_shard",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "legendarymonuments:darkstone_shard",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "mega_showdown:blue_orb",
+          "weight": 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:golden_apple",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:heart_of_the_sea",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:axolotl_bucket",
+          "weight": 40
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:sand",
+          "weight": 400
+        },
+        {
+          "type": "minecraft:item",
+          "name": "cobblemon:relic_coin",
+          "weight": 400,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": 4,
+              "add": false,
+              "conditions": []
+            }
+          ],
+          "conditions": []
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:water_bucket",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gold_ingot",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:diamond",
+          "weight": 40,
+          "conditions": []
+        }
+      ],
+      "conditions": []
+    }
+  ],
+  "functions": []
+}

@@ -82,12 +82,18 @@ def paper_doll(source) -> str:
     return base64.b64encode(buf.getvalue()).decode()
 
 
-def generic_pool_groups(jar_path: Path, bands_path: Path) -> "dict[str, list[tuple[str, bytes]]]":
+def generic_pool_groups(jar_path: Path, bands_path: Path,
+                        pack_path: "Path | None") -> "dict[str, list[tuple[str, bytes]]]":
     """The generated generic-trainer bands, as {band id: [(label, png bytes)]}.
 
-    Reports a band's trainers in the order the file lists them, and reports a missing texture
-    rather than skipping it: RCT falls back to a group face and then to default.png, so a gap
-    here is a trainer who turns up looking like nobody in particular, not a crash.
+    Reads through the SAME source the game will: the shipped retexture pack first, the rctmod
+    jar per missing id. That is not a detail — an earlier version read only the jar, so the page
+    showed RCT's plain colour-swapped skins while the game was about to render Trainers+ art.
+    A review tool that does not show what players see is worse than no review tool, because it
+    invites a decision about art nobody is going to look at.
+
+    Reports a missing texture rather than skipping it: RCT falls back to a group face and then
+    to default.png, so a gap is a trainer who looks like nobody in particular, not a crash.
     """
     import zipfile
 
@@ -95,10 +101,21 @@ def generic_pool_groups(jar_path: Path, bands_path: Path) -> "dict[str, list[tup
     groups = {}
     with zipfile.ZipFile(jar_path) as jar:
         names = set(jar.namelist())
+        pack, by_name = None, {}
+        if pack_path is not None and pack_path.is_file():
+            pack = zipfile.ZipFile(pack_path)
+            by_name = {
+                n.rsplit("/", 1)[1][:-4]: n
+                for n in pack.namelist()
+                if "/trainers/single/" in n and n.endswith(".png")
+            }
         for band in bands:
             entries = []
             for trainer in band["trainers"]:
                 stem = trainer.split(":", 1)[-1]
+                if stem in by_name:
+                    entries.append((stem, pack.read(by_name[stem])))
+                    continue
                 entry = f"assets/rctmod/textures/trainers/single/{stem}.png"
                 if entry not in names:
                     entries.append((f"{stem} (NO TEXTURE)", None))
@@ -109,8 +126,8 @@ def generic_pool_groups(jar_path: Path, bands_path: Path) -> "dict[str, list[tup
     return groups
 
 
-def render_generic(jar_path: Path, bands_path: Path) -> None:
-    groups = generic_pool_groups(jar_path, bands_path)
+def render_generic(jar_path: Path, bands_path: Path, pack_path: "Path | None") -> None:
+    groups = generic_pool_groups(jar_path, bands_path, pack_path)
     cards, total = [], 0
     for title, entries in groups.items():
         cards.append(f'<h2>{title}</h2><div class="grid">')
@@ -128,8 +145,9 @@ def render_generic(jar_path: Path, bands_path: Path) -> None:
     OUT_GENERIC.write_text(SHELL.format(
         title="Roguelite generic trainers",
         heading=f"Generic trainer pool — {total} from RCT's library",
-        sub="These fight their RCT-authored teams at levels from the wave curve. Skins come from "
-            "the rctmod jar, resolved by RCT's own trainer id — nothing is installed for them.",
+        sub="These fight their RCT-authored teams at levels from the wave curve. Skins are resolved "
+            "by RCT's own trainer id and read through the shipped RCT Trainers+ pack, falling back "
+            "to the rctmod jar per id — the same order the game uses.",
         body="".join(cards),
     ), encoding="utf-8")
     print(f"wrote {OUT_GENERIC} — {total} trainers across {len(groups)} bands")
@@ -141,6 +159,10 @@ def main() -> None:
                         help="review the generated generic trainer bands instead of the installed skins")
     parser.add_argument("--jar", default=Path("/tmp/rctmod.jar"), type=Path)
     parser.add_argument("--bands", default=REPO / "ops/roguelite-generic-trainer-bands.json", type=Path)
+    parser.add_argument("--pack", type=Path,
+                        default=REPO / "modpack/resourcepacks/RCT Trainers+ [1.6] v2.1.zip",
+                        help="retexture pack the modpack ships; read FIRST so the page shows what "
+                             "players actually see. Pass a nonexistent path to see raw RCT art.")
     args = parser.parse_args()
 
     if args.generic:
@@ -148,7 +170,7 @@ def main() -> None:
             sys.exit(f"no rctmod jar at {args.jar} — see modpack/mods/rctmod.pw.toml for the url")
         if not args.bands.is_file():
             sys.exit(f"no bands file at {args.bands} — run gen_roguelite_generic_pool.py first")
-        render_generic(args.jar, args.bands)
+        render_generic(args.jar, args.bands, args.pack)
         return
 
     files = sorted(DEST.glob("rgl_*.png"))

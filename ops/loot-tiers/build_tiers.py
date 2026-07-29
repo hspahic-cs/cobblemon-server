@@ -279,8 +279,17 @@ def collect_universe() -> set[str]:
     return {i for i in out if ":" in i and i.split(":")[0] in NAMESPACES}
 
 
-# ---------------------------------------------------------------- classification
-def classify(iid: str, overrides: dict) -> tuple[int, str, str]:
+def classify(iid: str, overrides: dict, market: dict) -> tuple[int, str, str]:
+    """Assign a tier. Purchasability is deliberately NOT used to cap the tier.
+
+    An earlier version capped any purchasable item at T1, on the theory that if
+    you can buy it, it isn't a chase item. That's wrong, and consistently so:
+    heavy consumption creates scarcity even when an item is on the shelf. Exp
+    candies are the clearest case -- they're purchasable AND among the few
+    sellable items AND feedstock for the EV candies, so demand keeps them
+    genuinely valuable. Plates are stocked but still Rare. Shelf price is
+    recorded as evidence and left for a human to weigh.
+    """
     if iid in overrides:
         tier, why = overrides[iid]
         return tier, why, "override"
@@ -294,6 +303,7 @@ def build() -> tuple[dict, str]:
     raw = load_json(OVERRIDES) or {}
     overrides = {k: v for k, v in raw.items() if not k.startswith("_")}
 
+    market = load_json(MARKET) or {}
     ev = collect_evidence()
 
     universe = collect_universe() | {k for k in ev if k.split(":")[0] in NAMESPACES}
@@ -302,7 +312,7 @@ def build() -> tuple[dict, str]:
 
     rows = []
     for iid in sorted(universe):
-        tier, why, how = classify(iid, overrides)
+        tier, why, how = classify(iid, overrides, market)
         rows.append({
             "id": iid,
             "tier": tier,

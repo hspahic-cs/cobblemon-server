@@ -909,10 +909,10 @@
     },
     {
       "id": "cobblemon:courage_candy",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "EV candy",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "crate:rare",
@@ -1234,9 +1234,9 @@
     },
     {
       "id": "cobblemon:dream_ball",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Specialty ball, not purchasable",
+      "tier": 3,
+      "tierName": "Epic",
+      "rationale": "Specialty ball \u2014 Hidden Ability transfer, high player demand",
       "assignedBy": "override",
       "sources": [
         {
@@ -1499,9 +1499,9 @@
     },
     {
       "id": "cobblemon:exp_candy_l",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "Mid exp candy",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Feedstock for EV candies \u2014 heavy consumption keeps it scarce despite being on the shelf",
       "assignedBy": "override",
       "sources": [
         {
@@ -1603,7 +1603,7 @@
       "id": "cobblemon:exp_candy_xl",
       "tier": 2,
       "tierName": "Rare",
-      "rationale": "Largest exp candy",
+      "rationale": "Feedstock for EV candies \u2014 heavy consumption keeps it scarce despite being on the shelf",
       "assignedBy": "override",
       "sources": [
         {
@@ -2254,10 +2254,10 @@
     },
     {
       "id": "cobblemon:health_candy",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "EV candy",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "crate:rare",
@@ -3142,10 +3142,10 @@
     },
     {
       "id": "cobblemon:mighty_candy",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "EV candy",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "crate:rare",
@@ -3919,10 +3919,10 @@
     },
     {
       "id": "cobblemon:quick_candy",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "EV candy",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "crate:rare",
@@ -3987,7 +3987,7 @@
       "id": "cobblemon:rare_candy",
       "tier": 2,
       "tierName": "Rare",
-      "rationale": "Instant level",
+      "rationale": "Instant level. Purchasable, but heavy demand keeps it scarce.",
       "assignedBy": "override",
       "sources": [
         {
@@ -4705,10 +4705,10 @@
     },
     {
       "id": "cobblemon:smart_candy",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "EV candy",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "crate:rare",
@@ -5060,10 +5060,10 @@
     },
     {
       "id": "cobblemon:tough_candy",
-      "tier": 1,
-      "tierName": "Uncommon",
-      "rationale": "EV candy",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "crate:rare",

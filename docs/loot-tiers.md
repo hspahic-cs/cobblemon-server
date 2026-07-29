@@ -21,7 +21,7 @@ with what already exists.
 | **T1** | Uncommon | Routine reward scale. Safe for regular play loops. |
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 
-537 items tiered — T5: 4, T4: 21, T3: 22, T2: 177, T1: 194, T0: 119.
+537 items tiered — T5: 4, T4: 21, T3: 23, T2: 183, T1: 187, T0: 119.
 
 ## Picking a reward
 
@@ -84,6 +84,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 |---|---|---|
 | `cobblemon:ability_patch` | Hidden ability. Deliberately pulled from the Ultra crate. | `crate:rare` 7.2%; `loot:chests/registeel_chest` 5.92% |
 | `cobblemon:beast_ball` | Best-in-slot for Ultra Beasts, not purchasable | `loot:legendary/pokeballs` |
+| `cobblemon:dream_ball` | Specialty ball — Hidden Ability transfer, high player demand | `crate:common` 4.6%; `loot:legendary/pokeballs`; `market` |
 | `cobblemon:gold_bottle_cap` | Full IV hyper training | *not currently granted anywhere* |
 | `cobblemon:held_item_voucher` | Redeems for a premium held item | `crate:rare` 2.9% |
 | `cobblemon:tr_voucher` | Redeems for a TR | `crate:rare` 3.9% |
@@ -126,6 +127,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:choice_scarf` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
 | `cobblemon:choice_specs` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
 | `cobblemon:clear_amulet` | Premium competitive held item | `market` |
+| `cobblemon:courage_candy` | EV candy — Rare crate loot, high player demand | `crate:rare` 0.95% |
 | `cobblemon:covert_cloak` | Premium competitive held item | `market` |
 | `cobblemon:cracked_pot` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:dark_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 32.33%; `loot:archaeology/ruins` 22.73% |
@@ -134,14 +136,14 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:deep_sea_tooth` | Evolution item | `crate:common` 0.203%; `market` |
 | `cobblemon:dragon_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 64.29% |
 | `cobblemon:dragon_scale` | Evolution item | `crate:common` 0.203% |
-| `cobblemon:dream_ball` | Specialty ball, not purchasable | `crate:common` 4.6%; `loot:legendary/pokeballs`; `market` |
 | `cobblemon:dubious_disc` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:dusk_stone` | Evolution stone | `crate:common` 0.71%; `loot:chests/turnback_cave_chest` 10.9%; `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:dusk_stone_block` | Evolution stone | `loot:chests/turnback_cave_vault` 2.12% |
 | `cobblemon:electirizer` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:electric_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 64.29% |
 | `cobblemon:eviolite` | Premium competitive held item | `crate:common` 0.5%; `market` |
-| `cobblemon:exp_candy_xl` | Largest exp candy | `market` |
+| `cobblemon:exp_candy_l` | Feedstock for EV candies — heavy consumption keeps it scarce despite being on the shelf | `market` |
+| `cobblemon:exp_candy_xl` | Feedstock for EV candies — heavy consumption keeps it scarce despite being on the shelf | `market` |
 | `cobblemon:expert_belt` | Premium competitive held item | `market` |
 | `cobblemon:fairy_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:fighting_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
@@ -155,6 +157,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:ghost_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 32.33%; `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:health_candy` | EV candy — Rare crate loot, high player demand | `crate:rare` 0.95% |
 | `cobblemon:heavy_duty_boots` | Premium competitive held item | `crate:common` 0.5%; `loot:rare/battle`; `market` |
 | `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regice_chest` 79.18% |
 | `cobblemon:ice_stone` | Evolution stone | `crate:common` 0.71%; `loot:chests/regice_chest` 35.77% |
@@ -167,6 +170,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:malicious_armor` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:masterpiece_teacup` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:metal_alloy` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:mighty_candy` | EV candy — Rare crate loot, high player demand | `crate:rare` 0.95% |
 | `cobblemon:mirror_herb` | Premium competitive held item | `loot:uncommon/battle`; `loot:uncommon/nature`; `market` |
 | `cobblemon:moon_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
@@ -176,16 +180,19 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:protector` | Evolution item | `crate:common` 0.203%; `loot:rare/battle`; `loot:chests/regirock_chest` 66.01% |
 | `cobblemon:psychic_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/liberty_island_chest` 39.31% |
 | `cobblemon:punching_glove` | Premium competitive held item | `market` |
-| `cobblemon:rare_candy` | Instant level | `crate:common` 5.1%; `crate:rare` 12.0%; `loot:epic/medicine` +3 more |
+| `cobblemon:quick_candy` | EV candy — Rare crate loot, high player demand | `crate:rare` 0.95% |
+| `cobblemon:rare_candy` | Instant level. Purchasable, but heavy demand keeps it scarce. | `crate:common` 5.1%; `crate:rare` 12.0%; `loot:epic/medicine` +3 more |
 | `cobblemon:reaper_cloth` | Evolution item | `crate:common` 0.203%; `loot:chests/turnback_cave_vault` 5.25% |
 | `cobblemon:rock_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regirock_chest` 66.01% |
 | `cobblemon:rocky_helmet` | Premium competitive held item | `crate:common` 0.5%; `market` |
 | `cobblemon:sachet` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:shiny_stone` | Evolution stone | `crate:common` 0.71% |
+| `cobblemon:smart_candy` | EV candy — Rare crate loot, high player demand | `crate:rare` 0.95% |
 | `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:sun_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:throat_spray` | Premium competitive held item | `market` |
 | `cobblemon:thunder_stone` | Evolution stone | `crate:common` 0.71% |
+| `cobblemon:tough_candy` | EV candy — Rare crate loot, high player demand | `crate:rare` 0.95% |
 | `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:water_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:weakness_policy` | Premium competitive held item | `market` |
@@ -325,7 +332,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:clever_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
 | `cobblemon:coarse_mulch` | Mulch | `loot:uncommon/nature` |
 | `cobblemon:colbur_berry` | Berry | *not currently granted anywhere* |
-| `cobblemon:courage_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:cover_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:cyan_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:cyan_mint_seeds` | Mint seed | `loot:epic/nature` |
@@ -341,7 +347,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:eject_pack` | Standard held / utility item | `market` |
 | `cobblemon:electric_seed` | Standard held / utility item | `loot:chests/dragoeleki_chest` 25.68% |
 | `cobblemon:everstone` | Standard held / utility item | `crate:common` 1.5%; `market` |
-| `cobblemon:exp_candy_l` | Mid exp candy | `market` |
 | `cobblemon:exp_share` | Standard held / utility item | `market` |
 | `cobblemon:fairy_feather` | EV feather | `loot:rare/battle`; `loot:chests/bell_tower_chest` 29.42%; `market` |
 | `cobblemon:fast_ball` | Specialty ball | `loot:chests/dragoeleki_chest` 64.29% |
@@ -361,7 +366,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:guard_spec` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:hard_stone` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/regirock_chest` 66.01% +1 more |
 | `cobblemon:hasty_mint` | Nature mint | `crate:common` 0.195% |
-| `cobblemon:health_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:health_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
 | `cobblemon:heat_rock` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regirock_chest` 26.68%; `market` |
 | `cobblemon:heavy_ball` | Specialty ball | `loot:chests/registeel_chest` 72.93% |
@@ -390,7 +394,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:metal_coat` | Standard held / utility item | `crate:common` 0.305%; `loot:chests/registeel_chest` 72.93%; `market` |
 | `cobblemon:metal_powder` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:metronome` | Standard held / utility item | `market` |
-| `cobblemon:mighty_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:mild_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:miracle_seed` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
 | `cobblemon:modest_mint` | Nature mint | `crate:common` 0.195% |
@@ -424,7 +427,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:protein` | Vitamin | `crate:common` 1.183%; `loot:chests/regirock_chest` 4.97%; `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:psychic_seed` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:quick_ball` | Specialty ball | `crate:common` 3.1%; `market` |
-| `cobblemon:quick_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:quick_claw` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:quick_powder` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:quiet_mint` | Nature mint | `crate:common` 0.195% |
@@ -456,7 +458,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:skull_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:sky_tumblestone` | Crafting material | `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:small_budding_sky_tumblestone` | Crafting material | `loot:legendary/archeology` |
-| `cobblemon:smart_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:smoke_ball` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:smooth_rock` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regirock_chest` 26.68%; `market` |
 | `cobblemon:soft_sand` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
@@ -470,7 +471,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:terrain_extender` | Standard held / utility item | `market` |
 | `cobblemon:timer_ball` | Specialty ball | `crate:common` 4.6%; `loot:chests/regigigas_chest` 95.41%; `market` |
 | `cobblemon:timid_mint` | Nature mint | `crate:common` 0.195% |
-| `cobblemon:tough_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:toxic_orb` | Standard held / utility item | `loot:legendary/battle`; `market` |
 | `cobblemon:tumblestone` | Standard held / utility item | `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:twisted_spoon` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |

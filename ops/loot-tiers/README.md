@@ -27,6 +27,22 @@ the next run overwrites your change.
 
 Then re-run the generator and commit both outputs.
 
+## Why purchasability doesn't set the tier either
+
+An earlier version capped any purchasable item at T1 — "if you can buy it, it
+isn't a chase item." That rule was removed, because it is wrong in a way that
+matters: **heavy consumption creates scarcity even when an item is stocked.**
+
+- **Exp candies** are purchasable *and* among the few sellable items *and*
+  feedstock for the EV candies. Constant demand keeps them genuinely valuable,
+  so T2 — not T1.
+- **Arceus plates** are stocked at $5,000 and still Rare.
+
+Shelf price is recorded as evidence and left for a human to weigh. Note also
+that price barely discriminates anyway: 751 of 816 catalogue entries are a flat
+$5,000. The exp candies are one of the few real price ladders in the game
+($15 → $90 → $270 → $810 → $2,430).
+
 ## Why drop rates don't set the tier
 
 Every row records its evidence — which crate, chest, or trainer table grants the

@@ -47,6 +47,7 @@ and `--pool-size` are how you overrule them, and the report prints enough to arg
 """
 
 import argparse
+import hashlib
 import json
 import re
 import sys
@@ -81,9 +82,23 @@ NAMED_WORDS = frozenset({
 # — and a class of literally "trainer", "pokemon_trainer" or "professor" is the catch-all where
 # story characters live. Excluding those three costs only `trainer_77`, which is no loss.
 #
+# `dragon_tamer` and `gentleman` are excluded for a THIRD reason, and it is worth spelling out
+# because it is invisible to every check above. Trainers+ draws one texture per class and reuses
+# it across every member, and for these two the artist drew a recognisable character:
+# dragon_tamer is unmistakably Drake of the Hoenn Elite Four, gentleman is another known face.
+# Our boss roster already casts Drake (`rgl_drake`), so leaving the class in means a player fights
+# him as filler at wave 45 and again as an Elite Four member.
+#
+# The veto has to be the CLASS, not the id. All 16 dragon_tamer_* ids share that one texture and
+# all 14 gentleman_* ids share theirs, so excluding `dragon_tamer_ramiro_0134` would simply pick
+# another dragon tamer with the same face. Use --exclude-classes to revisit, and note that no
+# automated rule finds these: the id is generic, RCT's type is `normal`, and the art is bespoke
+# rather than a byte-identical copy of the named character's texture. Somebody has to look.
+#
 # The rest are RCT's joke and utility classes, which would break the fiction of a gauntlet.
 DEFAULT_EXCLUDED_CLASSES = (
-    "trainer", "pokemon_trainer", "professor",
+    "trainer", "trainer_77_05f6", "pokemon_trainer", "professor",
+    "dragon_tamer", "gentleman",
     "dumbass", "dumbass_jojo", "friendly", "game_freaks", "gatekeeper",
 )
 
@@ -171,6 +186,33 @@ DEFAULT_BANDS = [
 
 DEFAULT_POOL_SIZE = 24
 
+# The retexture pack the modpack ships. Read here for ONE reason: to deduplicate on ART.
+#
+# Trainers+ gives a texture per trainer CLASS and reuses it across every member — 1559 ids share
+# just 173 distinct images. Picking one trainer per class *per band* therefore put the same Bug
+# Catcher picture in all three bands and four identical Burglars in the pool: 72 ids, 39 looks.
+# Deduplicating by id cannot see that, because the ids genuinely differ. Only the bytes do not.
+DEFAULT_PACK = REPO / "modpack/resourcepacks/RCT Trainers+ [1.6] v2.1.zip"
+
+
+def art_hashes(pack_path: "Path | None", jar: zipfile.ZipFile) -> "dict[str, str]":
+    """trainer id -> hash of the texture the game will actually render for it."""
+    out = {}
+    entries = {
+        n.rsplit("/", 1)[1][:-4]: (jar, n)
+        for n in jar.namelist()
+        if "/trainers/single/" in n and n.endswith(".png")
+    }
+    if pack_path is not None and pack_path.is_file():
+        pack = zipfile.ZipFile(pack_path)
+        # Pack wins, exactly as it does in game.
+        for n in pack.namelist():
+            if "/trainers/single/" in n and n.endswith(".png"):
+                entries[n.rsplit("/", 1)[1][:-4]] = (pack, n)
+    for stem, (archive, name) in entries.items():
+        out[stem] = hashlib.sha256(archive.read(name)).hexdigest()
+    return out
+
 
 def load_generic_trainers(jar_path: Path) -> "list[dict]":
     """Every RCT trainer that is not a named character, with the facts a band needs."""
@@ -228,7 +270,7 @@ def trainer_class(stem: str) -> str:
     return match.group(1) if match else stem
 
 
-def pick_pool(candidates: "list[dict]", size: int) -> "list[dict]":
+def pick_pool(candidates: "list[dict]", size: int, used_art: "set[str]") -> "list[dict]":
     """Take `size` trainers, spread across classes.
 
     Round-robin by class rather than a plain sort or a random sample. A sort by id would make
@@ -245,10 +287,18 @@ def pick_pool(candidates: "list[dict]", size: int) -> "list[dict]":
     while len(picked) < size and not exhausted:
         exhausted = True
         for klass in sorted(by_class):
-            if not by_class[klass]:
-                continue
-            picked.append(by_class[klass].pop(0))
-            exhausted = False
+            while by_class[klass]:
+                candidate = by_class[klass].pop(0)
+                art = candidate.get("art")
+                # Skip a trainer whose picture is already in the pool. Not an id check: the ids
+                # differ, the art does not, and a player cannot tell two Burglars apart.
+                if art is not None and art in used_art:
+                    continue
+                if art is not None:
+                    used_art.add(art)
+                picked.append(candidate)
+                exhausted = False
+                break
             if len(picked) == size:
                 break
     return picked
@@ -272,6 +322,12 @@ def main() -> None:
                         help="comma-separated allowlist of trainer classes, e.g. youngster,hiker")
     parser.add_argument("--exclude-classes", default=",".join(DEFAULT_EXCLUDED_CLASSES),
                         help=f"comma-separated classes to drop (default: {','.join(DEFAULT_EXCLUDED_CLASSES)})")
+    parser.add_argument("--pack", type=Path, default=DEFAULT_PACK,
+                        help="retexture pack the modpack ships. Read to deduplicate on ART, since "
+                             "it reuses one texture per class across every member.")
+    parser.add_argument("--exclude-ids", default="",
+                        help="comma-separated trainer ids to veto, for art that depicts a famous "
+                             "character on a generic id (e.g. dragon_tamer_ramiro_0134 is Drake)")
     parser.add_argument("--size-floors", default="",
                         help="comma-separated minimum party size per band, e.g. 2,3,4. RCT's "
                              "authored sizes follow the games, so a high floor narrows the pool "
@@ -298,11 +354,38 @@ def main() -> None:
     if not trainers:
         sys.exit("no trainers left after --classes/--exclude-classes")
 
-    print(f"{len(trainers)} generic trainers available in {args.jar.name}")
+    veto = {i.strip() for i in args.exclude_ids.split(",") if i.strip()}
+    if veto:
+        before = len(trainers)
+        trainers = [t for t in trainers if t["id"] not in veto]
+        print(f"vetoed {before - len(trainers)} id(s) by --exclude-ids")
+
+    # Attach the hash of the texture the game will render, so selection can dedupe on art.
+    with zipfile.ZipFile(args.jar) as jar:
+        hashes = art_hashes(args.pack if args.pack and args.pack.is_file() else None, jar)
+    for t in trainers:
+        t["art"] = hashes.get(t["id"])
+
+    distinct = len({t["art"] for t in trainers if t["art"]})
+    print(f"{len(trainers)} generic trainers available in {args.jar.name}, "
+          f"but only {distinct} DISTINCT LOOKS — that is the real ceiling on variety")
 
     waves = trainer_waves(args.run_length, args.trainer_interval, args.boss_interval)
     bands, used, report = [], set(), []
-    for band_id, min_wave, max_wave, min_size in bands_spec:
+    # Shared across bands: the same Bug Catcher picture in early AND late is the duplication
+    # this exists to prevent, so the set is not reset per band.
+    used_art = set()
+
+    # MOST CONSTRAINED BAND FIRST, then restore the declared order for output.
+    #
+    # With art deduplicated globally there are only ~87 distinct looks to go round, so whichever
+    # band draws first takes the pick of them. Drawing in declared order made the bands
+    # alphabetical slices — early got ace_trainer..dragon_tamer, late got whatever survived — and
+    # left the late band with 9 trainers because the high party sizes it needs had already gone
+    # to a band that had no such requirement. Filling by descending size floor gives the scarce
+    # big-party art to the only band that cannot substitute for it; the early band is choosing
+    # from 847 candidates and can afford to go last.
+    for band_id, min_wave, max_wave, min_size in sorted(bands_spec, key=lambda b: -b[3]):
         # Each id is used by at most one band. A trainer in two bands is not broken, but it
         # makes "have I seen this one already" depend on where you are, which is the opposite
         # of what a ramp is for.
@@ -310,7 +393,7 @@ def main() -> None:
             t for t in trainers
             if t["size"] >= min_size and t["id"] not in used
         ]
-        pool = pick_pool(candidates, args.pool_size)
+        pool = pick_pool(candidates, args.pool_size, used_art)
         used.update(t["id"] for t in pool)
 
         band = {
@@ -326,6 +409,10 @@ def main() -> None:
 
         covered = [w for w in waves if w >= min_wave and (max_wave is None or w <= max_wave)]
         report.append((band_id, min_size, len(candidates), pool, covered))
+
+    order = [b[0] for b in bands_spec]
+    bands.sort(key=lambda b: order.index(b["id"]))
+    report.sort(key=lambda r: order.index(r[0]))
 
     if not args.out.parent.is_dir():
         sys.exit(f"no directory {args.out.parent}")

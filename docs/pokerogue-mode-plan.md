@@ -740,6 +740,33 @@ unpredictably. Not offering a restore is better than offering one that lies.
 discover by losing a Pokémon into a price they choose. The rule is unchanged; only its visibility
 is.
 
+### 2.23 Arena slots are held only while a player is in one; expiry is nearly irrelevant
+
+**The premise this corrects.** Earlier sections treated an arena slot as held for a whole run,
+which made expiry a *capacity* problem: a bounded grid, runs spanning days, and a queue of
+absent players starving new starts. That framing was wrong. **A run only occupies an arena while
+its player is online and in it.** On logout the run state is already saved, so the slot can be
+released and reacquired on return — re-stamping is idempotent and cheap, which is what makes this
+free.
+
+**So expiry is storage hygiene, not capacity management**, and it can be generous. A run is a
+handful of Pokémon and some counters; a player holds one at a time. There is no volume here worth
+policing.
+
+**Chosen:**
+
+- **Activity means playing the run.** Progressing a wave is activity; merely logging in is not.
+  A player who logs in daily and never touches their run is not using it.
+- **The period scales with depth.** The deepest runs (wave 100+) last **six months**; shallower
+  runs expire sooner. A wave-3 run nobody returned to is worth nothing; a wave-150 run is many
+  hours of play and should outlive any reasonable absence.
+- **Expiry pays nothing.** Someone who has not touched a run in six months is not owed a payout,
+  and paying one would land on an absent player anyway.
+
+**Consequence for the arena work:** `RunArenas` currently allocates a slot for the run's duration.
+It needs to release on logout and reacquire on login. Until that lands, `maxConcurrentRuns`
+throttles *concurrent players*, not concurrent runs, which is a much tighter bound than intended.
+
 ---
 
 ## 3. Preliminary plan
@@ -832,9 +859,7 @@ is no run loop, no battle, no command.
 - **Boss roster:** who they are, at what intervals.
 - Waves per run; milestone checkpoint interval (§2.10 keeps milestones as persistence
   granularity — how coarse is still open).
-- **Run expiry.** Runs checkpoint indefinitely and nothing voids an abandoned one, so world save
-  data accumulates dead runs forever. The tower voids on daily rotation; this has no equivalent.
-  Likely a configurable expiry after some period offline.
+- ~~Run expiry~~ **Decided 2026-07-28 — see §2.23.**
 - Escalation ladder: which wave bands unlock Mega / Tera / Dynamax / legendaries.
 - Entry gating: what starting a run costs, and what stops abandon-and-restart from rerolling a
   bad draft.

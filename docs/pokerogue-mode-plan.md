@@ -397,9 +397,21 @@ datapack JSON and cannot express a team scaled at runtime". They can.
 caps. The same shape applied to the NPC actor scales an authored team to any wave level, with
 crash-safe restore already solved there.
 
-**What A buys:** trainer skins, names, dialogue, summon/tag/cleanup machinery, and per-trainer
-AI configuration — none of which we would have to write. It also avoids building a bespoke
-battle driver.
+**What A buys:** trainer skins, names, dialogue, and per-trainer AI configuration — none of which
+we would have to write.
+
+**Correction, 2026-07-28: it does *not* avoid a bespoke battle driver.** An earlier draft claimed
+that; implementing the provider proved otherwise. `RCTMod.makeBattle` builds the **player's** side
+from `TrainerPlayer.getTeam()` — the player's real Cobblemon party — which would drag overworld
+Pokémon into the arena, damage them, and aim permadeath at Pokémon the run has never heard of.
+Its `canBattleAgainst` gate also refuses any trainer the player has already beaten, which every
+roster repeat is by design.
+
+So the provider takes RCT apart rather than calling into it: authored team, RCT's own
+`TrainerEntityBattleActor` with the trainer's authored AI, and the player's side from the run
+party, driven by an ordinary `BattleRegistry.startBattle`. Everything §2.6 actually wanted from
+RCT survives; the driver is about forty lines. The decision stands — what was wrong was the cost
+estimate, not the choice.
 
 **Honest limitation:** scaling level does not scale movesets, EVs, or held items. A team
 authored at L15 and stretched to L60 still runs L15 moves. So the ladder wants a handful of

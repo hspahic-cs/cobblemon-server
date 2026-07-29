@@ -863,6 +863,34 @@ testable at all.
 default. A run started under an override should be identifiable, so an inflated leaderboard entry
 can be told apart from an honest one.
 
+### 2.26 A payout owed to an offline player is held, not dropped
+
+**Chosen:** hold the grants and drop them at the player's feet on **next login**.
+
+**Why this is not an edge case:** §2.10's disconnect penalty can wipe a party, which ends the run
+and owes a payout to someone who is by definition not there. Dropping at the moment the run ends
+would put items in the world for five minutes and then lose them — in exactly the case the
+mechanism exists for, while the log said it paid.
+
+**Delivery waits for a safe moment.** Login *arms* it; the drop happens once the player is
+settled, alive, not in a run and not in arena space. Our own login hooks teleport people, a
+player on the respawn screen is "online" by every test the server makes, and dropping into a
+sealed arena puts permanent items in a dimension whose blocks are rewritten between waves. There
+is no timeout on that wait — the debt is on disk, so waiting costs nothing, and a timeout would
+only convert a safe wait into a delivery somewhere already judged wrong.
+
+**It errs toward losing a payout rather than duplicating one.** A crash between the ledger write
+and the items existing pays zero, never twice. Paying twice is unbounded and invisible — the
+crash window repeats on every restart and nothing distinguishes the copy, which is precisely the
+faucet §2.2 refuses. Paying zero is single and repairable, from a log line written *before* the
+claim naming the player and every item.
+
+**Held payouts never expire**, and this is deliberately *not* inherited from §2.23. Expiring a
+run and expiring a debt are different acts: an untouched run is owed nothing, whereas a held
+payout is already owed, earned and resolved, and is waiting only because the server chose the
+moment of delivery. If the file ever grows, the honest fix is an op command that lists and clears
+it — not a timer that quietly deletes debts.
+
 ---
 
 ## 3. Preliminary plan

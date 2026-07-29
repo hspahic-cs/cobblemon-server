@@ -13,17 +13,40 @@ A flat texture dump would technically show the same pixels but is unreadable as 
 likeness, and the whole point of the page is answering "is that actually Steven Stone".
 """
 
+import argparse
 import base64
+import json
 import sys
 from io import BytesIO
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from gen_trainer_texture_pack import PACK_DIR, ROGUELITE_FROM_SERVER_GYMS, ROGUELITE_SKINS  # noqa: E402
+from gen_trainer_texture_pack import PACK_DIR, REPO, ROGUELITE_FROM_SERVER_GYMS, ROGUELITE_SKINS  # noqa: E402
 
 DEST = PACK_DIR / "assets/rctmod/textures/trainers/single"
 OUT = Path("/tmp/roguelite-skins.html")
+OUT_GENERIC = Path("/tmp/roguelite-generic-trainers.html")
 SCALE = 6
+
+SHELL = (
+    "<!doctype html><meta charset=utf-8><title>{title}</title>"
+    "<style>"
+    "body{{background:#15171c;color:#e6e8ee;font:14px/1.5 system-ui,sans-serif;margin:0;padding:32px}}"
+    "h1{{font-size:20px;margin:0 0 4px}}p.sub{{color:#8b93a7;margin:0 0 28px;max-width:70ch}}"
+    "h2{{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#8b93a7;"
+    "border-bottom:1px solid #2a2e39;padding-bottom:8px;margin:36px 0 20px}}"
+    "h2 .n{{color:#5a6376;margin-left:6px}}"
+    ".grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:20px}}"
+    "figure{{margin:0;text-align:center;background:#1c1f27;border:1px solid #2a2e39;"
+    "border-radius:8px;padding:14px 8px}}"
+    "img{{image-rendering:pixelated;height:192px;width:auto;display:block;margin:0 auto 10px}}"
+    ".missing{{height:192px;display:flex;align-items:center;justify-content:center;"
+    "font-size:48px;color:#3a4050;margin-bottom:10px}}"
+    "figcaption b{{display:block;text-transform:capitalize}}"
+    "figcaption span{{display:block;color:#5a6376;font-size:11px;font-family:ui-monospace,monospace}}"
+    "</style>"
+    "<h1>{heading}</h1><p class=sub>{sub}</p>{body}"
+)
 
 # (source box in the 64x64 texture, destination corner on the 16x32 doll).
 # Second entry of each pair is the overlay layer for the same body part.
@@ -37,10 +60,16 @@ PARTS = [
 ]
 
 
-def paper_doll(path: Path) -> str:
+def paper_doll(source) -> str:
+    """Render one skin as a front-facing figure. Takes a path or raw PNG bytes.
+
+    Bytes matter for the generic pool: those trainers' textures are never installed into the
+    pack — they live inside the rctmod jar and RCT resolves them by its own id — so reviewing
+    them means reading straight out of the archive.
+    """
     from PIL import Image
 
-    src = Image.open(path).convert("RGBA")
+    src = Image.open(BytesIO(source) if isinstance(source, bytes) else source).convert("RGBA")
     if src.size != (64, 64):
         src = src.resize((64, 64), Image.NEAREST)
     doll = Image.new("RGBA", (16, 32), (0, 0, 0, 0))
@@ -53,7 +82,75 @@ def paper_doll(path: Path) -> str:
     return base64.b64encode(buf.getvalue()).decode()
 
 
+def generic_pool_groups(jar_path: Path, bands_path: Path) -> "dict[str, list[tuple[str, bytes]]]":
+    """The generated generic-trainer bands, as {band id: [(label, png bytes)]}.
+
+    Reports a band's trainers in the order the file lists them, and reports a missing texture
+    rather than skipping it: RCT falls back to a group face and then to default.png, so a gap
+    here is a trainer who turns up looking like nobody in particular, not a crash.
+    """
+    import zipfile
+
+    bands = json.loads(bands_path.read_text(encoding="utf-8"))["bands"]
+    groups = {}
+    with zipfile.ZipFile(jar_path) as jar:
+        names = set(jar.namelist())
+        for band in bands:
+            entries = []
+            for trainer in band["trainers"]:
+                stem = trainer.split(":", 1)[-1]
+                entry = f"assets/rctmod/textures/trainers/single/{stem}.png"
+                if entry not in names:
+                    entries.append((f"{stem} (NO TEXTURE)", None))
+                    continue
+                entries.append((stem, jar.read(entry)))
+            waves = f"waves {band['min_wave']}-{band.get('max_wave', '200')}"
+            groups[f"{band['id']} — {waves}, {len(entries)} trainers"] = entries
+    return groups
+
+
+def render_generic(jar_path: Path, bands_path: Path) -> None:
+    groups = generic_pool_groups(jar_path, bands_path)
+    cards, total = [], 0
+    for title, entries in groups.items():
+        cards.append(f'<h2>{title}</h2><div class="grid">')
+        for label, data in entries:
+            total += 1
+            if data is None:
+                cards.append(f'<figure><div class="missing">?</div><figcaption><b>{label}</b></figcaption></figure>')
+                continue
+            name = label.rsplit("_", 1)[0].replace("_", " ")
+            cards.append(
+                f'<figure><img src="data:image/png;base64,{paper_doll(data)}" alt="{name}">'
+                f"<figcaption><b>{name}</b><span>{label}</span></figcaption></figure>"
+            )
+        cards.append("</div>")
+    OUT_GENERIC.write_text(SHELL.format(
+        title="Roguelite generic trainers",
+        heading=f"Generic trainer pool — {total} from RCT's library",
+        sub="These fight their RCT-authored teams at levels from the wave curve. Skins come from "
+            "the rctmod jar, resolved by RCT's own trainer id — nothing is installed for them.",
+        body="".join(cards),
+    ), encoding="utf-8")
+    print(f"wrote {OUT_GENERIC} — {total} trainers across {len(groups)} bands")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--generic", action="store_true",
+                        help="review the generated generic trainer bands instead of the installed skins")
+    parser.add_argument("--jar", default=Path("/tmp/rctmod.jar"), type=Path)
+    parser.add_argument("--bands", default=REPO / "ops/roguelite-generic-trainer-bands.json", type=Path)
+    args = parser.parse_args()
+
+    if args.generic:
+        if not args.jar.is_file():
+            sys.exit(f"no rctmod jar at {args.jar} — see modpack/mods/rctmod.pw.toml for the url")
+        if not args.bands.is_file():
+            sys.exit(f"no bands file at {args.bands} — run gen_roguelite_generic_pool.py first")
+        render_generic(args.jar, args.bands)
+        return
+
     files = sorted(DEST.glob("rgl_*.png"))
     if not files:
         sys.exit(f"no rgl_*.png in {DEST}")
@@ -83,26 +180,13 @@ def main() -> None:
             )
         cards.append("</div>")
 
-    OUT.write_text(
-        "<!doctype html><meta charset=utf-8><title>Roguelite trainer skins</title>"
-        "<style>"
-        "body{background:#15171c;color:#e6e8ee;font:14px/1.5 system-ui,sans-serif;margin:0;padding:32px}"
-        "h1{font-size:20px;margin:0 0 4px}p.sub{color:#8b93a7;margin:0 0 28px}"
-        "h2{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:#8b93a7;"
-        "border-bottom:1px solid #2a2e39;padding-bottom:8px;margin:36px 0 20px}"
-        "h2 .n{color:#5a6376;margin-left:6px}"
-        ".grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:20px}"
-        "figure{margin:0;text-align:center;background:#1c1f27;border:1px solid #2a2e39;"
-        "border-radius:8px;padding:14px 8px}"
-        "img{image-rendering:pixelated;height:192px;width:auto;display:block;margin:0 auto 10px}"
-        "figcaption b{display:block;text-transform:capitalize}"
-        "figcaption span{display:block;color:#5a6376;font-size:11px;font-family:ui-monospace,monospace}"
-        "</style>"
-        f"<h1>Roguelite trainer skins — {len(files)} installed</h1>"
-        "<p class=sub>Front view, overlay layer composited. Check each is the right character "
-        "and the art is acceptable; note any to replace.</p>" + "".join(cards),
-        encoding="utf-8",
-    )
+    OUT.write_text(SHELL.format(
+        title="Roguelite trainer skins",
+        heading=f"Roguelite trainer skins — {len(files)} installed",
+        sub="Front view, overlay layer composited. Check each is the right character and the art "
+            "is acceptable; note any to replace.",
+        body="".join(cards),
+    ), encoding="utf-8")
     print(f"wrote {OUT} — {len(files)} skins")
     for source, paths in groups.items():
         print(f"  {source}: {len(paths)}")

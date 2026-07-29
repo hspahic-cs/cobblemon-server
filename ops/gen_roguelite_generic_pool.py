@@ -45,7 +45,7 @@ import json
 import re
 import sys
 import zipfile
-from collections import Counter, defaultdict
+from collections import Counter as collections_Counter, Counter, defaultdict
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -64,14 +64,80 @@ NAMED_WORDS = frozenset({
     "boss", "rival", "title", "defense", "admin",
 })
 
-# Joke and one-off classes RCT ships that would break the fiction of a trainer gauntlet. Dropped
-# by default and listed here so the choice is visible; clear it with `--exclude-classes ''`.
-DEFAULT_EXCLUDED_CLASSES = ("dumbass", "dumbass_jojo", "friendly", "game_freaks", "gatekeeper")
+# Classes dropped by default. Listed here so the choice is visible rather than buried in a
+# filter; override with `--exclude-classes ''`.
+#
+# The first three are where the PROTAGONISTS AND PROFESSORS HIDE, and they are the reason
+# neither filter above is enough on its own. RCT types Red, Brendan, May, Dawn and Oak as
+# `normal`, and their ids carry no word NAMED_WORDS could match, so `trainer_red_0003` and
+# `professor_oak_00c8` both reached the late band as ordinary filler. What gives them away is
+# the class: a generic trainer in this mode should have a JOB — hiker, biker, lass, ace trainer
+# — and a class of literally "trainer", "pokemon_trainer" or "professor" is the catch-all where
+# story characters live. Excluding those three costs only `trainer_77`, which is no loss.
+#
+# The rest are RCT's joke and utility classes, which would break the fiction of a gauntlet.
+DEFAULT_EXCLUDED_CLASSES = (
+    "trainer", "pokemon_trainer", "professor",
+    "dumbass", "dumbass_jojo", "friendly", "game_freaks", "gatekeeper",
+)
 
 
 def is_named_character(stem: str) -> bool:
-    """True if the id names one of RCT's story characters rather than a generic trainer."""
+    """Backstop only — the real filter is RCT's own `type`, see [resolve_types].
+
+    Kept because it costs nothing and catches an id whose group is missing, but it must not be
+    the primary test: guessing character-hood from a filename does not work. `trainer_red_0003`
+    is Red, `professor_oak_00c8` is Oak, and `commander_jupiter_041e` is a Team Galactic
+    commander — none contains a word this could match, and all three reached the pool.
+    """
     return bool(NAMED_WORDS & set(stem.split("_")))
+
+
+# The only RCT trainer type that is an ordinary trainer. Everything else is story cast:
+# `leader` / `e4` / `champ` are the boss roster's, `rival` is Red, Brendan, May and Dawn,
+# `team_rocket` / `team_galactic` / `team_shadow` are villain organisations, `battleground` is
+# RCT's endgame gauntlet, and `ligh_of_ruin` (sic — RCT's spelling) is romhack-series cast.
+GENERIC_TYPE = "normal"
+
+
+def resolve_types(jar: zipfile.ZipFile) -> "tuple[dict[str, str], list[str]]":
+    """Map every trainer id to RCT's own type, plus the group names, longest first.
+
+    RCT declares the type in `data/rctmod/mobs/trainers/`, as an individual file per trainer
+    where one exists and otherwise on the trainer's GROUP (`groups/<name>.json`) — 116 groups
+    covering 1559 trainers. So a lookup is: the individual entry, else the longest group name
+    that prefixes the id.
+
+    Longest-prefix and not the class regex, because the two disagree exactly where it matters:
+    `professor_oak_00c8` has no individual entry, and a shortest-match would resolve it against
+    a `trainer`-ish group and call Oak an ordinary trainer.
+    """
+    individual, groups = {}, {}
+    prefix = "data/rctmod/mobs/trainers/"
+    for name in jar.namelist():
+        if not (name.startswith(prefix) and name.endswith(".json")):
+            continue
+        stem = name[len(prefix):-5]
+        try:
+            declared = json.loads(jar.read(name)).get("type")
+        except json.JSONDecodeError:
+            continue
+        if not declared:
+            continue
+        if stem.startswith("groups/"):
+            groups[stem[len("groups/"):]] = declared
+        else:
+            individual[stem] = declared
+    return {**groups, **individual}, sorted(groups, key=len, reverse=True)
+
+
+def type_of(stem: str, types: "dict[str, str]", group_names: "list[str]") -> "str | None":
+    if stem in types:
+        return types[stem]
+    for group in group_names:
+        if stem.startswith(group):
+            return types[group]
+    return None
 
 # (band id, min_wave, max_wave or None, minimum party size).
 # The wave edges match example.json's trainer bands so the fragment drops straight in. The
@@ -95,7 +161,9 @@ def load_generic_trainers(jar_path: Path) -> "list[dict]":
             "Download it with the url in modpack/mods/rctmod.pw.toml, or pass a path."
         )
     out = []
+    skipped = collections_Counter()
     with zipfile.ZipFile(jar_path) as jar:
+        types, group_names = resolve_types(jar)
         textures = {
             name.rsplit("/", 1)[1][:-4]
             for name in jar.namelist()
@@ -105,7 +173,12 @@ def load_generic_trainers(jar_path: Path) -> "list[dict]":
             if not (name.startswith("data/rctmod/trainers/") and name.endswith(".json")):
                 continue
             stem = name.rsplit("/", 1)[1][:-5]
-            if is_named_character(stem):
+            # RCT's own classification first; the filename heuristic is only a backstop for a
+            # trainer whose group is missing, and an unresolved type is treated as story cast
+            # rather than waved through — a mystery id is not something to put in a filler wave.
+            declared = type_of(stem, types, group_names)
+            if declared != GENERIC_TYPE or is_named_character(stem):
+                skipped[declared or "<unclassified>"] += 1
                 continue
             try:
                 data = json.loads(jar.read(name))
@@ -125,6 +198,8 @@ def load_generic_trainers(jar_path: Path) -> "list[dict]":
                 # falls back to groups/<group>.png then default.png, so this is not fatal.
                 "has_skin": stem in textures,
             })
+    for kind, n in sorted(skipped.items(), key=lambda kv: -kv[1]):
+        print(f"  excluded {n:>4} of type {kind}")
     return out
 
 
@@ -250,9 +325,16 @@ def main() -> None:
         print(f"  covers {len(covered)} trainer wave(s): {covered}")
         print(f"  party sizes: {dict(sorted(sizes.items()))}")
         print(f"  classes: {', '.join(f'{k}x{v}' for k, v in classes.most_common())}")
+        # Two different complaints, and only the first is a bug. A pool smaller than its waves
+        # forces a repeat inside one run. A pool merely CLOSE to its wave count is fine for one
+        # run but means every run draws from nearly the same handful, so the mode stops feeling
+        # different on a replay — which for a roguelite is the point of the mode.
         if len(pool) < len(covered):
             print(f"  WARNING: pool of {len(pool)} is smaller than the {len(covered)} waves it "
                   "covers, so a single run will meet repeats")
+        elif len(pool) < 2 * len(covered):
+            print(f"  NOTE: {len(pool)} trainers over {len(covered)} waves is thin for replay "
+                  "variety — lower this band's party-size floor to widen it")
         if skinless:
             print(f"  NO RCT SKIN ({len(skinless)}), will fall back to the group/default face: "
                   f"{', '.join(skinless)}")

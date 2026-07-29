@@ -1,0 +1,420 @@
+#!/usr/bin/env python3
+"""Build the server-wide loot tier list.
+
+Reads every place the server already grants or prices an item, assigns each item
+a tier T0-T5, and writes:
+
+    ops/loot-tiers/tiers.json   machine-readable source of truth
+    docs/loot-tiers.md          human-readable reference
+
+Tiers come from three things, in priority order:
+
+    1. ops/loot-tiers/overrides.json   explicit pins (judgment calls)
+    2. CATEGORY_RULES below            pattern rules over item ids
+    3. namespace default               last-resort fallback
+
+Evidence (which crate/chest/trainer table actually grants an item, and at what
+rate) is collected and attached to every row so a tier can be argued with rather
+than taken on faith. Evidence does NOT auto-assign tiers -- drop rate measures
+how often we *currently* give something out, which is the thing we're trying to
+sanity-check, so using it as the tier would be circular.
+
+Usage:  python3 ops/loot-tiers/build_tiers.py [--check]
+
+    --check  exit 1 if the generated files differ from what's on disk
+             (for CI / pre-commit; does not write)
+"""
+from __future__ import annotations
+
+import argparse
+import collections
+import json
+import pathlib
+import re
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parents[2]
+OVERRIDES = ROOT / "ops/loot-tiers/overrides.json"
+OUT_JSON = ROOT / "ops/loot-tiers/tiers.json"
+OUT_MD = ROOT / "docs/loot-tiers.md"
+
+OVERRIDES_DIR = ROOT / "modpack/server-overrides"
+MARKET = OVERRIDES_DIR / "config/cobblemon-market/authored/items.json"
+GACHA_DIR = OVERRIDES_DIR / "config/cobblemon-gacha/authored/tables"
+DATAPACKS = OVERRIDES_DIR / "datapacks"
+
+TIER_NAMES = {
+    5: "Mythic",
+    4: "Legendary",
+    3: "Epic",
+    2: "Rare",
+    1: "Uncommon",
+    0: "Common",
+}
+TIER_BLURB = {
+    5: "Gates a box legendary or mythical, or guarantees a catch. Never a routine reward.",
+    4: "Summons or permanently unlocks a legendary/forme. One-per-player scale.",
+    3: "Permanent competitive power or a hard-gated component. A real chase reward.",
+    2: "Strong but repeatable. Fine as the headline reward for a genuine challenge.",
+    1: "Routine reward scale. Safe for regular play loops.",
+    0: "Filler. Safe to hand out in bulk.",
+}
+
+# Namespaces we tier individually. simpletms is collapsed (see TM_* below).
+NAMESPACES = ("cobblemon", "mega_showdown", "legendarymonuments", "minecraft")
+
+# ---------------------------------------------------------------- category rules
+# (regex over the item id, tier, rationale). First match wins, so order matters:
+# put specific patterns above general ones.
+CATEGORY_RULES: list[tuple[str, int, str]] = [
+    # --- consumable healing / status: bulk filler
+    (r":(potion|super_potion|hyper_potion|max_potion|full_restore)$", 0, "Healing consumable"),
+    (r":(revive|max_revive)$", 0, "Revive consumable"),
+    (r":(ether|max_ether|elixir|max_elixir)$", 0, "PP consumable"),
+    (r":(antidote|awakening|burn_heal|ice_heal|paralyze_heal|full_heal)$", 0, "Status heal"),
+    (r":(remedy|fine_remedy|superb_remedy|energy_root|medicinal_leek)$", 0, "Herbal heal"),
+    # --- currency & basic balls
+    (r":relic_coin(_pouch|_sack)?$", 0, "Currency"),
+    (r":(poke_ball|great_ball|ultra_ball)$", 0, "Basic ball"),
+    (r":ancient_\w*ball$", 0, "Hisuian basic ball"),
+    # --- exp candy: size-graded
+    (r":exp_candy_(xs|s|m)$", 0, "Small exp candy"),
+    # --- vanilla bulk materials
+    (r"^minecraft:(cobblestone|dirt|sand|gravel|stick|string|coal|iron_nugget|gold_nugget|"
+     r"copper_ingot|iron_ingot|gold_ingot|quartz|lapis_lazuli|emerald|redstone|flint|clay_ball|"
+     r"bone|leather|feather|wheat|bread|apple|glass|torch|paper|charcoal)$", 0, "Vanilla bulk material"),
+    (r"^minecraft:\w*(planks|log|stone|bricks|slab|stairs|wall|fence|door|sign)$", 0, "Vanilla building block"),
+    # --- specialty balls: routine
+    (r":(azure|dive|dusk|fast|heavy|nest|net|quick|timer|luxury|friend|moon|love|lure|level|"
+     r"safari|sport|premier|repeat|cherish|park)_ball$", 1, "Specialty ball"),
+    # --- routine competitive filler
+    (r":\w+_mint(_leaf)?$", 1, "Nature mint"),
+    (r":\w*mint_seeds$", 1, "Mint seed"),
+    (r":\w+_apricorn(_seed)?$", 1, "Apricorn"),
+    (r":(hp_up|protein|iron|calcium|zinc|carbos)$", 1, "Vitamin"),
+    (r":\w+_feather$", 1, "EV feather"),
+    (r":(health|quick|mighty|smart|tough|courage)_candy$", 1, "EV candy"),
+    (r":\w*fossil\w*$", 1, "Fossil"),
+    (r":\w+_mulch$", 1, "Mulch"),
+    (r":power_(anklet|band|belt|bracer|lens|weight)$", 1, "EV training item"),
+    (r":exp_candy_l$", 1, "Mid exp candy"),
+    (r":\w+_tumblestone(_cluster)?$", 1, "Crafting material"),
+    (r":\w+_berry$", 1, "Berry"),
+    # --- type-flavoured power: rare band
+    (r":\w+_gem$", 2, "Type gem — one-shot damage boost"),
+    (r":\w+_tera_shard$", 2, "Tera shard"),
+    (r":\w+ium_z$", 2, "Z-crystal"),
+    (r":\w+_plate$", 2, "Arceus plate / type booster"),
+    (r":\w+_memory$", 2, "Silvally memory"),
+    # --- evolution items
+    (r":(fire|water|thunder|leaf|moon|sun|shiny|dusk|dawn|ice)_stone(_block)?$", 2, "Evolution stone"),
+    (r":(link_cable|dubious_disc|dragon_scale|deep_sea_tooth|deep_sea_scale|electirizer|"
+     r"magmarizer|protector|reaper_cloth|prism_scale|whipped_dream|sachet|oval_stone|"
+     r"chipped_pot|cracked_pot|masterpiece_teacup|black_augurite|auspicious_armor|"
+     r"malicious_armor|metal_alloy|galarica_cuff|galarica_wreath)$", 2, "Evolution item"),
+    # --- premium competitive held items
+    (r":(choice_band|choice_scarf|choice_specs|life_orb|leftovers|focus_sash|assault_vest|"
+     r"eviolite|heavy_duty_boots|covert_cloak|booster_energy|clear_amulet|loaded_dice|"
+     r"expert_belt|rocky_helmet|air_balloon|weakness_policy|throat_spray|blunder_policy|"
+     r"punching_glove|ability_shield|mirror_herb)$", 2, "Premium competitive held item"),
+    # --- everything else held/util
+    (r"^cobblemon:", 1, "Standard held / utility item"),
+    (r"^mega_showdown:", 2, "Mega Showdown item (type/forme adjacent)"),
+    (r"^legendarymonuments:", 3, "Monument item — treat as gated until pinned otherwise"),
+    (r"^minecraft:", 0, "Vanilla item"),
+]
+
+# SimpleTMs: 631 near-identical ids, collapsed to two rules rather than 631 rows.
+# The premium list is CURATED (competitive relevance), not derived -- there is no
+# move-power data in the TM item ids to derive it from.
+TM_PREMIUM = {
+    "earthquake", "closecombat", "swordsdance", "nastyplot", "calmmind", "dragondance",
+    "stealthrock", "spikes", "toxicspikes", "willowisp", "thunderwave", "knockoff",
+    "uturn", "voltswitch", "flipturn", "recover", "roost", "substitute", "protect",
+    "icebeam", "flamethrower", "thunderbolt", "shadowball", "focusblast", "surf",
+    "dracometeor", "hurricane", "leechseed", "defog", "rapidspin", "trickroom",
+    "psyshock", "moonblast", "playrough", "ironhead", "scald", "hydropump",
+}
+TM_PREMIUM_TIER = 2
+TM_DEFAULT_TIER = 1
+
+
+def load_json(p: pathlib.Path):
+    try:
+        return json.loads(p.read_text())
+    except Exception:
+        return None
+
+
+# ---------------------------------------------------------------- evidence
+def per_chest(weight: int, total: int, rolls) -> float | None:
+    if not total or not isinstance(rolls, int):
+        return None
+    p = weight / total
+    return (1 - (1 - p) ** rolls) * 100
+
+
+def collect_evidence() -> dict[str, list[dict]]:
+    ev: dict[str, list[dict]] = collections.defaultdict(list)
+
+    # --- gacha crates: explicit tier + weight
+    for f in sorted(GACHA_DIR.glob("*.json")):
+        d = load_json(f)
+        if not d:
+            continue
+        crate = d.get("tier", f.stem.upper())
+        for e in d.get("entries", []):
+            for it in e.get("items", []):
+                iid = it.get("id")
+                if iid:
+                    ev[iid].append({
+                        "source": f"crate:{crate.lower()}",
+                        "detail": f"{e.get('lootTier','?')} band, {e.get('weightPct')}%",
+                        "rate": e.get("weightPct"),
+                    })
+
+    # --- loot tables in datapacks (chest + trainer)
+    for f in sorted(DATAPACKS.rglob("*.json")):
+        if "loot_table" not in f.as_posix():
+            continue
+        d = load_json(f)
+        if not isinstance(d, dict) or "pools" not in d:
+            continue
+        label = f.parent.name + "/" + f.stem
+        for pool in d.get("pools") or []:
+            entries = pool.get("entries") or []
+            total = sum(e.get("weight", 1) for e in entries)
+            rolls = pool.get("rolls")
+            for e in entries:
+                iid = e.get("name")
+                if not isinstance(iid, str) or ":" not in iid:
+                    continue
+                pc = per_chest(e.get("weight", 1), total, rolls)
+                ev[iid].append({
+                    "source": f"loot:{label}",
+                    "detail": f"w={e.get('weight',1)}/{total}, rolls={rolls}",
+                    "rate": round(pc, 2) if pc is not None else None,
+                })
+
+    # --- market: purchasable at all is itself a rarity ceiling
+    mk = load_json(MARKET) or {}
+    for iid, meta in mk.items():
+        ev[iid].append({
+            "source": "market",
+            "detail": f"${meta.get('baseBuyPrice',0):,} ({meta.get('vendorTag') or 'untagged'})",
+            "rate": None,
+        })
+    return ev
+
+
+# ---------------------------------------------------------------- universe
+# Only pull ids out of keys that actually hold an ITEM. A blanket regex over the
+# file text also scoops up structure ids, biome tags, block ids and sound events
+# -- e.g. legendarymonuments:spear_pillar is a structure, not something you can
+# put in a chest.
+ITEM_KEYS = {"item", "signatureItem", "heldItem"}
+# Paths that never contain item ids, only worldgen/registry references.
+SKIP_PATH = re.compile(r"/(worldgen|structure|tags|advancement|dimension|biome)/")
+
+
+def walk_items(node, out: set[str], in_items_list: bool = False) -> None:
+    """Recursively pull item ids out of item-bearing keys only."""
+    if isinstance(node, dict):
+        # loot-table entry: {"type": "minecraft:item", "name": "<id>"}
+        if node.get("type") in ("minecraft:item", "item") and isinstance(node.get("name"), str):
+            out.add(node["name"])
+        # recipe result: {"result": {"id": "<id>"}}
+        res = node.get("result")
+        if isinstance(res, dict) and isinstance(res.get("id"), str):
+            out.add(res["id"])
+        for k, v in node.items():
+            if k in ITEM_KEYS and isinstance(v, str) and ":" in v:
+                out.add(v)
+            # gacha: {"items": [{"id": "<id>"}]}
+            elif k == "items" and isinstance(v, list):
+                for e in v:
+                    if isinstance(e, dict) and isinstance(e.get("id"), str):
+                        out.add(e["id"])
+                    walk_items(e, out, True)
+            else:
+                walk_items(v, out, in_items_list)
+    elif isinstance(node, list):
+        for v in node:
+            walk_items(v, out, in_items_list)
+
+
+def collect_universe() -> set[str]:
+    out: set[str] = set()
+    for f in OVERRIDES_DIR.rglob("*.json"):
+        if SKIP_PATH.search(f.as_posix()):
+            continue
+        d = load_json(f)
+        if d is None:
+            continue
+        if f == MARKET and isinstance(d, dict):
+            out |= set(d)
+            continue
+        walk_items(d, out)
+    return {i for i in out if ":" in i and i.split(":")[0] in NAMESPACES}
+
+
+# ---------------------------------------------------------------- classification
+def classify(iid: str, overrides: dict) -> tuple[int, str, str]:
+    if iid in overrides:
+        tier, why = overrides[iid]
+        return tier, why, "override"
+    for pat, tier, why in CATEGORY_RULES:
+        if re.search(pat, iid):
+            return tier, why, "rule"
+    return 0, "Unmatched — defaulted", "default"
+
+
+def build() -> tuple[dict, str]:
+    raw = load_json(OVERRIDES) or {}
+    overrides = {k: v for k, v in raw.items() if not k.startswith("_")}
+
+    ev = collect_evidence()
+
+    universe = collect_universe() | {k for k in ev if k.split(":")[0] in NAMESPACES}
+    universe |= set(overrides)
+    universe = {u for u in universe if u.split(":")[0] in NAMESPACES}
+
+    rows = []
+    for iid in sorted(universe):
+        tier, why, how = classify(iid, overrides)
+        rows.append({
+            "id": iid,
+            "tier": tier,
+            "tierName": TIER_NAMES[tier],
+            "rationale": why,
+            "assignedBy": how,
+            "sources": ev.get(iid, []),
+        })
+
+    tms = {
+        "note": ("631 SimpleTMs are collapsed into two rules rather than enumerated. "
+                 "The premium split is curated by competitive relevance -- TM item ids "
+                 "carry no move-power data to derive it from."),
+        "defaultTier": TM_DEFAULT_TIER,
+        "premiumTier": TM_PREMIUM_TIER,
+        "premiumMoves": sorted(TM_PREMIUM),
+    }
+
+    doc = {
+        "_generated": "ops/loot-tiers/build_tiers.py -- do not hand-edit; edit overrides.json or the rules",
+        "tiers": {str(k): {"name": v, "meaning": TIER_BLURB[k]} for k, v in sorted(TIER_NAMES.items(), reverse=True)},
+        "simpletms": tms,
+        "items": rows,
+    }
+    return doc, render_md(doc)
+
+
+# ---------------------------------------------------------------- markdown
+def render_md(doc: dict) -> str:
+    rows = doc["items"]
+    by_tier = collections.defaultdict(list)
+    for r in rows:
+        by_tier[r["tier"]].append(r)
+
+    L: list[str] = []
+    L.append("# Loot tiers\n")
+    L.append("Canonical rarity ladder for every item the server hands out. Consult this\n"
+             "when designing a new game, quest, crate, or reward so payouts stay consistent\n"
+             "with what already exists.\n")
+    L.append("!!! warning \"Generated file\"\n")
+    L.append("    Built by `ops/loot-tiers/build_tiers.py`. Don't hand-edit — change\n"
+             "    `ops/loot-tiers/overrides.json` (for a specific item) or the category\n"
+             "    rules in the script (for a whole class), then re-run it.\n")
+
+    L.append("## The ladder\n")
+    L.append("| Tier | Name | Use it for |")
+    L.append("|---|---|---|")
+    for t in sorted(TIER_NAMES, reverse=True):
+        L.append(f"| **T{t}** | {TIER_NAMES[t]} | {TIER_BLURB[t]} |")
+    L.append("")
+    counts = ", ".join(f"T{t}: {len(by_tier[t])}" for t in sorted(by_tier, reverse=True))
+    L.append(f"{len(rows)} items tiered — {counts}.\n")
+
+    L.append("## Picking a reward\n")
+    L.append("Rough guidance, not a rule:\n")
+    L.append("- **Daily / repeatable loop** → T0–T1. Bulk is fine.\n"
+             "- **Weekly objective, gym rematch, mid-tier quest** → T1–T2, occasionally T2 as the headline.\n"
+             "- **Genuine one-off challenge (tournament placing, hard boss, long questline)** → T2–T3.\n"
+             "- **T4 and T5 gate legendaries.** Handing these out casually devalues the crate\n"
+             "  economy and the monument hunt at the same time. Prefer a crate key instead —\n"
+             "  it preserves the roll.\n")
+    L.append("The Ultra crate is the rarity benchmark the tiers are calibrated against:\n"
+             "jackpot band 0.8–1.6%, high band 4.9%.\n")
+
+    for t in sorted(by_tier, reverse=True):
+        L.append(f"## T{t} — {TIER_NAMES[t]}\n")
+        L.append(f"*{TIER_BLURB[t]}*\n")
+        L.append("| Item | Why | Where it comes from |")
+        L.append("|---|---|---|")
+        for r in sorted(by_tier[t], key=lambda x: x["id"]):
+            srcs = r["sources"]
+            if srcs:
+                shown = "; ".join(
+                    f"`{s['source']}`" + (f" {s['rate']}%" if s.get("rate") is not None else "")
+                    for s in srcs[:3])
+                if len(srcs) > 3:
+                    shown += f" +{len(srcs)-3} more"
+            else:
+                shown = "*not currently granted anywhere*"
+            L.append(f"| `{r['id']}` | {r['rationale']} | {shown} |")
+        L.append("")
+
+    tms = doc["simpletms"]
+    L.append("## SimpleTMs (collapsed)\n")
+    L.append(f"{tms['note']}\n")
+    L.append(f"- **Default: T{tms['defaultTier']}** — every TM not listed below.\n")
+    L.append(f"- **Premium: T{tms['premiumTier']}** — {len(tms['premiumMoves'])} competitively "
+             "load-bearing moves (hazards, setup, pivots, recovery, top coverage):\n")
+    L.append("  " + ", ".join(f"`{m}`" for m in tms["premiumMoves"]) + "\n")
+
+    L.append("## How tiers are assigned\n")
+    L.append("In priority order:\n")
+    L.append("1. **`overrides.json`** — explicit pins. Judgment calls live here.\n"
+             "2. **Category rules** — patterns over item ids in `build_tiers.py`.\n"
+             "3. **Namespace default** — last resort.\n")
+    L.append("Drop rates are recorded as *evidence* but deliberately do **not** drive the tier.\n"
+             "How often we currently hand something out is the thing we're trying to\n"
+             "sanity-check against, so deriving the tier from it would be circular — a\n"
+             "mispriced item would justify its own mispricing.\n")
+    return "\n".join(L) + "\n"
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--check", action="store_true", help="fail if generated output is stale")
+    args = ap.parse_args()
+
+    doc, md = build()
+    new_json = json.dumps(doc, indent=2) + "\n"
+
+    if args.check:
+        stale = []
+        if not OUT_JSON.exists() or OUT_JSON.read_text() != new_json:
+            stale.append(str(OUT_JSON.relative_to(ROOT)))
+        if not OUT_MD.exists() or OUT_MD.read_text() != md:
+            stale.append(str(OUT_MD.relative_to(ROOT)))
+        if stale:
+            print("STALE (re-run ops/loot-tiers/build_tiers.py): " + ", ".join(stale), file=sys.stderr)
+            return 1
+        print("loot tiers up to date")
+        return 0
+
+    OUT_JSON.write_text(new_json)
+    OUT_MD.write_text(md)
+    n = len(doc["items"])
+    by = collections.Counter(r["tier"] for r in doc["items"])
+    print(f"wrote {OUT_JSON.relative_to(ROOT)} and {OUT_MD.relative_to(ROOT)}")
+    print(f"  {n} items — " + ", ".join(f"T{t}: {by[t]}" for t in sorted(by, reverse=True)))
+    unmatched = [r["id"] for r in doc["items"] if r["assignedBy"] == "default"]
+    if unmatched:
+        print(f"  {len(unmatched)} unmatched (defaulted to T0): {', '.join(unmatched[:15])}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

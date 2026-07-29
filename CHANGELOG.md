@@ -12,6 +12,21 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **Server-wide loot tier list** (`docs/loot-tiers.md`, generated from
+  `ops/loot-tiers/`). A canonical T0–T5 rarity ladder covering 433 items, so new
+  games, quests, crates and rewards can be priced against what already exists
+  rather than by feel. Tiers come from explicit pins plus category rules; the
+  crate/chest/trainer drop rates behind each item are recorded as *evidence* but
+  deliberately don't set the tier, since that would let a mispriced item justify
+  its own mispricing. Regenerate with `python3 ops/loot-tiers/build_tiers.py`
+  (`--check` fails on stale output).
+
+### Fixed
+- **`statchic` dropped nothing.** Its `drops` entry named
+  `cobblemon:electic_gem` — missing the `r` — so the drop silently never
+  resolved. Found by the loot-tier sweep.
+
 ### Changed
 - **Champion Jax no longer drops a Totem of Undying.** The Totem is the Zacian
   summon gate, and Jax handed one out *guaranteed* on defeat — a stronger source

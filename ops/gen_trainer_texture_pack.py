@@ -165,14 +165,23 @@ ROGUELITE_SKINS = {
 # which filenames it will accept, so deleting a covered name would make it reject a better
 # skin for that character later. What still needs work is computed from what is on disk.
 ROGUELITE_FROM_SERVER_GYMS = {
-    # Rule 3(a) applied to characters RCT does not ship at all: our own server-gyms
-    # datapack already casts a face for these three (they are our Elite Four / gym
-    # leaders), and a player meeting them in a run should see the face they know. This is
-    # NOT the lookalike substitution rule 4 forbids — rule 4 is about casting an unrelated
-    # NPC as a character; these files ARE our server's chosen portrayal of that character.
+    # Rule 3(a): reuse the face our own server-gyms datapack already gives a character, so a
+    # player meets the same person in both modes.
+    #
+    # THE TEST THIS TABLE HAS TO PASS, learned the hard way (2026-07-29): "our gym uses it for
+    # that character" is NOT sufficient. Our gym datapack names its leaders after real
+    # characters but picked their faces from RCT's generic library, so most of those files are
+    # lookalikes wearing the character's name — precisely what rule 4 forbids. rgl_cheren and
+    # rgl_grant were added from gym_12_cheren / gym_14_grant and were plainly the wrong people
+    # (Cheren dark-skinned in a green hoodie; Grant green-haired in a yellow tee). They were
+    # removed, and those two characters are back on the sourcing list.
+    #
+    # So an entry belongs here only if the face ACTUALLY LOOKS LIKE the character — check it
+    # with gen_skin_review_page.py before adding one. Where it does not, ship no file: RCT's
+    # default face reads as "not done yet", which is honest, while a confident miscast does not.
+    #
+    # Alder survives that test: long red hair over a white-and-orange robe is his design.
     "rgl_alder": "gym_20_alder",
-    "rgl_cheren": "gym_12_cheren",
-    "rgl_grant": "gym_14_grant",
 }
 
 ROGUELITE_UNCOVERED = {

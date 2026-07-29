@@ -38,6 +38,26 @@ To review what is installed:
 Renders every skin as a front-facing figure, grouped by source. It writes outside the repo
 on purpose — see Licensing.
 
+## Still needed — 2
+
+Two characters were briefly covered by our server-gym cast and should not have been. Our gym
+datapack names its leaders after real characters but picked their faces from RCT's *generic*
+library, so `gym_12_cheren` and `gym_14_grant` are lookalikes wearing a character's name —
+Cheren rendered dark-skinned in a green hoodie, Grant green-haired in a yellow tee. Neither
+is the person. The files were deleted rather than left in place: RCT's default face reads as
+"not done yet", a confident miscast does not.
+
+Both have a purpose-made skin available. Fetch them with `ops/fetch-missing-skins.js`, or:
+
+| Save as | Skin | Download |
+| --- | --- | --- |
+| `Cheren.png` | Pokémon Black/White – Cheren | https://www.planetminecraft.com/skin/pokemon-black-white-cheren/download/file/15794298/ |
+| `Grant.png` | Gym Leader Grant | https://www.planetminecraft.com/skin/gym-leader-grant/download/file/7418586/ |
+
+`rgl_alder` is still cast from `gym_20_alder` and does pass the likeness test — long red hair
+over a white-and-orange robe is Alder's design. Worth replacing if a purpose-made Alder ever
+turns up, but it is not a miscast.
+
 ## Reviewed and accepted
 
 All 130 were reviewed on 2026-07-29. Four were raised as looking weak — mostly

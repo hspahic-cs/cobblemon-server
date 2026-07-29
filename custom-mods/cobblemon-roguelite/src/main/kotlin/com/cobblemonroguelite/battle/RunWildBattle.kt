@@ -41,20 +41,15 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/battle")
  * the opponent is spawned as an ordinary wild entity rather than conjured straight into a battle
  * team. Nothing here marks it as ours; it is wild in exactly the sense the rest of Cobblemon means.
  *
- * ### What a capture currently does, and why that is not finished here
+ * ### What a capture does, and where the rest of it lives
  *
- * Cobblemon's capture flow puts the caught Pokémon in the **player's own party or PC**, because that
- * is what catching means everywhere else. Under §1.1 a run Pokémon must never reach the player's
- * storage and under §2.13 it must reach [RunState.party] instead — so a wild wave being catchable is
- * only half of §2.13, and the other half is not implemented.
- *
- * It is not implemented here because routing it needs a decision this layer cannot make: a run party
- * holds six, there is no run PC, and nothing has decided what a seventh catch does. The adjacent
- * question is the same shape — a capture inside a run marks the species `CAUGHT` in the player's
- * Pokédex, which §2.15 says must not happen, and undoing that after the fact is a different
- * mechanism again. **Until both are answered, a run's captures leak into the player's real storage**,
- * which is the one thing this module is built not to do. Nothing else here depends on it, so the fix
- * is additive; it is stated at the top of this file because a wild wave looks finished without it.
+ * Cobblemon's capture flow puts the caught Pokémon in the **player's own party or PC** and marks the
+ * species `CAUGHT` in their **real Pokédex**, because that is what catching means everywhere else.
+ * Both are forbidden here — §1.1 keeps run Pokémon out of the player's storage, §2.15 keeps in-run
+ * catching from unlocking starters — and neither is fixed in this file, because neither is a property
+ * of how the wave was built. [RunCapture] takes the Pokémon back out of real storage and hands it to
+ * the run; [RunDexGuard] stops the dex write happening at all. What this file owes them is the one
+ * fact they cannot recover afterwards: whether the wave was catchable, carried into [RunBattles.track].
  *
  * ### Why the battle is assembled by hand instead of through `BattleBuilder.pve`
  *
@@ -159,7 +154,10 @@ object RunWildBattle {
         // catching something in the open. Without it §2.13's whole party system silently does nothing.
         entity.battleId = battle.battleId
 
-        RunBattles.track(server, battle, player.uuid, plan.wave, entity)
+        // `plan.catchable` and not `plan.kind == WILD`, for the reason [RunWaveBattles] routes off the
+        // plan: a roster promotion can make this wave a boss, and the plan is the only thing that
+        // knows. [RunCapture] reads it back to decide whether a thrown ball may reach the run party.
+        RunBattles.track(server, battle, player.uuid, plan.wave, entity, catchable = plan.catchable)
         log.info(
             "roguelite: {} started wild wave {} against {} (level {})",
             player.gameProfile.name, plan.wave, wild.species.name, wild.level,

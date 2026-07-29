@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.starter.StarterOffer
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
@@ -182,6 +183,124 @@ object RunMessages {
                 "costs nothing.",
         ).withStyle(ChatFormatting.YELLOW)
     }
+
+    /**
+     * §2.13, at the moment the ball lands.
+     *
+     * The full-party branch is red and the ordinary one is not, which is the only signal the player
+     * gets that this catch is different from the last one: it has not joined anything yet, and the
+     * next thing they type decides which Pokémon stops existing.
+     */
+    fun caught(routing: CatchRouting, pokemon: Pokemon): Component = when (routing) {
+        is CatchRouting.Joined -> Component.literal(
+            // The level is named because §2.21 puts a mid-run catch in at its own encounter level
+            // rather than the party's, so a player who expected it to arrive at parity with their
+            // lead can see immediately that it did not.
+            "Caught ${describe(pokemon)}. It joins your run party in slot ${routing.slot}.",
+        ).withStyle(ChatFormatting.GREEN)
+
+        is CatchRouting.HeldForDecision -> Component.literal(
+            "Caught ${describe(pokemon)}, but your run party is full. It is not yours yet — " +
+                "/roguelite catch to decide what to give up.",
+        ).withStyle(ChatFormatting.RED)
+
+        is CatchRouting.AlreadyDeciding -> Component.literal(
+            "Caught ${describe(pokemon)} while you were still deciding about " +
+                "${describe(routing.held)}. ${pokemon.species.name} is gone — settle the first " +
+                "decision with /roguelite catch.",
+        ).withStyle(ChatFormatting.RED)
+    }
+
+    /**
+     * §2.14 refusing a catch on a trainer or boss wave.
+     *
+     * Says the Pokémon is gone rather than implying it was never caught, because the player watched
+     * the ball land. Only reachable through a bug — those opponents are spawned uncatchable — so it
+     * also has to be a line an operator can search the log for, which is why it names the rule.
+     */
+    fun uncatchableWave(): Component = Component.literal(
+        "That was not a wild wave, so it could not be caught into your run — and it is gone. " +
+            "Tell an operator: a run wave was catchable that should not have been.",
+    ).withStyle(ChatFormatting.RED)
+
+    /**
+     * The decision itself. The longest message in here, and every line of it is load-bearing.
+     *
+     * ### Why it says "destroyed" twice and never says "box" or "storage"
+     *
+     * Mainline Pokémon trains players that a full party means a trip to the PC, i.e. that this screen
+     * costs nothing. §2.13 gives a run no PC on purpose: whichever side of this the player picks, that
+     * Pokémon is gone the way a faint is gone. A prompt that read as inventory management would be
+     * describing a different game, and the player would find out which one only after picking.
+     *
+     * ### Why the party is numbered here rather than left to /roguelite status
+     *
+     * The swap takes a slot number, so the numbers have to come from the same message that asks for
+     * one. Sending them to another command to look it up is how somebody destroys slot 3 having read
+     * a list that was ordered differently.
+     */
+    fun catchPrompt(pokemon: Pokemon, party: List<Pokemon>): Component {
+        val roster = party.mapIndexed { index, member -> "  ${index + 1}. ${describe(member)}" }
+            .joinToString("\n")
+        return Component.literal(
+            "You are holding ${describe(pokemon)} and your run party is full.\n" +
+                "One of these seven does not continue the run, and whichever you give up is gone for " +
+                "good — there is no box to take it back out of.\n" +
+                "$roster\n" +
+                "/roguelite catch swap <1-${party.size}> — that party member is destroyed and " +
+                "${pokemon.species.name} takes its place.\n" +
+                "/roguelite catch release — ${pokemon.species.name} is destroyed and your party is unchanged.",
+        ).withStyle(ChatFormatting.RED)
+    }
+
+    /** The claim branch: a slot opened between the catch and the question, so there is nothing to decide. */
+    fun catchJoined(pokemon: Pokemon, slot: Int): Component = Component.literal(
+        "A slot had opened in your run party, so ${describe(pokemon)} took it — slot $slot. " +
+            "Nothing was given up.",
+    ).withStyle(ChatFormatting.GREEN)
+
+    fun nothingHeld(): Component =
+        literal("You are not holding a caught Pokémon. /roguelite status shows where your run stands.")
+
+    /** Said when a wave is asked for while a decision is outstanding. Names the block, not an error. */
+    fun catchPending(pokemon: Pokemon): Component = Component.literal(
+        "Your run is waiting on you: ${describe(pokemon)} is caught and your party is full. " +
+            "/roguelite catch to swap or release it, then resume.",
+    ).withStyle(ChatFormatting.YELLOW)
+
+    /** Both confirmations name the Pokémon that dies, because that is the only fact being confirmed. */
+    fun confirmSwap(slot: Int, discarded: Pokemon, incoming: Pokemon): Component = Component.literal(
+        "Swap ${describe(incoming)} in for ${describe(discarded)} in slot $slot? " +
+            "${discarded.species.name} is destroyed for good — it does not go anywhere. " +
+            "Type /roguelite catch swap $slot confirm.",
+    ).withStyle(ChatFormatting.RED)
+
+    fun confirmRelease(pokemon: Pokemon): Component = Component.literal(
+        "Release ${describe(pokemon)}? It is destroyed for good and your party is unchanged. " +
+            "Type /roguelite catch release confirm.",
+    ).withStyle(ChatFormatting.RED)
+
+    fun catchResolved(resolution: CatchResolution): Component = when (resolution) {
+        is CatchResolution.Swapped -> Component.literal(
+            "${resolution.discarded.species.name} is gone. ${describe(resolution.kept)} takes slot " +
+                "${resolution.slot}. /roguelite resume to fight on.",
+        ).withStyle(ChatFormatting.YELLOW)
+
+        is CatchResolution.Released -> Component.literal(
+            "${resolution.released.species.name} is gone and your party is unchanged. " +
+                "/roguelite resume to fight on.",
+        ).withStyle(ChatFormatting.YELLOW)
+
+        // Nothing was destroyed, so this is the one branch that is not red: it is a typo, and the
+        // decision is still there to make.
+        is CatchResolution.NoSuchSlot -> literal(
+            "Your run party has ${resolution.partySize} Pokémon, so that slot is not one of them. " +
+                "/roguelite catch lists them.",
+        )
+    }
+
+    /** Species and level in one place, so the number is present everywhere a Pokémon is named. */
+    private fun describe(pokemon: Pokemon): String = "${pokemon.species.name} (Lv ${pokemon.level})"
 
     fun confirmAbandon(wave: Int, party: Int): Component = Component.literal(
         "Abandon your run at wave $wave? Your $party run Pokémon are destroyed and your entry fee is " +

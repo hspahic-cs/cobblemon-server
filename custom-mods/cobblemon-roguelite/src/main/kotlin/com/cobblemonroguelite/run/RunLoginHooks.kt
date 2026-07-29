@@ -54,9 +54,15 @@ object RunLoginHooks {
         when (val status = reconciliation.status) {
             RunStatus.None -> Unit
             is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.offer(status.offer))
-            is RunStatus.InProgress -> player.sendSystemMessage(
-                RunMessages.atWave(status.run.wave, status.run.partySnapshot().size, status.depthCap),
-            )
+            is RunStatus.InProgress -> {
+                player.sendSystemMessage(
+                    RunMessages.atWave(status.run.wave, status.run.partySnapshot().size, status.depthCap),
+                )
+                // §2.13. A held catch stops the run advancing, so a player who logs in and finds
+                // `/roguelite resume` refusing has to be told why here — the alternative is somebody
+                // concluding their run is stuck and abandoning it, which destroys the party.
+                status.run.pendingCatch?.let { player.sendSystemMessage(RunMessages.catchPending(it)) }
+            }
         }
     }
 

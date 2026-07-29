@@ -48,6 +48,14 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/battle")
  *   §2.10 charges a disconnect against, so a battle that ends without any of the above leaves it
  *   set, and the player's next ordinary logout is billed as a rage-quit.
  *
+ * ### What it holds as well as reports
+ *
+ * Whether the wave is **catchable** (§2.14), carried in from the plan at [track]. It is held here
+ * rather than re-derived because this index is the only thing that still exists when a ball lands:
+ * [RunCapture] gets a player and a Pokémon and nothing else, and the wave number it could look up
+ * would answer the schedule's question rather than the plan's — which disagree exactly on the waves a
+ * roster promoted from wild to boss.
+ *
  * ### Adoption, and why trainer waves need it
  *
  * [com.cobblemonroguelite.integration.RunTrainerBattles] is on the far side of a licence boundary and
@@ -89,6 +97,7 @@ object RunBattles {
         val player: UUID,
         val wave: Int,
         val opponent: PokemonEntity?,
+        val catchable: Boolean,
     ) {
         /** Last field reported to the run, so an unchanged tick writes nothing. */
         @Volatile
@@ -99,14 +108,30 @@ object RunBattles {
     fun isFighting(player: UUID): Boolean = byPlayer.containsKey(player)
 
     /**
+     * True while [player] is fighting a wave whose plan said it was catchable (§2.14).
+     *
+     * Read off [WavePlan.catchable][com.cobblemonroguelite.composition.WavePlan.catchable] as it was
+     * carried into [track], never re-derived from [wave]. A run's roster can promote what the
+     * schedule calls a wild wave into a boss, so the interval arithmetic and the plan disagree on
+     * exactly the waves where being wrong hands a player a boss.
+     *
+     * False for an adopted battle, which is the correct default twice over: adoption is how trainer
+     * and boss waves reach this layer (they are started behind the RCT seam), and a battle nobody
+     * planned is not one this module should be routing captures out of.
+     */
+    fun isCatchableWave(player: UUID): Boolean =
+        byPlayer[player]?.let { battles[it]?.catchable } == true
+
+    /**
      * Register a battle as this run's wave.
      *
      * Replaces rather than refuses, because the explicit registration is always the better-informed
-     * one: it carries the opponent entity and the wave the caller actually planned, where an adopted
-     * entry has to infer the wave from the marker and knows of no entity to clean up. The race is
-     * real — `startBattle` fires `BATTLE_STARTED_POST` *during* the call, i.e. before [RunWildBattle]
-     * gets to register anything — and it is closed twice over: [adopt] defers to the server thread
-     * and re-checks, and this overwrites if it somehow got there first.
+     * one: it carries the opponent entity, the wave the caller actually planned and whether that wave
+     * is catchable, where an adopted entry has to infer the wave from the marker and knows of no
+     * entity to clean up. The race is real — `startBattle` fires `BATTLE_STARTED_POST` *during* the
+     * call, i.e. before [RunWildBattle] gets to register anything — and it is closed twice over:
+     * [adopt] defers to the server thread and re-checks, and this overwrites if it somehow got there
+     * first.
      */
     fun track(
         server: MinecraftServer,
@@ -114,8 +139,9 @@ object RunBattles {
         player: UUID,
         wave: Int,
         opponent: PokemonEntity? = null,
+        catchable: Boolean = false,
     ) {
-        battles[battle.battleId] = LiveBattle(server, battle.battleId, player, wave, opponent)
+        battles[battle.battleId] = LiveBattle(server, battle.battleId, player, wave, opponent, catchable)
         byPlayer[player] = battle.battleId
     }
 

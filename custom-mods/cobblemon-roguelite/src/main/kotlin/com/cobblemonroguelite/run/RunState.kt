@@ -80,6 +80,18 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   between waves when it is not, and every later reader of the file — an operator, a repair, a
  *   future policy — would believe that. The live comparison works off the in-memory run, which
  *   [RunStore] holds for the whole server lifetime and therefore across a player's disconnect.
+ * @property pendingCatch §2.13's seventh catch, waiting on a swap-or-release decision. It is a run
+ *   Pokémon that is **not** in [party] and is not in any Cobblemon store either, which makes this
+ *   field the only reference to it in the world — hence persisted, and hence the run refuses to
+ *   advance while it is set ([RunController.resume]). A run that fought on with this dangling would
+ *   eventually end, and the payout path does not look here, so the Pokémon would be destroyed by a
+ *   decision the player was never asked to make.
+ *
+ *   Every *mutation* takes the same monitor as [party], because each one is a compound operation —
+ *   "is the party full, and if so hold this", "is a decision outstanding, and if so which member goes"
+ *   — and two of those interleaving is how a catch gets silently overwritten by the next one. Plain
+ *   reads of it do not take the monitor: they ask only whether a decision is outstanding, they all
+ *   happen on the server thread, and the same is true of the [battle] marker beside it.
  */
 data class RunState(
     var wave: Int = 1,
@@ -94,6 +106,7 @@ data class RunState(
     var entry: RunEntryPoint? = null,
     var stampedTemplate: ResourceLocation? = null,
     var battle: RunBattleMarker? = null,
+    var pendingCatch: Pokemon? = null,
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
     fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
@@ -126,6 +139,85 @@ data class RunState(
      */
     fun kill(pokemon: Pokemon): Boolean = synchronized(party) { party.removeIf { it.uuid == pokemon.uuid } }
 
+    /**
+     * Offer a freshly caught Pokémon to the run (§2.13). See [CatchRouting] for the three answers.
+     *
+     * **Nothing here touches [Pokemon.level].** §2.21 puts a mid-run catch in at its own encounter
+     * level, which is the curve level for the wave it was caught on and therefore already at parity
+     * with the run — levelling it to match the party would hand back exactly the catch-up cost that
+     * decision exists to charge. It is not healed either, for [RunBattleParty][com.cobblemonroguelite.battle.RunBattleParty]'s
+     * reason: the ball landed on a Pokémon that had been fought down, and topping it up is the same
+     * silent undoing of attrition a `heal()` between waves would be.
+     *
+     * One monitor for the whole decision. Split into "is the party full?" then "add", two captures
+     * arriving together would both see room and one of them would be dropped on the floor — and a
+     * dropped run catch is unrecoverable, not a retry.
+     */
+    fun offer(pokemon: Pokemon): CatchRouting = synchronized(party) {
+        when (RunCatchRules.route(party.size, pendingCatch != null)) {
+            RunCatchRules.Route.REFUSE -> CatchRouting.AlreadyDeciding(pendingCatch!!)
+
+            RunCatchRules.Route.JOIN -> {
+                party.add(pokemon)
+                CatchRouting.Joined(party.size)
+            }
+
+            RunCatchRules.Route.HOLD -> {
+                pendingCatch = pokemon
+                CatchRouting.HeldForDecision(pokemon, party.toList())
+            }
+        }
+    }
+
+    /**
+     * Take the held catch in without asking, when the party has room again.
+     *
+     * The prompt exists *because* the party was full, so a party that is no longer full has answered
+     * the question by itself — asking a player to choose between six and a spare slot is a decision
+     * with one sensible answer and an irrecoverable wrong one. Reachable in practice only through
+     * §2.10: a disconnect in the few ticks between the capture and the wave resolving kills what was
+     * on the field, and the run comes back holding a catch and five party members.
+     *
+     * Returns the slot it landed in, or null when there was nothing held or no room for it.
+     */
+    fun claimPendingCatch(): Int? = synchronized(party) {
+        val held = pendingCatch
+        if (!RunCatchRules.claims(party.size, held != null)) return null
+        party.add(held!!)
+        pendingCatch = null
+        party.size
+    }
+
+    /**
+     * §2.13's decision, applied. Null when nothing was held — which is the whole of the double-fire
+     * guard: a second `confirm` finds the field already cleared and destroys nothing.
+     */
+    fun resolveCatch(decision: CatchDecision): CatchResolution? = synchronized(party) {
+        val held = pendingCatch ?: return null
+        return when (decision) {
+            is CatchDecision.Release -> {
+                pendingCatch = null
+                CatchResolution.Released(held)
+            }
+
+            is CatchDecision.Swap -> {
+                // 1-based, because the prompt numbers the party for the player and the command takes
+                // the number they read there. Out of range is answered rather than thrown: it is a
+                // typo in a command whose other branch destroys a Pokémon, so it has to fail by
+                // saying no.
+                val index = RunCatchRules.swapIndex(decision.slot, party.size)
+                    ?: return CatchResolution.NoSuchSlot(party.size)
+                val discarded = party.set(index, held)
+                pendingCatch = null
+                // Placed at the discarded one's index rather than appended: slot 1 is the lead the
+                // next wave opens with ([RunBattleParty][com.cobblemonroguelite.battle.RunBattleParty]
+                // leads on `party.first()`), so appending would quietly move the lead whenever
+                // somebody swapped it out.
+                CatchResolution.Swapped(decision.slot, discarded, held)
+            }
+        }
+    }
+
     fun toNbt(registryAccess: RegistryAccess): CompoundTag {
         val tag = CompoundTag()
         tag.putInt(SCHEMA_KEY, SCHEMA_VERSION)
@@ -148,6 +240,18 @@ data class RunState(
         val list = ListTag()
         partySnapshot().forEach { list.add(it.saveToNBT(registryAccess)) }
         tag.put("party", list)
+        // Written even though the run cannot advance while it is set, and *because* of that: this
+        // tag is the only reference to a Pokémon that is in no store at all, so a checkpoint that
+        // skipped it would destroy a catch on the next restart — and the run would come back
+        // resumable, with nothing anywhere to say a decision had been pending.
+        synchronized(party) { pendingCatch }?.let { held ->
+            runCatching { tag.put(PENDING_CATCH_KEY, held.saveToNBT(registryAccess)) }
+                // The one failure that would otherwise be invisible in both directions: the catch is
+                // gone and the run comes back resumable, so nothing downstream ever notices a
+                // decision was owed. Caught rather than thrown for [RunStore.save]'s reason — one
+                // unserializable Pokémon must not take the whole checkpoint with it.
+                .onFailure { log.error("roguelite: could not serialize a held catch — it will be lost", it) }
+        }
         return tag
     }
 
@@ -158,9 +262,22 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 5
+        const val SCHEMA_VERSION = 6
 
         private const val SCHEMA_KEY = "schemaVersion"
+
+        private const val PENDING_CATCH_KEY = "pendingCatch"
+
+        /**
+         * §2.13: the run party holds six and there is no run PC.
+         *
+         * Not configurable, and it is not a tuning knob dressed up as a constant. Cobblemon's
+         * `PartyStore` is six slots, and [RunBattleParty][com.cobblemonroguelite.battle.RunBattleParty]
+         * builds the wave's battle team by pouring the run party into one — so a seventh member would
+         * not be a bigger party, it would be a wave refused for a party that "would not fit a battle
+         * store". The number is inherited, not chosen.
+         */
+        const val MAX_PARTY = 6
 
         /**
          * Rebuild a run from its checkpoint. Returns null if the snapshot is unusable, which
@@ -235,6 +352,18 @@ data class RunState(
                 // Absent or unreadable both restore as "no battle", which costs the player nothing.
                 // See [RunBattleMarker.fromNbt] for why that is the only safe failure direction.
                 battle = if (tag.contains("battle")) RunBattleMarker.fromNbt(tag.getCompound("battle")) else null,
+                // Dropped rather than fatal, on the same rule the party members follow: a catch that
+                // will not load costs the player one Pokémon they had not yet decided to keep, where
+                // failing the load would cost them the six they had. Logged at WARN because unlike a
+                // party member this one leaves no gap behind — the run simply becomes resumable, and
+                // nothing else would ever mention that a decision had been outstanding.
+                pendingCatch = if (tag.contains(PENDING_CATCH_KEY)) {
+                    runCatching { Pokemon.loadFromNBT(registryAccess, tag.getCompound(PENDING_CATCH_KEY)) }
+                        .onFailure { log.warn("roguelite: dropping an unreadable held catch — the run resumes without it", it) }
+                        .getOrNull()
+                } else {
+                    null
+                },
             )
         }
     }

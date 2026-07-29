@@ -84,6 +84,17 @@ sealed interface ResumeResult {
      */
     data class RosterUnavailable(val rosterId: ResourceLocation?) : ResumeResult
 
+    /**
+     * §2.13: a caught Pokémon is waiting on a swap-or-release decision, so the run does not advance.
+     *
+     * A gate rather than a nudge. The held catch lives in one field on the run and nowhere else, so a
+     * run that fought on with it pending would carry it to the end and destroy it there — by a
+     * decision the player was never asked to make, which is the exact failure the prompt exists to
+     * avoid. Blocking also keeps the prompt readable as a decision: it is the only thing between them
+     * and the next wave.
+     */
+    data class CatchPending(val pokemon: Pokemon, val party: List<Pokemon>) : ResumeResult
+
     data class Ended(val report: RunEndReport) : ResumeResult
 }
 
@@ -277,6 +288,13 @@ object RunController {
                 ?.let { ResumeResult.AwaitingStarter(offerFactory().offerFor(player.uuid, it.seed)) }
                 ?: ResumeResult.NoRun
 
+        // Checked before the step is composed, not after. Composing is harmless, but [WaveStep.Fight]
+        // is followed immediately by an arena entry and a teleport, and a player moved into their
+        // arena to be told they cannot fight yet is a worse answer than the same words with nothing
+        // moved. Deliberately does *not* claim a catch that would now fit — see [catchPrompt] for
+        // why that side effect belongs on the command that reports it.
+        run.pendingCatch?.let { return ResumeResult.CatchPending(it, run.partySnapshot()) }
+
         return when (val step = nextStep(run, depthCapFor(player))) {
             is WaveStep.EndRun -> ResumeResult.Ended(endRun(server, player.uuid, step.cause))
             // Logged at ERROR because only an operator can act on it and nothing else will say so: the
@@ -454,6 +472,105 @@ object RunController {
     }
 
     /**
+     * §2.13: a wild wave was caught, and the catch belongs to the run rather than to the player.
+     *
+     * **The caller owes the harder half.** By the time this is called the Pokémon must already have
+     * been taken back out of the player's real party and PC — Cobblemon's capture flow puts it there
+     * before anything of ours runs — because a Pokémon that is in the run party *and* in a real store
+     * is one object being mutated by two owners, and the real one is the one that gets saved.
+     * [RunCapture][com.cobblemonroguelite.battle.RunCapture] is where that happens and is the only
+     * intended caller.
+     *
+     * Checkpointed immediately rather than at the next wave boundary. The party's other members can
+     * afford to wait — they are also in the last checkpoint — but this one exists in memory only, so
+     * the ordinary wave-boundary flush would leave a crash costing the player a catch they watched
+     * land. Returns null when there is no run, which means a capture arrived for a run that has
+     * already ended and the Pokémon is not ours to place.
+     */
+    fun pokemonCaught(server: MinecraftServer, player: UUID, pokemon: Pokemon): CatchRouting? {
+        val store = RunStore.of(server)
+        val run = store.get(player) ?: return null
+        val routing = run.offer(pokemon)
+        // Not on AlreadyDeciding: nothing changed, and a flush for a no-op is a file write per
+        // failure in the one branch that is already shouting about a bug.
+        if (routing !is CatchRouting.AlreadyDeciding) store.checkpoint(server, player)
+        when (routing) {
+            is CatchRouting.Joined -> log.info(
+                "roguelite: {} caught {} (level {}) into run party slot {}",
+                player, pokemon.species.name, pokemon.level, routing.slot,
+            )
+
+            is CatchRouting.HeldForDecision -> log.info(
+                "roguelite: {} caught {} with a full run party — held pending swap or release",
+                player, pokemon.species.name,
+            )
+
+            is CatchRouting.AlreadyDeciding -> log.error(
+                "roguelite: {} caught {} while still holding {} for a decision — the new catch is " +
+                    "lost. A run should not be able to fight a wave with a catch pending; check " +
+                    "ResumeResult.CatchPending is still gating.",
+                player, pokemon.species.name, routing.held.species.name,
+            )
+        }
+        return routing
+    }
+
+    /**
+     * §2.13's prompt: what is being decided, without deciding it.
+     *
+     * The one thing it may change is claiming a catch the party now has room for — see
+     * [RunState.claimPendingCatch]. That is here rather than in [resume] because it is the only entry
+     * point that can *tell the player it happened*, and a slot silently filling itself is how somebody
+     * later concludes the prompt is unreliable.
+     */
+    fun catchPrompt(server: MinecraftServer, player: ServerPlayer): CatchPrompt {
+        val store = RunStore.of(server)
+        val run = store.get(player.uuid) ?: return CatchPrompt.NoRun
+        val held = run.pendingCatch ?: return CatchPrompt.NothingHeld
+        val claimed = run.claimPendingCatch()
+        if (claimed != null) {
+            store.checkpoint(server, player.uuid)
+            log.info(
+                "roguelite: {}'s held {} joined the party at slot {} — a slot had opened since the catch",
+                player.gameProfile.name, held.species.name, claimed,
+            )
+            return CatchPrompt.Joined(held, claimed)
+        }
+        return CatchPrompt.Held(held, run.partySnapshot())
+    }
+
+    /**
+     * §2.13's decision, applied. **The caller must have confirmed it with the player**, on the same
+     * terms as [abandon]: both branches destroy a Pokémon and neither is recoverable.
+     *
+     * Null means nothing was held — a second `confirm`, or a decision typed after the party had room
+     * and the catch let itself in. Answering null rather than repeating the last outcome is what
+     * makes the second `confirm` harmless: there is nothing left to destroy and nothing is claimed to
+     * have been.
+     */
+    fun resolveCatch(server: MinecraftServer, player: ServerPlayer, decision: CatchDecision): CatchResolution? {
+        val store = RunStore.of(server)
+        val run = store.get(player.uuid) ?: return null
+        val resolution = run.resolveCatch(decision) ?: return null
+        // Not on NoSuchSlot: the run is untouched, and the catch is still held for the next attempt.
+        if (resolution !is CatchResolution.NoSuchSlot) store.checkpoint(server, player.uuid)
+        when (resolution) {
+            is CatchResolution.Swapped -> log.info(
+                "roguelite: {} swapped {} out of slot {} for {} — the discarded one is gone",
+                player.gameProfile.name, resolution.discarded.species.name, resolution.slot,
+                resolution.kept.species.name,
+            )
+
+            is CatchResolution.Released -> log.info(
+                "roguelite: {} released their held {}", player.gameProfile.name, resolution.released.species.name,
+            )
+
+            is CatchResolution.NoSuchSlot -> Unit
+        }
+        return resolution
+    }
+
+    /**
      * The wave battle was lost.
      *
      * Under permadeath a defeat should already have arrived as a faint per party member, so this is
@@ -512,6 +629,17 @@ object RunController {
         val run = store.end(server, player)
         val wave = run?.wave ?: 1
         val outcome = cause.outcome
+
+        // Said out loud, because it is the one casualty of a run end that nothing else accounts for:
+        // the party is expected to die with the run, and a held catch is a Pokémon the player was
+        // still being asked about. If this line ever appears next to a *cleared* run rather than an
+        // abandoned or wiped one, something advanced a run past the gate that should have stopped it.
+        run?.pendingCatch?.let {
+            log.info(
+                "roguelite: {}'s run ended holding an undecided {} — it goes with the run (§2.2)",
+                player, it.species.name,
+            )
+        }
 
         // Before the payout, because the payout can throw through a provider and a player left
         // standing in a void arena is the worse of the two failures. The removal from the store has

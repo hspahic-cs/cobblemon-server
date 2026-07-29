@@ -73,5 +73,11 @@ object RunWaveBattles : RunWaveHandler {
         RunWaves.register(this)
         RunBattles.register()
         RunBagGuard.register()
+        // §2.13 and §2.15's two halves. Registered here rather than beside the run lifecycle because
+        // both are gated on a wave battle being live, and a build with no battle layer has no way to
+        // reach either — a capture guard installed without the battles it guards would be a
+        // subscription that can only ever fire on somebody else's catch.
+        RunCapture.register()
+        RunDexGuard.register()
     }
 }

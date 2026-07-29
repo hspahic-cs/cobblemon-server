@@ -32,7 +32,10 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  * - **No personal bag** (§2.11): bag actions are rejected outright for run battles.
  * - **[WavePlan.catchable] is authoritative** (§2.14): wild waves are catchable, trainer and boss
  *   waves never are. Re-deriving it from the wave number in the battle layer is how a boss ends up
- *   in somebody's party.
+ *   in somebody's party. A handler that wants captures routed into the run must carry the flag into
+ *   [com.cobblemonroguelite.battle.RunBattles.track]; it defaults to false, and forgetting it costs
+ *   the player the catch rather than leaking it — [com.cobblemonroguelite.battle.RunCapture] takes
+ *   every capture back out of real storage first and only then asks whether the run may keep it.
  * - **The trainer is handed over, never drawn here.** `trainer` on [beginWave] is the pick the run
  *   already made — reconciled against fixed encounters and against this run's no-repeat memory, and
  *   recorded as the opponent this wave met. A handler that resolves its own would summon somebody

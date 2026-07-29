@@ -149,6 +149,14 @@ class RunStateTest {
     }
 
     @Test
+    fun `a run with no decision outstanding writes no pendingCatch`() {
+        // Presence is the state, the same as the battle marker: [RunController.resume] refuses a
+        // wave whenever this tag restores as non-null, so an always-written key would stop every
+        // resumed run dead on a decision nobody is holding.
+        assertFalse(RunState(seed = 1L).toNbt(RegistryAccess.EMPTY).contains("pendingCatch"))
+    }
+
+    @Test
     fun `partySnapshot hands back a copy, not the live list`() {
         val run = RunState(seed = 1L)
         assertNotSame(run.party, run.partySnapshot())

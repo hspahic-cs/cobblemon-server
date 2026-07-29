@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.run
 
 import com.mojang.brigadier.CommandDispatcher
+import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
@@ -65,6 +66,42 @@ object RunCommands {
                     Commands.literal("pause")
                         .executes { player(it)?.let { p -> pause(p, confirmed = false) } ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let { p -> pause(p, confirmed = true) } ?: 0 }),
+                )
+                .then(
+                    // §2.13's swap-or-release. Bare `catch` asks, `swap <slot>` and `release` warn,
+                    // and only the trailing `confirm` destroys anything — the same three steps as
+                    // `abandon`, because it is the same kind of act: a Pokémon stops existing and
+                    // there is nowhere to get it back from.
+                    Commands.literal("catch")
+                        .executes { player(it)?.let(::catchPrompt) ?: 0 }
+                        .then(
+                            Commands.literal("swap")
+                                .then(
+                                    // Bounded at the source, so an out-of-range number is a parse
+                                    // error the player sees before any confirmation exists to type.
+                                    // [RunState.resolveCatch] still range-checks, because the party
+                                    // can be shorter than six.
+                                    Commands.argument("slot", IntegerArgumentType.integer(1, RunState.MAX_PARTY))
+                                        .executes { ctx ->
+                                            player(ctx)?.let { warnSwap(it, IntegerArgumentType.getInteger(ctx, "slot")) } ?: 0
+                                        }
+                                        .then(
+                                            Commands.literal("confirm").executes { ctx ->
+                                                player(ctx)?.let {
+                                                    resolveCatch(it, CatchDecision.Swap(IntegerArgumentType.getInteger(ctx, "slot")))
+                                                } ?: 0
+                                            },
+                                        ),
+                                ),
+                        )
+                        .then(
+                            Commands.literal("release")
+                                .executes { player(it)?.let(::warnRelease) ?: 0 }
+                                .then(
+                                    Commands.literal("confirm")
+                                        .executes { player(it)?.let { p -> resolveCatch(p, CatchDecision.Release) } ?: 0 },
+                                ),
+                        ),
                 )
                 .then(
                     Commands.literal("abandon")
@@ -143,9 +180,15 @@ object RunCommands {
         when (val status = RunController.status(player.server, player)) {
             RunStatus.None -> player.sendSystemMessage(RunMessages.noRun())
             is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.offer(status.offer))
-            is RunStatus.InProgress -> player.sendSystemMessage(
-                RunMessages.atWave(status.run.wave, status.run.partySnapshot().size, status.depthCap),
-            )
+            is RunStatus.InProgress -> {
+                player.sendSystemMessage(
+                    RunMessages.atWave(status.run.wave, status.run.partySnapshot().size, status.depthCap),
+                )
+                // Appended rather than folded in: "wave 13, 6 Pokémon alive" is true and complete as
+                // a status line, and it is also the line a player would read as "nothing is stopping
+                // me" — which, with a decision outstanding, is exactly wrong.
+                status.run.pendingCatch?.let { player.sendSystemMessage(RunMessages.catchPending(it)) }
+            }
         }
         return 1
     }
@@ -158,6 +201,14 @@ object RunCommands {
             is ResumeResult.WaveUnavailable -> player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave))
             is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
             is ResumeResult.RosterUnavailable -> player.sendSystemMessage(RunMessages.rosterUnavailable())
+            // Both lines: what is blocking the run, then the decision itself. A player who typed
+            // `resume` wants the next thing to type, and sending them to another command to find out
+            // what they are choosing between is a step this prompt cannot afford.
+            is ResumeResult.CatchPending -> {
+                player.sendSystemMessage(RunMessages.catchPending(result.pokemon))
+                player.sendSystemMessage(RunMessages.catchPrompt(result.pokemon, result.party))
+            }
+
             is ResumeResult.Ended -> player.sendSystemMessage(RunMessages.ended(result.report))
         }
         return 1
@@ -173,12 +224,85 @@ object RunCommands {
         return 1
     }
 
+    /**
+     * §2.13's prompt. Always succeeds, for [pause]'s reason: it reports a fact, and a failure code on
+     * "am I holding anything" would make the command look broken in the reassuring case.
+     *
+     * The one branch with a side effect is [CatchPrompt.Joined], and the controller says why it is
+     * allowed to have one.
+     */
+    private fun catchPrompt(player: ServerPlayer): Int {
+        when (val prompt = RunController.catchPrompt(player.server, player)) {
+            CatchPrompt.NoRun -> player.sendSystemMessage(RunMessages.noRun())
+            CatchPrompt.NothingHeld -> player.sendSystemMessage(RunMessages.nothingHeld())
+            is CatchPrompt.Held -> player.sendSystemMessage(RunMessages.catchPrompt(prompt.pokemon, prompt.party))
+            is CatchPrompt.Joined -> player.sendSystemMessage(RunMessages.catchJoined(prompt.pokemon, prompt.slot))
+        }
+        return 1
+    }
+
+    /**
+     * Name what `swap <slot> confirm` would destroy, without destroying it.
+     *
+     * Reads the party through the prompt rather than trusting the slot number, because the whole
+     * point of the warning is to say *which* Pokémon dies — a warning that only echoed the number
+     * back would confirm nothing the player did not already type.
+     */
+    private fun warnSwap(player: ServerPlayer, slot: Int): Int {
+        val prompt = RunController.catchPrompt(player.server, player)
+        if (prompt !is CatchPrompt.Held) return catchPromptFallback(player, prompt)
+        val discarded = prompt.party.getOrNull(slot - 1)
+        if (discarded == null) {
+            player.sendSystemMessage(RunMessages.catchResolved(CatchResolution.NoSuchSlot(prompt.party.size)))
+            return 0
+        }
+        player.sendSystemMessage(RunMessages.confirmSwap(slot, discarded, prompt.pokemon))
+        return 1
+    }
+
+    private fun warnRelease(player: ServerPlayer): Int {
+        val prompt = RunController.catchPrompt(player.server, player)
+        if (prompt !is CatchPrompt.Held) return catchPromptFallback(player, prompt)
+        player.sendSystemMessage(RunMessages.confirmRelease(prompt.pokemon))
+        return 1
+    }
+
+    /** The two non-decision answers, so both warnings say the same thing about them. */
+    private fun catchPromptFallback(player: ServerPlayer, prompt: CatchPrompt): Int {
+        when (prompt) {
+            CatchPrompt.NoRun -> player.sendSystemMessage(RunMessages.noRun())
+            is CatchPrompt.Joined -> player.sendSystemMessage(RunMessages.catchJoined(prompt.pokemon, prompt.slot))
+            else -> player.sendSystemMessage(RunMessages.nothingHeld())
+        }
+        return 0
+    }
+
+    private fun resolveCatch(player: ServerPlayer, decision: CatchDecision): Int {
+        val resolution = RunController.resolveCatch(player.server, player, decision)
+        if (resolution == null) {
+            // Nothing was held — a second `confirm`, or a catch that let itself in while they typed.
+            // Said plainly rather than treated as an error: nothing was destroyed either time, and
+            // that is the reassurance a player re-typing a destructive command needs.
+            player.sendSystemMessage(RunMessages.nothingHeld())
+            return 0
+        }
+        player.sendSystemMessage(RunMessages.catchResolved(resolution))
+        return if (resolution is CatchResolution.NoSuchSlot) 0 else 1
+    }
+
     private fun warnAbandon(player: ServerPlayer): Int {
         when (val status = RunController.status(player.server, player)) {
             RunStatus.None -> player.sendSystemMessage(RunMessages.noRun())
             is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.confirmAbandon(1, 0))
-            is RunStatus.InProgress ->
-                player.sendSystemMessage(RunMessages.confirmAbandon(status.run.wave, status.run.partySnapshot().size))
+            // A held catch counts. It is a run Pokémon that abandoning destroys along with the party,
+            // and a confirmation that undercounted the casualties by one is the exact failure the
+            // confirmation exists to prevent.
+            is RunStatus.InProgress -> player.sendSystemMessage(
+                RunMessages.confirmAbandon(
+                    status.run.wave,
+                    status.run.partySnapshot().size + (if (status.run.pendingCatch != null) 1 else 0),
+                ),
+            )
         }
         return 1
     }

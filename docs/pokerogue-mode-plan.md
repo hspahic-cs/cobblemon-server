@@ -1120,6 +1120,33 @@ shield *count* in the nickname was rejected twice over: whether a mid-battle nic
 reaches the client is unverified, and a Pokémon whose name changes as you hit it breaks a rule
 players know. The name says *what kind of fight this is*; the messages carry the running count.
 
+**Item suppression is a hole, and it is closed inside run battles only.** `onTakeItem` blocks
+*removal* — Knock Off, Trick — but **Magic Room, Embargo and Klutz do not remove anything**. They
+make Showdown stop consulting the item, so our handlers never run and the shields simply switch
+off. The ability slot would not have saved us: Gastro Acid and Neutralizing Gas do the same to
+abilities. No slot in Showdown is un-suppressable.
+
+**Chosen: detect the suppression and cancel it, scoped to run battles containing a shielded
+boss**, with a message framing it as the boss resisting. One place to fix, covers all three
+effects, and it reads as boss design rather than as a patch.
+
+**Deliberately not scoped wider.** Magic Room is untouched everywhere else on the server —
+ranked, gyms, wild, PvP — and untouched even inside a run battle with no shielded boss on the
+field. The move is not being nerfed; a boss is being made immune, which is an ordinary thing for
+a boss to be. Note that cancelling a field effect also restores the *player's* items, so the fix
+favours the player rather than taxing them.
+
+**Rejected — banning the moves at format level.** Showdown's banlist rejects *teams* containing a
+banned move at validation, so a player who caught something with Magic Room mid-run would find
+their whole team refused. Far worse than the exploit.
+
+**Rejected — restoring HP after the fact** when a hit crossed a boundary while suppressed. Robust
+against suppression mechanisms we have not thought of, but it means visibly healing the boss
+after damage, which looks like a bug even when it is working correctly.
+
+**Sequencing:** implement after the dev pass confirms the base mechanic fires at all. Hardening a
+mechanic nobody has seen work once risks building on something that needs reshaping anyway.
+
 **A segmented HP bar needs a client mod, and is deliberately deferred.** It is the faithful
 version, and we already ship client mods — but it costs the standalone story, and nobody yet
 knows whether the marker plus messages are enough. The shield state lives server-side either way,

@@ -372,8 +372,16 @@ else.
    expensive machinery in the design, and it exists to approximate a PokéRogue mechanic rather
    than to serve the bar in §1. Not in phase 1; possibly not at all.
 
-**Accepted loss:** passive auto-triggering modifiers (auto-berry at 50% HP, Multi Lens extra
-hits) are not reachable. They get expressed as (1) instead.
+**~~Accepted loss:~~ this was wrong — corrected 2026-07-29, see §2.31.** The original text said
+passive auto-triggering modifiers (auto-berry at 50% HP, Multi Lens extra hits) "are not
+reachable". They are. Cobblemon's datapack registries — `abilities/*.js`, `held_items/*.js`,
+`moves/*.js`, `bag_items/*.js` — ship **real Showdown handler functions** (`onDamage`,
+`onDamagingHit`, `onResidual`, `onEat` …), not name mappings onto existing behaviour. Cobblemon's
+own `held_items/eggantberry.js` is a working example.
+
+The decision itself stands — the bundle is still not to be patched, and for a stronger reason
+than the one given here (§2.31). What changes is the scope of what "supported mechanisms" covers,
+which is considerably larger than this section assumed.
 
 ### 2.5 Tera and Dynamax are enabled inside a run only
 
@@ -1037,6 +1045,52 @@ worth curating. A generated team is uniform by nature; the fights players rememb
 someone tuned. The roster can already name a specific trainer id, so an authored fight is one
 entry that points at one rather than at a generator.
 
+### 2.31 What we can actually do to a live battle
+
+Investigated 2026-07-29 against the deployed Cobblemon 1.7.3 jar, its unbundled Showdown on the
+dev VM, and a GraalJS probe. This corrects §2.4 and reopens two mechanics it wrote off.
+
+**Datapack JS is real code, not name mapping.** `data/<ns>/abilities/*.js`, `held_items/*.js`,
+`moves/*.js` and `bag_items/*.js` are each scanned and pushed to Showdown, and they carry genuine
+handler functions with access to the battle and the Pokémon. A custom ability is then assignable
+from Kotlin via `updateAbility(..., forced = true)`, which bypasses the species pool. This is the
+channel to build on: stock Cobblemon, no mixin, no bundle contact, survives publication.
+
+**Bundle patching is now disqualified for a stronger reason than §2.4 gave.** Mega Showdown
+**already overwrites** Cobblemon's `sim/battle.js`, `sim/side.js`, `data/abilities.js` and others
+on our server — the deployed files are byte-identical to those inside its jar. Patching the
+bundle would put us in a load-order fight with a mod we depend on, on our own machine, before
+publication is even considered. Its version string (`1.8.2+1.7.3`) encodes the Cobblemon release
+whose bundle it replaces, which is §2.4's "maintenance tax" made observable.
+
+**The GraalJS context is public and reachable.** `GraalShowdownService.context` is a public field
+on a public singleton; live `Battle` objects are readable and writable from Kotlin, verified by
+probe. Mega Showdown already does exactly this. The gotcha is that Graal is **relocated** into
+`com.cobblemon.mod.relocations.graalvm.polyglot`. Treat this as the emergency lever, not the
+foundation: its whole fragility surface is two symbols plus a package name, which is a far
+smaller update-time contract than patching the bundle.
+
+**`>eval` exists in stock Showdown** and `PokemonBattle.writeShowdownAction` reaches it with no
+validation — a public path to arbitrary mutation. It costs red chat spam, because the eval case
+emits protocol lines the interpreter broadcasts. Escape hatch, not foundation.
+
+**Boss shields are cheap.** One custom ability of ~60–80 lines expresses both halves: floor
+incoming damage at the next segment boundary, and boost a random stat when a boundary breaks. The
+`-boost` line comes back through the normal interpreter, so the player sees it happen correctly.
+
+**Stacking is partly recoverable.** Showdown's one-item limit constrains *count*, not
+*magnitude*: pre-generate tiers as separate datapack items and swap between waves. The player
+experiences stacking; Showdown only ever sees one item. The ability slot gives a second axis.
+
+**Levels above 100: Showdown is not the blocker** — it clamps to 9999 and scales stats correctly.
+Cobblemon's global `maxPokemonLevel` is. A sim-only bump is a **trap**: HP instructions write
+*absolute* values from the sim, so a Pokémon whose sim maxhp exceeds its Cobblemon maxhp shows a
+full health bar until the sim drops below the real cap. The workable route is raising the config
+and re-clamping normal play with two mixins on the EXP paths.
+
+**Hard ceiling regardless:** poke-engine stores level as `i8` and panics above **127**, and a pyo3
+panic escapes the bridge's guards. Cap at 127 while the bridge exists.
+
 ---
 
 ## 3. Preliminary plan
@@ -1056,12 +1110,24 @@ Host seams for charging, bonus payouts and battle AI, each with a working standa
 the trainer-battle provider lives in `cobblemon-bridge` and reaches the module by reflection so
 no build-time edge exists between them.
 
+§2.30's generated teams: a roster's `generated` block holds signature species per trainer, and the
+team is built at the encounter from `(seed, wave)` — seeded alternative, party size and evolution
+stage by band, held items on their own draw stream, no EVs. `ops/gen_pokerogue_roster.py` extracts
+the signature table into that block. A trainer with no entry keeps the authored path, which is how
+the Elite Four and the champion stay hand-made.
+
 ### Not built, and blocking a playable run
 
 All of it content, none of it code:
 
 - A **default trainer roster** — nothing ships at `cobblemon_roguelite:default`, so every wave
-  reports no roster.
+  reports no roster. `ops/gen_pokerogue_roster.py --roster` now produces one from PokéRogue's
+  signature table (74 leaders), but its band edges are a mechanical split of their ordering and it
+  is server-side content by §2.7 — it must not be committed into the mod.
+- **Held item choices** for generated teams. The mechanism ships with an empty table, so trainers
+  currently carry nothing.
+- **RCT trainers for the generated leaders** — a generated team still needs an NPC with a name, a
+  skin, a bag and an AI, and the ids the script emits (`rgl_brock`, …) name nothing yet.
 - An **arena template** `.nbt` — a run fails at `resume` with the expected path named. This also
   decides whether `power_spot` goes inside it, which §2.5's gimmick confinement depends on.
 - The **per-species cost table** (§2.13), the **baseline starter pool** (§2.15), **reward and
@@ -1081,6 +1147,11 @@ transitions (§2.24 left the seam, implemented seeded).
 Everything that needs a booted server: the capture path end to end, the biome repaint, trainer
 waves through the bridge provider, and the party HUD. The dev VM has confirmed the arena
 dimension, `power_spot` placement, and NPC-side level scaling.
+
+Generated teams are decided in unit tests and *built* only on a server, so what the dev VM still
+owes is that Cobblemon accepts the properties strings — `species=cobblemon:corsola galarian
+level=53 held_item=cobblemon:leftovers` resolving to the regional form, holding the item, and
+`create()` deriving a level-appropriate moveset.
 
 ---
 

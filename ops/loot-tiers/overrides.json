@@ -2,8 +2,8 @@
   "_comment": "Explicit tier pins. These WIN over the category rules in build_tiers.py. Put judgment calls here rather than contorting a rule. Format: '<item id>': [tier, 'why'].",
 
   "_vouchers": "BP shop vouchers (modpack/server-overrides/config/bp-items.json). NOT Cobblemon items — there is no cobblemon:*_voucher registry entry, which is exactly why the rare crate's voucher rows grant nothing. Tiers track BP cost.",
-  "cobblemon:tr_voucher": [-1, "BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (74 warnings in prod). Real item is bp:tr_voucher."],
-  "cobblemon:held_item_voucher": [-1, "BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (57 warnings in prod). Real item is bp:held_item_voucher."],
+  "cobblemon:tr_voucher": [-1, "BROKEN — not a registered item. The rare crate granted it as type:vanilla and players got nothing (74 prod warnings). Fixed to a placeholder; kept pinned so the dead id stays visible."],
+  "cobblemon:held_item_voucher": [-1, "BROKEN — not a registered item. Same as tr_voucher (57 prod warnings). Fixed to a placeholder."],
   "bp:shiny_voucher": [4, "Shiny Voucher — 75 BP, ~20x the other vouchers"],
   "bp:tr_voucher": [2, "TR Voucher — 4 BP"],
   "bp:held_item_voucher": [2, "Held Item Voucher — 3 BP"],

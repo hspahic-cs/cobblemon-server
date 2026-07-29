@@ -412,6 +412,14 @@ def build() -> tuple[dict, str]:
     universe |= set(overrides)
     universe = {u for u in universe if u.split(":")[0] in NAMESPACES}
 
+    # NOTE: do not try to auto-detect dead item ids by "absent from the registry".
+    # The registry is harvested from `item.<ns>.<name>` lang keys only, so every
+    # BLOCK (apricorn_log, healing_machine, pc, gilded_chest, the whole tumblestone
+    # family) is missing from it, along with any item that has no lang entry.
+    # Absence from the harvest is not evidence of absence from the game: trying
+    # this flagged 246 perfectly real items as broken. Dead ids are pinned by hand
+    # in overrides.json, on the strength of an actual "Unknown item id in loot
+    # table" warning in the server log -- which is the only reliable signal.
     rows = []
     for iid in sorted(universe):
         tier, why, how = classify(iid, overrides, market)

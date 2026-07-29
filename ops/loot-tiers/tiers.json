@@ -7730,15 +7730,9 @@
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
-      "rationale": "BROKEN \u2014 this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (57 warnings in prod). Real item is bp:held_item_voucher.",
+      "rationale": "BROKEN \u2014 not a registered item. Same as tr_voucher (57 prod warnings). Fixed to a placeholder.",
       "assignedBy": "override",
-      "sources": [
-        {
-          "source": "crate:rare",
-          "detail": "High band, 2.9%",
-          "rate": 2.9
-        }
-      ]
+      "sources": []
     },
     {
       "id": "cobblemon:helix_fossil",
@@ -16717,15 +16711,9 @@
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
-      "rationale": "BROKEN \u2014 this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (74 warnings in prod). Real item is bp:tr_voucher.",
+      "rationale": "BROKEN \u2014 not a registered item. The rare crate granted it as type:vanilla and players got nothing (74 prod warnings). Fixed to a placeholder; kept pinned so the dead id stays visible.",
       "assignedBy": "override",
-      "sources": [
-        {
-          "source": "crate:rare",
-          "detail": "High band, 3.9%",
-          "rate": 3.9
-        }
-      ]
+      "sources": []
     },
     {
       "id": "cobblemon:tumblestone",

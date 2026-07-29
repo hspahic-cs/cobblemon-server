@@ -1183,8 +1183,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
-| `cobblemon:held_item_voucher` | BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (57 warnings in prod). Real item is bp:held_item_voucher. | `crate:rare` 2.9% |
-| `cobblemon:tr_voucher` | BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (74 warnings in prod). Real item is bp:tr_voucher. | `crate:rare` 3.9% |
+| `cobblemon:held_item_voucher` | BROKEN — not a registered item. Same as tr_voucher (57 prod warnings). Fixed to a placeholder. | *not currently granted anywhere* |
+| `cobblemon:tr_voucher` | BROKEN — not a registered item. The rare crate granted it as type:vanilla and players got nothing (74 prod warnings). Fixed to a placeholder; kept pinned so the dead id stays visible. | *not currently granted anywhere* |
 | `legendarymonuments:arc_phone` | Recipe disabled by server-no-arc-phone | *not currently granted anywhere* |
 | `mega_showdown:aloraichium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
 | `mega_showdown:blank_z` | Blank Z-crystal — disabled on this server | *not currently granted anywhere* |

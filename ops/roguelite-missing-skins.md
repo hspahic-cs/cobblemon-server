@@ -38,17 +38,22 @@ To review what is installed:
 Renders every skin as a front-facing figure, grouped by source. It writes outside the repo
 on purpose — see Licensing.
 
-## Worth a second look
+## Reviewed and accepted
 
-Sourced and installed, but the art looks weak rather than wrong — bare skin-coloured limbs
-where the character should be clothed, which reads as a low-effort fan skin in game:
+All 130 were reviewed on 2026-07-29. Four were raised as looking weak — mostly
+skin-coloured limbs, which usually means a low-effort fan skin — and **all four were
+accepted as-is**:
 
-| Id | Problem |
-| --- | --- |
-| `rgl_phoebe` | Renders close to unclothed; least usable of the set |
-| `rgl_gordie` | Washed-out pinks and greys, does not read as Gordie's climbing gear |
-| `rgl_hapu` | Bare arms, gold torso pattern |
-| `rgl_marnie` | Bare arms over a pink dress |
+| Id | Raised as | Why it stands |
+| --- | --- | --- |
+| `rgl_phoebe` | Renders close to unclothed | Faithful, not lazy: Phoebe's outfit is a bare-midriff top with bare arms and legs, so the flag was a misread |
+| `rgl_gordie` | Does not read as his climbing gear | No alternative exists on the skin sites |
+| `rgl_hapu` | Bare arms, gold torso | No alternative exists |
+| `rgl_marnie` | Bare arms over a pink dress | No alternative exists |
+
+So do not "fix" these by substituting a lookalike — the same reasoning as rule 4 in
+`gen_trainer_texture_pack.py`. Replace one only when a genuinely better skin of that
+character turns up.
 
 `rgl_roxanne` is worth a glance for a different reason: it is one of the legacy 64×32
 conversions, so its second limb pair is mirrored rather than authored.

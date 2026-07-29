@@ -72,3 +72,7 @@ custom-mods/*/run/
 *.lock
 .DS_Store
 Thumbs.db
+
+# Trainer skin downloads awaiting validation (ops/skin-staging/README.md)
+ops/skin-staging/*.png
+ops/skin-staging/*.PNG

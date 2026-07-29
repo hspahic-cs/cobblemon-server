@@ -621,10 +621,14 @@ their marks, so launch day would not reset every veteran to zero. Moving the sou
 removed the need: everyone starts at base 10 regardless of history, which is simpler and touches
 real storage not at all.
 
-**Open — which species gets the credit.** PokéRogue credits the line root, so a caught Charizard
-candies Charmander. The literal reading of this section credits the species actually caught,
-which is defensible since §2.15 lets a player start as any species they have caught on the
-server. Both are implemented; the switch is one assignment, but it is **not retroactive**.
+**Credit goes to the evolution line's root** (decided 2026-07-28) — a caught Charizard candies
+Charmander, which is PokéRogue's rule.
+
+The deciding argument is accumulation. Crediting the species actually caught scatters a line's
+earnings across as many ledgers as the line has stages, so a player who catches Charmander,
+Charmeleon and Charizard over a run banks three separate piles and rarely reaches a passive on
+any of them. Crediting the root means every catch in a line pays into the one thing the candy is
+spent on. Note the choice is **not retroactive** — candy banked under one rule does not move.
 
 ### 2.18 Depth is gated on badges; entry costs currency
 

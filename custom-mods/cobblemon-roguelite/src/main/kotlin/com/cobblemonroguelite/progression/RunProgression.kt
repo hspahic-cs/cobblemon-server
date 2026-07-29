@@ -34,14 +34,21 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/progression")
 object RunProgression {
 
     /**
-     * How a caught Pokémon is turned into the species that gets the credit. Swappable because the
-     * answer is a genuine design fork and is not settled — see [ProgressionSpeciesKey].
+     * How a caught Pokémon is turned into the species that gets the credit.
+     *
+     * **Decided 2026-07-28: the evolution line's root** (plan §2.17) — a caught Charizard candies
+     * Charmander, which is PokéRogue's rule. It is also the only choice that makes candy
+     * *accumulate*: crediting the caught species would scatter a line's earnings across three
+     * separate ledgers, and a player would rarely reach a passive on any of them.
+     *
+     * Still swappable, but note a switch is **not retroactive** — candy already banked under one
+     * key does not move to the other.
      *
      * `@Volatile` for [com.cobblemonroguelite.run.RunSettings]'s reason: set at setup from another
      * mod's thread, read from the server and battle threads.
      */
     @Volatile
-    var speciesKey: ProgressionSpeciesKey = CaughtSpeciesKey
+    var speciesKey: ProgressionSpeciesKey = EvolutionLineRootKey
 
     /**
      * Credit a catch made inside a run.
@@ -152,22 +159,25 @@ object RunProgression {
 /**
  * Which species a catch credits — the caught one, or the root of its evolution line.
  *
- * **This is an open design fork, not a settled one.** PokéRogue credits the *starter* species: a
+ * **Settled 2026-07-28: [EvolutionLineRootKey].** PokéRogue credits the *starter* species — a
  * caught Charizard candies Charmander, because Charmander is the thing you can start with and
- * therefore the thing candy is spent on. Crediting the caught species instead is simpler, and it is
- * not obviously wrong for us — §2.15 lets a player start as any species they have caught on the
- * server, so a Charizard floor is directly usable in a way it is not in PokéRogue.
+ * therefore the thing candy is spent on.
  *
- * The default is [CaughtSpeciesKey], which is the literal reading of the decision as written ("the
- * best IVs of that species"). [EvolutionLineRootKey] is provided, tested and one assignment away for
- * whoever settles this. Note the choice is not retroactive: switching it later leaves candy already
- * banked where it was banked.
+ * The deciding argument is accumulation. Crediting the caught species scatters a line's earnings
+ * across as many ledgers as the line has stages, so a player who catches Charmander, Charmeleon and
+ * Charizard across a run banks three separate piles and rarely reaches a passive on any of them.
+ * Crediting the root means every catch in the line pays into the thing the candy is spent on.
+ *
+ * [CaughtSpeciesKey] remains implemented and tested — it is not obviously wrong for us, since
+ * §2.15 lets a player start as any species they caught on the server, so a Charizard floor would be
+ * directly usable in a way it is not in PokéRogue. Note the choice is **not retroactive**:
+ * switching leaves candy already banked where it was banked.
  */
 fun interface ProgressionSpeciesKey {
     fun keyFor(species: Species): ResourceLocation
 }
 
-/** Credit the species that was actually caught. The default; see [ProgressionSpeciesKey]. */
+/** Credit the species that was actually caught. Not the default; see [ProgressionSpeciesKey]. */
 object CaughtSpeciesKey : ProgressionSpeciesKey {
     override fun keyFor(species: Species): ResourceLocation = species.resourceIdentifier
 }

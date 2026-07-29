@@ -944,9 +944,9 @@
     },
     {
       "id": "cobblemon:bug_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -1573,9 +1573,9 @@
     },
     {
       "id": "cobblemon:dark_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -1776,9 +1776,9 @@
     },
     {
       "id": "cobblemon:dragon_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -1979,9 +1979,9 @@
     },
     {
       "id": "cobblemon:electric_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2323,9 +2323,9 @@
     },
     {
       "id": "cobblemon:fairy_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2353,9 +2353,9 @@
     },
     {
       "id": "cobblemon:fighting_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2402,9 +2402,9 @@
     },
     {
       "id": "cobblemon:fire_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2500,9 +2500,9 @@
     },
     {
       "id": "cobblemon:flying_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2775,9 +2775,9 @@
     },
     {
       "id": "cobblemon:ghost_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2800,9 +2800,9 @@
     },
     {
       "id": "cobblemon:grass_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2927,9 +2927,9 @@
     },
     {
       "id": "cobblemon:ground_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -3271,9 +3271,9 @@
     },
     {
       "id": "cobblemon:ice_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -4555,9 +4555,9 @@
     },
     {
       "id": "cobblemon:normal_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -4883,9 +4883,9 @@
     },
     {
       "id": "cobblemon:poison_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -5323,9 +5323,9 @@
     },
     {
       "id": "cobblemon:psychic_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -5971,9 +5971,9 @@
     },
     {
       "id": "cobblemon:rock_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -6662,9 +6662,9 @@
     },
     {
       "id": "cobblemon:steel_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -7175,9 +7175,9 @@
     },
     {
       "id": "cobblemon:water_gem",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [

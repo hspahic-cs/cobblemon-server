@@ -22,7 +22,7 @@ with what already exists.
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 | **TX** | Disabled | Intentionally not obtainable — recipe banned and/or stripped from loot. Never use as a reward. If one of these is still dropping, that's a bug to fix, not a tier to change. |
 
-940 items tiered — T5: 4, T4: 39, T3: 58, T2: 215, T1: 381, T0: 149, TX: 94.
+940 items tiered — T5: 4, T4: 39, T3: 76, T2: 197, T1: 381, T0: 149, TX: 94.
 
 ## Picking a reward
 
@@ -103,14 +103,32 @@ jackpot band 0.8–1.6%, high band 4.9%.
 |---|---|---|
 | `cobblemon:ability_patch` | Hidden ability. Deliberately pulled from the Ultra crate. | `crate:rare` 7.2%; `loot:chests/registeel_chest` 6.87% |
 | `cobblemon:beast_ball` | Best-in-slot for Ultra Beasts, not purchasable | `loot:legendary/pokeballs` |
+| `cobblemon:bug_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:courage_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95% |
+| `cobblemon:dark_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 33.52%; `loot:archaeology/ruins` 22.73% |
+| `cobblemon:dragon_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 74.23% |
+| `cobblemon:electric_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 74.23% |
+| `cobblemon:fairy_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:fighting_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:fire_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/bell_tower_chest` 30.22%; `loot:chests/liberty_island_chest` 39.31% |
+| `cobblemon:flying_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/bell_tower_chest` 30.22% |
+| `cobblemon:ghost_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 33.52%; `loot:chests/turnback_cave_vault` 10.75% |
+| `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:health_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95% |
 | `cobblemon:held_item_voucher` | Redeems for a premium held item | `crate:rare` 2.9% |
+| `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regice_chest` 85.07% |
 | `cobblemon:mighty_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95% |
+| `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:poison_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:psychic_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/liberty_island_chest` 39.31% |
 | `cobblemon:quick_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95% |
+| `cobblemon:rock_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regirock_chest` 70.66% |
 | `cobblemon:smart_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95% |
+| `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:tough_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95% |
 | `cobblemon:tr_voucher` | Redeems for a TR | `crate:rare` 3.9% |
+| `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `legendarymonuments:azelf_fang` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
 | `legendarymonuments:darkstone_shard` | 9 craft into a T4 Dark Stone | `loot:chests/bell_tower_chest` 9.07%; `loot:chests/liberty_island_chest` 12.32%; `loot:chests/lugia_temple_chest` 20.5% |
 | `legendarymonuments:distortion_portal` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
@@ -174,7 +192,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:black_augurite` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:blunder_policy` | Premium competitive held item | `loot:rare/battle`; `market` |
 | `cobblemon:booster_energy` | Premium competitive held item | *not currently granted anywhere* |
-| `cobblemon:bug_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:chipped_pot` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:choice_band` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
 | `cobblemon:choice_scarf` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
@@ -182,32 +199,21 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:clear_amulet` | Premium competitive held item | `market` |
 | `cobblemon:covert_cloak` | Premium competitive held item | `market` |
 | `cobblemon:cracked_pot` | Evolution item | `crate:common` 0.203% |
-| `cobblemon:dark_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 33.52%; `loot:archaeology/ruins` 22.73% |
 | `cobblemon:deep_sea_scale` | Evolution item | `crate:common` 0.203%; `market` |
 | `cobblemon:deep_sea_tooth` | Evolution item | `crate:common` 0.203%; `market` |
-| `cobblemon:dragon_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 74.23% |
 | `cobblemon:dragon_scale` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:dream_ball` | Specialty ball — Hidden Ability transfer | `crate:common` 4.6%; `loot:legendary/pokeballs`; `market` |
 | `cobblemon:dubious_disc` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:electirizer` | Evolution item | `crate:common` 0.203% |
-| `cobblemon:electric_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 74.23% |
 | `cobblemon:eviolite` | Premium competitive held item | `crate:common` 0.5%; `market` |
 | `cobblemon:exp_candy_l` | Feedstock for IV candies — heavy consumption keeps it scarce despite being on the shelf | `market` |
 | `cobblemon:exp_candy_xl` | Feedstock for IV candies — heavy consumption keeps it scarce despite being on the shelf | `market` |
 | `cobblemon:expert_belt` | Premium competitive held item | `market` |
-| `cobblemon:fairy_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
-| `cobblemon:fighting_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
-| `cobblemon:fire_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/bell_tower_chest` 30.22%; `loot:chests/liberty_island_chest` 39.31% |
 | `cobblemon:flame_plate` | Arceus plate / type booster | *not currently granted anywhere* |
-| `cobblemon:flying_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/bell_tower_chest` 30.22% |
 | `cobblemon:focus_sash` | Premium competitive held item | `crate:common` 0.5%; `loot:uncommon/battle`; `market` |
 | `cobblemon:galarica_cuff` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:galarica_wreath` | Evolution item | `crate:common` 0.203% |
-| `cobblemon:ghost_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 33.52%; `loot:chests/turnback_cave_vault` 10.75% |
-| `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
-| `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:heavy_duty_boots` | Premium competitive held item | `crate:common` 0.5%; `loot:rare/battle`; `market` |
-| `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regice_chest` 85.07% |
 | `cobblemon:leftovers` | Premium competitive held item | `crate:common` 0.305%; `loot:legendary/battle`; `market` |
 | `cobblemon:life_orb` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
 | `cobblemon:link_cable` | Evolution item | `loot:chests/turnback_cave_chest` 11.36% |
@@ -217,21 +223,15 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:masterpiece_teacup` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:metal_alloy` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:mirror_herb` | Premium competitive held item | `loot:uncommon/battle`; `loot:uncommon/nature`; `market` |
-| `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:oval_stone` | Evolution item | `crate:common` 0.203% |
-| `cobblemon:poison_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:prism_scale` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:protector` | Evolution item | `crate:common` 0.203%; `loot:rare/battle`; `loot:chests/regirock_chest` 70.66% |
-| `cobblemon:psychic_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/liberty_island_chest` 39.31% |
 | `cobblemon:punching_glove` | Premium competitive held item | `market` |
 | `cobblemon:rare_candy` | Instant level. Purchasable, but heavy demand keeps it scarce. | `crate:common` 5.1%; `crate:rare` 12.0%; `loot:epic/medicine` +3 more |
 | `cobblemon:reaper_cloth` | Evolution item | `crate:common` 0.203%; `loot:chests/turnback_cave_vault` 5.48% |
-| `cobblemon:rock_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regirock_chest` 70.66% |
 | `cobblemon:rocky_helmet` | Premium competitive held item | `crate:common` 0.5%; `market` |
 | `cobblemon:sachet` | Evolution item | `crate:common` 0.203% |
-| `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:throat_spray` | Premium competitive held item | `market` |
-| `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:weakness_policy` | Premium competitive held item | `market` |
 | `cobblemon:whipped_dream` | Evolution item | `crate:common` 0.203% |
 | `legendarymonuments:ancient_rubble_ore` | Ore block, mid-tier crafting material | `loot:chests/regigigas_chest` 16.94% |

@@ -110,7 +110,7 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     (r":\w+_tumblestone(_cluster)?$", 1, "Crafting material"),
     (r":\w+_berry$", 1, "Berry"),
     # --- type-flavoured power: rare band
-    (r":\w+_gem$", 2, "Type gem — one-shot damage boost"),
+    (r":\w+_gem$", 3, "Type gem — one-shot damage boost"),
     (r":\w+_tera_shard$", DISABLED, "Tera shard — Tera is banned on this server"),
     (r":\w+ium_z$", DISABLED, "Z-crystal — disabled on this server"),
     (r":blank_z$", DISABLED, "Blank Z-crystal — disabled on this server"),

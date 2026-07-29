@@ -171,6 +171,15 @@
       ]
     },
     {
+      "id": "cobblemon:aguav_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:air_balloon",
       "tier": 2,
       "tierLabel": "T2",
@@ -191,6 +200,150 @@
       ]
     },
     {
+      "id": "cobblemon:ancient_azure_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_citrine_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_feather_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_gigaton_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_great_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_heavy_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_ivory_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_jet_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_leaden_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_origin_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_poke_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_roseate_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_slate_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_ultra_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_verdant_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ancient_wing_ball",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Hisuian basic ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:antidote",
       "tier": 0,
       "tierLabel": "T0",
@@ -206,6 +359,96 @@
       ]
     },
     {
+      "id": "cobblemon:apicot_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:apricorn_boat",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:apricorn_chest_boat",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_black",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_blue",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_green",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_pink",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_red",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_white",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:aprijuice_yellow",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:armor_fossil",
       "tier": 1,
       "tierLabel": "T1",
@@ -219,6 +462,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:aspear_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:assault_vest",
@@ -306,6 +558,15 @@
       ]
     },
     {
+      "id": "cobblemon:babiri_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:beast_ball",
       "tier": 3,
       "tierLabel": "T3",
@@ -319,6 +580,42 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:belue_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:berry_juice",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:berry_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:big_malasada",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:big_root",
@@ -359,6 +656,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:black_apricorn",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Apricorn",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:black_apricorn_seed",
@@ -486,6 +792,15 @@
       ]
     },
     {
+      "id": "cobblemon:blue_apricorn",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Apricorn",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:blue_apricorn_seed",
       "tier": 1,
       "tierLabel": "T1",
@@ -529,6 +844,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:bluk_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:blunder_policy",
@@ -610,6 +934,15 @@
       ]
     },
     {
+      "id": "cobblemon:brittle_candy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:bug_gem",
       "tier": 2,
       "tierLabel": "T2",
@@ -625,6 +958,15 @@
       ]
     },
     {
+      "id": "cobblemon:bugwort",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:burn_heal",
       "tier": 0,
       "tierLabel": "T0",
@@ -638,6 +980,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:bygone_sherd",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:calcium",
@@ -673,6 +1024,33 @@
           "rate": 0.195
         }
       ]
+    },
+    {
+      "id": "cobblemon:candied_apple",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:candied_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:capture_sherd",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:carbos",
@@ -713,6 +1091,15 @@
           "rate": 0.195
         }
       ]
+    },
+    {
+      "id": "cobblemon:casteliacone",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:cell_battery",
@@ -758,6 +1145,51 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:charti_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:cheri_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:cherish_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:chesto_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:chilan_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:chipped_pot",
@@ -859,6 +1291,15 @@
       "sources": []
     },
     {
+      "id": "cobblemon:citrine_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:claw_fossil",
       "tier": 1,
       "tierLabel": "T1",
@@ -929,6 +1370,24 @@
       ]
     },
     {
+      "id": "cobblemon:clever_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:clover_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:coarse_mulch",
       "tier": 1,
       "tierLabel": "T1",
@@ -944,7 +1403,25 @@
       ]
     },
     {
+      "id": "cobblemon:coba_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:colbur_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:cornn_berry",
       "tier": 1,
       "tierLabel": "T1",
       "tierName": "Uncommon",
@@ -998,6 +1475,15 @@
       ]
     },
     {
+      "id": "cobblemon:coward_candy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:cracked_pot",
       "tier": 2,
       "tierLabel": "T2",
@@ -1011,6 +1497,24 @@
           "rate": 0.203
         }
       ]
+    },
+    {
+      "id": "cobblemon:cream_puff",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:custap_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:cyan_mint_leaf",
@@ -1232,6 +1736,15 @@
       ]
     },
     {
+      "id": "cobblemon:dome_sherd",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:dragon_fang",
       "tier": 1,
       "tierLabel": "T1",
@@ -1337,6 +1850,15 @@
       ]
     },
     {
+      "id": "cobblemon:durin_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:dusk_ball",
       "tier": 1,
       "tierLabel": "T1",
@@ -1400,6 +1922,15 @@
           "rate": 2.22
         }
       ]
+    },
+    {
+      "id": "cobblemon:eggant_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:eject_button",
@@ -1515,6 +2046,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:enigma_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:ether",
@@ -1827,6 +2367,15 @@
       ]
     },
     {
+      "id": "cobblemon:figy_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:fine_remedy",
       "tier": 0,
       "tierLabel": "T0",
@@ -1939,6 +2488,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:flower_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:flying_gem",
@@ -2061,6 +2619,24 @@
       ]
     },
     {
+      "id": "cobblemon:fresh_start_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:friend_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:full_heal",
       "tier": 0,
       "tierLabel": "T0",
@@ -2121,6 +2697,15 @@
       ]
     },
     {
+      "id": "cobblemon:galarica_nuts",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:galarica_wreath",
       "tier": 2,
       "tierLabel": "T2",
@@ -2134,6 +2719,15 @@
           "rate": 0.203
         }
       ]
+    },
+    {
+      "id": "cobblemon:ganlon_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:genius_feather",
@@ -2154,6 +2748,15 @@
           "rate": 33.52
         }
       ]
+    },
+    {
+      "id": "cobblemon:genius_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:gentle_mint",
@@ -2211,6 +2814,15 @@
       ]
     },
     {
+      "id": "cobblemon:grassy_seed",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:great_ball",
       "tier": 0,
       "tierLabel": "T0",
@@ -2234,6 +2846,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:green_apricorn",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Apricorn",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:green_apricorn_seed",
@@ -2281,6 +2902,15 @@
       ]
     },
     {
+      "id": "cobblemon:grepa_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:grip_claw",
       "tier": 1,
       "tierLabel": "T1",
@@ -2311,11 +2941,29 @@
       ]
     },
     {
+      "id": "cobblemon:growth_mulch",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Mulch",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:guard_spec",
       "tier": 1,
       "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:haban_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
       "assignedBy": "rule",
       "sources": []
     },
@@ -2365,6 +3013,24 @@
       ]
     },
     {
+      "id": "cobblemon:heal_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:heal_powder",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:health_candy",
       "tier": 3,
       "tierLabel": "T3",
@@ -2398,6 +3064,24 @@
           "rate": 33.52
         }
       ]
+    },
+    {
+      "id": "cobblemon:health_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:hearty_grains",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:heat_rock",
@@ -2495,6 +3179,33 @@
       ]
     },
     {
+      "id": "cobblemon:helix_sherd",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:hondew_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:hopo_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:hp_up",
       "tier": 1,
       "tierLabel": "T1",
@@ -2548,6 +3259,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:iapapa_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:ice_gem",
@@ -2685,6 +3405,15 @@
       ]
     },
     {
+      "id": "cobblemon:jaboca_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:jaw_fossil",
       "tier": 1,
       "tierLabel": "T1",
@@ -2700,6 +3429,15 @@
       ]
     },
     {
+      "id": "cobblemon:jelly_doughnut",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:jolly_mint",
       "tier": 1,
       "tierLabel": "T1",
@@ -2713,6 +3451,51 @@
           "rate": 0.195
         }
       ]
+    },
+    {
+      "id": "cobblemon:jubilife_muffin",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:kasib_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:kebia_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:kee_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:kelpsy_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:kings_rock",
@@ -2755,6 +3538,24 @@
       ]
     },
     {
+      "id": "cobblemon:lansat_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:lava_cookie",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:lax_mint",
       "tier": 1,
       "tierLabel": "T1",
@@ -2785,6 +3586,15 @@
       ]
     },
     {
+      "id": "cobblemon:leek_and_potato_stew",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:leftovers",
       "tier": 2,
       "tierLabel": "T2",
@@ -2811,6 +3621,24 @@
     },
     {
       "id": "cobblemon:leppa_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:level_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:liechi_berry",
       "tier": 1,
       "tierLabel": "T1",
       "tierName": "Uncommon",
@@ -2934,6 +3762,24 @@
       ]
     },
     {
+      "id": "cobblemon:love_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:love_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:lucky_egg",
       "tier": 1,
       "tierLabel": "T1",
@@ -2988,6 +3834,33 @@
       ]
     },
     {
+      "id": "cobblemon:lumiose_galette",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:lure_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:luxury_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:magmarizer",
       "tier": 2,
       "tierLabel": "T2",
@@ -3038,6 +3911,24 @@
       ]
     },
     {
+      "id": "cobblemon:mago_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:magost_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:malicious_armor",
       "tier": 2,
       "tierLabel": "T2",
@@ -3051,6 +3942,15 @@
           "rate": 0.203
         }
       ]
+    },
+    {
+      "id": "cobblemon:maranga_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:master_ball",
@@ -3188,6 +4088,15 @@
       ]
     },
     {
+      "id": "cobblemon:medicinal_brew",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:medicinal_leek",
       "tier": 0,
       "tierLabel": "T0",
@@ -3303,6 +4212,15 @@
       ]
     },
     {
+      "id": "cobblemon:micle_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:mighty_candy",
       "tier": 3,
       "tierLabel": "T3",
@@ -3383,6 +4301,15 @@
       ]
     },
     {
+      "id": "cobblemon:misty_seed",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:modest_mint",
       "tier": 1,
       "tierLabel": "T1",
@@ -3398,6 +4325,24 @@
       ]
     },
     {
+      "id": "cobblemon:moomoo_milk",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:moon_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:moon_stone",
       "tier": 0,
       "tierLabel": "T0",
@@ -3411,6 +4356,15 @@
           "rate": 0.71
         }
       ]
+    },
+    {
+      "id": "cobblemon:mulch_base",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:muscle_band",
@@ -3453,6 +4407,15 @@
       ]
     },
     {
+      "id": "cobblemon:muscle_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:mystic_water",
       "tier": 1,
       "tierLabel": "T1",
@@ -3491,6 +4454,15 @@
           "rate": 0.195
         }
       ]
+    },
+    {
+      "id": "cobblemon:nanab_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:naughty_mint",
@@ -3573,6 +4545,15 @@
       ]
     },
     {
+      "id": "cobblemon:nomel_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:normal_gem",
       "tier": 2,
       "tierLabel": "T2",
@@ -3586,6 +4567,42 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:nostalgic_sherd",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:npc_editor",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:numb_candy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:occa_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:old_amber_fossil",
@@ -3603,6 +4620,33 @@
       ]
     },
     {
+      "id": "cobblemon:old_gateau",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:open_faced_sandwich",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:oran_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:oval_stone",
       "tier": 2,
       "tierLabel": "T2",
@@ -3618,6 +4662,15 @@
       ]
     },
     {
+      "id": "cobblemon:pamtre_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:paralyze_heal",
       "tier": 0,
       "tierLabel": "T0",
@@ -3631,6 +4684,24 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:park_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:passho_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:payapa_berry",
@@ -3655,6 +4726,60 @@
           "rate": 0.203
         }
       ]
+    },
+    {
+      "id": "cobblemon:peat_mulch",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Mulch",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pecha_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:persim_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:petaya_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pewter_crunchies",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pinap_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:pink_apricorn",
@@ -3772,6 +4897,15 @@
       ]
     },
     {
+      "id": "cobblemon:poke_bait",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:poke_ball",
       "tier": 0,
       "tierLabel": "T0",
@@ -3785,6 +4919,123 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:poke_puff",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:poke_rod",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_black",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_blue",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_green",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_pink",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_red",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_white",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokedex_yellow",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pokerod_smithing_template",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:pomeg_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:ponigiri",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:potato_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:potion",
@@ -3982,6 +5233,15 @@
       ]
     },
     {
+      "id": "cobblemon:premier_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:prism_scale",
       "tier": 2,
       "tierLabel": "T2",
@@ -4106,6 +5366,15 @@
       ]
     },
     {
+      "id": "cobblemon:qualot_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:quick_ball",
       "tier": 1,
       "tierLabel": "T1",
@@ -4196,6 +5465,24 @@
       ]
     },
     {
+      "id": "cobblemon:rabuta_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:rage_candy_bar",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:rare_candy",
       "tier": 2,
       "tierLabel": "T2",
@@ -4251,6 +5538,15 @@
       ]
     },
     {
+      "id": "cobblemon:rawst_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:razor_claw",
       "tier": 1,
       "tierLabel": "T1",
@@ -4289,6 +5585,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:razz_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:reaper_cloth",
@@ -4541,6 +5846,15 @@
       ]
     },
     {
+      "id": "cobblemon:repeat_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:resist_feather",
       "tier": 1,
       "tierLabel": "T1",
@@ -4559,6 +5873,24 @@
           "rate": 33.52
         }
       ]
+    },
+    {
+      "id": "cobblemon:resist_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:revival_herb",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:revive",
@@ -4581,6 +5913,15 @@
       ]
     },
     {
+      "id": "cobblemon:ribbon_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:rich_mulch",
       "tier": 1,
       "tierLabel": "T1",
@@ -4596,6 +5937,15 @@
       ]
     },
     {
+      "id": "cobblemon:rindo_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:ring_target",
       "tier": 1,
       "tierLabel": "T1",
@@ -4609,6 +5959,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:roasted_leek",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:rock_gem",
@@ -4666,6 +6025,69 @@
       ]
     },
     {
+      "id": "cobblemon:root_fossil",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Fossil",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:roseate_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:roseli_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:rowap_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:saccharine_boat",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:saccharine_chest_boat",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:saccharine_sapling",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:sachet",
       "tier": 2,
       "tierLabel": "T2",
@@ -4679,6 +6101,15 @@
           "rate": 0.203
         }
       ]
+    },
+    {
+      "id": "cobblemon:safari_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:safety_goggles",
@@ -4714,6 +6145,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:salac_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:sandy_mulch",
@@ -4761,6 +6201,24 @@
       ]
     },
     {
+      "id": "cobblemon:scroll_of_darkness",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:scroll_of_waters",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:serious_mint",
       "tier": 1,
       "tierLabel": "T1",
@@ -4774,6 +6232,15 @@
           "rate": 0.195
         }
       ]
+    },
+    {
+      "id": "cobblemon:shalour_sable",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:sharp_beak",
@@ -4831,6 +6298,15 @@
       ]
     },
     {
+      "id": "cobblemon:shell_helmet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:shiny_stone",
       "tier": 0,
       "tierLabel": "T0",
@@ -4844,6 +6320,24 @@
           "rate": 0.71
         }
       ]
+    },
+    {
+      "id": "cobblemon:shuca_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:sickly_candy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:silk_scarf",
@@ -4901,6 +6395,15 @@
       ]
     },
     {
+      "id": "cobblemon:sinister_tea",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:sitrus_berry",
       "tier": 1,
       "tierLabel": "T1",
@@ -4938,6 +6441,24 @@
           "rate": 10.75
         }
       ]
+    },
+    {
+      "id": "cobblemon:slate_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:slow_candy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:small_budding_sky_tumblestone",
@@ -4988,6 +6509,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:smoked_tail_curry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:smooth_rock",
@@ -5095,6 +6625,42 @@
       ]
     },
     {
+      "id": "cobblemon:spelon_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:sport_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Specialty ball",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:star_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:starf_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:steel_gem",
       "tier": 2,
       "tierLabel": "T2",
@@ -5123,6 +6689,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:strawberry_sweet",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:sun_stone",
@@ -5180,6 +6755,24 @@
       ]
     },
     {
+      "id": "cobblemon:surprise_mulch",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Mulch",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:suspicious_sherd",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:sweet_apple",
       "tier": 1,
       "tierLabel": "T1",
@@ -5215,6 +6808,15 @@
       ]
     },
     {
+      "id": "cobblemon:swift_mochi",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:syrupy_apple",
       "tier": 1,
       "tierLabel": "T1",
@@ -5230,6 +6832,24 @@
       ]
     },
     {
+      "id": "cobblemon:tamato_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:tanga_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:tart_apple",
       "tier": 1,
       "tierLabel": "T1",
@@ -5243,6 +6863,15 @@
           "rate": 0.203
         }
       ]
+    },
+    {
+      "id": "cobblemon:tasty_tail",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:terrain_extender",
@@ -5328,6 +6957,15 @@
           "rate": 0.195
         }
       ]
+    },
+    {
+      "id": "cobblemon:touga_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:tough_candy",
@@ -5485,6 +7123,15 @@
       ]
     },
     {
+      "id": "cobblemon:verdant_ball",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:vivichoke",
       "tier": 1,
       "tierLabel": "T1",
@@ -5498,6 +7145,33 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:vivichoke_dip",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:vivichoke_seeds",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:wacan_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:water_gem",
@@ -5530,6 +7204,24 @@
       ]
     },
     {
+      "id": "cobblemon:watmel_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:weak_candy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:weakness_policy",
       "tier": 2,
       "tierLabel": "T2",
@@ -5543,6 +7235,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:wepear_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:whipped_dream",
@@ -5660,6 +7361,15 @@
       ]
     },
     {
+      "id": "cobblemon:wiki_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "cobblemon:wise_glasses",
       "tier": 1,
       "tierLabel": "T1",
@@ -5683,6 +7393,78 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "cobblemon:x_accuracy",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:x_attack",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:x_defence",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:x_special_attack",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:x_special_defence",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:x_speed",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:yache_berry",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Berry",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "cobblemon:yellow_apricorn",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Apricorn",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "cobblemon:yellow_apricorn_seed",
@@ -5755,12 +7537,39 @@
       ]
     },
     {
+      "id": "legendarymonuments:antimatter_globe",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Azure Flute component \u2014 the Arceus path",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:arc_phone",
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Recipe disabled by server-no-arc-phone",
       "assignedBy": "override",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:arctic_stone",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary (bird / Heatran)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:azelf_fang",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Red Chain component \u2014 crafts into a T4",
+      "assignedBy": "rule",
       "sources": []
     },
     {
@@ -5779,6 +7588,15 @@
       ]
     },
     {
+      "id": "legendarymonuments:blue_feather",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "EV feather",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:celestica_flute",
       "tier": 5,
       "tierLabel": "T5",
@@ -5792,6 +7610,24 @@
           "rate": 1.11
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:clear_bell",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Utility / crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:cosmic_bag",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Utility / crafting material",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:curry_of_justice",
@@ -5849,6 +7685,24 @@
       ]
     },
     {
+      "id": "legendarymonuments:distortion_portal",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:dragon_golem_ingot",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Golem crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:dragon_golem_key",
       "tier": 3,
       "tierLabel": "T3",
@@ -5864,6 +7718,87 @@
       ]
     },
     {
+      "id": "legendarymonuments:dragon_pauldron",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Regi armour component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:dream_string",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Utility / crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:dyna_apple",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:electric_golem_ingot",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Golem crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:electric_golem_key",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Chamber / monument gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:electric_pauldron",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Regi armour component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:entei_treat",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary at its shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:firescourge_seal",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Locates a shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:fragmented_red_chain",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Red Chain component \u2014 crafts into a T4",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:fullmoon_whistle",
       "tier": 4,
       "tierLabel": "T4",
@@ -5877,6 +7812,42 @@
           "rate": 6.5
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:galar_particle",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Utility / crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:galarian_urn_of_embers",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Legendary-adjacent gate component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:galarian_urn_of_frost",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Legendary-adjacent gate component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:galarian_urn_of_storms",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Legendary-adjacent gate component",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:golem_scrap",
@@ -5899,6 +7870,15 @@
       ]
     },
     {
+      "id": "legendarymonuments:grasswither_seal",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Locates a shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:griseous_key",
       "tier": 4,
       "tierLabel": "T4",
@@ -5914,6 +7894,51 @@
       ]
     },
     {
+      "id": "legendarymonuments:groundblight_seal",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Locates a shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:gs_ball",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a mythical",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:heroshield",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:herosword",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:ice_golem_ingot",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Golem crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:ice_golem_key",
       "tier": 3,
       "tierLabel": "T3",
@@ -5927,6 +7952,51 @@
           "rate": 2.8
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:ice_pauldron",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Regi armour component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:icerend_seal",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Locates a shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:idealsbottle",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:latias_treat",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary at its shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:latios_treat",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary at its shrine",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:liberty_pass",
@@ -5984,6 +8054,51 @@
       ]
     },
     {
+      "id": "legendarymonuments:lugia_key",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Chamber / monument gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:lunar_feather",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "EV feather",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:magma_stone",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary (bird / Heatran)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:mesprit_plume",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Red Chain component \u2014 crafts into a T4",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:molten_stone",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary (bird / Heatran)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:newmoon_whistle",
       "tier": 4,
       "tierLabel": "T4",
@@ -5997,6 +8112,15 @@
           "rate": 6.5
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:nightmare_essence",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:old_sea_map",
@@ -6014,6 +8138,15 @@
       ]
     },
     {
+      "id": "legendarymonuments:ominous_griseous_key",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Chamber / monument gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:origin_ingot",
       "tier": 3,
       "tierLabel": "T3",
@@ -6027,6 +8160,15 @@
           "rate": 1.11
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:poketreat_box",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Utility / crafting material",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:proof_of_conquest_a",
@@ -6074,6 +8216,15 @@
       ]
     },
     {
+      "id": "legendarymonuments:raikou_treat",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary at its shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:rainbow_feather",
       "tier": 4,
       "tierLabel": "T4",
@@ -6087,6 +8238,15 @@
           "rate": 4.9
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:raw_origin",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:red_chain",
@@ -6104,6 +8264,69 @@
       ]
     },
     {
+      "id": "legendarymonuments:red_feather",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "EV feather",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:regice_tablet",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Regi chamber gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:regidrago_tablet",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Regi chamber gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:regieleki_tablet",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Regi chamber gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:regirock_tablet",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Regi chamber gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:registeel_tablet",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Regi chamber gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:rock_golem_ingot",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Golem crafting material",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:rock_golem_key",
       "tier": 3,
       "tierLabel": "T3",
@@ -6117,6 +8340,78 @@
           "rate": 2.8
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:rock_pauldron",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Regi armour component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:sacred_ash",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:silver_wing",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:space_globe",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Azure Flute component \u2014 the Arceus path",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:special_leafy_greens",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Curry ingredient \u2014 a Swords of Justice favourite",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:special_meat_chunks",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Curry ingredient \u2014 a Swords of Justice favourite",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:special_spices",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Curry ingredient \u2014 a Swords of Justice favourite",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:steel_golem_ingot",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Golem crafting material",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:steel_golem_key",
@@ -6134,6 +8429,60 @@
       ]
     },
     {
+      "id": "legendarymonuments:steel_pauldron",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Regi armour component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:suicune_treat",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary at its shrine",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:temple_key",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Chamber / monument gate",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:time_globe",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Azure Flute component \u2014 the Arceus path",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:titan_core",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:titan_hammer",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:titan_key",
       "tier": 4,
       "tierLabel": "T4",
@@ -6147,6 +8496,33 @@
           "rate": 2.8
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:titan_pauldron",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Regi armour component",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:truthbottle",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:tuft_of_mew_hair",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a mythical",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "legendarymonuments:urn_of_embers",
@@ -6194,6 +8570,15 @@
       ]
     },
     {
+      "id": "legendarymonuments:uxie_claw",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Red Chain component \u2014 crafts into a T4",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:vortex_stone",
       "tier": 4,
       "tierLabel": "T4",
@@ -6207,6 +8592,24 @@
           "rate": 4.9
         }
       ]
+    },
+    {
+      "id": "legendarymonuments:yellow_feather",
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "EV feather",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "legendarymonuments:zap_stone",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Summons a legendary (bird / Heatran)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:abomasite",
@@ -6266,6 +8669,15 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:aerodactylite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:aggronite",
       "tier": 2,
       "tierLabel": "T2",
@@ -6311,6 +8723,15 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:archie_anchor",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:ash_cap",
       "tier": 4,
       "tierLabel": "T4",
@@ -6348,10 +8769,10 @@
     },
     {
       "id": "mega_showdown:blank_z",
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Blank Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
@@ -6389,11 +8810,56 @@
       ]
     },
     {
+      "id": "mega_showdown:booster_energy",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Premium competitive held item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:brendan_mega_cuff",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:bug_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:bug_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:buginium_z",
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:burn_drive",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
@@ -6425,6 +8891,42 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:chill_drive",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:cornerstone_mask",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:dark_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:dark_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:darkinium_z",
       "tier": -1,
       "tierLabel": "TX",
@@ -6452,6 +8954,24 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:dna_splicer",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:douse_drive",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:draco_plate",
       "tier": 2,
       "tierLabel": "T2",
@@ -6465,6 +8985,15 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "mega_showdown:dragon_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:dragon_tera_shard",
@@ -6500,6 +9029,24 @@
       ]
     },
     {
+      "id": "mega_showdown:dynamax_band",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:dynamax_candy",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:earth_plate",
       "tier": 2,
       "tierLabel": "T2",
@@ -6520,6 +9067,15 @@
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:electric_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
       "assignedBy": "rule",
       "sources": []
     },
@@ -6551,11 +9107,56 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:fairy_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:fairy_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:fighting_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:fighting_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:fightinium_z",
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:fire_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
       "assignedBy": "rule",
       "sources": []
     },
@@ -6606,6 +9207,24 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "mega_showdown:flying_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:flying_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:flyinium_z",
@@ -6686,11 +9305,38 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:gladion_z_power_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:glalitite",
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:grass_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:grass_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
       "assignedBy": "rule",
       "sources": []
     },
@@ -6739,6 +9385,24 @@
       ]
     },
     {
+      "id": "mega_showdown:ground_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:ground_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:groundium_z",
       "tier": -1,
       "tierLabel": "TX",
@@ -6749,6 +9413,33 @@
     },
     {
       "id": "mega_showdown:gyaradosite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:hapu_z_power_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:hapus_z_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:hearthflame_mask",
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
@@ -6771,6 +9462,15 @@
       "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:ice_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
       "assignedBy": "rule",
       "sources": []
     },
@@ -6880,6 +9580,60 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:korrina_glove",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:latiasite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:latiosite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:legend_plate",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Arceus plate / type booster",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:likos_pendant",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:lisia_mega_tiara",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:lopunnite",
       "tier": 2,
       "tierLabel": "T2",
@@ -6946,6 +9700,15 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:lysandre_ring",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:manectite",
       "tier": 2,
       "tierLabel": "T2",
@@ -6965,6 +9728,51 @@
     },
     {
       "id": "mega_showdown:mawilite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:max_honey",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:max_mushroom",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:max_soup",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:maxie_glasses",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:may_bracelet",
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
@@ -6997,6 +9805,69 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:mega_bracelet",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mega_bracelet_black",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mega_bracelet_blue",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mega_bracelet_green",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mega_bracelet_pink",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mega_bracelet_red",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mega_bracelet_yellow",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:mega_meteorid_block",
       "tier": 2,
       "tierLabel": "T2",
@@ -7010,6 +9881,15 @@
           "rate": 4.55
         }
       ]
+    },
+    {
+      "id": "mega_showdown:mega_ring",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:mega_stone",
@@ -7027,6 +9907,15 @@
       ]
     },
     {
+      "id": "mega_showdown:meltan",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:metagrossite",
       "tier": 2,
       "tierLabel": "T2",
@@ -7041,6 +9930,24 @@
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mewtwonite_x",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mewtwonite_y",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
@@ -7069,6 +9976,33 @@
       ]
     },
     {
+      "id": "mega_showdown:n_lunarizer",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:n_solarizer",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:nanu_z_power_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:normal_tera_shard",
       "tier": -1,
       "tierLabel": "TX",
@@ -7087,7 +10021,43 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:olivia_z_power_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:olivias_z_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:omni_ring",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:pidgeotite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:pika_case",
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
@@ -7110,6 +10080,15 @@
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:pink_nectar",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
@@ -7138,6 +10117,24 @@
       ]
     },
     {
+      "id": "mega_showdown:poison_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:poison_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:poisonium_z",
       "tier": -1,
       "tierLabel": "TX",
@@ -7156,11 +10153,56 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:prison_bottle",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:psychic_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:psychic_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:psychium_z",
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:purple_nectar",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:red_nectar",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
@@ -7180,12 +10222,48 @@
       ]
     },
     {
+      "id": "mega_showdown:reins_of_unity",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:reveal_glass",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:rock_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:rock_tera_shard",
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
       "assignedBy": "override",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:rocket_z_power_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
       "sources": []
     },
     {
@@ -7198,20 +10276,29 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:rotom_catalogue",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:rusted_shield",
-      "tier": -1,
-      "tierLabel": "TX",
-      "tierName": "Disabled",
-      "rationale": "Zamazenta-Crowned gate \u2014 craft banned by server-craft-bans",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Zamazenta-Crowned gate. Craft banned \u2014 intended to be chest loot instead. NOT YET PLACED IN ANY CHEST.",
       "assignedBy": "override",
       "sources": []
     },
     {
       "id": "mega_showdown:rusted_sword",
-      "tier": -1,
-      "tierLabel": "TX",
-      "tierName": "Disabled",
-      "rationale": "Zacian-Crowned gate \u2014 craft banned by server-craft-bans",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Zacian-Crowned gate. Craft banned (was iron_sword + netherite_scrap + fire_charge, far too cheap) \u2014 intended to be chest loot instead. NOT YET PLACED IN ANY CHEST.",
       "assignedBy": "override",
       "sources": []
     },
@@ -7253,6 +10340,15 @@
     },
     {
       "id": "mega_showdown:sharpedonite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:shock_drive",
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
@@ -7303,6 +10399,33 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:soul_dew",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:sparkling_stone_dark",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:sparkling_stone_light",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:splash_plate",
       "tier": 2,
       "tierLabel": "T2",
@@ -7338,6 +10461,15 @@
       ]
     },
     {
+      "id": "mega_showdown:star_core",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:steel_memory",
       "tier": 2,
       "tierLabel": "T2",
@@ -7371,6 +10503,24 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:steelixite",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:stellar_tera_shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera shard \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:stone_plate",
       "tier": 2,
       "tierLabel": "T2",
@@ -7395,11 +10545,173 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:sweet_max_soup",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:tapunium_z",
       "tier": -1,
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_orb",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_black",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_blue",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_brown",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_cyan",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_gray",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_green",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_light_blue",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_light_gray",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_lime",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_magenta",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_orange",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_pink",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_purple",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_red",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_white",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:tera_pouch_yellow",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera enabler \u2014 Tera is banned on this server",
       "assignedBy": "rule",
       "sources": []
     },
@@ -7446,6 +10758,15 @@
       "sources": []
     },
     {
+      "id": "mega_showdown:water_memory",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Silvally memory",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:water_tera_shard",
       "tier": -1,
       "tierLabel": "TX",
@@ -7460,6 +10781,105 @@
       "tierLabel": "TX",
       "tierName": "Disabled",
       "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:wellspring_mask",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:wishing_star",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:yellow_nectar",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_power_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring_black",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring_blue",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring_green",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring_pink",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring_red",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:z_ring_yellow",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-Ring \u2014 enabler for the disabled Z-crystals",
       "assignedBy": "rule",
       "sources": []
     },
@@ -7557,6 +10977,15 @@
           "rate": 6.87
         }
       ]
+    },
+    {
+      "id": "mega_showdown:zygarde_cube",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "minecraft:ancient_debris",

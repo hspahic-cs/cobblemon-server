@@ -35,6 +35,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 OVERRIDES = ROOT / "ops/loot-tiers/overrides.json"
+REGISTRY = ROOT / "ops/loot-tiers/item-registry.json"
 OUT_JSON = ROOT / "ops/loot-tiers/tiers.json"
 OUT_MD = ROOT / "docs/loot-tiers.md"
 
@@ -112,6 +113,14 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     (r":\w+_gem$", 2, "Type gem — one-shot damage boost"),
     (r":\w+_tera_shard$", DISABLED, "Tera shard — Tera is banned on this server"),
     (r":\w+ium_z$", DISABLED, "Z-crystal — disabled on this server"),
+    (r":blank_z$", DISABLED, "Blank Z-crystal — disabled on this server"),
+    (r":z_?(ring|power_ring)(_\w+)?$", DISABLED, "Z-Ring — enabler for the disabled Z-crystals"),
+    (r":\w+_z_(ring|power_ring)$", DISABLED, "Z-Ring — enabler for the disabled Z-crystals"),
+    (r":\w*z_ring\w*$", DISABLED, "Z-Ring — enabler for the disabled Z-crystals"),
+    (r":tera_(orb|pouch\w*)$", DISABLED, "Tera enabler — Tera is banned on this server"),
+    (r":dynamax_(band|candy)$", DISABLED, "Dynamax is disabled on this server"),
+    (r":max_(soup|mushroom|honey)$", DISABLED, "Dynamax is disabled on this server"),
+    (r":sweet_max_soup$", DISABLED, "Dynamax is disabled on this server"),
     (r":\w+_plate$", 2, "Arceus plate / type booster"),
     (r":\w+_memory$", 2, "Silvally memory"),
     # --- evolution items
@@ -125,6 +134,24 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
      r"eviolite|heavy_duty_boots|covert_cloak|booster_energy|clear_amulet|loaded_dice|"
      r"expert_belt|rocky_helmet|air_balloon|weakness_policy|throat_spray|blunder_policy|"
      r"punching_glove|ability_shield|mirror_herb)$", 2, "Premium competitive held item"),
+    # --- LegendaryMonuments families, classified from the mod's own tooltips
+    #     (e.g. entei_treat: "can be used to summon Entei at the Burned Tower")
+    (r"^legendarymonuments:\w+_treat$", 4, "Summons a legendary at its shrine"),
+    (r"^legendarymonuments:(arctic|molten|zap|magma)_stone$", 4, "Summons a legendary (bird / Heatran)"),
+    (r"^legendarymonuments:(space|time|antimatter)_globe$", 4, "Azure Flute component — the Arceus path"),
+    (r"^legendarymonuments:(gs_ball|tuft_of_mew_hair)$", 4, "Summons a mythical"),
+    (r"^legendarymonuments:\w+_seal$", 3, "Locates a shrine"),
+    (r"^legendarymonuments:\w+_tablet$", 3, "Regi chamber gate"),
+    (r"^legendarymonuments:galarian_urn_of_\w+$", 3, "Legendary-adjacent gate component"),
+    (r"^legendarymonuments:(uxie_claw|azelf_fang|mesprit_plume|fragmented_red_chain)$", 3,
+     "Red Chain component — crafts into a T4"),
+    (r"^legendarymonuments:\w+_key$", 3, "Chamber / monument gate"),
+    (r"^legendarymonuments:\w+_golem_ingot$", 2, "Golem crafting material"),
+    (r"^legendarymonuments:\w+_pauldron$", 2, "Regi armour component"),
+    (r"^legendarymonuments:special_(leafy_greens|meat_chunks|spices)$", 1,
+     "Curry ingredient — a Swords of Justice favourite"),
+    (r"^legendarymonuments:(poketreat_box|dream_string|clear_bell|cosmic_bag|galar_particle)$", 1,
+     "Utility / crafting material"),
     # --- everything else held/util
     (r"^cobblemon:", 1, "Standard held / utility item"),
     (r"^mega_showdown:", 2, "Mega Showdown item (type/forme adjacent)"),
@@ -278,7 +305,11 @@ def walk_items(node, out: set[str], in_items_list: bool = False) -> None:
 
 
 def collect_universe() -> set[str]:
-    out: set[str] = set()
+    # Seed from the mods' actual item registry, not just what our configs happen
+    # to reference. Reference-only seeding silently omitted 381 real items --
+    # including 10 Tera shards, every Z-Ring, and the Tera Orb -- which meant
+    # "disabled" categories looked complete while whole variants sat untiered.
+    out: set[str] = set((load_json(REGISTRY) or {}).get("items", {}))
     for f in OVERRIDES_DIR.rglob("*.json"):
         if SKIP_PATH.search(f.as_posix()):
             continue

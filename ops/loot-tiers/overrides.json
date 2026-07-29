@@ -17,8 +17,8 @@
   "mega_showdown:rock_tera_shard": [-1, "Tera is banned on this server — stripped from monument chest loot (was up to 95%/chest)"],
   "mega_showdown:steel_tera_shard": [-1, "Tera is banned on this server — stripped from monument chest loot (was up to 95%/chest)"],
   "mega_showdown:water_tera_shard": [-1, "Tera is banned on this server — stripped from monument chest loot (was up to 95%/chest)"],
-  "mega_showdown:rusted_sword": [-1, "Zacian-Crowned gate — craft banned by server-craft-bans"],
-  "mega_showdown:rusted_shield": [-1, "Zamazenta-Crowned gate — craft banned by server-craft-bans"],
+  "mega_showdown:rusted_sword": [4, "Zacian-Crowned gate. Craft banned (was iron_sword + netherite_scrap + fire_charge, far too cheap) — intended to be chest loot instead. NOT YET PLACED IN ANY CHEST."],
+  "mega_showdown:rusted_shield": [4, "Zamazenta-Crowned gate. Craft banned — intended to be chest loot instead. NOT YET PLACED IN ANY CHEST."],
 
   "_T4_legendary": "Summons or permanently unlocks a legendary/forme. One-per-player scale.",
   "mega_showdown:ash_cap": [4, "Uncraftable — craft banned by server-craft-bans; Ultra crate only"],

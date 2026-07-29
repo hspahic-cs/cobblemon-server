@@ -1,9 +1,17 @@
 #!/usr/bin/env bash
-# Re-harvest the item registry from the mod jars on the server.
-# The tier list seeds its universe from this file, so items that nothing in our
-# configs references yet still get a tier. Run after a modpack bump.
+# Re-harvest the data files the tier list is built from, off the mod jars.
+# Run after a modpack bump.
 #
 #   COBBLEMON_SSH=user@host ops/loot-tiers/refresh_registry.sh
+#
+#   item-registry.json  every real item id + display name + tooltip. Seeds the
+#                       universe, so items nothing references yet still get tiered.
+#   mod-loot.json       loot tables shipped BY THE MODS. Regenerate this with the
+#                       companion harvest (see mod-loot.json's own _comment) --
+#                       without it, evidence covers only tables we override and
+#                       items sourced from ruins/archaeology read as "not granted
+#                       anywhere", which is how 9 type gems were wrongly reported
+#                       as sourceless.
 set -euo pipefail
 : "${COBBLEMON_SSH:?set COBBLEMON_SSH to the VM's user@host}"
 MODS=${MODS_DIR:-/srv/cobblemon/cobblemon-prod/mods}

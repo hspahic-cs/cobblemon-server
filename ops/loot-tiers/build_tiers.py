@@ -36,6 +36,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 OVERRIDES = ROOT / "ops/loot-tiers/overrides.json"
 REGISTRY = ROOT / "ops/loot-tiers/item-registry.json"
+MOD_LOOT = ROOT / "ops/loot-tiers/mod-loot.json"
 OUT_JSON = ROOT / "ops/loot-tiers/tiers.json"
 OUT_MD = ROOT / "docs/loot-tiers.md"
 
@@ -196,6 +197,7 @@ def per_chest(weight: int, total: int, rolls) -> float | None:
 
 def collect_evidence() -> dict[str, list[dict]]:
     ev: dict[str, list[dict]] = collections.defaultdict(list)
+    ev_tables: set[str] = set()
 
     # --- gacha crates: explicit tier + weight
     for f in sorted(GACHA_DIR.glob("*.json")):
@@ -231,7 +233,9 @@ def collect_evidence() -> dict[str, list[dict]]:
         d = load_json(f)
         if not isinstance(d, dict) or "pools" not in d:
             continue
-        label = f.parent.name + "/" + f.stem
+        mns = re.search(r"/datapacks/[^/]+/data/([a-z0-9_]+)/loot_table/(.+)\.json$", f.as_posix())
+        label = f"{mns.group(1)}/{mns.group(2)}" if mns else f.parent.name + "/" + f.stem
+        ev_tables.add(label)
         for pool in d.get("pools") or []:
             entries = pool.get("entries") or []
             total = sum(e.get("weight", 1) for e in entries)
@@ -246,6 +250,22 @@ def collect_evidence() -> dict[str, list[dict]]:
                     "detail": f"w={e.get('weight',1)}/{total}, rolls={rolls}",
                     "rate": round(pc, 2) if pc is not None else None,
                 })
+
+    # --- mod-side loot tables (ruins, archaeology, trainer loot, un-overridden
+    #     monument chests). Without these, evidence only covers tables we
+    #     override, and an item sourced purely from ruins reads as "not granted
+    #     anywhere" -- which is how 9 type gems were wrongly reported as having
+    #     no source. Skip any table we override; ours is the live version.
+    ours = {lbl for lbl in ev_tables}
+    for iid, srcs in ((load_json(MOD_LOOT) or {}).get("sources") or {}).items():
+        for sc in srcs:
+            if sc["t"] in ours:
+                continue
+            ev[iid].append({
+                "source": f"mod:{sc['t']}",
+                "detail": "mod loot table",
+                "rate": sc.get("r"),
+            })
 
     # --- market: purchasable at all is itself a rarity ceiling
     mk = load_json(MARKET) or {}

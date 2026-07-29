@@ -46,7 +46,28 @@ these items already sat at the minimum `weight: 1`:
 If you retune these, regenerate rather than hand-editing: the scale factors are
 what make the orb math work.
 
+## Totem of Undying (the Zacian gate)
+
+The Ultra crate's 1.6% roll is the **only intended** source. Two others were
+removed:
+
+| Source | Status |
+|---|---|
+| `bell_tower_chest` | Removed 0.23.31 (8.7%/chest) |
+| `champion_jax_05b7` `signatureItem` | Removed — was guaranteed on defeat |
+| Ultra crate, 1.6% | **Intended — leave this one** |
+
+Vanilla evokers (raids, woodland mansions) still drop them; that's vanilla and
+out of scope.
+
+If a player reports getting one from Ho-Oh, it is either pre-June-2026, an
+evoker, or a Bell Tower chest that was generated *and populated* before the
+0.23.31 fix and hasn't been looted yet.
+
 ## Known gaps (deliberately not changed)
+
+These are **intentional** — the call was not to punish players for finding this
+content themselves. Listed so the rates are discoverable, not as a to-do list.
 
 - `lugia_temple_chest` still contains **inline exp candies** (`exp_candy_xs`
   90.2%/chest, `exp_candy_s` 56.3%, `exp_candy_m` 19.4%). It was never covered

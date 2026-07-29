@@ -27,8 +27,8 @@
   "series": [
     "unbound"
   ],
-  "signatureItem": "minecraft:totem_of_undying",
+  "signatureItem": "cobblemon:leftovers",
   "spawnWeightFactor": 0.08,
   "type": "normal",
-  "_comment": "boss retyped normal + thinned (was champ) \u2014 server-trainer-spawns"
+  "_comment": "boss retyped normal + thinned (was champ) \u2014 server-trainer-spawns. signatureItem was minecraft:totem_of_undying, which is the Zacian summon gate: beating Jax once handed out a guaranteed gate and undercut the 1.6% Ultra crate roll. Swapped to a competitive held item, matching every other champion/E4 (life_orb, prism_scale, quick_claw, ...)."
 }

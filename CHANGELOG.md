@@ -13,6 +13,13 @@ root README.
 ## [Unreleased]
 
 ### Changed
+- **Champion Jax no longer drops a Totem of Undying.** The Totem is the Zacian
+  summon gate, and Jax handed one out *guaranteed* on defeat — a stronger source
+  than the 1.6% Ultra crate roll it was meant to gate. Signature item is now
+  `cobblemon:leftovers`, matching every other champion and Elite Four member
+  (all of whom use competitive held items; Jax's vanilla Totem was the lone
+  outlier). With this and the 0.23.31 chest removal, the Ultra crate is once
+  again the only non-vanilla Totem source.
 - **Monument artifact rarity brought in line with the Ultra crate.** All figures
   are per chest opened (these pools roll 3–14 times, so per-roll weights
   understate real supply):

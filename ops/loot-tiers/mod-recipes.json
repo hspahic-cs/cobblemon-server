@@ -1,0 +1,2412 @@
+{
+"_comment": "Recipes shipped by the MOD JARS, keyed by the item they produce. Without this, anything craftable reads as having no source - which made every Dynamax and Tera item look unobtainable. Recipes we ban in server-craft-bans / server-no-arc-phone are skipped at build time. Refresh with ops/loot-tiers/refresh_registry.sh",
+"sources": {
+"cobblemon:ability_capsule": [
+"mega_showdown/recipe/ability_capsule"
+],
+"cobblemon:ability_patch": [
+"mega_showdown/recipe/ability_patch"
+],
+"cobblemon:ability_shield": [
+"cobblemon/recipe/ability_shield"
+],
+"cobblemon:adamant_mint": [
+"cobblemon/recipe/adamant_mint"
+],
+"cobblemon:air_balloon": [
+"cobblemon/recipe/air_balloon"
+],
+"cobblemon:ancient_azure_ball": [
+"cobblemon/recipe/ancient_azure_ball"
+],
+"cobblemon:ancient_azure_rod": [
+"cobblemon/recipe/ancient_azure_rod"
+],
+"cobblemon:ancient_citrine_ball": [
+"cobblemon/recipe/ancient_citrine_ball"
+],
+"cobblemon:ancient_citrine_rod": [
+"cobblemon/recipe/ancient_citrine_rod"
+],
+"cobblemon:ancient_feather_ball": [
+"cobblemon/recipe/ancient_feather_ball"
+],
+"cobblemon:ancient_feather_rod": [
+"cobblemon/recipe/ancient_feather_rod"
+],
+"cobblemon:ancient_gigaton_ball": [
+"cobblemon/recipe/ancient_gigaton_ball"
+],
+"cobblemon:ancient_gigaton_rod": [
+"cobblemon/recipe/ancient_gigaton_rod"
+],
+"cobblemon:ancient_great_ball": [
+"cobblemon/recipe/ancient_great_ball"
+],
+"cobblemon:ancient_great_rod": [
+"cobblemon/recipe/ancient_great_rod"
+],
+"cobblemon:ancient_heavy_ball": [
+"cobblemon/recipe/ancient_heavy_ball"
+],
+"cobblemon:ancient_heavy_rod": [
+"cobblemon/recipe/ancient_heavy_rod"
+],
+"cobblemon:ancient_ivory_ball": [
+"cobblemon/recipe/ancient_ivory_ball"
+],
+"cobblemon:ancient_ivory_rod": [
+"cobblemon/recipe/ancient_ivory_rod"
+],
+"cobblemon:ancient_jet_ball": [
+"cobblemon/recipe/ancient_jet_ball"
+],
+"cobblemon:ancient_jet_rod": [
+"cobblemon/recipe/ancient_jet_rod"
+],
+"cobblemon:ancient_leaden_ball": [
+"cobblemon/recipe/ancient_leaden_ball"
+],
+"cobblemon:ancient_leaden_rod": [
+"cobblemon/recipe/ancient_leaden_rod"
+],
+"cobblemon:ancient_origin_ball": [
+"legendarymonuments/recipe/ancient_origin_ball"
+],
+"cobblemon:ancient_origin_rod": [
+"cobblemon/recipe/ancient_origin_rod"
+],
+"cobblemon:ancient_poke_ball": [
+"cobblemon/recipe/ancient_poke_ball"
+],
+"cobblemon:ancient_poke_rod": [
+"cobblemon/recipe/ancient_poke_rod"
+],
+"cobblemon:ancient_roseate_ball": [
+"cobblemon/recipe/ancient_roseate_ball"
+],
+"cobblemon:ancient_roseate_rod": [
+"cobblemon/recipe/ancient_roseate_rod"
+],
+"cobblemon:ancient_slate_ball": [
+"cobblemon/recipe/ancient_slate_ball"
+],
+"cobblemon:ancient_slate_rod": [
+"cobblemon/recipe/ancient_slate_rod"
+],
+"cobblemon:ancient_ultra_ball": [
+"cobblemon/recipe/ancient_ultra_ball"
+],
+"cobblemon:ancient_ultra_rod": [
+"cobblemon/recipe/ancient_ultra_rod"
+],
+"cobblemon:ancient_verdant_ball": [
+"cobblemon/recipe/ancient_verdant_ball"
+],
+"cobblemon:ancient_verdant_rod": [
+"cobblemon/recipe/ancient_verdant_rod"
+],
+"cobblemon:ancient_wing_ball": [
+"cobblemon/recipe/ancient_wing_ball"
+],
+"cobblemon:ancient_wing_rod": [
+"cobblemon/recipe/ancient_wing_rod"
+],
+"cobblemon:antidote": [
+"cobblemon/recipe/brewing_stand/antidote_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/antidote_in_campfire_pot"
+],
+"cobblemon:apricorn_boat": [
+"cobblemon/recipe/apricorn_boat"
+],
+"cobblemon:apricorn_button": [
+"cobblemon/recipe/apricorn_button"
+],
+"cobblemon:apricorn_chest_boat": [
+"cobblemon/recipe/apricorn_chest_boat"
+],
+"cobblemon:apricorn_door": [
+"cobblemon/recipe/apricorn_door"
+],
+"cobblemon:apricorn_fence": [
+"cobblemon/recipe/apricorn_fence"
+],
+"cobblemon:apricorn_fence_gate": [
+"cobblemon/recipe/apricorn_fence_gate"
+],
+"cobblemon:apricorn_hanging_sign": [
+"cobblemon/recipe/apricorn_hanging_sign"
+],
+"cobblemon:apricorn_planks": [
+"cobblemon/recipe/apricorn_planks"
+],
+"cobblemon:apricorn_pressure_plate": [
+"cobblemon/recipe/apricorn_pressure_plate"
+],
+"cobblemon:apricorn_sign": [
+"cobblemon/recipe/apricorn_sign"
+],
+"cobblemon:apricorn_slab": [
+"cobblemon/recipe/apricorn_slab"
+],
+"cobblemon:apricorn_stairs": [
+"cobblemon/recipe/apricorn_stairs"
+],
+"cobblemon:apricorn_trapdoor": [
+"cobblemon/recipe/apricorn_trapdoor"
+],
+"cobblemon:apricorn_wood": [
+"cobblemon/recipe/apricorn_wood"
+],
+"cobblemon:aprijuice_black": [
+"cobblemon/recipe/campfire_pot/black_aprijuice"
+],
+"cobblemon:aprijuice_blue": [
+"cobblemon/recipe/campfire_pot/blue_aprijuice"
+],
+"cobblemon:aprijuice_green": [
+"cobblemon/recipe/campfire_pot/green_aprijuice"
+],
+"cobblemon:aprijuice_pink": [
+"cobblemon/recipe/campfire_pot/pink_aprijuice"
+],
+"cobblemon:aprijuice_red": [
+"cobblemon/recipe/campfire_pot/red_aprijuice"
+],
+"cobblemon:aprijuice_white": [
+"cobblemon/recipe/campfire_pot/white_aprijuice"
+],
+"cobblemon:aprijuice_yellow": [
+"cobblemon/recipe/campfire_pot/yellow_aprijuice"
+],
+"cobblemon:assault_vest": [
+"cobblemon/recipe/assault_vest"
+],
+"cobblemon:automaton_armor_trim_smithing_template": [
+"cobblemon/recipe/automaton_armor_trim_smithing_template"
+],
+"cobblemon:awakening": [
+"cobblemon/recipe/brewing_stand/awakening_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/awakening_in_campfire_pot"
+],
+"cobblemon:azure_ball": [
+"cobblemon/recipe/azure_ball"
+],
+"cobblemon:azure_rod": [
+"cobblemon/recipe/azure_rod"
+],
+"cobblemon:beast_ball": [
+"cobblemon/recipe/beast_ball"
+],
+"cobblemon:beast_rod": [
+"cobblemon/recipe/beast_rod"
+],
+"cobblemon:berry_juice": [
+"cobblemon/recipe/berry_juice"
+],
+"cobblemon:berry_sweet": [
+"cobblemon/recipe/campfire_pot/berry_sweet"
+],
+"cobblemon:big_malasada": [
+"cobblemon/recipe/campfire_pot/big_malasada"
+],
+"cobblemon:binding_band": [
+"cobblemon/recipe/binding_band"
+],
+"cobblemon:black_belt": [
+"cobblemon/recipe/black_belt"
+],
+"cobblemon:black_gilded_chest": [
+"cobblemon/recipe/black_gilded_chest"
+],
+"cobblemon:black_glasses": [
+"cobblemon/recipe/black_glasses"
+],
+"cobblemon:black_plaque": [
+"cobblemon/recipe/black_plaque",
+"cobblemon/recipe/black_plaque_redye"
+],
+"cobblemon:black_tumblestone": [
+"cobblemon/recipe/black_tumblestone"
+],
+"cobblemon:black_tumblestone_block": [
+"cobblemon/recipe/black_tumblestone_block"
+],
+"cobblemon:black_tumblestone_brick_slab": [
+"cobblemon/recipe/black_tumblestone_brick_slab",
+"cobblemon/recipe/black_tumblestone_brick_slab_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_brick_slab_from_black_tumblestone_bricks_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_brick_slab_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:black_tumblestone_brick_stairs": [
+"cobblemon/recipe/black_tumblestone_brick_stairs",
+"cobblemon/recipe/black_tumblestone_brick_stairs_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_brick_stairs_from_black_tumblestone_bricks_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_brick_stairs_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:black_tumblestone_brick_wall": [
+"cobblemon/recipe/black_tumblestone_brick_wall",
+"cobblemon/recipe/black_tumblestone_brick_wall_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_brick_wall_from_black_tumblestone_bricks_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_brick_wall_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:black_tumblestone_bricks": [
+"cobblemon/recipe/black_tumblestone_bricks",
+"cobblemon/recipe/black_tumblestone_bricks_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/black_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:blue_gilded_chest": [
+"cobblemon/recipe/blue_gilded_chest"
+],
+"cobblemon:blue_plaque": [
+"cobblemon/recipe/blue_plaque",
+"cobblemon/recipe/blue_plaque_redye"
+],
+"cobblemon:blunder_policy": [
+"cobblemon/recipe/blunder_policy"
+],
+"cobblemon:bold_mint": [
+"cobblemon/recipe/bold_mint"
+],
+"cobblemon:brave_mint": [
+"cobblemon/recipe/brave_mint"
+],
+"cobblemon:bright_powder": [
+"cobblemon/recipe/bright_powder"
+],
+"cobblemon:brittle_candy": [
+"cobblemon/recipe/campfire_pot/brittle_candy_l",
+"cobblemon/recipe/campfire_pot/brittle_candy_xl"
+],
+"cobblemon:brown_plaque": [
+"cobblemon/recipe/brown_plaque",
+"cobblemon/recipe/brown_plaque_redye"
+],
+"cobblemon:burn_heal": [
+"cobblemon/recipe/brewing_stand/burn_heal_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/burn_heal_in_campfire_pot"
+],
+"cobblemon:calcium": [
+"cobblemon/recipe/brewing_stand/calcium_in_brewing_stand"
+],
+"cobblemon:calm_mint": [
+"cobblemon/recipe/calm_mint"
+],
+"cobblemon:campfire_pot_black": [
+"cobblemon/recipe/campfire_pot_black"
+],
+"cobblemon:campfire_pot_blue": [
+"cobblemon/recipe/campfire_pot_blue"
+],
+"cobblemon:campfire_pot_green": [
+"cobblemon/recipe/campfire_pot_green"
+],
+"cobblemon:campfire_pot_pink": [
+"cobblemon/recipe/campfire_pot_pink"
+],
+"cobblemon:campfire_pot_red": [
+"cobblemon/recipe/campfire_pot_red"
+],
+"cobblemon:campfire_pot_white": [
+"cobblemon/recipe/campfire_pot_white"
+],
+"cobblemon:campfire_pot_yellow": [
+"cobblemon/recipe/campfire_pot_yellow"
+],
+"cobblemon:candied_apple": [
+"cobblemon/recipe/campfire_pot/candied_apple"
+],
+"cobblemon:candied_berry": [
+"cobblemon/recipe/campfire_pot/candied_berry"
+],
+"cobblemon:carbos": [
+"cobblemon/recipe/brewing_stand/carbos_in_brewing_stand"
+],
+"cobblemon:careful_mint": [
+"cobblemon/recipe/careful_mint"
+],
+"cobblemon:casteliacone": [
+"cobblemon/recipe/campfire_pot/casteliacone"
+],
+"cobblemon:cell_battery": [
+"cobblemon/recipe/cell_battery"
+],
+"cobblemon:charcoal_stick": [
+"cobblemon/recipe/charcoal_stick"
+],
+"cobblemon:cherish_rod": [
+"cobblemon/recipe/cherish_rod"
+],
+"cobblemon:chipped_pot": [
+"cobblemon/recipe/chipped_pot"
+],
+"cobblemon:chiseled_black_tumblestone_bricks": [
+"cobblemon/recipe/chiseled_black_tumblestone_bricks",
+"cobblemon/recipe/chiseled_black_tumblestone_bricks_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/chiseled_black_tumblestone_bricks_from_black_tumblestone_bricks_in_stonecutter",
+"cobblemon/recipe/chiseled_black_tumblestone_bricks_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:chiseled_polished_black_tumblestone": [
+"cobblemon/recipe/chiseled_polished_black_tumblestone",
+"cobblemon/recipe/chiseled_polished_black_tumblestone_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/chiseled_polished_black_tumblestone_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:chiseled_polished_sky_tumblestone": [
+"cobblemon/recipe/chiseled_polished_sky_tumblestone",
+"cobblemon/recipe/chiseled_polished_sky_tumblestone_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/chiseled_polished_sky_tumblestone_from_sky_tumblestone_block_in_stonecutter"
+],
+"cobblemon:chiseled_polished_tumblestone": [
+"cobblemon/recipe/chiseled_polished_tumblestone",
+"cobblemon/recipe/chiseled_polished_tumblestone_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/chiseled_polished_tumblestone_from_tumblestone_block_in_stonecutter"
+],
+"cobblemon:chiseled_sky_tumblestone_bricks": [
+"cobblemon/recipe/chiseled_sky_tumblestone_bricks",
+"cobblemon/recipe/chiseled_sky_tumblestone_bricks_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/chiseled_sky_tumblestone_bricks_from_sky_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/chiseled_sky_tumblestone_bricks_from_sky_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:chiseled_tumblestone_bricks": [
+"cobblemon/recipe/chiseled_tumblestone_bricks",
+"cobblemon/recipe/chiseled_tumblestone_bricks_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/chiseled_tumblestone_bricks_from_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/chiseled_tumblestone_bricks_from_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:choice_band": [
+"cobblemon/recipe/choice_band"
+],
+"cobblemon:choice_scarf": [
+"cobblemon/recipe/choice_scarf"
+],
+"cobblemon:choice_specs": [
+"cobblemon/recipe/choice_specs"
+],
+"cobblemon:citrine_ball": [
+"cobblemon/recipe/citrine_ball"
+],
+"cobblemon:citrine_rod": [
+"cobblemon/recipe/citrine_rod"
+],
+"cobblemon:cleanse_tag": [
+"cobblemon/recipe/cleanse_tag"
+],
+"cobblemon:clear_amulet": [
+"cobblemon/recipe/clear_amulet"
+],
+"cobblemon:clever_feather": [
+"cobblemon/recipe/clever_feather"
+],
+"cobblemon:clever_mochi": [
+"cobblemon/recipe/campfire_pot/clever_mochi"
+],
+"cobblemon:clover_sweet": [
+"cobblemon/recipe/campfire_pot/clover_sweet"
+],
+"cobblemon:coarse_mulch": [
+"cobblemon/recipe/coarse_mulch"
+],
+"cobblemon:courage_candy": [
+"cobblemon/recipe/campfire_pot/courage_candy_l",
+"cobblemon/recipe/campfire_pot/courage_candy_xl"
+],
+"cobblemon:covert_cloak": [
+"cobblemon/recipe/covert_cloak"
+],
+"cobblemon:coward_candy": [
+"cobblemon/recipe/campfire_pot/coward_candy_l",
+"cobblemon/recipe/campfire_pot/coward_candy_xl"
+],
+"cobblemon:cracked_pot": [
+"cobblemon/recipe/cracked_pot"
+],
+"cobblemon:cyan_plaque": [
+"cobblemon/recipe/cyan_plaque",
+"cobblemon/recipe/cyan_plaque_redye"
+],
+"cobblemon:damp_rock": [
+"cobblemon/recipe/damp_rock"
+],
+"cobblemon:dawn_stone": [
+"cobblemon/recipe/dawn_stone_from_blasting_dawn_stone_ore",
+"cobblemon/recipe/dawn_stone_from_blasting_deepslate_dawn_stone_ore",
+"cobblemon/recipe/dawn_stone_from_block",
+"cobblemon/recipe/dawn_stone_from_smelting_dawn_stone_ore",
+"cobblemon/recipe/dawn_stone_from_smelting_deepslate_dawn_stone_ore",
+"minecraft/recipe/dawn_stone_blasting",
+"minecraft/recipe/dawn_stone_smelting"
+],
+"cobblemon:dawn_stone_block": [
+"cobblemon/recipe/dawn_stone_block"
+],
+"cobblemon:destiny_knot": [
+"cobblemon/recipe/destiny_knot"
+],
+"cobblemon:dire_hit": [
+"cobblemon/recipe/campfire_pot/dire_hit"
+],
+"cobblemon:display_case": [
+"cobblemon/recipe/display_case"
+],
+"cobblemon:dive_ball": [
+"cobblemon/recipe/dive_ball"
+],
+"cobblemon:dive_rod": [
+"cobblemon/recipe/dive_rod"
+],
+"cobblemon:dragon_fang": [
+"cobblemon/recipe/dragon_fang"
+],
+"cobblemon:dream_ball": [
+"cobblemon/recipe/dream_ball"
+],
+"cobblemon:dream_rod": [
+"cobblemon/recipe/dream_rod"
+],
+"cobblemon:dubious_disc": [
+"cobblemon/recipe/dubious_disc"
+],
+"cobblemon:dusk_ball": [
+"cobblemon/recipe/dusk_ball"
+],
+"cobblemon:dusk_rod": [
+"cobblemon/recipe/dusk_rod"
+],
+"cobblemon:dusk_stone": [
+"cobblemon/recipe/dusk_stone_from_blasting_deepslate_dusk_stone_ore",
+"cobblemon/recipe/dusk_stone_from_blasting_dusk_stone_ore",
+"cobblemon/recipe/dusk_stone_from_block",
+"cobblemon/recipe/dusk_stone_from_smelting_deepslate_dusk_stone_ore",
+"cobblemon/recipe/dusk_stone_from_smelting_dusk_stone_ore",
+"minecraft/recipe/dusk_stone_blasting",
+"minecraft/recipe/dusk_stone_smelting"
+],
+"cobblemon:dusk_stone_block": [
+"cobblemon/recipe/dusk_stone_block"
+],
+"cobblemon:eject_button": [
+"cobblemon/recipe/eject_button"
+],
+"cobblemon:eject_pack": [
+"cobblemon/recipe/eject_pack",
+"mega_showdown/recipe/eject_pack"
+],
+"cobblemon:electirizer": [
+"cobblemon/recipe/electirizer"
+],
+"cobblemon:electric_seed": [
+"mega_showdown/recipe/electric_seed"
+],
+"cobblemon:elixir": [
+"cobblemon/recipe/brewing_stand/elixir_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/elixir_in_campfire_pot"
+],
+"cobblemon:ether": [
+"cobblemon/recipe/brewing_stand/ether_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/ether_in_campfire_pot"
+],
+"cobblemon:eviolite": [
+"cobblemon/recipe/eviolite"
+],
+"cobblemon:exp_candy_l": [
+"cobblemon/recipe/campfire_pot/exp_candy_l",
+"cobblemon/recipe/exp_candy_l_from_exp_candy_xl"
+],
+"cobblemon:exp_candy_m": [
+"cobblemon/recipe/campfire_pot/exp_candy_m",
+"cobblemon/recipe/exp_candy_m_from_exp_candy_l"
+],
+"cobblemon:exp_candy_s": [
+"cobblemon/recipe/campfire_pot/exp_candy_s",
+"cobblemon/recipe/exp_candy_s_from_exp_candy_m"
+],
+"cobblemon:exp_candy_xl": [
+"cobblemon/recipe/campfire_pot/exp_candy_xl"
+],
+"cobblemon:exp_candy_xs": [
+"cobblemon/recipe/campfire_pot/exp_candy_xs",
+"cobblemon/recipe/exp_candy_xs_from_exp_candy_s"
+],
+"cobblemon:exp_share": [
+"cobblemon/recipe/exp_share"
+],
+"cobblemon:expert_belt": [
+"cobblemon/recipe/expert_belt"
+],
+"cobblemon:fairy_feather": [
+"cobblemon/recipe/fairy_feather"
+],
+"cobblemon:fast_ball": [
+"cobblemon/recipe/fast_ball"
+],
+"cobblemon:fast_rod": [
+"cobblemon/recipe/fast_rod"
+],
+"cobblemon:fine_remedy": [
+"cobblemon/recipe/fine_remedy"
+],
+"cobblemon:fire_stone": [
+"cobblemon/recipe/fire_stone_from_blasting_deepslate_fire_stone_ore",
+"cobblemon/recipe/fire_stone_from_blasting_fire_stone_ore",
+"cobblemon/recipe/fire_stone_from_blasting_nether_fire_stone_ore",
+"cobblemon/recipe/fire_stone_from_block",
+"cobblemon/recipe/fire_stone_from_smelting_deepslate_fire_stone_ore",
+"cobblemon/recipe/fire_stone_from_smelting_fire_stone_ore",
+"cobblemon/recipe/fire_stone_from_smelting_nether_fire_stone_ore",
+"minecraft/recipe/fire_stone_blasting",
+"minecraft/recipe/fire_stone_smelting"
+],
+"cobblemon:fire_stone_block": [
+"cobblemon/recipe/fire_stone_block"
+],
+"cobblemon:flame_orb": [
+"cobblemon/recipe/flame_orb"
+],
+"cobblemon:flower_sweet": [
+"cobblemon/recipe/campfire_pot/flower_sweet"
+],
+"cobblemon:focus_band": [
+"cobblemon/recipe/focus_band"
+],
+"cobblemon:focus_sash": [
+"cobblemon/recipe/focus_sash"
+],
+"cobblemon:fossil_analyzer": [
+"cobblemon/recipe/fossil_analyzer"
+],
+"cobblemon:fresh_start_mochi": [
+"cobblemon/recipe/campfire_pot/fresh_start_mochi"
+],
+"cobblemon:friend_ball": [
+"cobblemon/recipe/friend_ball"
+],
+"cobblemon:friend_rod": [
+"cobblemon/recipe/friend_rod"
+],
+"cobblemon:full_heal": [
+"cobblemon/recipe/brewing_stand/lum_full_heal_in_brewing_stand",
+"cobblemon/recipe/brewing_stand/pep_up_full_heal_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/lum_full_heal_in_campfire_pot",
+"cobblemon/recipe/campfire_pot/pep_up_full_heal_in_campfire_pot"
+],
+"cobblemon:full_restore": [
+"cobblemon/recipe/brewing_stand/full_restore_in_brewing_stand"
+],
+"cobblemon:galarica_cuff": [
+"cobblemon/recipe/galarica_cuff"
+],
+"cobblemon:galarica_wreath": [
+"cobblemon/recipe/galarica_wreath"
+],
+"cobblemon:genius_feather": [
+"cobblemon/recipe/genius_feather"
+],
+"cobblemon:genius_mochi": [
+"cobblemon/recipe/campfire_pot/genius_mochi"
+],
+"cobblemon:gentle_mint": [
+"cobblemon/recipe/gentle_mint"
+],
+"cobblemon:gilded_chest": [
+"cobblemon/recipe/gilded_chest"
+],
+"cobblemon:grassy_seed": [
+"mega_showdown/recipe/grassy_seed"
+],
+"cobblemon:gray_plaque": [
+"cobblemon/recipe/gray_plaque",
+"cobblemon/recipe/gray_plaque_redye"
+],
+"cobblemon:great_ball": [
+"cobblemon/recipe/great_ball"
+],
+"cobblemon:great_rod": [
+"cobblemon/recipe/great_rod"
+],
+"cobblemon:green_gilded_chest": [
+"cobblemon/recipe/green_gilded_chest"
+],
+"cobblemon:green_plaque": [
+"cobblemon/recipe/green_plaque",
+"cobblemon/recipe/green_plaque_redye"
+],
+"cobblemon:growth_mulch": [
+"cobblemon/recipe/growth_mulch"
+],
+"cobblemon:guard_spec": [
+"cobblemon/recipe/campfire_pot/guard_spec"
+],
+"cobblemon:hard_stone": [
+"cobblemon/recipe/hard_stone"
+],
+"cobblemon:hasty_mint": [
+"cobblemon/recipe/hasty_mint"
+],
+"cobblemon:heal_ball": [
+"cobblemon/recipe/heal_ball"
+],
+"cobblemon:heal_powder": [
+"cobblemon/recipe/heal_powder"
+],
+"cobblemon:heal_rod": [
+"cobblemon/recipe/heal_rod"
+],
+"cobblemon:healing_machine": [
+"cobblemon/recipe/healing_machine"
+],
+"cobblemon:health_candy": [
+"cobblemon/recipe/campfire_pot/health_candy_l",
+"cobblemon/recipe/campfire_pot/health_candy_xl"
+],
+"cobblemon:health_feather": [
+"cobblemon/recipe/health_feather"
+],
+"cobblemon:health_mochi": [
+"cobblemon/recipe/campfire_pot/health_mochi"
+],
+"cobblemon:hearty_grain_bale": [
+"cobblemon/recipe/hearty_grain_bale"
+],
+"cobblemon:hearty_grains": [
+"cobblemon/recipe/hearty_grains_from_bale"
+],
+"cobblemon:heat_rock": [
+"cobblemon/recipe/heat_rock"
+],
+"cobblemon:heavy_ball": [
+"cobblemon/recipe/heavy_ball"
+],
+"cobblemon:heavy_duty_boots": [
+"cobblemon/recipe/heavy_duty_boots"
+],
+"cobblemon:heavy_rod": [
+"cobblemon/recipe/heavy_rod"
+],
+"cobblemon:hp_up": [
+"cobblemon/recipe/brewing_stand/hp_up_in_brewing_stand"
+],
+"cobblemon:humid_mulch": [
+"cobblemon/recipe/humid_mulch"
+],
+"cobblemon:hyper_potion": [
+"cobblemon/recipe/brewing_stand/hyper_potion_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/hyper_potion_in_campfire_pot"
+],
+"cobblemon:ice_heal": [
+"cobblemon/recipe/brewing_stand/ice_heal_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/ice_heal_in_campfire_pot"
+],
+"cobblemon:ice_stone": [
+"cobblemon/recipe/ice_stone_from_blasting_deepslate_ice_stone_ore",
+"cobblemon/recipe/ice_stone_from_blasting_ice_stone_ore",
+"cobblemon/recipe/ice_stone_from_block",
+"cobblemon/recipe/ice_stone_from_smelting_deepslate_ice_stone_ore",
+"cobblemon/recipe/ice_stone_from_smelting_ice_stone_ore",
+"minecraft/recipe/ice_stone_blasting",
+"minecraft/recipe/ice_stone_smelting"
+],
+"cobblemon:ice_stone_block": [
+"cobblemon/recipe/ice_stone_block"
+],
+"cobblemon:icy_rock": [
+"cobblemon/recipe/icy_rock"
+],
+"cobblemon:impish_mint": [
+"cobblemon/recipe/impish_mint"
+],
+"cobblemon:iron": [
+"cobblemon/recipe/brewing_stand/iron_in_brewing_stand"
+],
+"cobblemon:iron_ball": [
+"cobblemon/recipe/iron_ball"
+],
+"cobblemon:jolly_mint": [
+"cobblemon/recipe/jolly_mint"
+],
+"cobblemon:jubilife_muffin": [
+"cobblemon/recipe/campfire_pot/jubilife_muffin"
+],
+"cobblemon:kings_rock": [
+"cobblemon/recipe/kings_rock"
+],
+"cobblemon:lava_cookie": [
+"cobblemon/recipe/campfire_pot/lava_cookie"
+],
+"cobblemon:lax_mint": [
+"cobblemon/recipe/lax_mint"
+],
+"cobblemon:leaf_stone": [
+"cobblemon/recipe/leaf_stone_from_blasting_deepslate_leaf_stone_ore",
+"cobblemon/recipe/leaf_stone_from_blasting_leaf_stone_ore",
+"cobblemon/recipe/leaf_stone_from_block",
+"cobblemon/recipe/leaf_stone_from_smelting_deepslate_leaf_stone_ore",
+"cobblemon/recipe/leaf_stone_from_smelting_leaf_stone_ore",
+"minecraft/recipe/leaf_stone_blasting",
+"minecraft/recipe/leaf_stone_smelting"
+],
+"cobblemon:leaf_stone_block": [
+"cobblemon/recipe/leaf_stone_block"
+],
+"cobblemon:leek_and_potato_stew": [
+"cobblemon/recipe/campfire_pot/leek_and_potato_stew_in_campfire_pot",
+"cobblemon/recipe/leek_and_potato_stew"
+],
+"cobblemon:level_ball": [
+"cobblemon/recipe/level_ball"
+],
+"cobblemon:level_rod": [
+"cobblemon/recipe/level_rod"
+],
+"cobblemon:life_orb": [
+"cobblemon/recipe/life_orb"
+],
+"cobblemon:light_blue_plaque": [
+"cobblemon/recipe/light_blue_plaque",
+"cobblemon/recipe/light_blue_plaque_redye"
+],
+"cobblemon:light_clay": [
+"cobblemon/recipe/light_clay"
+],
+"cobblemon:light_gray_plaque": [
+"cobblemon/recipe/light_gray_plaque",
+"cobblemon/recipe/light_gray_plaque_redye"
+],
+"cobblemon:lime_plaque": [
+"cobblemon/recipe/lime_plaque",
+"cobblemon/recipe/lime_plaque_redye"
+],
+"cobblemon:link_cable": [
+"cobblemon/recipe/link_cable"
+],
+"cobblemon:loaded_dice": [
+"cobblemon/recipe/loaded_dice"
+],
+"cobblemon:loamy_mulch": [
+"cobblemon/recipe/loamy_mulch"
+],
+"cobblemon:lonely_mint": [
+"cobblemon/recipe/lonely_mint"
+],
+"cobblemon:love_ball": [
+"cobblemon/recipe/love_ball"
+],
+"cobblemon:love_rod": [
+"cobblemon/recipe/love_rod"
+],
+"cobblemon:love_sweet": [
+"cobblemon/recipe/campfire_pot/love_sweet"
+],
+"cobblemon:luminous_moss": [
+"cobblemon/recipe/luminous_moss"
+],
+"cobblemon:lumiose_galette": [
+"cobblemon/recipe/campfire_pot/lumiose_galette"
+],
+"cobblemon:lure_ball": [
+"cobblemon/recipe/lure_ball"
+],
+"cobblemon:lure_rod": [
+"cobblemon/recipe/lure_rod"
+],
+"cobblemon:luxury_ball": [
+"cobblemon/recipe/luxury_ball"
+],
+"cobblemon:luxury_rod": [
+"cobblemon/recipe/luxury_rod"
+],
+"cobblemon:magenta_plaque": [
+"cobblemon/recipe/magenta_plaque",
+"cobblemon/recipe/magenta_plaque_redye"
+],
+"cobblemon:magmarizer": [
+"cobblemon/recipe/magmarizer"
+],
+"cobblemon:magnet": [
+"cobblemon/recipe/magnet"
+],
+"cobblemon:master_ball": [
+"cobblemon/recipe/master_ball"
+],
+"cobblemon:master_rod": [
+"cobblemon/recipe/master_rod"
+],
+"cobblemon:masterpiece_teacup": [
+"cobblemon/recipe/masterpiece_teacup"
+],
+"cobblemon:max_elixir": [
+"cobblemon/recipe/brewing_stand/max_elixir_in_brewing_stand"
+],
+"cobblemon:max_ether": [
+"cobblemon/recipe/brewing_stand/max_ether_in_brewing_stand"
+],
+"cobblemon:max_potion": [
+"cobblemon/recipe/brewing_stand/max_potion_in_brewing_stand"
+],
+"cobblemon:max_revive": [
+"cobblemon/recipe/campfire_pot/max_revive"
+],
+"cobblemon:medicinal_brew": [
+"cobblemon/recipe/brewing_stand/medicinal_brew_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/medicinal_brew_in_campfire_pot"
+],
+"cobblemon:metal_coat": [
+"cobblemon/recipe/metal_coat"
+],
+"cobblemon:metronome": [
+"cobblemon/recipe/metronome"
+],
+"cobblemon:mighty_candy": [
+"cobblemon/recipe/campfire_pot/mighty_candy_l",
+"cobblemon/recipe/campfire_pot/mighty_candy_xl"
+],
+"cobblemon:mild_mint": [
+"cobblemon/recipe/mild_mint"
+],
+"cobblemon:miracle_seed": [
+"cobblemon/recipe/miracle_seed"
+],
+"cobblemon:misty_seed": [
+"mega_showdown/recipe/misty_seed"
+],
+"cobblemon:modest_mint": [
+"cobblemon/recipe/modest_mint"
+],
+"cobblemon:monitor": [
+"cobblemon/recipe/monitor"
+],
+"cobblemon:moon_ball": [
+"cobblemon/recipe/moon_ball"
+],
+"cobblemon:moon_rod": [
+"cobblemon/recipe/moon_rod"
+],
+"cobblemon:moon_stone": [
+"cobblemon/recipe/moon_stone_from_blasting_deepslate_moon_stone_ore",
+"cobblemon/recipe/moon_stone_from_blasting_dripstone_moon_stone_ore",
+"cobblemon/recipe/moon_stone_from_blasting_moon_stone_ore",
+"cobblemon/recipe/moon_stone_from_block",
+"cobblemon/recipe/moon_stone_from_smelting_deepslate_moon_stone_ore",
+"cobblemon/recipe/moon_stone_from_smelting_dripstone_moon_stone_ore",
+"cobblemon/recipe/moon_stone_from_smelting_moon_stone_ore",
+"minecraft/recipe/moon_stone_blasting",
+"minecraft/recipe/moon_stone_smelting"
+],
+"cobblemon:moon_stone_block": [
+"cobblemon/recipe/moon_stone_block"
+],
+"cobblemon:mulch_base": [
+"cobblemon/recipe/mulch_base"
+],
+"cobblemon:muscle_band": [
+"cobblemon/recipe/muscle_band"
+],
+"cobblemon:muscle_feather": [
+"cobblemon/recipe/muscle_feather"
+],
+"cobblemon:muscle_mochi": [
+"cobblemon/recipe/campfire_pot/muscle_mochi"
+],
+"cobblemon:mystic_water": [
+"cobblemon/recipe/mystic_water"
+],
+"cobblemon:naive_mint": [
+"cobblemon/recipe/naive_mint"
+],
+"cobblemon:naughty_mint": [
+"cobblemon/recipe/naughty_mint"
+],
+"cobblemon:nest_ball": [
+"cobblemon/recipe/nest_ball"
+],
+"cobblemon:nest_rod": [
+"cobblemon/recipe/nest_rod"
+],
+"cobblemon:net_ball": [
+"cobblemon/recipe/net_ball"
+],
+"cobblemon:net_rod": [
+"cobblemon/recipe/net_rod"
+],
+"cobblemon:never_melt_ice": [
+"cobblemon/recipe/never_melt_ice"
+],
+"cobblemon:numb_candy": [
+"cobblemon/recipe/campfire_pot/numb_candy_l",
+"cobblemon/recipe/campfire_pot/numb_candy_xl"
+],
+"cobblemon:old_gateau": [
+"cobblemon/recipe/campfire_pot/old_gateau"
+],
+"cobblemon:open_faced_sandwich": [
+"cobblemon/recipe/campfire_pot/open_faced_sandwich"
+],
+"cobblemon:orange_plaque": [
+"cobblemon/recipe/orange_plaque",
+"cobblemon/recipe/orange_plaque_redye"
+],
+"cobblemon:paralyze_heal": [
+"cobblemon/recipe/brewing_stand/paralyze_heal_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/paralyze_heal_in_campfire_pot"
+],
+"cobblemon:park_ball": [
+"cobblemon/recipe/park_ball"
+],
+"cobblemon:park_rod": [
+"cobblemon/recipe/park_rod"
+],
+"cobblemon:pasture": [
+"cobblemon/recipe/pasture"
+],
+"cobblemon:pc": [
+"cobblemon/recipe/pc"
+],
+"cobblemon:peat_block": [
+"cobblemon/recipe/peat_block"
+],
+"cobblemon:peat_mulch": [
+"cobblemon/recipe/peat_mulch"
+],
+"cobblemon:pewter_crunchies": [
+"cobblemon/recipe/campfire_pot/pewter_crunchies"
+],
+"cobblemon:pink_gilded_chest": [
+"cobblemon/recipe/pink_gilded_chest"
+],
+"cobblemon:pink_plaque": [
+"cobblemon/recipe/pink_plaque",
+"cobblemon/recipe/pink_plaque_redye"
+],
+"cobblemon:poison_barb": [
+"cobblemon/recipe/poison_barb"
+],
+"cobblemon:poke_bait": [
+"cobblemon/recipe/campfire_pot/poke_bait"
+],
+"cobblemon:poke_ball": [
+"cobblemon/recipe/poke_ball"
+],
+"cobblemon:poke_cake": [
+"cobblemon/recipe/campfire_pot/poke_cake"
+],
+"cobblemon:poke_rod": [
+"cobblemon/recipe/poke_rod"
+],
+"cobblemon:poke_snack": [
+"cobblemon/recipe/campfire_pot/poke_snack"
+],
+"cobblemon:pokedex_black": [
+"cobblemon/recipe/pokedex_black"
+],
+"cobblemon:pokedex_blue": [
+"cobblemon/recipe/pokedex_blue"
+],
+"cobblemon:pokedex_green": [
+"cobblemon/recipe/pokedex_green"
+],
+"cobblemon:pokedex_pink": [
+"cobblemon/recipe/pokedex_pink"
+],
+"cobblemon:pokedex_red": [
+"cobblemon/recipe/pokedex_red"
+],
+"cobblemon:pokedex_white": [
+"cobblemon/recipe/pokedex_white"
+],
+"cobblemon:pokedex_yellow": [
+"cobblemon/recipe/pokedex_yellow"
+],
+"cobblemon:pokerod_smithing_template": [
+"cobblemon/recipe/pokerod_smithing_template"
+],
+"cobblemon:polished_black_tumblestone": [
+"cobblemon/recipe/polished_black_tumblestone",
+"cobblemon/recipe/polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:polished_black_tumblestone_slab": [
+"cobblemon/recipe/polished_black_tumblestone_slab",
+"cobblemon/recipe/polished_black_tumblestone_slab_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/polished_black_tumblestone_slab_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:polished_black_tumblestone_stairs": [
+"cobblemon/recipe/polished_black_tumblestone_stairs",
+"cobblemon/recipe/polished_black_tumblestone_stairs_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/polished_black_tumblestone_stairs_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:polished_black_tumblestone_wall": [
+"cobblemon/recipe/polished_black_tumblestone_wall",
+"cobblemon/recipe/polished_black_tumblestone_wall_from_black_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/polished_black_tumblestone_wall_from_polished_black_tumblestone_in_stonecutter"
+],
+"cobblemon:polished_sky_tumblestone": [
+"cobblemon/recipe/polished_sky_tumblestone",
+"cobblemon/recipe/polished_sky_tumblestone_in_stonecutter"
+],
+"cobblemon:polished_sky_tumblestone_slab": [
+"cobblemon/recipe/polished_sky_tumblestone_slab",
+"cobblemon/recipe/polished_sky_tumblestone_slab_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/polished_sky_tumblestone_slab_from_sky_tumblestone_block_in_stonecutter"
+],
+"cobblemon:polished_sky_tumblestone_stairs": [
+"cobblemon/recipe/polished_sky_tumblestone_stairs",
+"cobblemon/recipe/polished_sky_tumblestone_stairs_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/polished_sky_tumblestone_stairs_from_sky_tumblestone_block_in_stonecutter"
+],
+"cobblemon:polished_sky_tumblestone_wall": [
+"cobblemon/recipe/polished_sky_tumblestone_wall",
+"cobblemon/recipe/polished_sky_tumblestone_wall_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/polished_sky_tumblestone_wall_from_sky_tumblestone_block_in_stonecutter"
+],
+"cobblemon:polished_tumblestone": [
+"cobblemon/recipe/polished_tumblestone",
+"cobblemon/recipe/polished_tumblestone_in_stonecutter"
+],
+"cobblemon:polished_tumblestone_slab": [
+"cobblemon/recipe/polished_tumblestone_slab",
+"cobblemon/recipe/polished_tumblestone_slab_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/polished_tumblestone_slab_from_tumblestone_block_in_stonecutter"
+],
+"cobblemon:polished_tumblestone_stairs": [
+"cobblemon/recipe/polished_tumblestone_stairs",
+"cobblemon/recipe/polished_tumblestone_stairs_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/polished_tumblestone_stairs_from_tumblestone_block_in_stonecutter"
+],
+"cobblemon:polished_tumblestone_wall": [
+"cobblemon/recipe/polished_tumblestone_wall",
+"cobblemon/recipe/polished_tumblestone_wall_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/polished_tumblestone_wall_from_tumblestone_block_in_stonecutter"
+],
+"cobblemon:ponigiri": [
+"cobblemon/recipe/campfire_pot/ponigiri"
+],
+"cobblemon:potato_mochi": [
+"cobblemon/recipe/campfire_pot/potato_mochi"
+],
+"cobblemon:potion": [
+"cobblemon/recipe/brewing_stand/potion_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/potion_in_campfire_pot"
+],
+"cobblemon:power_anklet": [
+"cobblemon/recipe/power_anklet"
+],
+"cobblemon:power_band": [
+"cobblemon/recipe/power_band"
+],
+"cobblemon:power_belt": [
+"cobblemon/recipe/power_belt"
+],
+"cobblemon:power_bracer": [
+"cobblemon/recipe/power_bracer"
+],
+"cobblemon:power_lens": [
+"cobblemon/recipe/power_lens"
+],
+"cobblemon:power_weight": [
+"cobblemon/recipe/power_weight"
+],
+"cobblemon:pp_max": [
+"cobblemon/recipe/brewing_stand/pp_max_in_brewing_stand"
+],
+"cobblemon:pp_up": [
+"cobblemon/recipe/brewing_stand/pp_up_in_brewing_stand"
+],
+"cobblemon:premier_ball": [
+"cobblemon/recipe/premier_ball"
+],
+"cobblemon:premier_rod": [
+"cobblemon/recipe/premier_rod"
+],
+"cobblemon:protective_pads": [
+"cobblemon/recipe/protective_pads"
+],
+"cobblemon:protector": [
+"cobblemon/recipe/protector"
+],
+"cobblemon:protein": [
+"cobblemon/recipe/brewing_stand/protein_in_brewing_stand"
+],
+"cobblemon:psychic_seed": [
+"mega_showdown/recipe/psychic_seed"
+],
+"cobblemon:punching_glove": [
+"cobblemon/recipe/punching_glove"
+],
+"cobblemon:purple_plaque": [
+"cobblemon/recipe/purple_plaque",
+"cobblemon/recipe/purple_plaque_redye"
+],
+"cobblemon:quick_ball": [
+"cobblemon/recipe/quick_ball"
+],
+"cobblemon:quick_candy": [
+"cobblemon/recipe/campfire_pot/quick_candy_l",
+"cobblemon/recipe/campfire_pot/quick_candy_xl"
+],
+"cobblemon:quick_rod": [
+"cobblemon/recipe/quick_rod"
+],
+"cobblemon:quiet_mint": [
+"cobblemon/recipe/quiet_mint"
+],
+"cobblemon:rage_candy_bar": [
+"cobblemon/recipe/campfire_pot/rage_candy_bar"
+],
+"cobblemon:rash_mint": [
+"cobblemon/recipe/rash_mint"
+],
+"cobblemon:reaper_cloth": [
+"cobblemon/recipe/reaper_cloth"
+],
+"cobblemon:red_card": [
+"cobblemon/recipe/red_card"
+],
+"cobblemon:red_plaque": [
+"cobblemon/recipe/red_plaque",
+"cobblemon/recipe/red_plaque_redye"
+],
+"cobblemon:relaxed_mint": [
+"cobblemon/recipe/relaxed_mint"
+],
+"cobblemon:relic_coin": [
+"cobblemon/recipe/relic_coin_from_pouch"
+],
+"cobblemon:relic_coin_pouch": [
+"cobblemon/recipe/relic_pouch_from_coin",
+"cobblemon/recipe/relic_pouch_from_relic_sack"
+],
+"cobblemon:relic_coin_sack": [
+"cobblemon/recipe/relic_coin_sack"
+],
+"cobblemon:remedy": [
+"cobblemon/recipe/remedy"
+],
+"cobblemon:repeat_ball": [
+"cobblemon/recipe/repeat_ball"
+],
+"cobblemon:repeat_rod": [
+"cobblemon/recipe/repeat_rod"
+],
+"cobblemon:resist_feather": [
+"cobblemon/recipe/resist_feather"
+],
+"cobblemon:resist_mochi": [
+"cobblemon/recipe/campfire_pot/resist_mochi"
+],
+"cobblemon:restoration_tank": [
+"cobblemon/recipe/restoration_tank"
+],
+"cobblemon:revive": [
+"cobblemon/recipe/campfire_pot/revive"
+],
+"cobblemon:ribbon_sweet": [
+"cobblemon/recipe/campfire_pot/ribbon_sweet"
+],
+"cobblemon:rich_mulch": [
+"cobblemon/recipe/rich_mulch"
+],
+"cobblemon:ring_target": [
+"cobblemon/recipe/ring_target"
+],
+"cobblemon:roasted_leek": [
+"cobblemon/recipe/roasted_leek",
+"cobblemon/recipe/roasted_leek_by_campfire",
+"cobblemon/recipe/roasted_leek_by_smoking"
+],
+"cobblemon:rocky_helmet": [
+"cobblemon/recipe/rocky_helmet"
+],
+"cobblemon:room_service": [
+"cobblemon/recipe/room_service"
+],
+"cobblemon:roseate_ball": [
+"cobblemon/recipe/roseate_ball"
+],
+"cobblemon:roseate_rod": [
+"cobblemon/recipe/roseate_rod"
+],
+"cobblemon:saccharine_boat": [
+"cobblemon/recipe/saccharine_boat"
+],
+"cobblemon:saccharine_button": [
+"cobblemon/recipe/saccharine_button"
+],
+"cobblemon:saccharine_chest_boat": [
+"cobblemon/recipe/saccharine_chest_boat"
+],
+"cobblemon:saccharine_door": [
+"cobblemon/recipe/saccharine_door"
+],
+"cobblemon:saccharine_fence": [
+"cobblemon/recipe/saccharine_fence"
+],
+"cobblemon:saccharine_fence_gate": [
+"cobblemon/recipe/saccharine_fence_gate"
+],
+"cobblemon:saccharine_hanging_sign": [
+"cobblemon/recipe/saccharine_hanging_sign"
+],
+"cobblemon:saccharine_planks": [
+"cobblemon/recipe/saccharine_planks"
+],
+"cobblemon:saccharine_pressure_plate": [
+"cobblemon/recipe/saccharine_pressure_plate"
+],
+"cobblemon:saccharine_sign": [
+"cobblemon/recipe/saccharine_sign"
+],
+"cobblemon:saccharine_slab": [
+"cobblemon/recipe/saccharine_slab"
+],
+"cobblemon:saccharine_stairs": [
+"cobblemon/recipe/saccharine_stairs"
+],
+"cobblemon:saccharine_trapdoor": [
+"cobblemon/recipe/saccharine_trapdoor"
+],
+"cobblemon:saccharine_wood": [
+"cobblemon/recipe/saccharine_wood"
+],
+"cobblemon:sachet": [
+"cobblemon/recipe/sachet"
+],
+"cobblemon:safari_ball": [
+"cobblemon/recipe/safari_ball"
+],
+"cobblemon:safari_rod": [
+"cobblemon/recipe/safari_rod"
+],
+"cobblemon:safety_goggles": [
+"cobblemon/recipe/safety_goggles"
+],
+"cobblemon:sandy_mulch": [
+"cobblemon/recipe/sandy_mulch"
+],
+"cobblemon:sassy_mint": [
+"cobblemon/recipe/sassy_mint"
+],
+"cobblemon:scope_lens": [
+"cobblemon/recipe/scope_lens"
+],
+"cobblemon:serious_mint": [
+"cobblemon/recipe/serious_mint"
+],
+"cobblemon:shell_bell": [
+"cobblemon/recipe/shell_bell"
+],
+"cobblemon:shiny_stone": [
+"cobblemon/recipe/shiny_stone_from_blasting_deepslate_shiny_stone_ore",
+"cobblemon/recipe/shiny_stone_from_blasting_shiny_stone_ore",
+"cobblemon/recipe/shiny_stone_from_block",
+"cobblemon/recipe/shiny_stone_from_smelting_deepslate_shiny_stone_ore",
+"cobblemon/recipe/shiny_stone_from_smelting_shiny_stone_ore",
+"minecraft/recipe/shiny_stone_blasting",
+"minecraft/recipe/shiny_stone_smelting"
+],
+"cobblemon:shiny_stone_block": [
+"cobblemon/recipe/shiny_stone_block"
+],
+"cobblemon:sickly_candy": [
+"cobblemon/recipe/campfire_pot/sickly_candy_l",
+"cobblemon/recipe/campfire_pot/sickly_candy_xl"
+],
+"cobblemon:silk_scarf": [
+"cobblemon/recipe/silk_scarf"
+],
+"cobblemon:silver_powder": [
+"cobblemon/recipe/silver_powder"
+],
+"cobblemon:sinister_tea": [
+"cobblemon/recipe/campfire_pot/sinister_tea",
+"cobblemon/recipe/campfire_pot/sinister_tea_with_masterpiece_teacup",
+"cobblemon/recipe/campfire_pot/sinister_tea_with_unremarkable_teacup"
+],
+"cobblemon:sky_tumblestone": [
+"cobblemon/recipe/sky_tumblestone"
+],
+"cobblemon:sky_tumblestone_block": [
+"cobblemon/recipe/sky_tumblestone_block"
+],
+"cobblemon:sky_tumblestone_brick_slab": [
+"cobblemon/recipe/sky_tumblestone_brick_slab",
+"cobblemon/recipe/sky_tumblestone_brick_slab_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_brick_slab_from_sky_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_brick_slab_from_sky_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:sky_tumblestone_brick_stairs": [
+"cobblemon/recipe/sky_tumblestone_brick_stairs",
+"cobblemon/recipe/sky_tumblestone_brick_stairs_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_brick_stairs_from_sky_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_brick_stairs_from_sky_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:sky_tumblestone_brick_wall": [
+"cobblemon/recipe/sky_tumblestone_brick_wall",
+"cobblemon/recipe/sky_tumblestone_brick_wall_from_polished_sky_tumblestone_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_brick_wall_from_sky_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_brick_wall_from_sky_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:sky_tumblestone_bricks": [
+"cobblemon/recipe/sky_tumblestone_bricks",
+"cobblemon/recipe/sky_tumblestone_bricks_from_sky_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/sky_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:slate_ball": [
+"cobblemon/recipe/slate_ball"
+],
+"cobblemon:slate_rod": [
+"cobblemon/recipe/slate_rod"
+],
+"cobblemon:slow_candy": [
+"cobblemon/recipe/campfire_pot/slow_candy_l",
+"cobblemon/recipe/campfire_pot/slow_candy_xl"
+],
+"cobblemon:smart_candy": [
+"cobblemon/recipe/campfire_pot/smart_candy_l",
+"cobblemon/recipe/campfire_pot/smart_candy_xl"
+],
+"cobblemon:smoked_tail_curry": [
+"cobblemon/recipe/campfire_pot/smoked_tail_curry"
+],
+"cobblemon:smooth_black_tumblestone": [
+"cobblemon/recipe/smooth_black_tumblestone"
+],
+"cobblemon:smooth_black_tumblestone_slab": [
+"cobblemon/recipe/smooth_black_tumblestone_slab",
+"cobblemon/recipe/smooth_black_tumblestone_slab_from_stonecutter"
+],
+"cobblemon:smooth_black_tumblestone_stairs": [
+"cobblemon/recipe/smooth_black_tumblestone_stairs",
+"cobblemon/recipe/smooth_black_tumblestone_stairs_from_stonecutter"
+],
+"cobblemon:smooth_rock": [
+"cobblemon/recipe/smooth_rock"
+],
+"cobblemon:smooth_sky_tumblestone": [
+"cobblemon/recipe/smooth_sky_tumblestone"
+],
+"cobblemon:smooth_sky_tumblestone_slab": [
+"cobblemon/recipe/smooth_sky_tumblestone_slab",
+"cobblemon/recipe/smooth_sky_tumblestone_slab_from_stonecutter"
+],
+"cobblemon:smooth_sky_tumblestone_stairs": [
+"cobblemon/recipe/smooth_sky_tumblestone_stairs",
+"cobblemon/recipe/smooth_sky_tumblestone_stairs_from_stonecutter"
+],
+"cobblemon:smooth_tumblestone": [
+"cobblemon/recipe/smooth_tumblestone"
+],
+"cobblemon:smooth_tumblestone_slab": [
+"cobblemon/recipe/smooth_tumblestone_slab",
+"cobblemon/recipe/smooth_tumblestone_slab_from_stonecutter"
+],
+"cobblemon:smooth_tumblestone_stairs": [
+"cobblemon/recipe/smooth_tumblestone_stairs",
+"cobblemon/recipe/smooth_tumblestone_stairs_from_stonecutter"
+],
+"cobblemon:soft_sand": [
+"cobblemon/recipe/soft_sand"
+],
+"cobblemon:soothe_bell": [
+"cobblemon/recipe/soothe_bell"
+],
+"cobblemon:spell_tag": [
+"cobblemon/recipe/spell_tag"
+],
+"cobblemon:sport_ball": [
+"cobblemon/recipe/sport_ball"
+],
+"cobblemon:sport_rod": [
+"cobblemon/recipe/sport_rod"
+],
+"cobblemon:star_sweet": [
+"cobblemon/recipe/campfire_pot/star_sweet"
+],
+"cobblemon:strawberry_sweet": [
+"cobblemon/recipe/campfire_pot/strawberry_sweet"
+],
+"cobblemon:stripped_apricorn_wood": [
+"cobblemon/recipe/stripped_apricorn_wood"
+],
+"cobblemon:sun_stone": [
+"cobblemon/recipe/sun_stone_from_blasting_deepslate_sun_stone_ore",
+"cobblemon/recipe/sun_stone_from_blasting_sun_stone_ore",
+"cobblemon/recipe/sun_stone_from_blasting_terracotta_sun_stone_ore",
+"cobblemon/recipe/sun_stone_from_block",
+"cobblemon/recipe/sun_stone_from_smelting_deepslate_sun_stone_ore",
+"cobblemon/recipe/sun_stone_from_smelting_sun_stone_ore",
+"cobblemon/recipe/sun_stone_from_smelting_terracotta_sun_stone_ore",
+"minecraft/recipe/sun_stone_blasting",
+"minecraft/recipe/sun_stone_smelting"
+],
+"cobblemon:sun_stone_block": [
+"cobblemon/recipe/sun_stone_block"
+],
+"cobblemon:super_potion": [
+"cobblemon/recipe/brewing_stand/super_potion_in_brewing_stand",
+"cobblemon/recipe/campfire_pot/super_potion_in_campfire_pot"
+],
+"cobblemon:superb_remedy": [
+"cobblemon/recipe/superb_remedy",
+"cobblemon/recipe/superb_remedy_2"
+],
+"cobblemon:surprise_mulch": [
+"cobblemon/recipe/surprise_mulch"
+],
+"cobblemon:swift_feather": [
+"cobblemon/recipe/swift_feather"
+],
+"cobblemon:swift_mochi": [
+"cobblemon/recipe/campfire_pot/swift_mochi"
+],
+"cobblemon:tatami_block": [
+"cobblemon/recipe/tatami_block"
+],
+"cobblemon:tatami_mat": [
+"cobblemon/recipe/tatami_mat"
+],
+"cobblemon:terrain_extender": [
+"cobblemon/recipe/terrain_extender"
+],
+"cobblemon:throat_spray": [
+"cobblemon/recipe/brewing_stand/throat_spray_in_brewing_stand"
+],
+"cobblemon:thunder_stone": [
+"cobblemon/recipe/thunder_stone_from_blasting_deepslate_thunder_stone_ore",
+"cobblemon/recipe/thunder_stone_from_blasting_thunder_stone_ore",
+"cobblemon/recipe/thunder_stone_from_block",
+"cobblemon/recipe/thunder_stone_from_smelting_deepslate_thunder_stone_ore",
+"cobblemon/recipe/thunder_stone_from_smelting_thunder_stone_ore",
+"minecraft/recipe/thunder_stone_blasting",
+"minecraft/recipe/thunder_stone_smelting"
+],
+"cobblemon:thunder_stone_block": [
+"cobblemon/recipe/thunder_stone_block"
+],
+"cobblemon:timer_ball": [
+"cobblemon/recipe/timer_ball"
+],
+"cobblemon:timer_rod": [
+"cobblemon/recipe/timer_rod"
+],
+"cobblemon:timid_mint": [
+"cobblemon/recipe/timid_mint"
+],
+"cobblemon:tough_candy": [
+"cobblemon/recipe/campfire_pot/tough_candy_l",
+"cobblemon/recipe/campfire_pot/tough_candy_xl"
+],
+"cobblemon:toxic_orb": [
+"cobblemon/recipe/toxic_orb"
+],
+"cobblemon:tumblestone": [
+"cobblemon/recipe/tumblestone"
+],
+"cobblemon:tumblestone_block": [
+"cobblemon/recipe/tumblestone_block"
+],
+"cobblemon:tumblestone_brick_slab": [
+"cobblemon/recipe/tumblestone_brick_slab",
+"cobblemon/recipe/tumblestone_brick_slab_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/tumblestone_brick_slab_from_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/tumblestone_brick_slab_from_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:tumblestone_brick_stairs": [
+"cobblemon/recipe/tumblestone_brick_stairs",
+"cobblemon/recipe/tumblestone_brick_stairs_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/tumblestone_brick_stairs_from_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/tumblestone_brick_stairs_from_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:tumblestone_brick_wall": [
+"cobblemon/recipe/tumblestone_brick_wall",
+"cobblemon/recipe/tumblestone_brick_wall_from_polished_tumblestone_in_stonecutter",
+"cobblemon/recipe/tumblestone_brick_wall_from_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/tumblestone_brick_wall_from_tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:tumblestone_bricks": [
+"cobblemon/recipe/tumblestone_bricks",
+"cobblemon/recipe/tumblestone_bricks_from_tumblestone_block_in_stonecutter",
+"cobblemon/recipe/tumblestone_bricks_in_stonecutter"
+],
+"cobblemon:twisted_spoon": [
+"cobblemon/recipe/twisted_spoon"
+],
+"cobblemon:ultra_ball": [
+"cobblemon/recipe/ultra_ball"
+],
+"cobblemon:ultra_rod": [
+"cobblemon/recipe/ultra_rod"
+],
+"cobblemon:unremarkable_teacup": [
+"cobblemon/recipe/unremarkable_teacup"
+],
+"cobblemon:upgrade": [
+"cobblemon/recipe/upgrade"
+],
+"cobblemon:utility_umbrella": [
+"cobblemon/recipe/utility_umbrella"
+],
+"cobblemon:verdant_ball": [
+"cobblemon/recipe/verdant_ball"
+],
+"cobblemon:verdant_rod": [
+"cobblemon/recipe/verdant_rod"
+],
+"cobblemon:vivichoke_dip": [
+"cobblemon/recipe/campfire_pot/vivichoke_dip"
+],
+"cobblemon:vivichoke_seeds": [
+"cobblemon/recipe/vivichoke_seeds"
+],
+"cobblemon:water_stone": [
+"cobblemon/recipe/water_stone_from_blasting_deepslate_water_stone_ore",
+"cobblemon/recipe/water_stone_from_blasting_water_stone_ore",
+"cobblemon/recipe/water_stone_from_block",
+"cobblemon/recipe/water_stone_from_smelting_deepslate_water_stone_ore",
+"cobblemon/recipe/water_stone_from_smelting_water_stone_ore",
+"minecraft/recipe/water_stone_blasting",
+"minecraft/recipe/water_stone_smelting"
+],
+"cobblemon:water_stone_block": [
+"cobblemon/recipe/water_stone_block"
+],
+"cobblemon:weak_candy": [
+"cobblemon/recipe/campfire_pot/weak_candy_l",
+"cobblemon/recipe/campfire_pot/weak_candy_xl"
+],
+"cobblemon:weakness_policy": [
+"cobblemon/recipe/weakness_policy"
+],
+"cobblemon:whipped_dream": [
+"cobblemon/recipe/campfire_pot/whipped_dream"
+],
+"cobblemon:white_gilded_chest": [
+"cobblemon/recipe/white_gilded_chest"
+],
+"cobblemon:white_plaque": [
+"cobblemon/recipe/white_plaque",
+"cobblemon/recipe/white_plaque_redye"
+],
+"cobblemon:wide_lens": [
+"cobblemon/recipe/wide_lens"
+],
+"cobblemon:wise_glasses": [
+"cobblemon/recipe/wise_glasses"
+],
+"cobblemon:x_accuracy": [
+"cobblemon/recipe/campfire_pot/x_accuracy"
+],
+"cobblemon:x_attack": [
+"cobblemon/recipe/campfire_pot/x_attack"
+],
+"cobblemon:x_defence": [
+"cobblemon/recipe/campfire_pot/x_defence"
+],
+"cobblemon:x_special_attack": [
+"cobblemon/recipe/campfire_pot/x_special_attack"
+],
+"cobblemon:x_special_defence": [
+"cobblemon/recipe/campfire_pot/x_special_defence"
+],
+"cobblemon:x_speed": [
+"cobblemon/recipe/campfire_pot/x_speed"
+],
+"cobblemon:yellow_gilded_chest": [
+"cobblemon/recipe/yellow_gilded_chest"
+],
+"cobblemon:yellow_plaque": [
+"cobblemon/recipe/yellow_plaque",
+"cobblemon/recipe/yellow_plaque_redye"
+],
+"cobblemon:zinc": [
+"cobblemon/recipe/brewing_stand/zinc_in_brewing_stand"
+],
+"cobblemon:zoom_lens": [
+"cobblemon/recipe/zoom_lens"
+],
+"legendarymonuments:arc_phone": [
+"legendarymonuments/recipe/arc_phone_recipe"
+],
+"legendarymonuments:azure_flute": [
+"legendarymonuments/recipe/azure_flute_recipe"
+],
+"legendarymonuments:cosmic_bag": [
+"legendarymonuments/recipe/cosmic_bag_craft"
+],
+"legendarymonuments:curry_of_justice": [
+"legendarymonuments/recipe/campfire_pot/curry_of_justice_campfire_pot"
+],
+"legendarymonuments:darkstone": [
+"legendarymonuments/recipe/shards_to_darkstone"
+],
+"legendarymonuments:distortion_button": [
+"legendarymonuments/recipe/distortion_button"
+],
+"legendarymonuments:distortion_cobblestone_bricks": [
+"legendarymonuments/recipe/distortion_cobblestone_bricks"
+],
+"legendarymonuments:distortion_cobblestone_bricks_slab": [
+"legendarymonuments/recipe/distortion_cobblestone_bricks_slab"
+],
+"legendarymonuments:distortion_cobblestone_bricks_stairs": [
+"legendarymonuments/recipe/distortion_cobblestone_bricks_stairs"
+],
+"legendarymonuments:distortion_cobblestone_bricks_wall": [
+"legendarymonuments/recipe/distortion_cobblestone_bricks_wall"
+],
+"legendarymonuments:distortion_deepslate_bricks": [
+"legendarymonuments/recipe/distortion_deepslate_bricks"
+],
+"legendarymonuments:distortion_deepslate_bricks_slab": [
+"legendarymonuments/recipe/distortion_deepslate_bricks_slab"
+],
+"legendarymonuments:distortion_deepslate_bricks_stairs": [
+"legendarymonuments/recipe/distortion_deepslate_bricks_stairs"
+],
+"legendarymonuments:distortion_deepslate_bricks_wall": [
+"legendarymonuments/recipe/distortion_deepslate_bricks_wall"
+],
+"legendarymonuments:distortion_door": [
+"legendarymonuments/recipe/distortion_door"
+],
+"legendarymonuments:distortion_fence": [
+"legendarymonuments/recipe/distortion_fence"
+],
+"legendarymonuments:distortion_fence_gate": [
+"legendarymonuments/recipe/distortion_fence_gate"
+],
+"legendarymonuments:distortion_hanging_sign": [
+"legendarymonuments/recipe/distortion_hanging_sign"
+],
+"legendarymonuments:distortion_planks": [
+"legendarymonuments/recipe/distortion_planks_from_log"
+],
+"legendarymonuments:distortion_portal": [
+"legendarymonuments/recipe/distortion_portal_craft"
+],
+"legendarymonuments:distortion_pressure_plate": [
+"legendarymonuments/recipe/distortion_pressure_plate"
+],
+"legendarymonuments:distortion_sign": [
+"legendarymonuments/recipe/distortion_sign"
+],
+"legendarymonuments:distortion_slab": [
+"legendarymonuments/recipe/distortion_slab"
+],
+"legendarymonuments:distortion_stairs": [
+"legendarymonuments/recipe/distortion_stairs"
+],
+"legendarymonuments:distortion_trapdoor": [
+"legendarymonuments/recipe/distortion_trapdoor"
+],
+"legendarymonuments:dragon_golem_block": [
+"legendarymonuments/recipe/dragon_golem_block"
+],
+"legendarymonuments:dragon_golem_ingot": [
+"legendarymonuments/recipe/dragon_golem_ingot_craft",
+"legendarymonuments/recipe/dragon_golem_ingot_from_block"
+],
+"legendarymonuments:dragon_golem_key": [
+"legendarymonuments/recipe/dragon_golem_key"
+],
+"legendarymonuments:dragon_pauldron": [
+"legendarymonuments/recipe/dragon_pauldron_craft"
+],
+"legendarymonuments:dream_catcher": [
+"legendarymonuments/recipe/dream_catcher_craft"
+],
+"legendarymonuments:electric_golem_block": [
+"legendarymonuments/recipe/electric_golem_block"
+],
+"legendarymonuments:electric_golem_ingot": [
+"legendarymonuments/recipe/electric_golem_ingot_craft",
+"legendarymonuments/recipe/electric_golem_ingot_from_block"
+],
+"legendarymonuments:electric_golem_key": [
+"legendarymonuments/recipe/electric_golem_key"
+],
+"legendarymonuments:electric_pauldron": [
+"legendarymonuments/recipe/electric_pauldron_craft"
+],
+"legendarymonuments:entei_treat": [
+"legendarymonuments/recipe/entei_treat_craft"
+],
+"legendarymonuments:fullmoon_whistle": [
+"legendarymonuments/recipe/fullmoon_whistle_craft"
+],
+"legendarymonuments:galar_particle": [
+"legendarymonuments/recipe/galar_particle_craft"
+],
+"legendarymonuments:galarian_torch": [
+"legendarymonuments/recipe/galarian_torch_craft"
+],
+"legendarymonuments:galarian_urn_of_embers": [
+"legendarymonuments/recipe/galarian_urn_of_embers_craft"
+],
+"legendarymonuments:galarian_urn_of_embers_block": [
+"legendarymonuments/recipe/geub"
+],
+"legendarymonuments:galarian_urn_of_frost": [
+"legendarymonuments/recipe/galarian_urn_of_frost_craft"
+],
+"legendarymonuments:galarian_urn_of_frost_block": [
+"legendarymonuments/recipe/gfub"
+],
+"legendarymonuments:galarian_urn_of_storms": [
+"legendarymonuments/recipe/galarian_urn_of_storms_craft"
+],
+"legendarymonuments:galarian_urn_of_storms_block": [
+"legendarymonuments/recipe/gsub"
+],
+"legendarymonuments:golem_scrap": [
+"legendarymonuments/recipe/golem_scrap",
+"legendarymonuments/recipe/golem_scrap_blasting"
+],
+"legendarymonuments:gs_ball": [
+"legendarymonuments/recipe/gs_ball_craft"
+],
+"legendarymonuments:ice_golem_block": [
+"legendarymonuments/recipe/ice_golem_block"
+],
+"legendarymonuments:ice_golem_ingot": [
+"legendarymonuments/recipe/ice_golem_ingot_craft",
+"legendarymonuments/recipe/ice_golem_ingot_from_block"
+],
+"legendarymonuments:ice_golem_key": [
+"legendarymonuments/recipe/ice_golem_key"
+],
+"legendarymonuments:ice_pauldron": [
+"legendarymonuments/recipe/ice_pauldron_craft"
+],
+"legendarymonuments:latias_treat": [
+"legendarymonuments/recipe/latias_treat_craft"
+],
+"legendarymonuments:latios_treat": [
+"legendarymonuments/recipe/latios_treat_craft"
+],
+"legendarymonuments:lightstone": [
+"legendarymonuments/recipe/shards_to_lightstone"
+],
+"legendarymonuments:magma_stone": [
+"legendarymonuments/recipe/magma_stone_craft"
+],
+"legendarymonuments:meltan_box": [
+"legendarymonuments/recipe/meltan_box_craft"
+],
+"legendarymonuments:newmoon_whistle": [
+"legendarymonuments/recipe/newmoon_whistle_craft"
+],
+"legendarymonuments:origin_block": [
+"legendarymonuments/recipe/origin_block"
+],
+"legendarymonuments:origin_ingot": [
+"legendarymonuments/recipe/origin_ingot",
+"legendarymonuments/recipe/origin_ingot_blasting",
+"legendarymonuments/recipe/origin_ingot_from_block"
+],
+"legendarymonuments:raikou_treat": [
+"legendarymonuments/recipe/raikou_treat_craft"
+],
+"legendarymonuments:rainbow_feather": [
+"legendarymonuments/recipe/rainbow_feather_craft"
+],
+"legendarymonuments:raw_origin": [
+"legendarymonuments/recipe/raw_origin",
+"legendarymonuments/recipe/raw_origin_blasting"
+],
+"legendarymonuments:red_chain": [
+"legendarymonuments/recipe/red_chain"
+],
+"legendarymonuments:rock_golem_block": [
+"legendarymonuments/recipe/rock_golem_block"
+],
+"legendarymonuments:rock_golem_ingot": [
+"legendarymonuments/recipe/rock_golem_ingot_craft",
+"legendarymonuments/recipe/rock_golem_ingot_from_block"
+],
+"legendarymonuments:rock_golem_key": [
+"legendarymonuments/recipe/rock_golem_key"
+],
+"legendarymonuments:rock_pauldron": [
+"legendarymonuments/recipe/rock_pauldron_craft"
+],
+"legendarymonuments:sandstone_pressure_plate": [
+"legendarymonuments/recipe/galar_particle_block_craft",
+"legendarymonuments/recipe/sandstone_pressure_plate"
+],
+"legendarymonuments:steel_golem_block": [
+"legendarymonuments/recipe/steel_golem_block"
+],
+"legendarymonuments:steel_golem_ingot": [
+"legendarymonuments/recipe/steel_golem_ingot_craft",
+"legendarymonuments/recipe/steel_golem_ingot_from_block"
+],
+"legendarymonuments:steel_golem_key": [
+"legendarymonuments/recipe/steel_golem_key"
+],
+"legendarymonuments:steel_pauldron": [
+"legendarymonuments/recipe/steel_pauldron_craft"
+],
+"legendarymonuments:suicune_treat": [
+"legendarymonuments/recipe/suicune_treat_craft"
+],
+"legendarymonuments:suitcase_block": [
+"legendarymonuments/recipe/suitcase_block_craft"
+],
+"legendarymonuments:titan_hammer": [
+"legendarymonuments/recipe/titan_hammer"
+],
+"legendarymonuments:titan_key": [
+"legendarymonuments/recipe/titan_key"
+],
+"legendarymonuments:titan_pauldron": [
+"legendarymonuments/recipe/titan_pauldron_craft"
+],
+"legendarymonuments:urn_of_embers": [
+"legendarymonuments/recipe/urn_of_embers_craft"
+],
+"legendarymonuments:urn_of_embers_block": [
+"legendarymonuments/recipe/eub"
+],
+"legendarymonuments:urn_of_frost": [
+"legendarymonuments/recipe/urn_of_frost_craft"
+],
+"legendarymonuments:urn_of_frost_block": [
+"legendarymonuments/recipe/fub"
+],
+"legendarymonuments:urn_of_storms": [
+"legendarymonuments/recipe/urn_of_storms_craft"
+],
+"legendarymonuments:urn_of_storms_block": [
+"legendarymonuments/recipe/sub"
+],
+"legendarymonuments:vortex_stone": [
+"legendarymonuments/recipe/vortex_stone_craft"
+],
+"mega_showdown:abomasite": [
+"mega_showdown/recipe/abomasite"
+],
+"mega_showdown:absolite": [
+"mega_showdown/recipe/absolite"
+],
+"mega_showdown:adamant_orb": [
+"mega_showdown/recipe/adamant_orb"
+],
+"mega_showdown:adrenaline_orb": [
+"mega_showdown/recipe/adrenaline_orb"
+],
+"mega_showdown:aerodactylite": [
+"mega_showdown/recipe/aerodactylite"
+],
+"mega_showdown:aggronite": [
+"mega_showdown/recipe/aggronite"
+],
+"mega_showdown:alakazite": [
+"mega_showdown/recipe/alakazite"
+],
+"mega_showdown:aloraichium_z": [
+"mega_showdown/recipe/aloraichium_z"
+],
+"mega_showdown:altarianite": [
+"mega_showdown/recipe/altarianite"
+],
+"mega_showdown:ampharosite": [
+"mega_showdown/recipe/ampharosite"
+],
+"mega_showdown:archie_anchor": [
+"mega_showdown/recipe/archie_anchor"
+],
+"mega_showdown:ash_cap": [
+"mega_showdown/recipe/ash_cap"
+],
+"mega_showdown:audinite": [
+"mega_showdown/recipe/audinite"
+],
+"mega_showdown:banettite": [
+"mega_showdown/recipe/banettite"
+],
+"mega_showdown:beedrillite": [
+"mega_showdown/recipe/beedrillite"
+],
+"mega_showdown:blastoisinite": [
+"mega_showdown/recipe/blastoisinite"
+],
+"mega_showdown:blazikenite": [
+"mega_showdown/recipe/blazikenite"
+],
+"mega_showdown:booster_energy": [
+"mega_showdown/recipe/booster_energy"
+],
+"mega_showdown:brendan_mega_cuff": [
+"mega_showdown/recipe/brendan_mega_cuff"
+],
+"mega_showdown:buginium_z": [
+"mega_showdown/recipe/buginium_z"
+],
+"mega_showdown:burn_drive": [
+"mega_showdown/recipe/burn_drive"
+],
+"mega_showdown:cameruptite": [
+"mega_showdown/recipe/cameruptite"
+],
+"mega_showdown:charizardite_x": [
+"mega_showdown/recipe/charizardite_x"
+],
+"mega_showdown:charizardite_y": [
+"mega_showdown/recipe/charizardite_y"
+],
+"mega_showdown:chill_drive": [
+"mega_showdown/recipe/chill_drive"
+],
+"mega_showdown:chiseled_mega_meteorid_block": [
+"mega_showdown/recipe/chiseled_mega_meteorid_block",
+"minecraft/recipe/chiseled_meteor_from_bricks_stonecutting"
+],
+"mega_showdown:chiseled_mega_meteorid_brick": [
+"mega_showdown/recipe/chiseled_mega_meteorid_brick",
+"minecraft/recipe/chiseled_brick_from_bricks_stonecutting"
+],
+"mega_showdown:darkinium_z": [
+"mega_showdown/recipe/darkinium_z"
+],
+"mega_showdown:decidium_z": [
+"mega_showdown/recipe/decidium_z"
+],
+"mega_showdown:diancite": [
+"mega_showdown/recipe/diancite"
+],
+"mega_showdown:dna_splicer": [
+"mega_showdown/recipe/dna_splicer"
+],
+"mega_showdown:douse_drive": [
+"mega_showdown/recipe/douse_drive"
+],
+"mega_showdown:dragonium_z": [
+"mega_showdown/recipe/dragonium_z"
+],
+"mega_showdown:dynamax_band": [
+"mega_showdown/recipe/dynamax_band"
+],
+"mega_showdown:dynamax_candy": [
+"mega_showdown/recipe/dynamax_candy"
+],
+"mega_showdown:eevium_z": [
+"mega_showdown/recipe/eevium_z"
+],
+"mega_showdown:electrium_z": [
+"mega_showdown/recipe/electrium_z"
+],
+"mega_showdown:fairium_z": [
+"mega_showdown/recipe/fairium_z"
+],
+"mega_showdown:fightinium_z": [
+"mega_showdown/recipe/fightinium_z"
+],
+"mega_showdown:firium_z": [
+"mega_showdown/recipe/firium_z"
+],
+"mega_showdown:flyinium_z": [
+"mega_showdown/recipe/flyinium_z"
+],
+"mega_showdown:galladite": [
+"mega_showdown/recipe/galladite"
+],
+"mega_showdown:garchompite": [
+"mega_showdown/recipe/garchompite"
+],
+"mega_showdown:gardevoirite": [
+"mega_showdown/recipe/gardevoirite"
+],
+"mega_showdown:gengarite": [
+"mega_showdown/recipe/gengarite"
+],
+"mega_showdown:ghostium_z": [
+"mega_showdown/recipe/ghostium_z"
+],
+"mega_showdown:gladion_z_power_ring": [
+"mega_showdown/recipe/gladion_z_power_ring"
+],
+"mega_showdown:glalitite": [
+"mega_showdown/recipe/glalitite"
+],
+"mega_showdown:grassium_z": [
+"mega_showdown/recipe/grassium_z"
+],
+"mega_showdown:griseous_orb": [
+"mega_showdown/recipe/griseous_orb"
+],
+"mega_showdown:groundium_z": [
+"mega_showdown/recipe/groundium_z"
+],
+"mega_showdown:gyaradosite": [
+"mega_showdown/recipe/gyaradosite"
+],
+"mega_showdown:hapu_z_power_ring": [
+"mega_showdown/recipe/hapu_z_power_ring"
+],
+"mega_showdown:hapus_z_ring": [
+"mega_showdown/recipe/hapus_z_ring"
+],
+"mega_showdown:heracronite": [
+"mega_showdown/recipe/heracronite"
+],
+"mega_showdown:houndoominite": [
+"mega_showdown/recipe/houndoominite"
+],
+"mega_showdown:icium_z": [
+"mega_showdown/recipe/icium_z"
+],
+"mega_showdown:incinium_z": [
+"mega_showdown/recipe/incinium_z"
+],
+"mega_showdown:kangaskhanite": [
+"mega_showdown/recipe/kangaskhanite"
+],
+"mega_showdown:keystone": [
+"mega_showdown/recipe/keystone"
+],
+"mega_showdown:keystone_block": [
+"mega_showdown/recipe/keystone_block"
+],
+"mega_showdown:kommonium_z": [
+"mega_showdown/recipe/kommonium_z"
+],
+"mega_showdown:korrina_glove": [
+"mega_showdown/recipe/korrina_glove"
+],
+"mega_showdown:latiasite": [
+"mega_showdown/recipe/latiasite"
+],
+"mega_showdown:latiosite": [
+"mega_showdown/recipe/latiosite"
+],
+"mega_showdown:likos_pendant": [
+"mega_showdown/recipe/likos_pendant"
+],
+"mega_showdown:lisia_mega_tiara": [
+"mega_showdown/recipe/lisia_mega_tiara"
+],
+"mega_showdown:lopunnite": [
+"mega_showdown/recipe/lopunnite"
+],
+"mega_showdown:lucarionite": [
+"mega_showdown/recipe/lucarionite"
+],
+"mega_showdown:lunalium_z": [
+"mega_showdown/recipe/lunalium_z"
+],
+"mega_showdown:lustrous_orb": [
+"mega_showdown/recipe/lustrous_orb"
+],
+"mega_showdown:lycanium_z": [
+"mega_showdown/recipe/lycanium_z"
+],
+"mega_showdown:lysandre_ring": [
+"mega_showdown/recipe/lysandre_ring"
+],
+"mega_showdown:manectite": [
+"mega_showdown/recipe/manectite"
+],
+"mega_showdown:marshadium_z": [
+"mega_showdown/recipe/marshadium_z"
+],
+"mega_showdown:mawilite": [
+"mega_showdown/recipe/mawilite"
+],
+"mega_showdown:max_honey": [
+"mega_showdown/recipe/max_honey"
+],
+"mega_showdown:max_soup": [
+"mega_showdown/recipe/max_soup"
+],
+"mega_showdown:maxie_glasses": [
+"mega_showdown/recipe/maxie_glasses"
+],
+"mega_showdown:may_bracelet": [
+"mega_showdown/recipe/may_bracelet"
+],
+"mega_showdown:medichamite": [
+"mega_showdown/recipe/medichamite"
+],
+"mega_showdown:mega_bracelet": [
+"mega_showdown/recipe/mega_bracelet"
+],
+"mega_showdown:mega_bracelet_black": [
+"mega_showdown/recipe/mega_bracelet_black"
+],
+"mega_showdown:mega_bracelet_blue": [
+"mega_showdown/recipe/mega_bracelet_blue"
+],
+"mega_showdown:mega_bracelet_green": [
+"mega_showdown/recipe/mega_bracelet_green"
+],
+"mega_showdown:mega_bracelet_pink": [
+"mega_showdown/recipe/mega_bracelet_pink"
+],
+"mega_showdown:mega_bracelet_red": [
+"mega_showdown/recipe/mega_bracelet_red"
+],
+"mega_showdown:mega_bracelet_yellow": [
+"mega_showdown/recipe/mega_bracelet_yellow"
+],
+"mega_showdown:mega_meteorid_brick": [
+"mega_showdown/recipe/mega_meteorid_brick",
+"minecraft/recipe/meteor_brick_from_polished_stonecutting"
+],
+"mega_showdown:mega_ring": [
+"mega_showdown/recipe/mega_ring"
+],
+"mega_showdown:metagrossite": [
+"mega_showdown/recipe/metagrossite"
+],
+"mega_showdown:mewnium_z": [
+"mega_showdown/recipe/mewnium_z"
+],
+"mega_showdown:mewtwonite_x": [
+"mega_showdown/recipe/mewtwonite_x"
+],
+"mega_showdown:mewtwonite_y": [
+"mega_showdown/recipe/mewtwonite_y"
+],
+"mega_showdown:mimikium_z": [
+"mega_showdown/recipe/mimikium_z"
+],
+"mega_showdown:n_lunarizer": [
+"mega_showdown/recipe/n_lunarizer"
+],
+"mega_showdown:n_solarizer": [
+"mega_showdown/recipe/n_solarizer"
+],
+"mega_showdown:nanu_z_power_ring": [
+"mega_showdown/recipe/nanu_z_power_ring"
+],
+"mega_showdown:normalium_z": [
+"mega_showdown/recipe/normalium_z"
+],
+"mega_showdown:olivia_z_power_ring": [
+"mega_showdown/recipe/olivia_z_power_ring"
+],
+"mega_showdown:olivias_z_ring": [
+"mega_showdown/recipe/olivias_z_ring"
+],
+"mega_showdown:omni_ring": [
+"mega_showdown/recipe/omni_ring"
+],
+"mega_showdown:pedestal": [
+"mega_showdown/recipe/pedestal"
+],
+"mega_showdown:pidgeotite": [
+"mega_showdown/recipe/pidgeotite"
+],
+"mega_showdown:pika_case": [
+"mega_showdown/recipe/pika_case"
+],
+"mega_showdown:pikanium_z": [
+"mega_showdown/recipe/pikanium_z"
+],
+"mega_showdown:pikashunium_z": [
+"mega_showdown/recipe/pikashunium_z"
+],
+"mega_showdown:pink_nectar": [
+"mega_showdown/recipe/pink_nectar"
+],
+"mega_showdown:pinsirite": [
+"mega_showdown/recipe/pinsirite"
+],
+"mega_showdown:poisonium_z": [
+"mega_showdown/recipe/poisonium_z"
+],
+"mega_showdown:polished_mega_meteorid_block": [
+"mega_showdown/recipe/polished_mega_meteorid_block",
+"minecraft/recipe/polished_meteor_from_blasting",
+"minecraft/recipe/polished_meteor_from_block_stonecutting",
+"minecraft/recipe/polished_meteor_from_smelting"
+],
+"mega_showdown:power_spot": [
+"mega_showdown/recipe/power_spot"
+],
+"mega_showdown:primarium_z": [
+"mega_showdown/recipe/primarium_z"
+],
+"mega_showdown:psychium_z": [
+"mega_showdown/recipe/psychium_z"
+],
+"mega_showdown:purple_nectar": [
+"mega_showdown/recipe/purple_nectar"
+],
+"mega_showdown:reassembly_unit": [
+"mega_showdown/recipe/reassembly_unit"
+],
+"mega_showdown:red_nectar": [
+"mega_showdown/recipe/red_nectar"
+],
+"mega_showdown:reins_of_unity": [
+"mega_showdown/recipe/reins_of_unity"
+],
+"mega_showdown:rocket_z_power_ring": [
+"mega_showdown/recipe/rocket_z_power_ring"
+],
+"mega_showdown:rockium_z": [
+"mega_showdown/recipe/rockium_z"
+],
+"mega_showdown:rotom_catalogue": [
+"mega_showdown/recipe/rotom_catalogue"
+],
+"mega_showdown:rotom_fan": [
+"mega_showdown/recipe/rotom_fan"
+],
+"mega_showdown:rotom_fridge": [
+"mega_showdown/recipe/rotom_fridge"
+],
+"mega_showdown:rotom_mow": [
+"mega_showdown/recipe/rotom_mow"
+],
+"mega_showdown:rotom_oven": [
+"mega_showdown/recipe/rotom_oven"
+],
+"mega_showdown:rotom_washing_machine": [
+"mega_showdown/recipe/rotom_washing_machine"
+],
+"mega_showdown:rusted_shield": [
+"legendarymonuments/recipe/rusted_shield"
+],
+"mega_showdown:rusted_sword": [
+"legendarymonuments/recipe/rusted_sword"
+],
+"mega_showdown:sablenite": [
+"mega_showdown/recipe/sablenite"
+],
+"mega_showdown:salamencite": [
+"mega_showdown/recipe/salamencite"
+],
+"mega_showdown:sceptilite": [
+"mega_showdown/recipe/sceptilite"
+],
+"mega_showdown:scizorite": [
+"mega_showdown/recipe/scizorite"
+],
+"mega_showdown:sharpedonite": [
+"mega_showdown/recipe/sharpedonite"
+],
+"mega_showdown:shock_drive": [
+"mega_showdown/recipe/shock_drive"
+],
+"mega_showdown:slowbronite": [
+"mega_showdown/recipe/slowbronite"
+],
+"mega_showdown:snorlium_z": [
+"mega_showdown/recipe/snorlium_z"
+],
+"mega_showdown:solganium_z": [
+"mega_showdown/recipe/solganium_z"
+],
+"mega_showdown:soul_dew": [
+"mega_showdown/recipe/soul_dew"
+],
+"mega_showdown:steelium_z": [
+"mega_showdown/recipe/steelium_z"
+],
+"mega_showdown:steelixite": [
+"mega_showdown/recipe/steelixite"
+],
+"mega_showdown:swampertite": [
+"mega_showdown/recipe/swampertite"
+],
+"mega_showdown:sweet_max_soup": [
+"mega_showdown/recipe/sweet_max_soup"
+],
+"mega_showdown:tapunium_z": [
+"mega_showdown/recipe/tapunium_z"
+],
+"mega_showdown:tera_orb": [
+"mega_showdown/recipe/tera_orb"
+],
+"mega_showdown:tera_pouch_black": [
+"mega_showdown/recipe/tera_pouch_black"
+],
+"mega_showdown:tera_pouch_blue": [
+"mega_showdown/recipe/tera_pouch_blue"
+],
+"mega_showdown:tera_pouch_brown": [
+"mega_showdown/recipe/tera_pouch_brown"
+],
+"mega_showdown:tera_pouch_cyan": [
+"mega_showdown/recipe/tera_pouch_cyan"
+],
+"mega_showdown:tera_pouch_gray": [
+"mega_showdown/recipe/tera_pouch_gray"
+],
+"mega_showdown:tera_pouch_green": [
+"mega_showdown/recipe/tera_pouch_green"
+],
+"mega_showdown:tera_pouch_light_blue": [
+"mega_showdown/recipe/tera_pouch_light_blue"
+],
+"mega_showdown:tera_pouch_light_gray": [
+"mega_showdown/recipe/tera_pouch_light_gray"
+],
+"mega_showdown:tera_pouch_lime": [
+"mega_showdown/recipe/tera_pouch_lime"
+],
+"mega_showdown:tera_pouch_magenta": [
+"mega_showdown/recipe/tera_pouch_magenta"
+],
+"mega_showdown:tera_pouch_orange": [
+"mega_showdown/recipe/tera_pouch_orange"
+],
+"mega_showdown:tera_pouch_pink": [
+"mega_showdown/recipe/tera_pouch_pink"
+],
+"mega_showdown:tera_pouch_purple": [
+"mega_showdown/recipe/tera_pouch_purple"
+],
+"mega_showdown:tera_pouch_red": [
+"mega_showdown/recipe/tera_pouch_red"
+],
+"mega_showdown:tera_pouch_white": [
+"mega_showdown/recipe/tera_pouch_white"
+],
+"mega_showdown:tera_pouch_yellow": [
+"mega_showdown/recipe/tera_pouch_yellow"
+],
+"mega_showdown:tyranitarite": [
+"mega_showdown/recipe/tyranitarite"
+],
+"mega_showdown:ultranecrozium_z": [
+"mega_showdown/recipe/ultranecrozium_z"
+],
+"mega_showdown:venusaurite": [
+"mega_showdown/recipe/venusaurite"
+],
+"mega_showdown:waterium_z": [
+"mega_showdown/recipe/waterium_z"
+],
+"mega_showdown:yellow_nectar": [
+"mega_showdown/recipe/yellow_nectar"
+],
+"mega_showdown:z_power_ring": [
+"mega_showdown/recipe/z_power_ring"
+],
+"mega_showdown:z_ring": [
+"mega_showdown/recipe/z_ring"
+],
+"mega_showdown:z_ring_black": [
+"mega_showdown/recipe/z_ring_black"
+],
+"mega_showdown:z_ring_blue": [
+"mega_showdown/recipe/z_ring_blue"
+],
+"mega_showdown:z_ring_green": [
+"mega_showdown/recipe/z_ring_green"
+],
+"mega_showdown:z_ring_pink": [
+"mega_showdown/recipe/z_ring_pink"
+],
+"mega_showdown:z_ring_red": [
+"mega_showdown/recipe/z_ring_red"
+],
+"mega_showdown:z_ring_yellow": [
+"mega_showdown/recipe/z_ring_yellow"
+],
+"mega_showdown:zygarde_cube": [
+"mega_showdown/recipe/zygarde_cube"
+]
+}
+}

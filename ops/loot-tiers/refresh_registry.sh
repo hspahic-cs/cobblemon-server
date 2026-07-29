@@ -6,6 +6,8 @@
 #
 #   item-registry.json  every real item id + display name + tooltip. Seeds the
 #                       universe, so items nothing references yet still get tiered.
+#   mod-recipes.json    recipes shipped by the mods, keyed by output item. Without
+#                       it every craftable item reads as sourceless.
 #   mod-loot.json       loot tables shipped BY THE MODS. Regenerate this with the
 #                       companion harvest (see mod-loot.json's own _comment) --
 #                       without it, evidence covers only tables we override and

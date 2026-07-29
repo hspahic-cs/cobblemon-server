@@ -37,6 +37,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[2]
 OVERRIDES = ROOT / "ops/loot-tiers/overrides.json"
 REGISTRY = ROOT / "ops/loot-tiers/item-registry.json"
 MOD_LOOT = ROOT / "ops/loot-tiers/mod-loot.json"
+MOD_RECIPES = ROOT / "ops/loot-tiers/mod-recipes.json"
 OUT_JSON = ROOT / "ops/loot-tiers/tiers.json"
 OUT_MD = ROOT / "docs/loot-tiers.md"
 
@@ -59,9 +60,11 @@ TIER_NAMES = {
     0: "Common",
 }
 TIER_BLURB = {
-    DISABLED: ("Intentionally not obtainable — recipe banned and/or stripped from loot. "
-               "Never use as a reward. If one of these is still dropping, that's a bug to fix, "
-               "not a tier to change."),
+    DISABLED: ("Never award. Two different situations live here, and the per-item status "
+               "says which: **not obtainable** (recipe banned and/or stripped from loot — if one "
+               "of these is still dropping, that's a bug to fix, not a tier to change), or "
+               "**banned to use** (freely obtainable, but the mechanic is disabled and using it "
+               "is a bannable offence, so the item is worthless as a reward)."),
     5: "Gates a box legendary or mythical, or guarantees a catch. Never a routine reward.",
     4: "Summons or permanently unlocks a legendary/forme. One-per-player scale.",
     3: "Permanent competitive power or a hard-gated component. A real chase reward.",
@@ -119,9 +122,9 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     (r":\w+_z_(ring|power_ring)$", DISABLED, "Z-Ring — enabler for the disabled Z-crystals"),
     (r":\w*z_ring\w*$", DISABLED, "Z-Ring — enabler for the disabled Z-crystals"),
     (r":tera_(orb|pouch\w*)$", DISABLED, "Tera enabler — Tera is banned on this server"),
-    (r":dynamax_(band|candy)$", DISABLED, "Dynamax is disabled on this server"),
-    (r":max_(soup|mushroom|honey)$", DISABLED, "Dynamax is disabled on this server"),
-    (r":sweet_max_soup$", DISABLED, "Dynamax is disabled on this server"),
+    (r":dynamax_(band|candy)$", DISABLED, "Dynamax is banned — item works, the mechanic does not"),
+    (r":max_(soup|mushroom|honey)$", DISABLED, "Dynamax is banned — item works, the mechanic does not"),
+    (r":sweet_max_soup$", DISABLED, "Dynamax is banned — item works, the mechanic does not"),
     (r":\w+_plate$", 2, "Arceus plate / type booster"),
     (r":\w+_memory$", 2, "Silvally memory"),
     # --- evolution items
@@ -267,6 +270,25 @@ def collect_evidence() -> dict[str, list[dict]]:
                 "rate": sc.get("r"),
             })
 
+    # --- mod recipes. Craftability is a source. Omitting it made every Dynamax
+    #     and Tera item read as unobtainable when in fact they are all craftable.
+    #     Recipes we override with a neoforge:false condition are real bans, so
+    #     those are skipped.
+    banned = set()
+    for f in DATAPACKS.rglob("*.json"):
+        m = re.search(r"/datapacks/[^/]+/data/([a-z0-9_]+)/recipes?/(.+)\.json$", f.as_posix())
+        if not m:
+            continue
+        d = load_json(f) or {}
+        conds = d.get("neoforge:conditions") or []
+        if any((c or {}).get("type") == "neoforge:false" for c in conds):
+            banned.add(f"{m.group(1)}/recipe/{m.group(2)}")
+    for iid, paths in ((load_json(MOD_RECIPES) or {}).get("sources") or {}).items():
+        live = [p for p in paths if p not in banned]
+        if live:
+            ev[iid].append({"source": "craft", "detail": f"{len(live)} recipe(s): {live[0]}",
+                            "rate": None})
+
     # --- market: purchasable at all is itself a rarity ceiling
     mk = load_json(MARKET) or {}
     for iid, meta in mk.items():
@@ -377,14 +399,19 @@ def build() -> tuple[dict, str]:
     rows = []
     for iid in sorted(universe):
         tier, why, how = classify(iid, overrides, market)
+        srcs = ev.get(iid, [])
+        status = None
+        if tier == DISABLED:
+            status = "banned-to-use" if srcs else "not-obtainable"
         rows.append({
             "id": iid,
+            "status": status,
             "tier": tier,
             "tierLabel": tlabel(tier),
             "tierName": TIER_NAMES[tier],
             "rationale": why,
             "assignedBy": how,
-            "sources": ev.get(iid, []),
+            "sources": srcs,
         })
 
     tms = {
@@ -506,6 +533,13 @@ def main() -> int:
     by = collections.Counter(r["tier"] for r in doc["items"])
     print(f"wrote {OUT_JSON.relative_to(ROOT)} and {OUT_MD.relative_to(ROOT)}")
     print(f"  {n} items — " + ", ".join(f"{tlabel(t)}: {by[t]}" for t in sorted(by, reverse=True)))
+    tx = [r for r in doc["items"] if r["tier"] == DISABLED]
+    if tx:
+        no = sum(1 for r in tx if r["status"] == "not-obtainable")
+        bad = [r["id"] for r in tx if r["status"] == "banned-to-use"]
+        print(f"  TX: {no} not-obtainable, {len(bad)} banned-to-use (obtainable, mechanic disabled)")
+        if bad:
+            print("       " + ", ".join(sorted(bad)[:8]) + (" ..." if len(bad) > 8 else ""))
     unmatched = [r["id"] for r in doc["items"] if r["assignedBy"] == "default"]
     if unmatched:
         print(f"  {len(unmatched)} unmatched (defaulted to T0): {', '.join(unmatched[:15])}")

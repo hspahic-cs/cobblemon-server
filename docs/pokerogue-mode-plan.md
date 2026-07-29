@@ -895,20 +895,46 @@ it — not a timer that quietly deletes debts.
 
 ## 3. Preliminary plan
 
-**Phase 1 — vertical slice.** Starter offer, ~10 waves, **catch-into-run-party**, reward picks,
-permadeath, checkpoint and resume with disconnect attribution, run party in its own store.
-Deliberately de-risks the unknowns: run-store lifecycle, runtime-scaled RCT opponents, and the
-run loop reimplemented free of the tower. Catching is in this phase because §2.13 makes it the
-party system, not an enhancement.
+The original three-phase plan described a ten-wave vertical slice, and §2.19's 200-wave decision
+retired that framing. What follows is where things actually stand.
 
-**Phase 2 — full mode.** Boss trainers, run variance and branching, concurrent runs and arena
-instancing, gimmick confinement.
+### Built
 
-**Phase 3 — balance.** Content and tuning.
+Run lifecycle (start ordering, progress, abandon, pause, commands), world-save-data persistence,
+arenas (slot grid, chunk tickets, stamping, entry and exit, biome repaint), the datapack
+convention with reward, payout, trainer-roster and biome registries, wild-wave generation, the
+10-point starter budget, candy and IV-floor progression, wave composition, trainer rosters with
+fixed-encounter overrides, wild and trainer battles, catch-into-run-party with swap-or-release,
+permadeath, disconnect attribution, offline payout delivery, and the operator depth override.
+Host seams for charging, bonus payouts and battle AI, each with a working standalone default;
+the trainer-battle provider lives in `cobblemon-bridge` and reaches the module by reflection so
+no build-time edge exists between them.
 
-**Landed so far:** `RunState` (run model with NBT round-tripping) and `RunStore` (world-save-data
-persistence for every active run), both in the new standalone module. Nothing is wired up: there
-is no run loop, no battle, no command.
+### Not built, and blocking a playable run
+
+All of it content, none of it code:
+
+- A **default trainer roster** — nothing ships at `cobblemon_roguelite:default`, so every wave
+  reports no roster.
+- An **arena template** `.nbt` — a run fails at `resume` with the expected path named. This also
+  decides whether `power_spot` goes inside it, which §2.5's gimmick confinement depends on.
+- The **per-species cost table** (§2.13), the **baseline starter pool** (§2.15), **reward and
+  payout table contents**, the **entry fee**, and **candy prices**.
+- **Biome definitions** — template, Minecraft biome and name per biome (§2.24).
+
+Every one of these fails loudly by design rather than silently doing nothing.
+
+### Not built, not blocking
+
+A run-party GUI (see §5 — the party HUD question is unresolved), biome-gated encounter pools
+(the seam exists and is documented; using it is a content call), and player-chosen biome
+transitions (§2.24 left the seam, implemented seeded).
+
+### Unverified
+
+Everything that needs a booted server: the capture path end to end, the biome repaint, trainer
+waves through the bridge provider, and the party HUD. The dev VM has confirmed the arena
+dimension, `power_spot` placement, and NPC-side level scaling.
 
 ---
 

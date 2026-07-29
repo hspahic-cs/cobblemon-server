@@ -816,6 +816,46 @@ policing.
 It needs to release on logout and reacquire on login. Until that lands, `maxConcurrentRuns`
 throttles *concurrent players*, not concurrent runs, which is a much tighter bound than intended.
 
+### 2.24 Biomes: the arena becomes the place you are
+
+**Chosen:** a run moves through **biomes**, one per wave band (PokéRogue changes region every ten
+waves), and the arena *becomes* that biome rather than merely being decorated for it.
+
+**Two mechanisms, and the second is the one that sells it:**
+
+1. **The arena template changes.** Already decided in §2.19 — the slot stays allocated and only
+   the stamped structure changes at a band boundary. Biomes are simply what those bands *are*.
+2. **The Minecraft biome of the arena box is repainted** to match, via `FillBiomeCommand.fill`,
+   which is public static and does the chunk rewrite and client resend itself. That changes sky
+   colour, fog, water and grass tint, ambient sound loops and biome music — the whole feel of the
+   place — for a call we do not have to write. A stamped structure alone reads as scenery; a
+   repainted biome reads as somewhere else.
+
+**Consequence worth taking:** a biome is a natural key for the wild encounter pool.
+`WaveSpeciesPool.eligibleAt` was deliberately built so that "everything the data side wants to do
+with tiers, segments, biomes or evolution stages collapses into this call", so biome-gated
+encounters need no new plumbing — only the biome in the key. Whether to use it that way is a
+content decision, but the mechanism should not be foreclosed.
+
+**Open:** whether biome transitions are **chosen** by the player (PokéRogue offers a branch) or
+follow a seeded path. A branch is the more interesting mechanic and is the reason the biome
+belongs in `RunState` rather than being derived from the wave number — derive it and a choice can
+never be added without a schema change.
+
+### 2.25 The badge gate has an operator override
+
+**Chosen:** an op-only override that bypasses §2.18's badge-gated depth cap.
+
+**Why it is not just a testing convenience:** the gate reads *server* advancements, so on a dev
+server nobody has the badges, and every run is capped at the shallowest tier. Without an override
+the deep half of a 200-wave ladder — bosses, the flat-level last third, the E4 waves — is
+unreachable by the people who need to test it. The override is what makes the back of the run
+testable at all.
+
+**Constraints:** op-only, per-player, obvious in the log when it is in force, and never the
+default. A run started under an override should be identifiable, so an inflated leaderboard entry
+can be told apart from an honest one.
+
 ---
 
 ## 3. Preliminary plan

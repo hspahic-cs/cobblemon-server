@@ -1366,83 +1366,67 @@ level=53 held_item=cobblemon:leftovers` resolving to the regional form, holding 
 
 ## 5. Open questions
 
-### Blocking phase 1
+Decisions §2 has settled are **not** repeated here. This is only what is genuinely undecided.
 
-- **Run-party visibility.** Cobblemon's party HUD reads Cobblemon storage, not our run store, so
-  a player mid-run may see their real party while battling with run mons. Needs checking on dev;
-  the answer decides whether phase 1 needs a custom GUI. Now sharper than before: under §2.13 the
-  party changes *during* a run as the player catches, so whatever shows it has to stay live.
-- **Starter contents:** the **baseline pool** every player can start with regardless of Pokédex
-  (§2.15 makes this mandatory, not optional), and the per-species **cost table**. "How many are
-  shown" and "how the offer is weighted" are dissolved by §2.13's budget — the catalogue is every
-  eligible species, priced, and the player chooses.
-- **Candy prices and friendship rate.** Passive unlock and cost reductions default to PokéRogue's
-  reference numbers (40, and 20/50); eggs are deliberately **unpriced and refused** rather than
-  given a number nobody chose. Friendship is a placeholder flat threshold — PokéRogue scales it
-  by starter cost, which is the same balance judgement §2.13 keeps server-side.
-- **Catch rules inside a run:** catch rate, and whether balls are earned/purchased or unlimited.
-  §2.14 settles *what* is catchable (wild only, never trainer-owned).
-- **Wave interval constants:** how often trainer and boss waves land, and the level-curve
-  constants (§2.14 fixes the shape, not the numbers).
-- **How the last third of the run gets harder** (see §2.19) — levels are pinned at 100 from
-  roughly wave 138 on, so difficulty there has to come from team quality, EVs, held items,
-  gimmicks and boss design rather than from the curve. §2.21 makes this sharper: EXP rewards are
-  dead weight past the cap too, so the reward table has to change character over the same band.
-- **The E4 and champion schedule does not fit a fixed boss interval.** §2.7 puts them at waves
-  182/184/186/188 and 190, which are not multiples of ten — a single "boss every 10th" rule
-  cannot express them. It needs either an explicit authored-wave list or a fixed-encounter
-  override layer sitting above the interval rule. The composition layer is shaped to accept one;
-  nothing has decided what it looks like.
-- **Should "boss" and "leader" be distinct encounter kinds?** Currently every tenth wave is one
+### Design calls
+
+- **§2.11's bag guard blocks run-issued bag items too.** It is a blanket rejection, so PokéRogue's
+  X Attack line and Dire Hit cannot ship until it becomes "reject player-owned, allow run-issued".
+  A decision reversal, not a detail. Note those effects are player-wide and last five battles in
+  PokéRogue, so the faithful version is run state applied at battle start, not a consumable.
+- **Should "boss" and "leader" be distinct encounter kinds?** Every tenth wave is currently one
   kind. Gym leaders, rivals, the E4 and the champion may want different treatment.
-- **Arena slot policy for multi-session runs** (§2.19): whether a slot is released when a player
-  logs out mid-run and reacquired on return. At 200 waves most runs will span sessions, and
-  holding a slot for a player who is offline for a week starves `maxConcurrentRuns`.
-- ~~Do trade-ins update the IV high-water mark?~~ **Yes, decided 2026-07-28.** Any Pokémon that
-  enters a player's possession raises their mark, trades included. The objection — that one
-  perfect specimen passed around could water-mark a whole server — was weighed and dismissed:
-  players are unlikely to organise that, and if they do it costs nothing that matters. A shared
-  IV floor changes which *starters* are on offer, not the difficulty of the run, and §2.17
-  already forbids unlock status from touching offer weighting. Rewarding trading is the point
-  (§2.17), so the permissive reading is also the one that serves the decision.
-- **What the payout actually contains** — §2.20 settles that it is not currency and that it is
-  data-driven; the candidates raised were egg vouchers or gacha pulls, cosmetics, profile titles,
-  leaderboard standing and run-only unlocks.
-- **Party leveling.** The opponent curve is fixed (§2.19) but nothing says what level a run
-  starter begins at or how the party keeps pace across 200 waves. If levels come only from
-  rewards, difficulty is really a function of reward luck; if from battle EXP, the EXP gain has
-  to track a curve Cobblemon's own EXP tables were not built for. PokéRogue uses both. Cheap to
-  decide now, expensive to retrofit, since it changes what the reward table must express.
-- **Reward table contents and rarity curve** — the schema is buildable now (§2.12); the data is
-  not blocking until balance.
+- **Enemy buff tokens (§2.34): an ability on every enemy, or folded into §2.6's level scaling?**
+  An ability strips the Pokémon's real one — the exact objection §2.32 raised against ability-slot
+  shields. Folding the first three into scaling is cheaper and costs nothing.
+- **Trainer filler species.** Type-matched stride sampling gives Brock a Cramorant. Acceptable,
+  authored per leader, or dropped so late bands run four?
+- **Does a minimal arena palette ship by default?** `ArenaBuilds.default` names an `.nbt` nobody
+  ships, so an unconfigured install fails loudly. Shipping one makes the mode playable out of the
+  box, against §2.29's "not somebody's taste on every server".
+- **Bless §2.34's first modifier set?** Eight items sharing one tiering harness.
+- **Is the milestone checkpoint interval still a thing?** §2.10 kept milestones as persistence
+  granularity, but checkpointing is per-wave and §2.23 changed how sessions work. It may be dead.
+- **How the flat last third escalates** (§2.19, §2.21). Levels pin at 100 from ~wave 138 and EXP
+  rewards go dead over the same band, so the reward table has to change character there. Boss
+  shields (§2.32) and modifier tiers (§2.33) are levers; nothing has designed the shape.
 
-### Blocking phase 2
+### Content and numbers
 
-- **Replayability model** beyond §2.15's dex unlocks: what else varies between runs — reward
-  paths, branching routes, run modifiers.
-- **Boss roster:** who they are, at what intervals.
-- Waves per run; milestone checkpoint interval (§2.10 keeps milestones as persistence
-  granularity — how coarse is still open).
-- ~~Run expiry~~ **Decided 2026-07-28 — see §2.23.**
-- Escalation ladder: which wave bands unlock Mega / Tera / Dynamax / legendaries.
-- Entry gating: what starting a run costs, and what stops abandon-and-restart from rerolling a
-  bad draft.
+- Per-species **cost table** (§2.13) — extractable from PokéRogue, server-side only.
+- **Baseline starter pool** — decided as the classic starters (§2.28); the list itself is unwritten.
+- **Candy prices** — decided as PokéRogue's per-tier table (§2.28); the code still ships a flat 40.
+- **Reward table** contents and rarity curve.
+- **Egg payout bands** — which egg tier at which depth (§2.28).
+- **Shop stock, prices and credit earning rates** (§2.35).
+- **Biome definitions and arena palettes** (§2.24, §2.29) — roughly thirty rows each.
+- **Trainer band edges** — the current 21/21/20 split is mechanical, and §2.19's twenty boss waves
+  against four late bosses will repeat visibly.
+- **Held-item tiers for trainers** (§2.30) — ships empty, so nothing generated carries an item.
+- **Boss shield counts** — which party members get them and how many by wave (§2.32).
+- **The E4 and champion schedule**, and their authored teams (§2.7, §2.30).
+- **Escalation ladder** — which wave bands unlock Mega, Tera, Dynamax, legendaries.
 
-### Parked — deliberately out of scope for this work
+### Deferred until someone has played it
 
-- **Battle speed.** 200 waves makes Cobblemon's battle pacing worth attacking, and a fair amount
-  of it is fixed per battle (start, send-out, faint, end) rather than per turn, so it is paid 200
-  times regardless of how short a fight is. Findings, so they are not rediscovered: there is **no
-  config lever** — Cobblemon exposes only `walkingInBattleAnimations` and `animateBattleTiles`,
-  both already false on our server. The delays are hardcoded across ~30 sites (fifteen at 1.5s,
-  six at 2s, one at 2.5s, some `WaitDispatch`), all funnelling through
-  `PokemonBattle.dispatchWaiting(delaySeconds)`, which is server-side and therefore mixin-able
-  with no client mod. About twenty further waits are `UntilDispatch`, which block on a condition
-  rather than a timer and set a floor a multiplier cannot get under.
-  **Decided 2026-07-28: separate PR, and probably server-wide rather than run-only.** Not part of
-  this mode's work.
+- **Difficulty calibration.** Bosses have shields again (§2.32) but players do not yet have
+  stacking (§2.33), so the two halves are not yet balanced against each other.
+- **A client mod for a segmented HP bar** (§2.32) — decide once the marker and messages have been
+  seen in play.
+- **Whether one modifier line per Pokémon is too tight** (§2.33), which is what the unspent
+  ability axis is for.
+- **Replayability beyond §2.15's dex unlocks** — reward paths, branching routes, run modifiers.
 
 ### Blocking publication only
 
 - Whether to publish at all, and under what licence and name (§2.9).
-- RCT's licence, if it is to be more than a soft dependency (§2.6).
+- **RCT's licence**, if it is ever to be more than a soft dependency (§2.6).
+
+### Parked — deliberately out of scope
+
+- **Battle speed.** Findings recorded so they are not rediscovered: no config lever exists;
+  Cobblemon exposes only `walkingInBattleAnimations` and `animateBattleTiles`, both already false
+  here. The delays are hardcoded across ~30 sites funnelling through
+  `PokemonBattle.dispatchWaiting`, which is server-side and mixin-able with no client mod. About
+  twenty further waits are `UntilDispatch`, blocking on a condition rather than a timer, and set a
+  floor a multiplier cannot get under. **Separate PR, probably server-wide rather than run-only.**

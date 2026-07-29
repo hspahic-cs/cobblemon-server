@@ -216,6 +216,24 @@ players converge on the same picks.
 catch-into-run-party is not an enhancement, it is the party system; the vertical slice cannot
 ship without it. §3 is updated accordingly.
 
+**A full party: swap or release, decided 2026-07-28.** The run party holds six and there is no
+run PC, so a seventh catch prompts the player to swap it for a party member or let it go.
+
+**Considered:** refuse the catch outright (simplest, and makes slots a hard resource) · a
+swap-or-release prompt · run-scoped box storage (most generous, most new state). Chosen the
+middle: it is what mainline Pokémon does, so it needs no explanation, and it keeps the party
+decision *live* — a good catch late in a run should be able to displace a spent one, which
+refusing would forbid and boxes would make consequence-free.
+
+**Note what the swap discards is unrecoverable.** A released or swapped-out run Pokémon is gone,
+exactly like a permadeath (§2.2 — nothing leaves a run), so the prompt has to read as a decision
+rather than as inventory management.
+
+**Two isolation leaks this must close**, both live today: Cobblemon's capture flow writes the
+caught Pokémon to the player's **real** party and PC, and it marks the species `CAUGHT` in their
+**real Pokédex** — which §2.15 forbids outright, since server catches are what unlock starters
+and an in-run catch must not.
+
 ### 2.14 Wave composition: mostly wild, trainers at intervals
 
 **Chosen:** mirror PokéRogue's structure — most waves are **wild encounters**, a **trainer**

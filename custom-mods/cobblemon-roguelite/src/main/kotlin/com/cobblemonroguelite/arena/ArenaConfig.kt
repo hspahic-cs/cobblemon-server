@@ -44,7 +44,7 @@ import net.minecraft.resources.ResourceLocation
  * @property entryOffset where the player lands, relative to the slot origin. Defaults to the middle
  *   of [box], one block up.
  * @property entryYaw which way they face on arrival.
- * @property templates which structure is stamped, per wave band.
+ * @property builds which arena is put in the slot, per wave band.
  * @property fixedArenas option D. Empty means the generated grid.
  * @property settleTicks how long a caller must wait after [ArenaChunks.hold] before summoning
  *   anything into a slot. Zero is wrong even though the chunks are loaded synchronously: the tower
@@ -61,7 +61,7 @@ data class ArenaConfig(
     val box: ArenaBox = ArenaBox(),
     val entryOffset: BlockPos = BlockPos(box.width / 2, 1, box.depth / 2),
     val entryYaw: Float = 0f,
-    val templates: ArenaTemplates = ArenaTemplates(),
+    val builds: ArenaBuilds = ArenaBuilds(),
     val fixedArenas: List<ArenaOrigin> = emptyList(),
     val settleTicks: Int = 40,
 ) {
@@ -125,11 +125,13 @@ data class ArenaConfig(
 data class ArenaBox(val width: Int = 64, val height: Int = 32, val depth: Int = 64) {
     init {
         require(width >= 1 && height >= 1 && depth >= 1) { "arena box must be at least 1x1x1, was $this" }
-        // The clear pass is one setBlock per block in here, on the server thread, once per stamp.
-        // 64x32x64 is ~131k blocks and is already the upper end of what belongs in a tick; a config
-        // typo of 6400 would be 1.3 billion and would present as the server hanging on run start.
+        // Everything that touches an arena walks this volume on the server thread, once per stamp:
+        // the entity sweep, the clear, the repaint's slicing, and — for a palette with no explicit
+        // size — the platform itself. [ArenaBoxScan] takes the empty parts out of the clear, but a
+        // full-box palette still plans one block per cell of its footprint, and a config typo of 6400
+        // would be 1.3 billion cells presenting as the server hanging on run start.
         require(width.toLong() * height * depth <= MAX_VOLUME) {
-            "arena box $this is ${width.toLong() * height * depth} blocks; the clear pass runs on the " +
+            "arena box $this is ${width.toLong() * height * depth} blocks; the stamp runs on the " +
                 "server thread and is capped at $MAX_VOLUME"
         }
     }
@@ -152,38 +154,45 @@ data class ArenaBox(val width: Int = 64, val height: Int = 32, val depth: Int = 
 data class ArenaOrigin(val origin: BlockPos, val dimension: ResourceLocation? = null)
 
 /**
- * Which structure is stamped into a slot at a given wave.
+ * Which arena goes into a slot at a given wave, for a server with no biomes configured.
  *
- * ### Ids, not structures
+ * ### Ids, not structures or palettes
  *
- * This resolves to a [ResourceLocation] and stops — the same split
- * [com.cobblemonroguelite.composition.RewardRouting] makes, and for the same reason: a template that
- * is missing at stamp time should be reported by the layer that actually looked in the resource
- * manager and found nothing, not guessed at here.
+ * This resolves to an [ArenaBuild] and stops — the same split
+ * [com.cobblemonroguelite.composition.RewardRouting] makes, and for the same reason: a build that is
+ * missing at stamp time should be reported by the layer that actually went looking for it and found
+ * nothing, not guessed at here.
  *
- * ### The default id names a file this mod does not ship
+ * ### The default names a file this mod does not ship
  *
- * `data/cobblemon_roguelite/structure/arena.nbt` is content — an actual build, with a `power_spot`
- * in it if Mega Showdown is installed — and content is not this module's to invent. So the default
- * points at a well-known path and [ArenaStamper] fails **loudly** when nothing is there. The
- * alternative, placing nothing and carrying on, drops a player into a void dimension with no floor.
+ * `data/cobblemon_roguelite/structure/arena.nbt` is content — an actual build — and content is not
+ * this module's to invent. §2.29 sharpens that rather than softening it: a published build cannot
+ * ship a hand-made arena without imposing somebody's taste on every server that installs it, and the
+ * same argument applies to shipping a *palette* and pointing the default at it. So the default stays
+ * a template id with nothing at it, [ArenaStamper] fails **loudly**, and a server chooses its own
+ * arena by naming a palette here or on a biome. The alternative — placing nothing and carrying on —
+ * drops a player into a void dimension with no floor.
  *
  * @property bands checked in order, first match wins, so an author reads precedence top-down. Same
  *   convention as [com.cobblemonroguelite.composition.RewardBand], since an author will meet both.
  */
-data class ArenaTemplates(
-    val default: ResourceLocation = ResourceLocation.fromNamespaceAndPath(CobblemonRoguelite.MOD_ID, "arena"),
+data class ArenaBuilds(
+    val default: ArenaBuild = ArenaBuild.Template(
+        ResourceLocation.fromNamespaceAndPath(CobblemonRoguelite.MOD_ID, "arena"),
+    ),
     val bands: List<ArenaBand> = emptyList(),
 ) {
-    fun templateFor(wave: Int): ResourceLocation = bands.firstOrNull { it.covers(wave) }?.template ?: default
+    fun buildFor(wave: Int): ArenaBuild = bands.firstOrNull { it.covers(wave) }?.build ?: default
 }
 
 /**
- * A wave range that gets its own arena build (§2.19).
+ * A wave range that gets its own arena (§2.19).
  *
+ * @property build a generated palette or a hand-built template; the band does not care which, and
+ *   neither does anything that reads it.
  * @property maxWave inclusive, null for open-ended.
  */
-data class ArenaBand(val minWave: Int, val maxWave: Int? = null, val template: ResourceLocation) {
+data class ArenaBand(val minWave: Int, val maxWave: Int? = null, val build: ArenaBuild) {
     init {
         require(minWave >= 1) { "minWave must be at least 1, was $minWave" }
         require(maxWave == null || maxWave >= minWave) {

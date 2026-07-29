@@ -113,6 +113,8 @@ class JsonView internal constructor(
 
     fun optionalDouble(key: String): Double? = double(key, required = false)
 
+    fun optionalBoolean(key: String): Boolean? = boolean(key, required = false)
+
     fun requireObject(key: String): JsonView? = obj(key, required = true)
 
     fun optionalObject(key: String): JsonView? = obj(key, required = false)
@@ -180,6 +182,21 @@ class JsonView internal constructor(
             return null
         }
         return primitive.asDouble
+    }
+
+    /**
+     * A flag. Strict about the type for the reader's usual reason: `"power_spot": "false"` is a
+     * string, is truthy under every lenient parser ever written, and would turn a deliberate opt-out
+     * into the opposite of what was typed.
+     */
+    private fun boolean(key: String, required: Boolean): Boolean? {
+        val element = raw(key, required) ?: return null
+        val primitive = element as? JsonPrimitive
+        if (primitive == null || !primitive.isBoolean) {
+            problem(key, "expected true or false, found ${describe(element)}")
+            return null
+        }
+        return primitive.asBoolean
     }
 
     private fun obj(key: String, required: Boolean): JsonView? {

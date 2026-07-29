@@ -1,0 +1,72 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not content. What the arenas of a run actually look",
+    "like is DELIBERATELY NOT DECIDED (plan §2.29 fixed the mechanism and left the blocks open), so",
+    "nothing below is a recommendation.",
+    "",
+    "Unlike the biome example there is no 'weight' to disable: a palette does nothing until something",
+    "names it. Nothing ships naming this one, so it is inert. Copy it, rename it, change the blocks.",
+    "",
+    "One palette per file. The id is the file path: this one is 'cobblemon_roguelite:example', and a",
+    "file at .../arena_palettes/volcano/summit.json in namespace 'ns' would be 'ns:volcano/summit'.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
+    "unknown field is an error, so a typo is reported instead of silently taking a default.",
+    "",
+    "The atmosphere is NOT built here. Sky colour, fog, water and grass tint, ambient loops and music",
+    "all come from the biome file's 'minecraft_biome' repaint (§2.24). This is only the floor you",
+    "stand on, in the right colour. A basalt platform under orange fog reads as a volcano; the same",
+    "platform under a snowy biome reads as a caldera. That is the intended division of labour."
+  ],
+
+  "_floor": [
+    "The platform, one block layer, at the very bottom of the arena box - which is where the player",
+    "is put down. Required, and it may not be 'minecraft:air': an arena of air is a run with no floor",
+    "in a void dimension. Any registered block id, from any mod; an id nothing provides refuses the",
+    "arena by name rather than quietly placing nothing.",
+    "",
+    "Blocks are placed in their DEFAULT state, so naming a stair or a slab gets you the default",
+    "facing. Use the arena_template override on a biome if you need real block states."
+  ],
+  "floor": "minecraft:grass_block",
+
+  "_width_depth": [
+    "Platform size in blocks, centred in the arena box. Both optional - omit them and the platform",
+    "fills the box footprint (64x64 by default). Minimum 3x3. Larger than the box is refused, with",
+    "both numbers in the message, because everything that tidies an arena up works on the box."
+  ],
+  "width": 41,
+  "depth": 41,
+
+  "_rim": [
+    "An optional wall one block thick around the platform edge, standing on the floor. Not decoration:",
+    "the dimension is void and the platform has an edge, so this is the difference between a player",
+    "who walks off and a player who does not. Omit the whole object for no rim; 'height' defaults to 1."
+  ],
+  "rim": {
+    "block": "minecraft:mossy_cobblestone",
+    "height": 2
+  },
+
+  "_pillars": [
+    "Four optional columns at the platform corners, standing on the floor. The only purely-decorative",
+    "field here, and cheap - four columns is a few dozen blocks. 'inset' is how far in from the corner",
+    "each one sits; 0 puts them in the rim, which is legal and means the pillar wins those cells."
+  ],
+  "pillars": {
+    "block": "minecraft:oak_log",
+    "height": 6,
+    "inset": 3
+  },
+
+  "_power_spot": [
+    "Whether to place Mega Showdown's power_spot, one block off the platform centre (§2.5). TRUE is",
+    "the default and should stay true: the entire Tera/Dynamax confinement is 'this block exists",
+    "inside an arena and nowhere else', so setting it false is a biome where those gimmicks silently",
+    "do not work. It exists as a field so an owner who has banned them can say so.",
+    "",
+    "Mega Showdown is a soft dependency. On a server without it the block is missing, that is logged",
+    "as an error naming the id, and the arena is built anyway - a Dynamax-less arena is playable."
+  ],
+  "power_spot": true
+}

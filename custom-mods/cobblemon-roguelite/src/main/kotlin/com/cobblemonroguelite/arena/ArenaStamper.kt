@@ -1,6 +1,6 @@
 package com.cobblemonroguelite.arena
 
-import net.minecraft.core.BlockPos
+import com.cobblemonroguelite.data.arena.ArenaPalettes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
@@ -22,8 +22,17 @@ sealed interface StampResult {
     /** The dimension in config does not exist on this server. */
     data class NoSuchDimension(val dimension: ResourceLocation) : StampResult
 
-    /** Nothing at `data/<ns>/structure/<path>.nbt`. The one an owner will actually hit. */
+    /** Nothing at `data/<ns>/structure/<path>.nbt`. The one an owner using the `.nbt` override will hit. */
     data class TemplateMissing(val template: ResourceLocation) : StampResult
+
+    /** Nothing at `data/<ns>/roguelite/arena_palettes/<path>.json`, or that file was rejected at load. */
+    data class PaletteMissing(val palette: ResourceLocation) : StampResult
+
+    /** The palette is bigger than [ArenaConfig.box] in one dimension or another. [detail] says which. */
+    data class PaletteDoesNotFit(val palette: ResourceLocation, val detail: String) : StampResult
+
+    /** The palette names a block this server does not have. Logged with every offending id. */
+    data class PaletteBlockMissing(val palette: ResourceLocation) : StampResult
 
     /** Chunks could not be force-loaded, so anything we wrote would have gone nowhere. */
     data object NotLoaded : StampResult
@@ -33,7 +42,7 @@ sealed interface StampResult {
 }
 
 /**
- * Putting an arena into a slot: clear, sweep, place.
+ * Putting an arena into a slot: check, clear, sweep, build.
  *
  * ### On assignment, never on release
  *
@@ -45,42 +54,98 @@ sealed interface StampResult {
  * previous assignment having ended tidily, so there is no window in which it can be wrong.
  *
  * That makes this callable more than once per run and it has to be, because §2.19 re-stamps at wave
- * band boundaries: the slot stays allocated for the whole run and only the template changes. Nothing
- * here reads or writes any state of its own, so a second call is simply a first call again.
+ * band boundaries and §2.23 re-stamps on every session resume: the slot stays allocated for the whole
+ * run and only the build changes. Nothing here reads or writes any state of its own, so a second call
+ * is simply a first call again.
  *
- * ### A missing template fails loudly
+ * ### Two kinds of build, one entry point
  *
- * The arena build is content — an `.nbt` with a floor, walls, and a `power_spot` if the owner wants
- * Dynamax in runs — and content is not this module's to invent. So the shipped default names a path
- * with nothing at it, and this returns [StampResult.TemplateMissing] rather than placing nothing and
- * carrying on. The distinction is not academic: the arena dimension is void, so "placed nothing"
- * means the next thing that happens is a player falling out of the world.
+ * [ArenaBuild.Palette] is §2.29's generated platform and is the one a server owner who cannot build
+ * can author — see [ArenaGenerator]. [ArenaBuild.Template] is a hand-made `.nbt` and stays supported
+ * for the owner who can. They are dispatched here rather than at the caller so that the entity sweep,
+ * the chunk hold and the failure vocabulary are shared: a run does not care which kind of arena it is
+ * standing in, and neither does anything above this.
  *
- * ### Clear before place
+ * ### A build that is not there fails loudly
  *
- * [StructureTemplate.placeInWorld] only writes the blocks the template contains, so stamping a small
- * template over a large one leaves the large one's walls standing. The clear pass covers the whole
- * declared [ArenaBox] — see there for why the box is declared in config rather than taken from the
- * template — and it is the expensive part of a stamp, which is why a stamp happens on assignment and
- * at band boundaries and nowhere else.
+ * Neither a missing `.nbt` nor a missing palette places anything and carries on. The distinction is
+ * not academic: the arena dimension is void, so "placed nothing" means the next thing that happens is
+ * a player falling out of the world. The shipped default names a template nobody has made (see
+ * [ArenaBuilds]), so an unconfigured server hits this deliberately rather than silently.
+ *
+ * ### Clear before place, and only as much as is needed
+ *
+ * [net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate.placeInWorld] only
+ * writes the blocks the template contains, so stamping a small template over a large one leaves the
+ * large one's walls standing. The template path therefore clears the whole declared [ArenaBox] — see
+ * there for why the box is declared in config rather than taken from the template. The palette path
+ * does not have to: it knows every cell it wants, so it clears only what the new arena does not claim.
+ * Both go through [ArenaBoxScan], which skips chunk sections that hold nothing at all — in a void
+ * dimension, nearly all of them.
  */
 object ArenaStamper {
 
     /**
      * Flags for both the clear and the placement. `UPDATE_CLIENTS` (2) is what vanilla's own structure
      * block placement uses; neighbour updates are deliberately **not** requested — an arena is placed
-     * as a finished thing, and running block updates across ~130k cleared blocks would cost far more
-     * than the placement itself while changing nothing about the result in a void dimension.
+     * as a finished thing, and running block updates across a whole build would cost far more than the
+     * placement itself while changing nothing about the result in a void dimension.
      */
     private const val PLACE_FLAGS = Block.UPDATE_CLIENTS or Block.UPDATE_SUPPRESS_DROPS
 
     /**
-     * Clear [placement], empty it of entities, and place [template] at its origin.
+     * Empty [placement] of entities and make [build] stand in it.
      *
      * Call on the server thread. It force-loads, edits blocks and discards entities, none of which is
      * safe from a battle callback thread.
      */
-    fun stamp(level: ServerLevel, placement: ArenaPlacement, template: ResourceLocation): StampResult {
+    fun stamp(level: ServerLevel, placement: ArenaPlacement, build: ArenaBuild): StampResult = when (build) {
+        is ArenaBuild.Template -> stampTemplate(level, placement, build.id)
+        is ArenaBuild.Palette -> generate(level, placement, build.id)
+    }
+
+    /**
+     * §2.29's generated arena.
+     *
+     * Everything that can fail is decided **before** the sweep and the first block write: the palette
+     * has to exist, it has to fit the box, and every block it names has to be registered. An arena
+     * that got halfway and then found a typo would leave the slot holding two builds at once, and the
+     * player is standing in the difference.
+     */
+    private fun generate(level: ServerLevel, placement: ArenaPlacement, id: ResourceLocation): StampResult {
+        val palette = ArenaPalettes[id]
+        if (palette == null) {
+            log.error(
+                "roguelite: arena palette '{}' is not loaded — expected data/{}/roguelite/arena_palettes/{}.json " +
+                    "in a datapack or a mod jar, or it was rejected at load (look above for its problems). " +
+                    "Slot {} is NOT usable and no player will be sent to it.",
+                id, id.namespace, id.path, placement.slot,
+            )
+            return StampResult.PaletteMissing(id)
+        }
+
+        val plan = when (val planned = ArenaPlan.of(palette, placement.box)) {
+            is ArenaPlanResult.Planned -> planned.plan
+            is ArenaPlanResult.DoesNotFit -> {
+                log.error(
+                    "roguelite: arena palette '{}' does not fit the configured arena box: {}. Slot {} is " +
+                        "NOT usable — shrink the palette or grow ArenaConfig.box.",
+                    id, planned.detail, placement.slot,
+                )
+                return StampResult.PaletteDoesNotFit(id, planned.detail)
+            }
+        }
+
+        val resolved = ArenaGenerator.resolve(plan) ?: return StampResult.PaletteBlockMissing(id)
+
+        if (!ArenaChunks.hold(level, placement.box)) return StampResult.NotLoaded
+        sweep(level, placement.box)
+        ArenaGenerator.apply(level, placement.box, resolved)
+        return StampResult.Stamped
+    }
+
+    /** The hand-built override: clear the whole box, then let vanilla place the `.nbt`. */
+    private fun stampTemplate(level: ServerLevel, placement: ArenaPlacement, template: ResourceLocation): StampResult {
         val structure = level.server.structureManager.get(template).orElse(null)
         if (structure == null) {
             log.error(
@@ -107,7 +172,8 @@ object ArenaStamper {
         // Not an error — an owner is allowed to ship a build smaller than the box, and usually will.
         // Larger is the one that matters: the overspill lands outside the volume the next stamp
         // clears and the entity sweep empties, so it accumulates across band transitions and, at
-        // spacing this template was not checked against, could reach the arena next door.
+        // spacing this template was not checked against, could reach the arena next door. A palette
+        // cannot do this — [ArenaPlan] refuses rather than warns, because it knows its own extent.
         if (size.x > placement.box.xSpan || size.y > placement.box.ySpan || size.z > placement.box.zSpan) {
             log.warn(
                 "roguelite: arena template '{}' is {}x{}x{}, larger than the configured arena box " +
@@ -140,14 +206,6 @@ object ArenaStamper {
 
     private fun clear(level: ServerLevel, box: BoundingBox) {
         val air = Blocks.AIR.defaultBlockState()
-        val cursor = BlockPos.MutableBlockPos()
-        for (x in box.minX()..box.maxX()) {
-            for (y in box.minY()..box.maxY()) {
-                for (z in box.minZ()..box.maxZ()) {
-                    cursor.set(x, y, z)
-                    if (!level.getBlockState(cursor).isAir) level.setBlock(cursor, air, PLACE_FLAGS)
-                }
-            }
-        }
+        ArenaBoxScan.forEachNonAir(level, box) { pos -> level.setBlock(pos, air, PLACE_FLAGS) }
     }
 }

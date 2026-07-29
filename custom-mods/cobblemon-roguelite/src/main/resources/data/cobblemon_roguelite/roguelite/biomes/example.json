@@ -19,13 +19,20 @@
   "_display_name": "What the player is told they arrived in. Free text; there is no language file.",
   "display_name": "Example Meadow",
 
-  "_arena_template": [
-    "The build stamped into the arena while the run is here - data/<ns>/structure/<path>.nbt, the",
-    "same kind of id as ArenaTemplates.default. A run in a biome uses THIS instead of the wave-band",
-    "template in the arena config, which is what stops a server having two answers to 'what does",
-    "wave 40 look like'. Nothing ships at the id below."
+  "_arena_palette": [
+    "The arena generated while the run is here - an ArenaPalettes id, i.e. a file at",
+    "data/<ns>/roguelite/arena_palettes/<path>.json. That file is a choice of BLOCKS (floor, rim,",
+    "pillars, size), which is what makes an arena authorable by somebody who cannot build (§2.29).",
+    "",
+    "A run in a biome uses THIS instead of the wave-band build in the arena config, which is what",
+    "stops a server having two answers to 'what does wave 40 look like'.",
+    "",
+    "'arena_template' may be written INSTEAD, naming a hand-built data/<ns>/structure/<path>.nbt for",
+    "an owner who can build. Exactly one of the two - writing both is an error rather than one",
+    "silently winning, because a precedence rule would mean adding a palette to a biome that already",
+    "had a template does nothing, with nothing in the log to say why."
   ],
-  "arena_template": "cobblemon_roguelite:arena/example",
+  "arena_palette": "cobblemon_roguelite:example",
 
   "_minecraft_biome": [
     "The biome the arena box is repainted to, which is the half a player actually feels: sky colour,",

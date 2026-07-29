@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemonroguelite.arena.ArenaBuild
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
@@ -99,18 +100,18 @@ class RunStateTest {
         // registry) and does not need to be: the three keys are not merely ignored on load, they are
         // never named there at all.
         val entry = RunEntryPoint(ResourceLocation.withDefaultNamespace("overworld"), 10.0, 64.0, -20.0, 45f, 5f)
-        val template = ResourceLocation.fromNamespaceAndPath("cobblemon_roguelite", "arena_late")
+        val build = ArenaBuild.Palette(ResourceLocation.fromNamespaceAndPath("cobblemon_roguelite", "arena_late"))
         val painted = ResourceLocation.fromNamespaceAndPath("minecraft", "basalt_deltas")
         val tag = RunState(
             seed = 1L,
             arenaSlot = 7,
             entry = entry,
-            stampedTemplate = template,
+            stampedBuild = build,
             paintedBiome = painted,
         ).toNbt(RegistryAccess.EMPTY)
         assertEquals(entry, RunEntryPoint.fromNbt(tag.getCompound("entry")))
         assertFalse(tag.contains("arenaSlot"))
-        assertFalse(tag.contains("stampedTemplate"))
+        assertFalse(tag.contains("stampedBuild"))
         assertFalse(tag.contains("paintedBiome"))
     }
 

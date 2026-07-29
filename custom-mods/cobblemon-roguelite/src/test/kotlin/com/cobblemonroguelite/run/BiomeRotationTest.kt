@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemonroguelite.arena.ArenaBuild
 import com.cobblemonroguelite.data.biome.RunBiome
 import com.cobblemonroguelite.data.biome.RunBiomes
 import net.minecraft.resources.ResourceLocation
@@ -23,7 +24,7 @@ class BiomeRotationTest {
     private fun biome(name: String, min: Int = 1, max: Int? = null, weight: Double = 1.0) = RunBiome(
         id = ResourceLocation.fromNamespaceAndPath("test", name),
         displayName = name,
-        arenaTemplate = ResourceLocation.fromNamespaceAndPath("test", "arena/$name"),
+        arenaBuild = ArenaBuild.Palette(ResourceLocation.fromNamespaceAndPath("test", name)),
         minecraftBiome = ResourceLocation.fromNamespaceAndPath("minecraft", name),
         minWave = min,
         maxWave = max,

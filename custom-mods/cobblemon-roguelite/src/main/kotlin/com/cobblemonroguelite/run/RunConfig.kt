@@ -61,8 +61,9 @@ import net.minecraft.resources.ResourceLocation
  *   knob: arenas are leased per session, so shortening these frees disk and nothing else.
  * @property arena where runs are fought and how many can be fought at once. Unlike the rest of this
  *   class its defaults are real rather than placeholders — the grid works out of the box — with the
- *   single exception of [com.cobblemonroguelite.arena.ArenaTemplates.default], which names a build
- *   nobody has made. See there for why that fails loudly instead of degrading.
+ *   single exception of [com.cobblemonroguelite.arena.ArenaBuilds.default], which names a build
+ *   nobody has made. See there for why that fails loudly instead of degrading, and why §2.29's
+ *   generated palettes did not turn into a shipped default arena.
  */
 data class RunConfig(
     val depthGate: RunDepthGate = RunDepthGate.UNGATED,

@@ -89,11 +89,11 @@ object RunArenas {
     /**
      * Give [run] an arena and stamp it. Idempotent: a run that already holds a slot keeps it.
      *
-     * **A fresh assignment always stamps**, even when the template that is going in is the one that
-     * was already there. That is the crash-proofing: the slot was last used by somebody else's run,
-     * and whether their cleanup ran is not something we get to assume. Comparing
-     * [RunState.stampedTemplate] would skip the stamp exactly in the case that most needs it — same
-     * template, different run, unknown wreckage.
+     * **A fresh assignment always stamps**, even when the arena that is going in is the one that was
+     * already there. That is the crash-proofing: the slot was last used by somebody else's run, and
+     * whether their cleanup ran is not something we get to assume. Comparing [RunState.stampedBuild]
+     * would skip the stamp exactly in the case that most needs it — same build, different run,
+     * unknown wreckage.
      *
      * Since §2.23 that is no longer a rare path. Every session's first entry comes through here, because
      * [release] gave the slot back at the last logout, so "a fresh assignment always stamps" is now the
@@ -115,7 +115,7 @@ object RunArenas {
         run.arenaSlot = slot
         // Cleared so the stamp below cannot be skipped by a value inherited from... anything. A run
         // reaching here has no arena by definition, so whatever it thinks is standing in one is wrong.
-        run.stampedTemplate = null
+        run.stampedBuild = null
         // Same reasoning, one field over: the biome painted into the slot belongs to whoever had it
         // last. [RunState.biome] is deliberately *not* cleared — that is where the run is, not what
         // the world looks like, and clearing it would discard a transition the player was told about
@@ -129,9 +129,9 @@ object RunArenas {
      *
      * This is the §2.19 band transition and the resume path in one call, because they want the same
      * thing: the build the current wave calls for, standing, in loaded chunks. It re-stamps only when
-     * the template actually differs from [RunState.stampedTemplate] — a stamp is ~130k block writes
-     * and doing it per wave would be a visible hitch every battle — but it takes the chunk ticket
-     * every time, since the arena may have gone cold since the last call.
+     * the build actually differs from [RunState.stampedBuild] — a stamp walks the whole arena box and
+     * doing it per wave would be a visible hitch every battle — but it takes the chunk ticket every
+     * time, since the arena may have gone cold since the last call.
      *
      * The wave handler must call this before summoning anything, and must then let
      * [ArenaConfig.settleTicks] pass. See [ArenaChunks] for what happens if it does not.
@@ -157,8 +157,8 @@ object RunArenas {
             ?: return ArenaResult.Failure(ArenaFailure.NotStamped(StampResult.NoSuchDimension(placement.dimension)))
 
         val biome = biomeFor(run, config)
-        val wanted = biome?.arenaTemplate ?: config.templates.templateFor(run.wave)
-        if (run.stampedTemplate == wanted) {
+        val wanted = biome?.arenaBuild ?: config.builds.buildFor(run.wave)
+        if (run.stampedBuild == wanted) {
             // Already correct. Still needs the ticket: "stamped" is a fact about blocks on disk, not
             // about chunks being loaded, and the two come apart the moment the last player leaves.
             if (!ArenaChunks.hold(level, placement.box)) {
@@ -170,12 +170,12 @@ object RunArenas {
 
         return when (val result = ArenaStamper.stamp(level, placement, wanted)) {
             StampResult.Stamped -> {
-                run.stampedTemplate = wanted
-                log.info("roguelite: stamped '{}' into arena slot {} for wave {}", wanted, slot, run.wave)
+                run.stampedBuild = wanted
+                log.info("roguelite: stamped {} into arena slot {} for wave {}", wanted, slot, run.wave)
                 repaint(level, placement, run, biome)
                 ArenaResult.Success(placement)
             }
-            // stampedTemplate is left alone on failure, so the next attempt tries again rather than
+            // stampedBuild is left alone on failure, so the next attempt tries again rather than
             // believing a build that is not there.
             else -> ArenaResult.Failure(ArenaFailure.NotStamped(result))
         }
@@ -207,8 +207,8 @@ object RunArenas {
         if (definition == null) {
             log.warn(
                 "roguelite: run is in biome '{}' which is no longer loaded — falling back to the " +
-                    "configured arena template ({}) and leaving the painted biome alone",
-                visit.biome, config.templates.templateFor(run.wave),
+                    "configured arena build ({}) and leaving the painted biome alone",
+                visit.biome, config.builds.buildFor(run.wave),
             )
         }
         return definition
@@ -300,11 +300,11 @@ object RunArenas {
      *
      * ### Why all three fields go together
      *
-     * [RunState.arenaSlot] is the lease. [RunState.stampedTemplate] and [RunState.paintedBiome] are
+     * [RunState.arenaSlot] is the lease. [RunState.stampedBuild] and [RunState.paintedBiome] are
      * facts about what is standing in the slot *that lease pointed at*, and the moment the lease is
      * gone they describe a box that belongs to whoever gets it next. Leaving either behind is the one
      * way a returning player lands in the previous tenant's scenery: [prepare] skips the stamp when the
-     * template it wants is the one it believes is already there, and skips the repaint on the same
+     * build it wants is the one it believes is already there, and skips the repaint on the same
      * comparison. [assign] clears both again on the way back in — that clearing is the crash-proofing
      * and has to stay, because a crash skips this call entirely — but a checkpoint written between the
      * two would otherwise carry a claim about a slot this run does not hold.
@@ -324,7 +324,7 @@ object RunArenas {
     fun release(server: MinecraftServer, run: RunState) {
         val slot = run.arenaSlot ?: return
         run.arenaSlot = null
-        run.stampedTemplate = null
+        run.stampedBuild = null
         run.paintedBiome = null
         val placement = layout().placementOf(slot) ?: return
         levelOf(server, placement.dimension)?.let { ArenaChunks.release(it, placement.box) }

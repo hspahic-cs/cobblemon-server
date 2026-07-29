@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.data
 
 import com.cobblemon.mod.common.data.CobblemonDataProvider
+import com.cobblemonroguelite.data.arena.ArenaPalettes
 import com.cobblemonroguelite.data.biome.RunBiomes
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
@@ -76,6 +77,16 @@ object RogueliteData {
         // run mid-band will find its arena rebuilt around it. That is the intended behaviour — it is
         // how an author iterates on an arena without restarting — but it is worth knowing before
         // editing one on a live server.
+        // Registered BEFORE biomes only for readability in the log — nothing here resolves anything
+        // across registries at load time, and a biome that names a palette is checked at stamp time
+        // by [com.cobblemonroguelite.arena.ArenaStamper] rather than here. See [ArenaPalettes].
+        //
+        // Reloadable, and this is the one an author will iterate on hardest: editing a palette and
+        // running `/reload` changes the arena at the next band boundary or the next session resume,
+        // which is as close to a live preview as a block palette gets. It does NOT rebuild the arena
+        // a player is currently standing in — [com.cobblemonroguelite.arena.RunArenas.prepare] skips
+        // the stamp while the build id is unchanged, and the id does not change when its contents do.
+        CobblemonDataProvider.register(ArenaPalettes, reloadable = true)
         CobblemonDataProvider.register(RunBiomes, reloadable = true)
         log.info("roguelite: datapack registries registered — tables load from data/<namespace>/{}/", RogueliteDataRegistry.ROOT)
     }

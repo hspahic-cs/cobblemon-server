@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.run
 
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemonroguelite.arena.ArenaBuild
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
@@ -75,7 +76,9 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  * @property entry where the player came from, restored on run end and on an ejection. Persisted,
  *   unlike the three arena fields around it, because it is a fact about the *world outside* the run and
  *   is the only way home. See [RunEntryPoint].
- * @property stampedTemplate which arena build is currently standing in [arenaSlot]. Not persisted, for
+ * @property stampedBuild which arena is currently standing in [arenaSlot] — §2.29's generated palette
+ *   or a hand-built template, tagged so the two can never be confused for each other
+ *   ([com.cobblemonroguelite.arena.ArenaBuild]). Not persisted, for
  *   [arenaSlot]'s reason and with an extra edge: it is the value §2.19's band transition is detected by
  *   comparison against, so a copy that survived into a session holding a *different* slot would report
  *   "already correct" about a box the run has never been in and skip the stamp that puts a floor under
@@ -86,7 +89,7 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   rather than derived from [wave] — in short, because §2.24 leaves the door open to the player
  *   *choosing* the next biome, and a derived one closes it behind a schema change.
  * @property paintedBiome the Minecraft biome currently painted into [arenaSlot], or null when the
- *   slot has not been repainted for this run. [stampedTemplate]'s field one row over, for exactly its
+ *   slot has not been repainted for this run. [stampedBuild]'s field one row over, for exactly its
  *   reason and with the same answer on persistence: it is a fact about what is in the world, not about
  *   what should be, and the two come apart the moment a slot is handed to a different run. Kept
  *   separate from [biome] because a repaint can fail while a stamp succeeds — writing one field would
@@ -135,7 +138,7 @@ data class RunState(
     val trainerMemory: RunTrainerMemory = RunTrainerMemory(),
     var arenaSlot: Int? = null,
     var entry: RunEntryPoint? = null,
-    var stampedTemplate: ResourceLocation? = null,
+    var stampedBuild: ArenaBuild? = null,
     var biome: BiomeVisit? = null,
     var paintedBiome: ResourceLocation? = null,
     var battle: RunBattleMarker? = null,
@@ -282,7 +285,7 @@ data class RunState(
         // and the arena slot use: absent and empty mean the same thing here, so the only thing being
         // saved is bytes in a file that is written every wave.
         if (!trainerMemory.isEmpty()) tag.put("trainerMemory", trainerMemory.toNbt())
-        // §2.23: arenaSlot, stampedTemplate and paintedBiome are **not** written, and their absence is
+        // §2.23: arenaSlot, stampedBuild and paintedBiome are **not** written, and their absence is
         // the mechanism rather than an omission. All three describe a lease that lasts one session, so
         // a copy on disk would be a claim about an arena this run does not hold the moment the process
         // that made it goes away — see the property docs. `entry` is written because it is the opposite
@@ -403,7 +406,7 @@ data class RunState(
                 trainerRoster = tag.getString("trainerRoster").takeIf { it.isNotEmpty() }
                     ?.let { ResourceLocation.tryParse(it) },
                 trainerMemory = RunTrainerMemory.fromNbt(tag.getList("trainerMemory", 10 /* TAG_COMPOUND */)),
-                // arenaSlot, stampedTemplate and paintedBiome are not read because they are not
+                // arenaSlot, stampedBuild and paintedBiome are not read because they are not
                 // written (§2.23). A restored run holds no arena and nothing is claimed to be standing
                 // in one, so the first entry of the new session allocates, stamps and repaints — which
                 // is the correct thing to do about a grid whose contents nobody can vouch for.

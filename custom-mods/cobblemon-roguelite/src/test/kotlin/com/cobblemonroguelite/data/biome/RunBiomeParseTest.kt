@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.data.biome
 
+import com.cobblemonroguelite.arena.ArenaBuild
 import com.cobblemonroguelite.data.DataProblems
 import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
@@ -35,7 +36,7 @@ class RunBiomeParseTest {
     private val minimal = """
         {
           "display_name": "Grassy Field",
-          "arena_template": "test:arena/grassland",
+          "arena_palette": "test:grassland",
           "minecraft_biome": "minecraft:plains"
         }
     """
@@ -48,7 +49,7 @@ class RunBiomeParseTest {
 
         assertEquals(file, biome.id, "the id is the file path, not a field")
         assertEquals("Grassy Field", biome.displayName)
-        assertEquals(ResourceLocation.fromNamespaceAndPath("test", "arena/grassland"), biome.arenaTemplate)
+        assertEquals(ArenaBuild.Palette(ResourceLocation.fromNamespaceAndPath("test", "grassland")), biome.arenaBuild)
         assertEquals(ResourceLocation.fromNamespaceAndPath("minecraft", "plains"), biome.minecraftBiome)
         assertEquals(1, biome.minWave)
         assertNull(biome.maxWave, "an absent max_wave must mean unbounded, not wave 0")
@@ -63,7 +64,7 @@ class RunBiomeParseTest {
                 """
                 {
                   "display_name": "Volcano",
-                  "arena_template": "test:arena/volcano",
+                  "arena_palette": "test:volcano",
                   "minecraft_biome": "minecraft:basalt_deltas",
                   "min_wave": 100,
                   "max_wave": 150
@@ -83,7 +84,7 @@ class RunBiomeParseTest {
             """
             {
               "display_name": "Example",
-              "arena_template": "test:arena/example",
+              "arena_palette": "test:example",
               "minecraft_biome": "minecraft:meadow",
               "weight": 0
             }
@@ -98,7 +99,7 @@ class RunBiomeParseTest {
     fun `a missing required field names the field`() {
         val parsed = parse("""{ "display_name": "Nowhere" }""")
         assertNull(parsed.biome)
-        assertTrue(parsed.mentions("arena_template", "missing"), parsed.messages.toString())
+        assertTrue(parsed.mentions("arena_palette", "missing"), parsed.messages.toString())
         assertTrue(parsed.mentions("minecraft_biome", "missing"), parsed.messages.toString())
     }
 
@@ -108,7 +109,7 @@ class RunBiomeParseTest {
             """
             {
               "display_name": "Broken",
-              "arena_template": "test:arena/ok",
+              "arena_palette": "test:ok",
               "minecraft_biome": "Not An Id"
             }
             """,
@@ -123,7 +124,7 @@ class RunBiomeParseTest {
             """
             {
               "display_name": "Impossible",
-              "arena_template": "test:arena/ok",
+              "arena_palette": "test:ok",
               "minecraft_biome": "minecraft:plains",
               "min_wave": 100,
               "max_wave": 50
@@ -142,7 +143,7 @@ class RunBiomeParseTest {
             """
             {
               "display_name": "  ",
-              "arena_template": "test:arena/ok",
+              "arena_palette": "test:ok",
               "minecraft_biome": "minecraft:plains"
             }
             """,
@@ -159,7 +160,7 @@ class RunBiomeParseTest {
             """
             {
               "display_name": "Typo",
-              "arena_template": "test:arena/ok",
+              "arena_palette": "test:ok",
               "minecraft_biome": "minecraft:plains",
               "wieght": 5
             }
@@ -176,12 +177,60 @@ class RunBiomeParseTest {
             {
               "_comment": "example only",
               "display_name": "Commented",
-              "arena_template": "test:arena/ok",
+              "arena_palette": "test:ok",
               "minecraft_biome": "minecraft:plains"
             }
             """,
         )
         assertNotNull(parsed.biome)
         assertTrue(parsed.problems.isEmpty(), parsed.messages.toString())
+    }
+
+    @Test
+    fun `naming both an arena palette and an arena template is refused`() {
+        // §2.29: a biome has one arena. A precedence rule would mean an author adding a palette to a
+        // biome that already had a template sees no change at all, with nothing in the log to say why.
+        val parsed = parse(
+            """
+            {
+              "display_name": "Two Minds",
+              "arena_palette": "test:ok",
+              "arena_template": "test:arena/ok",
+              "minecraft_biome": "minecraft:plains"
+            }
+            """,
+        )
+        assertNull(parsed.biome)
+        assertTrue(parsed.mentions("arena_palette", "arena_template"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a hand-built template is still accepted, and is not the same thing as a palette`() {
+        val parsed = parse(
+            """
+            {
+              "display_name": "Owner Built",
+              "arena_template": "test:arena/grassland",
+              "minecraft_biome": "minecraft:plains"
+            }
+            """,
+        )
+        val biome = assertNotNull(parsed.biome)
+        assertTrue(parsed.problems.isEmpty(), parsed.messages.toString())
+        assertEquals(
+            ArenaBuild.Template(ResourceLocation.fromNamespaceAndPath("test", "arena/grassland")),
+            biome.arenaBuild,
+        )
+    }
+
+    @Test
+    fun `the shipped example biome is a valid biome`() {
+        // It ships in the jar's data folder, so if it stops parsing every server logs a rejected file
+        // on boot — and the one file an owner copies to start from would be broken.
+        val stream = javaClass.getResourceAsStream("/data/cobblemon_roguelite/roguelite/biomes/example.json")
+        val json = assertNotNull(stream, "example.json is missing from the mod's resources").reader().readText()
+        val parsed = parse(json)
+        assertNotNull(parsed.biome, "shipped example failed to parse: ${parsed.messages}")
+        assertTrue(parsed.problems.isEmpty(), "shipped example has problems: ${parsed.messages}")
     }
 }

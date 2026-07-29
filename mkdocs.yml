@@ -65,6 +65,7 @@ exclude_docs: |
   snapshots.md
   upstream-sources.md
   working-with-mods.md
+  loot-tiers.md
 
 nav:
   - Home: index.md
@@ -82,4 +83,4 @@ nav:
       - PvP rules: pvp.md
       - Rental teams: rental-teams.html
       - Finding legendaries: legendaries.md
-      - Loot tiers: loot-tiers.md
+      - Loot tiers: loot-tiers.html

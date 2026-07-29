@@ -133,6 +133,7 @@
     },
     {
       "species": "braviary",
+      "aspects": ["hisuian"],
       "level": 60,
       "nature": "timid",
       "ivs": {

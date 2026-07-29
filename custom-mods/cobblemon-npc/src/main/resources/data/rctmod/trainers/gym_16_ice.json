@@ -16,6 +16,7 @@
   "team": [
     {
       "species": "ninetales",
+      "aspects": ["alolan"],
       "level": 60,
       "nature": "timid",
       "ivs": {

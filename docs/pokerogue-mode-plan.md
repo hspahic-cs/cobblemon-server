@@ -1283,6 +1283,35 @@ which is the behaviour a between-wave shop wants.
 **Open, and all of it content:** what credits are earned per wave kind, what the shop stocks, what
 things cost, and whether the shop restocks per wave or per band. None of it blocks the mechanism.
 
+### 2.36 Decision blitz, 2026-07-29
+
+**Run-issued bag items are allowed.** §2.11's blanket rejection becomes "reject player-owned,
+allow run-issued". The ban existed so a player's own potions could not trivialise permadeath;
+items the *run* grants are the reward loop, not a bypass of it. This unblocks PokéRogue's X Attack
+line — noting those are player-wide and last five battles there, so the faithful version is run
+state applied at battle start rather than a consumable.
+
+**A default arena palette ships**, keyed to biomes, so an unconfigured install is playable and
+testable. §2.29 worried about imposing taste on every server; a plainly-labelled default that an
+owner overrides is a smaller cost than a mode that cannot be entered.
+
+**The milestone checkpoint interval is dropped.** §2.10 kept it as persistence granularity, but
+checkpointing is per-wave and §2.23 rewrote how sessions work. It described nothing.
+
+**Content mirrors PokéRogue except the payout.** The per-species cost table and the starter list
+are extracted from their repo, and candy prices swap to their per-tier table (§2.28). Run
+*rewards* stay ours — §2.28's depth-banded eggs — because those hook into our gacha and economy,
+which theirs does not have.
+
+**Rivals are a distinct encounter kind; the E4 and champion are not.** Checked rather than
+assumed: the E4 sit at waves 182/184/186/188 and the champion at 190, always from one region —
+fixed, strong, and otherwise ordinary bosses, which §2.30's fixed-encounter override already
+expresses. **Rivals are different in kind.** They appear at waves 8, 25, 55, 95, 145 and 195 as
+the *same character* whose team grows across the run — a regional starter and regional bird to
+begin, gaining Pokémon each meeting, ending on Rayquaza. That is a run-long thread, not a boss:
+it needs run state remembering which rival and what they have gained. Recorded as a real gap;
+nothing implements it.
+
 ---
 
 ## 3. Preliminary plan

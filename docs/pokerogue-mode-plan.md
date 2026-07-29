@@ -970,6 +970,34 @@ overcharges strong species and undercharges weak ones — the opposite of the in
 carries friendship caps scaling 25–600 by cost, against our flat 150 placeholder; both are the
 `friendshipThresholdByCost` seam that was left empty for exactly this.
 
+### 2.29 Arenas are generated from a palette, not built by hand
+
+**Chosen:** the arena is **generated in code** from a per-biome block palette — floor, border,
+dimensions — rather than stamped from a hand-built `StructureTemplate`. A hand-built `.nbt`
+remains supported as an override.
+
+**Why, and it is not only about who can build.** A published build (§1.2) cannot depend on a
+hand-made structure either: it would have to *ship* one, and that one becomes somebody's taste
+imposed on every server that installs the mod. Generation from data is the shape that works for
+both us and a stranger's server.
+
+**Why a plain platform is enough.** The atmosphere is not carried by the build — it is carried by
+§2.24's biome repaint. Sky colour, fog, water and grass tint, ambient loops and biome music all
+change when the arena's Minecraft biome is repainted. A basalt platform under orange fog with
+volcanic ambience reads as a volcano; the structure was never going to do that work.
+
+**What this changes and what it does not.** The slot grid, chunk tickets, stamp-on-assignment,
+band transitions and the repaint all stay exactly as they are — only "read an `.nbt`" becomes
+"place blocks from a palette". The palette is content a non-builder can author: it is a choice of
+**blocks**, not of architecture.
+
+**Rejected for now — worldgen arenas.** Switching the arena dimension to a noise generator so each
+slot sits in real terrain, with a biome transition moving the player to a matching cell, needs no
+authoring at all and would look better. It also trades away the sealed-box property that makes
+arenas cheap and predictable, complicates the slot grid, and stops guaranteeing flat ground.
+Worth revisiting if generated platforms feel sterile *in play* — a judgement to make after seeing
+one, not before.
+
 ---
 
 ## 3. Preliminary plan

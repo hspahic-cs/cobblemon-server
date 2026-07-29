@@ -31,7 +31,8 @@ import net.minecraft.nbt.CompoundTag
  *
  * @property candy unspent candy. A balance, not a lifetime total — spending lowers it.
  * @property floor §2.17's IV floor, [IvFloor.BASE] until a run catch raises it.
- * @property passiveUnlocked whether this species' passive ability has been bought (§2.15).
+ * @property hiddenAbilityUnlocked whether this species' hidden-ability unlock has been bought
+ *   (§2.15, §2.27). Read by starter creation, which is what makes it worth storing.
  * @property costReductions how many starter-cost reductions have been bought. Capped by the length of
  *   [CandyPrices.costReductionCandy].
  * @property friendship friendship banked toward the next candy, i.e. the remainder below the
@@ -41,7 +42,7 @@ import net.minecraft.nbt.CompoundTag
 data class SpeciesProgress(
     val candy: Int = 0,
     val floor: IvFloor = IvFloor.BASE,
-    val passiveUnlocked: Boolean = false,
+    val hiddenAbilityUnlocked: Boolean = false,
     val costReductions: Int = 0,
     val friendship: Int = 0,
 ) {
@@ -101,17 +102,21 @@ data class SpeciesProgress(
      * Attempt a purchase. Pure: the result carries the new record and the caller decides whether to
      * store it, which is what lets a UI quote a price without committing to it.
      *
-     * Every refusal is its own case rather than a null, because the four of them need four different
-     * things said to the player — "you need 12 more", "you already own that", "there are no more to
-     * buy" and "the server has not priced eggs" are not interchangeable, and collapsing them is how a
-     * button ends up doing nothing with no explanation.
+     * Every refusal is its own case rather than a null, because each of them needs a different thing
+     * said to the player — "you need 12 more", "you already own that", "there are no more to buy",
+     * "the server has not priced eggs" and "this species has no hidden ability to unlock" are not
+     * interchangeable, and collapsing them is how a button ends up doing nothing with no explanation.
+     *
+     * The last of those is decided in [CandyLedger.quote] and never here: whether a species has a
+     * hidden ability is a fact about Cobblemon's data, and this record is six numbers. See
+     * [SpendResult.NoHiddenAbility].
      */
     fun buy(
         purchase: CandyPurchase,
         starterCost: Int = UNKNOWN_STARTER_COST,
         prices: CandyPrices = ProgressionSettings.prices,
     ): SpendResult {
-        if (purchase == CandyPurchase.PASSIVE && passiveUnlocked) return SpendResult.AlreadyOwned
+        if (purchase == CandyPurchase.HIDDEN_ABILITY && hiddenAbilityUnlocked) return SpendResult.AlreadyOwned
         val price = prices.priceOf(purchase, starterCost, costReductions)
             ?: return when (purchase) {
                 // A null price means two different things depending on the purchase, and the two are
@@ -123,7 +128,7 @@ data class SpeciesProgress(
         if (candy < price) return SpendResult.NotEnoughCandy(have = candy, need = price)
 
         val bought = when (purchase) {
-            CandyPurchase.PASSIVE -> copy(candy = candy - price, passiveUnlocked = true)
+            CandyPurchase.HIDDEN_ABILITY -> copy(candy = candy - price, hiddenAbilityUnlocked = true)
             CandyPurchase.COST_REDUCTION -> copy(candy = candy - price, costReductions = costReductions + 1)
             // An egg leaves no mark on this record on purpose: what an egg *is* belongs to whatever
             // grants it, and a counter here would be a second copy of a fact that store already owns.
@@ -144,7 +149,7 @@ data class SpeciesProgress(
     fun toNbt(): CompoundTag = CompoundTag().apply {
         if (candy != 0) putInt(CANDY_KEY, candy)
         if (!floor.isBase()) put(FLOOR_KEY, floor.toNbt())
-        if (passiveUnlocked) putBoolean(PASSIVE_KEY, true)
+        if (hiddenAbilityUnlocked) putBoolean(HIDDEN_ABILITY_KEY, true)
         if (costReductions != 0) putInt(REDUCTIONS_KEY, costReductions)
         if (friendship != 0) putInt(FRIENDSHIP_KEY, friendship)
     }
@@ -172,7 +177,7 @@ data class SpeciesProgress(
 
         private const val CANDY_KEY = "candy"
         private const val FLOOR_KEY = "floor"
-        private const val PASSIVE_KEY = "passive"
+        private const val HIDDEN_ABILITY_KEY = "hiddenAbility"
         private const val REDUCTIONS_KEY = "costReductions"
         private const val FRIENDSHIP_KEY = "friendship"
 
@@ -190,7 +195,7 @@ data class SpeciesProgress(
             } else {
                 IvFloor.BASE
             },
-            passiveUnlocked = tag.getBoolean(PASSIVE_KEY),
+            hiddenAbilityUnlocked = tag.getBoolean(HIDDEN_ABILITY_KEY),
             costReductions = tag.getInt(REDUCTIONS_KEY),
             friendship = tag.getInt(FRIENDSHIP_KEY),
         )
@@ -198,6 +203,8 @@ data class SpeciesProgress(
 }
 
 /** The outcome of a [SpeciesProgress.buy]. See there for why the refusals are not one case. */
+// Five cases, and [CandyMessages.refusal] is a `when` over the whole type, so adding a sixth without
+// wording it fails to compile. That is the property the split is for.
 sealed interface SpendResult {
 
     /** Bought. [progress] is the record to store; storing it is the caller's job. */
@@ -205,7 +212,7 @@ sealed interface SpendResult {
 
     data class NotEnoughCandy(val have: Int, val need: Int) : SpendResult
 
-    /** A passive that is already unlocked. Buying it twice would be a pure candy sink for nothing. */
+    /** An unlock that is already held. Buying it twice would be a pure candy sink for nothing. */
     data object AlreadyOwned : SpendResult
 
     /** Every cost reduction for this species has been bought. */
@@ -213,4 +220,17 @@ sealed interface SpendResult {
 
     /** The server has not given this purchase a price — see [CandyPrices]. Not the player's fault. */
     data object NotPriced : SpendResult
+
+    /**
+     * There is no hidden ability to unlock for this species (§2.27), so the purchase is withdrawn
+     * rather than taken.
+     *
+     * **This case is the reason the whole rename happened.** The unlock it replaced was recorded and
+     * did nothing; the one failure that would put us straight back there is selling an unlock for a
+     * species whose ability slot is empty — the player would pay, the starter would come out with an
+     * ordinary ability, and nothing would ever say why. Distinct from [NotPriced] because that one is
+     * "nobody has decided what this costs" and this one is "there is nothing here to buy at any
+     * price": the first is fixed by an operator setting a number, the second cannot be fixed by one.
+     */
+    data object NoHiddenAbility : SpendResult
 }

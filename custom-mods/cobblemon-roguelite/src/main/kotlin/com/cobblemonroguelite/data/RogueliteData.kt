@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.data.CobblemonDataProvider
 import com.cobblemonroguelite.data.biome.RunBiomes
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
+import com.cobblemonroguelite.data.starter.HiddenAbilityTables
 import com.cobblemonroguelite.data.starter.StarterCostTables
 import com.cobblemonroguelite.data.trainer.TrainerRosters
 import org.slf4j.LoggerFactory
@@ -64,6 +65,12 @@ object RogueliteData {
         // not seeded, so there is nothing snapshotted to go stale). A run already under way is
         // unaffected — its party was bought and built at `chooseStarters`.
         CobblemonDataProvider.register(StarterCostTables, reloadable = true)
+        // Reloadable, and read at two moments that are hours apart: the candy shop quotes what an
+        // unlock grants, and a starter build grants it (§2.27). Editing this between the two means a
+        // player was quoted one ability and handed another — which is why the grant re-reads the
+        // table rather than trusting anything carried from the purchase, and why a species that lost
+        // its assignment logs rather than silently falling back.
+        CobblemonDataProvider.register(HiddenAbilityTables, reloadable = true)
         // Reloadable, and this is the one whose reload a player can *see*: editing a biome file
         // changes which build is stamped and which Minecraft biome is painted at the next wave, so a
         // run mid-band will find its arena rebuilt around it. That is the intended behaviour — it is

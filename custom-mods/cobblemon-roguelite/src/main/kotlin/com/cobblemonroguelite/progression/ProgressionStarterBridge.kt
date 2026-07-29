@@ -46,6 +46,18 @@ class ProgressionStarterBridge(private val server: MinecraftServer) : StarterPro
             .onFailure { log.warn("roguelite: could not price {} for {} — using base cost", species, player, it) }
             .getOrDefault(baseCost)
 
+    /**
+     * §2.27's unlock, with the evolution-line root resolved inside [RunProgression.hiddenAbilityUnlocked].
+     *
+     * Degrades to `false`, which is the pre-progression answer and the only safe one: a starter built
+     * without a grant is the run every player had before this feature existed, whereas defaulting to
+     * `true` would hand out an ability nobody paid for whenever the store hiccupped.
+     */
+    override fun hiddenAbilityUnlocked(player: UUID, species: ResourceLocation): Boolean =
+        runCatching { RunProgression.hiddenAbilityUnlocked(server, player, species) }
+            .onFailure { log.warn("roguelite: could not read a hidden-ability unlock for {} — granting none", species, it) }
+            .getOrDefault(false)
+
     override fun ivFloor(player: UUID, species: ResourceLocation): StarterIvFloor =
         runCatching { RunProgression.ivFloor(server, player, species).asStarterFloor() }
             .onFailure { log.warn("roguelite: could not read an IV floor for {} — using base", species, it) }

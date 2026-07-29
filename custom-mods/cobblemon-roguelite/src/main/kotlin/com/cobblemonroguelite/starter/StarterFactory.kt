@@ -43,16 +43,21 @@ object StarterFactory {
      *
      * @param ivFloor per-species floor from §2.17, supplied by the caller because it is per *player*
      *   and this object deliberately never sees one — see [StarterProgression].
+     * @param hiddenAbilityUnlocked whether this player has bought §2.27's unlock for that species.
+     *   Per *player* for the same reason and supplied the same way. Note the caller resolves §2.17's
+     *   evolution-line root; what this object grants is the ability of the species in front of it.
      */
     fun createTeam(
         species: List<ResourceLocation>,
         level: Int,
         runSeed: Long,
         ivFloor: (ResourceLocation) -> StarterIvFloor,
+        hiddenAbilityUnlocked: (ResourceLocation) -> Boolean = { false },
     ): StarterTeamResult {
         val built = ArrayList<Pokemon>(species.size)
         species.forEachIndexed { slot, id ->
-            val pokemon = create(id, level, runSeed, slot, ivFloor(id)) ?: return StarterTeamResult.Unavailable(id)
+            val pokemon = create(id, level, runSeed, slot, ivFloor(id), hiddenAbilityUnlocked(id))
+                ?: return StarterTeamResult.Unavailable(id)
             built += pokemon
         }
         return StarterTeamResult.Built(built)
@@ -76,6 +81,7 @@ object StarterFactory {
         runSeed: Long,
         slot: Int,
         ivFloor: StarterIvFloor,
+        hiddenAbilityUnlocked: Boolean = false,
     ): Pokemon? {
         // getByIdentifier, not getByName: the latter forces the `cobblemon` namespace, so an addon
         // species would report missing here and then resolve fine in the properties string.
@@ -95,6 +101,21 @@ object StarterFactory {
         StarterIvRoll.roll(runSeed, species, slot, ivFloor).forEach { (stat, value) ->
             runCatching { pokemon.setIV(stat, value) }
                 .onFailure { log.warn("roguelite: could not set {} IV on starter '{}'", stat, species, it) }
+        }
+
+        // §2.27. Applied after creation for the same reason the IVs are: `create()` has already
+        // rolled an ordinary ability, and the properties string has no syntax for "this exact one"
+        // — Cobblemon's `hiddenability=true` picks at random among hidden entries and knows nothing
+        // about the datapack override, so it is the wrong tool even though it is the obvious one.
+        //
+        // A failure here does not fail the starter. The unlock is permanent and the player keeps it;
+        // a run that begins with the ordinary ability is a worse run that still plays, whereas
+        // refusing the build would cost them a start they have already paid for (§2.16).
+        if (hiddenAbilityUnlocked) {
+            val granted = HiddenAbilityGrant.applyTo(pokemon)
+            if (granted != null) {
+                log.info("roguelite: starter '{}' begins with its unlocked ability '{}'", species, granted)
+            }
         }
 
         // `create()` leaves the moveset empty on some paths, and a Pokémon with no moves takes the

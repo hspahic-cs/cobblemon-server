@@ -29,14 +29,14 @@ class ProgressionPersistenceTest {
         before.update(torchic) {
             it.creditCatch(IvFloor(31, 4, 22, 31, 0, 18), shinyVariant = 0)
                 .creditFriendship(200)
-                .copy(passiveUnlocked = true, costReductions = 1)
+                .copy(hiddenAbilityUnlocked = true, costReductions = 1)
         }
         before.update(gible) { it.creditCatch(IvFloor.flat(24), shinyVariant = -1) }
 
         val after = PlayerProgression.fromNbt(before.toNbt())
         assertEquals(before.all(), after.all())
         assertEquals(IvFloor(31, 10, 22, 31, 10, 18), after.of(torchic).floor)
-        assertTrue(after.of(torchic).passiveUnlocked)
+        assertTrue(after.of(torchic).hiddenAbilityUnlocked)
         assertEquals(1, after.of(torchic).costReductions)
     }
 
@@ -72,12 +72,12 @@ class ProgressionPersistenceTest {
 
     @Test
     fun `a damaged floor costs the floor and not the candy`() {
-        val tag = SpeciesProgress(candy = 12, passiveUnlocked = true).toNbt()
+        val tag = SpeciesProgress(candy = 12, hiddenAbilityUnlocked = true).toNbt()
         tag.put("floor", CompoundTag().apply { putIntArray("ivs", intArrayOf(31, 31)) })
 
         val restored = SpeciesProgress.fromNbt(tag)
         assertEquals(12, restored.candy)
-        assertTrue(restored.passiveUnlocked)
+        assertTrue(restored.hiddenAbilityUnlocked)
         assertEquals(IvFloor.BASE, restored.floor)
     }
 
@@ -137,7 +137,7 @@ class ProgressionPersistenceTest {
             repeat(threads) {
                 pool.submit {
                     start.await()
-                    if (player.buy(torchic, CandyPurchase.PASSIVE) is SpendResult.Ok) bought.incrementAndGet()
+                    if (player.buy(torchic, CandyPurchase.HIDDEN_ABILITY) is SpendResult.Ok) bought.incrementAndGet()
                 }
             }
             start.countDown()

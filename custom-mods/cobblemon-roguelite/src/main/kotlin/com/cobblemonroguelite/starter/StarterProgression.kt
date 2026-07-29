@@ -85,12 +85,29 @@ interface StarterProgression {
     /** The IV floor [player] has earned for [species] (§2.17). Never below [StarterIvFloor.BASE]. */
     fun ivFloor(player: UUID, species: ResourceLocation): StarterIvFloor
 
+    /**
+     * Whether [player] has bought the hidden-ability unlock that covers [species] (§2.27).
+     *
+     * Asked in *this* package's terms — a species about to be built — and answered by whoever owns
+     * the ledger. That matters more here than it does for the other two questions, because candy is
+     * banked on the **evolution line's root** (§2.17): the unlock for Charizard was bought on
+     * Charmander's ledger, and resolving that is the store's job. Selection asks about the species it
+     * is actually building and must not try to walk a line itself, or the two walks could disagree
+     * and a player would own an unlock that never fires.
+     *
+     * *Which* ability that unlock grants is a separate question with a separate answer
+     * ([HiddenAbilityGrant]), and it is keyed on this species rather than on the root — a Charizard
+     * gets Charizard's, not Charmander's.
+     */
+    fun hiddenAbilityUnlocked(player: UUID, species: ResourceLocation): Boolean
+
     companion object {
 
-        /** No reductions, flat base IVs. What a server with no progression store behaves like. */
+        /** No reductions, flat base IVs, no unlocks. What a server with no progression store behaves like. */
         val Base: StarterProgression = object : StarterProgression {
             override fun effectiveCost(player: UUID, species: ResourceLocation, baseCost: Int) = baseCost
             override fun ivFloor(player: UUID, species: ResourceLocation) = StarterIvFloor.Base
+            override fun hiddenAbilityUnlocked(player: UUID, species: ResourceLocation) = false
         }
 
         /**

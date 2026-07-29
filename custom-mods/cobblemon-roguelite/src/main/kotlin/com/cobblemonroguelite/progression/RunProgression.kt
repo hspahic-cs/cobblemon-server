@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.progression
 
+import com.cobblemon.mod.common.api.pokemon.PokemonSpecies
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.pokemon.Species
@@ -39,7 +40,7 @@ object RunProgression {
      * **Decided 2026-07-28: the evolution line's root** (plan §2.17) — a caught Charizard candies
      * Charmander, which is PokéRogue's rule. It is also the only choice that makes candy
      * *accumulate*: crediting the caught species would scatter a line's earnings across three
-     * separate ledgers, and a player would rarely reach a passive on any of them.
+     * separate ledgers, and a player would rarely reach an unlock on any of them.
      *
      * Still swappable, but note a switch is **not retroactive** — candy already banked under one
      * key does not move to the other.
@@ -122,9 +123,38 @@ object RunProgression {
         baseCost: Int,
     ): Int = ProgressionStore.of(server).progressFor(player, species).effectiveStarterCost(baseCost)
 
-    /** Whether this player has bought [species]' passive ability (§2.15). */
-    fun passiveUnlocked(server: MinecraftServer, player: UUID, species: ResourceLocation): Boolean =
-        ProgressionStore.of(server).progressFor(player, species).passiveUnlocked
+    /**
+     * Whether this player has bought the hidden-ability unlock covering [species] (§2.15, §2.27).
+     *
+     * **Resolves the evolution-line root before reading**, unlike [ivFloor] and [effectiveStarterCost]
+     * above, which take the id they are given. That is not an inconsistency to tidy away: [speciesKey]
+     * is what every *credit* is keyed by, so a Charizard's unlock was bought on Charmander's row and
+     * reading Charizard's row would find `false` for a player who owns it. The shop resolves the same
+     * key by the same call ([CandyCommands]), which is the point — one walk, one answer, no way for a
+     * purchase and a grant to disagree about which ledger they mean.
+     *
+     * Falls back to the id as given when the species does not resolve. A species Cobblemon does not
+     * have cannot be started with either, so the lookup finds nothing and the starter is built without
+     * the grant — the same outcome as never having bought it, which is the safe direction.
+     */
+    fun hiddenAbilityUnlocked(server: MinecraftServer, player: UUID, species: ResourceLocation): Boolean =
+        ProgressionStore.of(server).progressFor(player, ledgerKeyFor(species)).hiddenAbilityUnlocked
+
+    /**
+     * The ledger row [species] pays into and is spent from — §2.17's evolution-line root.
+     *
+     * Here rather than at each caller so that "which row" is decided once. Two copies of this walk is
+     * a shop that spends a ledger the catches never paid into, which is the failure [CandyCommands]
+     * already documents avoiding on its side.
+     */
+    fun ledgerKeyFor(species: ResourceLocation): ResourceLocation {
+        val resolved = runCatching { PokemonSpecies.getByIdentifier(species) }
+            .onFailure { log.warn("roguelite: could not resolve '{}' to a species", species, it) }
+            .getOrNull() ?: return species
+        return runCatching { speciesKey.keyFor(resolved) }
+            .onFailure { log.warn("roguelite: could not resolve a ledger row for '{}'", species, it) }
+            .getOrDefault(species)
+    }
 
     /**
      * A caught Pokémon's IVs as the primitive form §2.17 stores.
@@ -165,7 +195,7 @@ object RunProgression {
  *
  * The deciding argument is accumulation. Crediting the caught species scatters a line's earnings
  * across as many ledgers as the line has stages, so a player who catches Charmander, Charmeleon and
- * Charizard across a run banks three separate piles and rarely reaches a passive on any of them.
+ * Charizard across a run banks three separate piles and rarely reaches an unlock on any of them.
  * Crediting the root means every catch in the line pays into the thing the candy is spent on.
  *
  * [CaughtSpeciesKey] remains implemented and tested — it is not obviously wrong for us, since

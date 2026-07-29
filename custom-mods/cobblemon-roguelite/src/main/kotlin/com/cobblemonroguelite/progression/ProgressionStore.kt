@@ -181,8 +181,15 @@ class ProgressionStore private constructor() : SavedData() {
          * Bump when the *meaning* of anything [save] writes changes. Nothing reads it yet and that is
          * fine: it costs one int now and is the difference between a future migration being possible
          * and being guesswork, on a file that is never deleted and will outlive every other one here.
+         *
+         * **2 (§2.27):** the per-species `passive` flag became `hiddenAbility`. Deliberately **no
+         * migration** — the flag is not read under its old key, so a version-1 file loads with every
+         * unlock reset to unbought. That is only acceptable because nothing is live: the mode has
+         * never run on a server, so there is no player whose candy this costs. If that ever stops
+         * being true, this is the version number a migration keys off, which is the whole reason it
+         * was here before anything read it.
          */
-        const val SCHEMA_VERSION = 1
+        const val SCHEMA_VERSION = 2
 
         private const val PLAYERS_KEY = "players"
         private const val SCHEMA_KEY = "schema"

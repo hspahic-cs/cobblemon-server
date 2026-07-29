@@ -21,26 +21,26 @@ class CandySpendTest {
     @Test
     fun `a passive costs the configured price and deducts it`() {
         val rich = SpeciesProgress(candy = 100)
-        val result = rich.buy(CandyPurchase.PASSIVE, prices = prices)
+        val result = rich.buy(CandyPurchase.HIDDEN_ABILITY, prices = prices)
         assertIs<SpendResult.Ok>(result)
         assertEquals(40, result.spent)
         assertEquals(60, result.progress.candy)
-        assertTrue(result.progress.passiveUnlocked)
+        assertTrue(result.progress.hiddenAbilityUnlocked)
     }
 
     @Test
     fun `a passive priced by starter cost overrides the flat price`() {
         // §2.13 keeps the cost table server-side, so the per-cost map is the seam that lets an
         // operator supply PokéRogue's curve without this module carrying their data.
-        val byCost = CandyPrices(passiveCandy = 40, passiveCandyByCost = mapOf(6 to 80))
-        val result = SpeciesProgress(candy = 100).buy(CandyPurchase.PASSIVE, starterCost = 6, prices = byCost)
+        val byCost = CandyPrices(hiddenAbilityCandy = 40, hiddenAbilityCandyByCost = mapOf(6 to 80))
+        val result = SpeciesProgress(candy = 100).buy(CandyPurchase.HIDDEN_ABILITY, starterCost = 6, prices = byCost)
         assertIs<SpendResult.Ok>(result)
         assertEquals(80, result.spent)
     }
 
     @Test
     fun `an unaffordable purchase reports the gap rather than failing silently`() {
-        val result = SpeciesProgress(candy = 28).buy(CandyPurchase.PASSIVE, prices = prices)
+        val result = SpeciesProgress(candy = 28).buy(CandyPurchase.HIDDEN_ABILITY, prices = prices)
         assertIs<SpendResult.NotEnoughCandy>(result)
         assertEquals(28, result.have)
         assertEquals(40, result.need)
@@ -48,8 +48,8 @@ class CandySpendTest {
 
     @Test
     fun `a passive already owned is refused, not resold`() {
-        val owner = SpeciesProgress(candy = 100, passiveUnlocked = true)
-        assertIs<SpendResult.AlreadyOwned>(owner.buy(CandyPurchase.PASSIVE, prices = prices))
+        val owner = SpeciesProgress(candy = 100, hiddenAbilityUnlocked = true)
+        assertIs<SpendResult.AlreadyOwned>(owner.buy(CandyPurchase.HIDDEN_ABILITY, prices = prices))
     }
 
     @Test
@@ -99,7 +99,7 @@ class CandySpendTest {
         // Through the store-side path, because that is the one that writes: a refusal must not be
         // able to deduct, and must not create a row for a player who bought nothing.
         val player = PlayerProgression()
-        assertIs<SpendResult.NotEnoughCandy>(player.buy(species, CandyPurchase.PASSIVE, prices = prices))
+        assertIs<SpendResult.NotEnoughCandy>(player.buy(species, CandyPurchase.HIDDEN_ABILITY, prices = prices))
         assertTrue(player.isEmpty())
         assertEquals(SpeciesProgress.EMPTY, player.of(species))
     }
@@ -108,11 +108,11 @@ class CandySpendTest {
     fun `a stored purchase deducts exactly once`() {
         val player = PlayerProgression()
         player.update(species) { it.copy(candy = 45) }
-        assertIs<SpendResult.Ok>(player.buy(species, CandyPurchase.PASSIVE, prices = prices))
+        assertIs<SpendResult.Ok>(player.buy(species, CandyPurchase.HIDDEN_ABILITY, prices = prices))
         assertEquals(5, player.of(species).candy)
-        assertTrue(player.of(species).passiveUnlocked)
+        assertTrue(player.of(species).hiddenAbilityUnlocked)
         // The second attempt is refused and, critically, does not deduct again.
-        assertIs<SpendResult.AlreadyOwned>(player.buy(species, CandyPurchase.PASSIVE, prices = prices))
+        assertIs<SpendResult.AlreadyOwned>(player.buy(species, CandyPurchase.HIDDEN_ABILITY, prices = prices))
         assertEquals(5, player.of(species).candy)
     }
 }

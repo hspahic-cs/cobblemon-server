@@ -23,19 +23,23 @@ class CandyMessagesTest {
         requested: ResourceLocation = charmander,
         starterCost: Int = 4,
         prices: CandyPrices = CandyPrices(),
-    ) = CandyLedger.view(requested, charmander, progress, starterCost, prices)
+        hiddenAbility: String? = "solarpower",
+    ) = CandyLedger.view(
+        requested, charmander, progress, starterCost, prices, CandyLedger.EGGS_GRANTABLE, hiddenAbility,
+    )
 
     @Test
-    fun `the four refusals are four different sentences`() {
+    fun `the five refusals are five different sentences`() {
         val ledger = view(SpeciesProgress(candy = 3))
         val texts = listOf(
-            SpendResult.NotEnoughCandy(have = 3, need = 40) to CandyPurchase.PASSIVE,
-            SpendResult.AlreadyOwned to CandyPurchase.PASSIVE,
+            SpendResult.NotEnoughCandy(have = 3, need = 40) to CandyPurchase.HIDDEN_ABILITY,
+            SpendResult.AlreadyOwned to CandyPurchase.HIDDEN_ABILITY,
             SpendResult.SoldOut to CandyPurchase.COST_REDUCTION,
             SpendResult.NotPriced to CandyPurchase.EGG,
+            SpendResult.NoHiddenAbility to CandyPurchase.HIDDEN_ABILITY,
         ).map { (result, purchase) -> CandyMessages.refusal(ledger, purchase, result).string }
 
-        // The point of [SpendResult] having four cases. Two identical strings here would mean the
+        // The point of [SpendResult] having five cases. Two identical strings here would mean the
         // split upstream bought nothing and the player is being told "no" without being told what to
         // do about it.
         assertEquals(texts.size, texts.toSet().size, texts.toString())
@@ -43,6 +47,9 @@ class CandyMessagesTest {
         assertTrue("already own" in texts[1], texts[1])
         assertTrue("no more to buy" in texts[2], texts[2])
         assertTrue("not available on this server" in texts[3], texts[3])
+        assertTrue("no hidden ability" in texts[4], texts[4])
+        // The one refusal nobody can act on must not read as an operator problem or a price problem.
+        assertTrue("nothing was taken" in texts[4], texts[4])
     }
 
     @Test
@@ -74,14 +81,14 @@ class CandyMessagesTest {
     @Test
     fun `the confirmation names the price, the balance and the command that acts`() {
         val ledger = view(SpeciesProgress(candy = 100), requested = charizard)
-        val plan = CandyLedger.plan(ledger.offer(CandyPurchase.PASSIVE), confirmed = false)
+        val plan = CandyLedger.plan(ledger.offer(CandyPurchase.HIDDEN_ABILITY), confirmed = false)
         val text = CandyMessages.confirm(ledger, plan as CandyPurchasePlan.Confirm).string
 
         assertTrue("40 candy" in text, text)
         assertTrue("100" in text, text)
         // Echoed back as the player typed it, not as the credited species: the command they are being
         // told to type has to be one that parses against what is on their screen.
-        assertTrue("/roguelite candy cobblemon:charizard buy passive confirm" in text, text)
+        assertTrue("/roguelite candy cobblemon:charizard buy hiddenability confirm" in text, text)
     }
 
     @Test
@@ -110,19 +117,37 @@ class CandyMessagesTest {
     }
 
     @Test
-    fun `a passive is not sold as an ability that already works`() {
-        // Nothing in a run reads [SpeciesProgress.passiveUnlocked] yet. The purchase is still worth
-        // making — the unlock is permanent — but a player who was told it "applies to your next run"
-        // would go looking for a difference that is not there, which is the same failure as an
-        // unexplained refusal approached from the other side.
+    fun `an unlock is sold as what it is, with no caveat now that it works`() {
+        // This test used to assert the opposite sentence. §2.27 wired the grant up, so the caveat is
+        // gone — and it is gone *by the flag*, not by deletion, so a build that un-wires the grant
+        // brings the honest wording back everywhere at once. Asserting against
+        // [CandyLedger.HIDDEN_ABILITIES_GRANTED] rather than against a literal `false` is what keeps
+        // those two facts tied together.
         val priced = CandyMessages.view(view(SpeciesProgress(candy = 100)))[1].string
-        val sold = CandyMessages.bought(charmander, CandyPurchase.PASSIVE, spent = 40, remaining = 60).string
+        val sold = CandyMessages.bought(charmander, CandyPurchase.HIDDEN_ABILITY, spent = 40, remaining = 60).string
         for (text in listOf(priced, sold)) {
-            assertEquals(!CandyLedger.PASSIVES_ACTIVE, "do not affect runs yet" in text, text)
+            assertEquals(!CandyLedger.HIDDEN_ABILITIES_GRANTED, "do not affect runs yet" in text, text)
         }
+        assertTrue(CandyLedger.HIDDEN_ABILITIES_GRANTED, "the grant is wired up; see §2.27")
+
         // Cost reductions do work, and must not inherit the caveat.
         val reduction = CandyMessages.bought(charmander, CandyPurchase.COST_REDUCTION, spent = 20, remaining = 80).string
         assertTrue("do not affect runs yet" !in reduction, reduction)
+    }
+
+    @Test
+    fun `a priced unlock names the ability it grants`() {
+        // Without the name the line is "40 candy for a hidden ability", which is a price attached to
+        // an unknown — and hidden abilities are not interchangeable (§2.27's whole reason for making
+        // the granted ability overridable).
+        val priced = CandyMessages.view(view(SpeciesProgress(candy = 100)))[1].string
+        assertTrue("solarpower" in priced, priced)
+
+        // And a species with none says so on the line rather than dropping it, which would read as a
+        // display bug and be saved toward anyway.
+        val absent = CandyMessages.view(view(SpeciesProgress(candy = 100), hiddenAbility = null))[1].string
+        assertTrue("nothing to unlock" in absent, absent)
+        assertTrue("solarpower" !in absent, absent)
     }
 
     @Test

@@ -295,6 +295,10 @@ object RunController {
                 level = config.starterLevel,
                 runSeed = pending.seed,
                 ivFloor = { progression.ivFloor(player.uuid, it) },
+                // §2.27, looked up here for the same reason the floor is: the factory never receives
+                // a player. The store resolves §2.17's evolution-line root behind this call, so a
+                // Charizard starter reads the unlock bought on Charmander.
+                hiddenAbilityUnlocked = { progression.hiddenAbilityUnlocked(player.uuid, it) },
             )
         ) {
             is StarterTeamResult.Built -> built.team

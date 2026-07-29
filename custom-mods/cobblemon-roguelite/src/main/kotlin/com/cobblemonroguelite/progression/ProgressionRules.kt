@@ -71,22 +71,31 @@ data class CandyRules(
         friendshipThresholdByCost[starterCost] ?: friendshipThreshold
 }
 
-/** What candy is spent on. §2.15: "passive unlocks, cost reductions, and eggs". */
-enum class CandyPurchase { PASSIVE, COST_REDUCTION, EGG }
+/**
+ * What candy is spent on. §2.15 called the first one a "passive unlock"; §2.27 renamed it, because
+ * PokéRogue's passive is a *second* ability stacking on the Pokémon's own and this is not that. Ours
+ * grants the species' **hidden ability** — one ability, the one Showdown can actually apply — and
+ * carrying their word for it would have every player arriving from PokéRogue expecting the other
+ * mechanic.
+ */
+enum class CandyPurchase { HIDDEN_ABILITY, COST_REDUCTION, EGG }
 
 /**
  * Prices, and the only three numbers in this file that are pure balance.
  *
- * §2.15 quotes PokéRogue's reference points — roughly 40 candy for a 3-cost species' passive, cost
+ * §2.15 quotes PokéRogue's reference points — roughly 40 candy for a 3-cost species' unlock, cost
  * reductions at 20 and 50 — and the task that produced this file was explicit that they are
- * configurable rather than decided. So [passiveCandy] is a **flat** default rather than a curve, and
+ * configurable rather than decided. So [hiddenAbilityCandy] is a **flat** default rather than a curve, and
  * [eggCandy] is null: an unpriced purchase is refused ([SpendResult.NotPriced]) rather than given a
  * number nobody chose. Refusing is the honest failure — a wrong price that works reads as a decision
  * and quietly becomes one.
  *
- * @property passiveCandy flat price of a passive unlock when [passiveCandyByCost] has no entry.
- * @property passiveCandyByCost per-starter-cost prices. PokéRogue's real table scales with cost;
- *   populate this server-side to have it.
+ * @property hiddenAbilityCandy flat price of a hidden-ability unlock (§2.27) when
+ *   [hiddenAbilityCandyByCost] has no entry.
+ * @property hiddenAbilityCandyByCost per-starter-cost prices. PokéRogue's real table scales with cost;
+ *   populate this server-side to have it. Worth having here more than anywhere else: §2.13 prices
+ *   Torchic at 4 largely *because* of Speed Boost, so the species whose unlock is worth most are
+ *   already the ones the cost table has marked expensive.
  * @property costReductionCandy the price of the first, second, … cost reduction. The list length is
  *   therefore also the cap on how many a species may buy, which is deliberate: one number cannot
  *   drift out of step with the other.
@@ -96,15 +105,15 @@ enum class CandyPurchase { PASSIVE, COST_REDUCTION, EGG }
  * @property eggCandy price of an egg, or null for "not priced yet".
  */
 data class CandyPrices(
-    val passiveCandy: Int = 40,
-    val passiveCandyByCost: Map<Int, Int> = emptyMap(),
+    val hiddenAbilityCandy: Int = 40,
+    val hiddenAbilityCandyByCost: Map<Int, Int> = emptyMap(),
     val costReductionCandy: List<Int> = listOf(20, 50),
     val costReductionAmount: Int = 1,
     val minimumStarterCost: Int = 1,
     val eggCandy: Int? = null,
 ) {
     init {
-        require(passiveCandy >= 0) { "passiveCandy must not be negative, was $passiveCandy" }
+        require(hiddenAbilityCandy >= 0) { "hiddenAbilityCandy must not be negative, was $hiddenAbilityCandy" }
         require(costReductionCandy.all { it >= 0 }) { "costReductionCandy must not be negative" }
         require(costReductionAmount >= 0) { "costReductionAmount must not be negative" }
         require(minimumStarterCost >= 1) { "minimumStarterCost must be at least 1" }
@@ -122,7 +131,7 @@ data class CandyPrices(
      */
     fun priceOf(purchase: CandyPurchase, starterCost: Int, costReductionsOwned: Int): Int? =
         when (purchase) {
-            CandyPurchase.PASSIVE -> passiveCandyByCost[starterCost] ?: passiveCandy
+            CandyPurchase.HIDDEN_ABILITY -> hiddenAbilityCandyByCost[starterCost] ?: hiddenAbilityCandy
             CandyPurchase.COST_REDUCTION -> costReductionCandy.getOrNull(costReductionsOwned)
             CandyPurchase.EGG -> eggCandy
         }

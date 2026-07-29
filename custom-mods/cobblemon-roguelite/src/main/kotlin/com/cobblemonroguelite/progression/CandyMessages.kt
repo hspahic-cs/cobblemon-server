@@ -28,7 +28,7 @@ object CandyMessages {
      * the player concludes the feature is broken, and they are not wrong.
      */
     fun word(purchase: CandyPurchase): String = when (purchase) {
-        CandyPurchase.PASSIVE -> "passive"
+        CandyPurchase.HIDDEN_ABILITY -> "hiddenability"
         CandyPurchase.COST_REDUCTION -> "reduction"
         CandyPurchase.EGG -> "egg"
     }
@@ -36,21 +36,39 @@ object CandyMessages {
     /**
      * The sentence a purchase needs when what it buys is recorded but not yet wired up.
      *
-     * Appended everywhere a passive is priced or sold, because the alternative is a player spending
-     * forty candy and looking for a difference that is not there — which is the same failure as a
-     * refusal with no explanation, arrived at from the other direction. See
-     * [CandyLedger.PASSIVES_ACTIVE]; this string disappears on its own when the flag flips.
+     * **Empty today**, because §2.27 wired the unlock up: a bought hidden ability is granted when the
+     * starter is built. It was not always, and the caveat is kept rather than deleted for the reason
+     * [CandyLedger.HIDDEN_ABILITIES_GRANTED] gives — a build that un-wires the grant flips one
+     * constant and every price and receipt goes back to saying so, instead of quietly selling an
+     * action that appears to do nothing. That failure is the one this whole module is written to
+     * avoid, and it cost a rename to get out of.
      */
     private fun caveat(purchase: CandyPurchase): String =
-        if (purchase == CandyPurchase.PASSIVE && !CandyLedger.PASSIVES_ACTIVE) {
-            " Note: passives are recorded permanently but do not affect runs yet."
+        if (purchase == CandyPurchase.HIDDEN_ABILITY && !CandyLedger.HIDDEN_ABILITIES_GRANTED) {
+            " Note: hidden-ability unlocks are recorded permanently but do not affect runs yet."
         } else {
             ""
         }
 
+    /**
+     * What an unlock grants, appended to its offer line — " It grants speedboost." — or nothing when
+     * the view does not know.
+     *
+     * Named for the same reason a cost reduction's effect is named: a price attached to an unnamed
+     * benefit is not a decision. It matters more here, because hidden abilities are not
+     * interchangeable — Speed Boost wins games and Truant loses them, which is why §2.27 made the
+     * granted ability overridable at all. A player who can read which one they are buying can decide
+     * whether it is worth forty candy; a player who cannot is gambling with permanent currency.
+     */
+    private fun grants(view: CandyLedgerView, purchase: CandyPurchase): String {
+        if (purchase != CandyPurchase.HIDDEN_ABILITY) return ""
+        val ability = view.hiddenAbility ?: return ""
+        return " It grants $ability."
+    }
+
     /** What the purchase is called in a sentence. */
     private fun noun(purchase: CandyPurchase): String = when (purchase) {
-        CandyPurchase.PASSIVE -> "passive ability"
+        CandyPurchase.HIDDEN_ABILITY -> "hidden ability"
         CandyPurchase.COST_REDUCTION -> "starter cost reduction"
         CandyPurchase.EGG -> "egg"
     }
@@ -85,7 +103,7 @@ object CandyMessages {
     fun ledger(rows: List<CandyLedgerRow>): Component {
         val listed = rows.joinToString(", ") { row ->
             val marks = buildList {
-                if (row.progress.passiveUnlocked) add("passive")
+                if (row.progress.hiddenAbilityUnlocked) add("hidden ability")
                 if (row.progress.costReductions > 0) add("-${row.progress.costReductions}")
             }
             val suffix = if (marks.isEmpty()) "" else " [${marks.joinToString(" ")}]"
@@ -135,7 +153,7 @@ object CandyMessages {
      *
      * The five states of [SpendResult] each get their own line, including the two that are not
      * failures at all from the player's side ("you own this", "there are none left"). A line that
-     * merely omitted the unbuyable ones would leave a player who saved for a passive staring at a
+     * merely omitted the unbuyable ones would leave a player who saved for an unlock staring at a
      * view that had silently stopped mentioning it.
      */
     private fun offerLine(view: CandyLedgerView, offer: CandyOffer): Component {
@@ -145,12 +163,12 @@ object CandyMessages {
         return when (val quote = offer.quote) {
             is SpendResult.Ok -> literal(
                 "$label$counted: ${quote.spent} candy — you can afford it. $buy" +
-                    effectOf(view, offer) + caveat(offer.purchase),
+                    effectOf(view, offer) + grants(view, offer.purchase) + caveat(offer.purchase),
             ).withStyle(ChatFormatting.YELLOW)
 
             is SpendResult.NotEnoughCandy -> literal(
                 "$label$counted: ${quote.need} candy — ${quote.need - quote.have} short." +
-                    effectOf(view, offer) + caveat(offer.purchase),
+                    effectOf(view, offer) + grants(view, offer.purchase) + caveat(offer.purchase),
             )
 
             SpendResult.AlreadyOwned -> literal("$label: already unlocked.").withStyle(ChatFormatting.GREEN)
@@ -165,6 +183,13 @@ object CandyMessages {
             // an error, because that is what it is: nobody has decided what an egg costs or what
             // hands one over, and a player reading "unpriced" would report it as a bug.
             SpendResult.NotPriced -> literal("$label: not available on this server.").withStyle(ChatFormatting.GRAY)
+
+            // Listed rather than omitted, like every other unbuyable state: a player looking at a
+            // species wants to know it has nothing to unlock, and a line that simply vanished would
+            // read as a display bug and be saved toward anyway.
+            SpendResult.NoHiddenAbility -> literal(
+                "$label: ${view.credited} has none, so there is nothing to unlock.",
+            ).withStyle(ChatFormatting.GRAY)
         }
     }
 
@@ -192,7 +217,7 @@ object CandyMessages {
      * the bare form of an irreversible command warns and the trailing `confirm` acts.
      *
      * "Cannot be undone" is stated because it genuinely cannot: there is no sell-back, and candy is
-     * earned at one per catch (§2.15). A player who buys a reduction meaning to buy a passive has
+     * earned at one per catch (§2.15). A player who buys a reduction meaning to buy an unlock has
      * lost a real number of runs' worth of catching.
      */
     fun confirm(view: CandyLedgerView, plan: CandyPurchasePlan.Confirm): Component = Component.literal(
@@ -210,8 +235,9 @@ object CandyMessages {
         remaining: Int,
     ): Component {
         val what = when (purchase) {
-            CandyPurchase.PASSIVE ->
-                "$credited's passive ability is unlocked, permanently and for every future run." +
+            CandyPurchase.HIDDEN_ABILITY ->
+                "$credited's hidden ability is unlocked, permanently and for every future run — every " +
+                    "starter from that evolution line now begins with it." +
                     caveat(purchase)
 
             CandyPurchase.COST_REDUCTION ->
@@ -236,12 +262,13 @@ object CandyMessages {
     ).withStyle(ChatFormatting.RED)
 
     /**
-     * Why a purchase did not happen — **four refusals, four sentences**.
+     * Why a purchase did not happen — **five refusals, five sentences**.
      *
      * Collapsing any two of these is the failure [SpendResult] exists to prevent: "you are 12 short",
-     * "you already own it", "there are none left" and "this server does not sell it" call for four
-     * different actions from the player, and a shared "cannot buy that" tells them to do nothing at
-     * all. The `when` is exhaustive over the sealed type so a fifth case cannot be added silently.
+     * "you already own it", "there are none left", "this server does not sell it" and "this species
+     * has none" call for five different actions from the player — catch more, do nothing, do nothing,
+     * tell an operator, pick another species — and a shared "cannot buy that" tells them to do nothing
+     * at all. The `when` is exhaustive over the sealed type so a sixth case cannot be added silently.
      *
      * [SpendResult.Ok] is worded rather than thrown for the reason `RunMessages.starterRejected` gives:
      * it is unreachable from here, and a crash would cost the player their session over a message they
@@ -275,7 +302,8 @@ object CandyMessages {
             SpendResult.NotPriced -> if (purchase == CandyPurchase.EGG) {
                 literal(
                     "Eggs are not available on this server, so there is nothing to buy and your candy " +
-                        "is untouched. Passives and cost reductions are: /roguelite candy ${view.requested}.",
+                        "is untouched. Hidden abilities and cost reductions are: " +
+                        "/roguelite candy ${view.requested}.",
                 ).withStyle(ChatFormatting.GRAY)
             } else {
                 literal(
@@ -283,6 +311,17 @@ object CandyMessages {
                         "bought and nothing was taken. Tell an operator.",
                 ).withStyle(ChatFormatting.RED)
             }
+
+            // The refusal §2.27 was written to make possible. Not an error, not the operator's
+            // fault, and not fixable by anyone — the species simply has no hidden ability, so there
+            // is nothing an unlock could grant. Selling it anyway is the exact outcome that made the
+            // old "passive" a purchase that did nothing, and the sentence says which species and what
+            // to do instead rather than leaving the player to re-read the price.
+            SpendResult.NoHiddenAbility -> literal(
+                "${view.credited} has no hidden ability recorded on this server, so there is nothing " +
+                    "to unlock and nothing was taken. Its candy still buys cost reductions: " +
+                    "/roguelite candy ${view.requested}.",
+            ).withStyle(ChatFormatting.GRAY)
         }
 
     /** Mutable so callers may style it; `RunMessages` returns a plain [Component] and styles inline. */

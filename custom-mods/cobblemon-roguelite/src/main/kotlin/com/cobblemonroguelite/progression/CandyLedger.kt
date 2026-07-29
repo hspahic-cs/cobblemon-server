@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation
  * ### Why this is a separate file from [SpeciesProgress.buy]
  *
  * [SpeciesProgress.buy] decides one purchase. A player looking at a species is asking three
- * questions at once — passive, cost reductions, eggs — and the answers have to be the *same* answers
+ * questions at once — hidden ability, cost reductions, eggs — and the answers have to be the *same* answers
  * the purchase path will give a moment later, including the prices. So the view is built by
  * **dry-running the real purchase** for each kind and keeping the [SpendResult]. That is what
  * [SpeciesProgress.buy]'s purity is for ("what lets a UI quote a price without committing to it"),
@@ -47,24 +47,25 @@ object CandyLedger {
     const val EGGS_GRANTABLE = false
 
     /**
-     * Whether an unlocked passive does anything inside a run yet. **It does not** — nothing outside
-     * this package reads [SpeciesProgress.passiveUnlocked].
+     * Whether an unlocked hidden ability actually reaches a run. **It does** — §2.27, granted by
+     * [com.cobblemonroguelite.starter.HiddenAbilityGrant] when the starter is built.
      *
-     * Unlike an egg this does *not* make the purchase a candy sink, which is why it is a wording flag
-     * rather than a refusal: the unlock is durable, per-species and permanent, so a passive bought
-     * today is a passive the player owns on the day the ability is wired up. Refusing the sale would
-     * cost them nothing and gain them nothing.
+     * This was `false` for as long as the unlock was PokéRogue's "passive": recorded permanently and
+     * read by nothing, which [CandyMessages] said out loud in a caveat appended to every price and
+     * every receipt. The caveat is gone because the sentence became untrue, not because it became
+     * inconvenient — and the flag stays rather than being deleted so that the wording and the wiring
+     * cannot drift apart again. Anyone who un-wires the grant flips this back and the honest sentence
+     * returns on its own, everywhere it used to be, with no message to rewrite.
      *
-     * What would be dishonest is selling it as a working ability. A player who spends forty candy and
-     * sees no difference in their next run has bought the thing this whole module is written to avoid
-     * — an action that appears to do nothing — so [CandyMessages] says plainly that it is recorded and
-     * not yet in effect. Flip this in the change that reads the flag in a run, not before.
+     * Note what this flag is *not*: it is not the availability check. A species with no hidden
+     * ability is refused per species ([SpendResult.NoHiddenAbility]); this is a statement about the
+     * build.
      */
-    const val PASSIVES_ACTIVE = false
+    const val HIDDEN_ABILITIES_GRANTED = true
 
-    /** Display order. Passive first because it is the purchase players save toward. */
+    /** Display order. The hidden ability first because it is the purchase players save toward. */
     val PURCHASE_ORDER: List<CandyPurchase> =
-        listOf(CandyPurchase.PASSIVE, CandyPurchase.COST_REDUCTION, CandyPurchase.EGG)
+        listOf(CandyPurchase.HIDDEN_ABILITY, CandyPurchase.COST_REDUCTION, CandyPurchase.EGG)
 
     /**
      * What [purchase] would do to [progress] if it were attempted now, without attempting it.
@@ -78,10 +79,14 @@ object CandyLedger {
         starterCost: Int = SpeciesProgress.UNKNOWN_STARTER_COST,
         prices: CandyPrices = ProgressionSettings.prices,
         eggsGrantable: Boolean = EGGS_GRANTABLE,
+        hiddenAbility: String? = null,
     ): SpendResult {
-        // Before the price is consulted, deliberately: a priced egg on a build with no grantor must
-        // refuse, not succeed. See [EGGS_GRANTABLE].
+        // Both of these run before the price is consulted, deliberately. A priced egg on a build with
+        // no grantor must refuse, not succeed (see [EGGS_GRANTABLE]) — and so must a hidden-ability
+        // unlock for a species that has no hidden ability, which is the exact sale §2.27 exists to
+        // prevent: candy spent, a starter built with an ordinary ability, and nothing said.
         if (purchase == CandyPurchase.EGG && !eggsGrantable) return SpendResult.NotPriced
+        if (purchase == CandyPurchase.HIDDEN_ABILITY && hiddenAbility == null) return SpendResult.NoHiddenAbility
         return progress.buy(purchase, starterCost, prices)
     }
 
@@ -92,9 +97,10 @@ object CandyLedger {
         starterCost: Int = SpeciesProgress.UNKNOWN_STARTER_COST,
         prices: CandyPrices = ProgressionSettings.prices,
         eggsGrantable: Boolean = EGGS_GRANTABLE,
+        hiddenAbility: String? = null,
     ): CandyOffer = CandyOffer(
         purchase = purchase,
-        quote = quote(progress, purchase, starterCost, prices, eggsGrantable),
+        quote = quote(progress, purchase, starterCost, prices, eggsGrantable, hiddenAbility),
         owned = if (purchase == CandyPurchase.COST_REDUCTION) progress.costReductions else 0,
         // The price list's length *is* the cap (see [CandyPrices.costReductionCandy]), so the
         // "3 of 3 bought" the player reads and the [SpendResult.SoldOut] they hit are the same number.
@@ -111,9 +117,20 @@ object CandyLedger {
      * only the requested one would be a lie about which record is being spent.
      *
      * @param starterCost the species' **base** §2.13 cost, or [SpeciesProgress.UNKNOWN_STARTER_COST].
-     *   Base and not the reduced one: [CandyPrices.passiveCandyByCost] prices a passive by how strong
-     *   the species inherently is, and keying it off the reduced cost would make a passive get cheaper
-     *   every time the player bought a reduction — a moving price on a purchase they are saving for.
+     *   Base and not the reduced one: [CandyPrices.hiddenAbilityCandyByCost] prices an unlock by how
+     *   strong the species inherently is, and keying it off the reduced cost would make the unlock get
+     *   cheaper every time the player bought a reduction — a moving price on a purchase they are
+     *   saving for.
+     * @param hiddenAbility the ability an unlock on [credited] would grant, or null when there is
+     *   none and the purchase must be withdrawn (§2.27). Resolved by the caller from Cobblemon's
+     *   species data, which this file must not touch — see the note on this object about none of it
+     *   needing a booted game.
+     *
+     *   Keyed on [credited] and not [requested] because the ledger is what is being spent: candy is
+     *   banked on the evolution line's root (§2.17), so the unlock is bought on the root and it is the
+     *   root's ability that prices and names it. The ability a *run* grants is looked up again, on the
+     *   species actually started, which for an evolved starter is a different ability — the shop names
+     *   what the purchase is, the starter build names what it gives.
      */
     fun view(
         requested: ResourceLocation,
@@ -122,11 +139,13 @@ object CandyLedger {
         starterCost: Int = SpeciesProgress.UNKNOWN_STARTER_COST,
         prices: CandyPrices = ProgressionSettings.prices,
         eggsGrantable: Boolean = EGGS_GRANTABLE,
+        hiddenAbility: String? = null,
     ): CandyLedgerView = CandyLedgerView(
         requested = requested,
         credited = credited,
         progress = progress,
         starterCost = starterCost,
+        hiddenAbility = hiddenAbility,
         effectiveStarterCost = starterCost
             .takeIf { it != SpeciesProgress.UNKNOWN_STARTER_COST }
             ?.let { prices.effectiveStarterCost(it, progress.costReductions) },
@@ -138,7 +157,7 @@ object CandyLedger {
             .takeIf { it != SpeciesProgress.UNKNOWN_STARTER_COST }
             ?.let { prices.effectiveStarterCost(it, progress.costReductions + 1) },
         floorStarterCost = prices.minimumStarterCost,
-        offers = PURCHASE_ORDER.map { offer(progress, it, starterCost, prices, eggsGrantable) },
+        offers = PURCHASE_ORDER.map { offer(progress, it, starterCost, prices, eggsGrantable, hiddenAbility) },
     )
 
     /**
@@ -146,7 +165,7 @@ object CandyLedger {
      *
      * ### Why a refusal is decided before the confirmation, not after
      *
-     * A player who cannot afford a passive is told so on the *bare* command. Asking them to confirm a
+     * A player who cannot afford an unlock is told so on the *bare* command. Asking them to confirm a
      * purchase that is going to be refused teaches them that `confirm` is a formality, which is
      * exactly the habit the confirmation exists to prevent — and it puts the only useful sentence
      * ("you are 12 short") behind a second command they have no reason to type.
@@ -177,7 +196,7 @@ object CandyLedger {
      * read first, then by id so two equal balances always come out in the same order.
      */
     fun summary(all: Map<ResourceLocation, SpeciesProgress>): List<CandyLedgerRow> = all
-        .filter { (_, progress) -> progress.candy > 0 || progress.passiveUnlocked || progress.costReductions > 0 }
+        .filter { (_, progress) -> progress.candy > 0 || progress.hiddenAbilityUnlocked || progress.costReductions > 0 }
         .map { (species, progress) -> CandyLedgerRow(species, progress) }
         .sortedWith(compareByDescending<CandyLedgerRow> { it.progress.candy }.thenBy { it.species.toString() })
 }
@@ -231,6 +250,10 @@ data class CandyLedgerRow(val species: ResourceLocation, val progress: SpeciesPr
  *   [effectiveStarterCost] when the floor has been reached, which is how the display knows a
  *   reduction that is still for sale would nonetheless buy nothing.
  * @property floorStarterCost [CandyPrices.minimumStarterCost], so the display can name the floor.
+ * @property hiddenAbility the ability [credited]'s unlock grants, or null when it has none. Carried
+ *   so the shop can *name* it: "40 candy" for an unnamed ability is not a decision a player can make,
+ *   and hidden abilities are the one purchase here whose value swings between transformative and
+ *   worthless (§2.27). A player who can see it is Speed Boost is being asked a real question.
  */
 data class CandyLedgerView(
     val requested: ResourceLocation,
@@ -241,6 +264,7 @@ data class CandyLedgerView(
     val nextStarterCost: Int?,
     val floorStarterCost: Int,
     val offers: List<CandyOffer>,
+    val hiddenAbility: String? = null,
 ) {
 
     val candy: Int get() = progress.candy

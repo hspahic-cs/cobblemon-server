@@ -2,6 +2,7 @@ package com.cobblemonroguelite.progression
 
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies
 import com.cobblemonroguelite.starter.DefaultStarterCosts
+import com.cobblemonroguelite.starter.HiddenAbilityGrant
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
@@ -36,7 +37,7 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/progression")
  *
  * ### Confirmation is a trailing literal, and this file inherits the rule rather than restating it
  *
- * `/roguelite candy <species> buy passive` names the price and does nothing; adding `confirm` buys.
+ * `/roguelite candy <species> buy hiddenability` names the price and does nothing; adding `confirm` buys.
  * A purchase is irreversible — candy is earned one per catch and there is no selling it back — so it
  * gets the same guard `abandon` has, and for the same reason `RunCommands` documents: a remembered
  * "they are about to buy something" token can go stale and fire on a command typed for an unrelated
@@ -46,8 +47,8 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/progression")
  * ### Why spending is not gated on being between runs
  *
  * Nothing here reads or writes a run, so a purchase mid-run is harmless: cost reductions are read
- * when a catalogue is priced and the passive when a starter is built, both of which happened before
- * the run began. Gating it would need this file to know about run state, and would leave a player
+ * when a catalogue is priced and the hidden ability when a starter is built, both of which happened
+ * before the run began. Gating it would need this file to know about run state, and would leave a player
  * who is mid-run unable to look at their own ledger.
  */
 object CandyCommands {
@@ -77,7 +78,7 @@ object CandyCommands {
                     .executes { ctx -> player(ctx)?.let { show(it, species(ctx)) } ?: 0 }
                     .then(
                         Commands.literal("buy")
-                            .then(purchase(CandyPurchase.PASSIVE))
+                            .then(purchase(CandyPurchase.HIDDEN_ABILITY))
                             .then(purchase(CandyPurchase.COST_REDUCTION))
                             // Present even though it is refused on every server today. A player who
                             // has read that candy buys eggs (§2.15) will type this, and "unknown
@@ -227,12 +228,17 @@ object CandyCommands {
             credited = credited,
             progress = progress,
             starterCost = baseStarterCost(credited),
+            // §2.27, and the last impure lookup this view needs: what an unlock on the *credited*
+            // species grants, or null if it has none and the purchase must be withdrawn. Read here
+            // rather than inside [CandyLedger] for that file's stated reason — nothing in it touches a
+            // server, a player or a Pokémon, and Cobblemon's ability pool is all three away.
+            hiddenAbility = HiddenAbilityGrant.offeredName(credited),
         )
     }
 
     /**
      * The credited species' §2.13 base cost, for the prices that are keyed by it
-     * ([CandyPrices.passiveCandyByCost]).
+     * ([CandyPrices.hiddenAbilityCandyByCost]).
      *
      * The *credited* species and not the one typed, because that is the species the candy belongs to
      * and the one a player can actually start a run with. Unknown degrades to the flat price rather

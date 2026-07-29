@@ -998,6 +998,45 @@ arenas cheap and predictable, complicates the slot grid, and stops guaranteeing 
 Worth revisiting if generated platforms feel sterile *in play* — a judgement to make after seeing
 one, not before.
 
+### 2.30 Trainer teams are generated, not authored
+
+**Chosen:** a roster entry stores a trainer's **signature species**, and the team is generated at
+the encounter from `(seed, wave)`. PokéRogue's `signature-species.ts` gives ~80 gym leaders as
+four slots each, where a slot is one species or a set of alternatives; that table is the input.
+
+**Why this became possible.** §2.6 assumed RCT would supply the team, so the team had to be
+authored JSON. It doesn't — RCT's own battle path builds the *player's* side from their real
+party, so the bridge provider already assembles battles itself. The team was ours to decide all
+along.
+
+**It also retires the reason bands encoded teams.** Bands existed because level-scaling an
+authored team does not scale its *movesets* — a team written for L15 still throws L15 moves at
+L60. Generating at the encounter derives the moveset for the level being generated, so that
+problem disappears. Bands now encode only **which leaders appear when**, and the evolution stage.
+
+**Settled details:**
+
+- **Alternatives are a seeded pick** at the encounter, so Brock differs between runs and is stable
+  within one. Generating Brock-A and Brock-B as separate roster entries was rejected: the roster
+  would happily draw both, and meeting Brock twice in a run reads as a bug.
+- **Party size scales by band** — 4 early, 5 mid, 6 late. This matters beyond fidelity: §2.19
+  leaves the last third of a run at flat level 100, so party size is one of the few difficulty
+  levers still available up there.
+- **Evolution stage comes from the band**, which is PokéRogue's "fully evolved from wave 80" rule
+  expressed as our band structure.
+- **No EVs.** PokéRogue removed EVs from stat calculation entirely, so trainers get none.
+- **Held items are generated**, scaled by band and boss status, mirroring their `genModifiers`.
+
+**The EV asymmetry is deliberate, not an oversight.** Our *players* earn EVs as a reward (§2.4's
+mechanism 1), because EVs are our substitute for PokéRogue's stacking modifiers, which had no
+Showdown equivalent. Their trainers have no EVs and no modifier stacks; ours have no EVs and
+some held items. The two sides stay consistent with each other.
+
+**Authored fights remain available** and should be used for the E4, the champion, and any rival
+worth curating. A generated team is uniform by nature; the fights players remember are the ones
+someone tuned. The roster can already name a specific trainer id, so an authored fight is one
+entry that points at one rather than at a generator.
+
 ---
 
 ## 3. Preliminary plan

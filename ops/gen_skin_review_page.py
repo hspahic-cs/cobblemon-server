@@ -279,6 +279,12 @@ def render_picker(jar_path: Path, pack_path: "Path | None") -> None:
         members.sort(key=lambda m: m["id"])
         rows.append({
             "look": art[:12],
+            # RCT's OWN trainer name, not a class parsed out of the filename. The filenames lie:
+            # `dumbass_*` is "Silly Gambler" in game, `pi_*` is "PI Carlos" (a private
+            # investigator), `prof_prof_*` is "Prof. Prof. Oak", and `ruin_mamoac_*` really is
+            # spelled that way by RCT. Showing the class made every one of those unreadable, and
+            # in two cases hid a famous character. The name is what a player sees above the NPC.
+            "label": members[0]["name"],
             "cls": members[0]["klass"],
             "rep": members[0]["id"],
             "n": len(members),
@@ -302,12 +308,12 @@ def render_picker(jar_path: Path, pack_path: "Path | None") -> None:
                 data = pack.read(pack_by_name[stem])
             else:
                 data = jar.read(f"assets/rctmod/textures/trainers/single/{stem}.png")
-            label = row["cls"].replace("_", " ")
+            label = row["label"]
             veto = '<span class="veto">vetoed</span>' if row["vetoed"] else ""
             cards.append(
                 f'<figure data-cls="{row["look"]}"><span class=tick>&#10003;</span>'
                 f'<img src="data:image/png;base64,{paper_doll(data)}" alt="{label}">'
-                f"<figcaption><b>{label}</b>"
+                f"<figcaption><b>{label}</b><span>{row['cls']}</span>"
                 f'<span>[{row["n"]}] max party {row["max_size"]}</span>{veto}</figcaption></figure>'
             )
     look_class = {r["look"]: r["cls"] for r in rows}

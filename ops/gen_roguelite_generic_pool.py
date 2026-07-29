@@ -98,9 +98,39 @@ NAMED_WORDS = frozenset({
 # The rest are RCT's joke and utility classes, which would break the fiction of a gauntlet.
 DEFAULT_EXCLUDED_CLASSES = (
     "trainer", "trainer_77_05f6", "pokemon_trainer", "professor",
+    # RCT files a SECOND Oak under a class the `professor` entry does not match. Its in-game
+    # name is "Prof. Prof. Oak", which is how it was caught — by reading the name rather than
+    # guessing from the filename.
+    "prof_prof",
     "dragon_tamer", "gentleman",
     "dumbass", "dumbass_jojo", "friendly", "game_freaks", "gatekeeper",
 )
+
+# Story characters that live in otherwise-ordinary classes, matched on RCT's own trainer NAME.
+#
+# This is the third and last way a famous face gets in, after the type filter and the class
+# vetoes. RCT names these plainly — "Trainer Blue", "Pokémon Trainer Dawn", "Prof. Prof. Oak" —
+# and the name is the only field that says so: the id is generic, the type is `normal`, and each
+# has its own bespoke texture so no byte-comparison against the named cast finds it.
+#
+# Applied even when a class is kept by hand (--picks), because keeping the `trainer` class for
+# one good anonymous skin should not also import Blue and May. Drop the name from here to allow
+# one deliberately.
+DEFAULT_VETOED_NAMES = frozenset({
+    # protagonists and rivals
+    "red", "blue", "green", "leaf", "ethan", "lyra", "brendan", "may", "lucas", "dawn",
+    "hilbert", "hilda", "nate", "rosa", "calem", "serena", "elio", "selene", "victor", "gloria",
+    # professors and notable NPCs RCT ships as ordinary trainers
+    "oak", "morimoto", "ketchup",
+    # Sinnoh's Galactic-arc companions, which read as story cast rather than filler
+    "cheryl", "buck", "marley", "mira", "riley",
+})
+
+
+def has_vetoed_name(name: str) -> bool:
+    """True if RCT's trainer name contains a story character's given name."""
+    words = {w.strip("().,'’\u2019").lower() for w in name.split()}
+    return bool(DEFAULT_VETOED_NAMES & words)
 
 
 def is_named_character(stem: str) -> bool:
@@ -247,6 +277,10 @@ def load_generic_trainers(jar_path: Path) -> "list[dict]":
                 continue
             team = data.get("team") or []
             if not team:
+                continue
+            label = data.get("name", stem)
+            if has_vetoed_name(label):
+                skipped["<story character by name>"] += 1
                 continue
             levels = [member.get("level", 0) for member in team]
             out.append({

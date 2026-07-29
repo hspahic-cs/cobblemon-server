@@ -1153,6 +1153,38 @@ knows whether the marker plus messages are enough. The shield state lives server
 so a client mod later *reads state that already exists*. It is additive, not a rewrite, which is
 what makes waiting cheap.
 
+### 2.33 Player-side stacking: depth, not breadth
+
+**Chosen:** recover PokéRogue's stacking modifiers as **tiered datapack held items**, using the
+pattern boss shields proved (§2.32) — one script per tier, no Minecraft item registered, the tier
+carried in a component naming the Showdown id, implementation shared behind a global.
+
+A reward pick grants a modifier or upgrades its tier, and the item on the run Pokémon *is* the
+stack. Because run Pokémon are real Cobblemon Pokémon in our own store, the stack persists across
+waves for free.
+
+**The honest limitation: one line per Pokémon, not many.** Showdown allows one held item, so a
+Pokémon can stack one modifier *deeply* — five tiers of extra hits — but cannot also carry berries
+and a type booster at the same time. PokéRogue piles several different modifiers on one Pokémon;
+we can pile one, high.
+
+**Depth is preserved, breadth is not**, and that is the trade. It is also a more interesting
+decision than PokéRogue's in one respect: with a single slot, choosing *which* line a Pokémon
+commits to actually matters, where stacking everything eventually does not.
+
+**The ability slot is a second axis** if one line proves too tight — a custom ability can carry an
+effect the same way. Worth holding until play shows it is needed rather than spending it now.
+
+**Multi Lens is reachable**, contrary to §2.4's original claim: `onModifyMove` can set
+`move.multihit`, so extra hits are ordinary item behaviour rather than an engine change.
+
+**In-battle one-shots** — X Attack, screens, hazards — belong in `bag_items/*.js` instead, which
+already receives the raw battle object. Those stack as consumables rather than as tiers.
+
+**Sequencing: after the dev pass.** This rides on exactly the channel §2.32 is waiting to have
+confirmed. Building a second feature on an unverified mechanism before the first one has fired
+once is how both end up needing rework.
+
 ---
 
 ## 3. Preliminary plan

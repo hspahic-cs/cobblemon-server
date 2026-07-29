@@ -807,10 +807,13 @@ is no run loop, no battle, no command.
 - **Arena slot policy for multi-session runs** (§2.19): whether a slot is released when a player
   logs out mid-run and reacquired on return. At 200 waves most runs will span sessions, and
   holding a slot for a player who is offline for a week starves `maxConcurrentRuns`.
-- **Do trade-ins update the IV high-water mark (§2.17)?** Counting them rewards trading, which is
-  the point — but it also means one perfect specimen passed around can water-mark a whole server.
-  Counting only self-caught Pokémon keeps the mark personal at the cost of some of the trade
-  incentive.
+- ~~Do trade-ins update the IV high-water mark?~~ **Yes, decided 2026-07-28.** Any Pokémon that
+  enters a player's possession raises their mark, trades included. The objection — that one
+  perfect specimen passed around could water-mark a whole server — was weighed and dismissed:
+  players are unlikely to organise that, and if they do it costs nothing that matters. A shared
+  IV floor changes which *starters* are on offer, not the difficulty of the run, and §2.17
+  already forbids unlock status from touching offer weighting. Rewarding trading is the point
+  (§2.17), so the permissive reading is also the one that serves the decision.
 - **What the payout actually contains** — §2.20 settles that it is not currency and that it is
   data-driven; the candidates raised were egg vouchers or gacha pulls, cosmetics, profile titles,
   leaderboard standing and run-only unlocks.

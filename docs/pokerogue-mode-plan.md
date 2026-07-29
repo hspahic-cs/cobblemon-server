@@ -234,6 +234,24 @@ caught Pokémon to the player's **real** party and PC, and it marks the species 
 **real Pokédex** — which §2.15 forbids outright, since server catches are what unlock starters
 and an in-run catch must not.
 
+**Balls are a reward, not a given** (decided 2026-07-28). Poké Balls are earned as a
+between-wave reward option rather than supplied without limit. That is what makes a catch a
+decision: with unlimited balls every wild wave is a free roll, and the swap-or-release choice
+above never has to be faced. It also gives the reward table a lever that is useful without being
+raw power, which matters most across the flat-level last third (§2.19) where EXP and level
+rewards are dead weight.
+
+**Catch rate: no change needed** (checked 2026-07-28). PokéRogue's catch rate is Gen VI
+mechanics — `(1 − ⅔ × %HP) × speciesCatchRate × ballBonus × statusBonus`. Cobblemon's own
+calculator computes `(3·maxHP − 2·currentHP) × catchRate × … / (3·maxHP)` times a status bonus,
+whose leading term is algebraically the same thing. Both are Gen 6. Cobblemon adds a low-level
+bonus (under L13) and a dark-grass modifier that PokéRogue lacks; neither is significant, and the
+low-level bonus helps early in a run when the party is most fragile.
+
+Our server already runs `captureCalculator: "cobblemon"`, so the answer is to leave it alone —
+which is fortunate, because that setting is **global**, like `maxPokemonLevel` and the gimmick
+booleans, so a run-only catch rate would have needed interception rather than configuration.
+
 ### 2.14 Wave composition: mostly wild, trainers at intervals
 
 **Chosen:** mirror PokéRogue's structure — most waves are **wild encounters**, a **trainer**

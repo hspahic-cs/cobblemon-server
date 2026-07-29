@@ -225,16 +225,56 @@ def roster_trainer_ids(roster_path: Path) -> "set[str]":
     return ids
 
 
+def texture_source(jar: zipfile.ZipFile, override: "Path | None"):
+    """Where ROGUELITE_SKINS art is copied FROM: the rctmod jar, or a retexture pack.
+
+    RCT's own trainer art is plain — colour-swapped default skins — and that is what the 43
+    `rgl_*` copies looked like: Misty as a generic brown-haired figure, Cynthia indistinguishable
+    from a passer-by. RCT Trainers+ (LGPL-3.0-or-later, forestfire5129) retextures all 1559 ids
+    with art that actually reads as the character, so pointing this at that pack upgrades every
+    copy without touching the mapping table.
+
+    Returns a `(name -> bytes | None)` reader that prefers the override and falls back to the
+    jar, because a retexture pack is not required to be complete and a missing entry should
+    degrade to RCT's own art rather than to no file at all.
+    """
+    jar_entries = set(jar.namelist())
+    if override is None:
+        return lambda stem: (
+            jar.read(f"assets/rctmod/textures/trainers/single/{stem}.png")
+            if f"assets/rctmod/textures/trainers/single/{stem}.png" in jar_entries else None
+        ), "the rctmod jar"
+
+    pack = zipfile.ZipFile(override)
+    # Packs nest under their own root folder, so index by basename rather than assuming a path.
+    by_name = {
+        name.rsplit("/", 1)[1][:-4]: name
+        for name in pack.namelist()
+        if "/trainers/single/" in name and name.endswith(".png")
+    }
+
+    def read(stem: str) -> "bytes | None":
+        if stem in by_name:
+            return pack.read(by_name[stem])
+        entry = f"assets/rctmod/textures/trainers/single/{stem}.png"
+        return jar.read(entry) if entry in jar_entries else None
+
+    return read, f"{override.name} ({len(by_name)} textures, falling back to the jar)"
+
+
 def write_roguelite_skins(jar: zipfile.ZipFile, jar_names: "set[str]",
-                          out_textures: Path, roster_path: "Path | None") -> None:
-    """Copy each ROGUELITE_SKINS texture out of the jar under our roguelite trainer id."""
+                          out_textures: Path, roster_path: "Path | None",
+                          textures_from: "Path | None" = None) -> None:
+    """Copy each ROGUELITE_SKINS texture under our roguelite trainer id."""
+    read, source_label = texture_source(jar, textures_from)
+    print(f"roguelite texture source: {source_label}")
     written, broken = 0, []
     for trainer_id, stem in sorted(ROGUELITE_SKINS.items()):
-        entry = f"assets/rctmod/textures/trainers/single/{stem}.png"
-        if entry not in jar_names:
+        data = read(stem)
+        if data is None:
             broken.append(f"{trainer_id} -> {stem} (not in this rctmod jar)")
             continue
-        (out_textures / f"{trainer_id}.png").write_bytes(jar.read(entry))
+        (out_textures / f"{trainer_id}.png").write_bytes(data)
         written += 1
     print(f"wrote {written} roguelite textures ({len(ROGUELITE_SKINS)} mapped)")
     for problem in broken:
@@ -284,6 +324,9 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("jar", nargs="?", default="/tmp/rctmod.jar",
                         help="rctmod jar to copy textures out of (prefer the DEPLOYED version)")
+    parser.add_argument("--textures-from", type=Path, metavar="PACK.zip",
+                        help="retexture pack to source ROGUELITE_SKINS art from (falls back to "
+                             "the jar per id). Use RCT Trainers+ — RCT's own art is plain.")
     parser.add_argument("--roster", type=Path,
                         help="generated roguelite roster JSON, to cross-check ROGUELITE_SKINS ids")
     args = parser.parse_args()
@@ -329,7 +372,7 @@ def main() -> None:
             print(f"  - {m}")
 
     # Roguelite trainers have no JSONs yet, so they come from the table, not the walk.
-    write_roguelite_skins(jar, jar_names, out_textures, args.roster)
+    write_roguelite_skins(jar, jar_names, out_textures, args.roster, args.textures_from)
 
 
 if __name__ == "__main__":

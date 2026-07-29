@@ -353,6 +353,14 @@ file = "options.txt"
 hash = "29c313b2cffb39903b0936163f490b6fb8fd8ba224c1d83688f649317e01cfaa"
 
 [[files]]
+file = "resourcepacks/RCT Trainers+ [1.6] v2.1.zip"
+hash = "44482d5e099fef585e9d742af176d6e54de09a26a8b575b7a510c23d6479f22d"
+
+[[files]]
+file = "resourcepacks/README.md"
+hash = "e517642f403723d153b4badcf1ea5c126fe649b1b55311d0401e3a5c69dd5903"
+
+[[files]]
 file = "resourcepacks/AllTheMons [R3.5.1].zip"
 hash = "61e3d1bc15796fe1aed642af15a4b7821cf4d4064110457d508c401a77ea20ab"
 

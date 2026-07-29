@@ -21,7 +21,7 @@ with what already exists.
 | **T1** | Uncommon | Routine reward scale. Safe for regular play loops. |
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 
-433 items tiered — T5: 4, T4: 21, T3: 22, T2: 106, T1: 161, T0: 119.
+537 items tiered — T5: 4, T4: 21, T3: 22, T2: 177, T1: 194, T0: 119.
 
 ## Picking a reward
 
@@ -114,101 +114,172 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:ability_capsule` | Swaps between normal abilities | `loot:chests/registeel_chest` 72.93%; `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:ability_shield` | Premium competitive held item | `loot:rare/battle`; `market` |
 | `cobblemon:air_balloon` | Premium competitive held item | `loot:rare/battle`; `market` |
-| `cobblemon:assault_vest` | Premium competitive held item | `market` |
-| `cobblemon:auspicious_armor` | Evolution item | `loot:chests/bell_tower_chest` 8.8% |
+| `cobblemon:assault_vest` | Premium competitive held item | `crate:common` 0.5%; `market` |
+| `cobblemon:auspicious_armor` | Evolution item | `crate:common` 0.203%; `loot:chests/bell_tower_chest` 8.8% |
+| `cobblemon:black_augurite` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:blunder_policy` | Premium competitive held item | `loot:rare/battle`; `market` |
 | `cobblemon:booster_energy` | Premium competitive held item | *not currently granted anywhere* |
 | `cobblemon:bottle_cap` | IV hyper training | *not currently granted anywhere* |
 | `cobblemon:bug_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
-| `cobblemon:choice_band` | Premium competitive held item | `loot:legendary/battle`; `market` |
-| `cobblemon:choice_scarf` | Premium competitive held item | `loot:legendary/battle`; `market` |
-| `cobblemon:choice_specs` | Premium competitive held item | `loot:legendary/battle`; `market` |
+| `cobblemon:chipped_pot` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:choice_band` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
+| `cobblemon:choice_scarf` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
+| `cobblemon:choice_specs` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
 | `cobblemon:clear_amulet` | Premium competitive held item | `market` |
 | `cobblemon:covert_cloak` | Premium competitive held item | `market` |
+| `cobblemon:cracked_pot` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:dark_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 32.33%; `loot:archaeology/ruins` 22.73% |
-| `cobblemon:dawn_stone` | Evolution stone | *not currently granted anywhere* |
-| `cobblemon:deep_sea_scale` | Evolution item | `market` |
-| `cobblemon:deep_sea_tooth` | Evolution item | `market` |
+| `cobblemon:dawn_stone` | Evolution stone | `crate:common` 0.71% |
+| `cobblemon:deep_sea_scale` | Evolution item | `crate:common` 0.203%; `market` |
+| `cobblemon:deep_sea_tooth` | Evolution item | `crate:common` 0.203%; `market` |
 | `cobblemon:dragon_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 64.29% |
-| `cobblemon:dragon_scale` | Evolution item | *not currently granted anywhere* |
+| `cobblemon:dragon_scale` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:dream_ball` | Specialty ball, not purchasable | `crate:common` 4.6%; `loot:legendary/pokeballs`; `market` |
-| `cobblemon:dubious_disc` | Evolution item | *not currently granted anywhere* |
-| `cobblemon:dusk_stone` | Evolution stone | `loot:chests/turnback_cave_chest` 10.9%; `loot:chests/turnback_cave_vault` 10.31% |
+| `cobblemon:dubious_disc` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:dusk_stone` | Evolution stone | `crate:common` 0.71%; `loot:chests/turnback_cave_chest` 10.9%; `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:dusk_stone_block` | Evolution stone | `loot:chests/turnback_cave_vault` 2.12% |
+| `cobblemon:electirizer` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:electric_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/dragoeleki_chest` 64.29% |
-| `cobblemon:eviolite` | Premium competitive held item | `market` |
+| `cobblemon:eviolite` | Premium competitive held item | `crate:common` 0.5%; `market` |
 | `cobblemon:exp_candy_xl` | Largest exp candy | `market` |
 | `cobblemon:expert_belt` | Premium competitive held item | `market` |
 | `cobblemon:fairy_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:fighting_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:fire_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/bell_tower_chest` 29.42%; `loot:chests/liberty_island_chest` 39.31% |
-| `cobblemon:fire_stone` | Evolution stone | *not currently granted anywhere* |
+| `cobblemon:fire_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:flame_plate` | Arceus plate / type booster | *not currently granted anywhere* |
 | `cobblemon:flying_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/bell_tower_chest` 29.42% |
-| `cobblemon:focus_sash` | Premium competitive held item | `loot:uncommon/battle`; `market` |
+| `cobblemon:focus_sash` | Premium competitive held item | `crate:common` 0.5%; `loot:uncommon/battle`; `market` |
+| `cobblemon:galarica_cuff` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:galarica_wreath` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:ghost_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 32.33%; `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
 | `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
-| `cobblemon:heavy_duty_boots` | Premium competitive held item | `loot:rare/battle`; `market` |
+| `cobblemon:heavy_duty_boots` | Premium competitive held item | `crate:common` 0.5%; `loot:rare/battle`; `market` |
 | `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regice_chest` 79.18% |
-| `cobblemon:ice_stone` | Evolution stone | `loot:chests/regice_chest` 35.77% |
-| `cobblemon:leftovers` | Premium competitive held item | `loot:legendary/battle`; `market` |
-| `cobblemon:life_orb` | Premium competitive held item | `loot:legendary/battle`; `market` |
+| `cobblemon:ice_stone` | Evolution stone | `crate:common` 0.71%; `loot:chests/regice_chest` 35.77% |
+| `cobblemon:leaf_stone` | Evolution stone | `crate:common` 0.71% |
+| `cobblemon:leftovers` | Premium competitive held item | `crate:common` 0.305%; `loot:legendary/battle`; `market` |
+| `cobblemon:life_orb` | Premium competitive held item | `crate:common` 0.5%; `loot:legendary/battle`; `market` |
 | `cobblemon:link_cable` | Evolution item | `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:loaded_dice` | Premium competitive held item | `market` |
+| `cobblemon:magmarizer` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:malicious_armor` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:masterpiece_teacup` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:metal_alloy` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:mirror_herb` | Premium competitive held item | `loot:uncommon/battle`; `loot:uncommon/nature`; `market` |
+| `cobblemon:moon_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:oval_stone` | Evolution item | `crate:common` 0.203% |
 | `cobblemon:poison_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
-| `cobblemon:prism_scale` | Evolution item | *not currently granted anywhere* |
-| `cobblemon:protector` | Evolution item | `loot:rare/battle`; `loot:chests/regirock_chest` 66.01% |
+| `cobblemon:prism_scale` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:protector` | Evolution item | `crate:common` 0.203%; `loot:rare/battle`; `loot:chests/regirock_chest` 66.01% |
 | `cobblemon:psychic_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/liberty_island_chest` 39.31% |
 | `cobblemon:punching_glove` | Premium competitive held item | `market` |
 | `cobblemon:rare_candy` | Instant level | `crate:common` 5.1%; `crate:rare` 12.0%; `loot:epic/medicine` +3 more |
-| `cobblemon:reaper_cloth` | Evolution item | `loot:chests/turnback_cave_vault` 5.25% |
+| `cobblemon:reaper_cloth` | Evolution item | `crate:common` 0.203%; `loot:chests/turnback_cave_vault` 5.25% |
 | `cobblemon:rock_gem` | Type gem — one-shot damage boost | `loot:legendary/battle`; `loot:chests/regirock_chest` 66.01% |
-| `cobblemon:rocky_helmet` | Premium competitive held item | `market` |
-| `cobblemon:shiny_stone` | Evolution stone | *not currently granted anywhere* |
+| `cobblemon:rocky_helmet` | Premium competitive held item | `crate:common` 0.5%; `market` |
+| `cobblemon:sachet` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:shiny_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:sun_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:throat_spray` | Premium competitive held item | `market` |
-| `cobblemon:thunder_stone` | Evolution stone | *not currently granted anywhere* |
+| `cobblemon:thunder_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:legendary/battle` |
+| `cobblemon:water_stone` | Evolution stone | `crate:common` 0.71% |
 | `cobblemon:weakness_policy` | Premium competitive held item | `market` |
+| `cobblemon:whipped_dream` | Evolution item | `crate:common` 0.203% |
 | `legendarymonuments:ancient_rubble_ore` | Ore block, mid-tier crafting material | `loot:chests/regigigas_chest` 12.31% |
 | `legendarymonuments:golem_scrap` | Golem crafting material — a component, not a gate | `loot:chests/turnback_cave_chest` 1.89%; `loot:chests/turnback_cave_vault` 2.12% |
+| `mega_showdown:abomasite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:absolite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:adrenaline_orb` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:aggronite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:alakazite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:altarianite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:ampharosite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:ash_cap` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:audinite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:banettite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:beedrillite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:blastoisinite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:blazikenite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:cameruptite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:charizardite_x` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:charizardite_y` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:darkinium_z` | Z-crystal | *not currently granted anywhere* |
+| `mega_showdown:decidium_z` | Z-crystal | *not currently granted anywhere* |
+| `mega_showdown:diancite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:draco_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:dragon_tera_shard` | Tera shard | `loot:chests/dragoeleki_chest` 64.29% |
 | `mega_showdown:dragonium_z` | Z-crystal | `loot:chests/dragoeleki_chest` 4.76% |
 | `mega_showdown:dread_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:earth_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:eevium_z` | Z-crystal | *not currently granted anywhere* |
 | `mega_showdown:electric_tera_shard` | Tera shard | `loot:chests/dragoeleki_chest` 64.29% |
 | `mega_showdown:electrium_z` | Z-crystal | `loot:chests/dragoeleki_chest` 4.76% |
+| `mega_showdown:fightinium_z` | Z-crystal | *not currently granted anywhere* |
 | `mega_showdown:fire_tera_shard` | Tera shard | `loot:chests/bell_tower_chest` 29.42% |
 | `mega_showdown:firium_z` | Z-crystal | `loot:chests/bell_tower_chest` 8.8% |
 | `mega_showdown:fist_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:flame_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:galladite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:garchompite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:gardevoirite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:gengarite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:ghost_memory` | Silvally memory | `loot:chests/turnback_cave_vault` 10.31% |
 | `mega_showdown:ghost_tera_shard` | Tera shard | `loot:chests/turnback_cave_chest` 32.33%; `loot:chests/turnback_cave_vault` 10.31% |
 | `mega_showdown:ghostium_z` | Z-crystal | `loot:chests/turnback_cave_vault` 2.12% |
+| `mega_showdown:glalitite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:groundium_z` | Z-crystal | *not currently granted anywhere* |
+| `mega_showdown:gyaradosite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:heracronite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:houndoominite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:ice_tera_shard` | Tera shard | `loot:chests/regice_chest` 79.18% |
 | `mega_showdown:icicle_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:insect_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:iron_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:kangaskhanite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:lopunnite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:lucarionite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:manectite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:mawilite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:meadow_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:medichamite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:mega_meteorid_block` | Mega Showdown item (type/forme adjacent) | `loot:archaeology/ruins` 4.55% |
+| `mega_showdown:metagrossite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:mewnium_z` | Z-crystal | *not currently granted anywhere* |
 | `mega_showdown:mind_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:normal_tera_shard` | Tera shard | `loot:chests/regigigas_chest` 95.41% |
+| `mega_showdown:normalium_z` | Z-crystal | *not currently granted anywhere* |
+| `mega_showdown:pidgeotite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:pinsirite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:pixie_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:poisonium_z` | Z-crystal | *not currently granted anywhere* |
+| `mega_showdown:psychium_z` | Z-crystal | *not currently granted anywhere* |
 | `mega_showdown:rock_tera_shard` | Tera shard | `loot:chests/regirock_chest` 66.01% |
+| `mega_showdown:rusted_sword` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:sablenite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:salamencite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:sceptilite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:scizorite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:sharpedonite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:sky_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:slowbronite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:solganium_z` | Z-crystal | *not currently granted anywhere* |
 | `mega_showdown:splash_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:spooky_plate` | Arceus plate / type booster | `loot:chests/turnback_cave_vault` 2.12%; `market` |
 | `mega_showdown:steel_memory` | Silvally memory | `loot:chests/registeel_chest` 5.92% |
 | `mega_showdown:steel_tera_shard` | Tera shard | `loot:chests/registeel_chest` 72.93% |
 | `mega_showdown:steelium_z` | Z-crystal | `loot:chests/registeel_chest` 5.92% |
 | `mega_showdown:stone_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:swampertite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:toxic_plate` | Arceus plate / type booster | `market` |
+| `mega_showdown:tyranitarite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
+| `mega_showdown:venusaurite` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:water_tera_shard` | Tera shard | `loot:chests/lugia_temple_chest` 56.32% |
+| `mega_showdown:waterium_z` | Z-crystal | *not currently granted anywhere* |
 | `mega_showdown:zap_plate` | Arceus plate / type booster | `market` |
 | `minecraft:ancient_debris` | Netherite path | *not currently granted anywhere* |
 | `minecraft:beacon` | $50,000 — the single most expensive market item | `market` |
@@ -225,22 +296,27 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | Item | Why | Where it comes from |
 |---|---|---|
 | `cobblemon:absorb_bulb` | Standard held / utility item | `loot:uncommon/battle`; `market` |
+| `cobblemon:adamant_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:armor_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:automaton_armor_trim_smithing_template` | Standard held / utility item | `loot:legendary/archeology` |
 | `cobblemon:azure_ball` | Specialty ball | `loot:chests/regice_chest` 79.18% |
 | `cobblemon:big_root` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:binding_band` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:black_apricorn_seed` | Apricorn | `loot:epic/nature` |
-| `cobblemon:black_belt` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:black_glasses` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:black_sludge` | Standard held / utility item | `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 10.9%; `market` |
+| `cobblemon:black_belt` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
+| `cobblemon:black_glasses` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
+| `cobblemon:black_sludge` | Standard held / utility item | `crate:common` 0.305%; `loot:legendary/battle`; `loot:chests/turnback_cave_chest` 10.9% +1 more |
 | `cobblemon:black_tumblestone` | Crafting material | `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:blue_apricorn_seed` | Apricorn | `loot:epic/nature` |
 | `cobblemon:blue_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:blue_mint_seeds` | Mint seed | `loot:epic/nature` |
+| `cobblemon:bold_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:brave_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:bright_powder` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:calcium` | Vitamin | `loot:chests/turnback_cave_chest` 10.9% |
-| `cobblemon:carbos` | Vitamin | `loot:chests/dragoeleki_chest` 4.76%; `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:calcium` | Vitamin | `crate:common` 1.183%; `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:calm_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:carbos` | Vitamin | `crate:common` 1.183%; `loot:chests/dragoeleki_chest` 4.76%; `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:careful_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:cell_battery` | Standard held / utility item | `loot:rare/battle`; `loot:chests/dragoeleki_chest` 25.68%; `market` |
 | `cobblemon:charcoal_stick` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:chople_berry` | Berry | *not currently granted anywhere* |
@@ -249,21 +325,22 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:clever_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
 | `cobblemon:coarse_mulch` | Mulch | `loot:uncommon/nature` |
 | `cobblemon:colbur_berry` | Berry | *not currently granted anywhere* |
+| `cobblemon:courage_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:cover_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:cyan_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:cyan_mint_seeds` | Mint seed | `loot:epic/nature` |
 | `cobblemon:damp_rock` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regirock_chest` 26.68%; `market` |
-| `cobblemon:destiny_knot` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:destiny_knot` | Standard held / utility item | `crate:common` 1.5%; `loot:rare/battle`; `market` |
 | `cobblemon:dire_hit` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:dive_ball` | Specialty ball | `loot:chests/liberty_island_chest` 39.31%; `loot:chests/lugia_temple_chest` 56.32% |
 | `cobblemon:dive_rod` | Standard held / utility item | `loot:chests/liberty_island_chest` 12.32% |
 | `cobblemon:dome_fossil` | Fossil | `loot:legendary/archeology` |
-| `cobblemon:dragon_fang` | Standard held / utility item | `loot:rare/battle`; `loot:chests/dragoeleki_chest` 25.68%; `market` |
+| `cobblemon:dragon_fang` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/dragoeleki_chest` 25.68% +1 more |
 | `cobblemon:dusk_ball` | Specialty ball | `loot:chests/regirock_chest` 66.01%; `loot:chests/turnback_cave_vault` 10.31%; `market` |
 | `cobblemon:eject_button` | Standard held / utility item | `market` |
 | `cobblemon:eject_pack` | Standard held / utility item | `market` |
 | `cobblemon:electric_seed` | Standard held / utility item | `loot:chests/dragoeleki_chest` 25.68% |
-| `cobblemon:everstone` | Standard held / utility item | `market` |
+| `cobblemon:everstone` | Standard held / utility item | `crate:common` 1.5%; `market` |
 | `cobblemon:exp_candy_l` | Mid exp candy | `market` |
 | `cobblemon:exp_share` | Standard held / utility item | `market` |
 | `cobblemon:fairy_feather` | EV feather | `loot:rare/battle`; `loot:chests/bell_tower_chest` 29.42%; `market` |
@@ -276,73 +353,90 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:fossilized_drake` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:fossilized_fish` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:genius_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
+| `cobblemon:gentle_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:green_apricorn_seed` | Apricorn | `loot:epic/nature` |
 | `cobblemon:green_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:green_mint_seeds` | Mint seed | `loot:epic/nature` |
 | `cobblemon:grip_claw` | Standard held / utility item | `market` |
 | `cobblemon:guard_spec` | Standard held / utility item | *not currently granted anywhere* |
-| `cobblemon:hard_stone` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regirock_chest` 66.01%; `market` |
+| `cobblemon:hard_stone` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/regirock_chest` 66.01% +1 more |
+| `cobblemon:hasty_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:health_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:health_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
 | `cobblemon:heat_rock` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regirock_chest` 26.68%; `market` |
 | `cobblemon:heavy_ball` | Specialty ball | `loot:chests/registeel_chest` 72.93% |
 | `cobblemon:helix_fossil` | Fossil | `loot:legendary/archeology` |
-| `cobblemon:hp_up` | Vitamin | `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:hp_up` | Vitamin | `crate:common` 1.183%; `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:humid_mulch` | Mulch | `loot:uncommon/nature` |
 | `cobblemon:icy_rock` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:iron` | Vitamin | `loot:chests/registeel_chest` 31.1%; `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:impish_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:iron` | Vitamin | `crate:common` 1.183%; `loot:chests/registeel_chest` 31.1%; `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:iron_ball` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:jaw_fossil` | Fossil | `loot:legendary/archeology` |
-| `cobblemon:kings_rock` | Standard held / utility item | `loot:chests/regirock_chest` 26.68%; `market` |
+| `cobblemon:jolly_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:kings_rock` | Standard held / utility item | `crate:common` 0.203%; `loot:chests/regirock_chest` 26.68%; `market` |
 | `cobblemon:lagging_tail` | Standard held / utility item | `market` |
+| `cobblemon:lax_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:leppa_berry` | Berry | *not currently granted anywhere* |
 | `cobblemon:light_ball` | Standard held / utility item | `market` |
 | `cobblemon:light_clay` | Standard held / utility item | `market` |
 | `cobblemon:loamy_mulch` | Mulch | `loot:uncommon/nature` |
+| `cobblemon:lonely_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:lucky_egg` | Standard held / utility item | `crate:common` 3.1%; `crate:rare` 7.7%; `loot:chests/bell_tower_chest` 8.8% +1 more |
 | `cobblemon:lum_berry` | Berry | *not currently granted anywhere* |
 | `cobblemon:luminous_moss` | Standard held / utility item | `market` |
-| `cobblemon:magnet` | Standard held / utility item | `loot:rare/battle`; `loot:chests/dragoeleki_chest` 25.68%; `loot:chests/registeel_chest` 31.1% +1 more |
+| `cobblemon:magnet` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/dragoeleki_chest` 25.68% +2 more |
 | `cobblemon:mental_herb` | Standard held / utility item | `loot:uncommon/battle`; `loot:uncommon/nature`; `market` |
-| `cobblemon:metal_coat` | Standard held / utility item | `loot:chests/registeel_chest` 72.93%; `market` |
+| `cobblemon:metal_coat` | Standard held / utility item | `crate:common` 0.305%; `loot:chests/registeel_chest` 72.93%; `market` |
 | `cobblemon:metal_powder` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:metronome` | Standard held / utility item | `market` |
-| `cobblemon:miracle_seed` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:muscle_band` | Standard held / utility item | `market` |
+| `cobblemon:mighty_candy` | EV candy | `crate:rare` 0.95% |
+| `cobblemon:mild_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:miracle_seed` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
+| `cobblemon:modest_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:muscle_band` | Standard held / utility item | `crate:common` 0.305%; `market` |
 | `cobblemon:muscle_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
-| `cobblemon:mystic_water` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:mystic_water` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
+| `cobblemon:naive_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:naughty_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:nest_ball` | Specialty ball | `market` |
 | `cobblemon:net_ball` | Specialty ball | `loot:chests/lugia_temple_chest` 56.32%; `market` |
-| `cobblemon:never_melt_ice` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regice_chest` 35.77%; `market` |
+| `cobblemon:never_melt_ice` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/regice_chest` 35.77% +1 more |
 | `cobblemon:old_amber_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:payapa_berry` | Berry | *not currently granted anywhere* |
+| `cobblemon:peat_block` | Standard held / utility item | `crate:common` 0.203% |
 | `cobblemon:pink_apricorn` | Apricorn | `loot:uncommon/nature` |
 | `cobblemon:pink_apricorn_seed` | Apricorn | `loot:epic/nature` |
 | `cobblemon:pink_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:pink_mint_seeds` | Mint seed | `loot:epic/nature` |
 | `cobblemon:plume_fossil` | Fossil | `loot:legendary/archeology` |
-| `cobblemon:poison_barb` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:power_anklet` | EV training item | `market` |
-| `cobblemon:power_band` | EV training item | `market` |
-| `cobblemon:power_belt` | EV training item | `market` |
-| `cobblemon:power_bracer` | EV training item | `market` |
+| `cobblemon:poison_barb` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
+| `cobblemon:power_anklet` | EV training item | `crate:common` 0.667%; `market` |
+| `cobblemon:power_band` | EV training item | `crate:common` 0.667%; `market` |
+| `cobblemon:power_belt` | EV training item | `crate:common` 0.667%; `market` |
+| `cobblemon:power_bracer` | EV training item | `crate:common` 0.667%; `market` |
 | `cobblemon:power_herb` | Standard held / utility item | `loot:uncommon/battle`; `loot:uncommon/nature`; `market` |
-| `cobblemon:power_lens` | EV training item | `market` |
-| `cobblemon:power_weight` | EV training item | `market` |
+| `cobblemon:power_lens` | EV training item | `crate:common` 0.667%; `market` |
+| `cobblemon:power_weight` | EV training item | `crate:common` 0.667%; `market` |
 | `cobblemon:pp_max` | Standard held / utility item | `loot:epic/medicine`; `loot:chests/turnback_cave_chest` 1.89% |
 | `cobblemon:pp_up` | Standard held / utility item | `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:protective_pads` | Standard held / utility item | `market` |
-| `cobblemon:protein` | Vitamin | `loot:chests/regirock_chest` 4.97%; `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:protein` | Vitamin | `crate:common` 1.183%; `loot:chests/regirock_chest` 4.97%; `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:psychic_seed` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:quick_ball` | Specialty ball | `crate:common` 3.1%; `market` |
+| `cobblemon:quick_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:quick_claw` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:quick_powder` | Standard held / utility item | `loot:rare/battle`; `market` |
-| `cobblemon:razor_claw` | Standard held / utility item | `market` |
-| `cobblemon:razor_fang` | Standard held / utility item | `market` |
+| `cobblemon:quiet_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:rash_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:razor_claw` | Standard held / utility item | `crate:common` 0.203%; `market` |
+| `cobblemon:razor_fang` | Standard held / utility item | `crate:common` 0.203%; `market` |
 | `cobblemon:red_apricorn` | Apricorn | `loot:uncommon/nature` |
 | `cobblemon:red_apricorn_seed` | Apricorn | `loot:epic/nature` |
 | `cobblemon:red_card` | Standard held / utility item | `market` |
 | `cobblemon:red_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:red_mint_seeds` | Mint seed | `loot:epic/nature` |
+| `cobblemon:relaxed_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:resist_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
 | `cobblemon:rich_mulch` | Mulch | `loot:uncommon/nature` |
 | `cobblemon:ring_target` | Standard held / utility item | `market` |
@@ -350,28 +444,38 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:safety_goggles` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:sail_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:sandy_mulch` | Mulch | `loot:uncommon/nature` |
+| `cobblemon:sassy_mint` | Nature mint | `crate:common` 0.195% |
 | `cobblemon:scope_lens` | Standard held / utility item | `market` |
-| `cobblemon:sharp_beak` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:serious_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:sharp_beak` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
 | `cobblemon:shed_shell` | Standard held / utility item | `market` |
 | `cobblemon:shell_bell` | Standard held / utility item | `market` |
-| `cobblemon:silk_scarf` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regigigas_chest` 55.9%; `market` |
-| `cobblemon:silver_powder` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:silk_scarf` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/regigigas_chest` 55.9% +1 more |
+| `cobblemon:silver_powder` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
 | `cobblemon:sitrus_berry` | Berry | *not currently granted anywhere* |
 | `cobblemon:skull_fossil` | Fossil | `loot:legendary/archeology` |
 | `cobblemon:sky_tumblestone` | Crafting material | `loot:chests/turnback_cave_vault` 10.31% |
 | `cobblemon:small_budding_sky_tumblestone` | Crafting material | `loot:legendary/archeology` |
+| `cobblemon:smart_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:smoke_ball` | Standard held / utility item | `loot:rare/battle`; `market` |
 | `cobblemon:smooth_rock` | Standard held / utility item | `loot:rare/battle`; `loot:chests/regirock_chest` 26.68%; `market` |
-| `cobblemon:soft_sand` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:soft_sand` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
 | `cobblemon:soothe_bell` | Standard held / utility item | `loot:chests/bell_tower_chest` 8.8%; `market` |
-| `cobblemon:spell_tag` | Standard held / utility item | `loot:rare/battle`; `loot:chests/turnback_cave_chest` 10.9%; `loot:chests/turnback_cave_vault` 10.31% +1 more |
+| `cobblemon:spell_tag` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `loot:chests/turnback_cave_chest` 10.9% +2 more |
 | `cobblemon:sticky_barb` | Standard held / utility item | `market` |
+| `cobblemon:sweet_apple` | Standard held / utility item | `crate:common` 0.203% |
 | `cobblemon:swift_feather` | EV feather | `loot:chests/bell_tower_chest` 61.29%; `loot:chests/turnback_cave_chest` 32.33% |
+| `cobblemon:syrupy_apple` | Standard held / utility item | `crate:common` 0.203% |
+| `cobblemon:tart_apple` | Standard held / utility item | `crate:common` 0.203% |
 | `cobblemon:terrain_extender` | Standard held / utility item | `market` |
 | `cobblemon:timer_ball` | Specialty ball | `crate:common` 4.6%; `loot:chests/regigigas_chest` 95.41%; `market` |
+| `cobblemon:timid_mint` | Nature mint | `crate:common` 0.195% |
+| `cobblemon:tough_candy` | EV candy | `crate:rare` 0.95% |
 | `cobblemon:toxic_orb` | Standard held / utility item | `loot:legendary/battle`; `market` |
 | `cobblemon:tumblestone` | Standard held / utility item | `loot:chests/turnback_cave_vault` 10.31% |
-| `cobblemon:twisted_spoon` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:twisted_spoon` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
+| `cobblemon:unremarkable_teacup` | Standard held / utility item | `crate:common` 0.203% |
+| `cobblemon:upgrade` | Standard held / utility item | `crate:common` 0.203% |
 | `cobblemon:utility_umbrella` | Standard held / utility item | `market` |
 | `cobblemon:vivichoke` | Standard held / utility item | `loot:epic/nature` |
 | `cobblemon:white_apricorn` | Apricorn | `loot:uncommon/nature` |
@@ -380,9 +484,9 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:white_mint_leaf` | Nature mint | `loot:epic/nature` |
 | `cobblemon:white_mint_seeds` | Mint seed | `loot:epic/nature` |
 | `cobblemon:wide_lens` | Standard held / utility item | `market` |
-| `cobblemon:wise_glasses` | Standard held / utility item | `loot:rare/battle`; `market` |
+| `cobblemon:wise_glasses` | Standard held / utility item | `crate:common` 0.305%; `loot:rare/battle`; `market` |
 | `cobblemon:yellow_apricorn_seed` | Apricorn | `loot:epic/nature` |
-| `cobblemon:zinc` | Vitamin | `loot:chests/regice_chest` 6.97%; `loot:chests/turnback_cave_chest` 10.9% |
+| `cobblemon:zinc` | Vitamin | `crate:common` 1.183%; `loot:chests/regice_chest` 6.97%; `loot:chests/turnback_cave_chest` 10.9% |
 | `cobblemon:zoom_lens` | Standard held / utility item | `market` |
 | `minecraft:diamond` | Common enough at this point in progression | `loot:epic/diverse`; `loot:chests/woodland_mansion` 0.0%; `loot:chests/bell_tower_chest` 8.8% +4 more |
 

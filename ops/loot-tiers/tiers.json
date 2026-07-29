@@ -148,6 +148,20 @@
       ]
     },
     {
+      "id": "cobblemon:adamant_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:air_balloon",
       "tier": 2,
       "tierName": "Rare",
@@ -202,6 +216,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -215,6 +234,11 @@
       "rationale": "Evolution item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
         {
           "source": "loot:chests/bell_tower_chest",
           "detail": "w=16/2441, rolls=14",
@@ -331,12 +355,31 @@
       ]
     },
     {
+      "id": "cobblemon:black_augurite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:black_belt",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -357,6 +400,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -375,6 +423,11 @@
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:legendary/battle",
           "detail": "w=1/26, rolls={'min': 1, 'max': 1}",
@@ -468,6 +521,20 @@
       ]
     },
     {
+      "id": "cobblemon:bold_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:booster_energy",
       "tier": 2,
       "tierName": "Rare",
@@ -482,6 +549,20 @@
       "rationale": "IV hyper training",
       "assignedBy": "override",
       "sources": []
+    },
+    {
+      "id": "cobblemon:brave_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
     },
     {
       "id": "cobblemon:bright_powder",
@@ -538,9 +619,28 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-6 random)",
+          "rate": 1.183
+        },
+        {
           "source": "loot:chests/turnback_cave_chest",
           "detail": "w=30/2355, rolls=9",
           "rate": 10.9
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:calm_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
         }
       ]
     },
@@ -552,6 +652,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-6 random)",
+          "rate": 1.183
+        },
+        {
           "source": "loot:chests/dragoeleki_chest",
           "detail": "w=5/925, rolls=9",
           "rate": 4.76
@@ -560,6 +665,20 @@
           "source": "loot:chests/turnback_cave_chest",
           "detail": "w=30/2355, rolls=9",
           "rate": 10.9
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:careful_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
         }
       ]
     },
@@ -607,12 +726,31 @@
       ]
     },
     {
+      "id": "cobblemon:chipped_pot",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:choice_band",
       "tier": 2,
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
         {
           "source": "loot:legendary/battle",
           "detail": "w=1/26, rolls={'min': 1, 'max': 1}",
@@ -633,6 +771,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
+        {
           "source": "loot:legendary/battle",
           "detail": "w=1/26, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -651,6 +794,11 @@
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
         {
           "source": "loot:legendary/battle",
           "detail": "w=1/26, rolls={'min': 1, 'max': 1}",
@@ -760,6 +908,20 @@
       "sources": []
     },
     {
+      "id": "cobblemon:courage_candy",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "EV candy",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "High band, 5.7% (1-of-6 random)",
+          "rate": 0.95
+        }
+      ]
+    },
+    {
       "id": "cobblemon:cover_fossil",
       "tier": 1,
       "tierName": "Uncommon",
@@ -784,6 +946,20 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:cracked_pot",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -869,7 +1045,13 @@
       "tierName": "Rare",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
     },
     {
       "id": "cobblemon:deep_sea_scale",
@@ -878,6 +1060,11 @@
       "rationale": "Evolution item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -893,6 +1080,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -906,6 +1098,11 @@
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 3.0% (1-of-2 random)",
+          "rate": 1.5
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -981,6 +1178,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -1022,7 +1224,13 @@
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
     },
     {
       "id": "cobblemon:dream_ball",
@@ -1054,7 +1262,13 @@
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
     },
     {
       "id": "cobblemon:dusk_ball",
@@ -1087,6 +1301,11 @@
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        },
         {
           "source": "loot:chests/turnback_cave_chest",
           "detail": "w=30/2355, rolls=9",
@@ -1138,6 +1357,20 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:electirizer",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -1234,6 +1467,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 3.0% (1-of-2 random)",
+          "rate": 1.5
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -1247,6 +1485,11 @@
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -1547,7 +1790,13 @@
       "tierName": "Rare",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
     },
     {
       "id": "cobblemon:flame_orb",
@@ -1635,6 +1884,11 @@
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
         {
           "source": "loot:uncommon/battle",
           "detail": "w=1/7, rolls={'min': 1, 'max': 1}",
@@ -1747,6 +2001,34 @@
       ]
     },
     {
+      "id": "cobblemon:galarica_cuff",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:galarica_wreath",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:genius_feather",
       "tier": 1,
       "tierName": "Uncommon",
@@ -1762,6 +2044,20 @@
           "source": "loot:chests/turnback_cave_chest",
           "detail": "w=100/2355, rolls=9",
           "rate": 32.33
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:gentle_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
         }
       ]
     },
@@ -1921,6 +2217,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -1934,6 +2235,34 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:hasty_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:health_candy",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "EV candy",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "High band, 5.7% (1-of-6 random)",
+          "rate": 0.95
         }
       ]
     },
@@ -2002,6 +2331,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -2048,6 +2382,11 @@
       "rationale": "Vitamin",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-6 random)",
+          "rate": 1.183
+        },
         {
           "source": "loot:chests/turnback_cave_chest",
           "detail": "w=30/2355, rolls=9",
@@ -2129,6 +2468,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        },
+        {
           "source": "loot:chests/regice_chest",
           "detail": "w=30/625, rolls=9",
           "rate": 35.77
@@ -2155,12 +2499,31 @@
       ]
     },
     {
+      "id": "cobblemon:impish_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:iron",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-6 random)",
+          "rate": 1.183
+        },
         {
           "source": "loot:chests/registeel_chest",
           "detail": "w=30/740, rolls=9",
@@ -2207,12 +2570,31 @@
       ]
     },
     {
+      "id": "cobblemon:jolly_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:kings_rock",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
         {
           "source": "loot:chests/regirock_chest",
           "detail": "w=30/885, rolls=9",
@@ -2240,12 +2622,45 @@
       ]
     },
     {
+      "id": "cobblemon:lax_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:leaf_stone",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution stone",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
+    },
+    {
       "id": "cobblemon:leftovers",
       "tier": 2,
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:legendary/battle",
           "detail": "w=1/26, rolls={'min': 1, 'max': 1}",
@@ -2273,6 +2688,11 @@
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
         {
           "source": "loot:legendary/battle",
           "detail": "w=1/26, rolls={'min': 1, 'max': 1}",
@@ -2356,6 +2776,20 @@
       ]
     },
     {
+      "id": "cobblemon:lonely_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:lucky_egg",
       "tier": 1,
       "tierName": "Uncommon",
@@ -2407,12 +2841,31 @@
       ]
     },
     {
+      "id": "cobblemon:magmarizer",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:magnet",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -2436,6 +2889,20 @@
       ]
     },
     {
+      "id": "cobblemon:malicious_armor",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:master_ball",
       "tier": 5,
       "tierName": "Mythic",
@@ -2451,6 +2918,20 @@
           "source": "crate:ultra",
           "detail": "Mid band, 6.5%",
           "rate": 6.5
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:masterpiece_teacup",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -2589,12 +3070,31 @@
       ]
     },
     {
+      "id": "cobblemon:metal_alloy",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:metal_coat",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:chests/registeel_chest",
           "detail": "w=100/740, rolls=9",
@@ -2641,12 +3141,45 @@
       ]
     },
     {
+      "id": "cobblemon:mighty_candy",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "EV candy",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "High band, 5.7% (1-of-6 random)",
+          "rate": 0.95
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:mild_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:miracle_seed",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -2684,12 +3217,45 @@
       ]
     },
     {
+      "id": "cobblemon:modest_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:moon_stone",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution stone",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
+    },
+    {
       "id": "cobblemon:muscle_band",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -2724,6 +3290,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -2732,6 +3303,34 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:naive_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:naughty_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
         }
       ]
     },
@@ -2775,6 +3374,11 @@
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -2821,6 +3425,20 @@
       ]
     },
     {
+      "id": "cobblemon:oval_stone",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:paralyze_heal",
       "tier": 0,
       "tierName": "Common",
@@ -2841,6 +3459,20 @@
       "rationale": "Berry",
       "assignedBy": "rule",
       "sources": []
+    },
+    {
+      "id": "cobblemon:peat_block",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
     },
     {
       "id": "cobblemon:pink_apricorn",
@@ -2920,6 +3552,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -2981,6 +3618,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 4.0% (1-of-6 random)",
+          "rate": 0.667
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -2994,6 +3636,11 @@
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 4.0% (1-of-6 random)",
+          "rate": 0.667
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -3009,6 +3656,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 4.0% (1-of-6 random)",
+          "rate": 0.667
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -3022,6 +3674,11 @@
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 4.0% (1-of-6 random)",
+          "rate": 0.667
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -3061,6 +3718,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Mid band, 4.0% (1-of-6 random)",
+          "rate": 0.667
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -3074,6 +3736,11 @@
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 4.0% (1-of-6 random)",
+          "rate": 0.667
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -3120,7 +3787,13 @@
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
     },
     {
       "id": "cobblemon:protective_pads",
@@ -3144,6 +3817,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -3162,6 +3840,11 @@
       "rationale": "Vitamin",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-6 random)",
+          "rate": 1.183
+        },
         {
           "source": "loot:chests/regirock_chest",
           "detail": "w=5/885, rolls=9",
@@ -3235,6 +3918,20 @@
       ]
     },
     {
+      "id": "cobblemon:quick_candy",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "EV candy",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "High band, 5.7% (1-of-6 random)",
+          "rate": 0.95
+        }
+      ]
+    },
+    {
       "id": "cobblemon:quick_claw",
       "tier": 1,
       "tierName": "Uncommon",
@@ -3269,6 +3966,20 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:quiet_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
         }
       ]
     },
@@ -3312,12 +4023,31 @@
       ]
     },
     {
+      "id": "cobblemon:rash_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:razor_claw",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
@@ -3333,6 +4063,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -3346,6 +4081,11 @@
       "rationale": "Evolution item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        },
         {
           "source": "loot:chests/turnback_cave_vault",
           "detail": "w=50/2808, rolls=3",
@@ -3420,6 +4160,20 @@
           "source": "loot:epic/nature",
           "detail": "w=1/25, rolls={'min': 1, 'max': 1}",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:relaxed_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
         }
       ]
     },
@@ -3652,6 +4406,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "High band, 4.5% (1-of-9 random)",
+          "rate": 0.5
+        },
+        {
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
@@ -3669,6 +4428,20 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:sachet",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -3720,6 +4493,20 @@
       ]
     },
     {
+      "id": "cobblemon:sassy_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:scope_lens",
       "tier": 1,
       "tierName": "Uncommon",
@@ -3734,12 +4521,31 @@
       ]
     },
     {
+      "id": "cobblemon:serious_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
       "id": "cobblemon:sharp_beak",
       "tier": 1,
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -3786,7 +4592,13 @@
       "tierName": "Rare",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
     },
     {
       "id": "cobblemon:silk_scarf",
@@ -3795,6 +4607,11 @@
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -3819,6 +4636,11 @@
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -3882,6 +4704,20 @@
       ]
     },
     {
+      "id": "cobblemon:smart_candy",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "EV candy",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "High band, 5.7% (1-of-6 random)",
+          "rate": 0.95
+        }
+      ]
+    },
+    {
       "id": "cobblemon:smoke_ball",
       "tier": 1,
       "tierName": "Uncommon",
@@ -3932,6 +4768,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -3969,6 +4810,11 @@
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
         {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
@@ -4020,6 +4866,20 @@
       ]
     },
     {
+      "id": "cobblemon:sun_stone",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution stone",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
+    },
+    {
       "id": "cobblemon:super_potion",
       "tier": 0,
       "tierName": "Common",
@@ -4058,6 +4918,20 @@
       ]
     },
     {
+      "id": "cobblemon:sweet_apple",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
       "id": "cobblemon:swift_feather",
       "tier": 1,
       "tierName": "Uncommon",
@@ -4073,6 +4947,34 @@
           "source": "loot:chests/turnback_cave_chest",
           "detail": "w=100/2355, rolls=9",
           "rate": 32.33
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:syrupy_apple",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:tart_apple",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -4110,7 +5012,13 @@
       "tierName": "Rare",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
-      "sources": []
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
     },
     {
       "id": "cobblemon:timer_ball",
@@ -4133,6 +5041,34 @@
           "source": "market",
           "detail": "$33 (untagged)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:timid_mint",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Nature mint",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 4.1% (1-of-21 random)",
+          "rate": 0.195
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:tough_candy",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "EV candy",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:rare",
+          "detail": "High band, 5.7% (1-of-6 random)",
+          "rate": 0.95
         }
       ]
     },
@@ -4191,6 +5127,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -4218,6 +5159,34 @@
           "source": "market",
           "detail": "$75 (untagged)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:unremarkable_teacup",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:upgrade",
+      "tier": 1,
+      "tierName": "Uncommon",
+      "rationale": "Standard held / utility item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -4264,6 +5233,20 @@
       ]
     },
     {
+      "id": "cobblemon:water_stone",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution stone",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-10 random)",
+          "rate": 0.71
+        }
+      ]
+    },
+    {
       "id": "cobblemon:weakness_policy",
       "tier": 2,
       "tierName": "Rare",
@@ -4274,6 +5257,20 @@
           "source": "market",
           "detail": "$5,000 (held_items)",
           "rate": null
+        }
+      ]
+    },
+    {
+      "id": "cobblemon:whipped_dream",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Evolution item",
+      "assignedBy": "rule",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-30 random)",
+          "rate": 0.203
         }
       ]
     },
@@ -4379,6 +5376,11 @@
       "assignedBy": "rule",
       "sources": [
         {
+          "source": "crate:common",
+          "detail": "Standard band, 6.1% (1-of-20 random)",
+          "rate": 0.305
+        },
+        {
           "source": "loot:rare/battle",
           "detail": "w=1/39, rolls={'min': 1, 'max': 1}",
           "rate": null
@@ -4411,6 +5413,11 @@
       "rationale": "Vitamin",
       "assignedBy": "rule",
       "sources": [
+        {
+          "source": "crate:common",
+          "detail": "Mid band, 7.1% (1-of-6 random)",
+          "rate": 1.183
+        },
         {
           "source": "loot:chests/regice_chest",
           "detail": "w=5/625, rolls=9",
@@ -4877,6 +5884,22 @@
       ]
     },
     {
+      "id": "mega_showdown:abomasite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:absolite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:adamant_crystal",
       "tier": 4,
       "tierName": "Legendary",
@@ -4905,7 +5928,87 @@
       ]
     },
     {
+      "id": "mega_showdown:adrenaline_orb",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:aggronite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:alakazite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:altarianite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:ampharosite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:ash_cap",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:audinite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:banettite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:beedrillite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:blastoisinite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:blazikenite",
       "tier": 2,
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
@@ -4925,6 +6028,54 @@
           "rate": 0.53
         }
       ]
+    },
+    {
+      "id": "mega_showdown:cameruptite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:charizardite_x",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:charizardite_y",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:darkinium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:decidium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:diancite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:draco_plate",
@@ -4997,6 +6148,14 @@
       ]
     },
     {
+      "id": "mega_showdown:eevium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:electric_tera_shard",
       "tier": 2,
       "tierName": "Rare",
@@ -5023,6 +6182,14 @@
           "rate": 4.76
         }
       ]
+    },
+    {
+      "id": "mega_showdown:fightinium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:fire_tera_shard",
@@ -5081,6 +6248,38 @@
       ]
     },
     {
+      "id": "mega_showdown:galladite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:garchompite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:gardevoirite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:gengarite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:ghost_memory",
       "tier": 2,
       "tierName": "Rare",
@@ -5128,6 +6327,14 @@
       ]
     },
     {
+      "id": "mega_showdown:glalitite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:griseous_core",
       "tier": 4,
       "tierName": "Legendary",
@@ -5159,6 +6366,38 @@
           "rate": 0.53
         }
       ]
+    },
+    {
+      "id": "mega_showdown:groundium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:gyaradosite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:heracronite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:houndoominite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:ice_tera_shard",
@@ -5217,6 +6456,14 @@
       ]
     },
     {
+      "id": "mega_showdown:kangaskhanite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:keystone",
       "tier": 3,
       "tierName": "Epic",
@@ -5229,6 +6476,22 @@
           "rate": 1.9
         }
       ]
+    },
+    {
+      "id": "mega_showdown:lopunnite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:lucarionite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:lustrous_globe",
@@ -5259,6 +6522,22 @@
       ]
     },
     {
+      "id": "mega_showdown:manectite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mawilite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:meadow_plate",
       "tier": 2,
       "tierName": "Rare",
@@ -5271,6 +6550,14 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "mega_showdown:medichamite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:mega_meteorid_block",
@@ -5301,6 +6588,22 @@
       ]
     },
     {
+      "id": "mega_showdown:metagrossite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mewnium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:mind_plate",
       "tier": 2,
       "tierName": "Rare",
@@ -5329,6 +6632,30 @@
       ]
     },
     {
+      "id": "mega_showdown:normalium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:pidgeotite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:pinsirite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:pixie_plate",
       "tier": 2,
       "tierName": "Rare",
@@ -5341,6 +6668,22 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "mega_showdown:poisonium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:psychium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:red_orb",
@@ -5371,6 +6714,54 @@
       ]
     },
     {
+      "id": "mega_showdown:rusted_sword",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:sablenite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:salamencite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:sceptilite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:scizorite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:sharpedonite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:sky_plate",
       "tier": 2,
       "tierName": "Rare",
@@ -5383,6 +6774,22 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "mega_showdown:slowbronite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:solganium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:splash_plate",
@@ -5474,6 +6881,14 @@
       ]
     },
     {
+      "id": "mega_showdown:swampertite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:toxic_plate",
       "tier": 2,
       "tierName": "Rare",
@@ -5488,6 +6903,22 @@
       ]
     },
     {
+      "id": "mega_showdown:tyranitarite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:venusaurite",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:water_tera_shard",
       "tier": 2,
       "tierName": "Rare",
@@ -5500,6 +6931,14 @@
           "rate": 56.32
         }
       ]
+    },
+    {
+      "id": "mega_showdown:waterium_z",
+      "tier": 2,
+      "tierName": "Rare",
+      "rationale": "Z-crystal",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:zap_plate",

@@ -165,12 +165,23 @@ def collect_evidence() -> dict[str, list[dict]]:
         crate = d.get("tier", f.stem.upper())
         for e in d.get("entries", []):
             for it in e.get("items", []):
-                iid = it.get("id")
-                if iid:
+                # A single item ("id"), or a random-pick bundle ("ids": [...]).
+                # Missing the plural form silently drops whole categories -- the
+                # evolution stones, nature mints and most Z-crystals all live in
+                # random_item bundles.
+                ids = [it["id"]] if isinstance(it.get("id"), str) else []
+                ids += [i for i in (it.get("ids") or []) if isinstance(i, str)]
+                bundle = len(ids) > 1
+                for iid in ids:
+                    detail = f"{e.get('lootTier','?')} band, {e.get('weightPct')}%"
+                    if bundle:
+                        detail += f" (1-of-{len(ids)} random)"
                     ev[iid].append({
                         "source": f"crate:{crate.lower()}",
-                        "detail": f"{e.get('lootTier','?')} band, {e.get('weightPct')}%",
-                        "rate": e.get("weightPct"),
+                        "detail": detail,
+                        # a 1-of-N bundle grants any single member at rate/N
+                        "rate": round(e["weightPct"] / len(ids), 3)
+                        if isinstance(e.get("weightPct"), (int, float)) else None,
                     })
 
     # --- loot tables in datapacks (chest + trainer)
@@ -227,9 +238,19 @@ def walk_items(node, out: set[str], in_items_list: bool = False) -> None:
         res = node.get("result")
         if isinstance(res, dict) and isinstance(res.get("id"), str):
             out.add(res["id"])
+        # gacha random_item bundle: {"ids": ["<id>", ...]}
+        if isinstance(node.get("ids"), list):
+            out.update(i for i in node["ids"] if isinstance(i, str) and ":" in i)
         for k, v in node.items():
-            if k in ITEM_KEYS and isinstance(v, str) and ":" in v:
-                out.add(v)
+            # heldItem may be a single id OR a list of candidates to pick from.
+            # Note: list entries are sometimes bare ("dark_gem" with no namespace);
+            # those are skipped rather than guessed at, since the resolving
+            # namespace is ambiguous.
+            if k in ITEM_KEYS:
+                if isinstance(v, str) and ":" in v:
+                    out.add(v)
+                elif isinstance(v, list):
+                    out.update(i for i in v if isinstance(i, str) and ":" in i)
             # gacha: {"items": [{"id": "<id>"}]}
             elif k == "items" and isinstance(v, list):
                 for e in v:

@@ -229,10 +229,21 @@ refusing would forbid and boxes would make consequence-free.
 exactly like a permadeath (§2.2 — nothing leaves a run), so the prompt has to read as a decision
 rather than as inventory management.
 
-**Two isolation leaks this must close**, both live today: Cobblemon's capture flow writes the
-caught Pokémon to the player's **real** party and PC, and it marks the species `CAUGHT` in their
-**real Pokédex** — which §2.15 forbids outright, since server catches are what unlock starters
-and an in-run catch must not.
+**Two isolation leaks, both closed 2026-07-28.** Cobblemon's capture flow wrote the caught
+Pokémon to the player's **real** party and PC, and marked the species `CAUGHT` in their **real
+Pokédex** — which §2.15 forbids outright, since server catches are what unlock starters and an
+in-run catch must not.
+
+They needed different fixes, which is worth recording because they look like one problem.
+Cobblemon exposes no cancellable hook on the way in — the capture *completes* into real storage
+and only then emits its event — so the party leak is corrected by reclaiming the Pokémon back out
+and routing it to the run party. The Pokédex write happens even earlier, inside `party.add`, and
+nothing hands back the previous value, so it cannot be undone at all and has to be **vetoed** at
+`POKEDEX_DATA_CHANGED_PRE`.
+
+The veto is gated on *fighting* or *being in an arena*, deliberately **not** on "has a run": a
+player who paused a run (§2.22) and went catching in the world must still earn real dex entries,
+and eating those would be a worse failure than the one being prevented.
 
 **Balls are a reward, not a given** (decided 2026-07-28). Poké Balls are earned as a
 between-wave reward option rather than supplied without limit. That is what makes a catch a

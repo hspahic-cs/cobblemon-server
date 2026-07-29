@@ -25,15 +25,26 @@ import net.minecraft.resources.ResourceLocation
  *   "fixed": [
  *     { "wave": 50, "trainer": "ns:rgl_rival" },
  *     { "wave": 182, "kind": "boss", "trainer": "ns:rgl_e4_1" }
- *   ]
+ *   ],
+ *   "generated": [
+ *     { "trainer": "ns:rgl_brock", "signature": [
+ *         { "alternatives": [ { "line": [ "cobblemon:onix", "cobblemon:steelix" ] } ] }
+ *     ] }
+ *   ],
+ *   "generation": { "party_size": [ { "min_wave": 1, "size": 4 } ], "held_items": [] }
  * }
  * ```
  *
- * A roster holds **trainer ids and nothing else** — no teams, no species, no levels. Teams are
- * authored as RCT trainers in their own datapack and the level comes from the wave curve (§2.6), so
- * everything this file says is *which* trainer, never *what* trainer. That is also what keeps the
- * whole layer compilable without RCT on the classpath (§1.2: their licence is unverified, so they
- * stay a soft dependency).
+ * A band and a fixed encounter hold **trainer ids and nothing else** — never a team. What changed with
+ * §2.30 is what an id can mean: an id listed in `generated` fights a team built at the encounter from
+ * its signature species, and an id that is not fights its RCT trainer's authored team, as every id did
+ * before. Either way this file names *which* trainer and never reaches into RCT, which is what keeps
+ * the layer compilable without RCT on the classpath (§1.2: their licence is unverified, so they stay a
+ * soft dependency) and unit-testable with no server at all.
+ *
+ * The species ids in a `line` are not checked against anything here for the same reason the trainer
+ * ids are not: this module cannot see a registry at parse time. A line naming a species the server
+ * does not have fails when the Pokémon is built, and is reported there.
  *
  * ### Containment: a bad roster is rejected whole, unlike a reward table
  *
@@ -71,6 +82,8 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
         val authoredFor = parseSchedule(root)
         val bandViews = root.requireObjectList("bands")
         val fixedViews = root.optionalObjectList("fixed") ?: emptyList()
+        val generatedViews = root.optionalObjectList("generated") ?: emptyList()
+        val generation = parseGeneration(root)
         root.expectNoUnknownKeys()
         if (authoredFor == null || bandViews == null) return null
 
@@ -103,11 +116,22 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
             }
         }
 
+        val generated = linkedMapOf<ResourceLocation, TrainerEntry>()
+        for (view in generatedViews) {
+            val entry = parseEntry(view) ?: continue
+            val clash = generated.put(entry.trainerId, entry)
+            if (clash != null) {
+                // Two signature blocks for one trainer: last-wins would depend on file order, and the
+                // two blocks are by definition different teams for the same NPC.
+                view.problem("trainer", "trainer '${entry.trainerId}' already has a generated entry")
+            }
+        }
+
         // Only worth running once the pieces parsed — schedule checks over a roster that already
         // lost a band would report holes the author did not create, on top of the real error.
-        if (problems.count != before) return null
+        if (problems.count != before || generation == null) return null
 
-        val roster = TrainerRoster(id, authoredFor, bands, fixed)
+        val roster = TrainerRoster(id, authoredFor, bands, fixed, generated, generation)
         roster.validate().forEach { problems.add("", it) }
         return if (problems.count == before) roster else null
     }
@@ -250,5 +274,228 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
             view.problem(field, "'$text' is not a valid id (expected namespace:path)")
             null
         }
+    }
+
+    // ─── §2.30: generated teams ────────────────────────────────────────────
+
+    /**
+     * One `generated` entry: a trainer id and the signature species its team is built from.
+     *
+     * `signature` is required and must be non-empty. An entry with an empty one is rejected rather
+     * than treated as "authored after all": the two are written differently on purpose — an authored
+     * fight has *no entry here at all* — and silently accepting an empty block would let a
+     * half-written entry look like a deliberate authored fight for as long as nobody checked.
+     */
+    private fun parseEntry(view: JsonView): TrainerEntry? {
+        val trainerId = parseTrainerId(view, "trainer")
+        val signature = parseSlots(view, "signature", required = true)
+        val filler = parseSlots(view, "filler", required = false) ?: emptyList()
+        view.expectNoUnknownKeys()
+
+        if (trainerId == null || signature == null) return null
+        if (signature.isEmpty()) {
+            view.problem(
+                "signature",
+                "must name at least one slot — a trainer whose team is generated from nothing would " +
+                    "arrive empty. For an authored fight, delete this entry and leave the id in its band",
+            )
+            return null
+        }
+        return TrainerEntry(trainerId, signature, filler)
+    }
+
+    private fun parseSlots(view: JsonView, field: String, required: Boolean): List<SignatureSlot>? {
+        val views = (if (required) view.requireObjectList(field) else view.optionalObjectList(field)) ?: return null
+        var ok = true
+        val slots = mutableListOf<SignatureSlot>()
+        views.forEach { slotView ->
+            val slot = parseSlot(slotView)
+            if (slot == null) ok = false else slots += slot
+        }
+        return if (ok) slots else null
+    }
+
+    private fun parseSlot(view: JsonView): SignatureSlot? {
+        val alternativeViews = view.requireObjectList("alternatives")
+        view.expectNoUnknownKeys()
+        if (alternativeViews == null) return null
+        if (alternativeViews.isEmpty()) {
+            view.problem("alternatives", "a slot with no alternatives can never be filled")
+            return null
+        }
+        var ok = true
+        val lines = mutableListOf<SpeciesLine>()
+        alternativeViews.forEach { alternativeView ->
+            val line = parseLine(alternativeView)
+            if (line == null) ok = false else lines += line
+        }
+        return if (ok && lines.isNotEmpty()) SignatureSlot(lines) else null
+    }
+
+    /**
+     * One alternative: an evolution line, base form first, plus its weight against the others.
+     *
+     * A stage is written as a `PokemonProperties` fragment — `cobblemon:corsola galarian` — because a
+     * regional form is an *aspect* in Cobblemon and not a species of its own. Only the first token is
+     * validated as an id; the rest is passed through untouched, since checking it would mean this
+     * module carrying its own copy of Cobblemon's property grammar.
+     */
+    private fun parseLine(view: JsonView): SpeciesLine? {
+        val stages = view.requireStringList("line")
+        val weight = view.optionalDouble("weight") ?: 1.0
+        view.expectNoUnknownKeys()
+        if (stages == null) return null
+        if (stages.isEmpty()) {
+            view.problem("line", "must name at least one species")
+            return null
+        }
+
+        var ok = true
+        val parsed = mutableListOf<TeamSpecies>()
+        stages.forEachIndexed { index, text ->
+            val tokens = text.trim().split(Regex("\\s+"))
+            val speciesId = ResourceLocation.tryParse(tokens.first())
+            if (speciesId == null) {
+                view.problem(
+                    "line[$index]",
+                    "'${tokens.first()}' is not a valid species id (expected namespace:path, " +
+                        "optionally followed by properties such as 'galarian')",
+                )
+                ok = false
+            } else {
+                parsed += TeamSpecies(speciesId, tokens.drop(1).joinToString(" ").takeIf { it.isNotBlank() })
+            }
+        }
+        if (weight < 0.0) {
+            view.problem("weight", "must not be negative, was $weight")
+            ok = false
+        }
+        return if (ok) SpeciesLine(parsed, weight) else null
+    }
+
+    /**
+     * The `generation` block, or the shipped defaults when it is absent.
+     *
+     * Absent is the ordinary case and means §2.30's numbers with no held items — a roster does not
+     * have to restate the design to get it. Present-but-broken returns null, which rejects the file:
+     * defaulting past an author's own tuning would run their content at party sizes they did not ask
+     * for, which is exactly the silent-wrong-answer this reader exists to prevent.
+     */
+    private fun parseGeneration(root: JsonView): TeamGenerationRules? {
+        val view = root.optionalObject("generation")
+        if (view == null) return if (root.hasField("generation")) null else TeamGenerationRules()
+
+        val sizeViews = view.optionalObjectList("party_size")
+        val evolutionView = view.optionalObject("evolution")
+        val itemViews = view.optionalObjectList("held_items")
+        view.expectNoUnknownKeys()
+
+        var ok = true
+        val sizes = mutableListOf<PartySizeTier>()
+        sizeViews?.forEach { tierView ->
+            val minWave = tierView.optionalInt("min_wave") ?: 1
+            val size = tierView.requireInt("size")
+            tierView.expectNoUnknownKeys()
+            if (minWave < 1) {
+                tierView.problem("min_wave", "must be at least 1, was $minWave")
+                ok = false
+            }
+            if (size != null && size !in 1..6) {
+                // Cobblemon's own party limit. A 7 here would be accepted by the format and then
+                // silently truncated wherever the team is built, which is a difficulty change nobody
+                // wrote down.
+                tierView.problem("size", "must be 1..6, was $size")
+                ok = false
+            }
+            if (size != null && minWave >= 1 && size in 1..6) sizes += PartySizeTier(minWave, size)
+            else ok = false
+        }
+
+        var evolution = EvolutionSchedule()
+        if (evolutionView != null) {
+            val waves = evolutionView.optionalIntList("stage_waves") ?: EvolutionSchedule.DEFAULT_STAGE_WAVES
+            val fully = evolutionView.optionalInt("fully_evolved_from") ?: EvolutionSchedule.DEFAULT_FULLY_EVOLVED_FROM
+            evolutionView.expectNoUnknownKeys()
+            when {
+                waves.any { it < 1 } -> {
+                    evolutionView.problem("stage_waves", "waves are 1-based, got $waves")
+                    ok = false
+                }
+                waves != waves.sorted() -> {
+                    evolutionView.problem("stage_waves", "must ascend, got $waves")
+                    ok = false
+                }
+                fully < 1 -> {
+                    evolutionView.problem("fully_evolved_from", "must be at least 1, was $fully")
+                    ok = false
+                }
+                else -> evolution = EvolutionSchedule(waves, fully)
+            }
+        }
+
+        val tiers = mutableListOf<HeldItemTier>()
+        itemViews?.forEach { tierView ->
+            val tier = parseHeldItemTier(tierView)
+            if (tier == null) ok = false else tiers += tier
+        }
+
+        if (!ok) return null
+        return TeamGenerationRules(
+            partySizes = sizes.ifEmpty { TeamGenerationRules.DEFAULT_PARTY_SIZES },
+            evolution = evolution,
+            heldItems = tiers,
+        )
+    }
+
+    private fun parseHeldItemTier(view: JsonView): HeldItemTier? {
+        val minWave = view.optionalInt("min_wave") ?: 1
+        val maxWave = view.optionalInt("max_wave")
+        val boss = view.optionalBoolean("boss")
+        val chance = view.requireDouble("chance")
+        val count = view.optionalInt("count") ?: 1
+        val itemViews = view.requireObjectList("items")
+        view.expectNoUnknownKeys()
+
+        var ok = true
+        if (minWave < 1) {
+            view.problem("min_wave", "must be at least 1, was $minWave")
+            ok = false
+        }
+        if (maxWave != null && maxWave < minWave) {
+            view.problem("max_wave", "$maxWave is before min_wave $minWave, so this tier could never match")
+            ok = false
+        }
+        if (chance != null && chance !in 0.0..1.0) {
+            view.problem("chance", "must be between 0 and 1, was $chance")
+            ok = false
+        }
+        if (count < 1) {
+            view.problem("count", "must be at least 1, was $count")
+            ok = false
+        }
+
+        val items = mutableListOf<HeldItemChoice>()
+        itemViews?.forEach { itemView ->
+            val id = itemView.requireString("item")?.let { text ->
+                ResourceLocation.tryParse(text) ?: run {
+                    itemView.problem("item", "'$text' is not a valid item id (expected namespace:path)")
+                    null
+                }
+            }
+            val weight = itemView.optionalDouble("weight") ?: 1.0
+            itemView.expectNoUnknownKeys()
+            if (weight < 0.0) {
+                itemView.problem("weight", "must not be negative, was $weight")
+                ok = false
+            }
+            if (id == null) ok = false else items += HeldItemChoice(id, weight)
+        }
+        if (itemViews != null && items.isEmpty()) {
+            view.problem("items", "must name at least one item — a tier with none would never place anything")
+            ok = false
+        }
+
+        if (!ok || chance == null || itemViews == null) return null
+        return HeldItemTier(minWave, maxWave, boss, chance, count, items)
     }
 }

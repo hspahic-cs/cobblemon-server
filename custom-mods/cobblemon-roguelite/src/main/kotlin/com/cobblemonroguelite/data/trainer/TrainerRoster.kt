@@ -9,17 +9,23 @@ import com.cobblemonroguelite.wave.WaveRandom
 import net.minecraft.resources.ResourceLocation
 
 /**
- * One wave range and the authored trainers that may be met inside it.
+ * One wave range and the trainers that may be met inside it.
  *
- * ### Why bands exist at all, now that runtime level scaling works
+ * ### Why bands exist at all, now that teams are generated
  *
- * Not for levels. Forcing an RCT trainer's team to the wave level at `BattleStartedEvent.Pre` is
- * verified on dev (§2.6), so one team could be stretched from wave 1 to wave 200 and always arrive
- * at the right level. What that setter does *not* scale is **movesets, EVs and held items** — it
- * moves a number and nothing else. A team authored for wave 10 therefore turns up at wave 150 at
- * level 100 still running its wave-10 moves on empty EV spreads, which reads to the player as a
- * level-100 opponent that cannot fight. Bands are the unit at which that content gets re-authored,
- * and that is the *only* reason this layer has wave ranges in it.
+ * Not for levels, and — since §2.30 — not for movesets either.
+ *
+ * They originally existed for movesets. Forcing an RCT trainer's team to the wave level at
+ * `BattleStartedEvent.Pre` is verified on dev (§2.6), so one team could be stretched from wave 1 to
+ * wave 200 and always arrive at the right level; what that setter does *not* scale is the **moveset**,
+ * so a team authored for wave 10 turned up at wave 150 at level 100 still running wave-10 moves.
+ * Bands were the unit at which that content got re-authored.
+ *
+ * Generating the team at the encounter ([TrainerTeamGenerator]) derives the moveset for the level
+ * being generated, which retires that reason entirely. What is left is the one §2.30 keeps: a band
+ * says **which leaders appear when**, and — through [TeamGenerationRules] — how big their parties are
+ * and how far evolved. An authored fight ([TrainerEntry]) still has the old problem, which is an
+ * argument for putting authored fights at a fixed wave rather than in a wide band.
  *
  * A band consequently carries **no level of its own**. One added here would silently compete with
  * [com.cobblemonroguelite.wave.WaveLevelCurve], and a run's difficulty would stop being the single
@@ -162,18 +168,51 @@ data class TrainerPick(
  * and belongs in `run/`. §2.19 makes it a real content concern (20 trainer waves against a small
  * pool means visible repeats), so it is named here rather than quietly left.
  *
+ * ### Two kinds of fight, told apart by [generated] and nothing else
+ *
+ * A band and a fixed encounter name a trainer **id**, and always have. Whether that fight is
+ * generated or authored is decided by whether [generated] holds an entry for the id — not by where
+ * the id appears, and not by a flag on the band. That is what lets one leader sit in a trainer band
+ * and a boss band without two copies of its signature species to keep in step, and it is why adding
+ * §2.30's generation to this format broke nothing that was already written: a roster with no
+ * [generated] block is exactly the roster it was before, every fight authored.
+ *
  * @property authoredFor the schedule this roster was written against, used by [validate] to work out
  *   which waves it is obliged to cover. It is **not** the schedule a run uses — that is the run's
  *   own [WaveCompositionConfig] — which is why [validate] takes a composition and this is only its
  *   default. When the two disagree the run's is the truth, and re-running [validate] against the
  *   live config is how that gets said out loud.
+ * @property generated trainer id → the signature species its team is built from. An id absent from
+ *   here is an authored fight: the trainer's own RCT team is fought as written, which is how the
+ *   Elite Four, the champion and any curated rival stay hand-made (§2.30).
+ * @property generation the dials generation reads — party size by band, evolution stage by wave, held
+ *   items. Shipped defaults are §2.30's numbers with no items; see [TeamGenerationRules].
  */
 data class TrainerRoster(
     val id: ResourceLocation,
     val authoredFor: WaveCompositionConfig,
     val bands: List<TrainerBand>,
     val fixed: Map<Int, FixedEncounter>,
+    val generated: Map<ResourceLocation, TrainerEntry> = emptyMap(),
+    val generation: TeamGenerationRules = TeamGenerationRules(),
 ) {
+
+    /**
+     * The team [trainerId] brings to [wave], or null when this is an authored fight.
+     *
+     * Null is the answer for every trainer this roster does not generate, and it means "fight the RCT
+     * trainer's own team" — the behaviour of every roster written before §2.30. Callers must not treat
+     * it as a failure and must not substitute anything: an authored Elite Four member replaced by a
+     * generated team would be the one fight in the run that somebody tuned, silently regenerated.
+     *
+     * [level] and [boss] come from the wave's [WavePlan] — the plan produced by [planFor], so
+     * promotions are already applied. Passing the *scheduled* kind instead would give a promoted Elite
+     * Four wave the ordinary trainer item tier.
+     */
+    fun teamFor(trainerId: ResourceLocation, wave: Int, level: Int, boss: Boolean, seed: Long): GeneratedTeam? =
+        generated[trainerId]?.let {
+            TrainerTeamGenerator.generate(it, wave, level, boss, seed, generation)
+        }
 
     /**
      * Who [wave] fights, or null when this roster serves it nothing.
@@ -306,7 +345,31 @@ data class TrainerRoster(
             reportGaps(kind, composition, problems)
         }
         reportFixedProblems(composition, problems)
+        reportUnusedGenerated(problems)
         return problems
+    }
+
+    /**
+     * Signature entries no band and no fixed encounter names.
+     *
+     * Dead data, and the specific way it dies is worth catching: a generated entry is joined to a
+     * fight by **id**, so `rgl_brock` in the entries and `rgl_borck` in a band is a roster where Brock
+     * loads clean, appears on schedule, and fights his authored RCT placeholder team instead of the
+     * generated one. Nothing else in the pipeline can notice — the id resolves, the trainer exists,
+     * the battle starts. Only this comparison can.
+     *
+     * Reported rather than fatal on its own footing: the parser rejects a file with any problem in it
+     * ([TrainerRosters]), which is the intended severity. A roster sharing one entry block across two
+     * files is not a use case this format has.
+     */
+    private fun reportUnusedGenerated(problems: MutableList<String>) {
+        if (generated.isEmpty()) return
+        val named = bands.flatMapTo(mutableSetOf()) { it.trainers } + fixed.values.map { it.trainerId }
+        generated.keys.filterNot { it in named }.sortedBy { it.toString() }.forEach { id ->
+            problems += "generated entry '$id' is never fought: no band lists it and no fixed " +
+                "encounter names it, so its signature species do nothing. Check the spelling against " +
+                "the band pools — a near-miss id fights the trainer's authored team instead"
+        }
     }
 
     /**

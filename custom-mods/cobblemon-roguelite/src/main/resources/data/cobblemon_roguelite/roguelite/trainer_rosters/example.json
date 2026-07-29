@@ -10,8 +10,10 @@
     "validates these files without booting a server, and can cross-check the ids against an RCT",
     "trainer datapack - which this mod cannot do, since it never sees RCT's registry.",
     "",
-    "A roster holds trainer IDS ONLY. No teams, no species, no levels: teams are authored as RCT",
-    "trainers in their own datapack, and the level comes from the wave curve at battle start.",
+    "Bands and fixed encounters hold trainer IDS ONLY. What an id MEANS is decided by the",
+    "'generated' block at the bottom: an id listed there fights a team built at the encounter from",
+    "its signature species, and an id that is not fights its RCT trainer's authored team. Levels",
+    "always come from the wave curve.",
     "",
     "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
     "unknown field is an error, so a typo is reported instead of silently taking a default."
@@ -105,10 +107,102 @@
       "trainer": "cobblemon_roguelite:example_fixed_rival"
     },
     {
-      "_note": "Wave 182 is a wild wave under 5/10. \"kind\" promotes it - without that this entry would never fire.",
+      "_note": [
+        "Wave 182 is a wild wave under 5/10. \"kind\" promotes it - without that this entry would",
+        "never fire. This trainer has NO generated entry below, which is deliberate: an Elite Four",
+        "member is exactly the fight worth authoring by hand. A generated team is uniform by nature."
+      ],
       "wave": 182,
       "kind": "boss",
       "trainer": "cobblemon_roguelite:example_fixed_late_boss"
     }
-  ]
+  ],
+
+  "_generated": [
+    "Trainers whose TEAM is generated at the encounter from their signature species, rather than",
+    "fought as authored. The trainer id must still name a real RCT trainer - the NPC, its name, its",
+    "skin, its bag and its AI all come from there. Only the team is replaced.",
+    "",
+    "A slot is one party position and its alternatives; an alternative is one species' evolution",
+    "LINE, base form first. Which alternative is a seeded pick on (run seed, wave), so a trainer",
+    "differs between runs and is identical on a resumed one; which STAGE comes from the wave.",
+    "",
+    "A stage is a Cobblemon properties fragment, not just a species id - a regional form is an",
+    "ASPECT in Cobblemon ('cobblemon:corsola galarian' is Ghost, 'cobblemon:corsola' is Water), and",
+    "getting that wrong is invisible until somebody notices the types are off.",
+    "",
+    "'weight' exists for branching species: Tyrogue becomes three lines, and without weights a slot",
+    "meant as a coin flip between two species would quietly become one-in-four for the other one.",
+    "",
+    "'filler' is only used when the band's party size is bigger than the number of signature slots.",
+    "No filler means a band asking for six gets four - a smaller party, not an invented one.",
+    "",
+    "THE ONE ENTRY BELOW IS AN EXAMPLE, NOT CONTENT. Generate real ones with",
+    "ops/gen_pokerogue_roster.py, into a SERVER-SIDE datapack - never into this mod (plan 2.7)."
+  ],
+  "generated": [
+    {
+      "_note": "Shape reference only. 'example_trainer_a' is the id used in the early trainer band above.",
+      "trainer": "cobblemon_roguelite:example_trainer_a",
+      "signature": [
+        { "alternatives": [ { "line": [ "cobblemon:onix", "cobblemon:steelix" ] } ] },
+        { "alternatives": [ { "line": [ "cobblemon:geodude", "cobblemon:graveler", "cobblemon:golem" ] } ] },
+        {
+          "_note": "PokeRogue writes this slot as [OMANYTE, KABUTO] - one or the other, per run.",
+          "alternatives": [
+            { "line": [ "cobblemon:omanyte", "cobblemon:omastar" ] },
+            { "line": [ "cobblemon:kabuto", "cobblemon:kabutops" ] }
+          ]
+        },
+        { "alternatives": [ { "line": [ "cobblemon:aerodactyl" ] } ] }
+      ],
+      "filler": [
+        { "alternatives": [ { "line": [ "cobblemon:rhyhorn", "cobblemon:rhydon", "cobblemon:rhyperior" ] } ] }
+      ]
+    }
+  ],
+
+  "_generation": [
+    "The dials generation reads. Optional - everything below IS the default, spelled out because the",
+    "block is easy to miss, EXCEPT held_items which ships empty.",
+    "",
+    "party_size: 4 early, 5 mid, 6 late. This is a difficulty lever, not a detail: levels flatten at",
+    "100 from about wave 138, so party size is one of the few dials still turning up there.",
+    "",
+    "evolution: stage_waves are the intermediate steps; fully_evolved_from is PokeRogue's own rule.",
+    "A line shorter than the schedule is clamped, so a two-stage line is already final where a",
+    "three-stage one is halfway.",
+    "",
+    "held_items: WHICH items is content, so nothing ships. With no tiers, generated trainers hold",
+    "nothing. 'chance' is per Pokemon; 'count' is how many draws one Pokemon gets (Cobblemon holds",
+    "ONE item - the extra draws buy a higher hit rate, not a stack); 'boss' filters by wave kind and",
+    "may be omitted to match both. The two tiers below are an example of the shape."
+  ],
+  "generation": {
+    "party_size": [
+      { "min_wave": 1, "size": 4 },
+      { "min_wave": 60, "size": 5 },
+      { "min_wave": 120, "size": 6 }
+    ],
+    "evolution": { "stage_waves": [ 20 ], "fully_evolved_from": 80 },
+    "held_items": [
+      {
+        "_note": "EXAMPLE. Boss waves from 80 on, two draws each at 40% - about two thirds hold something.",
+        "min_wave": 80,
+        "boss": true,
+        "chance": 0.4,
+        "count": 2,
+        "items": [
+          { "item": "cobblemon:leftovers", "weight": 2.0 },
+          { "item": "cobblemon:sitrus_berry" }
+        ]
+      },
+      {
+        "_note": "EXAMPLE. Everything else from wave 30 on, one draw at 20%.",
+        "min_wave": 30,
+        "chance": 0.2,
+        "items": [ { "item": "cobblemon:oran_berry" } ]
+      }
+    ]
+  }
 }

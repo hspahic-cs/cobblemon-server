@@ -301,10 +301,16 @@ active run, so it is the allocator's source of truth — no second registry to k
 that number rather than by runs ever played. That bound is the main practical advantage over
 option A.
 
-**The arena itself.** A `StructureTemplate` from `data/cobblemon_roguelite/structure/*.nbt` —
-1.21.1's structure resource directory is `structure`, singular — placed at the slot on
-assignment. Shipping it as a datapack structure means a server owner can replace the arena build
-without touching the jar, matching the reward-table decision (§2.12).
+**The arena itself.** *Superseded by §2.29 (2026-07-29):* generated in code from a per-biome
+**block palette** — `data/<ns>/roguelite/arena_palettes/<name>.json`, giving floor block, optional
+rim and pillar blocks, and a platform size — rather than stamped from a hand-built structure. The
+atmosphere is carried by §2.24's biome repaint, not by the geometry, so a plain platform in the
+right biome reads correctly; and a published build cannot ship a hand-made `.nbt` without imposing
+somebody's taste on every server that installs it. A `StructureTemplate` from
+`data/<ns>/structure/*.nbt` — 1.21.1's structure resource directory is `structure`, singular —
+remains supported as an override for an owner who can build, named with `arena_template` instead of
+`arena_palette`. Both are datapack content, so an owner replaces the arena build without touching
+the jar, matching the reward-table decision (§2.12).
 
 **Stamp on assignment, not on release.** Re-place the template and sweep entities in the slot box
 when the slot is handed out. Doing it on release means a crash between run-end and cleanup leaves
@@ -331,12 +337,14 @@ the player in the overworld rather than failing; and NeoForge patches the saved 
 use `LenientUnboundedMapCodec`, which drops entries it cannot decode instead of failing the whole
 `level.dat` parse. A player who removes the mod mid-run loses the run, not the save.
 
-**Gimmick confinement falls out of it.** `power_spot` goes in the arena template, placed only if
-Mega Showdown is loaded (registry lookup by id, soft dependency preserved — see below). Because
-slots are 1024 apart and `powerSpotRange` is 20, no arena's power spot can reach another's, and
-none of them can reach the shared world.
+**Gimmick confinement falls out of it.** `power_spot` is placed by the generator — one block off
+the platform centre, standing on the floor — and only if Mega Showdown is loaded (registry lookup
+by id, soft dependency preserved — see below); an owner using the `.nbt` override puts one in their
+build instead. Because slots are 1024 apart and `powerSpotRange` is 20, no arena's power spot can
+reach another's, and none of them can reach the shared world.
 
-**Owner override.** Config: `arena.dimension` (default ours), `arena.template`, `arena.spacing`,
+**Owner override.** Config: `arena.dimension` (default ours), `arena.builds` (a default build plus
+per-wave-band builds, each a palette id or a template id), `arena.spacing`,
 `arena.maxConcurrentRuns`, and an explicit list of arena origins that, when set, replaces the
 slot grid. That is option D as a first-class configuration rather than the default — it lets our
 own server point the mode at hand-built `multiworld:` arenas later without a code change, and it
@@ -353,8 +361,8 @@ covers hosts that refuse extra dimensions.
 - ~~**One room for the whole run, or a room per wave band?**~~ **Decided 2026-07-27: re-stamp per
   wave band**, for the aesthetic — a run that visibly changes scenery as it deepens reads better
   than one room for fifty waves, and the machinery makes it nearly free. The slot stays allocated
-  for the whole run; only the template stamped into it changes at band boundaries. Which templates
-  and how many bands are still a content call. Note this makes stamp-on-assignment (above) the
+  for the whole run; only the build stamped into it changes at band boundaries. Which palettes and
+  how many bands are still a content call. Note this makes stamp-on-assignment (above) the
   rule for *every* stamp, not just the first: a band transition re-stamps and sweeps the same way,
   so a crash mid-transition is no different from a crash mid-run.
 - **The dimension itself: verified on dev 2026-07-28.** The `dimension_type` + `dimension` pair

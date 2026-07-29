@@ -389,6 +389,127 @@ class TrainerRosterParseTest {
         assertTrue(problems.any { "no boss band covers" in it }, problems.toString())
     }
 
+    // ─── §2.30: generated teams ────────────────────────────────────────────
+
+    /** [minimal], with `test:a` generated from a two-slot signature. */
+    private val generated = """
+        {
+          "authored_for": { "run_length": 20 },
+          "bands": [
+            { "id": "t", "kind": "trainer", "min_wave": 1, "trainers": [ "test:a", "test:b" ] },
+            { "id": "b", "kind": "boss", "min_wave": 1, "trainers": [ "test:boss" ] }
+          ],
+          "generated": [
+            {
+              "trainer": "test:a",
+              "signature": [
+                { "alternatives": [ { "line": [ "cobblemon:onix", "cobblemon:steelix" ] } ] },
+                { "alternatives": [
+                    { "line": [ "cobblemon:corsola galarian", "cobblemon:cursola" ], "weight": 2.0 },
+                    { "line": [ "cobblemon:kabuto" ] }
+                ] }
+              ],
+              "filler": [ { "alternatives": [ { "line": [ "cobblemon:rhyhorn" ] } ] } ]
+            }
+          ],
+          "generation": {
+            "party_size": [ { "min_wave": 1, "size": 4 }, { "min_wave": 10, "size": 5 } ],
+            "evolution": { "stage_waves": [ 5, 9 ], "fully_evolved_from": 15 },
+            "held_items": [
+              { "min_wave": 3, "boss": true, "chance": 0.5, "count": 2,
+                "items": [ { "item": "cobblemon:leftovers", "weight": 2.0 }, { "item": "cobblemon:oran_berry" } ] }
+            ]
+          }
+        }
+    """
+
+    @Test
+    fun `a generated block parses into signature lines, filler and rules`() {
+        val parsed = parse(generated)
+        val roster = assertNotNull(parsed.roster, parsed.messages.toString())
+        assertTrue(parsed.problems.isEmpty(), parsed.messages.toString())
+
+        val entry = assertNotNull(roster.generated[ResourceLocation.parse("test:a")])
+        assertEquals(2, entry.signature.size)
+        assertEquals(1, entry.filler.size)
+
+        // The regional form must survive as a properties fragment, not be flattened into the id: a
+        // Galarian Corsola is a Ghost type and a plain one is not.
+        val galarian = entry.signature[1].alternatives.first().stages.first()
+        assertEquals("cobblemon:corsola", galarian.id.toString())
+        assertEquals("galarian", galarian.properties)
+        assertEquals(2.0, entry.signature[1].alternatives.first().weight)
+        assertNull(entry.signature[0].alternatives.first().stages.first().properties)
+
+        assertEquals(5, roster.generation.partySizeFor(10))
+        assertEquals(listOf(5, 9), roster.generation.evolution.stageWaves)
+        assertEquals(15, roster.generation.evolution.fullyEvolvedFrom)
+        val tier = assertNotNull(roster.generation.heldItemsFor(wave = 5, boss = true))
+        assertEquals(2, tier.count)
+        assertNull(roster.generation.heldItemsFor(wave = 5, boss = false), "the tier is boss-only")
+    }
+
+    @Test
+    fun `a roster with no generated block is every fight authored`() {
+        val roster = assertNotNull(parse(minimal).roster)
+        assertTrue(roster.generated.isEmpty())
+        // The defaults are §2.30's, so an untouched roster behaves the way the decision describes.
+        assertEquals(4, roster.generation.partySizeFor(1))
+        assertEquals(6, roster.generation.partySizeFor(200))
+        assertTrue(roster.generation.heldItems.isEmpty(), "item choices are content; none ship")
+    }
+
+    @Test
+    fun `a generated entry nobody fights is named`() {
+        val parsed = parse(
+            generated.replace("\"trainer\": \"test:a\"", "\"trainer\": \"test:aa\""),
+        )
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("test:aa", "never fought"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a signature slot with no alternatives is rejected rather than silently dropped`() {
+        val parsed = parse(
+            generated.replace(
+                "{ \"alternatives\": [ { \"line\": [ \"cobblemon:onix\", \"cobblemon:steelix\" ] } ] }",
+                "{ \"alternatives\": [] }",
+            ),
+        )
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("alternatives", "never be filled"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a misspelt species id is named with its slot`() {
+        val parsed = parse(generated.replace("\"cobblemon:onix\"", "\"COBBLEMON:Onix\""))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("line[0]", "not a valid species id"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `an out-of-range party size is rejected, not clamped`() {
+        // Cobblemon's party limit is six. A 7 that loads and is silently truncated later is a
+        // difficulty change nobody wrote down.
+        val parsed = parse(generated.replace("\"size\": 5", "\"size\": 7"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("size", "1..6"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a broken generation block rejects the file instead of defaulting past it`() {
+        val parsed = parse(generated.replace("\"chance\": 0.5", "\"chance\": 4"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("chance", "between 0 and 1"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `unknown fields inside generated data are still errors`() {
+        val parsed = parse(generated.replace("\"weight\": 2.0", "\"wieght\": 2.0"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("wieght", "unknown field"), parsed.messages.toString())
+    }
+
     @Test
     fun `the shipped example roster loads clean`() {
         // It ships enabled, so a broken example is an ERROR in every server owner's log on first

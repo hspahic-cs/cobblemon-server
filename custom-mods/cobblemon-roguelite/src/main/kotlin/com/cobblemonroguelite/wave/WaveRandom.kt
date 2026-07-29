@@ -47,6 +47,27 @@ enum class WaveDrawStream(internal val salt: Long) {
      * is what stops a run changing scenery every wave.
      */
     BIOME(0x4249_4F4D_4500_0005L),
+
+    /**
+     * Which Pokémon a generated trainer team is made of — which filler slots it uses and which
+     * alternative fills each slot. See
+     * [com.cobblemonroguelite.data.trainer.TrainerTeamGenerator].
+     *
+     * Appended, like [TRAINER] before it: a run checkpointed before §2.30's generated teams existed
+     * resumes against the same trainers at the same levels, because every stream above this line is
+     * untouched. The team it now generates for a wave it has *not* reached is new content in an old
+     * run, which is the same thing a roster edit does and is accepted for the same reason.
+     */
+    TRAINER_TEAM(0x5445_414D_0000_0006L),
+
+    /**
+     * Which held items a generated team's Pokémon carry.
+     *
+     * Separate from [TRAINER_TEAM] so that adding, removing or re-tuning an item tier cannot change
+     * *which Pokémon* a trainer brings. Sharing one stream would make a balance edit silently re-roll
+     * every species draw of every in-flight run.
+     */
+    TRAINER_ITEM(0x4954_454D_0000_0007L),
 }
 
 /**

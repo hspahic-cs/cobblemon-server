@@ -1,10 +1,13 @@
 package com.cobblemonroguelite.battle
 
 import com.cobblemonroguelite.composition.WavePlan
+import com.cobblemonroguelite.data.trainer.GeneratedTeam
 import com.cobblemonroguelite.data.trainer.TrainerPick
 import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.integration.RunTrainerBattleRequest
 import com.cobblemonroguelite.integration.RunTrainerBattles
+import com.cobblemonroguelite.run.RunRoster
+import com.cobblemonroguelite.run.RunRosters
 import com.cobblemonroguelite.run.RunState
 import com.cobblemonroguelite.run.RunWaveHandler
 import com.cobblemonroguelite.run.RunWaves
@@ -56,9 +59,63 @@ object RunWaveBattles : RunWaveHandler {
                 )
                 false
             } else {
-                RunTrainerBattles.begin(server, player, RunTrainerBattleRequest(plan, trainer))
+                RunTrainerBattles.begin(
+                    server, player, RunTrainerBattleRequest(plan, trainer, teamFor(run, plan, trainer)),
+                )
             }
         }
+    }
+
+    /**
+     * The opponent's team when the run's roster generates one for this trainer, null when it does not.
+     *
+     * ### Why the team is built here and not when the wave was planned
+     *
+     * Because a plan is made more than once. [com.cobblemonroguelite.run.RunProgress.planFor] is
+     * re-run on resume and again after a victory, and it is deliberately cheap and pure; the team is
+     * only ever needed at the moment a battle actually starts. Generating it here also keeps
+     * [com.cobblemonroguelite.run.WaveStep] and [com.cobblemonroguelite.run.RunWaveHandler] unchanged,
+     * so a host that replaced the whole battle layer before §2.30 still compiles.
+     *
+     * It costs nothing in determinism: generation is a pure function of `(seed, wave)` and the roster,
+     * so building it later gives the same team building it earlier would have (see
+     * [com.cobblemonroguelite.data.trainer.TrainerTeamGenerator]).
+     *
+     * ### Re-resolving the roster, and what a missing one means here
+     *
+     * The roster is re-bound rather than carried, for [com.cobblemonroguelite.run.RunRosters]' reason:
+     * `/reload` replaces the registry wholesale, and a roster held from planning time would generate
+     * from a file that is no longer on disk. A roster that has gone missing *between* planning and
+     * this call falls back to the authored team with a warning — the wave still happens, against the
+     * trainer's own RCT team, which is a worse fight and not a lost run.
+     */
+    private fun teamFor(run: RunState, plan: WavePlan, trainer: TrainerPick): GeneratedTeam? {
+        val roster = (RunRosters.bind(run) as? RunRoster.Loaded)?.roster
+        if (roster == null) {
+            log.warn(
+                "roguelite: wave {}'s roster is no longer loaded, so trainer '{}' fights its authored " +
+                    "team — a generated one cannot be built without the roster that describes it",
+                plan.wave, trainer.trainerId,
+            )
+            return null
+        }
+        val team = roster.teamFor(
+            trainerId = trainer.trainerId,
+            wave = plan.wave,
+            level = plan.level,
+            boss = plan.kind == RunOpponent.BOSS,
+            seed = run.seed,
+        )
+        // Logged as species and items rather than as properties strings: this line exists so that a
+        // "that leader's team was wrong" report can be checked against the roster without replaying
+        // the seed, and a wall of `species=... level=...` is not readable at that length.
+        if (team != null) {
+            log.debug(
+                "roguelite: wave {} generated {} for '{}': {}",
+                plan.wave, team.members.size, trainer.trainerId, team.describe(),
+            )
+        }
+        return team
     }
 
     /**

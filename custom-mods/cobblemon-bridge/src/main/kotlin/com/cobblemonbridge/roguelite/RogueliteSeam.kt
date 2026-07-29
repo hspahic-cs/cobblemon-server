@@ -26,6 +26,20 @@ data class TrainerWave(
      *  [level] — the curve applied it — so nothing here branches on this. */
     val kind: String,
     val trainerId: ResourceLocation,
+    /**
+     * The opponent's team as Cobblemon `PokemonProperties` strings, or **empty for an authored fight**.
+     *
+     * Roguelite decides which of the two a wave is (its plan §2.30: a roster generates most trainers
+     * from their signature species and leaves the Elite Four and the champion hand-made), and this
+     * side does as it is told. Empty must therefore mean "fight the RCT trainer's authored team" —
+     * the behaviour of every wave before generated teams existed — and never "no team".
+     *
+     * Strings, not objects, because the whole seam is reflective: one call over the boundary returning
+     * a `List<String>` beats walking four roguelite types by name. Each string is complete — species,
+     * aspects, level, held item — so building the Pokémon is a `PokemonProperties.parse().create()`
+     * and nothing else.
+     */
+    val teamProperties: List<String> = emptyList(),
 )
 
 /**
@@ -95,6 +109,7 @@ object RogueliteSeam {
     private var currentM: Method? = null
     private var planM: Method? = null
     private var pickM: Method? = null
+    private var teamM: Method? = null
     private var waveM: Method? = null
     private var levelM: Method? = null
     private var kindM: Method? = null
@@ -150,6 +165,7 @@ object RogueliteSeam {
             currentM = current
             planM = requestCls.getMethod("getPlan")
             pickM = requestCls.getMethod("getTrainer")
+            teamM = requestCls.getMethod("teamProperties")
             waveM = planCls.getMethod("getWave")
             levelM = planCls.getMethod("getLevel")
             kindM = planCls.getMethod("getKind")
@@ -197,6 +213,7 @@ object RogueliteSeam {
     }
 
     /** Unpack the request roguelite handed us. Null if any accessor has moved. */
+    @Suppress("UNCHECKED_CAST")
     fun waveOf(request: Any): TrainerWave? = try {
         val plan = planM!!.invoke(request)
         val pick = pickM!!.invoke(request)
@@ -205,6 +222,12 @@ object RogueliteSeam {
             level = levelM!!.invoke(plan) as Int,
             kind = kindM!!.invoke(plan).toString(),
             trainerId = trainerIdM!!.invoke(pick) as ResourceLocation,
+            // Filtered rather than trusted whole: a blank entry would parse into Cobblemon's default
+            // species, and a Bulbasaur appearing in a gym leader's team is the kind of bug that gets
+            // attributed to the roster rather than to the one empty string that caused it.
+            teamProperties = (teamM!!.invoke(request) as? List<String>)
+                ?.filter { it.isNotBlank() }
+                .orEmpty(),
         )
     } catch (e: Throwable) {
         log.error("could not read a roguelite trainer wave request", e)

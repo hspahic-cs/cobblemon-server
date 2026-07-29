@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.integration
 
 import com.cobblemonroguelite.composition.WavePlan
+import com.cobblemonroguelite.data.trainer.GeneratedTeam
 import com.cobblemonroguelite.data.trainer.TrainerPick
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
@@ -25,7 +26,27 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/integration")
 data class RunTrainerBattleRequest(
     val plan: WavePlan,
     val trainer: TrainerPick,
-)
+    val team: GeneratedTeam? = null,
+) {
+
+    /**
+     * The opponent's team as Cobblemon `PokemonProperties` strings, or **empty for an authored fight**.
+     *
+     * Empty is not "no team" and must not be treated as one: it means this trainer's RCT team is
+     * fought as written, which is every fight a roster does not generate and every fight there was
+     * before §2.30. An implementation that saw an empty list and refused the wave would delete the
+     * Elite Four from the run.
+     *
+     * Strings rather than the typed [GeneratedTeam] because of how the seam is crossed: the provider
+     * lives in another mod and reaches this class by reflection ([com.cobblemonroguelite.integration]
+     * is the only surface it knows), so one call returning `List<String>` is one reflective hop
+     * instead of a walk over four types. Each string is complete — species, aspects, level, held item
+     * — and everything else about the Pokémon is Cobblemon's to derive, which is the point: the
+     * moveset comes out right *for that level* rather than being an authored team's wave-10 moves at
+     * level 100 (§2.30).
+     */
+    fun teamProperties(): List<String> = team?.propertiesStrings() ?: emptyList()
+}
 
 /**
  * Starts the trainer and boss waves of §2.14.

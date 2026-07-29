@@ -128,6 +128,16 @@ class JsonView internal constructor(
     fun optionalStringList(key: String): List<String>? = stringList(key, required = false)
 
     /**
+     * A list of whole numbers — a set of thresholds, such as the waves at which a trainer's team
+     * evolves a stage.
+     *
+     * All-or-nothing like [stringList] and for its reason: the members are one *sequence* rather than
+     * independent entries, and quietly returning the two of three that parsed would hand back a
+     * schedule the author did not write.
+     */
+    fun optionalIntList(key: String): List<Int>? = intList(key, required = false)
+
+    /**
      * Report any field left untouched by the reads above. Call this **after** every read on this
      * object, including the optional ones — an optional field that was never asked for looks exactly
      * like a typo from here.
@@ -256,6 +266,30 @@ class JsonView internal constructor(
                 ok = false
             } else {
                 values += primitive.asString
+            }
+        }
+        return if (ok) values else null
+    }
+
+    private fun intList(key: String, required: Boolean): List<Int>? {
+        val element = raw(key, required) ?: return null
+        val array = element as? JsonArray
+        if (array == null) {
+            problem(key, "expected a list, found ${describe(element)}")
+            return null
+        }
+        var ok = true
+        val values = mutableListOf<Int>()
+        array.forEachIndexed { index, item ->
+            val primitive = item as? JsonPrimitive
+            val number = if (primitive != null && primitive.isNumber) primitive.asDouble else null
+            if (number == null || number != Math.floor(number) || number.isInfinite() ||
+                number > Int.MAX_VALUE || number < Int.MIN_VALUE
+            ) {
+                problems.add("${pathOf(key)}[$index]", "expected a whole number, found ${describe(item)}")
+                ok = false
+            } else {
+                values += number.toInt()
             }
         }
         return if (ok) values else null

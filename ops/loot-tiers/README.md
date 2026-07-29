@@ -5,9 +5,14 @@ that a new game, quest, crate, or reward can be priced against what already
 exists instead of by feel.
 
 ```sh
-python3 ops/loot-tiers/build_tiers.py            # regenerate
-python3 ops/loot-tiers/build_tiers.py --check    # fail if stale (CI)
+python3 ops/loot-tiers/build_tiers.py            # tiers.json + docs/loot-tiers.md
+python3 ops/loot-tiers/build_page.py             # docs/loot-tiers.html (the published page)
+python3 ops/loot-tiers/build_tiers.py --check    # fail if tiers.json/md are stale (CI)
 ```
+
+**Run both.** `build_page.py` reads `tiers.json`, so it must come second, and
+`--check` does not cover the HTML — if you regenerate tiers and forget the page,
+the wiki silently serves stale tiers.
 
 | File | Role |
 |---|---|
@@ -17,8 +22,10 @@ python3 ops/loot-tiers/build_tiers.py --check    # fail if stale (CI)
 | `mod-loot.json` | Harvested. Loot tables shipped by the mods. |
 | `mod-recipes.json` | Harvested. Recipes shipped by the mods. |
 | `refresh_registry.sh` | Re-harvests the three files above after a modpack bump. |
+| `build_page.py` | Renders the interactive browser. |
 | `tiers.json` | Generated. Machine-readable source of truth. |
-| `../../docs/loot-tiers.md` | Generated. Human-readable reference. |
+| `../../docs/loot-tiers.html` | Generated. **The page published to the wiki** — filterable, searchable, self-contained. |
+| `../../docs/loot-tiers.md` | Generated. Plain-text mirror, kept for readable PR diffs; excluded from the site so the nav has one entry. |
 
 ## TX is two different things
 

@@ -19,8 +19,9 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/progression")
  * [StarterProgression] is declared on the *consumer* side, by `starter`, precisely so that neither
  * package has to know the other's types — selection asks in its own terms ([StarterIvFloor], a base
  * cost to discount) and gets an answer without ever seeing a candy count. This class is the only
- * translation between the two vocabularies, and it is the only file in this package that imports
- * anything from `starter`.
+ * translation between the two vocabularies. The one other place this package touches `starter` at all
+ * is [CandyCommands], which reads a species' base cost so the candy shop quotes the same price the
+ * store will charge — a lookup, not a translation.
  *
  * ### Why it holds a server
  *

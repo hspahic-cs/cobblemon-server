@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.arena
 
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -68,5 +69,63 @@ class ArenaSlotsTest {
         assertTrue(ArenaSlots.hasFreeSlot(occupied = setOf(0), reserved = 0, capacity = 2))
         assertFalse(ArenaSlots.hasFreeSlot(occupied = setOf(0), reserved = 1, capacity = 2))
         assertFalse(ArenaSlots.hasFreeSlot(occupied = emptySet(), reserved = 4, capacity = 4))
+    }
+
+    @Test
+    fun `occupancy counts the runs holding a slot and ignores the ones that are not`() {
+        // Since §2.23 a null slot is the ordinary resting state of a saved run — every run whose player
+        // is offline is in it — so this is the line between "runs on the server" and "arenas in use".
+        assertEquals(setOf(0, 2), ArenaSlots.held(listOf(0, null, 2, null, null)))
+        assertTrue(ArenaSlots.held(listOf(null, null)).isEmpty())
+    }
+
+    @Test
+    fun `a logout frees the slot and the next start takes it`() {
+        // §2.23's whole point, as the sequence it happens in. Before the lease change these three runs
+        // held the grid whether or not anybody was playing them, so a capacity of 3 refused a fourth
+        // player while nobody was in an arena at all.
+        val slots: MutableMap<String, Int?> = mutableMapOf("a" to 0, "b" to 1, "c" to 2)
+        assertNull(ArenaSlots.firstFree(ArenaSlots.held(slots.values), capacity = 3))
+
+        slots["b"] = null // b logs out; the run is still on disk and still theirs.
+        assertEquals(1, ArenaSlots.firstFree(ArenaSlots.held(slots.values), capacity = 3))
+    }
+
+    @Test
+    fun `a returning player is not owed the slot they had`() {
+        // The assumption this change makes wrong, pinned so nothing grows to depend on it. b logs out,
+        // d takes the free index, and b comes back to a different arena — which is why the reacquire
+        // re-stamps and repaints rather than trusting what it thinks is standing there.
+        val slots: MutableMap<String, Int?> = mutableMapOf("a" to 0, "b" to 1, "c" to 2)
+        slots["b"] = null
+        slots["d"] = ArenaSlots.firstFree(ArenaSlots.held(slots.values), capacity = 4)
+        assertEquals(1, slots["d"])
+
+        slots["b"] = ArenaSlots.firstFree(ArenaSlots.held(slots.values), capacity = 4)
+        assertEquals(3, slots["b"])
+    }
+
+    @Test
+    fun `a crash leaves nothing leased`() {
+        // Not a property of any cleanup path — there is none, and a crash would skip it. It holds
+        // because the slot is never persisted: every run reloads holding null, so the grid comes back
+        // empty however the process died. See [com.cobblemonroguelite.run.RunState.arenaSlot].
+        val beforeTheCrash = listOf(0, 1, 2, 3)
+        val afterTheRestart = beforeTheCrash.map { null }
+        assertTrue(ArenaSlots.held(afterTheRestart).isEmpty())
+        assertEquals(0, ArenaSlots.firstFree(ArenaSlots.held(afterTheRestart), capacity = 4))
+    }
+
+    @Test
+    fun `only pending starts whose player is online reserve a slot`() {
+        // A pending start has no expiry, so counting the offline ones lets somebody who paid and quit
+        // before choosing burn a slot for the life of the world — capacity held by an absent player,
+        // which is the same defect the lease change removes everywhere else.
+        val here = UUID.randomUUID()
+        val gone = UUID.randomUUID()
+        val online = setOf(here)
+        assertEquals(1, ArenaSlots.reserved(listOf(here, gone)) { it in online })
+        assertEquals(0, ArenaSlots.reserved(listOf(gone)) { it in online })
+        assertEquals(0, ArenaSlots.reserved(emptyList()) { it in online })
     }
 }

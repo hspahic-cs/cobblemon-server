@@ -46,6 +46,22 @@ sealed interface ArenaFailure {
  * [com.cobblemonroguelite.run.RunWaveHandler], which does not exist yet; what this owes that seam is
  * an arena that is loaded and stamped by the time it is asked, which is [prepare].
  *
+ * ### §2.23: the lease lasts a session, not a run
+ *
+ * A run occupies an arena only while its player is online and in it. [release] gives the slot back on
+ * logout and [assign] takes a fresh one on the way in, and the run's state on disk carries no slot at
+ * all — see [com.cobblemonroguelite.run.RunState.arenaSlot]. Three things follow, and all three are
+ * places where an assumption of stability would be wrong:
+ *
+ * - **The slot a player gets back need not be the one they had.** [ArenaSlots] hands out the lowest
+ *   free index, so it usually will be on a quiet server and will not be on a busy one.
+ * - **Every reacquire re-stamps and repaints**, because the slot's last tenant was somebody else as
+ *   far as we are entitled to assume. That is [assign]'s existing crash-proofing doing the work; it
+ *   costs one stamp per session per run instead of one per wave band, which is the price of the change.
+ * - **A crash leaves nothing leased.** Occupancy is derived from the slot field of active runs, and
+ *   that field is never persisted, so a process that dies mid-run comes back with an empty grid rather
+ *   than with N slots held by players who are not connected.
+ *
  * ### Threading
  *
  * Server thread, all of it — block edits, entity discards and teleports are all unsafe from a battle
@@ -65,7 +81,7 @@ object RunArenas {
         val store = RunStore.of(server)
         return ArenaSlots.hasFreeSlot(
             occupied = occupiedSlots(store),
-            reserved = store.pendingStarts().size,
+            reserved = ArenaSlots.reserved(store.pendingStarts().keys) { server.playerList.getPlayer(it) != null },
             capacity = layout().capacity,
         )
     }
@@ -78,6 +94,12 @@ object RunArenas {
      * and whether their cleanup ran is not something we get to assume. Comparing
      * [RunState.stampedTemplate] would skip the stamp exactly in the case that most needs it — same
      * template, different run, unknown wreckage.
+     *
+     * Since §2.23 that is no longer a rare path. Every session's first entry comes through here, because
+     * [release] gave the slot back at the last logout, so "a fresh assignment always stamps" is now the
+     * cost of returning to a run rather than the cost of starting one. It stays unconditional for the
+     * reason above: the thing that would let it be skipped — knowing nobody else has been in this slot
+     * since — is exactly the state this design refuses to keep.
      *
      * Does not persist. The caller checkpoints, because it is the caller that knows whether this is
      * part of a larger transaction (run start writes the whole run once, not twice).
@@ -250,26 +272,61 @@ object RunArenas {
     }
 
     /**
-     * Send [player] back where they came from and free their slot.
-     *
-     * Deliberately does **not** clean the arena. See [ArenaStamper]: cleanup on the way out is
-     * cleanup a crash skips, so the next assignment does it instead. All this owes is that the slot
-     * stops being occupied, which is one field, and that the player stops being in the void.
+     * Send [player] back where they came from and free their slot: the run-end path, which is
+     * [release] plus a teleport.
      *
      * Called with the run that just ended — [RunStore.end] hands it back for exactly this — so the
      * slot is released from a value the store no longer holds. The release is therefore automatic
      * either way: a run that is gone from the store occupies nothing.
      *
-     * The chunk ticket is dropped here as an optimisation and not as a correctness step: it expires
-     * on its own ([ArenaChunks]), so this only shortens the window in which a finished run's arena is
-     * still ticking. Order matters slightly — the ticket goes after the teleport, since a player
-     * standing in chunks we just stopped holding keeps them loaded by being there anyway.
+     * The chunk ticket [release] drops is an optimisation and not a correctness step: it expires on
+     * its own ([ArenaChunks]), so it only shortens the window in which a finished run's arena is
+     * still ticking.
      */
     fun exit(server: MinecraftServer, player: ServerPlayer, run: RunState?) {
-        val slot = run?.arenaSlot
-        run?.arenaSlot = null
+        // Teleport first, release second — the order [release] cannot enforce for itself. A player
+        // standing in chunks we have just stopped holding keeps them loaded by being there anyway, so
+        // dropping the ticket first would only mean dropping it twice.
         if (isInArena(player)) eject(server, player, run?.entry)
-        val placement = slot?.let { layout().placementOf(it) } ?: return
+        run?.let { release(server, it) }
+    }
+
+    /**
+     * §2.23: give the slot back, without moving anybody.
+     *
+     * The other half of [exit], and the half that is called on its own — on logout, where there is no
+     * player left to teleport. What it owes is that the slot stops being occupied and that the arena
+     * stops being held loaded for a run nobody is playing.
+     *
+     * ### Why all three fields go together
+     *
+     * [RunState.arenaSlot] is the lease. [RunState.stampedTemplate] and [RunState.paintedBiome] are
+     * facts about what is standing in the slot *that lease pointed at*, and the moment the lease is
+     * gone they describe a box that belongs to whoever gets it next. Leaving either behind is the one
+     * way a returning player lands in the previous tenant's scenery: [prepare] skips the stamp when the
+     * template it wants is the one it believes is already there, and skips the repaint on the same
+     * comparison. [assign] clears both again on the way back in — that clearing is the crash-proofing
+     * and has to stay, because a crash skips this call entirely — but a checkpoint written between the
+     * two would otherwise carry a claim about a slot this run does not hold.
+     *
+     * [RunState.biome] is deliberately **not** cleared, for [assign]'s reason: it is where the run *is*,
+     * which a logout does not change, and discarding it would move the player to a different place for
+     * having taken a break.
+     *
+     * ### It does not clean the arena
+     *
+     * Same rule as [exit] and [ArenaStamper]: cleanup on the way out is cleanup a crash skips, so the
+     * next assignment does it. A released slot therefore still has the last run's build standing in it
+     * until somebody takes it, which is also why a player who logs back in inside arena space has to be
+     * put somewhere else rather than left where they are — see
+     * [com.cobblemonroguelite.run.RunController.reconcileOnLogin].
+     */
+    fun release(server: MinecraftServer, run: RunState) {
+        val slot = run.arenaSlot ?: return
+        run.arenaSlot = null
+        run.stampedTemplate = null
+        run.paintedBiome = null
+        val placement = layout().placementOf(slot) ?: return
         levelOf(server, placement.dimension)?.let { ArenaChunks.release(it, placement.box) }
     }
 
@@ -305,7 +362,7 @@ object RunArenas {
 
     /** Slots held by active runs. Recomputed per call; [ArenaSlots] says why there is no cached set. */
     private fun occupiedSlots(store: RunStore): Set<Int> =
-        store.activeRuns().values.mapNotNullTo(mutableSetOf()) { it.arenaSlot }
+        ArenaSlots.held(store.activeRuns().values.map { it.arenaSlot })
 
     private fun levelOf(server: MinecraftServer, dimension: ResourceLocation): ServerLevel? =
         server.getLevel(ResourceKey.create(Registries.DIMENSION, dimension))

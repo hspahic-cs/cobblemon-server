@@ -61,26 +61,42 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  * @property arenaSlot the run's arena, as a grid index. **An index and not coordinates**, because the
  *   coordinates are derived from it ([com.cobblemonroguelite.arena.ArenaLayout]) and a second copy of
  *   a derived fact is a second thing that can be wrong. It is also what makes this store the
- *   allocator's whole source of truth: a slot is occupied exactly when some active run says so, so a
- *   crash cannot leave a slot leased to nobody. Null means no arena has been assigned yet — which is
- *   a real state, since a run exists from the moment a starter is chosen and the assignment can fail.
- * @property entry where the player came from, restored on run end and on an ejection. See
- *   [RunEntryPoint].
- * @property stampedTemplate which arena build is currently standing in [arenaSlot]. Persisted so a
- *   restart mid-run does not re-stamp an arena that is already correct, and so §2.19's band
- *   transition can be detected by comparison rather than by remembering which band we were in — the
- *   template id is the thing that actually has to change, and reading the band boundary twice is how
- *   a re-tuned band list silently stops re-stamping.
+ *   allocator's whole source of truth: a slot is occupied exactly when some active run says so. Null
+ *   means the run holds no arena, which since §2.23 is the ordinary resting state — a run that has
+ *   just been created, and *every* run whose player is offline.
+ *
+ *   **Deliberately not persisted**, and this is the load-bearing half of §2.23's lease. A slot is held
+ *   for a session and given back at logout ([com.cobblemonroguelite.arena.RunArenas.release]); a crash
+ *   skips that call, so if the field reached disk it would come back leased to a player who is not
+ *   connected, and would stay leased until they returned — which for an abandoned run is never. Not
+ *   writing it makes "no lease outlives the process" structural rather than something a shutdown path
+ *   has to remember to do. It also removes the worse failure the persisted version had: a restored
+ *   slot that somebody else has since been given, which teleports two players into one arena.
+ * @property entry where the player came from, restored on run end and on an ejection. Persisted,
+ *   unlike the three arena fields around it, because it is a fact about the *world outside* the run and
+ *   is the only way home. See [RunEntryPoint].
+ * @property stampedTemplate which arena build is currently standing in [arenaSlot]. Not persisted, for
+ *   [arenaSlot]'s reason and with an extra edge: it is the value §2.19's band transition is detected by
+ *   comparison against, so a copy that survived into a session holding a *different* slot would report
+ *   "already correct" about a box the run has never been in and skip the stamp that puts a floor under
+ *   the player. Within a session it still does its job — a band transition re-stamps and a wave that
+ *   stays in its band does not, which is what keeps a 130k-block write off every battle.
  * @property biome §2.24: which biome this run is in, and the wave band it entered it for. See
  *   [BiomeVisit] for why the band travels with it and [BiomeRotation] for why this is stored at all
  *   rather than derived from [wave] — in short, because §2.24 leaves the door open to the player
  *   *choosing* the next biome, and a derived one closes it behind a schema change.
  * @property paintedBiome the Minecraft biome currently painted into [arenaSlot], or null when the
  *   slot has not been repainted for this run. [stampedTemplate]'s field one row over, for exactly its
- *   reason: it is a fact about what is in the world, not about what should be, and the two come apart
- *   the moment a slot is handed to a different run. Kept separate from [biome] because a repaint can
- *   fail while a stamp succeeds — writing one field would then either re-stamp an arena that is fine
- *   or stop retrying a repaint that never happened.
+ *   reason and with the same answer on persistence: it is a fact about what is in the world, not about
+ *   what should be, and the two come apart the moment a slot is handed to a different run. Kept
+ *   separate from [biome] because a repaint can fail while a stamp succeeds — writing one field would
+ *   then either re-stamp an arena that is fine or stop retrying a repaint that never happened.
+ * @property lastActiveAtEpochMs when this run was last *played* — §2.23's activity clock, and the only
+ *   input to expiry besides [wave]. Stamped by [touch] when a wave begins and when one is cleared, and
+ *   nowhere else: §2.23 is explicit that logging in is not activity, so a player who connects daily and
+ *   never touches their run is not keeping it alive. Set to the creation time for a run that has not
+ *   fought yet, which makes an abandoned starter offer's run age from the moment it existed rather than
+ *   from epoch zero.
  * @property startedUnderOverride §2.25: true when an operator's badge-gate override was in force for
  *   this player at the moment the run was created. Persisted for the one reason the override exists to
  *   be honest about — a run that reached wave 180 without the badges for it has to be tellable from
@@ -125,9 +141,26 @@ data class RunState(
     var battle: RunBattleMarker? = null,
     var pendingCatch: Pokemon? = null,
     val startedUnderOverride: Boolean = false,
+    var lastActiveAtEpochMs: Long = System.currentTimeMillis(),
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
     fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
+
+    /**
+     * §2.23: mark the run as played, right now.
+     *
+     * Called where a wave actually moves — begun or cleared — and nowhere near the login path. The
+     * distinction is the whole of the activity rule: expiry exists to reclaim runs nobody is playing,
+     * and a clock that any connection resets would keep every run a regular player ever abandoned alive
+     * forever while doing nothing for the storage it was written for.
+     *
+     * Takes the wall clock rather than a caller-supplied instant because there is nothing to be
+     * consistent with — the value is only ever compared against a later reading of the same clock, and
+     * the decision that reads it ([RunExpiry]) takes `now` as a parameter so that it stays testable.
+     */
+    fun touch() {
+        lastActiveAtEpochMs = System.currentTimeMillis()
+    }
 
     /**
      * The party as it stood at one instant, safe to iterate off the thread that owns the battle.
@@ -249,13 +282,17 @@ data class RunState(
         // and the arena slot use: absent and empty mean the same thing here, so the only thing being
         // saved is bytes in a file that is written every wave.
         if (!trainerMemory.isEmpty()) tag.put("trainerMemory", trainerMemory.toNbt())
-        // Absent rather than a sentinel for all three. `-1` would read back as a slot index in every
-        // arithmetic that touches it, and there is no coordinate that means "nowhere".
-        arenaSlot?.let { tag.putInt("arenaSlot", it) }
+        // §2.23: arenaSlot, stampedTemplate and paintedBiome are **not** written, and their absence is
+        // the mechanism rather than an omission. All three describe a lease that lasts one session, so
+        // a copy on disk would be a claim about an arena this run does not hold the moment the process
+        // that made it goes away — see the property docs. `entry` is written because it is the opposite
+        // kind of fact: where the player was standing in the real world before any of this started.
         entry?.let { tag.put("entry", it.toNbt()) }
-        stampedTemplate?.let { tag.putString("stampedTemplate", it.toString()) }
         biome?.let { tag.put("biome", it.toNbt()) }
-        paintedBiome?.let { tag.putString("paintedBiome", it.toString()) }
+        // Written unconditionally. There is no "never played" state to encode as absence — a run is
+        // stamped at creation — and an absent key would read back as epoch zero, i.e. a run that
+        // expired decades ago, which is the one direction this field must never fail in.
+        tag.putLong(LAST_ACTIVE_KEY, lastActiveAtEpochMs)
         // Written on every run and not only on the ones it is true for, unlike everything above it.
         // This is the audit flag §2.25 asks for, and a file where "honest" and "written by a build
         // that did not have the flag yet" look identical is a file that cannot answer the question it
@@ -287,11 +324,13 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 7
+        const val SCHEMA_VERSION = 8
 
         private const val SCHEMA_KEY = "schemaVersion"
 
         private const val PENDING_CATCH_KEY = "pendingCatch"
+
+        private const val LAST_ACTIVE_KEY = "lastActiveAt"
 
         /**
          * §2.13: the run party holds six and there is no run PC.
@@ -364,25 +403,24 @@ data class RunState(
                 trainerRoster = tag.getString("trainerRoster").takeIf { it.isNotEmpty() }
                     ?.let { ResourceLocation.tryParse(it) },
                 trainerMemory = RunTrainerMemory.fromNbt(tag.getList("trainerMemory", 10 /* TAG_COMPOUND */)),
-                // A run restored without its slot is not broken, it is unassigned: the next entry
-                // allocates one and stamps it. Restoring a *wrong* slot would be the bad outcome, so
-                // "absent" has to stay distinguishable from "zero", which is a valid index.
-                arenaSlot = if (tag.contains("arenaSlot")) tag.getInt("arenaSlot") else null,
+                // arenaSlot, stampedTemplate and paintedBiome are not read because they are not
+                // written (§2.23). A restored run holds no arena and nothing is claimed to be standing
+                // in one, so the first entry of the new session allocates, stamps and repaints — which
+                // is the correct thing to do about a grid whose contents nobody can vouch for.
                 entry = if (tag.contains("entry")) RunEntryPoint.fromNbt(tag.getCompound("entry")) else null,
-                // Deliberately dropped if unparseable rather than defaulted. A wrong value here says
-                // "the arena already has the right build in it" and would skip the stamp that puts a
-                // floor under the player.
-                stampedTemplate = tag.getString("stampedTemplate").takeIf { it.isNotEmpty() }
-                    ?.let { ResourceLocation.tryParse(it) },
-                // Both restore as null on damage, which the arena layer reads as "nothing is standing
-                // and nothing is painted" and repairs on the next prepare. That is the safe direction
-                // here in a way it is not for [stampedTemplate] above: a wrong value there skips the
-                // stamp that puts a floor under the player, whereas a missing value here costs one
-                // extra repaint of an arena nobody is looking at yet.
+                // Restores as null on damage, which the arena layer reads as "the run is nowhere in
+                // particular" and settles on the next prepare. Unlike the fields above it this one is
+                // *where the run is*, not what is in a box, so it is the one biome fact worth keeping
+                // across a session.
                 biome = if (tag.contains("biome")) BiomeVisit.fromNbt(tag.getCompound("biome")) else null,
-                paintedBiome = tag.getString("paintedBiome").takeIf { it.isNotEmpty() }
-                    ?.let { ResourceLocation.tryParse(it) },
                 startedUnderOverride = tag.getBoolean("startedUnderOverride"),
+                // Through [RunExpiry.restoreStamp] rather than read straight, because a missing key
+                // reads as 0 — January 1970, which is expired under every band — and this whole path
+                // needs a booted server to reach. See there for the rule and why it is not inline.
+                lastActiveAtEpochMs = RunExpiry.restoreStamp(
+                    tag.getLong(LAST_ACTIVE_KEY),
+                    System.currentTimeMillis(),
+                ),
                 // Absent or unreadable both restore as "no battle", which costs the player nothing.
                 // See [RunBattleMarker.fromNbt] for why that is the only safe failure direction.
                 battle = if (tag.contains("battle")) RunBattleMarker.fromNbt(tag.getCompound("battle")) else null,

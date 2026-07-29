@@ -8,6 +8,7 @@ import net.minecraft.world.level.saveddata.SavedData
 import org.slf4j.LoggerFactory
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
 
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/store")
 
@@ -52,6 +53,16 @@ class RunStore private constructor(
      * wipe. See [PendingStart] for why this has to reach disk at all.
      */
     private val pending = ConcurrentHashMap<UUID, PendingStart>()
+
+    /**
+     * §2.23: runs deleted by the expiry sweep whose owner has not been told yet.
+     *
+     * Here rather than in a file of its own because it is the *residue* of an entry in [runs] and has
+     * no life without one — a notice is written in the same call that removes a run and is dropped on
+     * the owner's next login. See [RunExpiryNotice] for why the record has to survive at all, and why
+     * this must not be allowed to become a ledger.
+     */
+    private val expired = ConcurrentHashMap<UUID, RunExpiryNotice>()
 
     fun get(player: UUID): RunState? = runs[player]
 
@@ -130,6 +141,39 @@ class RunStore private constructor(
     }
 
     /**
+     * §2.23: delete [player]'s run because nobody has played it, and leave a note saying so.
+     *
+     * Separate from [end] and it must stay separate, because [end] is the *payout* path — everything
+     * that calls it goes on to resolve a table and hand grants over, and an expiry pays nothing. Routing
+     * expiry through it would either pay a player who has not touched the run in half a year or need a
+     * "do not pay" flag threaded through the whole run-end path, which is a flag somebody eventually
+     * gets wrong in the direction that mints items.
+     *
+     * Flushes for [end]'s reason inverted: the removal must reach disk before the next autosave can
+     * write the run back out, or the sweep runs again next boot on a run it already announced as gone —
+     * and the player would be told twice about one deletion.
+     *
+     * Returns null when there was nothing to expire, so a double call is harmless.
+     */
+    fun expire(server: MinecraftServer, player: UUID, notice: RunExpiryNotice): RunState? {
+        val run = runs.remove(player) ?: return null
+        expired[player] = notice
+        setDirty()
+        flush(server, player)
+        return run
+    }
+
+    /**
+     * Take the pending expiry notice for [player], if there is one. Delivering it is the caller's job.
+     *
+     * Removing on read is the whole double-delivery guard: a player is told once that their run
+     * expired. Not flushed — a crash between this and the message re-delivers one sentence on the next
+     * login, which is a far better failure than a flush per login on the path that is empty for
+     * essentially every player.
+     */
+    fun takeExpiryNotice(player: UUID): RunExpiryNotice? = expired.remove(player)?.also { setDirty() }
+
+    /**
      * Persist the current state of [player]'s run. Call at wave boundaries, after shop purchases,
      * and on logout — anywhere losing the delta would be felt. Not per-turn: this serializes the
      * whole party and writes the file.
@@ -168,6 +212,9 @@ class RunStore private constructor(
         val allPending = CompoundTag()
         pending.forEach { (uuid, start) -> allPending.put(uuid.toString(), start.toNbt()) }
         tag.put(PENDING_KEY, allPending)
+        val allExpired = CompoundTag()
+        expired.forEach { (uuid, notice) -> allExpired.put(uuid.toString(), notice.toNbt()) }
+        tag.put(EXPIRED_KEY, allExpired)
         return tag
     }
 
@@ -176,6 +223,15 @@ class RunStore private constructor(
         const val DATA_NAME = "cobblemon_roguelite_runs"
         private const val RUNS_KEY = "runs"
         private const val PENDING_KEY = "pendingStarts"
+        private const val EXPIRED_KEY = "expiredNotices"
+
+        /**
+         * How long an undelivered expiry notice is kept, in days. Longer than the deepest retention
+         * band, so a notice always outlives the run it describes; finite, so a player who never comes
+         * back leaves three numbers behind rather than three numbers forever. It is the same argument
+         * expiry itself makes, applied to expiry's own paperwork.
+         */
+        private const val NOTICE_RETENTION_DAYS = 365L
 
         /**
          * The store for this server, created on first use. [DimensionDataStorage.computeIfAbsent]
@@ -217,9 +273,19 @@ class RunStore private constructor(
                 if (store.runs.containsKey(uuid)) continue
                 PendingStart.fromNbt(allPending.getCompound(key))?.let { store.pending[uuid] = it }
             }
+            val cutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(NOTICE_RETENTION_DAYS)
+            val allExpired = tag.getCompound(EXPIRED_KEY)
+            for (key in allExpired.allKeys) {
+                val uuid = runCatching { UUID.fromString(key) }.getOrNull() ?: continue
+                val notice = RunExpiryNotice.fromNbt(allExpired.getCompound(key)) ?: continue
+                // Aged out here rather than on a timer: this is the only moment the whole map is walked
+                // anyway, and a notice nobody has collected in a year is for a player who is not coming
+                // back for the sentence.
+                if (notice.expiredAtEpochMs >= cutoff) store.expired[uuid] = notice
+            }
             log.info(
-                "roguelite: loaded {} active run(s), {} awaiting a starter",
-                store.runs.size, store.pending.size,
+                "roguelite: loaded {} active run(s), {} awaiting a starter, {} unread expiry notice(s)",
+                store.runs.size, store.pending.size, store.expired.size,
             )
             return store
         }

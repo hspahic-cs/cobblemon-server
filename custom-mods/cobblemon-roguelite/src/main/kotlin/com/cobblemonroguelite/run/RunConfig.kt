@@ -55,6 +55,10 @@ import net.minecraft.resources.ResourceLocation
  *   also the arena build and, later, the wild pool. It is a length and not a list of bands because a
  *   band with no biome eligible for it is a hole ([BiomeRotation] keeps the previous biome), and
  *   uniform bands are the shape that cannot have holes in the first place.
+ * @property expiry §2.23: how long an *unplayed* run is kept, by depth. Its defaults are decisions
+ *   rather than placeholders — see [RunExpiryPolicy.DEFAULT_BANDS] — and it is the one thing here whose
+ *   effect is destructive, so it is worth an operator reading before changing. It is not a capacity
+ *   knob: arenas are leased per session, so shortening these frees disk and nothing else.
  * @property arena where runs are fought and how many can be fought at once. Unlike the rest of this
  *   class its defaults are real rather than placeholders — the grid works out of the box — with the
  *   single exception of [com.cobblemonroguelite.arena.ArenaTemplates.default], which names a build
@@ -70,6 +74,7 @@ data class RunConfig(
     val starterBudget: Int = DEFAULT_STARTER_BUDGET,
     val starterLevel: Int = 1,
     val biomeBandLength: Int = DEFAULT_BIOME_BAND_LENGTH,
+    val expiry: RunExpiryPolicy = RunExpiryPolicy(),
     val arena: ArenaConfig = ArenaConfig(),
 ) {
     init {

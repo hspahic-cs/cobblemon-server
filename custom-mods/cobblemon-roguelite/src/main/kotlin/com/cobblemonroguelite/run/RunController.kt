@@ -150,12 +150,25 @@ sealed interface DisconnectOutcome {
 /**
  * What [RunController.reconcileOnLogin] found, and what it did about it.
  *
- * [status] is computed **after** any attribution, so a run wiped by the penalty reports as
- * [RunStatus.None] rather than as a run with an empty party.
+ * [status] is computed **after** every one of the steps below, so a run that the penalty wiped or that
+ * expiry deleted reports as [RunStatus.None] rather than as a run that is no longer there.
+ *
+ * @property interrupted §2.10's attribution, or null on the ordinary login.
+ * @property expired §2.23: a run deleted while they were away, either by the boot sweep or by the check
+ *   on this very login. Both arrive the same way — through the notice in [RunStore] — so the caller has
+ *   one case to say rather than two, and the sentence does not depend on which one happened.
+ * @property expiring set only when the surviving run is close enough to expiry to be worth a warning.
+ *   Null on every ordinary login, which is what keeps this from being a line players learn to ignore.
+ * @property returnedFromArena §2.23: they logged in standing in arena space and were put back outside
+ *   it, because the lease on that arena ended when they logged out. Carried rather than merely done,
+ *   since a teleport nobody explains is worse than the position it corrected.
  */
 data class LoginReconciliation(
     val status: RunStatus,
     val interrupted: DisconnectOutcome? = null,
+    val expired: RunExpiryNotice? = null,
+    val expiring: RunExpiryStatus? = null,
+    val returnedFromArena: Boolean = false,
 )
 
 /**
@@ -387,9 +400,14 @@ object RunController {
                         // between the two calls, and a battle nobody marked is a battle a player can
                         // walk out of for free — which is the hole §2.10 exists to close.
                         run.battle = RunBattleMarker(step.plan.wave, ServerBootId.current, openingField(run))
-                        // Checkpointed because entering just wrote three fields — slot, entry point,
-                        // stamped template — and losing them costs the player their way home. The
-                        // marker rides along; it does not need its own flush (see [RunState.battle]).
+                        // §2.23's activity clock. Stamped on the wave *starting* and not only on it
+                        // being cleared, because a player who is fighting is playing: a run parked on a
+                        // wave somebody keeps failing to survive is in use, and an expiry that only
+                        // counted wins would delete it out from under the attempt.
+                        run.touch()
+                        // Checkpointed because entering just wrote the entry point, and losing it costs
+                        // the player their way home. The marker and the activity stamp ride along;
+                        // neither needs its own flush (see [RunState.battle]).
                         store.checkpoint(server, player.uuid)
                         // `step.trainer` is who this wave fights, already reconciled against fixed
                         // encounters and this run's no-repeat window, and it is handed straight to the
@@ -450,6 +468,11 @@ object RunController {
         // keeps §2.10 from firing on people who did nothing wrong: a marker left behind by a won
         // wave turns the player's next ordinary logout into a rage-quit.
         run.battle = null
+        // §2.23 again, and the one that carries the guarantee: a wave was progressed, which is the
+        // definition of activity. [resume] stamps it too, so this is only ever a small correction — but
+        // it is the stamp that is true of a run whose owner is grinding without relogging, and losing it
+        // would age a run that is being played every day.
+        run.touch()
         val composition = RunSettings.composition
         val roster = RunRosters.bind(run)
         val cleared = clearedPlan(run, composition, roster)
@@ -823,36 +846,163 @@ object RunController {
      * from its next checkpoint as no run at all ([RunState.fromNbt] discards an empty party), and the
      * player would never be paid.
      *
+     * ### The expiry half (§2.23)
+     *
+     * Checked first, before anything else can act on the run. A run past its retention period is
+     * deleted and pays nothing — see [RunExpiry] for why that is not the same question
+     * [com.cobblemonroguelite.payout.PendingPayoutLedger] answers — and doing it first is what stops a
+     * six-month-old run being penalised for a disconnect it will not survive, which would log a
+     * Pokémon's death inside a run that is about to cease to exist.
+     *
+     * The login check is a **backstop** to the boot sweep, not the main path: the sweep is what
+     * reclaims storage from players who never return, and this is what catches a run that crossed its
+     * period while the server happened to be up. Between the two there is one case neither covers, and
+     * that is deliberate — a run cannot expire out from under a player who is already online, because
+     * nothing re-checks during a session.
+     *
      * ### The arena half
      *
-     * Not §2.10 and not optional: a
-     * player who logs in inside an arena with no run to be there for is in a void dimension with no
-     * bed, no portal and nothing to fall onto, i.e. stuck permanently. That happens whenever a run
-     * ends while its owner is offline — expiry, an operator clearing a run — because the teleport in
-     * [endRun] can only move a player who is connected.
+     * Not §2.10 and not optional: a player who logs in inside an arena is in a void dimension with no
+     * bed, no portal and nothing to fall onto, i.e. stuck permanently unless something moves them.
      *
-     * Note what is lost in that case: the return position lived on the [RunState] that just ended, so
-     * these players go to world spawn rather than to where they started. Preserving it would mean
-     * keeping a record of ended runs purely to hold one position, and the alternative — leaving them
-     * in the void — is not a trade.
+     * Since §2.23 this is the *ordinary* case rather than the exceptional one. The arena lease ends at
+     * logout ([RunArenas.release]) and the slot may since have been handed to somebody else and
+     * re-stamped, so anybody who quit inside an arena logs back in standing in a box that is no longer
+     * theirs. They are ejected to their run's entry point and re-enter through [resume], which takes a
+     * fresh slot. The old exceptional case — arena space with no run at all — still lands here too and
+     * is handled by the same call, with the same fallback chain.
+     *
+     * Note what is lost when there is no run: the return position lived on the [RunState] that ended,
+     * so those players go to world spawn rather than to where they started. Preserving it would mean
+     * keeping a record of ended runs purely to hold one position, and the alternative — leaving them in
+     * the void — is not a trade.
      *
      * Returns what happened so the caller can tell the player; sends nothing itself.
      */
     fun reconcileOnLogin(server: MinecraftServer, player: ServerPlayer): LoginReconciliation {
-        val run = RunStore.of(server).get(player.uuid)
-        if (run != null) {
-            val interrupted = attributeInterruption(server, player, run)
-            // Status read *after* the attribution, never before: the penalty can move the wave and can
-            // end the run outright, and a status captured first would describe a run that is no longer
-            // there — including handing the login hook an InProgress holding an emptied party.
-            return LoginReconciliation(status(server, player), interrupted)
-        }
+        val store = RunStore.of(server)
+        expireIfStale(server, player.uuid)
+        // Taken whether or not this login expired anything: the notice may have been written by the
+        // boot sweep months ago. Removing it here is what makes the sentence get said exactly once.
+        val notice = store.takeExpiryNotice(player.uuid)
+
+        val run = store.get(player.uuid)
+        val interrupted = run?.let { attributeInterruption(server, player, it) }
+
+        // After the attribution, which can end a run and eject on its own — asking first would move a
+        // player whose run is about to be ended and then move them again.
+        val returned = evictFromArena(server, player)
+
+        // Status read *after* all of it, never before: expiry can delete the run and the penalty can
+        // move the wave or empty the party, and a status captured first would describe a run that is no
+        // longer there — including handing the login hook an InProgress holding an emptied party.
         val status = status(server, player)
-        if (RunArenas.isInArena(player)) {
-            log.info("roguelite: {} logged in inside an arena with no run — ejecting", player.gameProfile.name)
-            RunArenas.eject(server, player, entry = null)
+        return LoginReconciliation(
+            status = status,
+            interrupted = interrupted,
+            expired = notice,
+            expiring = nearExpiry(status),
+            returnedFromArena = returned,
+        )
+    }
+
+    /**
+     * Put a player who logged in inside arena space back outside it. True when it moved them.
+     *
+     * Ejects to the entry point of whatever run they still have, which is strictly better than the
+     * world-spawn fallback this used to be: a player who quit mid-run now returns to where they were
+     * standing before the run started, rather than to spawn. A player with no run has no entry point to
+     * offer and gets the fallback, with the warning [RunArenas.eject] logs.
+     */
+    private fun evictFromArena(server: MinecraftServer, player: ServerPlayer): Boolean {
+        if (!RunArenas.isInArena(player)) return false
+        val run = RunStore.of(server).get(player.uuid)
+        log.info(
+            "roguelite: {} logged in inside an arena they no longer hold — returning them to {}",
+            player.gameProfile.name, run?.entry?.dimension ?: "world spawn",
+        )
+        RunArenas.eject(server, player, run?.entry)
+        return true
+    }
+
+    /** §2.23's warning window, for a run that survived the login. Null unless it is worth saying. */
+    private fun nearExpiry(status: RunStatus): RunExpiryStatus? {
+        val run = (status as? RunStatus.InProgress)?.run ?: return null
+        val evaluated = RunExpiry.evaluate(run, System.currentTimeMillis(), RunSettings.current.expiry)
+        return evaluated.takeIf { it.nearExpiry }
+    }
+
+    /**
+     * §2.23: delete [player]'s run if nobody has played it inside its retention period.
+     *
+     * ### Why this is not [endRun]
+     *
+     * Because [endRun] pays. Every other way a run stops resolves a payout table, hands grants over and
+     * writes a [RunEndReport]; expiry does none of it, on §2.23's rule that half a year of silence is
+     * not owed anything and that the payment would land on somebody who is not there anyway. Sharing
+     * the path and suppressing the payout with a flag would put "do not mint items" behind a boolean,
+     * which is the direction that has to be impossible rather than merely correct today.
+     *
+     * The run's arena needs no explicit release: occupancy is derived from the store, so removing the
+     * entry frees whatever it held, and a run reaching here holds nothing anyway — its owner is offline
+     * or has only just connected.
+     *
+     * Returns the notice it wrote, or null when there was nothing to expire, which is nearly every call.
+     */
+    private fun expireIfStale(server: MinecraftServer, player: UUID): RunExpiryNotice? {
+        val store = RunStore.of(server)
+        val run = store.get(player) ?: return null
+        val now = System.currentTimeMillis()
+        val status = RunExpiry.evaluate(run, now, RunSettings.current.expiry)
+        if (!status.expired) return null
+        return expire(server, player, run, status, now)
+    }
+
+    /**
+     * §2.23's sweep: every run on the server, once, at start.
+     *
+     * This and not the login check is what the feature is *for*. Expiry is storage hygiene, and the
+     * runs worth reclaiming belong to players who are not logging in — a lazy check would keep exactly
+     * the runs it was written to remove. Running it at start rather than on a timer is enough because
+     * the periods are measured in weeks: a run that becomes stale during an uptime is collected at the
+     * next restart, or at its owner's next login, whichever comes first.
+     *
+     * Returns how many were deleted, for the caller's log line.
+     */
+    fun expireStaleRuns(server: MinecraftServer): Int {
+        val store = RunStore.of(server)
+        val now = System.currentTimeMillis()
+        val stale = RunExpiry.stale(store.activeRuns(), now, RunSettings.current.expiry)
+        for ((player, status) in stale) {
+            // Re-fetched rather than taken from the snapshot: the snapshot is a copy, and between it
+            // and here a player could in principle have connected and had their run ended some other
+            // way. Expiring a run that is no longer in the store would write a notice about nothing.
+            val run = store.get(player) ?: continue
+            expire(server, player, run, status, now)
         }
-        return LoginReconciliation(status)
+        return stale.size
+    }
+
+    /** The deletion itself, shared by the sweep and the login backstop. */
+    private fun expire(
+        server: MinecraftServer,
+        player: UUID,
+        run: RunState,
+        status: RunExpiryStatus,
+        now: Long,
+    ): RunExpiryNotice {
+        val notice = RunExpiryNotice.of(run.wave, status, now)
+        // Logged before the removal and with everything a dispute would need, on
+        // [PendingPayoutHooks]'s rule: this line is the only record that the run existed once the store
+        // entry is gone, and unlike a payout there is nothing downstream that will mention it again.
+        log.info(
+            "roguelite: expiring {}'s run at wave {} — untouched for {} day(s), which is past the {} day " +
+                "retention its depth earns. It pays nothing (§2.23). Party was {}.",
+            player, run.wave, status.idleDays, status.periodDays,
+            run.partySnapshot().map { it.species.name },
+        )
+        RunStore.of(server).expire(server, player, notice)
+        return notice
     }
 
     /** §2.10, one login's worth. Null when there was no battle to attribute, which is most logins. */

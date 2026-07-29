@@ -10,6 +10,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotSame
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 /**
  * Covers the parts of the checkpoint format that do not need a live game.
@@ -88,26 +89,34 @@ class RunStateTest {
     }
 
     @Test
-    fun `toNbt writes the arena fields`() {
+    fun `the entry point is written but the arena lease is not`() {
+        // §2.23. A slot is leased for a session, so writing it down would restore a lease held by
+        // somebody who is not connected — and, worse, one that may since have been handed to another
+        // run, which teleports two players into one arena. The entry point is the opposite kind of
+        // fact: where the player was standing in the real world, and the only way home.
+        //
+        // The read half is not exercised here (see the class docs — a restore needs a populated
+        // registry) and does not need to be: the three keys are not merely ignored on load, they are
+        // never named there at all.
         val entry = RunEntryPoint(ResourceLocation.withDefaultNamespace("overworld"), 10.0, 64.0, -20.0, 45f, 5f)
         val template = ResourceLocation.fromNamespaceAndPath("cobblemon_roguelite", "arena_late")
-        val tag = RunState(seed = 1L, arenaSlot = 7, entry = entry, stampedTemplate = template)
-            .toNbt(RegistryAccess.EMPTY)
-        assertEquals(7, tag.getInt("arenaSlot"))
+        val painted = ResourceLocation.fromNamespaceAndPath("minecraft", "basalt_deltas")
+        val tag = RunState(
+            seed = 1L,
+            arenaSlot = 7,
+            entry = entry,
+            stampedTemplate = template,
+            paintedBiome = painted,
+        ).toNbt(RegistryAccess.EMPTY)
         assertEquals(entry, RunEntryPoint.fromNbt(tag.getCompound("entry")))
-        assertEquals(template.toString(), tag.getString("stampedTemplate"))
+        assertFalse(tag.contains("arenaSlot"))
+        assertFalse(tag.contains("stampedTemplate"))
+        assertFalse(tag.contains("paintedBiome"))
     }
 
     @Test
-    fun `an unassigned arena slot is absent from the tag, not written as zero`() {
-        // Zero is a valid slot, and [RunState.fromNbt] distinguishes the two by presence. A run
-        // written as "slot 0" when it never had one would be restored pointing at somebody else's
-        // arena, and the allocator — which derives occupancy from exactly this field — would believe
-        // it. The read side of that pair cannot be exercised here; see the class docs.
-        val tag = RunState(seed = 1L).toNbt(RegistryAccess.EMPTY)
-        assertFalse(tag.contains("arenaSlot"))
-        assertFalse(tag.contains("entry"))
-        assertFalse(tag.contains("stampedTemplate"))
+    fun `a run that was never given an entry point writes none`() {
+        assertFalse(RunState(seed = 1L).toNbt(RegistryAccess.EMPTY).contains("entry"))
     }
 
     @Test
@@ -144,8 +153,21 @@ class RunStateTest {
     }
 
     @Test
-    fun `a slot of zero is written`() {
-        assertEquals(true, RunState(seed = 1L, arenaSlot = 0).toNbt(RegistryAccess.EMPTY).contains("arenaSlot"))
+    fun `the activity stamp is written unconditionally`() {
+        // §2.23's only input to expiry besides the wave, and there is no "never played" state to encode
+        // as absence — a run is stamped at creation. The read side is [RunExpiry.restoreStamp], which is
+        // a separate function precisely so that its epoch-zero defence can be run outside a server.
+        val at = 1_700_000_000_000L
+        val tag = RunState(seed = 1L, lastActiveAtEpochMs = at).toNbt(RegistryAccess.EMPTY)
+        assertEquals(at, tag.getLong("lastActiveAt"))
+        assertTrue(RunState(seed = 1L).toNbt(RegistryAccess.EMPTY).contains("lastActiveAt"))
+    }
+
+    @Test
+    fun `touch moves the activity stamp forward`() {
+        val run = RunState(seed = 1L, lastActiveAtEpochMs = 0L)
+        run.touch()
+        assertTrue(run.lastActiveAtEpochMs > 0L)
     }
 
     @Test
@@ -157,23 +179,21 @@ class RunStateTest {
     }
 
     @Test
-    fun `toNbt carries the biome and what is painted in the arena`() {
+    fun `the checkpoint carries where the run is, not what is painted in the arena`() {
         // Two fields for what looks like one fact, and they are not: [RunState.biome] is where the run
         // *is* and survives a slot reassignment, while paintedBiome is what is in the world and does
-        // not. A checkpoint that merged them would either re-stamp arenas that are fine or stop
-        // retrying repaints that never happened.
+        // not — so only the first is worth persisting. Merging them would either re-stamp arenas that
+        // are fine or stop retrying repaints that never happened.
         val visit = BiomeVisit(band = 4, biome = ResourceLocation.fromNamespaceAndPath("test", "volcano"))
         val painted = ResourceLocation.fromNamespaceAndPath("minecraft", "basalt_deltas")
         val tag = RunState(seed = 1L, biome = visit, paintedBiome = painted).toNbt(RegistryAccess.EMPTY)
         assertEquals(visit, BiomeVisit.fromNbt(tag.getCompound("biome")))
-        assertEquals(painted.toString(), tag.getString("paintedBiome"))
+        assertFalse(tag.contains("paintedBiome"))
     }
 
     @Test
-    fun `a run that has never entered a biome writes neither biome field`() {
-        val tag = RunState(seed = 1L).toNbt(RegistryAccess.EMPTY)
-        assertFalse(tag.contains("biome"))
-        assertFalse(tag.contains("paintedBiome"))
+    fun `a run that has never entered a biome writes no biome`() {
+        assertFalse(RunState(seed = 1L).toNbt(RegistryAccess.EMPTY).contains("biome"))
     }
 
     @Test

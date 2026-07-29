@@ -76,6 +76,36 @@
   },
   "items": [
     {
+      "id": "bp:held_item_voucher",
+      "status": null,
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Held Item Voucher \u2014 3 BP",
+      "assignedBy": "override",
+      "sources": []
+    },
+    {
+      "id": "bp:shiny_voucher",
+      "status": null,
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Shiny Voucher \u2014 75 BP, ~20x the other vouchers",
+      "assignedBy": "override",
+      "sources": []
+    },
+    {
+      "id": "bp:tr_voucher",
+      "status": null,
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "TR Voucher \u2014 4 BP",
+      "assignedBy": "override",
+      "sources": []
+    },
+    {
       "id": "cobblemon:ability_capsule",
       "status": null,
       "tier": 2,
@@ -7696,11 +7726,11 @@
     },
     {
       "id": "cobblemon:held_item_voucher",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Redeems for a premium held item",
+      "status": "broken",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "BROKEN \u2014 this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (57 warnings in prod). Real item is bp:held_item_voucher.",
       "assignedBy": "override",
       "sources": [
         {
@@ -16683,11 +16713,11 @@
     },
     {
       "id": "cobblemon:tr_voucher",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Redeems for a TR",
+      "status": "broken",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "BROKEN \u2014 this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (74 warnings in prod). Real item is bp:tr_voucher.",
       "assignedBy": "override",
       "sources": [
         {

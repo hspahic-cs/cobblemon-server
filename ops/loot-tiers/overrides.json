@@ -1,6 +1,13 @@
 {
   "_comment": "Explicit tier pins. These WIN over the category rules in build_tiers.py. Put judgment calls here rather than contorting a rule. Format: '<item id>': [tier, 'why'].",
 
+  "_vouchers": "BP shop vouchers (modpack/server-overrides/config/bp-items.json). NOT Cobblemon items — there is no cobblemon:*_voucher registry entry, which is exactly why the rare crate's voucher rows grant nothing. Tiers track BP cost.",
+  "cobblemon:tr_voucher": [-1, "BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (74 warnings in prod). Real item is bp:tr_voucher."],
+  "cobblemon:held_item_voucher": [-1, "BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (57 warnings in prod). Real item is bp:held_item_voucher."],
+  "bp:shiny_voucher": [4, "Shiny Voucher — 75 BP, ~20x the other vouchers"],
+  "bp:tr_voucher": [2, "TR Voucher — 4 BP"],
+  "bp:held_item_voucher": [2, "Held Item Voucher — 3 BP"],
+
   "_eggs": "Cobbreeding Pokemon Eggs. Never materialise as a plain item id — the gacha dispatches `givepokemonegg` and Cobbreeding builds the egg server-side (ludichat.cobbreeding.PokemonEgg), so each pool is tiered as its own entry. ANCHOR: 'Pokemon Egg is rare' — the rare pool is T2 and the rest are graded around it.",
   "cobbreeding:egg_common": [1, "Common Pokemon Egg — common pool"],
   "cobbreeding:egg_uncommon": [1, "Uncommon Pokemon Egg — uncommon pool"],
@@ -75,8 +82,6 @@
   "legendarymonuments:origin_ingot": [3, "Repairs the Red Chain — component for a T4"],
   "legendarymonuments:lightstone_shard": [3, "9 craft into a T4 Light Stone"],
   "legendarymonuments:darkstone_shard": [3, "9 craft into a T4 Dark Stone"],
-  "cobblemon:held_item_voucher": [3, "Redeems for a premium held item"],
-  "cobblemon:tr_voucher": [3, "Redeems for a TR"],
   "mega_showdown:zygarde_cell": [3, "Zygarde assembly component"],
   "cobblemon:beast_ball": [3, "Best-in-slot for Ultra Beasts, not purchasable"],
   "legendarymonuments:arc_phone": [-1, "Recipe disabled by server-no-arc-phone"],

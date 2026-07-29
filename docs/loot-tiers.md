@@ -31,7 +31,7 @@ with what already exists.
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 | **TX** | Disabled | Never award. Two different situations live here, and the per-item status says which: **not obtainable** (recipe banned and/or stripped from loot — if one of these is still dropping, that's a bug to fix, not a tier to change), or **banned to use** (freely obtainable, but the mechanic is disabled and using it is a bannable offence, so the item is worthless as a reward). |
 
-1181 items tiered — T5: 4, T4: 38, T3: 123, T2: 221, T1: 542, T0: 159, TX: 94.
+1184 items tiered — T5: 4, T4: 39, T3: 121, T2: 223, T1: 542, T0: 159, TX: 96.
 
 ## Picking a reward
 
@@ -64,6 +64,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
+| `bp:shiny_voucher` | Shiny Voucher — 75 BP, ~20x the other vouchers | *not currently granted anywhere* |
 | `legendarymonuments:antimatter_globe` | Azure Flute component — the Arceus path | *not currently granted anywhere* |
 | `legendarymonuments:arctic_stone` | Summons a legendary (bird / Heatran) | *not currently granted anywhere* |
 | `legendarymonuments:curry_of_justice` | Summons Keldeo | `crate:ultra` 6.5%; `craft` |
@@ -124,7 +125,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/rooted_arch_ruins`; `mod:cobblemon/sets/any_type_gem` |
 | `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/deserted_tower_ruins`; `mod:cobblemon/ruins/common/fallen_statue_ruins` +1 more |
 | `cobblemon:health_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:held_item_voucher` | Redeems for a premium held item | `crate:rare` 2.9% |
 | `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/regice_chest` 85.07%; `mod:cobblemon/ruins/common/hidden_bunker_ruins` +1 more |
 | `cobblemon:mighty_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:mega_showdown/chests/observatory_barrel_3` 59.22%; `mod:cobblemon/ruins/common/deserted_house_ruins` +1 more |
@@ -135,7 +135,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:smart_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:legendarymonuments/chests/heatran_cave_chest` 12.01%; `mod:cobblemon/ruins/common/hidden_bunker_ruins` +1 more |
 | `cobblemon:tough_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:tr_voucher` | Redeems for a TR | `crate:rare` 3.9% |
 | `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +3 more |
 | `cobbreeding:egg_baby_legend` | Cosmetic Pokemon Egg — baby_legend pool | `crate:pokemon` 0.5% |
 | `cobbreeding:egg_shiny` | Shiny Egg — guaranteed shiny from the rare|uncommon pool | `crate:pokemon` 3.4825%; `crate:ultra` 4.9% |
@@ -239,6 +238,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
+| `bp:held_item_voucher` | Held Item Voucher — 3 BP | *not currently granted anywhere* |
+| `bp:tr_voucher` | TR Voucher — 4 BP | *not currently granted anywhere* |
 | `cobblemon:ability_capsule` | Swaps between normal abilities | `loot:legendarymonuments/chests/registeel_chest` 78.61%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36%; `mod:rctmod/generic/epic/training` +1 more |
 | `cobblemon:ability_shield` | Premium competitive held item | `loot:rctmod/generic/rare/battle`; `mod:cobblemon/ruins/uncommon/deserted_town_center_ruins`; `mod:cobblemon/ruins/uncommon/fallen_statue_ruins` +6 more |
 | `cobblemon:air_balloon` | Premium competitive held item | `loot:rctmod/generic/rare/battle`; `craft`; `market` |
@@ -1182,6 +1183,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
+| `cobblemon:held_item_voucher` | BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (57 warnings in prod). Real item is bp:held_item_voucher. | `crate:rare` 2.9% |
+| `cobblemon:tr_voucher` | BROKEN — this item id does not exist. The rare crate grants it as type:vanilla, so the roll yields nothing (74 warnings in prod). Real item is bp:tr_voucher. | `crate:rare` 3.9% |
 | `legendarymonuments:arc_phone` | Recipe disabled by server-no-arc-phone | *not currently granted anywhere* |
 | `mega_showdown:aloraichium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
 | `mega_showdown:blank_z` | Blank Z-crystal — disabled on this server | *not currently granted anywhere* |

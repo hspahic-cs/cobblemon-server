@@ -75,7 +75,7 @@ TIER_BLURB = {
 
 # Namespaces we tier individually. simpletms is collapsed (see TM_* below).
 NAMESPACES = ("cobblemon", "mega_showdown", "legendarymonuments", "minecraft", "gacha",
-              "cobbreeding")
+              "cobbreeding", "bp")
 
 # ---------------------------------------------------------------- category rules
 # (regex over the item id, tier, rationale). First match wins, so order matters:
@@ -418,7 +418,12 @@ def build() -> tuple[dict, str]:
         srcs = ev.get(iid, [])
         status = None
         if tier == DISABLED:
-            status = "banned-to-use" if srcs else "not-obtainable"
+            if why.startswith("BROKEN"):
+                # A dead item id, not a policy decision -- something grants it and
+                # the player receives nothing. This is a bug to fix, not a tier.
+                status = "broken"
+            else:
+                status = "banned-to-use" if srcs else "not-obtainable"
         rows.append({
             "id": iid,
             "status": status,
@@ -558,6 +563,9 @@ def main() -> int:
     tx = [r for r in doc["items"] if r["tier"] == DISABLED]
     if tx:
         no = sum(1 for r in tx if r["status"] == "not-obtainable")
+        broken = [r["id"] for r in tx if r["status"] == "broken"]
+        if broken:
+            print(f"  !! BROKEN item ids granted by a loot source: {', '.join(broken)}")
         bad = [r["id"] for r in tx if r["status"] == "banned-to-use"]
         print(f"  TX: {no} not-obtainable, {len(bad)} banned-to-use (obtainable, mechanic disabled)")
         if bad:

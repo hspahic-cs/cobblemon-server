@@ -165,17 +165,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "mega_showdown:firium_z",
-          "weight": 16
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:gold_ingot",
-          "weight": 60
-        },
-        {
-          "type": "minecraft:item",
-          "name": "mega_showdown:fire_tera_shard",
           "weight": 60
         },
         {

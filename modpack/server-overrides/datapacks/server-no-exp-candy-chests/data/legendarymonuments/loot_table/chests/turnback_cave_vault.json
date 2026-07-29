@@ -65,17 +65,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "mega_showdown:ghost_tera_shard",
-          "weight": 100,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": 6
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "cobblemon:max_ether",
           "weight": 100,
           "functions": [
@@ -310,11 +299,6 @@
               "count": 2
             }
           ]
-        },
-        {
-          "type": "minecraft:item",
-          "name": "mega_showdown:ghostium_z",
-          "weight": 20
         },
         {
           "type": "minecraft:item",

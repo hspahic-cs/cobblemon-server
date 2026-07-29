@@ -1,29 +1,33 @@
 {
   "_generated": "ops/loot-tiers/build_tiers.py -- do not hand-edit; edit overrides.json or the rules",
   "tiers": {
-    "5": {
+    "T5": {
       "name": "Mythic",
       "meaning": "Gates a box legendary or mythical, or guarantees a catch. Never a routine reward."
     },
-    "4": {
+    "T4": {
       "name": "Legendary",
       "meaning": "Summons or permanently unlocks a legendary/forme. One-per-player scale."
     },
-    "3": {
+    "T3": {
       "name": "Epic",
       "meaning": "Permanent competitive power or a hard-gated component. A real chase reward."
     },
-    "2": {
+    "T2": {
       "name": "Rare",
       "meaning": "Strong but repeatable. Fine as the headline reward for a genuine challenge."
     },
-    "1": {
+    "T1": {
       "name": "Uncommon",
       "meaning": "Routine reward scale. Safe for regular play loops."
     },
-    "0": {
+    "T0": {
       "name": "Common",
       "meaning": "Filler. Safe to hand out in bulk."
+    },
+    "TX": {
+      "name": "Disabled",
+      "meaning": "Intentionally not obtainable \u2014 recipe banned and/or stripped from loot. Never use as a reward. If one of these is still dropping, that's a bug to fix, not a tier to change."
     }
   },
   "simpletms": {
@@ -74,25 +78,27 @@
     {
       "id": "cobblemon:ability_capsule",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Swaps between normal abilities",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=100/740, rolls=9",
-          "rate": 72.93
+          "detail": "w=100/635, rolls=9",
+          "rate": 78.61
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:ability_patch",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Hidden ability. Deliberately pulled from the Ultra crate.",
       "assignedBy": "override",
@@ -104,14 +110,15 @@
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=5/740, rolls=9",
-          "rate": 5.92
+          "detail": "w=5/635, rolls=9",
+          "rate": 6.87
         }
       ]
     },
     {
       "id": "cobblemon:ability_shield",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -131,6 +138,7 @@
     {
       "id": "cobblemon:absorb_bulb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -150,6 +158,7 @@
     {
       "id": "cobblemon:adamant_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -164,6 +173,7 @@
     {
       "id": "cobblemon:air_balloon",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -183,6 +193,7 @@
     {
       "id": "cobblemon:antidote",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Status heal",
       "assignedBy": "rule",
@@ -197,6 +208,7 @@
     {
       "id": "cobblemon:armor_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -211,6 +223,7 @@
     {
       "id": "cobblemon:assault_vest",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -230,6 +243,7 @@
     {
       "id": "cobblemon:auspicious_armor",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -241,14 +255,15 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         }
       ]
     },
     {
       "id": "cobblemon:automaton_armor_trim_smithing_template",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -263,6 +278,7 @@
     {
       "id": "cobblemon:awakening",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Status heal",
       "assignedBy": "rule",
@@ -277,20 +293,22 @@
     {
       "id": "cobblemon:azure_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=100/625, rolls=9",
-          "rate": 79.18
+          "detail": "w=100/525, rolls=9",
+          "rate": 85.07
         }
       ]
     },
     {
       "id": "cobblemon:beast_ball",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Best-in-slot for Ultra Beasts, not purchasable",
       "assignedBy": "override",
@@ -305,6 +323,7 @@
     {
       "id": "cobblemon:big_root",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -324,6 +343,7 @@
     {
       "id": "cobblemon:binding_band",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -343,6 +363,7 @@
     {
       "id": "cobblemon:black_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -357,6 +378,7 @@
     {
       "id": "cobblemon:black_augurite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -371,6 +393,7 @@
     {
       "id": "cobblemon:black_belt",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -395,6 +418,7 @@
     {
       "id": "cobblemon:black_glasses",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -419,6 +443,7 @@
     {
       "id": "cobblemon:black_sludge",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -435,8 +460,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "market",
@@ -448,20 +473,22 @@
     {
       "id": "cobblemon:black_tumblestone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Crafting material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:blue_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -476,6 +503,7 @@
     {
       "id": "cobblemon:blue_mint_leaf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -490,6 +518,7 @@
     {
       "id": "cobblemon:blue_mint_seeds",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mint seed",
       "assignedBy": "rule",
@@ -504,6 +533,7 @@
     {
       "id": "cobblemon:blunder_policy",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -523,6 +553,7 @@
     {
       "id": "cobblemon:bold_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -537,22 +568,16 @@
     {
       "id": "cobblemon:booster_energy",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
       "sources": []
     },
     {
-      "id": "cobblemon:bottle_cap",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "IV hyper training",
-      "assignedBy": "override",
-      "sources": []
-    },
-    {
       "id": "cobblemon:brave_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -567,6 +592,7 @@
     {
       "id": "cobblemon:bright_powder",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -586,6 +612,7 @@
     {
       "id": "cobblemon:bug_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -600,6 +627,7 @@
     {
       "id": "cobblemon:burn_heal",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Status heal",
       "assignedBy": "rule",
@@ -614,6 +642,7 @@
     {
       "id": "cobblemon:calcium",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
@@ -625,14 +654,15 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:calm_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -647,6 +677,7 @@
     {
       "id": "cobblemon:carbos",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
@@ -658,19 +689,20 @@
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=5/925, rolls=9",
-          "rate": 4.76
+          "detail": "w=5/715, rolls=9",
+          "rate": 6.12
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:careful_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -685,6 +717,7 @@
     {
       "id": "cobblemon:cell_battery",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -696,8 +729,8 @@
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         },
         {
           "source": "market",
@@ -709,6 +742,7 @@
     {
       "id": "cobblemon:charcoal_stick",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -728,6 +762,7 @@
     {
       "id": "cobblemon:chipped_pot",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -742,6 +777,7 @@
     {
       "id": "cobblemon:choice_band",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -766,6 +802,7 @@
     {
       "id": "cobblemon:choice_scarf",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -790,6 +827,7 @@
     {
       "id": "cobblemon:choice_specs",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -814,6 +852,7 @@
     {
       "id": "cobblemon:chople_berry",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Berry",
       "assignedBy": "rule",
@@ -822,6 +861,7 @@
     {
       "id": "cobblemon:claw_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -836,6 +876,7 @@
     {
       "id": "cobblemon:cleanse_tag",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -855,6 +896,7 @@
     {
       "id": "cobblemon:clear_amulet",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -869,25 +911,27 @@
     {
       "id": "cobblemon:clever_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "cobblemon:coarse_mulch",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mulch",
       "assignedBy": "rule",
@@ -902,6 +946,7 @@
     {
       "id": "cobblemon:colbur_berry",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Berry",
       "assignedBy": "rule",
@@ -909,10 +954,11 @@
     },
     {
       "id": "cobblemon:courage_candy",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
-      "assignedBy": "override",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
+      "assignedBy": "rule",
       "sources": [
         {
           "source": "crate:rare",
@@ -924,6 +970,7 @@
     {
       "id": "cobblemon:cover_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -938,6 +985,7 @@
     {
       "id": "cobblemon:covert_cloak",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -952,6 +1000,7 @@
     {
       "id": "cobblemon:cracked_pot",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -966,6 +1015,7 @@
     {
       "id": "cobblemon:cyan_mint_leaf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -980,6 +1030,7 @@
     {
       "id": "cobblemon:cyan_mint_seeds",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mint seed",
       "assignedBy": "rule",
@@ -994,6 +1045,7 @@
     {
       "id": "cobblemon:damp_rock",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1005,8 +1057,8 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=30/885, rolls=9",
-          "rate": 26.68
+          "detail": "w=30/785, rolls=9",
+          "rate": 29.58
         },
         {
           "source": "market",
@@ -1018,6 +1070,7 @@
     {
       "id": "cobblemon:dark_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1029,8 +1082,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:archaeology/ruins",
@@ -1041,8 +1094,9 @@
     },
     {
       "id": "cobblemon:dawn_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -1056,6 +1110,7 @@
     {
       "id": "cobblemon:deep_sea_scale",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -1075,6 +1130,7 @@
     {
       "id": "cobblemon:deep_sea_tooth",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -1094,6 +1150,7 @@
     {
       "id": "cobblemon:destiny_knot",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1118,6 +1175,7 @@
     {
       "id": "cobblemon:dire_hit",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1126,6 +1184,7 @@
     {
       "id": "cobblemon:dive_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
@@ -1137,14 +1196,15 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         }
       ]
     },
     {
       "id": "cobblemon:dive_rod",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1159,6 +1219,7 @@
     {
       "id": "cobblemon:dome_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -1173,6 +1234,7 @@
     {
       "id": "cobblemon:dragon_fang",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1189,8 +1251,8 @@
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         },
         {
           "source": "market",
@@ -1202,6 +1264,7 @@
     {
       "id": "cobblemon:dragon_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1213,14 +1276,15 @@
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
+          "detail": "w=100/715, rolls=9",
+          "rate": 74.23
         }
       ]
     },
     {
       "id": "cobblemon:dragon_scale",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -1234,9 +1298,10 @@
     },
     {
       "id": "cobblemon:dream_ball",
-      "tier": 3,
-      "tierName": "Epic",
-      "rationale": "Specialty ball \u2014 Hidden Ability transfer, high player demand",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Specialty ball \u2014 Hidden Ability transfer",
       "assignedBy": "override",
       "sources": [
         {
@@ -1259,6 +1324,7 @@
     {
       "id": "cobblemon:dubious_disc",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -1273,19 +1339,20 @@
     {
       "id": "cobblemon:dusk_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
+          "detail": "w=100/785, rolls=9",
+          "rate": 70.66
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -1296,8 +1363,9 @@
     },
     {
       "id": "cobblemon:dusk_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -1308,33 +1376,35 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:dusk_stone_block",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=20/2808, rolls=3",
-          "rate": 2.12
+          "detail": "w=20/2688, rolls=3",
+          "rate": 2.22
         }
       ]
     },
     {
       "id": "cobblemon:eject_button",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1349,6 +1419,7 @@
     {
       "id": "cobblemon:eject_pack",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1363,6 +1434,7 @@
     {
       "id": "cobblemon:electirizer",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -1377,6 +1449,7 @@
     {
       "id": "cobblemon:electric_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1388,36 +1461,38 @@
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
+          "detail": "w=100/715, rolls=9",
+          "rate": 74.23
         }
       ]
     },
     {
       "id": "cobblemon:electric_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         }
       ]
     },
     {
       "id": "cobblemon:elixir",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "PP consumable",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "market",
@@ -1429,6 +1504,7 @@
     {
       "id": "cobblemon:energy_root",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Herbal heal",
       "assignedBy": "rule",
@@ -1443,14 +1519,15 @@
     {
       "id": "cobblemon:ether",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "PP consumable",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -1462,6 +1539,7 @@
     {
       "id": "cobblemon:everstone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1481,6 +1559,7 @@
     {
       "id": "cobblemon:eviolite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -1500,8 +1579,9 @@
     {
       "id": "cobblemon:exp_candy_l",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
-      "rationale": "Feedstock for EV candies \u2014 heavy consumption keeps it scarce despite being on the shelf",
+      "rationale": "Feedstock for IV candies \u2014 heavy consumption keeps it scarce despite being on the shelf",
       "assignedBy": "override",
       "sources": [
         {
@@ -1514,14 +1594,15 @@
     {
       "id": "cobblemon:exp_candy_m",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Small exp candy",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -1530,13 +1611,13 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=40/2611, rolls=14",
-          "rate": 19.44
+          "detail": "w=40/2461, rolls=14",
+          "rate": 20.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "market",
@@ -1548,19 +1629,20 @@
     {
       "id": "cobblemon:exp_candy_s",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Small exp candy",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
+          "detail": "w=100/715, rolls=9",
+          "rate": 74.23
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -1569,28 +1651,28 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=100/625, rolls=9",
-          "rate": 79.18
+          "detail": "w=100/525, rolls=9",
+          "rate": 85.07
         },
         {
           "source": "loot:chests/regigigas_chest",
-          "detail": "w=100/345, rolls=9",
-          "rate": 95.41
+          "detail": "w=100/245, rolls=9",
+          "rate": 99.11
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
+          "detail": "w=100/785, rolls=9",
+          "rate": 70.66
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=100/740, rolls=9",
-          "rate": 72.93
+          "detail": "w=100/635, rolls=9",
+          "rate": 78.61
         },
         {
           "source": "market",
@@ -1602,8 +1684,9 @@
     {
       "id": "cobblemon:exp_candy_xl",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
-      "rationale": "Feedstock for EV candies \u2014 heavy consumption keeps it scarce despite being on the shelf",
+      "rationale": "Feedstock for IV candies \u2014 heavy consumption keeps it scarce despite being on the shelf",
       "assignedBy": "override",
       "sources": [
         {
@@ -1616,14 +1699,15 @@
     {
       "id": "cobblemon:exp_candy_xs",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Small exp candy",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -1632,8 +1716,8 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=400/2611, rolls=14",
-          "rate": 90.25
+          "detail": "w=400/2461, rolls=14",
+          "rate": 91.65
         },
         {
           "source": "market",
@@ -1645,6 +1729,7 @@
     {
       "id": "cobblemon:exp_share",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1659,6 +1744,7 @@
     {
       "id": "cobblemon:expert_belt",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -1673,6 +1759,7 @@
     {
       "id": "cobblemon:fairy_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
@@ -1684,8 +1771,8 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "market",
@@ -1697,6 +1784,7 @@
     {
       "id": "cobblemon:fairy_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1711,20 +1799,22 @@
     {
       "id": "cobblemon:fast_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
+          "detail": "w=100/715, rolls=9",
+          "rate": 74.23
         }
       ]
     },
     {
       "id": "cobblemon:fighting_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1739,6 +1829,7 @@
     {
       "id": "cobblemon:fine_remedy",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Herbal heal",
       "assignedBy": "rule",
@@ -1750,19 +1841,20 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:fire_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1774,8 +1866,8 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -1786,8 +1878,9 @@
     },
     {
       "id": "cobblemon:fire_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -1801,6 +1894,7 @@
     {
       "id": "cobblemon:flame_orb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1820,6 +1914,7 @@
     {
       "id": "cobblemon:flame_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -1828,6 +1923,7 @@
     {
       "id": "cobblemon:float_stone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1847,6 +1943,7 @@
     {
       "id": "cobblemon:flying_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -1858,14 +1955,15 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         }
       ]
     },
     {
       "id": "cobblemon:focus_band",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -1880,6 +1978,7 @@
     {
       "id": "cobblemon:focus_sash",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -1904,6 +2003,7 @@
     {
       "id": "cobblemon:fossilized_bird",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -1918,6 +2018,7 @@
     {
       "id": "cobblemon:fossilized_dino",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -1932,6 +2033,7 @@
     {
       "id": "cobblemon:fossilized_drake",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -1946,6 +2048,7 @@
     {
       "id": "cobblemon:fossilized_fish",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -1960,14 +2063,15 @@
     {
       "id": "cobblemon:full_heal",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Status heal",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -1979,6 +2083,7 @@
     {
       "id": "cobblemon:full_restore",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Healing consumable",
       "assignedBy": "rule",
@@ -1990,8 +2095,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "market",
@@ -2003,6 +2108,7 @@
     {
       "id": "cobblemon:galarica_cuff",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -2017,6 +2123,7 @@
     {
       "id": "cobblemon:galarica_wreath",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -2031,25 +2138,27 @@
     {
       "id": "cobblemon:genius_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "cobblemon:gentle_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2064,6 +2173,7 @@
     {
       "id": "cobblemon:ghost_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -2075,27 +2185,20 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
-      "id": "cobblemon:gold_bottle_cap",
-      "tier": 3,
-      "tierName": "Epic",
-      "rationale": "Full IV hyper training",
-      "assignedBy": "override",
-      "sources": []
-    },
-    {
       "id": "cobblemon:grass_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -2110,6 +2213,7 @@
     {
       "id": "cobblemon:great_ball",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Basic ball",
       "assignedBy": "rule",
@@ -2134,6 +2238,7 @@
     {
       "id": "cobblemon:green_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -2148,6 +2253,7 @@
     {
       "id": "cobblemon:green_mint_leaf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2162,6 +2268,7 @@
     {
       "id": "cobblemon:green_mint_seeds",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mint seed",
       "assignedBy": "rule",
@@ -2176,6 +2283,7 @@
     {
       "id": "cobblemon:grip_claw",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2190,6 +2298,7 @@
     {
       "id": "cobblemon:ground_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -2204,6 +2313,7 @@
     {
       "id": "cobblemon:guard_spec",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2212,6 +2322,7 @@
     {
       "id": "cobblemon:hard_stone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2228,8 +2339,8 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
+          "detail": "w=100/785, rolls=9",
+          "rate": 70.66
         },
         {
           "source": "market",
@@ -2241,6 +2352,7 @@
     {
       "id": "cobblemon:hasty_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2254,10 +2366,11 @@
     },
     {
       "id": "cobblemon:health_candy",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
-      "assignedBy": "override",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
+      "assignedBy": "rule",
       "sources": [
         {
           "source": "crate:rare",
@@ -2269,25 +2382,27 @@
     {
       "id": "cobblemon:health_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "cobblemon:heat_rock",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2299,8 +2414,8 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=30/885, rolls=9",
-          "rate": 26.68
+          "detail": "w=30/785, rolls=9",
+          "rate": 29.58
         },
         {
           "source": "market",
@@ -2312,20 +2427,22 @@
     {
       "id": "cobblemon:heavy_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=100/740, rolls=9",
-          "rate": 72.93
+          "detail": "w=100/635, rolls=9",
+          "rate": 78.61
         }
       ]
     },
     {
       "id": "cobblemon:heavy_duty_boots",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -2350,6 +2467,7 @@
     {
       "id": "cobblemon:held_item_voucher",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Redeems for a premium held item",
       "assignedBy": "override",
@@ -2364,6 +2482,7 @@
     {
       "id": "cobblemon:helix_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -2378,6 +2497,7 @@
     {
       "id": "cobblemon:hp_up",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
@@ -2389,14 +2509,15 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:humid_mulch",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mulch",
       "assignedBy": "rule",
@@ -2411,14 +2532,15 @@
     {
       "id": "cobblemon:hyper_potion",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Healing consumable",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -2430,6 +2552,7 @@
     {
       "id": "cobblemon:ice_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -2441,14 +2564,15 @@
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=100/625, rolls=9",
-          "rate": 79.18
+          "detail": "w=100/525, rolls=9",
+          "rate": 85.07
         }
       ]
     },
     {
       "id": "cobblemon:ice_heal",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Status heal",
       "assignedBy": "rule",
@@ -2462,8 +2586,9 @@
     },
     {
       "id": "cobblemon:ice_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -2474,14 +2599,15 @@
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=30/625, rolls=9",
-          "rate": 35.77
+          "detail": "w=30/525, rolls=9",
+          "rate": 41.11
         }
       ]
     },
     {
       "id": "cobblemon:icy_rock",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2501,6 +2627,7 @@
     {
       "id": "cobblemon:impish_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2515,6 +2642,7 @@
     {
       "id": "cobblemon:iron",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
@@ -2526,19 +2654,20 @@
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=30/740, rolls=9",
-          "rate": 31.1
+          "detail": "w=30/635, rolls=9",
+          "rate": 35.31
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:iron_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2558,6 +2687,7 @@
     {
       "id": "cobblemon:jaw_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -2572,6 +2702,7 @@
     {
       "id": "cobblemon:jolly_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2586,6 +2717,7 @@
     {
       "id": "cobblemon:kings_rock",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2597,8 +2729,8 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=30/885, rolls=9",
-          "rate": 26.68
+          "detail": "w=30/785, rolls=9",
+          "rate": 29.58
         },
         {
           "source": "market",
@@ -2610,6 +2742,7 @@
     {
       "id": "cobblemon:lagging_tail",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2624,6 +2757,7 @@
     {
       "id": "cobblemon:lax_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2637,8 +2771,9 @@
     },
     {
       "id": "cobblemon:leaf_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -2652,6 +2787,7 @@
     {
       "id": "cobblemon:leftovers",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -2676,6 +2812,7 @@
     {
       "id": "cobblemon:leppa_berry",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Berry",
       "assignedBy": "rule",
@@ -2684,6 +2821,7 @@
     {
       "id": "cobblemon:life_orb",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -2708,6 +2846,7 @@
     {
       "id": "cobblemon:light_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2722,6 +2861,7 @@
     {
       "id": "cobblemon:light_clay",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2736,20 +2876,22 @@
     {
       "id": "cobblemon:link_cable",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:loaded_dice",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -2764,6 +2906,7 @@
     {
       "id": "cobblemon:loamy_mulch",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mulch",
       "assignedBy": "rule",
@@ -2778,6 +2921,7 @@
     {
       "id": "cobblemon:lonely_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -2792,6 +2936,7 @@
     {
       "id": "cobblemon:lucky_egg",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2808,8 +2953,8 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         },
         {
           "source": "market",
@@ -2821,6 +2966,7 @@
     {
       "id": "cobblemon:lum_berry",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Berry",
       "assignedBy": "rule",
@@ -2829,6 +2975,7 @@
     {
       "id": "cobblemon:luminous_moss",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2843,6 +2990,7 @@
     {
       "id": "cobblemon:magmarizer",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -2857,6 +3005,7 @@
     {
       "id": "cobblemon:magnet",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -2873,13 +3022,13 @@
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=30/740, rolls=9",
-          "rate": 31.1
+          "detail": "w=30/635, rolls=9",
+          "rate": 35.31
         },
         {
           "source": "market",
@@ -2891,6 +3040,7 @@
     {
       "id": "cobblemon:malicious_armor",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -2905,6 +3055,7 @@
     {
       "id": "cobblemon:master_ball",
       "tier": 5,
+      "tierLabel": "T5",
       "tierName": "Mythic",
       "rationale": "Guaranteed catch. Ultra crate only, 2x at 6.5%.",
       "assignedBy": "override",
@@ -2924,6 +3075,7 @@
     {
       "id": "cobblemon:masterpiece_teacup",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -2938,6 +3090,7 @@
     {
       "id": "cobblemon:max_elixir",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "PP consumable",
       "assignedBy": "rule",
@@ -2949,8 +3102,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "market",
@@ -2962,6 +3115,7 @@
     {
       "id": "cobblemon:max_ether",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "PP consumable",
       "assignedBy": "rule",
@@ -2973,8 +3127,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -2986,6 +3140,7 @@
     {
       "id": "cobblemon:max_potion",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Healing consumable",
       "assignedBy": "rule",
@@ -2997,8 +3152,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "market",
@@ -3010,6 +3165,7 @@
     {
       "id": "cobblemon:max_revive",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Revive consumable",
       "assignedBy": "rule",
@@ -3021,8 +3177,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "market",
@@ -3034,6 +3190,7 @@
     {
       "id": "cobblemon:medicinal_leek",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Herbal heal",
       "assignedBy": "rule",
@@ -3048,6 +3205,7 @@
     {
       "id": "cobblemon:mental_herb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3072,6 +3230,7 @@
     {
       "id": "cobblemon:metal_alloy",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -3086,6 +3245,7 @@
     {
       "id": "cobblemon:metal_coat",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3097,8 +3257,8 @@
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=100/740, rolls=9",
-          "rate": 72.93
+          "detail": "w=100/635, rolls=9",
+          "rate": 78.61
         },
         {
           "source": "market",
@@ -3110,6 +3270,7 @@
     {
       "id": "cobblemon:metal_powder",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3129,6 +3290,7 @@
     {
       "id": "cobblemon:metronome",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3142,10 +3304,11 @@
     },
     {
       "id": "cobblemon:mighty_candy",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
-      "assignedBy": "override",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
+      "assignedBy": "rule",
       "sources": [
         {
           "source": "crate:rare",
@@ -3157,6 +3320,7 @@
     {
       "id": "cobblemon:mild_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -3171,6 +3335,7 @@
     {
       "id": "cobblemon:miracle_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3195,6 +3360,7 @@
     {
       "id": "cobblemon:mirror_herb",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -3219,6 +3385,7 @@
     {
       "id": "cobblemon:modest_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -3232,8 +3399,9 @@
     },
     {
       "id": "cobblemon:moon_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -3247,6 +3415,7 @@
     {
       "id": "cobblemon:muscle_band",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3266,25 +3435,27 @@
     {
       "id": "cobblemon:muscle_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "cobblemon:mystic_water",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3309,6 +3480,7 @@
     {
       "id": "cobblemon:naive_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -3323,6 +3495,7 @@
     {
       "id": "cobblemon:naughty_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -3337,6 +3510,7 @@
     {
       "id": "cobblemon:nest_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
@@ -3351,14 +3525,15 @@
     {
       "id": "cobblemon:net_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         },
         {
           "source": "market",
@@ -3370,6 +3545,7 @@
     {
       "id": "cobblemon:never_melt_ice",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3386,8 +3562,8 @@
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=30/625, rolls=9",
-          "rate": 35.77
+          "detail": "w=30/525, rolls=9",
+          "rate": 41.11
         },
         {
           "source": "market",
@@ -3399,6 +3575,7 @@
     {
       "id": "cobblemon:normal_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -3413,6 +3590,7 @@
     {
       "id": "cobblemon:old_amber_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -3427,6 +3605,7 @@
     {
       "id": "cobblemon:oval_stone",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -3441,6 +3620,7 @@
     {
       "id": "cobblemon:paralyze_heal",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Status heal",
       "assignedBy": "rule",
@@ -3455,6 +3635,7 @@
     {
       "id": "cobblemon:payapa_berry",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Berry",
       "assignedBy": "rule",
@@ -3463,6 +3644,7 @@
     {
       "id": "cobblemon:peat_block",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3477,6 +3659,7 @@
     {
       "id": "cobblemon:pink_apricorn",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -3491,6 +3674,7 @@
     {
       "id": "cobblemon:pink_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -3505,6 +3689,7 @@
     {
       "id": "cobblemon:pink_mint_leaf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -3519,6 +3704,7 @@
     {
       "id": "cobblemon:pink_mint_seeds",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mint seed",
       "assignedBy": "rule",
@@ -3533,6 +3719,7 @@
     {
       "id": "cobblemon:plume_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -3547,6 +3734,7 @@
     {
       "id": "cobblemon:poison_barb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3571,6 +3759,7 @@
     {
       "id": "cobblemon:poison_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -3585,6 +3774,7 @@
     {
       "id": "cobblemon:poke_ball",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Starter ball",
       "assignedBy": "override",
@@ -3599,6 +3789,7 @@
     {
       "id": "cobblemon:potion",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Healing consumable",
       "assignedBy": "rule",
@@ -3613,6 +3804,7 @@
     {
       "id": "cobblemon:power_anklet",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV training item",
       "assignedBy": "rule",
@@ -3632,6 +3824,7 @@
     {
       "id": "cobblemon:power_band",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV training item",
       "assignedBy": "rule",
@@ -3651,6 +3844,7 @@
     {
       "id": "cobblemon:power_belt",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV training item",
       "assignedBy": "rule",
@@ -3670,6 +3864,7 @@
     {
       "id": "cobblemon:power_bracer",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV training item",
       "assignedBy": "rule",
@@ -3689,6 +3884,7 @@
     {
       "id": "cobblemon:power_herb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3713,6 +3909,7 @@
     {
       "id": "cobblemon:power_lens",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV training item",
       "assignedBy": "rule",
@@ -3732,6 +3929,7 @@
     {
       "id": "cobblemon:power_weight",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV training item",
       "assignedBy": "rule",
@@ -3751,6 +3949,7 @@
     {
       "id": "cobblemon:pp_max",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3762,28 +3961,30 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=5/2355, rolls=9",
-          "rate": 1.89
+          "detail": "w=5/2255, rolls=9",
+          "rate": 1.98
         }
       ]
     },
     {
       "id": "cobblemon:pp_up",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:prism_scale",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -3798,6 +3999,7 @@
     {
       "id": "cobblemon:protective_pads",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3812,6 +4014,7 @@
     {
       "id": "cobblemon:protector",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -3828,14 +4031,15 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
+          "detail": "w=100/785, rolls=9",
+          "rate": 70.66
         }
       ]
     },
     {
       "id": "cobblemon:protein",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
@@ -3847,19 +4051,20 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=5/885, rolls=9",
-          "rate": 4.97
+          "detail": "w=5/785, rolls=9",
+          "rate": 5.59
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:psychic_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -3879,6 +4084,7 @@
     {
       "id": "cobblemon:psychic_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3887,6 +4093,7 @@
     {
       "id": "cobblemon:punching_glove",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -3901,6 +4108,7 @@
     {
       "id": "cobblemon:quick_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
@@ -3919,10 +4127,11 @@
     },
     {
       "id": "cobblemon:quick_candy",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
-      "assignedBy": "override",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
+      "assignedBy": "rule",
       "sources": [
         {
           "source": "crate:rare",
@@ -3934,6 +4143,7 @@
     {
       "id": "cobblemon:quick_claw",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3953,6 +4163,7 @@
     {
       "id": "cobblemon:quick_powder",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -3972,6 +4183,7 @@
     {
       "id": "cobblemon:quiet_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -3986,6 +4198,7 @@
     {
       "id": "cobblemon:rare_candy",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Instant level. Purchasable, but heavy demand keeps it scarce.",
       "assignedBy": "override",
@@ -4007,13 +4220,13 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "market",
@@ -4025,6 +4238,7 @@
     {
       "id": "cobblemon:rash_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -4039,6 +4253,7 @@
     {
       "id": "cobblemon:razor_claw",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4058,6 +4273,7 @@
     {
       "id": "cobblemon:razor_fang",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4077,6 +4293,7 @@
     {
       "id": "cobblemon:reaper_cloth",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -4088,14 +4305,15 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         }
       ]
     },
     {
       "id": "cobblemon:red_apricorn",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -4110,6 +4328,7 @@
     {
       "id": "cobblemon:red_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -4124,6 +4343,7 @@
     {
       "id": "cobblemon:red_card",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4138,6 +4358,7 @@
     {
       "id": "cobblemon:red_mint_leaf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -4152,6 +4373,7 @@
     {
       "id": "cobblemon:red_mint_seeds",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mint seed",
       "assignedBy": "rule",
@@ -4166,6 +4388,7 @@
     {
       "id": "cobblemon:relaxed_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -4180,19 +4403,20 @@
     {
       "id": "cobblemon:relic_coin",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Base currency unit",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
+          "detail": "w=100/715, rolls=9",
+          "rate": 74.23
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -4201,28 +4425,28 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=400/2611, rolls=14",
-          "rate": 90.25
+          "detail": "w=400/2461, rolls=14",
+          "rate": 91.65
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=100/625, rolls=9",
-          "rate": 79.18
+          "detail": "w=100/525, rolls=9",
+          "rate": 85.07
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
+          "detail": "w=100/785, rolls=9",
+          "rate": 70.66
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "loot:chests/observatory_barrel_2",
@@ -4239,6 +4463,7 @@
     {
       "id": "cobblemon:relic_coin_pouch",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Currency",
       "assignedBy": "rule",
@@ -4250,99 +4475,103 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=30/625, rolls=9",
-          "rate": 35.77
+          "detail": "w=30/525, rolls=9",
+          "rate": 41.11
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=30/885, rolls=9",
-          "rate": 26.68
+          "detail": "w=30/785, rolls=9",
+          "rate": 29.58
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         }
       ]
     },
     {
       "id": "cobblemon:relic_coin_sack",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Currency",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         }
       ]
     },
     {
       "id": "cobblemon:remedy",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Herbal heal",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:resist_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "cobblemon:revive",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Revive consumable",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -4354,6 +4583,7 @@
     {
       "id": "cobblemon:rich_mulch",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mulch",
       "assignedBy": "rule",
@@ -4368,6 +4598,7 @@
     {
       "id": "cobblemon:ring_target",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4382,6 +4613,7 @@
     {
       "id": "cobblemon:rock_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -4393,14 +4625,15 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
+          "detail": "w=100/785, rolls=9",
+          "rate": 70.66
         }
       ]
     },
     {
       "id": "cobblemon:rocky_helmet",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -4420,6 +4653,7 @@
     {
       "id": "cobblemon:room_service",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4434,6 +4668,7 @@
     {
       "id": "cobblemon:sachet",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -4448,6 +4683,7 @@
     {
       "id": "cobblemon:safety_goggles",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4467,6 +4703,7 @@
     {
       "id": "cobblemon:sail_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -4481,6 +4718,7 @@
     {
       "id": "cobblemon:sandy_mulch",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mulch",
       "assignedBy": "rule",
@@ -4495,6 +4733,7 @@
     {
       "id": "cobblemon:sassy_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -4509,6 +4748,7 @@
     {
       "id": "cobblemon:scope_lens",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4523,6 +4763,7 @@
     {
       "id": "cobblemon:serious_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -4537,6 +4778,7 @@
     {
       "id": "cobblemon:sharp_beak",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4561,6 +4803,7 @@
     {
       "id": "cobblemon:shed_shell",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4575,6 +4818,7 @@
     {
       "id": "cobblemon:shell_bell",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4588,8 +4832,9 @@
     },
     {
       "id": "cobblemon:shiny_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -4603,6 +4848,7 @@
     {
       "id": "cobblemon:silk_scarf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4619,8 +4865,8 @@
         },
         {
           "source": "loot:chests/regigigas_chest",
-          "detail": "w=30/345, rolls=9",
-          "rate": 55.9
+          "detail": "w=30/245, rolls=9",
+          "rate": 69.14
         },
         {
           "source": "market",
@@ -4632,6 +4878,7 @@
     {
       "id": "cobblemon:silver_powder",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4656,6 +4903,7 @@
     {
       "id": "cobblemon:sitrus_berry",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Berry",
       "assignedBy": "rule",
@@ -4664,6 +4912,7 @@
     {
       "id": "cobblemon:skull_fossil",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Fossil",
       "assignedBy": "rule",
@@ -4678,20 +4927,22 @@
     {
       "id": "cobblemon:sky_tumblestone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Crafting material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:small_budding_sky_tumblestone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Crafting material",
       "assignedBy": "rule",
@@ -4705,10 +4956,11 @@
     },
     {
       "id": "cobblemon:smart_candy",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
-      "assignedBy": "override",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
+      "assignedBy": "rule",
       "sources": [
         {
           "source": "crate:rare",
@@ -4720,6 +4972,7 @@
     {
       "id": "cobblemon:smoke_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4739,6 +4992,7 @@
     {
       "id": "cobblemon:smooth_rock",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4750,8 +5004,8 @@
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=30/885, rolls=9",
-          "rate": 26.68
+          "detail": "w=30/785, rolls=9",
+          "rate": 29.58
         },
         {
           "source": "market",
@@ -4763,6 +5017,7 @@
     {
       "id": "cobblemon:soft_sand",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4787,14 +5042,15 @@
     {
       "id": "cobblemon:soothe_bell",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         },
         {
           "source": "market",
@@ -4806,6 +5062,7 @@
     {
       "id": "cobblemon:spell_tag",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4822,13 +5079,13 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -4840,6 +5097,7 @@
     {
       "id": "cobblemon:steel_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -4854,6 +5112,7 @@
     {
       "id": "cobblemon:sticky_barb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4867,8 +5126,9 @@
     },
     {
       "id": "cobblemon:sun_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -4882,14 +5142,15 @@
     {
       "id": "cobblemon:super_potion",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Healing consumable",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         },
         {
           "source": "market",
@@ -4901,25 +5162,27 @@
     {
       "id": "cobblemon:superb_remedy",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Herbal heal",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:sweet_apple",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4934,25 +5197,27 @@
     {
       "id": "cobblemon:swift_feather",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "EV feather",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "cobblemon:syrupy_apple",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4967,6 +5232,7 @@
     {
       "id": "cobblemon:tart_apple",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4981,6 +5247,7 @@
     {
       "id": "cobblemon:terrain_extender",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -4995,6 +5262,7 @@
     {
       "id": "cobblemon:throat_spray",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -5008,8 +5276,9 @@
     },
     {
       "id": "cobblemon:thunder_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -5023,6 +5292,7 @@
     {
       "id": "cobblemon:timer_ball",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Specialty ball",
       "assignedBy": "rule",
@@ -5034,8 +5304,8 @@
         },
         {
           "source": "loot:chests/regigigas_chest",
-          "detail": "w=100/345, rolls=9",
-          "rate": 95.41
+          "detail": "w=100/245, rolls=9",
+          "rate": 99.11
         },
         {
           "source": "market",
@@ -5047,6 +5317,7 @@
     {
       "id": "cobblemon:timid_mint",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -5060,10 +5331,11 @@
     },
     {
       "id": "cobblemon:tough_candy",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "EV candy \u2014 Rare crate loot, high player demand",
-      "assignedBy": "override",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
+      "assignedBy": "rule",
       "sources": [
         {
           "source": "crate:rare",
@@ -5075,6 +5347,7 @@
     {
       "id": "cobblemon:toxic_orb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5094,6 +5367,7 @@
     {
       "id": "cobblemon:tr_voucher",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Redeems for a TR",
       "assignedBy": "override",
@@ -5108,20 +5382,22 @@
     {
       "id": "cobblemon:tumblestone",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "cobblemon:twisted_spoon",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5146,6 +5422,7 @@
     {
       "id": "cobblemon:ultra_ball",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Basic ball",
       "assignedBy": "rule",
@@ -5165,6 +5442,7 @@
     {
       "id": "cobblemon:unremarkable_teacup",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5179,6 +5457,7 @@
     {
       "id": "cobblemon:upgrade",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5193,6 +5472,7 @@
     {
       "id": "cobblemon:utility_umbrella",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5207,6 +5487,7 @@
     {
       "id": "cobblemon:vivichoke",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5221,6 +5502,7 @@
     {
       "id": "cobblemon:water_gem",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
@@ -5234,8 +5516,9 @@
     },
     {
       "id": "cobblemon:water_stone",
-      "tier": 2,
-      "tierName": "Rare",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
       "rationale": "Evolution stone",
       "assignedBy": "rule",
       "sources": [
@@ -5249,6 +5532,7 @@
     {
       "id": "cobblemon:weakness_policy",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Premium competitive held item",
       "assignedBy": "rule",
@@ -5263,6 +5547,7 @@
     {
       "id": "cobblemon:whipped_dream",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Evolution item",
       "assignedBy": "rule",
@@ -5277,6 +5562,7 @@
     {
       "id": "cobblemon:white_apricorn",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -5291,6 +5577,7 @@
     {
       "id": "cobblemon:white_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -5305,6 +5592,7 @@
     {
       "id": "cobblemon:white_herb",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5329,6 +5617,7 @@
     {
       "id": "cobblemon:white_mint_leaf",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Nature mint",
       "assignedBy": "rule",
@@ -5343,6 +5632,7 @@
     {
       "id": "cobblemon:white_mint_seeds",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Mint seed",
       "assignedBy": "rule",
@@ -5357,6 +5647,7 @@
     {
       "id": "cobblemon:wide_lens",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5371,6 +5662,7 @@
     {
       "id": "cobblemon:wise_glasses",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5395,6 +5687,7 @@
     {
       "id": "cobblemon:yellow_apricorn_seed",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Apricorn",
       "assignedBy": "rule",
@@ -5409,6 +5702,7 @@
     {
       "id": "cobblemon:zinc",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Vitamin",
       "assignedBy": "rule",
@@ -5420,19 +5714,20 @@
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=5/625, rolls=9",
-          "rate": 6.97
+          "detail": "w=5/525, rolls=9",
+          "rate": 8.25
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "cobblemon:zoom_lens",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Standard held / utility item",
       "assignedBy": "rule",
@@ -5447,28 +5742,31 @@
     {
       "id": "legendarymonuments:ancient_rubble_ore",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Ore block, mid-tier crafting material",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/regigigas_chest",
-          "detail": "w=5/345, rolls=9",
-          "rate": 12.31
+          "detail": "w=5/245, rolls=9",
+          "rate": 16.94
         }
       ]
     },
     {
       "id": "legendarymonuments:arc_phone",
-      "tier": 3,
-      "tierName": "Epic",
-      "rationale": "Recipe disabled by server-no-arc-phone \u2014 currently unobtainable, tiered high so it stays that way if ever re-enabled",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Recipe disabled by server-no-arc-phone",
       "assignedBy": "override",
       "sources": []
     },
     {
       "id": "legendarymonuments:azure_flute",
       "tier": 5,
+      "tierLabel": "T5",
       "tierName": "Mythic",
       "rationale": "Opens the Hall of Origin \u2014 ARCEUS. Ultra crate jackpot at 0.8%.",
       "assignedBy": "override",
@@ -5483,20 +5781,22 @@
     {
       "id": "legendarymonuments:celestica_flute",
       "tier": 5,
+      "tierLabel": "T5",
       "tierName": "Mythic",
       "rationale": "Crafts into the Azure Flute. Same gate, one step removed.",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=10/2808, rolls=3",
-          "rate": 1.06
+          "detail": "w=10/2688, rolls=3",
+          "rate": 1.11
         }
       ]
     },
     {
       "id": "legendarymonuments:curry_of_justice",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Keldeo",
       "assignedBy": "override",
@@ -5511,6 +5811,7 @@
     {
       "id": "legendarymonuments:darkstone",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Zekrom",
       "assignedBy": "override",
@@ -5525,14 +5826,15 @@
     {
       "id": "legendarymonuments:darkstone_shard",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "9 craft into a T4 Dark Stone",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -5541,14 +5843,15 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=40/2611, rolls=14",
-          "rate": 19.44
+          "detail": "w=40/2461, rolls=14",
+          "rate": 20.5
         }
       ]
     },
     {
       "id": "legendarymonuments:dragon_golem_key",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Regidrago gate",
       "assignedBy": "override",
@@ -5563,6 +5866,7 @@
     {
       "id": "legendarymonuments:fullmoon_whistle",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Cresselia",
       "assignedBy": "override",
@@ -5577,39 +5881,42 @@
     {
       "id": "legendarymonuments:golem_scrap",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Golem crafting material \u2014 a component, not a gate",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=5/2355, rolls=9",
-          "rate": 1.89
+          "detail": "w=5/2255, rolls=9",
+          "rate": 1.98
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=20/2808, rolls=3",
-          "rate": 2.12
+          "detail": "w=20/2688, rolls=3",
+          "rate": 2.22
         }
       ]
     },
     {
       "id": "legendarymonuments:griseous_key",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Giratina",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "legendarymonuments:ice_golem_key",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Regice gate",
       "assignedBy": "override",
@@ -5624,6 +5931,7 @@
     {
       "id": "legendarymonuments:liberty_pass",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Victini",
       "assignedBy": "override",
@@ -5638,6 +5946,7 @@
     {
       "id": "legendarymonuments:lightstone",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Reshiram",
       "assignedBy": "override",
@@ -5652,14 +5961,15 @@
     {
       "id": "legendarymonuments:lightstone_shard",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "9 craft into a T4 Light Stone",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -5668,14 +5978,15 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=40/2611, rolls=14",
-          "rate": 19.44
+          "detail": "w=40/2461, rolls=14",
+          "rate": 20.5
         }
       ]
     },
     {
       "id": "legendarymonuments:newmoon_whistle",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Darkrai",
       "assignedBy": "override",
@@ -5690,6 +6001,7 @@
     {
       "id": "legendarymonuments:old_sea_map",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Mew",
       "assignedBy": "override",
@@ -5704,20 +6016,22 @@
     {
       "id": "legendarymonuments:origin_ingot",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Repairs the Red Chain \u2014 component for a T4",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=10/2808, rolls=3",
-          "rate": 1.06
+          "detail": "w=10/2688, rolls=3",
+          "rate": 1.11
         }
       ]
     },
     {
       "id": "legendarymonuments:proof_of_conquest_a",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Azelf",
       "assignedBy": "override",
@@ -5732,6 +6046,7 @@
     {
       "id": "legendarymonuments:proof_of_conquest_m",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Mesprit",
       "assignedBy": "override",
@@ -5746,6 +6061,7 @@
     {
       "id": "legendarymonuments:proof_of_conquest_u",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Uxie",
       "assignedBy": "override",
@@ -5760,6 +6076,7 @@
     {
       "id": "legendarymonuments:rainbow_feather",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Ho-Oh",
       "assignedBy": "override",
@@ -5774,6 +6091,7 @@
     {
       "id": "legendarymonuments:red_chain",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Dialga & Palkia",
       "assignedBy": "override",
@@ -5788,6 +6106,7 @@
     {
       "id": "legendarymonuments:rock_golem_key",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Regirock gate",
       "assignedBy": "override",
@@ -5802,6 +6121,7 @@
     {
       "id": "legendarymonuments:steel_golem_key",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Registeel gate",
       "assignedBy": "override",
@@ -5816,6 +6136,7 @@
     {
       "id": "legendarymonuments:titan_key",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Titan encounter gate",
       "assignedBy": "override",
@@ -5830,6 +6151,7 @@
     {
       "id": "legendarymonuments:urn_of_embers",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Legendary-adjacent gate component",
       "assignedBy": "override",
@@ -5844,6 +6166,7 @@
     {
       "id": "legendarymonuments:urn_of_frost",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Legendary-adjacent gate component",
       "assignedBy": "override",
@@ -5858,6 +6181,7 @@
     {
       "id": "legendarymonuments:urn_of_storms",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Legendary-adjacent gate component",
       "assignedBy": "override",
@@ -5872,6 +6196,7 @@
     {
       "id": "legendarymonuments:vortex_stone",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Summons Lugia",
       "assignedBy": "override",
@@ -5886,6 +6211,7 @@
     {
       "id": "mega_showdown:abomasite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5894,6 +6220,7 @@
     {
       "id": "mega_showdown:absolite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5902,13 +6229,14 @@
     {
       "id": "mega_showdown:adamant_crystal",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Dialga Origin forme unlock",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=1/2808, rolls=3",
+          "detail": "w=1/2688, rolls=3",
           "rate": 0.11
         }
       ]
@@ -5916,20 +6244,22 @@
     {
       "id": "mega_showdown:adamant_orb",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Origin-forme held item",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=5/2808, rolls=3",
-          "rate": 0.53
+          "detail": "w=5/2688, rolls=3",
+          "rate": 0.56
         }
       ]
     },
     {
       "id": "mega_showdown:adrenaline_orb",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5938,6 +6268,7 @@
     {
       "id": "mega_showdown:aggronite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5946,14 +6277,25 @@
     {
       "id": "mega_showdown:alakazite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:aloraichium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:altarianite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5962,6 +6304,7 @@
     {
       "id": "mega_showdown:ampharosite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5969,15 +6312,17 @@
     },
     {
       "id": "mega_showdown:ash_cap",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Uncraftable \u2014 craft banned by server-craft-bans; Ultra crate only",
+      "assignedBy": "override",
       "sources": []
     },
     {
       "id": "mega_showdown:audinite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5986,6 +6331,7 @@
     {
       "id": "mega_showdown:banettite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -5994,6 +6340,16 @@
     {
       "id": "mega_showdown:beedrillite",
       "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Mega Showdown item (type/forme adjacent)",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:blank_z",
+      "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6002,6 +6358,7 @@
     {
       "id": "mega_showdown:blastoisinite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6010,6 +6367,7 @@
     {
       "id": "mega_showdown:blazikenite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6018,20 +6376,31 @@
     {
       "id": "mega_showdown:blue_orb",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Primal Kyogre",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=1/2611, rolls=14",
-          "rate": 0.53
+          "detail": "w=1/2461, rolls=14",
+          "rate": 0.57
         }
       ]
     },
     {
+      "id": "mega_showdown:buginium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:cameruptite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6040,6 +6409,7 @@
     {
       "id": "mega_showdown:charizardite_x",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6048,6 +6418,7 @@
     {
       "id": "mega_showdown:charizardite_y",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6055,23 +6426,26 @@
     },
     {
       "id": "mega_showdown:darkinium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:decidium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:diancite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6080,6 +6454,7 @@
     {
       "id": "mega_showdown:draco_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6093,35 +6468,26 @@
     },
     {
       "id": "mega_showdown:dragon_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:dragonium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=5/925, rolls=9",
-          "rate": 4.76
-        }
-      ]
+      "sources": []
     },
     {
       "id": "mega_showdown:dread_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6136,6 +6502,7 @@
     {
       "id": "mega_showdown:earth_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6149,79 +6516,71 @@
     },
     {
       "id": "mega_showdown:eevium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:electric_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=100/925, rolls=9",
-          "rate": 64.29
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:electrium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=5/925, rolls=9",
-          "rate": 4.76
-        }
-      ]
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:fairium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
     },
     {
       "id": "mega_showdown:fightinium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:fire_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:firium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
-        }
-      ]
+      "sources": []
     },
     {
       "id": "mega_showdown:fist_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6236,6 +6595,7 @@
     {
       "id": "mega_showdown:flame_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6248,8 +6608,18 @@
       ]
     },
     {
+      "id": "mega_showdown:flyinium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:galladite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6258,6 +6628,7 @@
     {
       "id": "mega_showdown:garchompite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6266,6 +6637,7 @@
     {
       "id": "mega_showdown:gardevoirite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6274,6 +6646,7 @@
     {
       "id": "mega_showdown:gengarite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6282,68 +6655,65 @@
     {
       "id": "mega_showdown:ghost_memory",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Silvally memory",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "mega_showdown:ghost_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
-        },
-        {
-          "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:ghostium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=20/2808, rolls=3",
-          "rate": 2.12
-        }
-      ]
+      "sources": []
     },
     {
       "id": "mega_showdown:glalitite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:grassium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:griseous_core",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Giratina Origin forme unlock",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=1/2808, rolls=3",
+          "detail": "w=1/2688, rolls=3",
           "rate": 0.11
         }
       ]
@@ -6351,6 +6721,7 @@
     {
       "id": "mega_showdown:griseous_orb",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Origin-forme held item",
       "assignedBy": "override",
@@ -6362,22 +6733,24 @@
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=5/2808, rolls=3",
-          "rate": 0.53
+          "detail": "w=5/2688, rolls=3",
+          "rate": 0.56
         }
       ]
     },
     {
       "id": "mega_showdown:groundium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:gyaradosite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6386,6 +6759,7 @@
     {
       "id": "mega_showdown:heracronite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6394,6 +6768,7 @@
     {
       "id": "mega_showdown:houndoominite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6401,21 +6776,17 @@
     },
     {
       "id": "mega_showdown:ice_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/regice_chest",
-          "detail": "w=100/625, rolls=9",
-          "rate": 79.18
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:icicle_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6428,8 +6799,27 @@
       ]
     },
     {
+      "id": "mega_showdown:icium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:incinium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:insect_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6444,6 +6834,7 @@
     {
       "id": "mega_showdown:iron_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6458,6 +6849,7 @@
     {
       "id": "mega_showdown:kangaskhanite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6466,6 +6858,7 @@
     {
       "id": "mega_showdown:keystone",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Mega evolution enabler",
       "assignedBy": "override",
@@ -6478,8 +6871,18 @@
       ]
     },
     {
+      "id": "mega_showdown:kommonium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:lopunnite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6488,21 +6891,32 @@
     {
       "id": "mega_showdown:lucarionite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:lunalium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:lustrous_globe",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Palkia Origin forme unlock",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=1/2808, rolls=3",
+          "detail": "w=1/2688, rolls=3",
           "rate": 0.11
         }
       ]
@@ -6510,28 +6924,49 @@
     {
       "id": "mega_showdown:lustrous_orb",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Origin-forme held item",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=5/2808, rolls=3",
-          "rate": 0.53
+          "detail": "w=5/2688, rolls=3",
+          "rate": 0.56
         }
       ]
     },
     {
+      "id": "mega_showdown:lycanium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:manectite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:marshadium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:mawilite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6540,6 +6975,7 @@
     {
       "id": "mega_showdown:meadow_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6554,6 +6990,7 @@
     {
       "id": "mega_showdown:medichamite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6562,6 +6999,7 @@
     {
       "id": "mega_showdown:mega_meteorid_block",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6576,6 +7014,7 @@
     {
       "id": "mega_showdown:mega_stone",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Mega evolution enabler",
       "assignedBy": "override",
@@ -6590,6 +7029,7 @@
     {
       "id": "mega_showdown:metagrossite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6597,15 +7037,26 @@
     },
     {
       "id": "mega_showdown:mewnium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:mimikium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:mind_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6619,37 +7070,53 @@
     },
     {
       "id": "mega_showdown:normal_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/regigigas_chest",
-          "detail": "w=100/345, rolls=9",
-          "rate": 95.41
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:normalium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:pidgeotite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:pikanium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:pikashunium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:pinsirite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6658,6 +7125,7 @@
     {
       "id": "mega_showdown:pixie_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6671,59 +7139,86 @@
     },
     {
       "id": "mega_showdown:poisonium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:primarium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:psychium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:red_orb",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Primal Groudon",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=1/2441, rolls=14",
-          "rate": 0.57
+          "detail": "w=1/2365, rolls=14",
+          "rate": 0.59
         }
       ]
     },
     {
       "id": "mega_showdown:rock_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:rockium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/regirock_chest",
-          "detail": "w=100/885, rolls=9",
-          "rate": 66.01
-        }
-      ]
+      "sources": []
+    },
+    {
+      "id": "mega_showdown:rusted_shield",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Zamazenta-Crowned gate \u2014 craft banned by server-craft-bans",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:rusted_sword",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Zacian-Crowned gate \u2014 craft banned by server-craft-bans",
+      "assignedBy": "override",
       "sources": []
     },
     {
       "id": "mega_showdown:sablenite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6732,6 +7227,7 @@
     {
       "id": "mega_showdown:salamencite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6740,6 +7236,7 @@
     {
       "id": "mega_showdown:sceptilite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6748,6 +7245,7 @@
     {
       "id": "mega_showdown:scizorite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6756,6 +7254,7 @@
     {
       "id": "mega_showdown:sharpedonite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6764,6 +7263,7 @@
     {
       "id": "mega_showdown:sky_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6778,22 +7278,34 @@
     {
       "id": "mega_showdown:slowbronite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:snorlium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:solganium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:splash_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6808,14 +7320,15 @@
     {
       "id": "mega_showdown:spooky_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=20/2808, rolls=3",
-          "rate": 2.12
+          "detail": "w=20/2688, rolls=3",
+          "rate": 2.22
         },
         {
           "source": "market",
@@ -6827,48 +7340,40 @@
     {
       "id": "mega_showdown:steel_memory",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Silvally memory",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=5/740, rolls=9",
-          "rate": 5.92
+          "detail": "w=5/635, rolls=9",
+          "rate": 6.87
         }
       ]
     },
     {
       "id": "mega_showdown:steel_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/registeel_chest",
-          "detail": "w=100/740, rolls=9",
-          "rate": 72.93
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:steelium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/registeel_chest",
-          "detail": "w=5/740, rolls=9",
-          "rate": 5.92
-        }
-      ]
+      "sources": []
     },
     {
       "id": "mega_showdown:stone_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6883,14 +7388,25 @@
     {
       "id": "mega_showdown:swampertite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:tapunium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:toxic_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6905,14 +7421,25 @@
     {
       "id": "mega_showdown:tyranitarite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
       "sources": []
     },
     {
+      "id": "mega_showdown:ultranecrozium_z",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "mega_showdown:venusaurite",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Mega Showdown item (type/forme adjacent)",
       "assignedBy": "rule",
@@ -6920,29 +7447,26 @@
     },
     {
       "id": "mega_showdown:water_tera_shard",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Tera shard",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
-        }
-      ]
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Tera is banned on this server \u2014 stripped from monument chest loot (was up to 95%/chest)",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "mega_showdown:waterium_z",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Z-crystal",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Z-crystal \u2014 disabled on this server",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "mega_showdown:zap_plate",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Arceus plate / type booster",
       "assignedBy": "rule",
@@ -6957,44 +7481,45 @@
     {
       "id": "mega_showdown:zygarde_cell",
       "tier": 3,
+      "tierLabel": "T3",
       "tierName": "Epic",
       "rationale": "Zygarde assembly component",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         },
         {
           "source": "loot:chests/regice_chest",
-          "detail": "w=30/625, rolls=9",
-          "rate": 35.77
+          "detail": "w=30/525, rolls=9",
+          "rate": 41.11
         },
         {
           "source": "loot:chests/regigigas_chest",
-          "detail": "w=5/345, rolls=9",
-          "rate": 12.31
+          "detail": "w=5/245, rolls=9",
+          "rate": 16.94
         },
         {
           "source": "loot:chests/regirock_chest",
-          "detail": "w=30/885, rolls=9",
-          "rate": 26.68
+          "detail": "w=30/785, rolls=9",
+          "rate": 29.58
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=30/740, rolls=9",
-          "rate": 31.1
+          "detail": "w=30/635, rolls=9",
+          "rate": 35.31
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=50/2808, rolls=3",
-          "rate": 5.25
+          "detail": "w=50/2688, rolls=3",
+          "rate": 5.48
         },
         {
           "source": "loot:chests/observatory_barrel_2",
@@ -7011,6 +7536,7 @@
     {
       "id": "mega_showdown:zygarde_core",
       "tier": 4,
+      "tierLabel": "T4",
       "tierName": "Legendary",
       "rationale": "Zygarde assembly core",
       "assignedBy": "override",
@@ -7022,19 +7548,20 @@
         },
         {
           "source": "loot:chests/regigigas_chest",
-          "detail": "w=5/345, rolls=9",
-          "rate": 12.31
+          "detail": "w=5/245, rolls=9",
+          "rate": 16.94
         },
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=5/740, rolls=9",
-          "rate": 5.92
+          "detail": "w=5/635, rolls=9",
+          "rate": 6.87
         }
       ]
     },
     {
       "id": "minecraft:ancient_debris",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Netherite path",
       "assignedBy": "override",
@@ -7043,6 +7570,7 @@
     {
       "id": "minecraft:apple",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7057,6 +7585,7 @@
     {
       "id": "minecraft:arrow",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7071,6 +7600,7 @@
     {
       "id": "minecraft:axolotl_bucket",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7082,8 +7612,8 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=40/2611, rolls=14",
-          "rate": 19.44
+          "detail": "w=40/2461, rolls=14",
+          "rate": 20.5
         },
         {
           "source": "market",
@@ -7095,6 +7625,7 @@
     {
       "id": "minecraft:beacon",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "$50,000 \u2014 the single most expensive market item",
       "assignedBy": "override",
@@ -7109,6 +7640,7 @@
     {
       "id": "minecraft:blaze_rod",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7128,6 +7660,7 @@
     {
       "id": "minecraft:bone",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7142,6 +7675,7 @@
     {
       "id": "minecraft:bricks",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla building block",
       "assignedBy": "rule",
@@ -7156,6 +7690,7 @@
     {
       "id": "minecraft:carrot",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7190,6 +7725,7 @@
     {
       "id": "minecraft:coal",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7204,6 +7740,7 @@
     {
       "id": "minecraft:cobblestone",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7218,6 +7755,7 @@
     {
       "id": "minecraft:cobweb",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7237,20 +7775,22 @@
     {
       "id": "minecraft:copper_ingot",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "minecraft:creeper_banner_pattern",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7265,6 +7805,7 @@
     {
       "id": "minecraft:dark_prismarine",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7279,6 +7820,7 @@
     {
       "id": "minecraft:diamond",
       "tier": 1,
+      "tierLabel": "T1",
       "tierName": "Uncommon",
       "rationale": "Common enough at this point in progression",
       "assignedBy": "override",
@@ -7295,23 +7837,23 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=40/2611, rolls=14",
-          "rate": 19.44
+          "detail": "w=40/2461, rolls=14",
+          "rate": 20.5
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=20/2808, rolls=3",
-          "rate": 2.12
+          "detail": "w=20/2688, rolls=3",
+          "rate": 2.22
         },
         {
           "source": "loot:archaeology/ruins",
@@ -7323,6 +7865,7 @@
     {
       "id": "minecraft:dirt",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7337,6 +7880,7 @@
     {
       "id": "minecraft:disc_fragment_5",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7351,20 +7895,22 @@
     {
       "id": "minecraft:dragon_breath",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/dragoeleki_chest",
-          "detail": "w=30/925, rolls=9",
-          "rate": 25.68
+          "detail": "w=30/715, rolls=9",
+          "rate": 32.01
         }
       ]
     },
     {
       "id": "minecraft:echo_shard",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7376,14 +7922,15 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=5/2355, rolls=9",
-          "rate": 1.89
+          "detail": "w=5/2255, rolls=9",
+          "rate": 1.98
         }
       ]
     },
     {
       "id": "minecraft:egg",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7398,6 +7945,7 @@
     {
       "id": "minecraft:elytra",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Vanilla chase item",
       "assignedBy": "override",
@@ -7406,6 +7954,7 @@
     {
       "id": "minecraft:emerald",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7417,8 +7966,8 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "loot:chests/liberty_island_chest",
@@ -7427,19 +7976,20 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "minecraft:enchanted_book",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7454,25 +8004,27 @@
     {
       "id": "minecraft:enchanted_golden_apple",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Vanilla chase item",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=4/2441, rolls=14",
-          "rate": 2.27
+          "detail": "w=4/2365, rolls=14",
+          "rate": 2.34
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=20/2808, rolls=3",
-          "rate": 2.12
+          "detail": "w=20/2688, rolls=3",
+          "rate": 2.22
         }
       ]
     },
     {
       "id": "minecraft:end_crystal",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7481,6 +8033,7 @@
     {
       "id": "minecraft:ender_eye",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7500,14 +8053,15 @@
     {
       "id": "minecraft:ender_pearl",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "market",
@@ -7519,6 +8073,7 @@
     {
       "id": "minecraft:experience_bottle",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7530,14 +8085,24 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         }
       ]
     },
     {
+      "id": "minecraft:fire_charge",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Vanilla item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "minecraft:firework_star",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7552,6 +8117,7 @@
     {
       "id": "minecraft:flower_banner_pattern",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7566,6 +8132,7 @@
     {
       "id": "minecraft:ghast_tear",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7577,8 +8144,8 @@
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "market",
@@ -7590,6 +8157,7 @@
     {
       "id": "minecraft:glistering_melon_slice",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7604,6 +8172,7 @@
     {
       "id": "minecraft:globe_banner_pattern",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7618,6 +8187,7 @@
     {
       "id": "minecraft:glow_ink_sac",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7632,30 +8202,32 @@
     {
       "id": "minecraft:gold_ingot",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         }
       ]
     },
     {
       "id": "minecraft:gold_nugget",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7675,6 +8247,7 @@
     {
       "id": "minecraft:golden_apple",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7686,19 +8259,20 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         }
       ]
     },
     {
       "id": "minecraft:golden_carrot",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7710,14 +8284,15 @@
         },
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         }
       ]
     },
     {
       "id": "minecraft:gravel",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7732,6 +8307,7 @@
     {
       "id": "minecraft:green_wool",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7740,6 +8316,7 @@
     {
       "id": "minecraft:gunpowder",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7754,6 +8331,7 @@
     {
       "id": "minecraft:heart_of_the_sea",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Vanilla chase item",
       "assignedBy": "override",
@@ -7765,14 +8343,15 @@
         },
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=10/2611, rolls=14",
-          "rate": 5.23
+          "detail": "w=10/2461, rolls=14",
+          "rate": 5.54
         }
       ]
     },
     {
       "id": "minecraft:iron_axe",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7787,44 +8366,56 @@
     {
       "id": "minecraft:iron_ingot",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=30/740, rolls=9",
-          "rate": 31.1
+          "detail": "w=30/635, rolls=9",
+          "rate": 35.31
         },
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=100/2355, rolls=9",
-          "rate": 32.33
+          "detail": "w=100/2255, rolls=9",
+          "rate": 33.52
         },
         {
           "source": "loot:chests/turnback_cave_vault",
-          "detail": "w=100/2808, rolls=3",
-          "rate": 10.31
+          "detail": "w=100/2688, rolls=3",
+          "rate": 10.75
         }
       ]
     },
     {
       "id": "minecraft:iron_nugget",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/registeel_chest",
-          "detail": "w=100/740, rolls=9",
-          "rate": 72.93
+          "detail": "w=100/635, rolls=9",
+          "rate": 78.61
         }
       ]
     },
     {
+      "id": "minecraft:iron_sword",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Vanilla item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "minecraft:lapis_lazuli",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -7839,6 +8430,7 @@
     {
       "id": "minecraft:magma_cream",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7853,6 +8445,7 @@
     {
       "id": "minecraft:map",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7867,6 +8460,7 @@
     {
       "id": "minecraft:melon_slice",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7881,6 +8475,7 @@
     {
       "id": "minecraft:mojang_banner_pattern",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7895,20 +8490,22 @@
     {
       "id": "minecraft:music_disc_11",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/turnback_cave_chest",
-          "detail": "w=30/2355, rolls=9",
-          "rate": 10.9
+          "detail": "w=30/2255, rolls=9",
+          "rate": 11.36
         }
       ]
     },
     {
       "id": "minecraft:music_disc_cat",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7923,6 +8520,7 @@
     {
       "id": "minecraft:music_disc_otherside",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7937,6 +8535,7 @@
     {
       "id": "minecraft:nautilus_shell",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7955,15 +8554,17 @@
     },
     {
       "id": "minecraft:nether_star",
-      "tier": 2,
-      "tierName": "Rare",
-      "rationale": "Vanilla boss drop",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Wither drop \u2014 treat as legendary-scale",
       "assignedBy": "override",
       "sources": []
     },
     {
       "id": "minecraft:nether_wart",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -7978,6 +8579,7 @@
     {
       "id": "minecraft:netherite_scrap",
       "tier": 2,
+      "tierLabel": "T2",
       "tierName": "Rare",
       "rationale": "Netherite path",
       "assignedBy": "override",
@@ -7986,6 +8588,7 @@
     {
       "id": "minecraft:netherite_upgrade_smithing_template",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8000,6 +8603,7 @@
     {
       "id": "minecraft:oak_log",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla building block",
       "assignedBy": "rule",
@@ -8014,6 +8618,7 @@
     {
       "id": "minecraft:obsidian",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8022,6 +8627,7 @@
     {
       "id": "minecraft:ochre_froglight",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8036,6 +8642,7 @@
     {
       "id": "minecraft:pearlescent_froglight",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8050,6 +8657,7 @@
     {
       "id": "minecraft:phantom_membrane",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8069,6 +8677,7 @@
     {
       "id": "minecraft:piglin_banner_pattern",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8083,6 +8692,7 @@
     {
       "id": "minecraft:potato",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8097,6 +8707,7 @@
     {
       "id": "minecraft:potion",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Healing consumable",
       "assignedBy": "rule",
@@ -8111,6 +8722,7 @@
     {
       "id": "minecraft:prismarine",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8125,6 +8737,7 @@
     {
       "id": "minecraft:prismarine_crystals",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8144,6 +8757,7 @@
     {
       "id": "minecraft:prismarine_shard",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8163,6 +8777,7 @@
     {
       "id": "minecraft:pufferfish",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8177,6 +8792,7 @@
     {
       "id": "minecraft:pumpkin_pie",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8191,20 +8807,22 @@
     {
       "id": "minecraft:raw_gold",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=160/2441, rolls=14",
-          "rate": 61.29
+          "detail": "w=160/2365, rolls=14",
+          "rate": 62.5
         }
       ]
     },
     {
       "id": "minecraft:red_wool",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8213,6 +8831,7 @@
     {
       "id": "minecraft:rotten_flesh",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8237,14 +8856,15 @@
     {
       "id": "minecraft:sand",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=400/2611, rolls=14",
-          "rate": 90.25
+          "detail": "w=400/2461, rolls=14",
+          "rate": 91.65
         },
         {
           "source": "market",
@@ -8256,6 +8876,7 @@
     {
       "id": "minecraft:shelter_pottery_sherd",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8273,8 +8894,18 @@
       ]
     },
     {
+      "id": "minecraft:shield",
+      "tier": 0,
+      "tierLabel": "T0",
+      "tierName": "Common",
+      "rationale": "Vanilla item",
+      "assignedBy": "rule",
+      "sources": []
+    },
+    {
       "id": "minecraft:shulker_shell",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8289,6 +8920,7 @@
     {
       "id": "minecraft:skull_banner_pattern",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8303,6 +8935,7 @@
     {
       "id": "minecraft:slime_ball",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8317,6 +8950,7 @@
     {
       "id": "minecraft:smooth_stone",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla building block",
       "assignedBy": "rule",
@@ -8331,20 +8965,22 @@
     {
       "id": "minecraft:sniffer_egg",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         }
       ]
     },
     {
       "id": "minecraft:spider_eye",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8359,6 +8995,7 @@
     {
       "id": "minecraft:spyglass",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8373,6 +9010,7 @@
     {
       "id": "minecraft:stone_bricks",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla building block",
       "assignedBy": "rule",
@@ -8387,6 +9025,7 @@
     {
       "id": "minecraft:string",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla bulk material",
       "assignedBy": "rule",
@@ -8401,6 +9040,7 @@
     {
       "id": "minecraft:sunflower",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8409,6 +9049,7 @@
     {
       "id": "minecraft:terracotta",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8423,20 +9064,22 @@
     {
       "id": "minecraft:torchflower",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=60/2441, rolls=14",
-          "rate": 29.42
+          "detail": "w=60/2365, rolls=14",
+          "rate": 30.22
         }
       ]
     },
     {
       "id": "minecraft:torchflower_seeds",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8451,6 +9094,7 @@
     {
       "id": "minecraft:totem_of_undying",
       "tier": 5,
+      "tierLabel": "T5",
       "tierName": "Mythic",
       "rationale": "Zacian summon gate. Ultra crate 1.6% is the only intended source.",
       "assignedBy": "override",
@@ -8465,6 +9109,7 @@
     {
       "id": "minecraft:tropical_fish_bucket",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8479,20 +9124,22 @@
     {
       "id": "minecraft:turtle_egg",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/bell_tower_chest",
-          "detail": "w=16/2441, rolls=14",
-          "rate": 8.8
+          "detail": "w=16/2365, rolls=14",
+          "rate": 9.07
         }
       ]
     },
     {
       "id": "minecraft:turtle_helmet",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8507,6 +9154,7 @@
     {
       "id": "minecraft:verdant_froglight",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
@@ -8521,20 +9169,22 @@
     {
       "id": "minecraft:water_bucket",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",
       "sources": [
         {
           "source": "loot:chests/lugia_temple_chest",
-          "detail": "w=150/2611, rolls=14",
-          "rate": 56.32
+          "detail": "w=150/2461, rolls=14",
+          "rate": 58.54
         }
       ]
     },
     {
       "id": "minecraft:white_wool",
       "tier": 0,
+      "tierLabel": "T0",
       "tierName": "Common",
       "rationale": "Vanilla item",
       "assignedBy": "rule",

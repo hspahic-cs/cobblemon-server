@@ -6,11 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mega_showdown:water_tera_shard",
-          "weight": 150
-        },
-        {
-          "type": "minecraft:item",
           "name": "cobblemon:exp_candy_xs",
           "weight": 400
         },

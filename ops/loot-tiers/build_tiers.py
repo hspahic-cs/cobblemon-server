@@ -43,7 +43,12 @@ MARKET = OVERRIDES_DIR / "config/cobblemon-market/authored/items.json"
 GACHA_DIR = OVERRIDES_DIR / "config/cobblemon-gacha/authored/tables"
 DATAPACKS = OVERRIDES_DIR / "datapacks"
 
+# TX (-1) is a STATUS, not a rarity: items that are intentionally not obtainable.
+# Kept in the same field so one sort/filter covers everything, and rendered "TX".
+DISABLED = -1
+
 TIER_NAMES = {
+    DISABLED: "Disabled",
     5: "Mythic",
     4: "Legendary",
     3: "Epic",
@@ -52,6 +57,9 @@ TIER_NAMES = {
     0: "Common",
 }
 TIER_BLURB = {
+    DISABLED: ("Intentionally not obtainable — recipe banned and/or stripped from loot. "
+               "Never use as a reward. If one of these is still dropping, that's a bug to fix, "
+               "not a tier to change."),
     5: "Gates a box legendary or mythical, or guarantees a catch. Never a routine reward.",
     4: "Summons or permanently unlocks a legendary/forme. One-per-player scale.",
     3: "Permanent competitive power or a hard-gated component. A real chase reward.",
@@ -93,7 +101,7 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     (r":\w+_apricorn(_seed)?$", 1, "Apricorn"),
     (r":(hp_up|protein|iron|calcium|zinc|carbos)$", 1, "Vitamin"),
     (r":\w+_feather$", 1, "EV feather"),
-    (r":(health|quick|mighty|smart|tough|courage)_candy$", 1, "EV candy"),
+    (r":(health|quick|mighty|smart|tough|courage)_candy$", 3, "IV candy — raises a stat's effective IV by 1; heavy player demand"),
     (r":\w*fossil\w*$", 1, "Fossil"),
     (r":\w+_mulch$", 1, "Mulch"),
     (r":power_(anklet|band|belt|bracer|lens|weight)$", 1, "EV training item"),
@@ -102,12 +110,12 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     (r":\w+_berry$", 1, "Berry"),
     # --- type-flavoured power: rare band
     (r":\w+_gem$", 2, "Type gem — one-shot damage boost"),
-    (r":\w+_tera_shard$", 2, "Tera shard"),
-    (r":\w+ium_z$", 2, "Z-crystal"),
+    (r":\w+_tera_shard$", DISABLED, "Tera shard — Tera is banned on this server"),
+    (r":\w+ium_z$", DISABLED, "Z-crystal — disabled on this server"),
     (r":\w+_plate$", 2, "Arceus plate / type booster"),
     (r":\w+_memory$", 2, "Silvally memory"),
     # --- evolution items
-    (r":(fire|water|thunder|leaf|moon|sun|shiny|dusk|dawn|ice)_stone(_block)?$", 2, "Evolution stone"),
+    (r":(fire|water|thunder|leaf|moon|sun|shiny|dusk|dawn|ice)_stone(_block)?$", 0, "Evolution stone"),
     (r":(link_cable|dubious_disc|dragon_scale|deep_sea_tooth|deep_sea_scale|electirizer|"
      r"magmarizer|protector|reaper_cloth|prism_scale|whipped_dream|sachet|oval_stone|"
      r"chipped_pot|cracked_pot|masterpiece_teacup|black_augurite|auspicious_armor|"
@@ -137,6 +145,11 @@ TM_PREMIUM = {
 }
 TM_PREMIUM_TIER = 2
 TM_DEFAULT_TIER = 1
+
+
+def tlabel(t: int) -> str:
+    """T5..T0, or TX for the disabled bucket."""
+    return "TX" if t == DISABLED else f"T{t}"
 
 
 def load_json(p: pathlib.Path):
@@ -316,6 +329,7 @@ def build() -> tuple[dict, str]:
         rows.append({
             "id": iid,
             "tier": tier,
+            "tierLabel": tlabel(tier),
             "tierName": TIER_NAMES[tier],
             "rationale": why,
             "assignedBy": how,
@@ -333,7 +347,7 @@ def build() -> tuple[dict, str]:
 
     doc = {
         "_generated": "ops/loot-tiers/build_tiers.py -- do not hand-edit; edit overrides.json or the rules",
-        "tiers": {str(k): {"name": v, "meaning": TIER_BLURB[k]} for k, v in sorted(TIER_NAMES.items(), reverse=True)},
+        "tiers": {tlabel(k): {"name": v, "meaning": TIER_BLURB[k]} for k, v in sorted(TIER_NAMES.items(), reverse=True)},
         "simpletms": tms,
         "items": rows,
     }
@@ -361,9 +375,9 @@ def render_md(doc: dict) -> str:
     L.append("| Tier | Name | Use it for |")
     L.append("|---|---|---|")
     for t in sorted(TIER_NAMES, reverse=True):
-        L.append(f"| **T{t}** | {TIER_NAMES[t]} | {TIER_BLURB[t]} |")
+        L.append(f"| **{tlabel(t)}** | {TIER_NAMES[t]} | {TIER_BLURB[t]} |")
     L.append("")
-    counts = ", ".join(f"T{t}: {len(by_tier[t])}" for t in sorted(by_tier, reverse=True))
+    counts = ", ".join(f"{tlabel(t)}: {len(by_tier[t])}" for t in sorted(by_tier, reverse=True))
     L.append(f"{len(rows)} items tiered — {counts}.\n")
 
     L.append("## Picking a reward\n")
@@ -378,7 +392,7 @@ def render_md(doc: dict) -> str:
              "jackpot band 0.8–1.6%, high band 4.9%.\n")
 
     for t in sorted(by_tier, reverse=True):
-        L.append(f"## T{t} — {TIER_NAMES[t]}\n")
+        L.append(f"## {tlabel(t)} — {TIER_NAMES[t]}\n")
         L.append(f"*{TIER_BLURB[t]}*\n")
         L.append("| Item | Why | Where it comes from |")
         L.append("|---|---|---|")
@@ -440,7 +454,7 @@ def main() -> int:
     n = len(doc["items"])
     by = collections.Counter(r["tier"] for r in doc["items"])
     print(f"wrote {OUT_JSON.relative_to(ROOT)} and {OUT_MD.relative_to(ROOT)}")
-    print(f"  {n} items — " + ", ".join(f"T{t}: {by[t]}" for t in sorted(by, reverse=True)))
+    print(f"  {n} items — " + ", ".join(f"{tlabel(t)}: {by[t]}" for t in sorted(by, reverse=True)))
     unmatched = [r["id"] for r in doc["items"] if r["assignedBy"] == "default"]
     if unmatched:
         print(f"  {len(unmatched)} unmatched (defaulted to T0): {', '.join(unmatched[:15])}")

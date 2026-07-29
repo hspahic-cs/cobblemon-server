@@ -156,6 +156,25 @@ ROGUELITE_SKINS = {
 # own table (that needs their file; gen_pokerogue_roster.py fetches it at run time). It is
 # therefore the shape of the gap, not proof of its exact membership — `--roster` is what
 # proves that, and it is the reason both directions of the diff are printed.
+#
+# A character here can still END UP with a skin, from either of two other sources:
+#   - ROGUELITE_FROM_SERVER_GYMS below, when our own server already casts them; or
+#   - a hand-sourced file installed by install_hand_sourced_skins.py.
+# Names therefore STAY here once covered that way. This table is "who RCT does not ship",
+# which is a fixed fact, not "who still needs work" — and the installer reads it to decide
+# which filenames it will accept, so deleting a covered name would make it reject a better
+# skin for that character later. What still needs work is computed from what is on disk.
+ROGUELITE_FROM_SERVER_GYMS = {
+    # Rule 3(a) applied to characters RCT does not ship at all: our own server-gyms
+    # datapack already casts a face for these three (they are our Elite Four / gym
+    # leaders), and a player meeting them in a run should see the face they know. This is
+    # NOT the lookalike substitution rule 4 forbids — rule 4 is about casting an unrelated
+    # NPC as a character; these files ARE our server's chosen portrayal of that character.
+    "rgl_alder": "gym_20_alder",
+    "rgl_cheren": "gym_12_cheren",
+    "rgl_grant": "gym_14_grant",
+}
+
 ROGUELITE_UNCOVERED = {
     "kanto": ["Janine"],
     "hoenn": ["Roxanne", "Brawly", "Wattson", "Flannery", "Norman", "Winona",
@@ -212,8 +231,28 @@ def write_roguelite_skins(jar: zipfile.ZipFile, jar_names: "set[str]",
     for problem in broken:
         print(f"  - BROKEN MAPPING: {problem}")
 
-    uncovered = sum(len(names) for names in ROGUELITE_UNCOVERED.values())
-    print(f"roguelite characters with NO RCT skin: {uncovered} (see ROGUELITE_UNCOVERED)")
+    # Copied from what is already installed in the pack, not from the jar: these are our
+    # server's own casting of a character RCT never shipped, so the source is a sibling
+    # file. Done after the jar pass so a jar mapping always wins if one is ever added.
+    for trainer_id, stem in sorted(ROGUELITE_FROM_SERVER_GYMS.items()):
+        source = out_textures / f"{stem}.png"
+        if not source.is_file():
+            print(f"  - BROKEN MAPPING: {trainer_id} -> {stem}.png missing from the pack")
+            continue
+        (out_textures / f"{trainer_id}.png").write_bytes(source.read_bytes())
+    print(f"wrote {len(ROGUELITE_FROM_SERVER_GYMS)} roguelite textures from our own server-gym casts")
+
+    # Counted against what is on disk, not against the table: the table lists who RCT does
+    # not ship, and most of those now have a hand-sourced file that this script never wrote
+    # and must not claim credit for. install_hand_sourced_skins.py prints the same figure.
+    uncovered = [
+        name for names in ROGUELITE_UNCOVERED.values() for name in names
+        if not (out_textures / f"rgl_{name.lower()}.png").is_file()
+    ]
+    total = sum(len(names) for names in ROGUELITE_UNCOVERED.values())
+    print(f"roguelite characters RCT does not ship: {total}, of which {len(uncovered)} still have no skin")
+    if uncovered:
+        print("  " + ", ".join(sorted(uncovered)))
 
     if roster_path is None:
         print("no --roster given: the ids above were NOT checked against a real roster")

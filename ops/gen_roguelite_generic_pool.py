@@ -24,20 +24,26 @@ band is the entire job. The one rule that makes this work is in the roster schem
 no entry in `generated` fights its **RCT-authored team**. We only add `generated` entries for
 trainers whose teams we want to build from signature species — which is the boss roster.
 
-WHAT THE BANDS ARE FOR, and why party size drives them:
+WHAT THE BANDS ARE FOR, and the mistake to avoid:
 
-Levels always come from the wave curve, so a band is not about levels. Scaling a team's level
-does not scale its *composition* — and RCT's generic trainers run from one Pokémon to six.
-A one-Pokémon Youngster levelled to 90 is not a wave-90 encounter, it is a free wave. Party
-size is therefore the difficulty lever the bands exist to ramp, which is why the defaults
-below gate on it and why sizes 1-2 are excluded from every band by default.
+Levels always come from the wave curve, so a band is not about levels. It is about composition,
+and the tempting move — ramp the minimum party size, 3 then 4 then 6 — is wrong. RCT's authored
+party sizes follow the games: a Youngster caps at three Pokémon, a Bug Catcher, Hiker, Swimmer
+and Black Belt at four, and essentially only `ace_trainer` fields six. So a `>= 6` floor does
+not select hard trainers, it selects ace trainers, and the pool stops showing the breadth of
+trainer classes that is the entire reason to have generic waves. The floors default low (2/3/4)
+for that reason.
+
+Late-run difficulty belongs to the levers built for it: the roster's `generated` block builds a
+team at the encounter with `party_size` from the wave (4/5/6), and boss waves carry shields.
+Those scale a Bug Catcher without requiring that RCT authored him six Pokémon.
 
 WHAT IS DELIBERATELY NOT DECIDED HERE:
 
 Which classes suit the mode is a flavour call, and how hard a wave-135 trainer should be is a
 balance call. Both are the server's, not this script's. The defaults are a starting point
-chosen to be defensible, not authoritative — `--classes`, `--exclude-classes`, `--band` and
-`--pool-size` are how you overrule them, and the report prints enough to argue with.
+chosen to be defensible, not authoritative — `--classes`, `--exclude-classes`, `--size-floors`
+and `--pool-size` are how you overrule them, and the report prints enough to argue with.
 """
 
 import argparse
@@ -140,14 +146,27 @@ def type_of(stem: str, types: "dict[str, str]", group_names: "list[str]") -> "st
     return None
 
 # (band id, min_wave, max_wave or None, minimum party size).
-# The wave edges match example.json's trainer bands so the fragment drops straight in. The
-# size floors are the difficulty ramp: a mid-run trainer brings at least four, and the last
-# band is full teams only, because from about wave 138 the level curve has flattened at 100
-# and composition is the only dial still turning.
+# The wave edges match example.json's trainer bands so the fragment drops straight in.
+#
+# THE SIZE FLOORS ARE LOW ON PURPOSE, and an earlier version got this wrong. Treating party
+# size as the difficulty ramp (3 / 4 / 6) looked principled and quietly destroyed the thing
+# generic trainers are FOR. RCT's authored party sizes follow the games: a Youngster caps at
+# three Pokémon, a Bug Catcher, Hiker, Swimmer and Black Belt at four. Only `ace_trainer` has
+# a deep bench of six. So a `>= 6` floor does not select "hard trainers", it selects
+# ace_trainers — and the pool stops looking like the breadth of trainer classes the games have,
+# which was the whole point of adding it.
+#
+# Difficulty at late waves has to come from somewhere else, and the roster already has the
+# levers: the `generated` block builds a team at the encounter with `party_size` from the wave
+# (4/5/6), and boss waves carry the shields. Those scale a Bug Catcher without demanding RCT
+# had authored him six Pokémon. Keeping a mild ramp here (2/3/4) still trends bigger over a run
+# without narrowing the cast to one class.
+#
+# Override with --size-floors.
 DEFAULT_BANDS = [
-    ("generic_trainer_early", 1, 60, 3),
-    ("generic_trainer_mid", 61, 130, 4),
-    ("generic_trainer_late", 131, None, 6),
+    ("generic_trainer_early", 1, 60, 2),
+    ("generic_trainer_mid", 61, 130, 3),
+    ("generic_trainer_late", 131, None, 4),
 ]
 
 DEFAULT_POOL_SIZE = 24
@@ -253,10 +272,21 @@ def main() -> None:
                         help="comma-separated allowlist of trainer classes, e.g. youngster,hiker")
     parser.add_argument("--exclude-classes", default=",".join(DEFAULT_EXCLUDED_CLASSES),
                         help=f"comma-separated classes to drop (default: {','.join(DEFAULT_EXCLUDED_CLASSES)})")
+    parser.add_argument("--size-floors", default="",
+                        help="comma-separated minimum party size per band, e.g. 2,3,4. RCT's "
+                             "authored sizes follow the games, so a high floor narrows the pool "
+                             "to ace_trainers rather than making it harder.")
     parser.add_argument("--run-length", type=int, default=200)
     parser.add_argument("--trainer-interval", type=int, default=5)
     parser.add_argument("--boss-interval", type=int, default=10)
     args = parser.parse_args()
+
+    bands_spec = DEFAULT_BANDS
+    if args.size_floors:
+        floors = [int(x) for x in args.size_floors.split(",")]
+        if len(floors) != len(DEFAULT_BANDS):
+            sys.exit(f"--size-floors needs {len(DEFAULT_BANDS)} values, got {len(floors)}")
+        bands_spec = [(b[0], b[1], b[2], f) for b, f in zip(DEFAULT_BANDS, floors)]
 
     trainers = load_generic_trainers(args.jar)
     allow = {c.strip() for c in args.classes.split(",") if c.strip()}
@@ -272,7 +302,7 @@ def main() -> None:
 
     waves = trainer_waves(args.run_length, args.trainer_interval, args.boss_interval)
     bands, used, report = [], set(), []
-    for band_id, min_wave, max_wave, min_size in DEFAULT_BANDS:
+    for band_id, min_wave, max_wave, min_size in bands_spec:
         # Each id is used by at most one band. A trainer in two bands is not broken, but it
         # makes "have I seen this one already" depend on where you are, which is the opposite
         # of what a ramp is for.

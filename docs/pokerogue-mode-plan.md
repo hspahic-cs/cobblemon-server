@@ -1091,6 +1091,41 @@ and re-clamping normal play with two mixins on the EXP paths.
 **Hard ceiling regardless:** poke-engine stores level as `i8` and panics above **127**, and a pyo3
 panic escapes the bridge's guards. Cap at 127 while the bridge exists.
 
+### 2.32 Boss shields are an unremovable held item, and they announce themselves
+
+**Chosen:** a boss's HP is segmented, and breaking a segment boosts a random stat — implemented as
+a **custom held item** shipped as datapack JS (§2.31), not as an ability.
+
+**Why the item slot and not the ability slot.** Forcing a custom ability would strip the
+Pokémon's own — a boss Gyarados would lose Intimidate to gain its shields, quietly removing the
+thing that makes it feel like that species. On the item slot the shields ride alongside whatever
+ability the Pokémon actually has. The cost is the boss's held item, which is the right budget to
+spend: the shields *are* its power.
+
+**The item must refuse removal.** Otherwise Knock Off, Trick or Magic Room delete a boss's
+shields mid-fight, which reads as a bug rather than counterplay. `onTakeItem` returning false is
+how Mega Stones already do this, so it is a supported property rather than a workaround.
+
+**Signalling is part of the mechanic, not polish.** An unexplained damage floor is *worse* than
+no mechanic: a player who watches a lethal hit land for 80% with no explanation concludes the mod
+is broken. Three message points, all from the item's own JS:
+
+- **At battle start** — the Pokémon is shielded, and how many.
+- **On each absorb** — the shield held. This is the one that prevents the bug report.
+- **On each break** — a shield shattered, and which stat rose. The `-boost` itself already comes
+  back through the normal interpreter; the sentence supplies the *cause*.
+
+**The Pokémon is marked statically, by name** — "Boss Onix" — set once at send-in. Putting the
+shield *count* in the nickname was rejected twice over: whether a mid-battle nickname change even
+reaches the client is unverified, and a Pokémon whose name changes as you hit it breaks a rule
+players know. The name says *what kind of fight this is*; the messages carry the running count.
+
+**A segmented HP bar needs a client mod, and is deliberately deferred.** It is the faithful
+version, and we already ship client mods — but it costs the standalone story, and nobody yet
+knows whether the marker plus messages are enough. The shield state lives server-side either way,
+so a client mod later *reads state that already exists*. It is additive, not a rewrite, which is
+what makes waiting cheap.
+
 ---
 
 ## 3. Preliminary plan

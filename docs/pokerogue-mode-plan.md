@@ -898,6 +898,47 @@ payout is already owed, earned and resolved, and is waiting only because the ser
 moment of delivery. If the file ever grows, the honest fix is an op command that lists and clears
 it — not a timer that quietly deletes debts.
 
+### 2.27 The candy "passive" is a hidden-ability unlock
+
+**Considered:** PokéRogue's actual passive — a *second* ability stacking on the Pokémon's own ·
+unlocking the species' **hidden ability**.
+
+**Chosen:** the hidden ability. Candy buys certainty of it on a starter.
+
+**Why not a true passive.** Three reasons, and the first two are structural rather than about
+balance:
+
+- **Showdown applies one ability.** A second stacking ability means patching the bundle — refused
+  in §2.4 as a permanent maintenance tax and incompatible with §1.2 — or hand-implementing each
+  passive mod-side. That is not one feature; it is an open-ended catalogue.
+- **Our opponents cannot compensate.** PokéRogue gives passives to enemies too and buffs bosses
+  procedurally, so its arms race self-balances. Ours are **authored** RCT teams (§2.7), so
+  player-only passives are straight power creep and the fix would be re-authoring every roster
+  entry rather than turning a dial.
+- **It would land where we are already flat.** §2.19 leaves the last third of a run pinned at
+  level 100, with difficulty coming from teams, items and gimmicks. A second ability on every
+  party member would overshoot that gap rather than fill it.
+
+**Why the hidden ability is the better fit.** `Pokemon.ability` is settable and species data
+already carries hidden abilities — Cobblemon defines the concept and never rolls it
+(`HiddenAbility.isSatisfiedBy` returns false behind a `TODO`), so this is a slot the game
+declares and leaves unused. §2.16 already adopted PokéRogue's 1/256 hidden-ability rate for
+encounters, so candy buying *certainty* is the natural extension of a rate we took anyway: the
+player is paying to stop gambling. And the cost table already prices ability access — Torchic
+costs 4 largely because Speed Boost, its hidden ability, is that strong.
+
+Power is bounded in a way a passive is not: hidden abilities are official and balanced, rather
+than hand-picked to make a species S-tier.
+
+**The weakness, and the fix.** Hidden abilities vary wildly in worth — Speed Boost is
+transformative, Truant is a joke — whereas PokéRogue hand-assigns passives to be good. So the
+granted ability is **datapack-defined per species**, defaulting to the species' hidden ability
+and overridable. A server can hand-assign a better one where the hidden ability is worthless,
+exactly as PokéRogue does, without ever needing a second ability slot.
+
+**Name it what it is.** "Passive" describes a mechanic we are not building, and the term would
+mislead anyone arriving from PokéRogue.
+
 ---
 
 ## 3. Preliminary plan

@@ -157,6 +157,47 @@ class RunStateTest {
     }
 
     @Test
+    fun `toNbt carries the biome and what is painted in the arena`() {
+        // Two fields for what looks like one fact, and they are not: [RunState.biome] is where the run
+        // *is* and survives a slot reassignment, while paintedBiome is what is in the world and does
+        // not. A checkpoint that merged them would either re-stamp arenas that are fine or stop
+        // retrying repaints that never happened.
+        val visit = BiomeVisit(band = 4, biome = ResourceLocation.fromNamespaceAndPath("test", "volcano"))
+        val painted = ResourceLocation.fromNamespaceAndPath("minecraft", "basalt_deltas")
+        val tag = RunState(seed = 1L, biome = visit, paintedBiome = painted).toNbt(RegistryAccess.EMPTY)
+        assertEquals(visit, BiomeVisit.fromNbt(tag.getCompound("biome")))
+        assertEquals(painted.toString(), tag.getString("paintedBiome"))
+    }
+
+    @Test
+    fun `a run that has never entered a biome writes neither biome field`() {
+        val tag = RunState(seed = 1L).toNbt(RegistryAccess.EMPTY)
+        assertFalse(tag.contains("biome"))
+        assertFalse(tag.contains("paintedBiome"))
+    }
+
+    @Test
+    fun `a biome visit in band zero survives the round trip`() {
+        // Band 0 is waves 1-10, i.e. every run's first band, and it is the value a presence check
+        // would get wrong: `getInt` answers 0 for an absent key just as readily as for a written one.
+        val visit = BiomeVisit(band = 0, biome = ResourceLocation.fromNamespaceAndPath("test", "meadow"))
+        assertEquals(visit, BiomeVisit.fromNbt(visit.toNbt()))
+        assertNull(BiomeVisit.fromNbt(CompoundTag()), "an empty tag is no visit, not band 0")
+    }
+
+    @Test
+    fun `the depth override flag is written on every run, not only on overridden ones`() {
+        // §2.25's audit flag. Written both ways so a run file answers "was this earned" outright,
+        // rather than by the absence of a key that a build without the feature would also lack.
+        val honest = RunState(seed = 1L).toNbt(RegistryAccess.EMPTY)
+        assertEquals(true, honest.contains("startedUnderOverride"))
+        assertEquals(false, honest.getBoolean("startedUnderOverride"))
+
+        val inflated = RunState(seed = 1L, startedUnderOverride = true).toNbt(RegistryAccess.EMPTY)
+        assertEquals(true, inflated.getBoolean("startedUnderOverride"))
+    }
+
+    @Test
     fun `partySnapshot hands back a copy, not the live list`() {
         val run = RunState(seed = 1L)
         assertNotSame(run.party, run.partySnapshot())

@@ -71,6 +71,21 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   transition can be detected by comparison rather than by remembering which band we were in — the
  *   template id is the thing that actually has to change, and reading the band boundary twice is how
  *   a re-tuned band list silently stops re-stamping.
+ * @property biome §2.24: which biome this run is in, and the wave band it entered it for. See
+ *   [BiomeVisit] for why the band travels with it and [BiomeRotation] for why this is stored at all
+ *   rather than derived from [wave] — in short, because §2.24 leaves the door open to the player
+ *   *choosing* the next biome, and a derived one closes it behind a schema change.
+ * @property paintedBiome the Minecraft biome currently painted into [arenaSlot], or null when the
+ *   slot has not been repainted for this run. [stampedTemplate]'s field one row over, for exactly its
+ *   reason: it is a fact about what is in the world, not about what should be, and the two come apart
+ *   the moment a slot is handed to a different run. Kept separate from [biome] because a repaint can
+ *   fail while a stamp succeeds — writing one field would then either re-stamp an arena that is fine
+ *   or stop retrying a repaint that never happened.
+ * @property startedUnderOverride §2.25: true when an operator's badge-gate override was in force for
+ *   this player at the moment the run was created. Persisted for the one reason the override exists to
+ *   be honest about — a run that reached wave 180 without the badges for it has to be tellable from
+ *   one that earned them, and the only moment that fact is knowable is run start. Never written
+ *   anywhere else, so it cannot be granted retroactively by turning the override on mid-run.
  * @property battle §2.10's battle-in-progress marker, or null between waves. Set when a wave battle
  *   begins and cleared when it resolves, by [RunController] — see [RunBattleMarker].
  *
@@ -105,8 +120,11 @@ data class RunState(
     var arenaSlot: Int? = null,
     var entry: RunEntryPoint? = null,
     var stampedTemplate: ResourceLocation? = null,
+    var biome: BiomeVisit? = null,
+    var paintedBiome: ResourceLocation? = null,
     var battle: RunBattleMarker? = null,
     var pendingCatch: Pokemon? = null,
+    val startedUnderOverride: Boolean = false,
 ) {
     /** A run ends when every party member has fainted — permadeath, not a whiteout. */
     fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
@@ -236,6 +254,13 @@ data class RunState(
         arenaSlot?.let { tag.putInt("arenaSlot", it) }
         entry?.let { tag.put("entry", it.toNbt()) }
         stampedTemplate?.let { tag.putString("stampedTemplate", it.toString()) }
+        biome?.let { tag.put("biome", it.toNbt()) }
+        paintedBiome?.let { tag.putString("paintedBiome", it.toString()) }
+        // Written on every run and not only on the ones it is true for, unlike everything above it.
+        // This is the audit flag §2.25 asks for, and a file where "honest" and "written by a build
+        // that did not have the flag yet" look identical is a file that cannot answer the question it
+        // exists for — even though the schema version already answers it, one indirection away.
+        tag.putBoolean("startedUnderOverride", startedUnderOverride)
         battle?.let { tag.put("battle", it.toNbt()) }
         val list = ListTag()
         partySnapshot().forEach { list.add(it.saveToNBT(registryAccess)) }
@@ -262,7 +287,7 @@ data class RunState(
          * format change reads old saves as if they were new ones and silently resumes runs with
          * wrong values, which is the one failure mode a checkpoint must never have.
          */
-        const val SCHEMA_VERSION = 6
+        const val SCHEMA_VERSION = 7
 
         private const val SCHEMA_KEY = "schemaVersion"
 
@@ -349,6 +374,15 @@ data class RunState(
                 // floor under the player.
                 stampedTemplate = tag.getString("stampedTemplate").takeIf { it.isNotEmpty() }
                     ?.let { ResourceLocation.tryParse(it) },
+                // Both restore as null on damage, which the arena layer reads as "nothing is standing
+                // and nothing is painted" and repairs on the next prepare. That is the safe direction
+                // here in a way it is not for [stampedTemplate] above: a wrong value there skips the
+                // stamp that puts a floor under the player, whereas a missing value here costs one
+                // extra repaint of an arena nobody is looking at yet.
+                biome = if (tag.contains("biome")) BiomeVisit.fromNbt(tag.getCompound("biome")) else null,
+                paintedBiome = tag.getString("paintedBiome").takeIf { it.isNotEmpty() }
+                    ?.let { ResourceLocation.tryParse(it) },
+                startedUnderOverride = tag.getBoolean("startedUnderOverride"),
                 // Absent or unreadable both restore as "no battle", which costs the player nothing.
                 // See [RunBattleMarker.fromNbt] for why that is the only safe failure direction.
                 battle = if (tag.contains("battle")) RunBattleMarker.fromNbt(tag.getCompound("battle")) else null,

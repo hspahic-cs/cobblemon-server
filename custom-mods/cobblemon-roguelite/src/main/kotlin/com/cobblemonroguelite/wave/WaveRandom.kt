@@ -37,6 +37,16 @@ enum class WaveDrawStream(internal val salt: Long) {
      * above this line moved.
      */
     TRAINER(0x5452_4149_4E45_5204L),
+
+    /**
+     * Which biome a wave band rotates into — see [com.cobblemonroguelite.run.BiomeRotation].
+     *
+     * The one stream drawn per *band* rather than per wave. That is not a violation of the
+     * `(seed, wave)` contract above so much as a reading of it: the band index is passed where the
+     * wave goes, so every wave inside a band asks the same question and gets the same answer, which
+     * is what stops a run changing scenery every wave.
+     */
+    BIOME(0x4249_4F4D_4500_0005L),
 }
 
 /**

@@ -1,5 +1,8 @@
 package com.cobblemonroguelite.arena
 
+import com.cobblemonroguelite.data.biome.RunBiome
+import com.cobblemonroguelite.data.biome.RunBiomes
+import com.cobblemonroguelite.run.BiomeRotation
 import com.cobblemonroguelite.run.RunEntryPoint
 import com.cobblemonroguelite.run.RunSettings
 import com.cobblemonroguelite.run.RunState
@@ -91,6 +94,11 @@ object RunArenas {
         // Cleared so the stamp below cannot be skipped by a value inherited from... anything. A run
         // reaching here has no arena by definition, so whatever it thinks is standing in one is wrong.
         run.stampedTemplate = null
+        // Same reasoning, one field over: the biome painted into the slot belongs to whoever had it
+        // last. [RunState.biome] is deliberately *not* cleared — that is where the run is, not what
+        // the world looks like, and clearing it would discard a transition the player was told about
+        // (and, once §2.24's branch exists, one they chose).
+        run.paintedBiome = null
         return prepare(server, run)
     }
 
@@ -105,6 +113,12 @@ object RunArenas {
      *
      * The wave handler must call this before summoning anything, and must then let
      * [ArenaConfig.settleTicks] pass. See [ArenaChunks] for what happens if it does not.
+     *
+     * ### Where §2.24's biome enters
+     *
+     * The band transition this call implements *is* the biome transition. The run's biome is settled
+     * first, because it decides which template is wanted; the repaint then follows the stamp, since
+     * repainting a box we are about to demolish and rebuild is work that shows for one tick.
      */
     fun prepare(server: MinecraftServer, run: RunState): ArenaResult<ArenaPlacement, ArenaFailure> {
         val config = config()
@@ -120,26 +134,93 @@ object RunArenas {
         val level = levelOf(server, placement.dimension)
             ?: return ArenaResult.Failure(ArenaFailure.NotStamped(StampResult.NoSuchDimension(placement.dimension)))
 
-        val wanted = config.templates.templateFor(run.wave)
+        val biome = biomeFor(run, config)
+        val wanted = biome?.arenaTemplate ?: config.templates.templateFor(run.wave)
         if (run.stampedTemplate == wanted) {
             // Already correct. Still needs the ticket: "stamped" is a fact about blocks on disk, not
             // about chunks being loaded, and the two come apart the moment the last player leaves.
-            return if (ArenaChunks.hold(level, placement.box)) {
-                ArenaResult.Success(placement)
-            } else {
-                ArenaResult.Failure(ArenaFailure.NotStamped(StampResult.NotLoaded))
+            if (!ArenaChunks.hold(level, placement.box)) {
+                return ArenaResult.Failure(ArenaFailure.NotStamped(StampResult.NotLoaded))
             }
+            repaint(level, placement, run, biome)
+            return ArenaResult.Success(placement)
         }
 
         return when (val result = ArenaStamper.stamp(level, placement, wanted)) {
             StampResult.Stamped -> {
                 run.stampedTemplate = wanted
                 log.info("roguelite: stamped '{}' into arena slot {} for wave {}", wanted, slot, run.wave)
+                repaint(level, placement, run, biome)
                 ArenaResult.Success(placement)
             }
             // stampedTemplate is left alone on failure, so the next attempt tries again rather than
             // believing a build that is not there.
             else -> ArenaResult.Failure(ArenaFailure.NotStamped(result))
+        }
+    }
+
+    /**
+     * Settle which biome [run] is in for the wave it is on, writing it onto the run.
+     *
+     * Written here rather than returned, because every caller of [prepare] would otherwise have to
+     * remember to store it — and a rotation that decided a transition and did not record it would
+     * re-decide, and could re-decide *differently* once §2.24's player choice exists.
+     *
+     * Null means no biome: either nothing is configured (the shipped state), or the run holds a biome
+     * id whose file has since been deleted. The second case keeps the run's [RunState.biome] as it is
+     * and only loses the arena build, because forgetting where a run is because of somebody's datapack
+     * edit is a larger consequence than falling back to the configured template for a band.
+     */
+    private fun biomeFor(run: RunState, config: ArenaConfig): RunBiome? {
+        val bandLength = RunSettings.current.biomeBandLength
+        run.biome = BiomeRotation.next(
+            current = run.biome,
+            wave = run.wave,
+            bandLength = bandLength,
+            seed = run.seed,
+            eligible = RunBiomes.eligibleAt(run.wave),
+        )
+        val visit = run.biome ?: return null
+        val definition = RunBiomes[visit.biome]
+        if (definition == null) {
+            log.warn(
+                "roguelite: run is in biome '{}' which is no longer loaded — falling back to the " +
+                    "configured arena template ({}) and leaving the painted biome alone",
+                visit.biome, config.templates.templateFor(run.wave),
+            )
+        }
+        return definition
+    }
+
+    /**
+     * §2.24's repaint, skipped when the box already carries this biome.
+     *
+     * Never fatal. A failed repaint leaves a stamped, playable arena that looks like the wrong place;
+     * refusing the wave over it would turn a cosmetic fault into a run the player cannot continue.
+     * [RunState.paintedBiome] is written only on success, so a failure retries on the next wave rather
+     * than being remembered as done.
+     */
+    private fun repaint(level: ServerLevel, placement: ArenaPlacement, run: RunState, biome: RunBiome?) {
+        if (biome == null || run.paintedBiome == biome.minecraftBiome) return
+        when (val result = ArenaBiomePainter.paint(level, placement.box, biome.minecraftBiome)) {
+            is BiomePaintResult.Painted -> {
+                run.paintedBiome = biome.minecraftBiome
+                log.info(
+                    "roguelite: arena slot {} repainted to {} for biome '{}' at wave {}",
+                    placement.slot, biome.minecraftBiome, biome.id, run.wave,
+                )
+            }
+
+            is BiomePaintResult.NoSuchBiome -> log.error(
+                "roguelite: biome '{}' names Minecraft biome '{}', which no datapack registers — arena " +
+                    "slot {} keeps the dimension's own biome. The run is unaffected.",
+                biome.id, result.biome, placement.slot,
+            )
+
+            is BiomePaintResult.Failed -> log.error(
+                "roguelite: could not repaint arena slot {} to '{}': {}. The run is unaffected.",
+                placement.slot, result.biome, result.detail,
+            )
         }
     }
 

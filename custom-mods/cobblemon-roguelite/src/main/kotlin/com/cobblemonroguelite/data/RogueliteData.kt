@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.data
 
 import com.cobblemon.mod.common.data.CobblemonDataProvider
+import com.cobblemonroguelite.data.biome.RunBiomes
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
 import com.cobblemonroguelite.data.starter.StarterCostTables
@@ -63,6 +64,12 @@ object RogueliteData {
         // not seeded, so there is nothing snapshotted to go stale). A run already under way is
         // unaffected — its party was bought and built at `chooseStarters`.
         CobblemonDataProvider.register(StarterCostTables, reloadable = true)
+        // Reloadable, and this is the one whose reload a player can *see*: editing a biome file
+        // changes which build is stamped and which Minecraft biome is painted at the next wave, so a
+        // run mid-band will find its arena rebuilt around it. That is the intended behaviour — it is
+        // how an author iterates on an arena without restarting — but it is worth knowing before
+        // editing one on a live server.
+        CobblemonDataProvider.register(RunBiomes, reloadable = true)
         log.info("roguelite: datapack registries registered — tables load from data/<namespace>/{}/", RogueliteDataRegistry.ROOT)
     }
 }

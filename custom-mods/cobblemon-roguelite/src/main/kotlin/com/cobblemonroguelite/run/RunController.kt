@@ -6,6 +6,7 @@ import com.cobblemonroguelite.arena.ArenaResult
 import com.cobblemonroguelite.arena.RunArenas
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WavePlan
+import com.cobblemonroguelite.data.biome.RunBiomes
 import com.cobblemonroguelite.data.payout.PayoutEntry
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.payout.RunOutcome
@@ -163,6 +164,11 @@ data class LoginReconciliation(
  * The payout is the single channel out of a sealed run (§1.1), so every field here exists to make
  * "why did I get that" answerable from a log line rather than from a reconstruction: which table,
  * which entries within it, what reached the player and what did not.
+ *
+ * @property startedUnderOverride §2.25, carried out of the run at the one moment anything downstream
+ *   would record a result. A leaderboard, a payout audit or a "deepest run this month" line reads this
+ *   report and nothing else, so an inflated run that did not say so here would be indistinguishable
+ *   from an honest one the instant the [RunState] was discarded.
  */
 data class RunEndReport(
     val cause: RunEndCause,
@@ -171,6 +177,7 @@ data class RunEndReport(
     val entries: List<PayoutEntry>,
     val delivery: PayoutDelivery,
     val bonusPaid: Boolean,
+    val startedUnderOverride: Boolean = false,
 ) {
     val outcome: RunOutcome get() = cause.outcome
 }
@@ -290,7 +297,18 @@ object RunController {
             // gives: two hundred waves is days of play, and an operator swapping rosters must not move
             // a run that is already halfway up a ladder.
             trainerRoster = config.trainerRoster,
+            // §2.25: stamped once, here, and never written again. Turning the override on halfway
+            // through somebody's run must not retroactively mark it — and turning it *off* must not
+            // launder a run that was started under it, which is the direction that matters.
+            startedUnderOverride = RunDepthOverrides.isActive(player.uuid),
         )
+        if (run.startedUnderOverride) {
+            log.warn(
+                "roguelite: {} started a run under an OPERATOR DEPTH OVERRIDE (§2.25) — it is marked as " +
+                    "such for the rest of its life and its depth is not earned",
+                player.gameProfile.name,
+            )
+        }
         // Order: create the run, then drop the pending start. The reverse leaves a crash between the
         // two costing the player their paid start entirely, where this way it costs nothing — the
         // load path drops a pending start whose run already exists.
@@ -355,9 +373,15 @@ object RunController {
                 // what force-loads the chunks the wave will summon into, so a handler called first
                 // would be summoning into cold, empty void — which fails silently, the way the dev
                 // `setblock` did before it was given a chunk ticket.
+                //
+                // Read before the call and compared after, because the transition is the arena's to
+                // decide and the player's to be told about, and those are two layers. See
+                // [announceBiome].
+                val wasIn = run.biome?.biome
                 when (val arena = RunArenas.enter(server, player, run)) {
                     is ArenaResult.Failure -> ResumeResult.ArenaUnavailable(arena.error)
                     is ArenaResult.Success -> {
+                        announceBiome(player, run, wasIn)
                         // Stamped *before* the handler is called, not after. A handler that blocks,
                         // or that hands the battle to a thread and returns, can lose the player
                         // between the two calls, and a battle nobody marked is a battle a player can
@@ -385,6 +409,27 @@ object RunController {
                 }
             }
         }
+    }
+
+    /**
+     * §2.24: tell the player where they now are, when it is somewhere new.
+     *
+     * Keyed on the biome id changing rather than on the band advancing, and the difference is one a
+     * player would notice: a rotation is free to draw the same biome twice in a row, and "you enter
+     * the Grassy Field" printed while standing in the Grassy Field reads as a bug in a message that
+     * exists to make a transition legible.
+     *
+     * Silent when the biome id no longer resolves — a datapack deleted mid-run. There is no display
+     * name to say, and naming the raw id would show the player a file path in place of a place.
+     */
+    private fun announceBiome(player: ServerPlayer, run: RunState, previous: ResourceLocation?) {
+        val current = run.biome?.biome ?: return
+        if (current == previous) return
+        val biome = RunBiomes[current] ?: return
+        player.sendSystemMessage(RunMessages.enteredBiome(biome.displayName))
+        log.info(
+            "roguelite: {} entered biome '{}' at wave {}", player.gameProfile.name, biome.id, run.wave,
+        )
     }
 
     /**
@@ -432,6 +477,9 @@ object RunController {
             is WaveStep.Fight -> {
                 run.wave = step.plan.wave
                 store.checkpoint(server, player)
+                // After the advance, so the wave named is the one about to be played rather than the
+                // one that was just cleared inside the cap.
+                auditOverride(server, player, run.wave)
                 step
             }
 
@@ -706,12 +754,14 @@ object RunController {
         val delivery = RunPayoutDelivery.deliver(server, player, entries.map { it.grant })
         val bonus = RunPayouts.pay(server, player, RunPayout(outcome, wave, table?.id, delivery.delivered))
 
+        val overridden = run?.startedUnderOverride == true
         log.info(
-            "roguelite: run ended for {} — cause={} outcome={} wave={} table={} entries={} delivered={} undelivered={} bonus={}",
+            "roguelite: run ended for {} — cause={} outcome={} wave={} table={} entries={} delivered={} " +
+                "undelivered={} bonus={} startedUnderOverride={}",
             player, cause, outcome.key, wave, table?.id, entries.map { it.id }, delivery.delivered.size,
-            delivery.undelivered.size, bonus,
+            delivery.undelivered.size, bonus, overridden,
         )
-        return RunEndReport(cause, wave, table?.id, entries, delivery, bonus)
+        return RunEndReport(cause, wave, table?.id, entries, delivery, bonus, overridden)
     }
 
     /**
@@ -881,11 +931,36 @@ object RunController {
     }
 
     /** Null means no cap. Denied reads as depth zero, which [RunProgress] ends the run on. */
-    private fun depthCapFor(player: ServerPlayer): Int? =
-        when (val gate = RunSettings.current.depthGate.evaluate(VanillaAdvancements.of(player))) {
-            is DepthGateResult.Allowed -> gate.maxWave
-            is DepthGateResult.Denied -> 0
-        }
+    private fun depthCapFor(player: ServerPlayer): Int? = depthGateFor(player).cap
+
+    /** §2.18's gate for this player, with §2.25's override applied. The one place both are read. */
+    private fun depthGateFor(player: ServerPlayer): DepthGateResult =
+        RunSettings.current.depthGate.evaluate(
+            VanillaAdvancements.of(player),
+            RunDepthOverrides.isActive(player.uuid),
+        )
+
+    /**
+     * §2.25's "obvious in the log when it is in force", said at the moment it is actually buying
+     * something.
+     *
+     * Not on every evaluation: the gate is read on `/roguelite status`, on every resume and after
+     * every wave, so a line per read would be noise that an operator learns to scroll past — which is
+     * the same as not logging it. This fires only when the honest gate would have ended the run
+     * *here*, so every line is one wave the player is playing that their badges do not entitle them
+     * to, and the first line names the wave it started at.
+     */
+    private fun auditOverride(server: MinecraftServer, player: UUID, wave: Int) {
+        val online = server.playerList.getPlayer(player) ?: return
+        if (!RunDepthOverrides.isActive(player)) return
+        val honest = RunSettings.current.depthGate.evaluate(VanillaAdvancements.of(online))
+        if (honest.allows(wave)) return
+        log.warn(
+            "roguelite: {} is at wave {} under an OPERATOR DEPTH OVERRIDE — their badges allow {}. " +
+                "This run is marked as started under an override; do not read its depth as earned.",
+            online.gameProfile.name, wave, honest.cap,
+        )
+    }
 
     /**
      * Built per call rather than held. The pool source, the price source and the budget all live in
@@ -910,8 +985,7 @@ object RunController {
         private val player: ServerPlayer,
     ) : RunStartContext {
 
-        override fun depthGate(): DepthGateResult =
-            RunSettings.current.depthGate.evaluate(VanillaAdvancements.of(player))
+        override fun depthGate(): DepthGateResult = depthGateFor(player)
 
         override fun arenaAvailable(): Boolean = RunArenas.hasCapacity(server)
 

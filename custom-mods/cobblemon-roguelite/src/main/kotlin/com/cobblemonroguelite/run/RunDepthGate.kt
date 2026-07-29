@@ -46,7 +46,19 @@ object VanillaAdvancements {
  */
 sealed interface DepthGateResult {
 
-    data class Allowed(val maxWave: Int?) : DepthGateResult
+    /**
+     * The cap as one number, so callers stop re-deriving it.
+     *
+     * A denial is depth **zero** and not null: null already means "no cap at all", and the two
+     * readings are opposites. Every place that flattens this by hand is a place that can flatten it
+     * the wrong way, and [RunProgress.nextStep] ends a run on `wave > cap` — which zero does
+     * immediately and null never does.
+     */
+    val cap: Int?
+
+    data class Allowed(val maxWave: Int?) : DepthGateResult {
+        override val cap: Int? get() = maxWave
+    }
 
     /**
      * No configured tier is earned and the ungated depth is zero, so there is no run to start.
@@ -56,8 +68,13 @@ sealed interface DepthGateResult {
      * and a message that named only the first tier would tell them to go and re-earn something they
      * cannot re-earn.
      */
-    data class Denied(val requires: List<ResourceLocation>) : DepthGateResult
+    data class Denied(val requires: List<ResourceLocation>) : DepthGateResult {
+        override val cap: Int get() = 0
+    }
 }
+
+/** Whether a run sitting at [wave] is inside [cap]. Null is uncapped. */
+fun DepthGateResult.allows(wave: Int): Boolean = cap.let { it == null || wave <= it }
 
 /**
  * One rung of the badge gate: earning [advancement] entitles a player to runs [maxWave] deep.
@@ -98,7 +115,20 @@ data class RunDepthGate(
     val baseMaxWave: Int? = null,
 ) {
 
-    fun evaluate(check: AdvancementCheck): DepthGateResult {
+    /**
+     * @param overridden §2.25's operator override, per player. Applied here and not at the call sites
+     *   because there are three of them — the start quote, the start itself and the per-wave cap —
+     *   and an override honoured by two of the three is an override that lets a run *start* deep and
+     *   then ends it at the badge cap on wave 11, which reads as the run breaking.
+     *
+     *   It answers `Allowed(null)`, i.e. the full run: deliberately not "the deepest configured tier",
+     *   because the point of the override is reaching the back of a 200-wave ladder that nobody on a
+     *   dev server has the badges for, and not "one tier better". It can never *lower* a cap, so an
+     *   override is safe to leave on for a player who has genuinely earned depth — they were already
+     *   uncapped.
+     */
+    fun evaluate(check: AdvancementCheck, overridden: Boolean = false): DepthGateResult {
+        if (overridden) return DepthGateResult.Allowed(null)
         val earned = tiers.filter { check.isEarned(it.advancement) }
         if (earned.isEmpty()) {
             // Null base and no tiers earned is the ungated default, not a fall-through: it has to

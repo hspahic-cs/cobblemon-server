@@ -49,6 +49,12 @@ import net.minecraft.resources.ResourceLocation
  * @property starterBudget §2.13. Points a player has to spend on their starting team. See
  *   [RunConfig.DEFAULT_STARTER_BUDGET] for why this one is a decision and not a placeholder.
  * @property starterLevel §2.21. A run starter begins at 1 and levels on the curve by battle EXP.
+ * @property biomeBandLength §2.24: how many waves a run spends in one biome. 10 is PokéRogue's own
+ *   region cadence and is a decision rather than a placeholder, in the way [starterBudget] is —
+ *   raising it does not make transitions rarer so much as change what a run *is*, since the biome is
+ *   also the arena build and, later, the wild pool. It is a length and not a list of bands because a
+ *   band with no biome eligible for it is a hole ([BiomeRotation] keeps the previous biome), and
+ *   uniform bands are the shape that cannot have holes in the first place.
  * @property arena where runs are fought and how many can be fought at once. Unlike the rest of this
  *   class its defaults are real rather than placeholders — the grid works out of the box — with the
  *   single exception of [com.cobblemonroguelite.arena.ArenaTemplates.default], which names a build
@@ -63,10 +69,14 @@ data class RunConfig(
     val starterCosts: StarterCostSource = DefaultStarterCosts,
     val starterBudget: Int = DEFAULT_STARTER_BUDGET,
     val starterLevel: Int = 1,
+    val biomeBandLength: Int = DEFAULT_BIOME_BAND_LENGTH,
     val arena: ArenaConfig = ArenaConfig(),
 ) {
     init {
         require(starterLevel >= 1) { "starterLevel must be at least 1, was $starterLevel" }
+        // Zero would be a division by zero inside the band arithmetic rather than a run with no
+        // biomes; "no biomes" is what an empty biomes folder means, and it is the shipped state.
+        require(biomeBandLength >= 1) { "biomeBandLength must be at least 1, was $biomeBandLength" }
         // Zero would be a run with no Pokémon in it. Nothing above enforces a *useful* budget — a
         // budget below the cheapest species is a legal configuration that refuses every start, and it
         // is refused at run start with a message naming both numbers rather than silently here.
@@ -81,6 +91,9 @@ data class RunConfig(
          * two-or-three Pokémon into a full party, which is a different mode.
          */
         const val DEFAULT_STARTER_BUDGET = 10
+
+        /** §2.24: PokéRogue changes region every ten waves, and a run is 200 waves (§2.19). */
+        const val DEFAULT_BIOME_BAND_LENGTH = 10
     }
 }
 

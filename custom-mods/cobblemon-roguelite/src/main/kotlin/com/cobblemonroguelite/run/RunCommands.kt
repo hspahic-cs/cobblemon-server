@@ -3,12 +3,16 @@ package com.cobblemonroguelite.run
 import com.cobblemonroguelite.starter.StarterSelection
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.IntegerArgumentType
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
+import net.minecraft.ChatFormatting
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.commands.SharedSuggestionProvider
+import net.minecraft.commands.arguments.EntityArgument
 import net.minecraft.commands.arguments.ResourceLocationArgument
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 
@@ -27,30 +31,34 @@ import net.minecraft.server.level.ServerPlayer
  * It uses the shape anyway so that "the second line is the one that counts" holds everywhere, rather
  * than being a rule with an exception the player has to learn.
  *
- * ### Every command is player-only
+ * ### Every *player* command is player-only, and one command deliberately is not
  *
- * A run belongs to a player and everything here reads or writes theirs. Console and command blocks
- * are refused by [Commands.requires] rather than by a null check inside each handler, so an operator
- * gets "unknown command" instead of a silent no-op.
+ * A run belongs to a player and almost everything here reads or writes theirs. Console and command
+ * blocks are refused by [Commands.requires] rather than by a null check inside each handler, so an
+ * operator gets "unknown command" instead of a silent no-op.
+ *
+ * The requirement sits on each branch rather than on the `roguelite` root, which it used to. §2.25's
+ * `override` is an operator command about *another* player, and a dev server's operator is typically
+ * typing into a server console with no entity attached — a root-level player check would have made
+ * the one command that exists for the console unreachable from it.
  */
 object RunCommands {
 
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
             Commands.literal("roguelite")
-                .requires { it.entity is ServerPlayer }
                 .then(
-                    Commands.literal("start")
+                    playerOnly(Commands.literal("start"))
                         .executes { player(it)?.let(::quoteStart) ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let(::start) ?: 0 }),
                 )
-                .then(Commands.literal("starter").then(starterArgument(1)))
-                .then(Commands.literal("status").executes { player(it)?.let(::status) ?: 0 })
-                .then(Commands.literal("resume").executes { player(it)?.let(::resume) ?: 0 })
+                .then(playerOnly(Commands.literal("starter")).then(starterArgument(1)))
+                .then(playerOnly(Commands.literal("status")).executes { player(it)?.let(::status) ?: 0 })
+                .then(playerOnly(Commands.literal("resume")).executes { player(it)?.let(::resume) ?: 0 })
                 .then(
                     // §2.22. The confirm branch is the same shape as `abandon`'s and does none of the
                     // same work: it acknowledges a price, it does not pay one. See [RunPause].
-                    Commands.literal("pause")
+                    playerOnly(Commands.literal("pause"))
                         .executes { player(it)?.let { p -> pause(p, confirmed = false) } ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let { p -> pause(p, confirmed = true) } ?: 0 }),
                 )
@@ -59,7 +67,7 @@ object RunCommands {
                     // and only the trailing `confirm` destroys anything — the same three steps as
                     // `abandon`, because it is the same kind of act: a Pokémon stops existing and
                     // there is nowhere to get it back from.
-                    Commands.literal("catch")
+                    playerOnly(Commands.literal("catch"))
                         .executes { player(it)?.let(::catchPrompt) ?: 0 }
                         .then(
                             Commands.literal("swap")
@@ -91,11 +99,97 @@ object RunCommands {
                         ),
                 )
                 .then(
-                    Commands.literal("abandon")
+                    playerOnly(Commands.literal("abandon"))
                         .executes { player(it)?.let(::warnAbandon) ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let(::abandon) ?: 0 }),
-                ),
+                )
+                // Last, and the only branch above that is not player-only.
+                .then(overrideCommand()),
         )
+    }
+
+    /** The player-only requirement, per branch. See the class docs for why it is not on the root. */
+    private fun playerOnly(node: LiteralArgumentBuilder<CommandSourceStack>) =
+        node.requires { it.entity is ServerPlayer }
+
+    /**
+     * §2.25: `/roguelite override <players> on|off`, and `/roguelite override list`.
+     *
+     * ### Why level 2 and not level 4
+     *
+     * Level 2 is the vanilla bar for commands that change the world (`/fillbiome` itself is level 2),
+     * and it is the level a dev server's testers actually have. Level 4 would mean only the console
+     * and the owner, which on the box this exists for is the same as nobody.
+     *
+     * ### Why there is no `off` for everybody
+     *
+     * A blanket clear is the command an operator reaches for when they have lost track, and losing
+     * track is precisely when it would silently end somebody's in-flight testing. `list` answers the
+     * question that leads to it, and the restart clears the rest.
+     */
+    private fun overrideCommand(): LiteralArgumentBuilder<CommandSourceStack> =
+        Commands.literal("override")
+            .requires { it.hasPermission(2) }
+            .then(Commands.literal("list").executes { listOverrides(it.source) })
+            .then(
+                Commands.argument("players", EntityArgument.players())
+                    .then(Commands.literal("on").executes { setOverride(it, on = true) })
+                    .then(Commands.literal("off").executes { setOverride(it, on = false) }),
+            )
+
+    /**
+     * Feedback goes through `sendSuccess(.., true)`, which broadcasts to every other operator.
+     *
+     * That is §2.25's "never quietly": an override granted in a private message is one the next
+     * operator to look at a leaderboard has no reason to suspect. The log line beside it
+     * ([RunDepthOverrides.set]) is the durable half; this is the half somebody sees at the time.
+     */
+    private fun setOverride(ctx: CommandContext<CommandSourceStack>, on: Boolean): Int {
+        val targets = EntityArgument.getPlayers(ctx, "players")
+        val by = ctx.source.textName
+        var changed = 0
+        for (target in targets) {
+            if (RunDepthOverrides.set(target.uuid, target.gameProfile.name, on, by)) changed++
+            // Told to the player as well, and not only to the operator: it changes what their runs
+            // mean, and a run marked as unearned without its owner ever being told is the sort of
+            // thing they find out from a leaderboard.
+            target.sendSystemMessage(
+                if (on) {
+                    Component.literal(
+                        "An operator has lifted the badge depth gate for you. Runs you start from now " +
+                            "on are recorded as started under an override.",
+                    ).withStyle(ChatFormatting.YELLOW)
+                } else {
+                    Component.literal("The badge depth gate applies to you again.").withStyle(ChatFormatting.YELLOW)
+                },
+            )
+        }
+        val verb = if (on) "lifted for" else "restored for"
+        ctx.source.sendSuccess(
+            {
+                Component.literal(
+                    "Roguelite depth gate $verb ${targets.size} player(s) ($changed changed). " +
+                        "Overrides are not saved and clear on restart.",
+                ).withStyle(ChatFormatting.YELLOW)
+            },
+            true,
+        )
+        return targets.size
+    }
+
+    /** Who is overridden right now. By UUID, because the set is keyed that way and may hold offline players. */
+    private fun listOverrides(source: CommandSourceStack): Int {
+        val active = RunDepthOverrides.active()
+        val text = if (active.isEmpty()) {
+            "No roguelite depth overrides are in force."
+        } else {
+            "Roguelite depth overrides in force for ${active.size} player(s): " +
+                active.joinToString(", ") { uuid ->
+                    source.server.playerList.getPlayer(uuid)?.gameProfile?.name ?: uuid.toString()
+                }
+        }
+        source.sendSuccess({ Component.literal(text) }, false)
+        return active.size
     }
 
     /**
@@ -223,6 +317,10 @@ object RunCommands {
                 // a status line, and it is also the line a player would read as "nothing is stopping
                 // me" — which, with a decision outstanding, is exactly wrong.
                 status.run.pendingCatch?.let { player.sendSystemMessage(RunMessages.catchPending(it)) }
+                // §2.25: the one place a player can find out their run is not comparable with anyone
+                // else's. Appended for the same reason — the depth on the line above is the number
+                // this qualifies.
+                if (status.run.startedUnderOverride) player.sendSystemMessage(RunMessages.depthOverridden())
             }
         }
         return 1

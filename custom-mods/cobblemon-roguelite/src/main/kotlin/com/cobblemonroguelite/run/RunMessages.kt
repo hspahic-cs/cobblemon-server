@@ -145,6 +145,30 @@ object RunMessages {
             "— your run is still paid for.",
     )
 
+    /**
+     * §2.24, at the moment the arena becomes somewhere else.
+     *
+     * Names the place and nothing else — not the wave, not the band, not how many waves it lasts.
+     * The message exists because the world visibly changed and an unexplained change reads as a
+     * glitch; a player who wants the numbers has `/roguelite status`. Green because it is the one
+     * unambiguously good thing this mode says between waves.
+     */
+    fun enteredBiome(name: String): Component =
+        Component.literal("You have arrived in $name.").withStyle(ChatFormatting.GREEN)
+
+    /**
+     * §2.25, said to the player whose run it is.
+     *
+     * Told rather than hidden, and that is the decision: the override is an operator's act on a
+     * player's run, and a player who is quietly playing an uncapped run has no way to know their
+     * result is not comparable with anyone else's. The wording puts it on the run rather than on
+     * them — they did not cheat, the gate was lifted.
+     */
+    fun depthOverridden(): Component = Component.literal(
+        "This run was started with the badge gate lifted by an operator, so its depth is not earned " +
+            "and it is recorded that way.",
+    ).withStyle(ChatFormatting.YELLOW)
+
     fun atWave(wave: Int, party: Int, depthCap: Int?): Component {
         val cap = depthCap?.let { " (your badges allow $it)" } ?: ""
         return literal("Wave $wave$cap, $party Pokémon alive.")

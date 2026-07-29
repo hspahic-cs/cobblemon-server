@@ -1172,6 +1172,12 @@ we can pile one, high.
 decision than PokéRogue's in one respect: with a single slot, choosing *which* line a Pokémon
 commits to actually matters, where stacking everything eventually does not.
 
+**Amended 2026-07-29 — this section overstated the loss.** In PokéRogue, vitamins, Macho Brace,
+Shuckle Juice, Old Gateau and Lucky Egg all occupy the *same held-item budget* as Leftovers and
+Multi Lens. For us those are mechanism 1 and cost no slot at all. So our single slot is contested
+only by *battle-effect* items, where PokéRogue's is contested by battle-effect **and** stat items.
+The audit in §2.34 found only **four** genuinely lost combinations — see there.
+
 **The ability slot is a second axis** if one line proves too tight — a custom ability can carry an
 effect the same way. Worth holding until play shows it is needed rather than spending it now.
 
@@ -1184,6 +1190,69 @@ already receives the raw battle object. Those stack as consumables rather than a
 **Sequencing: after the dev pass.** This rides on exactly the channel §2.32 is waiting to have
 confirmed. Building a second feature on an unverified mechanism before the first one has fired
 once is how both end up needing rework.
+
+### 2.34 The modifier audit
+
+Full pass over PokéRogue's `modifier-type.ts` / `modifier.ts` against what our channels express,
+2026-07-29. The menu, not a guess.
+
+**A large slice is already free.** Eviolite, the species stat boosters (Light Ball, Thick Club,
+Metal Powder, Quick Powder, Deep Sea Scale and Tooth), Toxic and Flame Orb, Leek, and **every
+berry** exist in stock Showdown at the same multipliers. They cost one Kotlin line each to make
+obtainable — no JS at all.
+
+**`consumed:false` gives berry persistence for free.** The `held_item_effect` component's flag
+decides whether the *ItemStack* dies when Showdown consumes the item, so a berry eaten in a wave
+is back for the next one. That is PokéRogue's Berry Pouch behaviour with nothing to build, and
+Berry Pouch becomes redundant rather than a feature.
+
+**Multi Lens is confirmed with a mechanism.** `onModifyMove` sets `move.multihit`, which
+`hitStepMoveHitLoop` then reads — Parental Bond does exactly this assignment. The per-hit damage
+split must be added by us via `onModifyDamage`, because only `multihitType === "parentalbond"`
+gets halved automatically.
+
+**Stacking is identity, not quantity.** PokéRogue counts stacks on one modifier; Showdown
+distinguishes items. So a reward pick is always "upgrade Multi Lens 1→2", never "add a second
+one", and every tier ceiling is *our* balance choice rather than theirs.
+
+**Only four combinations are genuinely lost:** Type Booster + Multi Lens (the canonical PokéRogue
+snowball), King's Rock + Multi Lens, Leftovers + Reviver Seed, and Focus Band + Reviver Seed. The
+last pair are near-duplicates anyway and should not both ship, or they read as the same reward
+twice.
+
+**An honest magnitude gap on vitamins.** PokéRogue multiplies a *base stat* by `1 + 0.1 × stack`,
+up to as many stacks as the Pokémon's IV in that stat — potentially ×4. Cobblemon EVs cap at
+252 per stat and 510 total, a far smaller ceiling, and Cobblemon has no base-stat override API.
+Matching it would cost the held-item slot. **Accept the smaller ceiling and tune wave difficulty
+to it.**
+
+**Two blockers of our own making, both worth knowing:**
+
+- **Bag items are impossible inside a run because §2.11 says so.** The blanket rejection of
+  bag-item actions also blocks *run-issued* ones, so PokéRogue's X Attack line and Dire Hit
+  cannot ship until that guard becomes "reject player-owned, allow run-issued". That is a
+  decision reversal, not an implementation detail. Note those effects are **player-wide and last
+  five battles** in PokéRogue, so the faithful version is run state applied at battle start, not
+  a consumable.
+- **~8 modifiers need an in-run currency.** `RunState.credits` exists and is documented as
+  "spent in the between-wave shop", but no shop was ever designed. The audit surfaced the gap;
+  nothing has closed it.
+
+**Grip Claw and Mini Black Hole are blocked by Cobblemon, not Showdown.**
+`CobblemonHeldItemManager` early-returns on every give/take item effect, commented as a temporary
+anti-duping fix. Item theft would need our own stack-moving code and opens a dupe surface.
+
+**Enemy buff tokens map to the ability axis** on generated enemy teams (§2.30) — damage up,
+damage reduction, regen, status chances, endure. But an ability on every enemy strips its real
+ability, which is the exact objection §2.32 raised against ability-slot shields. Folding the
+first three into §2.6's runtime scaling instead is cheaper and costs nothing; decide deliberately.
+
+**Recommended first set — eight, chosen to share one harness:** Attack Type Booster (18 types,
+generated), Leftovers, Focus Band, King's Rock, Shell Bell, Multi Lens, Reviver Seed, and the
+free berries. All but the last two use hooks the boss shield already proved, so the risk sits in
+the *tiering harness* rather than in eight separate unknowns. Build the harness plus Leftovers,
+Focus Band and King's Rock first — three near-verbatim stock copies validating the harness on the
+cheapest possible payload.
 
 ---
 

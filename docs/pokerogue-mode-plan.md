@@ -840,7 +840,14 @@ content decision, but the mechanism should not be foreclosed.
 **Open:** whether biome transitions are **chosen** by the player (PokéRogue offers a branch) or
 follow a seeded path. A branch is the more interesting mechanic and is the reason the biome
 belongs in `RunState` rather than being derived from the wave number — derive it and a choice can
-never be added without a schema change.
+never be added without a schema change. Implemented seeded; the seam is one function.
+
+**Implementation note worth keeping** (found 2026-07-28): `FillBiomeCommand.fill` refuses any
+region larger than the `commandModificationBlockLimit` game rule, default **32768**, and a default
+arena box is roughly 108,000 cells after quantisation. The naive single call is therefore refused
+on every server, every time, and the refusal arrives as a value rather than an exception — so it
+would have failed silently and completely. The repaint is sliced to fit. Anyone changing the
+arena box size needs to know this limit exists.
 
 ### 2.25 The badge gate has an operator override
 

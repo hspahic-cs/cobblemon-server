@@ -1312,6 +1312,45 @@ begin, gaining Pokémon each meeting, ending on Rayquaza. That is a run-long thr
 it needs run state remembering which rival and what they have gained. Recorded as a real gap;
 nothing implements it.
 
+### 2.37 EVs are the flat third's difficulty lever, on both sides
+
+**The problem (§2.19, §2.21):** from about wave 138 levels pin at 100 for everyone, and EXP
+rewards go dead over the same band. For roughly 30% of a run — the part meant to be hardest —
+nothing in the design escalates.
+
+**PokéRogue's answer does not port.** Theirs is stacking enemy buff tokens, applied side-wide and
+scaling with depth. Reproducing them needs a slot: the ability slot strips the Pokémon's real
+ability (§2.32's objection), and the item slot on a boss is spent on shields. And the obvious
+alternative — "just scale levels" — is precisely the lever that is capped.
+
+**Chosen: EVs, which PokéRogue does not have at all.** They removed EVs from stat calculation
+entirely, so §2.30 mirrored that and gave generated enemy teams none. That leaves 510 points per
+Pokémon sitting unused, costing no item slot and no ability slot. **Enemy EV spreads ramp with
+wave depth**, and they are the escalation the flat third was missing.
+
+**It is symmetric, which is what makes it legible.** Players already earn EVs as rewards — §2.4
+made them our substitute for PokéRogue's stacking modifiers. So in the late game both sides' power
+curves run on the same currency: the player's earned through reward picks, the enemy's scaled by
+depth. One shared mechanic that both sides visibly climb beats two unrelated ones.
+
+**The full late-third ramp is therefore four levers, none of them levels:** more boss shields
+deeper (§2.32), enemy EV spreads by wave, fully-evolved teams with better held items (§2.30), and
+gimmick bands unlocking Tera and Dynamax (§2.5).
+
+### 2.38 Trainer filler matches the specialty type, not the union
+
+**Keep generated filler** — their signature table gives four species and our late bands run five
+or six, so the gap is filled from the dex. It costs nothing and adds variety.
+
+**But the matching was wrong, and this is why Brock got a Cramorant.** The extractor unions the
+types of *every* signature species' final form. Brock's list contains Aerodactyl, which is
+Rock/**Flying** — so Flying enters the pool and Cramorant matches on it.
+
+**Fix: match the specialty type — the one common to the signature species — rather than the
+union.** Brock's four are Rock/Ground, Rock/Ground, Rock/Water and Rock/Flying; the intersection
+is **Rock**, which is exactly what a Brock filler should be. A union is a superset of every
+theme a leader touches, which is the opposite of a theme.
+
 ---
 
 ## 3. Preliminary plan

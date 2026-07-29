@@ -444,6 +444,12 @@ def render_md(doc: dict) -> str:
     L.append("Canonical rarity ladder for every item the server hands out. Consult this\n"
              "when designing a new game, quest, crate, or reward so payouts stay consistent\n"
              "with what already exists.\n")
+    L.append("!!! info \"Draft — under review\"\n")
+    L.append("    These tiers are a first pass and are being verified. If something looks\n"
+             "    mis-ranked, say so — especially anything you actually play around.\n\n"
+             "    A tier is what an item *should* be worth. The **Where it comes from**\n"
+             "    column is what currently grants it, and the two disagreeing is exactly\n"
+             "    the kind of thing worth reporting.\n")
     L.append("!!! warning \"Generated file\"\n")
     L.append("    Built by `ops/loot-tiers/build_tiers.py`. Don't hand-edit — change\n"
              "    `ops/loot-tiers/overrides.json` (for a specific item) or the category\n"

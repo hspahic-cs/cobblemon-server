@@ -4,6 +4,15 @@ Canonical rarity ladder for every item the server hands out. Consult this
 when designing a new game, quest, crate, or reward so payouts stay consistent
 with what already exists.
 
+!!! info "Draft — under review"
+
+    These tiers are a first pass and are being verified. If something looks
+    mis-ranked, say so — especially anything you actually play around.
+
+    A tier is what an item *should* be worth. The **Where it comes from**
+    column is what currently grants it, and the two disagreeing is exactly
+    the kind of thing worth reporting.
+
 !!! warning "Generated file"
 
     Built by `ops/loot-tiers/build_tiers.py`. Don't hand-edit — change

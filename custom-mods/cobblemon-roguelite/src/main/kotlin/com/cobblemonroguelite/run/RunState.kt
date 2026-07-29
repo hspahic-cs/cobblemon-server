@@ -29,7 +29,11 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
  *   **Mutated from battle threads.** The monitor is the list object itself: everything in this
  *   class touches it under `synchronized(party)`, and anything outside that has to reach the
  *   raw list must take the same lock. Readers should prefer [partySnapshot].
- * @property credits run-scoped currency, spent in the between-wave shop. Converted to
+ * @property credits run-scoped currency, earned and spent inside the run and **discarded when it
+ *   ends** (plan §2.35). It is deliberately *not* converted to anything: §2.20 makes the payout
+ *   non-currency so the entry fee stays a real sink, and converting a leftover balance would
+ *   quietly reopen that. An earlier version of this comment said "converted to
+ *   server currency at run end" — that predates §2.20 and was wrong. Not to
  *   server currency at run end — it is never itself a server balance.
  * @property seed fixes wave generation so a resumed run rolls the same opponents it would
  *   have rolled before the disconnect. Per-wave draws use `seed` combined with [wave].

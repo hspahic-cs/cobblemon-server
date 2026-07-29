@@ -1254,6 +1254,35 @@ the *tiering harness* rather than in eight separate unknowns. Build the harness 
 Focus Band and King's Rock first — three near-verbatim stock copies validating the harness on the
 cheapest possible payload.
 
+### 2.35 Credits are a within-run resource and never leave
+
+**The gap §2.34 exposed:** `RunState.credits` has existed since the first commit, documented as
+"spent in the between-wave shop" — and no shop was ever designed. Around eight of PokéRogue's
+modifiers (Amulet Coin, Coin Case, Nugget, Relic Gold, Golden Punch, Healing Charm, Lock Capsule)
+have no meaning without one.
+
+**Chosen:** credits are real, earned inside a run, spent inside a run, and **die with it**.
+Unspent credits convert to nothing.
+
+**This corrects a stale line.** `RunState`'s own docs say credits are "converted to server currency
+at run end". That predates §2.20, which made the payout **non-currency** precisely so the entry
+fee stays a real sink. Converting credits would quietly reopen the faucet §2.18 and §2.20 closed
+together. The doc comment is wrong and should be fixed with the implementation.
+
+**Two separate things, and conflating them would flatten both.** The **reward pick** after a wave
+is free and is where power comes from (§2.4 mechanism 1, and §2.33's modifier tiers). The **shop**
+is where credits go — consumables, balls (§2.13 made balls earned rather than unlimited), healing.
+PokéRogue runs both, and they do different jobs: the pick is a decision about your build, the shop
+is a decision about your resources.
+
+**Why credits dying with the run is the right call**, beyond consistency with §2.20: a currency
+that leaves makes every run a farming decision, and the mode already has exactly one metered
+channel out. Credits that expire also make *spending* them correct — a hoarded balance is wasted,
+which is the behaviour a between-wave shop wants.
+
+**Open, and all of it content:** what credits are earned per wave kind, what the shop stocks, what
+things cost, and whether the shop restocks per wave or per band. None of it blocks the mechanism.
+
 ---
 
 ## 3. Preliminary plan

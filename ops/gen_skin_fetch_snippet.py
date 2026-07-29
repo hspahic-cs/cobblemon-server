@@ -40,14 +40,27 @@ ROW = re.compile(
 
 def main() -> None:
     text = DOC.read_text(encoding="utf-8")
-    # Only the "Still needed" section: the Optional upgrades table below it lists characters
-    # that already have a working skin, and re-downloading those would overwrite a good file
-    # with one the operator has not chosen yet.
+    # Only a "Still needed" section is read. Other tables in the doc list characters that
+    # already have a working skin, and fetching those would overwrite a good file with one
+    # nobody has chosen yet.
+    if "## Still needed" not in text:
+        # Nothing outstanding. Delete any previously generated list rather than leaving it:
+        # a stale snippet is worse than none, because pasting it re-downloads skins that have
+        # since been installed and reviewed, silently reverting a hand-picked replacement.
+        note = "nothing to fetch — no '## Still needed' section in the doc"
+        if OUT.exists():
+            OUT.unlink()
+            note += f"; removed the stale {OUT.relative_to(REPO)}"
+        print(note)
+        return
+
     start = text.index("## Still needed")
-    end = text.index("## Optional upgrades")
-    rows = [(name, path) for name, _full, path in ROW.findall(text[start:end])]
+    rest = text[start:]
+    # Stop at the next top-level heading so only the outstanding table is picked up.
+    following = re.search(r"\n## (?!Still needed)", rest)
+    rows = [(name, path) for name, _full, path in ROW.findall(rest[: following.start() if following else None])]
     if not rows:
-        raise SystemExit(f"no download rows found in {DOC} — has the table format changed?")
+        raise SystemExit(f"'## Still needed' has no download rows — has the table format changed?")
 
     entries = ",\n  ".join(json.dumps([name, path]) for name, path in rows)
     OUT.write_text(

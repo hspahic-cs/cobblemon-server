@@ -270,7 +270,8 @@ def trainer_class(stem: str) -> str:
     return match.group(1) if match else stem
 
 
-def pick_pool(candidates: "list[dict]", size: int, used_art: "set[str]") -> "list[dict]":
+def pick_pool(candidates: "list[dict]", size: int, used_art: "set[str]",
+              allow_repeat_art: bool = False) -> "list[dict]":
     """Take `size` trainers, spread across classes.
 
     Round-robin by class rather than a plain sort or a random sample. A sort by id would make
@@ -292,7 +293,7 @@ def pick_pool(candidates: "list[dict]", size: int, used_art: "set[str]") -> "lis
                 art = candidate.get("art")
                 # Skip a trainer whose picture is already in the pool. Not an id check: the ids
                 # differ, the art does not, and a player cannot tell two Burglars apart.
-                if art is not None and art in used_art:
+                if art is not None and art in used_art and not allow_repeat_art:
                     continue
                 if art is not None:
                     used_art.add(art)
@@ -318,6 +319,10 @@ def main() -> None:
     parser.add_argument("--out", default=DEFAULT_OUT, type=Path)
     parser.add_argument("--pool-size", type=int, default=DEFAULT_POOL_SIZE,
                         help=f"trainers per band (default {DEFAULT_POOL_SIZE})")
+    parser.add_argument("--picks", type=Path,
+                        help="JSON from the skin picker (gen_skin_review_page.py --picker). Its "
+                             "class list becomes the allowlist, so the pool is exactly what was "
+                             "chosen by eye. Overrides --classes.")
     parser.add_argument("--classes", default="",
                         help="comma-separated allowlist of trainer classes, e.g. youngster,hiker")
     parser.add_argument("--exclude-classes", default=",".join(DEFAULT_EXCLUDED_CLASSES),
@@ -346,8 +351,29 @@ def main() -> None:
 
     trainers = load_generic_trainers(args.jar)
     allow = {c.strip() for c in args.classes.split(",") if c.strip()}
-    deny = {c.strip() for c in args.exclude_classes.split(",") if c.strip()}
-    if allow:
+    if args.picks:
+        if not args.picks.is_file():
+            sys.exit(f"no picks file at {args.picks} — use the picker's 'Download picks' button")
+        data = json.loads(args.picks.read_text(encoding="utf-8"))
+        # "looks" is the exact selection — art hashes, one per card in the picker. It is preferred
+        # over "classes" because a class can own more than one texture (ace_trainer has several),
+        # so a class-level list cannot say "keep this look, drop that one" and would silently
+        # widen the choice that was made by eye. "classes" is carried for readability and as a
+        # fallback for a hand-written picks file.
+        chosen_looks = {str(x)[:12] for x in data.get("looks") or []}
+        chosen = data.get("classes")
+        if not chosen_looks and not chosen:
+            sys.exit(f"{args.picks} has neither a 'looks' nor a 'classes' list")
+        allow = set(chosen or [])
+        # A hand-made selection is the whole point, so it also overrules the default class vetoes:
+        # if someone looked at the Drake-faced dragon_tamer and kept it anyway, that is a decision.
+        deny_default = False
+        if chosen_looks:
+            print(f"using {len(chosen_looks)} look(s) picked by hand from {args.picks.name}")
+        else:
+            print(f"using {len(allow)} class(es) from {args.picks.name} (no 'looks' list)")
+    deny = set() if args.picks else {c.strip() for c in args.exclude_classes.split(",") if c.strip()}
+    if allow and not (args.picks and chosen_looks):
         trainers = [t for t in trainers if t["klass"] in allow]
     if deny:
         trainers = [t for t in trainers if t["klass"] not in deny]
@@ -366,36 +392,63 @@ def main() -> None:
     for t in trainers:
         t["art"] = hashes.get(t["id"])
 
+    if args.picks and chosen_looks:
+        before = len(trainers)
+        trainers = [t for t in trainers if t["art"] and t["art"][:12] in chosen_looks]
+        if not trainers:
+            sys.exit("no trainer matched the picked looks — is the picks file from this pack?")
+        print(f"  {len(trainers)} of {before} trainers wear a picked look")
+
     distinct = len({t["art"] for t in trainers if t["art"]})
     print(f"{len(trainers)} generic trainers available in {args.jar.name}, "
           f"but only {distinct} DISTINCT LOOKS — that is the real ceiling on variety")
 
     waves = trainer_waves(args.run_length, args.trainer_interval, args.boss_interval)
-    bands, used, report = [], set(), []
-    # Shared across bands: the same Bug Catcher picture in early AND late is the duplication
-    # this exists to prevent, so the set is not reset per band.
-    used_art = set()
+    waves = trainer_waves(args.run_length, args.trainer_interval, args.boss_interval)
 
-    # MOST CONSTRAINED BAND FIRST, then restore the declared order for output.
+    # ---------------------------------------------------------------- allocation
     #
-    # With art deduplicated globally there are only ~87 distinct looks to go round, so whichever
-    # band draws first takes the pick of them. Drawing in declared order made the bands
-    # alphabetical slices — early got ace_trainer..dragon_tamer, late got whatever survived — and
-    # left the late band with 9 trainers because the high party sizes it needs had already gone
-    # to a band that had no such requirement. Filling by descending size floor gives the scarce
-    # big-party art to the only band that cannot substitute for it; the early band is choosing
-    # from 847 candidates and can afford to go last.
-    for band_id, min_wave, max_wave, min_size in sorted(bands_spec, key=lambda b: -b[3]):
-        # Each id is used by at most one band. A trainer in two bands is not broken, but it
-        # makes "have I seen this one already" depend on where you are, which is the opposite
-        # of what a ramp is for.
-        candidates = [
-            t for t in trainers
-            if t["size"] >= min_size and t["id"] not in used
-        ]
-        pool = pick_pool(candidates, args.pool_size, used_art)
-        used.update(t["id"] for t in pool)
+    # TWO PHASES, and the second one is not a nicety. Art is deduplicated globally, so the looks
+    # are a fixed pool (~85 by default, far fewer behind a hand-picked --picks list). A single
+    # greedy pass in most-constrained-first order starves the last band outright: with 13 looks
+    # picked, the late band took its 24 and the EARLY band was emitted with zero trainers.
+    #
+    # Phase 1 gives every band its minimum viable allotment — one trainer per wave it covers —
+    # still in descending size-floor order, so the scarce big-party art goes to the band that
+    # cannot substitute for it. Phase 2 tops each band up towards --pool-size with what is left.
+    # A band that cannot even be filled to its wave count in phase 1 is allowed to reuse art, with
+    # a warning: a visible repeat beats an empty band, which would leave waves with no trainer.
+    by_band = {b[0]: [] for b in bands_spec}
+    used_art, used_ids = set(), set()
+    constrained_first = sorted(bands_spec, key=lambda b: -b[3])
 
+    def candidates_for(min_size):
+        return [t for t in trainers if t["size"] >= min_size and t["id"] not in used_ids]
+
+    def take(band_id, min_size, want, allow_repeat_art):
+        picked = pick_pool(candidates_for(min_size), want, used_art, allow_repeat_art)
+        used_ids.update(t["id"] for t in picked)
+        by_band[band_id].extend(picked)
+        return len(picked)
+
+    for band_id, min_wave, max_wave, min_size in constrained_first:
+        covered = [w for w in waves if w >= min_wave and (max_wave is None or w <= max_wave)]
+        need = min(len(covered), args.pool_size)
+        distinct = take(band_id, min_size, need, allow_repeat_art=False)
+        if distinct < need:
+            repeated = take(band_id, min_size, need - distinct, allow_repeat_art=True)
+            print(f"  {band_id}: {distinct} of {need} waves got distinct art; {repeated} reuse a "
+                  f"face already in the pool (only so many looks exist). An empty wave would be "
+                  f"worse than a visible repeat.")
+
+    for band_id, min_wave, max_wave, min_size in constrained_first:
+        shortfall = args.pool_size - len(by_band[band_id])
+        if shortfall > 0:
+            take(band_id, min_size, shortfall, allow_repeat_art=False)
+
+    bands, report = [], []
+    for band_id, min_wave, max_wave, min_size in bands_spec:
+        pool = by_band[band_id]
         band = {
             "id": band_id,
             "kind": "trainer",
@@ -404,11 +457,9 @@ def main() -> None:
         }
         if max_wave is not None:
             band["max_wave"] = max_wave
-        # Insert max_wave before trainers for readability without relying on dict ordering games.
         bands.append({k: band[k] for k in ("id", "kind", "min_wave", "max_wave", "trainers") if k in band})
-
         covered = [w for w in waves if w >= min_wave and (max_wave is None or w <= max_wave)]
-        report.append((band_id, min_size, len(candidates), pool, covered))
+        report.append((band_id, min_size, len(candidates_for(min_size)) + len(pool), pool, covered))
 
     order = [b[0] for b in bands_spec]
     bands.sort(key=lambda b: order.index(b["id"]))

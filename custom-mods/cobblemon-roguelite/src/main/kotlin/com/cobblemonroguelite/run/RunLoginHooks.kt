@@ -53,7 +53,7 @@ object RunLoginHooks {
             ?.let { player.sendSystemMessage(RunMessages.ended(it)) }
         when (val status = reconciliation.status) {
             RunStatus.None -> Unit
-            is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.offer(status.offer))
+            is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.catalogue(status.catalogue))
             is RunStatus.InProgress -> {
                 player.sendSystemMessage(
                     RunMessages.atWave(status.run.wave, status.run.partySnapshot().size, status.depthCap),

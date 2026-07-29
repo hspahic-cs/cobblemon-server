@@ -1,12 +1,12 @@
 package com.cobblemonroguelite.run
 
 import com.cobblemonroguelite.integration.RunChargeResult
-import com.cobblemonroguelite.starter.StarterOffer
+import com.cobblemonroguelite.starter.StarterCatalogue
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 
 /**
- * The five things starting a run does, in the order it must do them.
+ * The six things starting a run does, in the order it must do them.
  *
  * ### Why the steps are an interface instead of direct calls
  *
@@ -48,6 +48,21 @@ interface RunStartContext {
     fun charge(quoteOnly: Boolean): RunChargeResult
 
     /**
+     * What this player may buy their starting team from (§2.13).
+     *
+     * **Takes no seed, and is asked before the fee.** Under the superseded random-offer design the
+     * offer was derived from the run seed, so it could only be built after the seed existed — which
+     * put the "this server has no starters" refusal *after* the charge, with a comment explaining why
+     * that was tolerable. A budget catalogue is a pure function of the player's unlocks and the price
+     * table, so the question can be asked while nothing has been taken, and the whole hazard goes
+     * away rather than being managed.
+     *
+     * Still a step on this interface rather than a call inside [RunStart], because it is the one
+     * refusal here that reads the datapack and it needs a booted server to answer.
+     */
+    fun starterCatalogue(): StarterCatalogue
+
+    /**
      * A fresh seed. §2.16: every start mints a new one, including a start straight after an abandon
      * — a player who dislikes their draft is meant to be able to walk away and get a different run,
      * and the fee is what prices that.
@@ -60,9 +75,6 @@ interface RunStartContext {
      * reroll of a run they have already paid for.
      */
     fun persistSeed(seed: Long)
-
-    /** The starter offer for this seed (§2.13). Derived, so it comes last. */
-    fun starterOffer(seed: Long): StarterOffer
 }
 
 /** Why a run did not start. Structured rather than pre-rendered so the command layer owns wording. */
@@ -83,12 +95,21 @@ sealed interface RunStartRefusal {
     data class Charge(val reason: Component) : RunStartRefusal
 
     /**
-     * The offer came back empty, i.e. the server has no starter pool. A configuration fault rather
-     * than a gameplay outcome, and one that lands **after the player has been charged** — which is
-     * why [StarterOffer] and its pool source both treat an empty baseline as an error rather than
-     * quietly narrowing the offer.
+     * The catalogue came back empty: the server has no starter pool, or everything in it is
+     * unpriced. A configuration fault rather than a gameplay outcome, and — unlike under the
+     * superseded offer design — one that now lands **before** the player is charged.
      */
     data object NoStartersAvailable : RunStartRefusal
+
+    /**
+     * The catalogue has species in it and none of them fits the budget.
+     *
+     * Separate from [NoStartersAvailable] because it is a different mistake with a different fix: the
+     * pool is fine and the prices are fine relative to each other, and somebody has set a budget below
+     * the cheapest thing anyone can buy. Both numbers are carried so the message can name them, since
+     * "no starters available" on a screen full of starters is not a report anyone can act on.
+     */
+    data class NoAffordableStarters(val cheapest: Int, val budget: Int) : RunStartRefusal
 }
 
 /** What a quote came to. Nothing has been taken either way. */
@@ -104,12 +125,12 @@ sealed interface RunStartQuote {
 sealed interface RunStartResult {
 
     /**
-     * The fee is taken, the seed is on disk, and the player has an offer to pick from. No
-     * [RunState] exists yet — it is built from the chosen starter, at level 1 (§2.21).
+     * The fee is taken, the seed is on disk, and the player has a catalogue to spend their budget on.
+     * No [RunState] exists yet — it is built from the team they buy, at level 1 (§2.21).
      */
-    data class OfferReady(
+    data class CatalogueReady(
         val seed: Long,
-        val offer: StarterOffer,
+        val catalogue: StarterCatalogue,
         val charged: Component?,
         val maxWave: Int?,
     ) : RunStartResult
@@ -126,15 +147,23 @@ sealed interface RunStartResult {
  *    is also the cheapest check, which is a coincidence and not the reason.
  * 2. **Arena before fee**, for the same reason and a sharper one: a full grid is a refusal the
  *    *server* caused, and charging for it would be charging a player for our concurrency limit.
- * 3. **Fee before seed.** [com.cobblemonroguelite.integration.RunChargeProvider] states this as its
- *    own contract: a player must never see a starter offer they are then refused for.
- * 4. **Seed persisted before the offer is built.** §2.16, and the reason [PendingStart] exists.
- * 5. **Offer last**, because it is derived from the seed and nothing else derives from it.
+ * 3. **Catalogue before fee**, which is new and is the one order this rework changed. §2.13's budget
+ *    catalogue is not derived from the seed, so "this server has no startable species" can be asked
+ *    while nothing has been taken. Under the superseded offer design it could not be, and the
+ *    refusal landed on a player who had already paid.
+ * 4. **Fee before seed.** [com.cobblemonroguelite.integration.RunChargeProvider] states this as its
+ *    own contract: a player must never see a starter screen they are then refused for.
+ * 5. **Seed persisted before the run can be built from it.** §2.16, and the reason [PendingStart]
+ *    exists.
  *
- * The quote path ([quote]) runs steps 1 to 3 with `quoteOnly`, and stops. It exists so a confirm
- * prompt can name the price — a prompt that cannot is a prompt the player cannot decide from — and
- * it must not touch steps 3 to 5, since a quote that mints a seed would let a player re-quote until
- * they liked the draft.
+ * The quote path ([quote]) runs steps 1 to 3 plus a `quoteOnly` charge, and stops. It exists so a
+ * confirm prompt can name the price — a prompt that cannot is a prompt the player cannot decide from
+ * — and it must not mint or persist a seed, since a quote that minted one would let a player re-quote
+ * until they liked the run.
+ *
+ * The catalogue is in the quote for the player's sake rather than the server's: being told the server
+ * has no starters *before* typing `confirm` is strictly better than being told after, and the check
+ * is a map lookup either way.
  */
 object RunStart {
 
@@ -145,6 +174,7 @@ object RunStart {
             is DepthGateResult.Allowed -> Unit
         }
         if (!ctx.arenaAvailable()) return RunStartQuote.Refused(RunStartRefusal.NoArenaAvailable)
+        catalogueRefusal(ctx)?.let { return RunStartQuote.Refused(it) }
         return when (val charge = ctx.charge(quoteOnly = true)) {
             is RunChargeResult.Refused -> RunStartQuote.Refused(RunStartRefusal.Charge(charge.reason))
             is RunChargeResult.Paid -> RunStartQuote.Priced(charge.detail)
@@ -152,7 +182,7 @@ object RunStart {
     }
 
     /**
-     * Start a run: gate, charge, mint, persist, offer.
+     * Start a run: gate, arena, catalogue, charge, mint, persist.
      *
      * The gate is re-evaluated here rather than carried over from [quote]. The two calls are separate
      * player actions with a confirmation between them, and although a badge cannot be *lost*, the
@@ -169,6 +199,11 @@ object RunStart {
         // between the price prompt and the confirm, another player may have taken the last slot.
         if (!ctx.arenaAvailable()) return RunStartResult.Refused(RunStartRefusal.NoArenaAvailable)
 
+        // Re-asked here as well, for the same reason as the gate and the arena: a `/reload` between
+        // the price prompt and the confirm can empty the price table, and the catalogue is cheap.
+        val catalogue = ctx.starterCatalogue()
+        catalogueRefusal(catalogue)?.let { return RunStartResult.Refused(it) }
+
         val charge = ctx.charge(quoteOnly = false)
         if (charge is RunChargeResult.Refused) {
             return RunStartResult.Refused(RunStartRefusal.Charge(charge.reason))
@@ -178,14 +213,22 @@ object RunStart {
         val seed = ctx.mintSeed()
         ctx.persistSeed(seed)
 
-        val offer = ctx.starterOffer(seed)
-        // Deliberately *after* the charge, and deliberately not rolled back. The fee is taken and the
-        // seed is on disk, so the player still owns a paid, seeded run — the pending start survives
-        // and the same offer resolves as soon as an op fixes the pool. Refunding here would need the
-        // refund seam §2.16 refused to add, and voiding the pending start would throw away the one
-        // record that they paid.
-        if (offer.isEmpty) return RunStartResult.Refused(RunStartRefusal.NoStartersAvailable)
+        return RunStartResult.CatalogueReady(seed = seed, catalogue = catalogue, charged = detail, maxWave = maxWave)
+    }
 
-        return RunStartResult.OfferReady(seed = seed, offer = offer, charged = detail, maxWave = maxWave)
+    private fun catalogueRefusal(ctx: RunStartContext): RunStartRefusal? = catalogueRefusal(ctx.starterCatalogue())
+
+    /**
+     * Whether this catalogue can start a run at all.
+     *
+     * Two failures, deliberately distinguished — see [RunStartRefusal.NoAffordableStarters]. Neither
+     * is a gameplay outcome; both are the server misconfigured, and both are worth refusing rather
+     * than showing a screen that cannot be acted on.
+     */
+    private fun catalogueRefusal(catalogue: StarterCatalogue): RunStartRefusal? = when {
+        catalogue.isEmpty -> RunStartRefusal.NoStartersAvailable
+        catalogue.affordable().isEmpty() ->
+            RunStartRefusal.NoAffordableStarters(catalogue.cheapest ?: 0, catalogue.budget)
+        else -> null
     }
 }

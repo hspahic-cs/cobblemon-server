@@ -1,7 +1,9 @@
 package com.cobblemonroguelite.run
 
 import com.cobblemon.mod.common.pokemon.Pokemon
-import com.cobblemonroguelite.starter.StarterOffer
+import com.cobblemonroguelite.starter.StarterCatalogue
+import com.cobblemonroguelite.starter.StarterSelection
+import com.cobblemonroguelite.starter.StarterSelectionResult
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
@@ -45,9 +47,19 @@ object RunMessages {
         "Your run arena could not be prepared, so you have not been moved. Your run is safe — tell an operator.",
     )
 
+    /**
+     * No longer says "your run is paid for": under §2.13's budget the catalogue is checked *before*
+     * the fee ([RunStart]), so a player who sees this has been charged nothing.
+     */
     fun noStarters(): Component = literal(
-        "The starter pool is empty, so there is nothing to offer you. Your run is paid for and " +
-            "waiting — tell an operator, then /roguelite resume.",
+        "This server has no startable Pokémon configured, so a run cannot begin. Nothing has been " +
+            "taken — tell an operator.",
+    )
+
+    /** The catalogue is fine and the budget is set below everything in it. Names both numbers. */
+    fun noAffordableStarters(refusal: RunStartRefusal.NoAffordableStarters): Component = literal(
+        "The starting budget is ${refusal.budget} point(s) and the cheapest Pokémon on this server " +
+            "costs ${refusal.cheapest}, so no team can be bought. Nothing has been taken — tell an operator.",
     )
 
     /** The confirm prompt. It names the price, which is the entire reason the quote step exists. */
@@ -60,18 +72,78 @@ object RunMessages {
         )
     }
 
-    fun offer(offer: StarterOffer): Component = literal(
-        "Choose your starter with /roguelite starter <species>: " +
-            offer.species.joinToString(", ") { it.toString() },
+    /**
+     * The catalogue, priced (§2.13).
+     *
+     * Says "up to" rather than naming a team size, because there is no fixed one — at these prices a
+     * budget buys two or three Pokémon and a party reaches six by catching, and a message that
+     * implied otherwise would read as a bug the first time somebody could only afford two.
+     *
+     * Unaffordable options are listed and marked rather than hidden. A player who cannot yet afford
+     * something should be able to see what they are saving discounts for; hiding it would make the
+     * candy reductions in §2.15 invisible until the moment they had already paid off.
+     */
+    fun catalogue(catalogue: StarterCatalogue): Component {
+        val budget = catalogue.budget
+        val listed = catalogue.options.joinToString(", ") { option ->
+            val price = "${option.species} (${option.cost})"
+            if (option.cost <= budget) price else "$price too dear"
+        }
+        return literal(
+            "You have $budget point(s) to spend on up to ${StarterSelection.MAX_TEAM} Pokémon — " +
+                "buy them with /roguelite starter <species> [more...]. Spending less is fine, and " +
+                "catching is how the rest of your party arrives. Available: $listed",
+        )
+    }
+
+    fun started(team: List<String>, spent: Int, remaining: Int): Component {
+        val unspent = if (remaining > 0) " $remaining point(s) unspent." else ""
+        return literal(
+            "Your run begins with ${team.joinToString(", ")} at level 1 for $spent point(s).$unspent " +
+                "/roguelite resume to fight wave 1.",
+        )
+    }
+
+    /**
+     * Why a proposed team was refused. One function over the whole result so that adding a refusal
+     * without wording it fails to compile — a refusal the player is shown as silence is a refusal
+     * they cannot act on, and this is the command layer's only chance to say anything.
+     */
+    fun starterRejected(reason: StarterSelectionResult): Component = when (reason) {
+        is StarterSelectionResult.Accepted ->
+            // Not reachable through the command path, and worded rather than thrown: a crash here
+            // would cost the player their session over a message they were never meant to see.
+            literal("That team is fine. /roguelite status shows where you stand.")
+
+        StarterSelectionResult.Empty ->
+            literal("Name at least one Pokémon. /roguelite status shows what you can afford.")
+
+        is StarterSelectionResult.NotEligible -> literal(
+            "Not available to you: ${reason.species.joinToString(", ")}. Catching a species on the " +
+                "server unlocks it for future runs; legendaries never unlock. /roguelite status lists yours.",
+        )
+
+        is StarterSelectionResult.Unpriced -> literal(
+            "This server has no price set for ${reason.species.joinToString(", ")}, so they cannot be " +
+                "bought. Tell an operator — your run is still paid for.",
+        )
+
+        is StarterSelectionResult.Duplicate ->
+            literal("You can only take one ${reason.species}. Pick a different second Pokémon.")
+
+        is StarterSelectionResult.TooMany ->
+            literal("A party holds ${reason.max}. Pick fewer — the rest of it comes from catching.")
+
+        is StarterSelectionResult.OverBudget -> literal(
+            "That team costs ${reason.spent} and you have ${reason.budget}. Drop one, or trade down " +
+                "— unspent points are allowed.",
+        )
+    }
+
+    fun speciesUnavailable(species: Any): Component = literal(
+        "$species could not be created on this server, so none of that team was bought. Pick again " +
+            "— your run is still paid for.",
     )
-
-    fun started(species: String): Component =
-        literal("Your run begins with $species at level 1. /roguelite resume to fight wave 1.")
-
-    fun notOffered(): Component = literal("That species was not in your offer. /roguelite status shows it again.")
-
-    fun speciesUnavailable(): Component =
-        literal("That species could not be created on this server. Pick another — your run is still paid for.")
 
     fun atWave(wave: Int, party: Int, depthCap: Int?): Component {
         val cap = depthCap?.let { " (your badges allow $it)" } ?: ""
@@ -160,7 +232,7 @@ object RunMessages {
         PauseAdvice.NoRun -> noRun()
 
         PauseAdvice.StarterPending -> literal(
-            "No battle in progress. Your paid start is saved and your starter offer will be waiting — " +
+            "No battle in progress. Your paid start is saved and your starting budget will be waiting — " +
                 "log off whenever you like.",
         )
 

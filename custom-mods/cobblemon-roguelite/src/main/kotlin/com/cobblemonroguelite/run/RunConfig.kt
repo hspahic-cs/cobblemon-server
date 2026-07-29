@@ -5,7 +5,9 @@ import com.cobblemonroguelite.arena.ArenaLayout
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.data.payout.PayoutTables
+import com.cobblemonroguelite.starter.DefaultStarterCosts
 import com.cobblemonroguelite.starter.PlaceholderStarterPoolSource
+import com.cobblemonroguelite.starter.StarterCostSource
 import com.cobblemonroguelite.starter.StarterPoolSource
 import net.minecraft.resources.ResourceLocation
 
@@ -41,6 +43,11 @@ import net.minecraft.resources.ResourceLocation
  *   a payout is re-read once at the end, whereas this would otherwise be re-read on every one of two
  *   hundred waves, so an operator swapping rosters would change the ladder under a run halfway up it.
  *   See [RunRosters].
+ * @property starterCosts §2.13's price per species. The default layers the server's datapack table
+ *   over a derived fallback — see [DefaultStarterCosts] for why a published build cannot ship the
+ *   real prices and what it uses instead.
+ * @property starterBudget §2.13. Points a player has to spend on their starting team. See
+ *   [RunConfig.DEFAULT_STARTER_BUDGET] for why this one is a decision and not a placeholder.
  * @property starterLevel §2.21. A run starter begins at 1 and levels on the curve by battle EXP.
  * @property arena where runs are fought and how many can be fought at once. Unlike the rest of this
  *   class its defaults are real rather than placeholders — the grid works out of the box — with the
@@ -53,11 +60,27 @@ data class RunConfig(
     val payoutTable: ResourceLocation = PayoutTables.DEFAULT_TABLE,
     val trainerRoster: ResourceLocation = RunRosters.DEFAULT_ROSTER,
     val starterPool: StarterPoolSource = PlaceholderStarterPoolSource,
+    val starterCosts: StarterCostSource = DefaultStarterCosts,
+    val starterBudget: Int = DEFAULT_STARTER_BUDGET,
     val starterLevel: Int = 1,
     val arena: ArenaConfig = ArenaConfig(),
 ) {
     init {
         require(starterLevel >= 1) { "starterLevel must be at least 1, was $starterLevel" }
+        // Zero would be a run with no Pokémon in it. Nothing above enforces a *useful* budget — a
+        // budget below the cheapest species is a legal configuration that refuses every start, and it
+        // is refused at run start with a message naming both numbers rather than silently here.
+        require(starterBudget >= 1) { "starterBudget must be at least 1, was $starterBudget" }
+    }
+
+    companion object {
+        /**
+         * §2.13's budget. Configurable, and unlike most numbers in this class it is a decision rather
+         * than a placeholder: 10 is PokéRogue's, and the cost table that gives it meaning is priced
+         * against it. Raising it without re-pricing does not make runs slightly stronger — it changes
+         * two-or-three Pokémon into a full party, which is a different mode.
+         */
+        const val DEFAULT_STARTER_BUDGET = 10
     }
 }
 

@@ -1,7 +1,9 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemonroguelite.starter.StarterSelection
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.IntegerArgumentType
+import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
@@ -42,22 +44,7 @@ object RunCommands {
                         .executes { player(it)?.let(::quoteStart) ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let(::start) ?: 0 }),
                 )
-                .then(
-                    Commands.literal("starter")
-                        .then(
-                            Commands.argument("species", ResourceLocationArgument.id())
-                                // Suggested from the player's own offer rather than from every
-                                // species on the server: the offer is three ids and typing one of
-                                // them exactly is otherwise the hardest part of starting a run.
-                                .suggests { ctx, builder ->
-                                    val offer = (status(ctx) as? RunStatus.AwaitingStarter)?.offer
-                                    SharedSuggestionProvider.suggestResource(offer?.species.orEmpty(), builder)
-                                }
-                                .executes { ctx ->
-                                    player(ctx)?.let { chooseStarter(it, ResourceLocationArgument.getId(ctx, "species")) } ?: 0
-                                },
-                        ),
-                )
+                .then(Commands.literal("starter").then(starterArgument(1)))
                 .then(Commands.literal("status").executes { player(it)?.let(::status) ?: 0 })
                 .then(Commands.literal("resume").executes { player(it)?.let(::resume) ?: 0 })
                 .then(
@@ -111,6 +98,52 @@ object RunCommands {
         )
     }
 
+    /**
+     * `/roguelite starter <a> [b] [c] ...`, built as nested optional arguments rather than one
+     * greedy string.
+     *
+     * A greedy string would be a third of the code and would give suggestions on the first species
+     * only. Under §2.13 a team is two or three ids typed exactly, in a chat box, with no GUI — so
+     * per-slot completion is not a nicety, it is the difference between the feature being usable
+     * from a command and not. Each level also `executes`, which is what makes every arity legal
+     * without declaring six overloads.
+     *
+     * Bounded at [StarterSelection.MAX_TEAM]: a seventh argument is refused by the parser, before
+     * there is anything to validate.
+     */
+    private fun starterArgument(depth: Int): RequiredArgumentBuilder<CommandSourceStack, ResourceLocation> {
+        val argument = Commands.argument(speciesArg(depth), ResourceLocationArgument.id())
+            // Suggested from the player's own catalogue rather than from every species on the
+            // server. Deliberately does not hide what they have already typed: filtering by the
+            // earlier arguments would need this to re-parse a half-typed command, and a duplicate is
+            // caught with a clear message a moment later.
+            .suggests { ctx, builder ->
+                val catalogue = (status(ctx) as? RunStatus.AwaitingStarter)?.catalogue
+                SharedSuggestionProvider.suggestResource(catalogue?.options.orEmpty().map { it.species }, builder)
+            }
+            .executes { ctx -> player(ctx)?.let { chooseStarters(it, speciesArgs(ctx)) } ?: 0 }
+        if (depth < StarterSelection.MAX_TEAM) argument.then(starterArgument(depth + 1))
+        return argument
+    }
+
+    private fun speciesArg(depth: Int) = "species$depth"
+
+    /**
+     * The species actually typed, in order.
+     *
+     * Brigadier has no "was this argument supplied" query, so absence is read off the exception its
+     * getter throws. Stopping at the first gap rather than collecting what is present keeps the
+     * order the player typed, which becomes their party order and therefore their lead.
+     */
+    private fun speciesArgs(ctx: CommandContext<CommandSourceStack>): List<ResourceLocation> {
+        val species = mutableListOf<ResourceLocation>()
+        for (depth in 1..StarterSelection.MAX_TEAM) {
+            val id = runCatching { ResourceLocationArgument.getId(ctx, speciesArg(depth)) }.getOrNull() ?: break
+            species += id
+        }
+        return species
+    }
+
     private fun player(ctx: CommandContext<CommandSourceStack>): ServerPlayer? = ctx.source.player
 
     private fun status(ctx: CommandContext<CommandSourceStack>): RunStatus? =
@@ -119,11 +152,11 @@ object RunCommands {
     private fun quoteStart(player: ServerPlayer): Int {
         val current = RunController.status(player.server, player)
         if (current !is RunStatus.None) {
-            // A pending start is answered with the offer rather than with "already running": the
+            // A pending start is answered with the catalogue rather than with "already running": the
             // player is one command away from being in a run and telling them they are busy would
             // hide that.
             player.sendSystemMessage(
-                if (current is RunStatus.AwaitingStarter) RunMessages.offer(current.offer) else RunMessages.alreadyRunning(),
+                if (current is RunStatus.AwaitingStarter) RunMessages.catalogue(current.catalogue) else RunMessages.alreadyRunning(),
             )
             return 0
         }
@@ -146,17 +179,19 @@ object RunCommands {
                 0
             }
 
-            is RunStartResult.OfferReady -> {
-                player.sendSystemMessage(RunMessages.offer(result.offer))
+            is RunStartResult.CatalogueReady -> {
+                player.sendSystemMessage(RunMessages.catalogue(result.catalogue))
                 1
             }
         }
     }
 
-    private fun chooseStarter(player: ServerPlayer, species: ResourceLocation): Int =
-        when (RunController.chooseStarter(player.server, player, species)) {
+    private fun chooseStarters(player: ServerPlayer, species: List<ResourceLocation>): Int =
+        when (val result = RunController.chooseStarters(player.server, player, species)) {
             is StarterChoiceResult.Started -> {
-                player.sendSystemMessage(RunMessages.started(species.toString()))
+                player.sendSystemMessage(
+                    RunMessages.started(species.map { it.toString() }, result.spent, result.remaining),
+                )
                 1
             }
 
@@ -165,13 +200,13 @@ object RunCommands {
                 0
             }
 
-            StarterChoiceResult.NotOffered -> {
-                player.sendSystemMessage(RunMessages.notOffered())
+            is StarterChoiceResult.Rejected -> {
+                player.sendSystemMessage(RunMessages.starterRejected(result.reason))
                 0
             }
 
-            StarterChoiceResult.SpeciesUnavailable -> {
-                player.sendSystemMessage(RunMessages.speciesUnavailable())
+            is StarterChoiceResult.SpeciesUnavailable -> {
+                player.sendSystemMessage(RunMessages.speciesUnavailable(result.species))
                 0
             }
         }
@@ -179,7 +214,7 @@ object RunCommands {
     private fun status(player: ServerPlayer): Int {
         when (val status = RunController.status(player.server, player)) {
             RunStatus.None -> player.sendSystemMessage(RunMessages.noRun())
-            is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.offer(status.offer))
+            is RunStatus.AwaitingStarter -> player.sendSystemMessage(RunMessages.catalogue(status.catalogue))
             is RunStatus.InProgress -> {
                 player.sendSystemMessage(
                     RunMessages.atWave(status.run.wave, status.run.partySnapshot().size, status.depthCap),
@@ -196,7 +231,7 @@ object RunCommands {
     private fun resume(player: ServerPlayer): Int {
         when (val result = RunController.resume(player.server, player)) {
             ResumeResult.NoRun -> player.sendSystemMessage(RunMessages.noRun())
-            is ResumeResult.AwaitingStarter -> player.sendSystemMessage(RunMessages.offer(result.offer))
+            is ResumeResult.AwaitingStarter -> player.sendSystemMessage(RunMessages.catalogue(result.catalogue))
             is ResumeResult.WaveStarted -> Unit // the battle itself is the feedback
             is ResumeResult.WaveUnavailable -> player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave))
             is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
@@ -320,5 +355,6 @@ object RunCommands {
         is RunStartRefusal.Charge -> refusal.reason
         RunStartRefusal.NoArenaAvailable -> RunMessages.noArenaAvailable()
         RunStartRefusal.NoStartersAvailable -> RunMessages.noStarters()
+        is RunStartRefusal.NoAffordableStarters -> RunMessages.noAffordableStarters(refusal)
     }
 }

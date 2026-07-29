@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemon.mod.common.util.party
 import com.cobblemon.mod.common.util.pc
+import com.cobblemonroguelite.progression.RunProgression
 import com.cobblemonroguelite.run.RunController
 import com.cobblemonroguelite.run.RunMessages
 import net.minecraft.server.level.ServerPlayer
@@ -92,6 +93,14 @@ object RunCapture {
             player.sendSystemMessage(RunMessages.uncatchableWave())
             return
         }
+
+        // §1.1 as restated: the Pokémon never leaves the run, but the *fact that it was caught* does —
+        // candy for the species and its IVs into that species' floor (§2.15, §2.17). Credited here,
+        // above the routing, because the routing is allowed to fail and the catch still happened; see
+        // [RunProgression.creditCatch] for both halves of the ordering. Nothing in that call touches
+        // the player's party, PC or Pokédex — it writes to a store of our own, which is what keeps
+        // this from being a hole in the two isolation mechanisms either side of it.
+        RunProgression.creditCatch(player.server, player.uuid, pokemon)
 
         val routing = RunController.pokemonCaught(player.server, player.uuid, pokemon)
         if (routing == null) {

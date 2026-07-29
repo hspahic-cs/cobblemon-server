@@ -3,6 +3,7 @@ package com.cobblemonroguelite
 import com.cobblemonroguelite.arena.ArenaSpawnSuppressor
 import com.cobblemonroguelite.battle.RunWaveBattles
 import com.cobblemonroguelite.data.RogueliteData
+import com.cobblemonroguelite.progression.ProgressionHooks
 import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunLoginHooks
 import net.neoforged.bus.api.IEventBus
@@ -56,6 +57,11 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
         // Game bus, not the mod bus: commands and player lifecycle are server-runtime events.
         NeoForge.EVENT_BUS.addListener<RegisterCommandsEvent> { RunCommands.register(it.dispatcher) }
         NeoForge.EVENT_BUS.register(RunLoginHooks)
+        // Binds the per-species progression store (§2.15 candy, §2.17 IV floors) to starter selection
+        // for the lifetime of the server. A game-bus listener because there is no server at setup and
+        // the store is world save data; without it selection quietly stays at base prices and base IVs,
+        // which plays correctly and is why this cannot fail loudly. See [ProgressionHooks].
+        NeoForge.EVENT_BUS.register(ProgressionHooks)
     }
 
     companion object {

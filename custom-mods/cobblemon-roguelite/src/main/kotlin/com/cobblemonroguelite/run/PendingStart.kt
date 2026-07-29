@@ -3,29 +3,34 @@ package com.cobblemonroguelite.run
 import net.minecraft.nbt.CompoundTag
 
 /**
- * A run that has been paid for and seeded but whose starter has not been chosen yet.
+ * A run that has been paid for and seeded but whose starting team has not been bought yet.
  *
  * ### Why this is persisted state and not a field on a GUI
  *
  * §2.16 requires the seed to be minted **and written down** before anything derived from it is
- * shown, and the starter offer is the first thing derived from it. Holding the seed only in the
- * open selection screen would mean a player who disconnects while looking at three species comes
- * back to a re-rolled offer — and since the fee was already taken at the door (§2.16's allowance
- * consumption), they would have paid for a run and been handed a different one. Worse, it is the
- * exact input a player would learn to exploit: quit at the offer screen until the draft is good.
+ * shown. Holding it only in the open selection screen would mean a player who disconnects mid-choice
+ * comes back to a different run — and since the fee was already taken at the door (§2.16's allowance
+ * consumption), they would have paid for a run and been handed another one.
+ *
+ * Under §2.13's superseded random offer that was also the anti-reroll guarantee: the offer was drawn
+ * from the seed, so an unpersisted seed meant quitting at the selection screen until the draft was
+ * good. A budget catalogue is not drawn, so that particular exploit no longer exists — but the seed
+ * still decides the team's IVs
+ * ([com.cobblemonroguelite.starter.StarterIvRoll]), so it still has to be written down before the
+ * player can act on it.
  *
  * So the moment the charge succeeds, this record exists and is on disk. Everything after it is
  * recoverable: [RunStore.pending] is what a reconnect reads to put the player back in front of the
- * same offer.
+ * same catalogue.
  *
- * ### Why the offer itself is not stored here
+ * ### Why the catalogue itself is not stored here
  *
- * The offer is a pure function of `(seed, eligible species)` — see
- * [com.cobblemonroguelite.starter.StarterOfferFactory] — so recomputing it from the seed gives the
- * same three species, and storing it would be a second copy that can disagree with the first. The
- * one input that can move underneath it is the player's Pokédex, and that class already states why
- * that re-roll is accepted rather than closed: triggering it costs catching a species you have never
- * caught, and closing it would mean snapshotting the eligible set into the save.
+ * It is a pure function of the player's eligible species and the price table — see
+ * [com.cobblemonroguelite.starter.StarterCatalogueFactory] — so rebuilding it costs a map lookup,
+ * and storing it would be a second copy that can disagree with the first. Two inputs can move
+ * underneath it: catching a new species on the server widens it, and a `/reload` can re-price it.
+ * Both are accepted rather than closed, for the reason that class gives — snapshotting them would be
+ * save state we then have to version, and it would also freeze a price an operator has since fixed.
  *
  * ### Why there is no expiry on this
  *

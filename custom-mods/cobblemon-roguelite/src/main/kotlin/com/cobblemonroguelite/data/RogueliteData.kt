@@ -3,6 +3,7 @@ package com.cobblemonroguelite.data
 import com.cobblemon.mod.common.data.CobblemonDataProvider
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
+import com.cobblemonroguelite.data.starter.StarterCostTables
 import com.cobblemonroguelite.data.trainer.TrainerRosters
 import org.slf4j.LoggerFactory
 
@@ -57,6 +58,11 @@ object RogueliteData {
         // a reward table changes what it rolls next. Bands and pools are ordered, and selection
         // indexes into them — see TrainerBand.trainers.
         CobblemonDataProvider.register(TrainerRosters, reloadable = true)
+        // Reloadable, with the same consequence and one more: a price edit reaches a *pending* start,
+        // because the catalogue is rebuilt from the pool every time it is shown (§2.13's budget is
+        // not seeded, so there is nothing snapshotted to go stale). A run already under way is
+        // unaffected — its party was bought and built at `chooseStarters`.
+        CobblemonDataProvider.register(StarterCostTables, reloadable = true)
         log.info("roguelite: datapack registries registered — tables load from data/<namespace>/{}/", RogueliteDataRegistry.ROOT)
     }
 }

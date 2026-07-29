@@ -13,10 +13,15 @@ import com.cobblemonroguelite.integration.RunCharges
 import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.integration.RunPayout
 import com.cobblemonroguelite.integration.RunPayouts
+import com.cobblemonroguelite.progression.RunProgression
 import com.cobblemonroguelite.starter.CobblemonPokedexUnlocks
+import com.cobblemonroguelite.starter.StarterCatalogue
+import com.cobblemonroguelite.starter.StarterCatalogueFactory
 import com.cobblemonroguelite.starter.StarterFactory
-import com.cobblemonroguelite.starter.StarterOffer
-import com.cobblemonroguelite.starter.StarterOfferFactory
+import com.cobblemonroguelite.starter.StarterProgression
+import com.cobblemonroguelite.starter.StarterSelection
+import com.cobblemonroguelite.starter.StarterSelectionResult
+import com.cobblemonroguelite.starter.StarterTeamResult
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
@@ -31,8 +36,12 @@ sealed interface RunStatus {
 
     data object None : RunStatus
 
-    /** Paid and seeded, still choosing (§2.16). [offer] is recomputed from the persisted seed. */
-    data class AwaitingStarter(val pending: PendingStart, val offer: StarterOffer) : RunStatus
+    /**
+     * Paid and seeded, still buying a team (§2.16). [catalogue] is rebuilt from the player's unlocks
+     * and the price table each time it is asked for — under §2.13's budget it is not derived from the
+     * seed, so there is nothing to reconstruct and nothing to keep in step with the persisted start.
+     */
+    data class AwaitingStarter(val pending: PendingStart, val catalogue: StarterCatalogue) : RunStatus
 
     /**
      * A live run. [step] is what would happen if they resumed — usually a wave to fight, but an
@@ -41,29 +50,34 @@ sealed interface RunStatus {
     data class InProgress(val run: RunState, val step: WaveStep, val depthCap: Int?) : RunStatus
 }
 
-/** Outcome of picking a starter out of an offer. */
+/** Outcome of buying a starting team out of a catalogue (§2.13). */
 sealed interface StarterChoiceResult {
 
-    data class Started(val run: RunState) : StarterChoiceResult
+    /** [spent] and [remaining] are carried so the player is told what the budget went on. */
+    data class Started(val run: RunState, val spent: Int, val remaining: Int) : StarterChoiceResult
 
-    /** No pending start — they never paid, or they already chose. */
+    /** No pending start — they never paid, or they already bought a team. */
     data object NoPendingStart : StarterChoiceResult
 
-    /** The species is real but was not one of the three they were shown. */
-    data object NotOffered : StarterChoiceResult
+    /**
+     * The selection did not pass [StarterSelection]. The whole result is carried rather than
+     * flattened to a boolean because every one of its cases needs different words, and half of them
+     * name a species or a number the player has to see to fix it.
+     */
+    data class Rejected(val reason: StarterSelectionResult) : StarterChoiceResult
 
     /**
-     * The species could not be built. The pending start is **kept**, not consumed: the player paid,
-     * and leaving the record in place means they can pick again — or pick a different one — once an
-     * op has fixed the pool. See [StarterFactory].
+     * A species in an otherwise legal team could not be built on this server. The pending start is
+     * **kept**, not consumed: the player paid, and leaving the record in place means they can buy
+     * again — or buy something else — once an op has fixed the pool. See [StarterFactory].
      */
-    data object SpeciesUnavailable : StarterChoiceResult
+    data class SpeciesUnavailable(val species: ResourceLocation) : StarterChoiceResult
 }
 
 /** Outcome of trying to get a player back into their run. */
 sealed interface ResumeResult {
     data object NoRun : ResumeResult
-    data class AwaitingStarter(val offer: StarterOffer) : ResumeResult
+    data class AwaitingStarter(val catalogue: StarterCatalogue) : ResumeResult
     data class WaveStarted(val plan: WavePlan) : ResumeResult
 
     /** The wave could not be started. The run is untouched and still resumable — see [RunWaves]. */
@@ -193,7 +207,7 @@ object RunController {
             return RunStatus.InProgress(run, nextStep(run, cap), cap)
         }
         val pending = store.pending(player.uuid) ?: return RunStatus.None
-        return RunStatus.AwaitingStarter(pending, offerFactory().offerFor(player.uuid, pending.seed))
+        return RunStatus.AwaitingStarter(pending, catalogueFactory().catalogueFor(player.uuid))
     }
 
     /**
@@ -229,24 +243,47 @@ object RunController {
     }
 
     /**
-     * Turn a pending start into a run, with [species] as its only party member at level 1 (§2.21).
+     * Turn a pending start into a run, with [species] as its starting party at level 1 (§2.21).
      *
-     * The seed comes from the persisted [PendingStart] and never from a fresh mint here: this is the
-     * other half of §2.16's guarantee, and a re-mint at this point would make the offer the player
-     * is looking at describe a run they are not about to play.
+     * The team is **not** a full party and must not be assumed to be one: at §2.13's prices 10 points
+     * buys two or three Pokémon, and catching is what takes a run to six.
+     *
+     * The seed comes from the persisted [PendingStart] and never from a fresh mint here — §2.16's
+     * other half. It no longer decides the catalogue (a budget is not rolled), but it does decide the
+     * team's IVs ([com.cobblemonroguelite.starter.StarterIvRoll]), so a re-mint at this point would
+     * hand the player a different team from the one their paid, persisted start describes.
      */
-    fun chooseStarter(server: MinecraftServer, player: ServerPlayer, species: ResourceLocation): StarterChoiceResult {
+    fun chooseStarters(
+        server: MinecraftServer,
+        player: ServerPlayer,
+        species: List<ResourceLocation>,
+    ): StarterChoiceResult {
         val store = RunStore.of(server)
         val pending = store.pending(player.uuid) ?: return StarterChoiceResult.NoPendingStart
-        val offer = offerFactory().offerFor(player.uuid, pending.seed)
-        if (!offer.contains(species)) return StarterChoiceResult.NotOffered
+
+        val catalogue = catalogueFactory().catalogueFor(player.uuid)
+        val selection = StarterSelection.validate(catalogue, species)
+        if (selection !is StarterSelectionResult.Accepted) return StarterChoiceResult.Rejected(selection)
 
         val config = RunSettings.current
-        val starter = StarterFactory.create(species, config.starterLevel) ?: return StarterChoiceResult.SpeciesUnavailable
+        // The IV floor is looked up per species here rather than inside the factory, so that the
+        // factory never receives a player — the same separation the cost source keeps (§2.15).
+        val progression = StarterProgression.current
+        val team = when (
+            val built = StarterFactory.createTeam(
+                species = selection.team.map { it.species },
+                level = config.starterLevel,
+                runSeed = pending.seed,
+                ivFloor = { progression.ivFloor(player.uuid, it) },
+            )
+        ) {
+            is StarterTeamResult.Built -> built.team
+            is StarterTeamResult.Unavailable -> return StarterChoiceResult.SpeciesUnavailable(built.species)
+        }
 
         val run = RunState(
             wave = 1,
-            party = mutableListOf(starter),
+            party = team.toMutableList(),
             seed = pending.seed,
             payoutTable = config.payoutTable,
             // Pinned here and never re-read from config again, for the reason [RunConfig.trainerRoster]
@@ -276,8 +313,11 @@ object RunController {
             )
         }
         store.checkpoint(server, player.uuid)
-        log.info("roguelite: {} started a run (seed={}, starter={})", player.gameProfile.name, run.seed, species)
-        return StarterChoiceResult.Started(run)
+        log.info(
+            "roguelite: {} started a run (seed={}, team={}, spent={}/{})",
+            player.gameProfile.name, run.seed, species, selection.spent, catalogue.budget,
+        )
+        return StarterChoiceResult.Started(run, selection.spent, selection.remaining)
     }
 
     /** Put the player back where they were: choosing a starter, or fighting the wave they are on. */
@@ -285,7 +325,7 @@ object RunController {
         val store = RunStore.of(server)
         val run = store.get(player.uuid)
             ?: return store.pending(player.uuid)
-                ?.let { ResumeResult.AwaitingStarter(offerFactory().offerFor(player.uuid, it.seed)) }
+                ?.let { ResumeResult.AwaitingStarter(catalogueFactory().catalogueFor(player.uuid)) }
                 ?: ResumeResult.NoRun
 
         // Checked before the step is composed, not after. Composing is harmless, but [WaveStep.Fight]
@@ -376,6 +416,12 @@ object RunController {
         // after §2.10's disconnect penalty, and recording on every plan would let `/roguelite status`
         // change who the player is about to meet.
         cleared.trainer?.let { run.trainerMemory.record(cleared.plan.wave, it.trainerId) }
+
+        // §2.15's third candy source: friendship earned in battle. Credited on the cleared wave and
+        // not per turn — the store is written once here instead of once per battle action, and the
+        // player perceives no difference. This is the only progression write outside the capture path,
+        // and like that one it touches nothing of the player's real data: see [RunProgression].
+        RunProgression.creditWaveFriendship(server, player, run.partySnapshot())
 
         // The depth cap is re-read from the player, so a run cleared by a player who has since logged
         // out falls back to "no cap" for this one decision. That errs towards letting the run
@@ -842,15 +888,22 @@ object RunController {
         }
 
     /**
-     * Built per call rather than held. The pool source lives in configuration that can be replaced at
-     * runtime, and a cached factory would keep serving the pool that was configured at boot.
+     * Built per call rather than held. The pool source, the price source and the budget all live in
+     * configuration that can be replaced at runtime, and a cached factory would keep serving what was
+     * configured at boot — including a price table a `/reload` has since corrected.
      */
-    private fun offerFactory(): StarterOfferFactory =
-        StarterOfferFactory(RunSettings.current.starterPool, CobblemonPokedexUnlocks)
+    private fun catalogueFactory(): StarterCatalogueFactory = RunSettings.current.let { config ->
+        StarterCatalogueFactory(
+            pool = config.starterPool,
+            unlocks = CobblemonPokedexUnlocks,
+            costs = config.starterCosts,
+            budget = config.starterBudget,
+        )
+    }
 
     /**
-     * The five start steps, bound to a real server and player. Nothing decides anything here — the
-     * order is [RunStart]'s and each of these is one call.
+     * The start steps, bound to a real server and player. Nothing decides anything here — the order
+     * is [RunStart]'s and each of these is one call.
      */
     private class ServerRunStartContext(
         private val server: MinecraftServer,
@@ -865,19 +918,19 @@ object RunController {
         override fun charge(quoteOnly: Boolean) =
             if (quoteOnly) RunCharges.quote(server, player.uuid) else RunCharges.charge(server, player.uuid)
 
+        override fun starterCatalogue(): StarterCatalogue = catalogueFactory().catalogueFor(player.uuid)
+
         /**
          * A random seed rather than a counter or the clock. Consecutive seeds are what a counter
-         * produces and what a coarse clock approximates, and [StarterOfferFactory] has to mix hard
-         * to keep those from correlating — feeding it uncorrelated values costs nothing and removes
-         * the dependency on that mixing being good enough.
+         * produces and what a coarse clock approximates, and
+         * [com.cobblemonroguelite.starter.StarterIvRoll] has to mix hard to keep those from
+         * correlating — feeding it uncorrelated values costs nothing and removes the dependency on
+         * that mixing being good enough.
          */
         override fun mintSeed(): Long = ThreadLocalRandom.current().nextLong()
 
         override fun persistSeed(seed: Long) {
             RunStore.of(server).beginPending(server, player.uuid, PendingStart(seed, System.currentTimeMillis()))
         }
-
-        override fun starterOffer(seed: Long): StarterOffer =
-            StarterOfferFactory(RunSettings.current.starterPool, CobblemonPokedexUnlocks).offerFor(player.uuid, seed)
     }
 }

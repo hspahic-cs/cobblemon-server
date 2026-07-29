@@ -18067,6 +18067,127 @@
       ]
     },
     {
+      "id": "cobbreeding:egg_baby_legend",
+      "status": null,
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Cosmetic Pokemon Egg \u2014 baby_legend pool",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:pokemon",
+          "detail": "Jackpot band, 0.5%",
+          "rate": 0.5
+        }
+      ]
+    },
+    {
+      "id": "cobbreeding:egg_common",
+      "status": null,
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Common Pokemon Egg \u2014 common pool",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 12.7%",
+          "rate": 12.7
+        },
+        {
+          "source": "crate:pokemon",
+          "detail": "Standard band, 34.825%",
+          "rate": 34.825
+        }
+      ]
+    },
+    {
+      "id": "cobbreeding:egg_rare",
+      "status": null,
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Rare Pokemon Egg \u2014 rare pool. The anchor: a Pokemon Egg is Rare.",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:pokemon",
+          "detail": "High band, 14.925%",
+          "rate": 14.925
+        },
+        {
+          "source": "crate:rare",
+          "detail": "High band, 21.7%",
+          "rate": 21.7
+        }
+      ]
+    },
+    {
+      "id": "cobbreeding:egg_shiny",
+      "status": null,
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Shiny Egg \u2014 guaranteed shiny from the rare|uncommon pool",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:pokemon",
+          "detail": "Jackpot band, 3.4825%",
+          "rate": 3.4825
+        },
+        {
+          "source": "crate:ultra",
+          "detail": "High band, 4.9%",
+          "rate": 4.9
+        }
+      ]
+    },
+    {
+      "id": "cobbreeding:egg_ultra_rare",
+      "status": null,
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Ultra Rare Pokemon Egg \u2014 ultra_rare pool (includes a Battle Bond Greninja)",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:pokemon",
+          "detail": "Jackpot band, 1.4925%",
+          "rate": 1.4925
+        },
+        {
+          "source": "crate:ultra",
+          "detail": "Standard band, 20.2%",
+          "rate": 20.2
+        }
+      ]
+    },
+    {
+      "id": "cobbreeding:egg_uncommon",
+      "status": null,
+      "tier": 1,
+      "tierLabel": "T1",
+      "tierName": "Uncommon",
+      "rationale": "Uncommon Pokemon Egg \u2014 uncommon pool",
+      "assignedBy": "override",
+      "sources": [
+        {
+          "source": "crate:common",
+          "detail": "High band, 12.8%",
+          "rate": 12.8
+        },
+        {
+          "source": "crate:pokemon",
+          "detail": "Standard band, 44.775%",
+          "rate": 44.775
+        }
+      ]
+    },
+    {
       "id": "gacha:common_key",
       "status": null,
       "tier": 0,

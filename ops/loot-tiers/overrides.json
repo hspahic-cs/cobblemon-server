@@ -1,6 +1,14 @@
 {
   "_comment": "Explicit tier pins. These WIN over the category rules in build_tiers.py. Put judgment calls here rather than contorting a rule. Format: '<item id>': [tier, 'why'].",
 
+  "_eggs": "Cobbreeding Pokemon Eggs. Never materialise as a plain item id — the gacha dispatches `givepokemonegg` and Cobbreeding builds the egg server-side (ludichat.cobbreeding.PokemonEgg), so each pool is tiered as its own entry. ANCHOR: 'Pokemon Egg is rare' — the rare pool is T2 and the rest are graded around it.",
+  "cobbreeding:egg_common": [1, "Common Pokemon Egg — common pool"],
+  "cobbreeding:egg_uncommon": [1, "Uncommon Pokemon Egg — uncommon pool"],
+  "cobbreeding:egg_rare": [2, "Rare Pokemon Egg — rare pool. The anchor: a Pokemon Egg is Rare."],
+  "cobbreeding:egg_ultra_rare": [3, "Ultra Rare Pokemon Egg — ultra_rare pool (includes a Battle Bond Greninja)"],
+  "cobbreeding:egg_shiny": [3, "Shiny Egg — guaranteed shiny from the rare|uncommon pool"],
+  "cobbreeding:egg_baby_legend": [3, "Cosmetic Pokemon Egg — baby_legend pool"],
+
   "_keys": "Gacha crate keys. These are VANILLA items carrying a custom_data{gacha_key} tag (see custom-mods/cobblemon-gacha/.../KeyItems.kt) — an untagged one will not open a crate, so they are tiered as their own entries rather than as the base item.",
   "gacha:common_key": [0, "Common Crate key — minecraft:trial_key + gacha_key tag"],
   "gacha:rare_key": [2, "Rare Crate key — minecraft:ominous_trial_key + gacha_key tag"],

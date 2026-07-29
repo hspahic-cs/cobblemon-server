@@ -31,7 +31,7 @@ with what already exists.
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 | **TX** | Disabled | Never award. Two different situations live here, and the per-item status says which: **not obtainable** (recipe banned and/or stripped from loot — if one of these is still dropping, that's a bug to fix, not a tier to change), or **banned to use** (freely obtainable, but the mechanic is disabled and using it is a bannable offence, so the item is worthless as a reward). |
 
-1175 items tiered — T5: 4, T4: 38, T3: 120, T2: 220, T1: 540, T0: 159, TX: 94.
+1181 items tiered — T5: 4, T4: 38, T3: 123, T2: 221, T1: 542, T0: 159, TX: 94.
 
 ## Picking a reward
 
@@ -137,6 +137,9 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:tough_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:tr_voucher` | Redeems for a TR | `crate:rare` 3.9% |
 | `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +3 more |
+| `cobbreeding:egg_baby_legend` | Cosmetic Pokemon Egg — baby_legend pool | `crate:pokemon` 0.5% |
+| `cobbreeding:egg_shiny` | Shiny Egg — guaranteed shiny from the rare|uncommon pool | `crate:pokemon` 3.4825%; `crate:ultra` 4.9% |
+| `cobbreeding:egg_ultra_rare` | Ultra Rare Pokemon Egg — ultra_rare pool (includes a Battle Bond Greninja) | `crate:pokemon` 1.4925%; `crate:ultra` 20.2% |
 | `gacha:ultra_key` | Ultra Crate key — minecraft:nether_star + gacha_key tag. Not obtainable outside quests and events. | `crate:rare` 0.7%; `crate:ultra` 0.8% |
 | `legendarymonuments:azelf_fang` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
 | `legendarymonuments:darkstone_shard` | 9 craft into a T4 Dark Stone | `loot:legendarymonuments/chests/bell_tower_chest` 9.07%; `loot:legendarymonuments/chests/liberty_island_chest` 12.32%; `loot:legendarymonuments/chests/lugia_temple_chest` 20.5% |
@@ -288,6 +291,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:throat_spray` | Premium competitive held item | `craft`; `market` |
 | `cobblemon:weakness_policy` | Premium competitive held item | `mod:cobblemon/blocks/weakness_policy`; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
 | `cobblemon:whipped_dream` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
+| `cobbreeding:egg_rare` | Rare Pokemon Egg — rare pool. The anchor: a Pokemon Egg is Rare. | `crate:pokemon` 14.925%; `crate:rare` 21.7% |
 | `gacha:pokemon_key` | Pokemon Crate key — minecraft:turtle_egg + gacha_key tag | *not currently granted anywhere* |
 | `gacha:rare_key` | Rare Crate key — minecraft:ominous_trial_key + gacha_key tag | `crate:common` 0.5%; `crate:rare` 1.4% |
 | `legendarymonuments:ancient_rubble_ore` | Ore block, mid-tier crafting material | `loot:legendarymonuments/chests/regigigas_chest` 16.94%; `mod:legendarymonuments/blocks/ancient_rubble_ore` 100.0% |
@@ -990,6 +994,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:yellow_plaque` | Standard held / utility item | `mod:cobblemon/blocks/yellow_plaque`; `craft` |
 | `cobblemon:zinc` | Vitamin | `crate:common` 1.183%; `loot:legendarymonuments/chests/regice_chest` 8.25%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36% +2 more |
 | `cobblemon:zoom_lens` | Standard held / utility item | `craft`; `market` |
+| `cobbreeding:egg_common` | Common Pokemon Egg — common pool | `crate:common` 12.7%; `crate:pokemon` 34.825% |
+| `cobbreeding:egg_uncommon` | Uncommon Pokemon Egg — uncommon pool | `crate:common` 12.8%; `crate:pokemon` 44.775% |
 | `legendarymonuments:blue_feather` | EV feather | *not currently granted anywhere* |
 | `legendarymonuments:clear_bell` | Utility / crafting material | *not currently granted anywhere* |
 | `legendarymonuments:cosmic_bag` | Utility / crafting material | `craft` |

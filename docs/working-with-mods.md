@@ -20,7 +20,7 @@ promoting to prod. Read this first if you've never deployed before.
             │ rsync over SSH  (CI does this)
             ▼
    ┌──────────────────────────────────────────────┐
-   │  192.168.1.20  (the cobblemon VM)             │
+   │  $COBBLEMON_SSH  (the cobblemon VM)           │
    │  /opt/cobblemon-dev   :25566   (test server)  │
    │  /opt/cobblemon-prod  :25565   (live server)  │
    └──────────────────────────────────────────────┘
@@ -181,7 +181,7 @@ your change works.
 You can tail server logs from your Mac to confirm mods loaded correctly:
 
 ```sh
-ssh sysadmin@192.168.1.20 'tail -f /opt/cobblemon-dev/logs/latest.log'
+ssh "$COBBLEMON_SSH" 'tail -f /opt/cobblemon-dev/logs/latest.log'
 ```
 
 ### 8. Promote to prod (also tags + publishes the Release)
@@ -268,8 +268,13 @@ Every Wednesday at 5 AM UTC, prod is snapshotted. To wipe dev's state and
 load the latest snapshot:
 
 ```sh
-ssh sysadmin@192.168.1.20 'sudo /opt/snapshots/dev-reset.sh'
+ssh "$COBBLEMON_SSH" 'sudo /opt/snapshots/dev-reset.sh'
 ```
+
+!!! warning "`dev-reset.sh` is not currently installed on the VM"
+
+    Install it from `ops/snapshots/dev-reset.sh` first — see
+    [snapshots.md](snapshots.md#reset-cobblemon-dev-to-a-prod-snapshot).
 
 This stops dev, backs up its current world to `world.before-reset-<ts>`,
 restores from the latest snapshot, and starts dev. Useful when dev's state
@@ -279,7 +284,7 @@ mid-test.
 To force an immediate snapshot (before resetting), trigger it manually:
 
 ```sh
-ssh sysadmin@192.168.1.20 'sudo systemctl start prod-snapshot.service'
+ssh "$COBBLEMON_SSH" 'sudo systemctl start prod-snapshot.service'
 ```
 
 See [snapshots.md](snapshots.md) for the full snapshot infrastructure.
@@ -290,7 +295,7 @@ The `mods.vX.Y.Z` directories are kept on the VM (5 most recent) so you can
 swap the live `mods/` directory to a previous version:
 
 ```sh
-ssh sysadmin@192.168.1.20
+ssh "$COBBLEMON_SSH"
 cd /opt/cobblemon-dev    # or /opt/cobblemon-prod
 ls mods.v*               # see available versions
 # mods/ MUST stay a real directory, not a symlink, Sinytra Connector breaks
@@ -310,7 +315,7 @@ you set up earlier; otherwise inline:
 
 ```sh
 # prod
-ssh sysadmin@192.168.1.20 'RCONPW=$(grep ^rcon.password /opt/cobblemon-prod/server.properties | cut -d= -f2); python3 -c "
+ssh "$COBBLEMON_SSH" 'RCONPW=$(grep ^rcon.password /opt/cobblemon-prod/server.properties | cut -d= -f2); python3 -c "
 import socket, struct
 s=socket.socket(); s.connect((\"127.0.0.1\",25575))
 def pkt(rid,t,b): body=struct.pack(\"<ii\",rid,t)+b.encode()+b\"\x00\x00\"; return struct.pack(\"<i\",len(body))+body
@@ -334,7 +339,7 @@ The deployer SSH key may have expired or the VM may be unreachable. SSH
 from your Mac to confirm:
 
 ```sh
-ssh deployer@192.168.1.20 echo ok
+ssh "$COBBLEMON_DEPLOY_SSH" echo ok
 ```
 
 If that fails, check `/etc/deploy-keys/` on the GitHub Actions runner pod
@@ -346,7 +351,7 @@ The mod jars deployed but the server didn't start back up cleanly. Tail the
 log to see what crashed:
 
 ```sh
-ssh sysadmin@192.168.1.20 'tail -50 /opt/cobblemon-dev/logs/latest.log'
+ssh "$COBBLEMON_SSH" 'tail -50 /opt/cobblemon-dev/logs/latest.log'
 ```
 
 Common causes: missing third-party dep (add to packwiz), modid collision
@@ -359,8 +364,8 @@ above and fix forward.
 Confirm the version on the VM matches what you bumped:
 
 ```sh
-ssh sysadmin@192.168.1.20 'cat /opt/cobblemon-dev/.deployed_version'
-ssh sysadmin@192.168.1.20 'ls -la /opt/cobblemon-dev/mods'
+ssh "$COBBLEMON_SSH" 'cat /opt/cobblemon-dev/.deployed_version'
+ssh "$COBBLEMON_SSH" 'ls -la /opt/cobblemon-dev/mods'
 ```
 
 If `.deployed_version` is older than the CHANGELOG, the deploy was likely

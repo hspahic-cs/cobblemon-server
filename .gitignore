@@ -72,3 +72,13 @@ custom-mods/*/run/
 *.lock
 .DS_Store
 Thumbs.db
+
+# Editor / tool scratch artifacts (a stray .Rhistory and a shell-mishap file
+# both made it into git before these were ignored)
+.Rhistory
+.Rapp.history
+*.bak
+*.orig
+*.rej
+*.swp
+*~

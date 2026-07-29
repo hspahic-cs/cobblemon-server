@@ -2,8 +2,8 @@
 # One-time bridge install on the VM. Run as sysadmin (needs sudo for useradd,
 # /opt creation, systemd unit registration, sudoers extension).
 #
-#   scp -i ~/.ssh/id_ed25519 -r ops/poke-engine-bridge sysadmin@192.168.1.20:/tmp/
-#   ssh -i ~/.ssh/id_ed25519 sysadmin@192.168.1.20 'sudo bash /tmp/poke-engine-bridge/install.sh'
+#   scp -i ~/.ssh/id_ed25519 -r ops/poke-engine-bridge "$COBBLEMON_SSH":/tmp/
+#   ssh -i ~/.ssh/id_ed25519 "$COBBLEMON_SSH" 'sudo bash /tmp/poke-engine-bridge/install.sh'
 #
 # After this, deploys are handled by the deploy-bridge.yml workflow (rsync
 # + restart). This script is idempotent — safe to re-run on the same VM.

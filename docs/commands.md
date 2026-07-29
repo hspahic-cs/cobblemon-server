@@ -12,15 +12,19 @@ The commands you'll reach for most often. Open chat (`T` or `/`), type the comma
 
 | Command | What it does |
 |---|---|
-| `/sethome <name>` | Save your current spot as a named home. You can keep **up to 5 homes**. |
+| `/sethome <name>` | Save your current spot as a named home. You get **5 for free**, and can buy more. |
 | `/home <name>` | Teleport to one of your saved homes. |
 | `/delhome <name>` | Delete a home to free up a slot. |
 | `/spawn` | Teleport back to the server spawn. |
 | `/warp <name>` | Travel to a public warp point (shops, the Elite Four, etc.). Run `/warp` on its own to see the list. |
 | `/tpa <player>` | Request to teleport to another player (they have to accept first). |
 
-!!! tip "Five home slots"
-    Homes are capped at **5**. If `/sethome <name>` says you're full, free a slot with `/delhome <name>` and try again.
+!!! tip "Need more than 5 homes?"
+    Everyone starts with **5** free home slots. If `/sethome <name>` says you're
+    full, either free a slot with `/delhome <name>`, or **buy another slot** from
+    the **Upgrades** tab of the Shopkeeper NPC at spawn. The first extra slot
+    costs **$100,000**, and each one after that costs **$50,000** more than the
+    last.
 
 ## Economy
 

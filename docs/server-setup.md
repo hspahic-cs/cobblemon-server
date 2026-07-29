@@ -1,9 +1,22 @@
 # Server VM setup
 
-The Minecraft server VM lives at `192.168.1.20` on the home LAN. Two
+The Minecraft server VM is reachable at `$COBBLEMON_SSH`. Two
 NeoForge servers run side-by-side: `cobblemon-prod` (live) and
 `cobblemon-dev` (testing). Both are supervised by systemd, each wrapped in
 a `screen` session so you can attach a console.
+
+!!! note "Host placeholders"
+
+    This repo is public, so it never names the VM's address. Commands here use
+    two environment variables — set them in your shell (or define matching
+    `Host` aliases in `~/.ssh/config`) before copy-pasting:
+
+    | Variable | Meaning |
+    |---|---|
+    | `COBBLEMON_SSH` | `sysadmin@<vm-host>` — operator account |
+    | `COBBLEMON_DEPLOY_SSH` | `deployer@<vm-host>` — CI deploy account |
+
+    Ask in Discord for the actual address.
 
 ## Layout
 
@@ -22,14 +35,15 @@ a `screen` session so you can attach a console.
 /home/sysadmin/.cobblemon-rcon   RCON passwords (mode 600)
 ```
 
-The old `~/minecraft/` (Fabric/Pixelmon) and the screen-loop wrapper
-`start.sh` are no longer used. They remain on disk as a safety net for
-the original world data.
+The old `~/minecraft/` (Fabric/Pixelmon) and `~/cobblemonvalley/` server
+instances, and the screen-loop wrapper `start.sh`, are no longer used. They
+were removed from the VM on 2026-07-29 — the world data they held is
+superseded by `/srv/cobblemon/` and by the snapshots under `/opt/snapshots/`.
 
 ## Common operations
 
 ```sh
-ssh -i ~/.ssh/id_ed25519 sysadmin@192.168.1.20
+ssh -i ~/.ssh/id_ed25519 "$COBBLEMON_SSH"
 
 # Service control
 sudo systemctl status cobblemon-prod

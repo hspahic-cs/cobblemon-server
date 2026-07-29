@@ -12,6 +12,22 @@ root README.
 
 ## [Unreleased]
 
+### Changed
+- **Repo + VM cleanup (no gameplay impact).** Removed two junk tracked files (a
+  shell-mishap artifact from #56 and an empty `.Rhistory`) and the obsolete
+  `docs/gym-ai-beta-test.md`, which targeted 0.8.1 and was an orphan page — in
+  neither `nav` nor `exclude_docs`.
+- **Docs corrected against reality.** `docs/snapshots.md` still described the
+  pre-2026-07-15 snapshot layout; the logic now lives in
+  `/usr/local/bin/world-snapshot.sh <dev|prod>` with `prod-snapshot.sh` as a thin
+  wrapper, and `dev-reset.sh` is documented but **not currently installed on the
+  VM**. Also fixed `commands.md`, which still claimed homes were hard-capped at
+  5 — extra slots have been purchasable from the Upgrades shop tab.
+- **Scrubbed the VM's LAN address from this public repo** (18 references across
+  6 files). Ops commands now use `$COBBLEMON_SSH` / `$COBBLEMON_DEPLOY_SSH`;
+  `ops/fetch_battle_logs.sh` requires `CONTROL_PLANE` instead of defaulting to a
+  hardcoded host.
+
 ## [0.32.0] - 2026-07-28
 
 ### Added

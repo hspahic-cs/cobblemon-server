@@ -1,0 +1,201 @@
+package com.cobblemonroguelite.data.shop
+
+import com.cobblemonroguelite.data.DataProblems
+import com.cobblemonroguelite.data.JsonView
+import com.cobblemonroguelite.data.RogueliteDataRegistry
+import com.cobblemonroguelite.data.reward.CurvePoint
+import com.cobblemonroguelite.data.reward.RunReward
+import com.cobblemonroguelite.data.reward.WeightCurve
+import net.minecraft.resources.ResourceLocation
+
+/**
+ * Every shop table on the server, loaded from `data/<namespace>/roguelite/shop_tables/<name>.json`.
+ *
+ * ### The file
+ *
+ * ```json
+ * {
+ *   "entries": [
+ *     {
+ *       "id": "protein",
+ *       "price": 120,
+ *       "weight": 2,
+ *       "min_wave": 1,
+ *       "max_wave": null,
+ *       "reward": { "type": "ev", "stat": "attack", "amount": 10 }
+ *     },
+ *     {
+ *       "id": "ability_patch",
+ *       "price": 400,
+ *       "min_wave": 40,
+ *       "price_curve": [ { "wave": 40, "weight": 100 }, { "wave": 200, "weight": 300 } ],
+ *       "reward": { "type": "ability_patch" }
+ *     }
+ *   ]
+ * }
+ * ```
+ *
+ * `reward` is the same object the reward tables take — see [RunReward], whose sealed list is §2.12's
+ * boundary on what a reward can be. A shop entry adds `price` and an optional `price_curve`, and it
+ * has **no tiers**: the reward tables need tiers because rarity has to ramp with depth on its own,
+ * whereas a shop's ramp is the price. Adding tiers here as well would give two independent knobs for
+ * the same feeling and make neither predictable.
+ *
+ * ### Containment
+ *
+ * Same rule as [com.cobblemonroguelite.data.reward.RewardTables], and for the same reason: a bad
+ * **entry** costs that entry and the table still loads; a bad **table-level** field costs the file.
+ * An entry that raised any problem is dropped even when enough of it parsed to build one, because the
+ * alternative is an entry that loads meaning something other than what was written — a `"price":
+ * "cheap"` falling back to a default price is exactly the silent mispricing this layer exists to
+ * prevent.
+ *
+ * A table whose entries all failed is an error, not an empty table: it would offer nothing forever
+ * and be indistinguishable in the log from a shop that was deliberately quiet.
+ */
+object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
+
+    public override fun parse(id: ResourceLocation, root: JsonView, problems: DataProblems): ShopTable? {
+        var fatal = false
+        val entryViews = root.requireObjectList("entries")
+        root.expectNoUnknownKeys()
+        if (entryViews == null) return null
+
+        val entries = mutableListOf<ShopEntry>()
+        val seen = mutableSetOf<String>()
+        for (view in entryViews) {
+            val before = problems.count
+            val entry = parseEntry(view)
+            if (entry == null || problems.count != before) continue
+            if (!seen.add(entry.id)) {
+                // Fatal rather than last-wins: with two entries under one id, both the offer's
+                // de-duplication and `purchase`'s lookup are ambiguous, and a purchase would charge
+                // for one and grant the other.
+                view.problem("id", "duplicate entry id '${entry.id}' in this table")
+                fatal = true
+                continue
+            }
+            entries += entry
+        }
+
+        if (entries.isEmpty()) {
+            problems.add("entries", "no usable entries — a shop that can offer nothing is not loaded")
+            return null
+        }
+        if (fatal) return null
+
+        val dropped = entryViews.size - entries.size
+        if (dropped > 0) problems.add("entries", "$dropped entry/entries dropped; the rest of the table loaded")
+
+        // Raised here, after the entries are accepted, for the reason spelled out in [parseEntry]:
+        // inside the read loop this warning would be counted as a problem and would drop the entry.
+        // Zeroing an entry is how an author shelves it without deleting it, so it must survive.
+        val shelved = entries.filter { it.weight == 0.0 }.map { it.id }
+        if (shelved.isNotEmpty()) {
+            problems.add(
+                "entries",
+                "weight 0 and can never be offered: ${shelved.joinToString(", ")} " +
+                    "(loaded anyway — this is how an entry is shelved without deleting it)",
+            )
+        }
+        return ShopTable(id, entries)
+    }
+
+    private fun parseEntry(view: JsonView): ShopEntry? {
+        val entryId = view.requireString("id")
+        val price = view.requireInt("price")
+        val rewardView = view.requireObject("reward")
+        val weight = view.optionalDouble("weight") ?: 1.0
+        val minWave = view.optionalInt("min_wave") ?: 1
+        val maxWave = view.optionalInt("max_wave")
+        val priceCurve = if (view.hasField("price_curve")) parseCurve(view) else null
+        val hadCurveField = view.hasField("price_curve")
+        view.expectNoUnknownKeys()
+
+        if (entryId == null || price == null || rewardView == null) return null
+        if (hadCurveField && priceCurve == null) return null
+        val reward = RunReward.parse(rewardView) ?: return null
+
+        if (entryId.isBlank()) {
+            view.problem("id", "must not be blank")
+            return null
+        }
+        if (price < 0) {
+            // Zero is allowed — a giveaway slot is a legitimate way to author a tutorial shop — but a
+            // negative price would pay the player to accept a reward, which is an income loop.
+            view.problem("price", "must not be negative, was $price")
+            return null
+        }
+        if (weight < 0.0) {
+            view.problem("weight", "must not be negative, was $weight")
+            return null
+        }
+        if (minWave < 1) {
+            view.problem("min_wave", "must be at least 1, was $minWave")
+            return null
+        }
+        if (maxWave != null && maxWave < minWave) {
+            view.problem("max_wave", "must not be below min_wave ($minWave), was $maxWave")
+            return null
+        }
+        // NOTE: a zero weight is *not* reported here, and that is not an oversight.
+        //
+        // [parse] drops any entry that raised a problem while being read, because a field that failed
+        // its type check must not fall back to a default and load meaning something else. A warning
+        // raised inside this function is indistinguishable from that, so warning about weight 0 here
+        // would DELETE the entry it was only meant to annotate — which is exactly what happened, and
+        // what the parse test now pins. The warning is emitted by [parse] after the entry is accepted.
+        // (RewardTables gets away with the same warning inline because its version sits on the *tier*,
+        // which is not subject to the entry-drop rule.)
+        return ShopEntry(
+            id = entryId,
+            reward = reward,
+            price = price,
+            weight = weight,
+            minWave = minWave,
+            maxWave = maxWave,
+            priceCurve = priceCurve,
+        )
+    }
+
+    /**
+     * The optional price curve, read with the reward tables' own [WeightCurve] rather than a second
+     * interpolation format.
+     *
+     * `weight` means "percent of the base price" here, which is a reuse of the field name for a
+     * different meaning and is worth being explicit about: 100 is the authored price, 300 is triple.
+     * The alternative — a `multiplier` field on a copy of the curve type — would duplicate the
+     * piecewise-line code and its tests to rename one key.
+     */
+    private fun parseCurve(view: JsonView): WeightCurve? {
+        val pointViews = view.requireObjectList("price_curve") ?: return null
+        if (pointViews.isEmpty()) {
+            view.problem("price_curve", "must have at least one point")
+            return null
+        }
+        val points = mutableListOf<CurvePoint>()
+        var ok = true
+        for (pointView in pointViews) {
+            val wave = pointView.requireInt("wave")
+            val weight = pointView.requireDouble("weight")
+            pointView.expectNoUnknownKeys()
+            if (wave == null || weight == null) {
+                ok = false
+                continue
+            }
+            if (wave < 1) {
+                pointView.problem("wave", "must be at least 1, was $wave")
+                ok = false
+                continue
+            }
+            if (weight < 0.0) {
+                pointView.problem("weight", "must not be negative, was $weight")
+                ok = false
+                continue
+            }
+            points += CurvePoint(wave, weight)
+        }
+        if (!ok) return null
+        return WeightCurve(points.sortedBy { it.wave })
+    }
+}

@@ -5,6 +5,7 @@ import com.cobblemonroguelite.data.arena.ArenaPalettes
 import com.cobblemonroguelite.data.biome.RunBiomes
 import com.cobblemonroguelite.data.payout.PayoutTables
 import com.cobblemonroguelite.data.reward.RewardTables
+import com.cobblemonroguelite.data.shop.ShopTables
 import com.cobblemonroguelite.data.starter.HiddenAbilityTables
 import com.cobblemonroguelite.data.starter.StarterCostTables
 import com.cobblemonroguelite.data.trainer.TrainerRosters
@@ -56,6 +57,13 @@ object RogueliteData {
     fun registerAll() {
         CobblemonDataProvider.register(RewardTables, reloadable = true)
         CobblemonDataProvider.register(PayoutTables, reloadable = true)
+        // Reloadable, and the consequence is sharper here than for the reward tables: the shop offer
+        // is DERIVED from (run seed, wave, rerolls) rather than stored (see
+        // [com.cobblemonroguelite.shop.ShopOffer]), so editing a shop table changes what an unopened
+        // shop contains in a run already under way. That is the intended trade — a stored offer could
+        // drift from the table it was drawn from, which is worse — but it does mean a price edit is
+        // visible to live runs at their next between-wave step.
+        CobblemonDataProvider.register(ShopTables, reloadable = true)
         // Reloadable like the rest, with one consequence worth knowing: editing a roster mid-run
         // changes who an in-flight run meets at waves it has not reached yet, the same way editing
         // a reward table changes what it rolls next. Bands and pools are ordered, and selection

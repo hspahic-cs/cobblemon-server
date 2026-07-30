@@ -15,6 +15,7 @@ import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.integration.RunPayout
 import com.cobblemonroguelite.integration.RunPayouts
 import com.cobblemonroguelite.progression.RunProgression
+import com.cobblemonroguelite.shop.ShopSettings
 import com.cobblemonroguelite.starter.CobblemonPokedexUnlocks
 import com.cobblemonroguelite.starter.StarterCatalogue
 import com.cobblemonroguelite.starter.StarterCatalogueFactory
@@ -488,6 +489,20 @@ object RunController {
         // after §2.10's disconnect penalty, and recording on every plan would let `/roguelite status`
         // change who the player is about to meet.
         cleared.trainer?.let { run.trainerMemory.record(cleared.plan.wave, it.trainerId) }
+
+        // Shop credits for the wave just won (§2.12's between-wave step needs something to spend).
+        //
+        // Paid off `cleared.plan`, the same re-composed plan the boss count above uses, so a promoted
+        // Elite Four wave pays boss rates — the player fought a boss, whatever the bare interval said.
+        //
+        // Paid off the plan's WAVE NUMBER rather than a running total of waves cleared. The two are
+        // equal today and diverge the moment §2.10's disconnect penalty sends a run back: paying per
+        // wave cleared would make the penalty farmable for income, while paying per wave number makes
+        // a re-fought wave pay exactly what it paid the first time. See [CreditRules].
+        //
+        // Before the store checkpoint below, so a crash between the two loses the credits rather than
+        // banking them without the wave — the player re-fights the wave and earns them again.
+        run.credits += ShopSettings.credits.creditsFor(cleared.plan.wave, cleared.plan.kind)
 
         // §2.15's third candy source: friendship earned in battle. Credited on the cleared wave and
         // not per turn — the store is written once here instead of once per battle action, and the

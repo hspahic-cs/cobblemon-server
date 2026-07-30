@@ -1,0 +1,90 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - a shape reference, not content. The prices and items below exist to show one of",
+    "each schema feature; what a run's shop actually sells, and what it costs, is server content and",
+    "a balance decision (plan §2.7 keeps transcribed content out of the mod entirely).",
+    "",
+    "Write your own at data/<your-namespace>/roguelite/shop_tables/<name>.json, or shadow this path",
+    "from your own datapack to delete this example.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other unknown",
+    "field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_how_the_offer_works": [
+    "The between-wave offer is DERIVED, never stored: it is a function of (run seed, wave, rerolls",
+    "taken), so a paused run resumes to the identical shop (§2.16) and relogging is not a free",
+    "reroll. Two consequences worth knowing:",
+    "",
+    "  - EDITING THIS FILE CHANGES WHAT LIVE RUNS SEE at waves whose shop they have not opened yet,",
+    "    the same way editing a reward table changes what it rolls next. That is the deliberate trade",
+    "    against a stored offer, which could drift from the table it was drawn from.",
+    "  - How MANY items are offered is not in this file. It is mechanism, not content - see",
+    "    ShopRules.offerSlots (default 4). A shop is a choice, so it deliberately does not scale with",
+    "    the player's balance.",
+    "",
+    "There are no TIERS here, unlike reward_tables. A reward table needs tiers because rarity has to",
+    "ramp with depth on its own; a shop's ramp is the price. Two independent knobs for one feeling",
+    "would make neither predictable."
+  ],
+
+  "_entries": [
+    "'reward' is the SAME object the reward tables take - see RunReward, whose sealed list is §2.12's",
+    "boundary on what a reward can be. A datapack can add entries, prices and whole tables; it cannot",
+    "add a KIND of reward, because there would be no code to apply it.",
+    "",
+    "'price' is authored per entry and never derived. A formula from reward magnitude to cost would be",
+    "wrong in both directions at once: 10 Attack EVs and 10 HP EVs cost the same to compute and are",
+    "worth wildly different amounts, and the same item is a bargain at wave 20 and a rounding error at",
+    "wave 180.",
+    "",
+    "'weight' is relative likelihood among entries eligible at that wave; it says nothing about depth.",
+    "Weight 0 shelves an entry without deleting it, and is reported at load so it is not a surprise.",
+    "",
+    "'min_wave'/'max_wave' are a HARD content rule ('no ability patch before wave 40'), separate from",
+    "pricing on purpose - a rebalance of prices should not reopen content that was closed deliberately.",
+    "",
+    "'price_curve' scales 'price' as a PERCENTAGE at that wave: 100 is the authored price, 300 triple.",
+    "It exists because credits-per-wave grows with depth (CreditRules), so a flat price becomes free by",
+    "the late run. Reuses the reward tables' curve format rather than inventing a second one."
+  ],
+  "entries": [
+    {
+      "_note": "Cheapest tier: always available, no curve, so it stays a filler purchase all run.",
+      "id": "protein",
+      "price": 120,
+      "weight": 2,
+      "reward": { "type": "ev", "stat": "attack", "amount": 10 }
+    },
+    {
+      "_note": "Held item, mid-run onward. Weight left at its default of 1.",
+      "id": "leftovers",
+      "price": 450,
+      "min_wave": 25,
+      "reward": { "type": "held_item", "item": "cobblemon:leftovers" }
+    },
+    {
+      "_note": [
+        "Late-run power purchase that gets more expensive as credits inflate. Triples in price between",
+        "wave 40 and wave 200, which roughly tracks the earn curve rather than outrunning it."
+      ],
+      "id": "ability_patch",
+      "price": 400,
+      "weight": 0.5,
+      "min_wave": 40,
+      "price_curve": [
+        { "wave": 40, "weight": 100 },
+        { "wave": 200, "weight": 300 }
+      ],
+      "reward": { "type": "ability" }
+    },
+    {
+      "_note": "An early-only entry, closed off once the run is past the point it would matter.",
+      "id": "rare_candy",
+      "price": 200,
+      "min_wave": 1,
+      "max_wave": 60,
+      "reward": { "type": "level", "amount": 1 }
+    }
+  ]
+}

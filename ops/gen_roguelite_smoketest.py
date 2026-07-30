@@ -31,6 +31,19 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 NS = "cobblemon_roguelite"
 DEFAULT_OUT = os.path.join(ROOT, "ops/roguelite-smoketest-pack")
 
+# The directory name this must be installed under on a server, and it MUST NOT start with `server-`.
+#
+# Learned by breaking the dev deploy on 2026-07-30. deploy-dev.yml has a "Prune retired server-*
+# datapacks" step that deletes any `server-*` pack the build does not ship, and it runs as `deployer`
+# while a hand-scp'd pack is owned by `sysadmin` — so the rm fails with Permission denied, the step
+# exits 1, and the whole deploy dies. It took down an unrelated 0.33.0 release, and it would have
+# failed every subsequent deploy until the directory was renamed.
+#
+# Two problems, one fix. Outside the `server-*` namespace the prune does not touch it, so it neither
+# breaks the deploy nor gets deleted on every deploy — which also means the smoke test survives
+# deploys instead of needing to be re-installed each time.
+INSTALL_DIR_NAME = "roguelite-smoketest"
+
 # Real RCT trainers, so the ids resolve to actual NPCs with authored teams and skins. NOT the rgl_*
 # ids: those name trainers nothing defines yet, so a boss band built from them would spawn nothing.
 BOSS_BANDS = [
@@ -157,8 +170,11 @@ def main():
     })
 
     print("\nNEXT, and read the caveats above first:")
-    print(f"  scp -r {os.path.relpath(args.out, ROOT)} cobblemon:/opt/cobblemon-dev/world/datapacks/"
-          "server-roguelite-smoketest")
+    print(f"  scp -r {os.path.relpath(args.out, ROOT)} "
+          f"cobblemon:/opt/cobblemon-dev/world/datapacks/{INSTALL_DIR_NAME}")
+    print(f"  # the name matters: anything starting with `server-` is pruned by deploy-dev.yml,")
+    print(f"  # which runs as `deployer` and cannot delete a sysadmin-owned dir — that failure")
+    print(f"  # exits the whole deploy. See INSTALL_DIR_NAME.")
     print("  ssh cobblemon 'sudo systemctl restart cobblemon-dev'")
 
 

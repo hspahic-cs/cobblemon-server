@@ -54,6 +54,21 @@ import net.minecraft.resources.ResourceLocation
  */
 object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
 
+    /**
+     * The table the between-wave shop reads when nothing pins another, following the convention
+     * [com.cobblemonroguelite.data.payout.PayoutTables.DEFAULT_TABLE] sets.
+     *
+     * A fixed id rather than "the first one loaded": with several tables installed, first-loaded depends
+     * on pack order and would make the shop's contents change for reasons an operator cannot see. A
+     * named default is a file they can find. Until one exists the paid half of the step is simply closed,
+     * which the command says out loud.
+     */
+    val DEFAULT_TABLE: ResourceLocation =
+        ResourceLocation.fromNamespaceAndPath(com.cobblemonroguelite.CobblemonRoguelite.MOD_ID, "default")
+
+    /** The table at [DEFAULT_TABLE], or null when no datapack has written one. */
+    fun default(): ShopTable? = this[DEFAULT_TABLE]
+
     public override fun parse(id: ResourceLocation, root: JsonView, problems: DataProblems): ShopTable? {
         var fatal = false
         val entryViews = root.requireObjectList("entries")

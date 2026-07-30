@@ -49,6 +49,17 @@ import net.minecraft.resources.ResourceLocation
 object RewardTables : RogueliteDataRegistry<RewardTable>("reward_tables") {
 
     /**
+     * The table the free between-wave offer reads, following the same convention as
+     * [com.cobblemonroguelite.data.payout.PayoutTables.DEFAULT_TABLE] — a named file rather than
+     * whichever pack happened to load first, so the three options a player sees are traceable to one id.
+     */
+    val DEFAULT_TABLE: ResourceLocation =
+        ResourceLocation.fromNamespaceAndPath(com.cobblemonroguelite.CobblemonRoguelite.MOD_ID, "default")
+
+    /** The table at [DEFAULT_TABLE], or null when no datapack has written one. */
+    fun default(): RewardTable? = this[DEFAULT_TABLE]
+
+    /**
      * Tier every entry gets when the table declares none. Not writable by an author — declaring a
      * tier called `default` and also relying on the no-tiers shorthand cannot both happen, since
      * declaring any tier turns the shorthand off.

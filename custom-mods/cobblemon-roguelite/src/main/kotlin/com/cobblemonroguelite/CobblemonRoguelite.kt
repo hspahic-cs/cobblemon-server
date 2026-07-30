@@ -6,6 +6,7 @@ import com.cobblemonroguelite.boss.BossShieldBattle
 import com.cobblemonroguelite.data.RogueliteData
 import com.cobblemonroguelite.payout.PendingPayoutHooks
 import com.cobblemonroguelite.progression.CandyCommands
+import com.cobblemonroguelite.shop.ShopCommands
 import com.cobblemonroguelite.progression.ProgressionHooks
 import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunLoginHooks
@@ -71,6 +72,9 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
             // state the mode shipped in: [com.cobblemonroguelite.progression.ProgressionStore.buy]
             // works and nothing reaches it.
             CandyCommands.register(it.dispatcher)
+            // Its own tree for the reason CandyCommands documents: Brigadier merges a second
+            // `roguelite` literal's children into the one already registered.
+            ShopCommands.register(it.dispatcher)
         }
         NeoForge.EVENT_BUS.register(RunLoginHooks)
         // Binds the per-species progression store (§2.15 candy, §2.17 IV floors) to starter selection

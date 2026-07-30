@@ -135,6 +135,20 @@ data class RunState(
     var wave: Int = 1,
     val party: MutableList<Pokemon> = mutableListOf(),
     var credits: Int = 0,
+    /**
+     * How many times the free reward offer has been rerolled **on the current wave**, and whether the
+     * one free option has already been taken.
+     *
+     * Both are per-wave and both are reset by [advanceTo], which is the only place a wave changes.
+     * Persisted, because §2.16 promises a paused run resumes to the state it left: without the reroll
+     * count the offer would recompute to the *first* three items and a relog would silently undo a
+     * paid reroll, and without the taken flag a relog would hand out the free reward again.
+     *
+     * They are two fields rather than one nullable "state of this wave's step" because they answer
+     * independent questions and a caller almost always wants exactly one of them.
+     */
+    var rerollsThisWave: Int = 0,
+    var rewardTakenThisWave: Boolean = false,
     val seed: Long,
     var bossesCleared: Int = 0,
     val payoutTable: ResourceLocation? = null,
@@ -167,6 +181,22 @@ data class RunState(
      */
     fun touch() {
         lastActiveAtEpochMs = System.currentTimeMillis()
+    }
+
+    /**
+     * Move the run to [wave], resetting everything that is scoped to a single wave.
+     *
+     * **The only way a wave should change.** Assigning `run.wave` directly is what this replaces, and
+     * the reason it is a method is that the assignment alone is a bug: [rerollsThisWave] and
+     * [rewardTakenThisWave] describe the between-wave step of the wave being *left*, so a run that
+     * advanced without clearing them would arrive at the next wave with its free reward already spent
+     * and its rerolls already priced up. Both failures are silent — the player simply finds the step
+     * missing — which is exactly the kind that should be impossible to write rather than remembered.
+     */
+    fun advanceTo(wave: Int) {
+        this.wave = wave
+        rerollsThisWave = 0
+        rewardTakenThisWave = false
     }
 
     /**
@@ -281,6 +311,11 @@ data class RunState(
         tag.putInt(SCHEMA_KEY, SCHEMA_VERSION)
         tag.putInt("wave", wave)
         tag.putInt("credits", credits)
+        // Written unconditionally rather than skipped when zero. Absence would be indistinguishable
+        // from "not rerolled", which is the same value — but a future non-zero default would then read
+        // back wrong from every existing save, and this file is written every wave anyway.
+        tag.putInt("rerollsThisWave", rerollsThisWave)
+        tag.putBoolean("rewardTakenThisWave", rewardTakenThisWave)
         tag.putLong("seed", seed)
         tag.putInt("bossesCleared", bossesCleared)
         payoutTable?.let { tag.putString("payoutTable", it.toString()) }
@@ -396,6 +431,11 @@ data class RunState(
                 wave = wave,
                 party = party,
                 credits = tag.getInt("credits"),
+                // Both default to the "step not started" values on an older save, which is the safe
+                // direction: a player who had rerolled gets one reroll's worth of value back, whereas
+                // defaulting `rewardTaken` to true would silently eat a reward they had not taken.
+                rerollsThisWave = tag.getInt("rerollsThisWave"),
+                rewardTakenThisWave = tag.getBoolean("rewardTakenThisWave"),
                 seed = tag.getLong("seed"),
                 bossesCleared = tag.getInt("bossesCleared"),
                 // An unparseable id restores as null rather than failing the run: null falls back to

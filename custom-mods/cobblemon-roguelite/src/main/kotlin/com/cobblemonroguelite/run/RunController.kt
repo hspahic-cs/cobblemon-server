@@ -517,7 +517,7 @@ object RunController {
         val step = RunProgress.afterVictory(cleared.plan, run.seed, composition, roster, run.trainerMemory, cap)
         return when (step) {
             is WaveStep.Fight -> {
-                run.wave = step.plan.wave
+                run.advanceTo(step.plan.wave)
                 store.checkpoint(server, player)
                 // After the advance, so the wave named is the one about to be played rather than the
                 // one that was just cleared inside the cap.
@@ -529,7 +529,7 @@ object RunController {
             // refusal is the player's next resume, not this. Returning it unadvanced would make them
             // fight a wave they have beaten once the operator fixes the datapack.
             is WaveStep.NoRoster -> {
-                run.wave = cleared.plan.wave + 1
+                run.advanceTo(cleared.plan.wave + 1)
                 store.checkpoint(server, player)
                 step
             }

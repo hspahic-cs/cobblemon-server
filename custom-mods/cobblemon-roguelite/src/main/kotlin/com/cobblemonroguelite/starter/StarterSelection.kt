@@ -66,7 +66,7 @@ sealed interface StarterSelectionResult {
 object StarterSelection {
 
     /**
-     * Most starters a team may contain, whatever the budget allows.
+     * The ceiling a run *party* has, and therefore an absolute ceiling on a draft.
      *
      * Mirrors [com.cobblemonroguelite.run.RunState.MAX_PARTY] and is duplicated rather than imported
      * so that `starter/` does not depend on `run/` — the dependency already runs the other way. A test
@@ -74,6 +74,32 @@ object StarterSelection {
      * be silently truncated by the party, and the player would have paid points for the missing one.
      */
     const val MAX_TEAM = 6
+
+    /**
+     * Most starters a **draft** may contain, whatever the budget allows. Decided 2026-07-29.
+     *
+     * ### Why this exists at all, when the budget was supposed to do the job
+     *
+     * §2.13 argued the budget alone would hold the line: "with costs in the 3–6 range, 10 points buys
+     * two or three Pokémon, not a full party. So catching is *still* how a party gets to six." That
+     * arithmetic was done against an assumed price band, and PokéRogue's real table is wider than the
+     * assumption — costs run **1 to 10**, with 25 species at cost 1 and 124 at cost 2. Six cost-1
+     * species is **6 of 10 points**, so the budget as specified bought a full party at wave 1 and
+     * "catching is the party system" quietly stopped being true.
+     *
+     * Three ways out were available: cap the count, cut the budget, or accept full starting parties.
+     * Cutting the budget does not work — six cost-1 picks cost 6, so the budget would have to fall
+     * below 6 to prevent them, which also makes any *pair* of 3-cost species unaffordable and collapses
+     * the draft to one cheap Pokémon. Accepting full parties is the faithful mirror but changes what
+     * the mode is. Capping the count keeps PokéRogue's prices as the balance statement they are (§2.13:
+     * "the cost *is* the balance statement") **and** keeps §2.13's intent, at the cost of one refusal
+     * a player can understand.
+     *
+     * Deliberately **not** equal to [MAX_TEAM]: the run party still holds six, and the other three
+     * slots are what catching fills. Those are two different limits that happened to share a number
+     * until the real prices arrived, which is exactly why they are now two constants.
+     */
+    const val MAX_STARTERS = 3
 
     fun validate(catalogue: StarterCatalogue, picks: List<ResourceLocation>): StarterSelectionResult {
         if (picks.isEmpty()) return StarterSelectionResult.Empty
@@ -91,9 +117,11 @@ object StarterSelection {
         val missing = picks.filterNot(catalogue::contains)
         if (missing.isNotEmpty()) return StarterSelectionResult.NotEligible(missing)
 
-        // Party size before budget. Both are refusals, but this one does not depend on the prices,
-        // so reporting it first keeps "you picked eight" from arriving as "you cannot afford this".
-        if (picks.size > MAX_TEAM) return StarterSelectionResult.TooMany(MAX_TEAM)
+        // Draft size before budget. Both are refusals, but this one does not depend on the prices, so
+        // reporting it first keeps "you picked eight" from arriving as "you cannot afford this" — and
+        // with the real price table it is the *common* refusal, since a wide cheap team is affordable
+        // long before it is legal. See [MAX_STARTERS].
+        if (picks.size > MAX_STARTERS) return StarterSelectionResult.TooMany(MAX_STARTERS)
 
         val team = picks.map { StarterOption(it, catalogue.costOf(it)!!) }
         val spent = team.sumOf { it.cost }

@@ -90,7 +90,7 @@ object RunMessages {
             if (option.cost <= budget) price else "$price too dear"
         }
         return literal(
-            "You have $budget point(s) to spend on up to ${StarterSelection.MAX_TEAM} Pokémon — " +
+            "You have $budget point(s) to spend on up to ${StarterSelection.MAX_STARTERS} Pokémon — " +
                 "buy them with /roguelite starter <species> [more...]. Spending less is fine, and " +
                 "catching is how the rest of your party arrives. Available: $listed",
         )

@@ -223,6 +223,33 @@ cannot, and it turns team-building into the first real decision of a run.
 a full party. So catching is *still* how a party gets to six — the earlier decision's substance
 survives, it just no longer starts at exactly one.
 
+**Amended 2026-07-29: the budget alone does not hold that line, so the draft is capped at three.**
+The paragraph above did its arithmetic against an assumed 3–6 price band. PokéRogue's real table,
+now extracted (`ops/gen_pokerogue_starters.py`, 542 species), runs **1 to 10** — with **25 species
+at cost 1 and 124 at cost 2**. Six cost-1 species is **6 of 10 points**, so as specified the budget
+bought a *full party at wave 1* and "catching is how a party gets to six" was simply false.
+
+Three ways out were considered. **Cutting the budget does not work**: six cost-1 picks cost 6, so
+the budget would have to drop below 6 to stop them, which also makes any *pair* of 3-cost species
+unaffordable and collapses the draft to a single cheap Pokémon. **Accepting full starting parties**
+is the faithful mirror, but it makes catching optional and changes what the mode is. **Chosen: cap
+the draft at three starters** (`StarterSelection.MAX_STARTERS`), independent of the six-member run
+party. That keeps their prices as the balance statement this section already argues they are, keeps
+catching as the party system, and costs one refusal a player can understand.
+
+Note the two limits are now deliberately different constants. They shared a number until the real
+prices arrived, and making them equal again reinstates the wave-1 full party — there is a test that
+fails if they do.
+
+**Amended 2026-07-29: their passive table is *not* imported.** §2.27 makes candy unlock a species'
+**hidden ability**, replacing its normal one. PokéRogue's passive is an **additional** second
+ability, and their assignments are balanced as a bonus: Bulbasaur's passive is Grassy Surge,
+Pikachu's is Transistor. Under our replace-semantics, importing that list hands Bulbasaur Grassy
+Surge *instead of* Overgrow — abilities chosen as a bonus, applied as a substitution, which is a
+balance re-reading rather than a port. §2.27 already falls back to each species' own Cobblemon
+hidden ability when no override exists, which is the slot Game Freak balanced, so **no override
+table ships**. The extractor can still emit one behind `--hidden-abilities` if that is revisited.
+
 **Costs mirror PokéRogue's**, per species, because they carry that balance judgement. See the
 licensing note in §2.7: their cost table is **their data**, so it is transcribed into server-side
 datapack content and never shipped in a published build, which needs derived defaults instead

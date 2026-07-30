@@ -202,8 +202,10 @@ object RunCommands {
      * from a command and not. Each level also `executes`, which is what makes every arity legal
      * without declaring six overloads.
      *
-     * Bounded at [StarterSelection.MAX_TEAM]: a seventh argument is refused by the parser, before
-     * there is anything to validate.
+     * Bounded at [StarterSelection.MAX_STARTERS], the DRAFT cap, not [StarterSelection.MAX_TEAM].
+     * A fourth argument is refused by the parser, before there is anything to validate. Using the
+     * party ceiling here would offer completions for slots the validator then rejects, which reads as
+     * the command being broken rather than the team being too big.
      */
     private fun starterArgument(depth: Int): RequiredArgumentBuilder<CommandSourceStack, ResourceLocation> {
         val argument = Commands.argument(speciesArg(depth), ResourceLocationArgument.id())
@@ -216,7 +218,7 @@ object RunCommands {
                 SharedSuggestionProvider.suggestResource(catalogue?.options.orEmpty().map { it.species }, builder)
             }
             .executes { ctx -> player(ctx)?.let { chooseStarters(it, speciesArgs(ctx)) } ?: 0 }
-        if (depth < StarterSelection.MAX_TEAM) argument.then(starterArgument(depth + 1))
+        if (depth < StarterSelection.MAX_STARTERS) argument.then(starterArgument(depth + 1))
         return argument
     }
 
@@ -231,7 +233,7 @@ object RunCommands {
      */
     private fun speciesArgs(ctx: CommandContext<CommandSourceStack>): List<ResourceLocation> {
         val species = mutableListOf<ResourceLocation>()
-        for (depth in 1..StarterSelection.MAX_TEAM) {
+        for (depth in 1..StarterSelection.MAX_STARTERS) {
             val id = runCatching { ResourceLocationArgument.getId(ctx, speciesArg(depth)) }.getOrNull() ?: break
             species += id
         }

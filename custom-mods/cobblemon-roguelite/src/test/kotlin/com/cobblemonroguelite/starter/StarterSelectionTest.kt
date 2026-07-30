@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 /**
  * §2.13's budget arithmetic.
@@ -146,17 +147,42 @@ class StarterSelectionTest {
         val many = assertIs<StarterSelectionResult.TooMany>(
             StarterSelection.validate(roomy, (1..7).map { id("mon$it") }),
         )
-        assertEquals(StarterSelection.MAX_TEAM, many.max)
+        assertEquals(StarterSelection.MAX_STARTERS, many.max)
     }
 
     @Test
-    fun `a full party is legal when the budget stretches to it`() {
+    fun `a full party is refused at the draft even when the budget stretches to it`() {
+        // THE REGRESSION THIS FILE EXISTS TO HOLD, and it used to assert the opposite.
+        //
+        // PokéRogue's real price table has 25 species at cost 1, so six of them cost 6 of a 10-point
+        // budget: affordable, and it bought a full party at wave 1. That made §2.13's "catching is
+        // still how a party gets to six" false. The draft is now capped independently of the party —
+        // see StarterSelection.MAX_STARTERS for why capping the count beat cutting the budget.
         val roomy = StarterCatalogue(budget = 10, options = (1..8).map { StarterOption(id("mon$it"), 1) })
-        val accepted = assertIs<StarterSelectionResult.Accepted>(
+        val many = assertIs<StarterSelectionResult.TooMany>(
             StarterSelection.validate(roomy, (1..6).map { id("mon$it") }),
         )
-        assertEquals(6, accepted.team.size)
-        assertEquals(4, accepted.remaining)
+        assertEquals(StarterSelection.MAX_STARTERS, many.max)
+    }
+
+    @Test
+    fun `a draft at exactly the cap is accepted`() {
+        val roomy = StarterCatalogue(budget = 10, options = (1..8).map { StarterOption(id("mon$it"), 1) })
+        val accepted = assertIs<StarterSelectionResult.Accepted>(
+            StarterSelection.validate(roomy, (1..StarterSelection.MAX_STARTERS).map { id("mon$it") }),
+        )
+        assertEquals(StarterSelection.MAX_STARTERS, accepted.team.size)
+        assertEquals(10 - StarterSelection.MAX_STARTERS, accepted.remaining)
+    }
+
+    @Test
+    fun `the draft cap is below the party cap, so catching still fills the party`() {
+        // Two different limits that shared a number until the real prices arrived. If they are ever
+        // made equal again, the wave-1 full party comes back.
+        assertTrue(
+            StarterSelection.MAX_STARTERS < StarterSelection.MAX_TEAM,
+            "the draft cap must leave room for catching (§2.13)",
+        )
     }
 
     @Test

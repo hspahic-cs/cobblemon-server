@@ -1,0 +1,6 @@
+{
+  "pack": {
+    "description": "PokeRogue-derived starter costs and unlock abilities for cobblemon-roguelite (plan 2.13/2.27). Server-side only. See ops/gen_pokerogue_starters.py.",
+    "pack_format": 48
+  }
+}

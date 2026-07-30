@@ -78,3 +78,6 @@ Thumbs.db
 # the extension entirely, and an *.png rule lets those files through into the repo.
 ops/skin-staging/*
 !ops/skin-staging/README.md
+
+# Generated throwaway smoke-test datapack (ops/gen_roguelite_smoketest.py) — never promoted
+ops/roguelite-smoketest-pack/

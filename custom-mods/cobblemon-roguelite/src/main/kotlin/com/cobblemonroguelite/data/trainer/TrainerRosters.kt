@@ -32,9 +32,16 @@ import net.minecraft.resources.ResourceLocation
  *         { "alternatives": [ { "line": [ "cobblemon:onix", "cobblemon:steelix" ] } ] }
  *     ] }
  *   ],
- *   "generation": { "party_size": [ { "min_wave": 1, "size": 4 } ], "held_items": [] }
+ *   "generation": { "party_size": [ { "min_wave": 1, "size": 4 } ], "held_items": [] },
+ *   "rival": {
+ *     "meetings": [ { "wave": 8, "trainer": "ns:rgl_rival_1" }, { "wave": 25, "trainer": "ns:rgl_rival_2" } ],
+ *     "teams": [ { "id": "kanto", "slots": [ { "alternatives": [ { "line": [ "cobblemon:bulbasaur" ] } ] } ] } ]
+ *   }
  * }
  * ```
+ *
+ * `rival` is §2.36's, and it is a third mechanism rather than a shape of the first two because a rival is
+ * one character met repeatedly with a team that *grows* — see [RivalLadder]. Absent is the ordinary case.
  *
  * A band and a fixed encounter hold **trainer ids and nothing else** — never a team. What changed with
  * §2.30 is what an id can mean: an id listed in `generated` fights a team built at the encounter from
@@ -85,6 +92,7 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
         val fixedViews = root.optionalObjectList("fixed") ?: emptyList()
         val generatedViews = root.optionalObjectList("generated") ?: emptyList()
         val generation = parseGeneration(root)
+        val rival = parseRival(root)
         root.expectNoUnknownKeys()
         if (authoredFor == null || bandViews == null) return null
 
@@ -132,7 +140,11 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
         // lost a band would report holes the author did not create, on top of the real error.
         if (problems.count != before || generation == null) return null
 
-        val roster = TrainerRoster(id, authoredFor, bands, fixed, generated, generation)
+        // `rival` is null both when the block is absent (the ordinary case) and when it failed to parse
+        // — and the two do not have to be told apart, unlike [parseGeneration]'s: a failure has already
+        // recorded a problem, and the guard above rejects the file before this line is reached. Passing
+        // null for a broken block would be a silently rival-less roster only if that guard were removed.
+        val roster = TrainerRoster(id, authoredFor, bands, fixed, generated, generation, rival)
         roster.validate().forEach { problems.add("", it) }
         return if (problems.count == before) roster else null
     }
@@ -236,9 +248,30 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
         return FixedEncounter(wave = wave, trainerId = trainer, kind = kind)
     }
 
+    /**
+     * A band's or a fixed encounter's `kind`.
+     *
+     * Only `trainer` and `boss` are spellable, and the two rejections it has to explain are different
+     * mistakes:
+     *
+     * - `wild` — wild waves are generated, not authored, so there is no roster entry to write.
+     * - `rival` — §2.36's rival is a real [RunOpponent], so this is the plausible wrong guess rather
+     *   than a typo, and it needs pointing somewhere rather than just refusing. A rival is not a kind a
+     *   wave can be *declared*: which meeting it is decides the team, and only the `rival` block knows
+     *   that. A band of kind rival would be worse still — see [TrainerBand].
+     */
     private fun parseKind(view: JsonView, field: String, required: Boolean): RunOpponent? {
         val raw = if (required) view.requireString(field) else view.optionalString(field)
         if (raw == null) return null
+        if (raw.lowercase() == "rival") {
+            view.problem(
+                field,
+                "'rival' is not a kind a band or a fixed encounter can declare — a rival's team depends " +
+                    "on WHICH meeting it is, which only the roster's top-level 'rival' block knows. " +
+                    "Declare the meeting there instead (§2.36)",
+            )
+            return null
+        }
         return KINDS[raw.lowercase()] ?: run {
             view.problem(
                 field,
@@ -275,6 +308,135 @@ object TrainerRosters : RogueliteDataRegistry<TrainerRoster>("trainer_rosters") 
             view.problem(field, "'$text' is not a valid id (expected namespace:path)")
             null
         }
+    }
+
+    // ─── §2.36: the rival ladder ───────────────────────────────────────────
+
+    /**
+     * The `rival` block, or null when there is none.
+     *
+     * ```json
+     * "rival": {
+     *   "meetings": [ { "wave": 8, "trainer": "ns:rgl_rival_1" }, { "wave": 25, "trainer": "ns:rgl_rival_2" } ],
+     *   "party_size": [ 2, 3, 4, 5, 6, 6 ],
+     *   "teams": [ { "id": "kanto", "slots": [ { "alternatives": [ { "line": [ "cobblemon:bulbasaur" ] } ] } ] } ]
+     * }
+     * ```
+     *
+     * Absent is the ordinary case and is **not** a hole: §2.14's mode is complete without a rival, so
+     * unlike `bands` there is nothing to report. Present-but-broken returns null and the caller's guard
+     * rejects the file, which is the same severity every other problem in a roster carries
+     * ([TrainerRosters]' containment note): a rival ladder with a wave typed wrong is not a narrower
+     * ladder, it is a run whose rival stops appearing partway through.
+     *
+     * `slots` reuses [parseSlots] deliberately — a rival's slot is exactly a signature slot, alternatives
+     * and weights and all, and a second grammar for the same thing would be a second grammar to keep in
+     * step with Cobblemon's aspect syntax. What differs is only what the *order* means, which is
+     * [RivalTeam]'s to document, not the parser's.
+     *
+     * The `require`s in [RivalLadder] and [RivalTeam] are pre-checked here for [parseSchedule]'s reason:
+     * an exception out of a datapack parse takes the whole reload with it, and the author would get a
+     * stack trace topped by a Kotlin init block instead of the name of the field they got wrong.
+     */
+    private fun parseRival(root: JsonView): RivalLadder? {
+        val view = root.optionalObject("rival") ?: return null
+
+        val meetingViews = view.requireObjectList("meetings")
+        val teamViews = view.requireObjectList("teams")
+        val partySizes = view.optionalIntList("party_size") ?: emptyList()
+        view.expectNoUnknownKeys()
+
+        var ok = true
+        val meetings = mutableListOf<RivalMeeting>()
+        meetingViews?.forEach { meetingView ->
+            val meeting = parseRivalMeeting(meetingView)
+            if (meeting == null) ok = false else meetings += meeting
+        }
+        if (meetingViews != null && meetings.isEmpty() && ok) {
+            view.problem("meetings", "a rival with no meetings is never met — delete the whole 'rival' block instead")
+            ok = false
+        }
+        // Ascending and distinct, checked here rather than sorted for the author. The meeting INDEX is
+        // what decides how much of the team has been gained, so re-ordering the file for them would
+        // change which team size lands on which wave — silently, and differently from what they wrote.
+        if (meetings.map { it.wave } != meetings.map { it.wave }.sorted()) {
+            view.problem(
+                "meetings",
+                "must be written in ascending wave order — the position in this list is the meeting " +
+                    "number, which is what decides how many Pokémon the rival brings",
+            )
+            ok = false
+        }
+        meetings.groupBy { it.wave }.filterValues { it.size > 1 }.keys.sorted().forEach { wave ->
+            view.problem("meetings", "two meetings on wave $wave — the meeting number would be ambiguous")
+            ok = false
+        }
+
+        val teams = mutableListOf<RivalTeam>()
+        val seenTeamIds = mutableSetOf<String>()
+        teamViews?.forEach { teamView ->
+            val team = parseRivalTeam(teamView) ?: run { ok = false; return@forEach }
+            // Fatal rather than last-wins, for [parseBand]'s reason: the id is how every validation
+            // message names a team, and two called 'kanto' make all of them ambiguous.
+            if (!seenTeamIds.add(team.id)) {
+                teamView.problem("id", "duplicate rival team id '${team.id}'")
+                ok = false
+            } else {
+                teams += team
+            }
+        }
+        if (teamViews != null && teams.isEmpty() && ok) {
+            view.problem("teams", "a rival needs at least one team, or it arrives with no Pokémon")
+            ok = false
+        }
+
+        partySizes.forEachIndexed { index, size ->
+            if (size !in 1..RivalLadder.MAX_PARTY) {
+                // Cobblemon's party limit, the same bound party_size takes in the generation block. A 7
+                // here would be silently truncated wherever the team is built — a difficulty change
+                // nobody wrote down.
+                view.problem("party_size[$index]", "must be 1..${RivalLadder.MAX_PARTY}, was $size")
+                ok = false
+            }
+        }
+
+        if (!ok || meetingViews == null || teamViews == null) return null
+        return RivalLadder(meetings, teams, partySizes)
+    }
+
+    private fun parseRivalMeeting(view: JsonView): RivalMeeting? {
+        val wave = view.requireInt("wave")
+        val trainer = parseTrainerId(view, "trainer")
+        view.expectNoUnknownKeys()
+
+        if (wave != null && wave < 1) {
+            view.problem("wave", "waves are 1-based, was $wave")
+            return null
+        }
+        if (wave == null || trainer == null) return null
+        return RivalMeeting(wave, trainer)
+    }
+
+    private fun parseRivalTeam(view: JsonView): RivalTeam? {
+        val teamId = view.requireString("id")
+        val slots = parseSlots(view, "slots", required = true)
+        view.expectNoUnknownKeys()
+
+        var ok = teamId != null && slots != null
+        if (teamId != null && teamId.isBlank()) {
+            view.problem("id", "must not be blank — it is how validation messages name this team")
+            ok = false
+        }
+        if (slots != null && slots.isEmpty()) {
+            view.problem(
+                "slots",
+                "must name at least one slot — slot one is the rival's starter, which is the only " +
+                    "Pokémon every meeting has in common",
+            )
+            ok = false
+        }
+        if (!ok) return null
+        return RivalTeam(teamId!!, slots!!)
     }
 
     // ─── §2.30: generated teams ────────────────────────────────────────────

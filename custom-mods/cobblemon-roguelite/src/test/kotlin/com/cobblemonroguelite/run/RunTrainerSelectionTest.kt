@@ -3,6 +3,12 @@ package com.cobblemonroguelite.run
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.data.trainer.FixedEncounter
+import com.cobblemonroguelite.data.trainer.RivalLadder
+import com.cobblemonroguelite.data.trainer.RivalMeeting
+import com.cobblemonroguelite.data.trainer.RivalTeam
+import com.cobblemonroguelite.data.trainer.SignatureSlot
+import com.cobblemonroguelite.data.trainer.SpeciesLine
+import com.cobblemonroguelite.data.trainer.TeamSpecies
 import com.cobblemonroguelite.data.trainer.TrainerBand
 import com.cobblemonroguelite.data.trainer.TrainerPickSource
 import com.cobblemonroguelite.data.trainer.TrainerRoster
@@ -150,6 +156,50 @@ class RunTrainerSelectionTest {
     fun `an undeclared fixed encounter on a wild wave still does not fire`() {
         val roster = roster(fixed = listOf(FixedEncounter(183, id("e4"))))
         assertNull(RunTrainerSelection.pick(roster, 183, RunOpponent.WILD, 7L, recent = emptyList()))
+    }
+
+    /**
+     * §2.36's rival is the one opponent a run is *supposed* to meet repeatedly, so the no-repeat window
+     * must not touch it.
+     *
+     * The window would not in fact drop it today — a rival has no pool, so there is nothing for
+     * [RunTrainerSelection] to exclude and it would answer the same way by accident. Pinned because the
+     * accident stops holding the moment a second history-aware rule is added here, and the symptom would
+     * be a run-long thread silently missing a meeting or two.
+     */
+    @Test
+    fun `a rival meeting ignores the history, even a window full of itself`() {
+        val ladder = RivalLadder(
+            meetings = listOf(RivalMeeting(8, id("rgl_rival_1")), RivalMeeting(25, id("rgl_rival_2"))),
+            teams = listOf(RivalTeam("kanto", listOf(SignatureSlot(listOf(SpeciesLine(listOf(
+                TeamSpecies(ResourceLocation.fromNamespaceAndPath("cobblemon", "bulbasaur")),
+            ))))))),
+            partySizes = listOf(1, 1),
+        )
+        val roster = roster().copy(rival = ladder)
+        val recent = List(RunTrainerMemory.WINDOW) { id("rgl_rival_2") }
+        val pick = RunTrainerSelection.pick(roster, 25, RunOpponent.RIVAL, seed = 7L, recent = recent)!!
+        assertEquals(id("rgl_rival_2"), pick.trainerId)
+        assertEquals(TrainerPickSource.RIVAL, pick.source)
+    }
+
+    @Test
+    fun `a rival meeting on a wild wave is still summoned`() {
+        // Wave 8 is wild under 5/10, so this is the promotion reaching the run loop. Contrast the
+        // undeclared fixed encounter above, which deliberately does NOT fire on a wild wave: a ladder
+        // always promotes, and a fixed entry with no `kind` deliberately does not.
+        val ladder = RivalLadder(
+            meetings = listOf(RivalMeeting(8, id("rgl_rival_1"))),
+            teams = listOf(RivalTeam("kanto", listOf(SignatureSlot(listOf(SpeciesLine(listOf(
+                TeamSpecies(ResourceLocation.fromNamespaceAndPath("cobblemon", "bulbasaur")),
+            ))))))),
+            partySizes = listOf(1),
+        )
+        val roster = roster().copy(rival = ladder)
+        val loaded = RunRoster.Loaded(roster.id, roster)
+        val fight = RunProgress.planFor(8, seed = 7L, composition, loaded, RunTrainerMemory())
+        assertEquals(RunOpponent.RIVAL, fight.plan.kind)
+        assertEquals(id("rgl_rival_1"), fight.trainer?.trainerId)
     }
 
     @Test

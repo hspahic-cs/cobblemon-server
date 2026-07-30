@@ -138,6 +138,18 @@ data class RewardRouting(
         RunOpponent.WILD to table("wild"),
         RunOpponent.TRAINER to table("trainer"),
         RunOpponent.BOSS to table("boss"),
+        // NO RIVAL ENTRY, and its absence is the decision rather than an omission. §2.36's rival waves
+        // are all *promoted* waves ([com.cobblemonroguelite.data.trainer.RivalLadder]), and a promoted
+        // wave rewards as the wave the schedule called it — pinned in `RunProgressTest`, because
+        // re-pointing a reward table from a roster file would be a balance change made by data, and
+        // §2.12 puts routing in the operator's hands. So [tableFor] is never called with RIVAL, and a
+        // key here would be config that looks live and does nothing.
+        //
+        // The consequence is worth stating because it is a wart rather than a virtue: a rival at wave 8
+        // rolls the *wild* table, since that is what wave 8 is scheduled as. It is the same wart a
+        // promoted Elite Four member has at wave 182 and is fixable today with a one-wave [RewardBand];
+        // whether promotions should route by effective kind is a §2.12 question this class must not
+        // answer for it.
     ),
 
     /** Checked in order, first match wins, so an author reads precedence off the file top-down. */

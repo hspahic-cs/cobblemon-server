@@ -6,8 +6,43 @@ import org.slf4j.LoggerFactory
 
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/integration")
 
-/** The three wave kinds of §2.14. Wild waves are catchable; trainer and boss waves are not. */
-enum class RunOpponent { WILD, TRAINER, BOSS }
+/**
+ * What a wave puts in front of the player.
+ *
+ * §2.14's three kinds plus §2.36's fourth. **Only [WILD] is catchable** — every other kind is
+ * trainer-owned, and that is the one rule this enum exists to make checkable in one place rather than
+ * re-derived from a wave number by each caller.
+ *
+ * ### Why [RIVAL] is a kind and not a flavour of [TRAINER]
+ *
+ * §2.36 checked this rather than assuming it, and reached opposite answers for the two cases it looked
+ * at. The Elite Four and the champion are *fixed, strong, otherwise ordinary bosses* — one authored
+ * team at one known wave — which §2.30's fixed-encounter override already expresses, so they got no
+ * new kind. A rival is not that: it is **the same character met six times with a team that grows**
+ * (waves 8/25/55/95/145/195), which means the thing that decides its team is not `(seed, wave)` but
+ * `(seed, which meeting)` — the *only* opponent in the mode whose content at wave 145 is constrained
+ * by what it brought at wave 25. See [com.cobblemonroguelite.data.trainer.RivalLadder].
+ *
+ * Making it a kind rather than a boolean on a pick buys three things that would each otherwise be a
+ * separate special case. **`plan.kind == BOSS` keeps meaning exactly "boss"**, which is the important
+ * one: a rival therefore takes neither the ×1.2 level multiplier nor §2.32's shields, and both omissions
+ * are decisions rather than gaps — argued in [com.cobblemonroguelite.data.trainer.RivalLadder]. A
+ * provider can drive a rival with a different AI through the seam that already exists
+ * ([RunBattleAiRequest] carries the kind). And the battle layer routes on the kind, so nothing has to
+ * ask a roster what a wave is a second time.
+ *
+ * What it does **not** buy is its own reward table. Every rival wave is a *promoted* wave, and a promoted
+ * wave rewards as the wave the schedule called it (§2.12 owns routing; see
+ * [com.cobblemonroguelite.composition.RewardRouting.byKind]) — so this kind is deliberately absent from
+ * that map rather than present and unreachable.
+ *
+ * ### Appended, and that is load-bearing
+ *
+ * [RIVAL] is last. Nothing persists this enum today — a checkpoint stores a wave number and re-derives
+ * the kind — but reward routing and band kinds are keyed on it in *datapack* files, and an author's
+ * `"boss"` must keep meaning boss. Anyone reordering these has changed what loaded content means.
+ */
+enum class RunOpponent { WILD, TRAINER, BOSS, RIVAL }
 
 /**
  * Everything a provider is told about the opponent it is being asked to drive.

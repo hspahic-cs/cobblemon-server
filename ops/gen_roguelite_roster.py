@@ -67,7 +67,19 @@ ID_RE = re.compile(r"^(?:[a-z0-9_.-]+:)?[a-z0-9_.\-/]+$")
 BAND_FIELDS = {"id", "kind", "min_wave", "max_wave", "trainers"}
 FIXED_FIELDS = {"wave", "kind", "trainer"}
 SCHEDULE_FIELDS = {"run_length", "trainer_interval", "boss_interval"}
-ROSTER_FIELDS = {"authored_for", "bands", "fixed", "generated", "generation"}
+ROSTER_FIELDS = {"authored_for", "bands", "fixed", "generated", "generation", "rival"}
+# §2.36's rival: one character met on a fixed schedule with a team that GROWS. A third mechanism beside
+# bands and fixed encounters, because a rival is neither a pool nor a pin — see RivalLadder.kt. The
+# checks below mirror the mod's, and the two worth having outside the game are the same two as for
+# `generated`: the JOIN (a stage id that also sits in a band pool can be drawn out of order) and the
+# ramp (a team one slot short means the rival silently stops growing at the last meeting).
+RIVAL_FIELDS = {"meetings", "teams", "party_size"}
+MEETING_FIELDS = {"wave", "trainer"}
+RIVAL_TEAM_FIELDS = {"id", "slots"}
+# The ramp §2.36 describes: two Pokemon at the first meeting, one more each time, capped by Cobblemon's
+# party limit. Must stay in step with RivalLadder.FIRST_MEETING_PARTY / MAX_PARTY.
+RIVAL_FIRST_MEETING_PARTY = 2
+MAX_PARTY = 6
 # §2.30's generated teams. The blocks are written by ops/gen_pokerogue_roster.py, not by hand, so what
 # is checked here is the join and the shape — the things a hand edit breaks — rather than every value.
 ENTRY_FIELDS = {"trainer", "signature", "filler"}
@@ -177,6 +189,15 @@ def validate_roster(path: str, doc: dict, trainer_ids: set[str] | None) -> Probl
             problems.add(where, f"duplicate band id '{band_id}'")
             continue
         seen_ids.add(band_id)
+        if kind == "rival":
+            # The plausible wrong guess rather than a typo, since RIVAL is a real wave kind. A band's
+            # whole job is "which of these turns up here", and §2.36's rival has no which.
+            problems.add(
+                f"{where}.kind",
+                "'rival' is not a band kind — a rival is met on a schedule, not drawn from a pool. "
+                "Put it in the roster's top-level 'rival' block instead",
+            )
+            continue
         if kind not in KINDS:
             problems.add(
                 f"{where}.kind",
@@ -214,6 +235,15 @@ def validate_roster(path: str, doc: dict, trainer_ids: set[str] | None) -> Probl
         if not isinstance(wave, int) or wave < 1:
             problems.add(f"{where}.wave", f"waves are 1-based, was {wave!r}")
             continue
+        if kind == "rival":
+            # A promotion carries no meeting number, so there would be no party size and no team. Only
+            # the `rival` block can say which meeting a wave is.
+            problems.add(
+                f"{where}.kind",
+                "'rival' is not a kind a fixed encounter can declare — a rival's team depends on WHICH "
+                "meeting it is, which only the roster's 'rival' block knows",
+            )
+            continue
         if kind is not None and kind not in KINDS:
             problems.add(f"{where}.kind", f"unknown kind {kind!r} (expected {' or '.join(KINDS)}, or omit it)")
             continue
@@ -223,12 +253,181 @@ def validate_roster(path: str, doc: dict, trainer_ids: set[str] | None) -> Probl
             continue
         by_wave[wave] = {"wave": wave, "kind": kind, "trainer": trainer}
 
+    meetings = check_rival(doc, parsed, by_wave, run_length, trainer_interval, boss_interval, trainer_ids, problems)
+
     check_overlaps(parsed, problems)
-    check_gaps(parsed, by_wave, run_length, trainer_interval, boss_interval, problems)
+    # Rival waves count as coverage. Five of §2.36's six meetings land on SCHEDULED TRAINER waves, so
+    # without this a complete roster is told it has five holes — and an author whose trainer band stops
+    # at 190 is told to extend it over a wave the rival already owns.
+    check_gaps(parsed, set(by_wave) | {m["wave"] for m in meetings}, run_length, trainer_interval, boss_interval, problems)
     check_fixed(by_wave, run_length, trainer_interval, boss_interval, problems)
-    named = {tid for band in parsed for tid in band["trainers"]} | {e["trainer"] for e in by_wave.values()}
+    # Rival stage ids count as named, so `check_generated` does not also report a generated entry for one
+    # as "never fought". It is a mistake, and `check_rival` says so more precisely — one mistake earning
+    # two messages is how the sharper of the two gets skimmed past.
+    named = (
+        {tid for band in parsed for tid in band["trainers"]}
+        | {e["trainer"] for e in by_wave.values()}
+        | {m["trainer"] for m in meetings}
+    )
     check_generated(doc, named, problems)
     return problems
+
+
+def check_rival(
+    doc: dict,
+    bands: list[dict],
+    fixed: dict[int, dict],
+    run_length: int,
+    trainer_interval: int,
+    boss_interval: int,
+    trainer_ids: set[str] | None,
+    problems: Problems,
+) -> list[dict]:
+    """The `rival` block — §2.36's ladder. Returns the parsed meetings, empty when there is none.
+
+    An absent block is NOT a hole, unlike an absent band: §2.14's mode is trainers, bosses and wild
+    waves, and the rival is an addition. So nothing is reported for a roster without one.
+    """
+    rival = doc.get("rival")
+    if rival is None:
+        return []
+    if not isinstance(rival, dict):
+        problems.add("rival", "expected an object")
+        return []
+    unknown_fields(rival, RIVAL_FIELDS, "rival", problems)
+
+    raw_meetings = rival.get("meetings")
+    if not isinstance(raw_meetings, list) or not raw_meetings:
+        problems.add("rival.meetings", "a rival with no meetings is never met — delete the whole block instead")
+        raw_meetings = []
+
+    meetings: list[dict] = []
+    for index, meeting in enumerate(raw_meetings):
+        where = f"rival.meetings[{index}]"
+        if not isinstance(meeting, dict):
+            problems.add(where, "expected an object")
+            continue
+        unknown_fields(meeting, MEETING_FIELDS, where, problems)
+        wave = meeting.get("wave")
+        if not isinstance(wave, int) or wave < 1:
+            problems.add(f"{where}.wave", f"waves are 1-based, was {wave!r}")
+            continue
+        check_id(meeting.get("trainer"), f"{where}.trainer", trainer_ids, problems)
+        meetings.append({"wave": wave, "trainer": meeting.get("trainer")})
+
+    # Ascending and distinct, not sorted for the author: the POSITION in this list is the meeting
+    # number, which is what decides how many Pokemon turn up. Sorting would move the party sizes onto
+    # different waves, silently and differently from what was written.
+    waves = [m["wave"] for m in meetings]
+    if waves != sorted(waves):
+        problems.add(
+            "rival.meetings",
+            "must be written in ascending wave order — the position in this list is the meeting number, "
+            "which is what decides how many Pokemon the rival brings",
+        )
+    for wave in sorted({w for w in waves if waves.count(w) > 1}):
+        problems.add("rival.meetings", f"two meetings on wave {wave} — the meeting number would be ambiguous")
+
+    party_size = rival.get("party_size") or []
+    if not isinstance(party_size, list):
+        problems.add("rival.party_size", "expected a list of party sizes, one per meeting")
+        party_size = []
+    for index, size in enumerate(party_size):
+        if not isinstance(size, int) or not 1 <= size <= MAX_PARTY:
+            problems.add(f"rival.party_size[{index}]", f"must be 1..{MAX_PARTY}, was {size!r}")
+
+    raw_teams = rival.get("teams")
+    if not isinstance(raw_teams, list) or not raw_teams:
+        problems.add("rival.teams", "a rival needs at least one team, or it arrives with no Pokemon")
+        raw_teams = []
+    teams: list[dict] = []
+    seen_ids: set = set()
+    for index, team in enumerate(raw_teams):
+        where = f"rival.teams[{index}]"
+        if not isinstance(team, dict):
+            problems.add(where, "expected an object")
+            continue
+        unknown_fields(team, RIVAL_TEAM_FIELDS, where, problems)
+        team_id = team.get("id")
+        if not isinstance(team_id, str) or not team_id.strip():
+            problems.add(f"{where}.id", "must be a non-empty name — it is how these messages identify the team")
+            continue
+        if team_id in seen_ids:
+            problems.add(f"{where}.id", f"duplicate rival team id '{team_id}'")
+            continue
+        seen_ids.add(team_id)
+        slots = team.get("slots")
+        if not isinstance(slots, list) or not slots:
+            problems.add(
+                f"{where}.slots",
+                "must name at least one slot — slot one is the rival's starter, the only Pokemon every "
+                "meeting has in common",
+            )
+            continue
+        for slot_index, slot in enumerate(slots):
+            check_slot(slot, f"{where}.slots[{slot_index}]", problems)
+        teams.append({"id": team_id, "slots": len(slots)})
+
+    pooled = {tid for band in bands for tid in band["trainers"]}
+    generated_ids = {
+        e.get("trainer") for e in (doc.get("generated") or []) if isinstance(e, dict)
+    }
+    for index, meeting in enumerate(meetings):
+        wave = meeting["wave"]
+        number = index + 1
+        if wave > run_length:
+            problems.add(
+                "rival",
+                f"meeting {number} is at wave {wave}, past the end of the run (run_length={run_length}), "
+                f"so the rival's team stops growing at meeting {index}",
+            )
+            continue
+        if wave in fixed:
+            problems.add(
+                "rival",
+                f"wave {wave} is both meeting {number} and a fixed encounter ({fixed[wave]['trainer']}) — "
+                f"the fixed encounter wins, so the meeting would silently not happen. Move one of them",
+            )
+        if kind_of(wave, trainer_interval, boss_interval) == "boss":
+            problems.add(
+                "rival",
+                f"meeting {number} is at wave {wave}, which this schedule makes a boss wave (boss every "
+                f"{boss_interval}) — a rival is not a boss, so this removes a boss from the run and the "
+                f"meeting takes no boss multiplier and no shields",
+            )
+        if meeting["trainer"] in pooled:
+            problems.add(
+                "rival",
+                f"stage '{meeting['trainer']}' (meeting {number}) is also in a band pool, so an ordinary "
+                f"trainer wave can draw it — the same character out of order, with the wrong meeting's team",
+            )
+        if meeting["trainer"] in generated_ids:
+            problems.add(
+                "rival",
+                f"stage '{meeting['trainer']}' (meeting {number}) also has a generated entry, which its own "
+                f"meeting will never use — a rival's team comes from rival.teams. Delete the generated entry",
+            )
+
+    # The ramp, measured against the deepest REACHABLE meeting so that shortening a run does not also
+    # demand longer teams for meetings that were just deleted. A team one slot short does not fail: the
+    # rival plateaus, which is the mechanic quietly not happening at the point it was meant to pay off.
+    reachable = [i for i, m in enumerate(meetings) if m["wave"] <= run_length]
+    if reachable and teams:
+        deepest = max(reachable)
+        if party_size:
+            wanted = party_size[min(deepest, len(party_size) - 1)]
+        else:
+            wanted = min(RIVAL_FIRST_MEETING_PARTY + deepest, MAX_PARTY)
+        for team in teams:
+            if team["slots"] < wanted:
+                problems.add(
+                    "rival",
+                    f"team '{team['id']}' has {team['slots']} slots but meeting {deepest + 1} "
+                    f"(wave {meetings[deepest]['wave']}) asks for {wanted} — the rival would arrive with "
+                    f"{team['slots']} Pokemon and stop growing, which is the one thing a rival is for",
+                )
+
+    return meetings
 
 
 def check_generated(doc: dict, named: set, problems: Problems) -> None:
@@ -378,7 +577,7 @@ def check_overlaps(bands: list[dict], problems: Problems) -> None:
 
 def check_gaps(
     bands: list[dict],
-    fixed: dict[int, dict],
+    served: set[int],
     run_length: int,
     trainer_interval: int,
     boss_interval: int,
@@ -388,8 +587,11 @@ def check_gaps(
 
     Only waves the schedule actually produces are required: demanding a boss band over waves 1-9
     under a boss interval of 10 would force a pool that can never be drawn, and content written to
-    satisfy a validator is content nobody checks. A fixed encounter counts as coverage — that is the
-    entire point of the override.
+    satisfy a validator is content nobody checks.
+
+    `served` is every wave already answered by something other than a band — fixed encounters, which is
+    the entire point of the override, and §2.36's rival meetings, five of which land on scheduled
+    trainer waves and would otherwise each be reported as a hole in a complete roster.
     """
     for kind in KINDS:
         of_kind = [b for b in bands if b["kind"] == kind]
@@ -401,7 +603,7 @@ def check_gaps(
         uncovered = [
             i
             for i, wave in enumerate(qualifying)
-            if wave not in fixed
+            if wave not in served
             and not any(b["min"] <= wave and (b["max"] is None or wave <= b["max"]) for b in of_kind)
         ]
         start = 0

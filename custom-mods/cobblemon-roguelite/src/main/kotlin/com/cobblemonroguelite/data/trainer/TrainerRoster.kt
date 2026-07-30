@@ -70,6 +70,14 @@ data class TrainerBand(
             "maxWave ($maxWave) is before minWave ($minWave), so this band could never match"
         }
         require(kind != RunOpponent.WILD) { "a wild wave has no authored trainer; bands are trainer or boss only" }
+        // A rival band is a contradiction, not an unsupported case: a band's entire job is "which of
+        // these turns up here", and §2.36's rival has no which — it is one character on a fixed
+        // schedule. Allowed, it would let a run meet stage 4 of the rival at wave 35 with a
+        // two-Pokémon team, out of order, as an ordinary trainer. See [RivalLadder].
+        require(kind != RunOpponent.RIVAL) {
+            "a rival is met on a schedule, not drawn from a pool — put it in the roster's 'rival' " +
+                "block rather than in a band"
+        }
     }
 
     fun covers(wave: Int): Boolean = wave >= minWave && (maxWave == null || wave <= maxWave)
@@ -114,11 +122,25 @@ data class FixedEncounter(
     init {
         require(wave >= 1) { "wave is 1-based, got $wave" }
         require(kind != RunOpponent.WILD) { "promoting a wave to WILD would mean 'fight nothing'; omit kind instead" }
+        // Promoting a wave to RIVAL would make it a rival wave with no ladder behind it: no meeting
+        // index, so no party size and no team. The rival block is the only thing that can say which
+        // meeting a wave is, so it is the only thing allowed to declare one.
+        require(kind != RunOpponent.RIVAL) {
+            "a rival wave is declared by the roster's 'rival' block, which is what knows WHICH meeting " +
+                "it is — a fixed encounter cannot promote a wave to a rival"
+        }
     }
 }
 
-/** Where a [TrainerPick] came from. Carried so a log line can say *why* wave 182 was that trainer. */
-enum class TrainerPickSource { BAND, FIXED }
+/**
+ * Where a [TrainerPick] came from. Carried so a log line can say *why* wave 182 was that trainer.
+ *
+ * [RIVAL] is the answer for a §2.36 meeting, and it is worth telling apart from [FIXED] even though
+ * both are "the author pinned this wave": a rival's *team* comes from the ladder rather than from
+ * [TrainerRoster.generated], so a report of the wrong team at wave 95 is checked against a different
+ * block of the file depending on which of the two this says.
+ */
+enum class TrainerPickSource { BAND, FIXED, RIVAL }
 
 /**
  * The answer to "who does wave N fight".
@@ -143,11 +165,18 @@ data class TrainerPick(
 /**
  * Which authored trainer a trainer or boss wave fights.
  *
- * ### Two mechanisms, and the override has to win
+ * ### Three mechanisms, and the precedence between them is fixed
  *
  * [bands] are the standing rule: a wave range holds a pool, and a wave draws from it. [fixed] is the
  * exception, checked first — see [FixedEncounter] for why a schedule this mode is aimed at cannot be
- * written without it.
+ * written without it. [rival] is §2.36's, checked between them, and it is a third mechanism rather than
+ * a use of the second because a rival is not a wave-shaped fact: it is one character across six waves
+ * whose team at the last is constrained by the first (see [RivalLadder]).
+ *
+ * **Order is fixed → rival → band, and only the first pair is a real choice.** A `fixed` entry on a
+ * rival meeting wave is rejected by [validate], so in a loaded roster the two cannot both claim a wave;
+ * fixed is still checked first so that its documented "beats everything" contract needs no exception,
+ * and so a roster built in code rather than parsed behaves predictably instead of by field order.
  *
  * **The schedule itself is not authored here.** This ships the mechanism and one obvious example;
  * which trainer sits at which wave is content, and §2.7 keeps the transcribed roster out of the mod
@@ -187,6 +216,10 @@ data class TrainerPick(
  *   Elite Four, the champion and any curated rival stay hand-made (§2.30).
  * @property generation the dials generation reads — party size by band, evolution stage by wave, held
  *   items. Shipped defaults are §2.30's numbers with no items; see [TeamGenerationRules].
+ * @property rival §2.36's rival ladder, or null for a roster with no rival. Null is the ordinary state
+ *   of every roster written before this existed and is not a hole: a run with no rival is a run of
+ *   trainers and bosses, which is what §2.14 describes on its own. [validate] therefore says nothing
+ *   about a missing ladder — it is the one absent block that is not evidence of a mistake.
  */
 data class TrainerRoster(
     val id: ResourceLocation,
@@ -195,6 +228,7 @@ data class TrainerRoster(
     val fixed: Map<Int, FixedEncounter>,
     val generated: Map<ResourceLocation, TrainerEntry> = emptyMap(),
     val generation: TeamGenerationRules = TeamGenerationRules(),
+    val rival: RivalLadder? = null,
 ) {
 
     /**
@@ -208,11 +242,24 @@ data class TrainerRoster(
      * [level] and [boss] come from the wave's [WavePlan] — the plan produced by [planFor], so
      * promotions are already applied. Passing the *scheduled* kind instead would give a promoted Elite
      * Four wave the ordinary trainer item tier.
+     *
+     * ### The rival is answered first, and matched on the id as well as the wave
+     *
+     * A §2.36 meeting is built by [RivalTeamGenerator] from [rival] rather than from [generated], so the
+     * ladder is consulted before the signature entries. The id has to match too, which is not
+     * belt-and-braces: [fixed] beats the ladder by design, so a (validation-rejected, but constructible
+     * in code) roster with a fixed entry on a meeting wave would hand this the *fixed* trainer, and
+     * handing back the rival's team for it would give some Elite Four member the rival's growing party.
      */
-    fun teamFor(trainerId: ResourceLocation, wave: Int, level: Int, boss: Boolean, seed: Long): GeneratedTeam? =
-        generated[trainerId]?.let {
+    fun teamFor(trainerId: ResourceLocation, wave: Int, level: Int, boss: Boolean, seed: Long): GeneratedTeam? {
+        val ladder = rival
+        if (ladder != null && ladder.meetingAt(wave)?.trainerId == trainerId) {
+            return RivalTeamGenerator.generate(ladder, wave, level, seed, generation)
+        }
+        return generated[trainerId]?.let {
             TrainerTeamGenerator.generate(it, wave, level, boss, seed, generation)
         }
+    }
 
     /**
      * Who [wave] fights, or null when this roster serves it nothing.
@@ -236,6 +283,14 @@ data class TrainerRoster(
         // never asked to promote.
         if (override != null && (override.kind != null || kind != RunOpponent.WILD)) {
             return TrainerPick(override.trainerId, TrainerPickSource.FIXED, bandId = null)
+        }
+
+        // Unconditional on [kind], unlike the undeclared-kind branch above. A rival meeting always
+        // promotes — there is no "replace the trainer on this wave but leave it a trainer wave" reading
+        // of a ladder — so a caller that passed the scheduled kind for wave 8 still gets the rival
+        // rather than nothing, which matches how a declared promotion resolves before [kind] is read.
+        rival?.meetingAt(wave)?.let {
+            return TrainerPick(it.trainerId, TrainerPickSource.RIVAL, bandId = null)
         }
 
         if (kind == RunOpponent.WILD) return null
@@ -268,15 +323,28 @@ data class TrainerRoster(
 
     fun isFixed(wave: Int): Boolean = fixed.containsKey(wave)
 
+    /** True on one of §2.36's rival waves. False for every roster with no [rival] block. */
+    fun isRivalMeeting(wave: Int): Boolean = rival?.isMeeting(wave) == true
+
     /**
      * The kind [wave] actually is once promotions are applied, given what the schedule said.
      *
      * Exists because [WaveComposition] cannot answer it: the composition is a pure function of wave
      * number and config and knows nothing about datapack content, which is right — which waves are
      * bosses must not depend on which roster a server happens to have loaded. So the promotion is
-     * resolved here, at the point where both facts are available.
+     * resolved here, at the point where both facts are available. §2.36's rival waves are the second
+     * reason and the stronger one: five of the six are *scheduled* trainer waves and one is a wild wave,
+     * so nothing derivable from the interval can tell them apart from their neighbours.
+     *
+     * A [fixed] entry wins over the ladder, including the undeclared-kind form that only replaces the
+     * trainer. That is the "fixed beats everything" contract kept without an exception; the combination
+     * is a [validate] error, so a loaded roster never exercises it.
      */
-    fun effectiveKind(wave: Int, scheduled: RunOpponent): RunOpponent = fixed[wave]?.kind ?: scheduled
+    fun effectiveKind(wave: Int, scheduled: RunOpponent): RunOpponent {
+        fixed[wave]?.let { return it.kind ?: scheduled }
+        if (isRivalMeeting(wave)) return RunOpponent.RIVAL
+        return scheduled
+    }
 
     /**
      * [WaveComposition.planFor] with this roster's promotions applied.
@@ -290,6 +358,13 @@ data class TrainerRoster(
      * The level is re-derived from the same curve on the same `(seed, wave, LEVEL)` stream, so a
      * promoted wave's level is what that wave would have been had the schedule made it a boss —
      * not a second opinion about it.
+     *
+     * **A rival promotion is handled by the same three lines and takes no level change**, which is the
+     * decision rather than a gap in the code: `boss` below is `kind == BOSS`, [RunOpponent.RIVAL] is not
+     * BOSS, so a rival gets the ordinary trainer level and — through
+     * [TeamGenerationRules.bossShieldsFor] — no §2.32 shields. [RivalLadder] argues both. What the
+     * promotion *does* change for a rival is the two things that matter: wave 8 stops being catchable,
+     * and the kind is right everywhere downstream.
      *
      * The reward table is left as the composition routed it. Routing rewards by *scheduled* kind
      * when a wave has been promoted is arguably wrong, but reward routing is §2.12's owner's call and
@@ -345,8 +420,98 @@ data class TrainerRoster(
             reportGaps(kind, composition, problems)
         }
         reportFixedProblems(composition, problems)
+        reportRivalProblems(composition, problems)
         reportUnusedGenerated(problems)
         return problems
+    }
+
+    /**
+     * Everything wrong with the §2.36 ladder, and nothing at all when there is no ladder.
+     *
+     * A roster with no rival is complete, not incomplete — §2.14's mode is trainers, bosses and wild
+     * waves, and the rival is an addition. So the absent block is silent, unlike an absent band.
+     *
+     * The four checks are the four ways a ladder can be written and not work, and each of them is
+     * otherwise invisible in play:
+     *
+     * - **A meeting past the end of the run** never fires, the same as a fixed encounter past the end.
+     *   Under the shipping 200-wave schedule the last meeting sits at wave 195, five waves from the end,
+     *   so an operator who shortens `run_length` to 150 silently deletes two meetings — which is exactly
+     *   the case the message is written for.
+     * - **A meeting sharing a wave with a [fixed] entry** is an author asking for two opponents at once.
+     *   [pickFor] resolves it in fixed's favour, so the *symptom* is a missing rival meeting and a rival
+     *   whose team jumps two sizes at the next one. Rejected rather than resolved: neither reading is
+     *   obviously the intent, and last-wins would depend on which block was written first.
+     * - **A meeting on a scheduled boss wave** removes a boss from the run, because RIVAL is not BOSS.
+     *   Reported for the same reason [reportFixedProblems] reports the trainer-over-boss case: §2.19
+     *   sizes the whole roster against the count of boss battles.
+     * - **A stage id that is also in a band or in [generated]** is the one that costs real time to
+     *   diagnose. A rival stage listed in a band can be *drawn* at an ordinary trainer wave, out of
+     *   order, with the two-Pokémon team of meeting one; a rival stage with a signature entry has a team
+     *   that is dead on its own meeting waves ([teamFor] answers from the ladder) and live anywhere
+     *   else. Both look like the roster working until somebody notices the rival turned up twice.
+     */
+    private fun reportRivalProblems(composition: WaveComposition, problems: MutableList<String>) {
+        val ladder = rival ?: return
+        val runLength = composition.config.runLength
+        val pooled = bands.flatMapTo(mutableSetOf()) { it.trainers }
+
+        ladder.meetings.forEachIndexed { index, meeting ->
+            val wave = meeting.wave
+            if (wave > runLength) {
+                problems += "rival meeting ${index + 1} is at wave $wave, past the end of the run " +
+                    "(run_length=$runLength), so that meeting never happens and the rival's team stops " +
+                    "growing at meeting ${index}"
+                return@forEachIndexed
+            }
+            if (isFixed(wave)) {
+                problems += "wave $wave is both rival meeting ${index + 1} and a fixed encounter " +
+                    "(${fixed[wave]?.trainerId}) — the fixed encounter wins, so the meeting would " +
+                    "silently not happen. Move one of them"
+            }
+            if (composition.kindOf(wave) == RunOpponent.BOSS) {
+                problems += "rival meeting ${index + 1} is at wave $wave, which this schedule makes a " +
+                    "boss wave (boss every ${composition.config.bossInterval}) — a rival is not a boss, " +
+                    "so this removes a boss from the run and the meeting takes no boss multiplier and " +
+                    "no shields. Move the meeting, or write that wave as a fixed boss instead"
+            }
+            if (meeting.trainerId in pooled) {
+                problems += "rival stage '${meeting.trainerId}' (meeting ${index + 1}) is also in a band " +
+                    "pool, so an ordinary trainer wave can draw it — the same character out of order, " +
+                    "with the wrong meeting's team. A rival belongs only in the rival block"
+            }
+            if (meeting.trainerId in generated) {
+                problems += "rival stage '${meeting.trainerId}' (meeting ${index + 1}) also has a " +
+                    "generated entry, which its own meeting will never use — a rival's team comes from " +
+                    "the rival block's 'teams'. Delete the generated entry"
+            }
+        }
+
+        reportShortRivalTeams(ladder, runLength, problems)
+    }
+
+    /**
+     * Rival teams that cannot fill the party their last reachable meeting asks for.
+     *
+     * §2.36's rival is defined by *gaining* a Pokémon each meeting, so a team one slot short does not
+     * fail — it plateaus, and the last meeting is the same size as the one before it. That is the whole
+     * mechanic quietly not happening at the point in a run where it was supposed to pay off, and no
+     * other check can see it: the team parses, the ladder fires, the battle starts.
+     *
+     * Measured against the deepest **reachable** meeting rather than the last one written, so an
+     * operator who shortens the run is not also told to lengthen teams for meetings they just deleted.
+     * The out-of-run meetings are already reported on their own footing above.
+     */
+    private fun reportShortRivalTeams(ladder: RivalLadder, runLength: Int, problems: MutableList<String>) {
+        val reachable = ladder.meetings.indices.filter { ladder.meetings[it].wave <= runLength }
+        val deepest = reachable.maxOrNull() ?: return
+        val wanted = ladder.partySizeAt(deepest)
+        ladder.teams.filter { it.slots.size < wanted }.forEach { team ->
+            problems += "rival team '${team.id}' has ${team.slots.size} slots but meeting " +
+                "${deepest + 1} (wave ${ladder.meetings[deepest].wave}) asks for $wanted — the rival " +
+                "would arrive with ${team.slots.size} Pokémon and stop growing, which is the one thing " +
+                "a rival is supposed to do"
+        }
     }
 
     /**
@@ -364,7 +529,12 @@ data class TrainerRoster(
      */
     private fun reportUnusedGenerated(problems: MutableList<String>) {
         if (generated.isEmpty()) return
-        val named = bands.flatMapTo(mutableSetOf()) { it.trainers } + fixed.values.map { it.trainerId }
+        // Rival stage ids count as named, so a generated entry for one is not reported here as well.
+        // It is a mistake — [reportRivalProblems] says so, more precisely — and one mistake earning two
+        // messages is how the sharper of the two gets skimmed past.
+        val named = bands.flatMapTo(mutableSetOf()) { it.trainers } +
+            fixed.values.map { it.trainerId } +
+            (rival?.trainerIds() ?: emptySet())
         generated.keys.filterNot { it in named }.sortedBy { it.toString() }.forEach { id ->
             problems += "generated entry '$id' is never fought: no band lists it and no fixed " +
                 "encounter names it, so its signature species do nothing. Check the spelling against " +
@@ -409,6 +579,12 @@ data class TrainerRoster(
      * A fixed encounter counts as coverage. Wave 190 needing no band is the whole point of the
      * override, and calling it a gap would make the E4 schedule unauthorable without writing filler
      * bands around it.
+     *
+     * **So does a rival meeting**, and that case is easy to miss because it is not symmetrical with the
+     * fixed one. Five of §2.36's six meetings land on *scheduled trainer waves* (25/55/95/145/195 are
+     * all multiples of five), so they qualify for the TRAINER pass below and would each be reported as
+     * a hole in a roster that is complete — and worse, an author whose trainer bands stop at 190 would
+     * be told to extend them to cover a wave the rival already owns.
      */
     private fun reportGaps(kind: RunOpponent, composition: WaveComposition, problems: MutableList<String>) {
         // Adjacency is measured in this list, not in wave numbers. The spacing between waves of one
@@ -419,7 +595,7 @@ data class TrainerRoster(
         val qualifying = (1..composition.config.runLength).filter { composition.kindOf(it) == kind }
         val uncovered = qualifying.indices.filter { i ->
             val wave = qualifying[i]
-            !isFixed(wave) && bandFor(wave, kind) == null
+            !isFixed(wave) && !isRivalMeeting(wave) && bandFor(wave, kind) == null
         }
         if (uncovered.isEmpty()) return
 

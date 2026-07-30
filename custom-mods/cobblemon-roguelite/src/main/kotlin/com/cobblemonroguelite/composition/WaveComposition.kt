@@ -60,6 +60,14 @@ class WaveComposition(val config: WaveCompositionConfig = WaveCompositionConfig(
      * appear at all; that is the sort of bug that reads as "the boss roster is unused" three weeks
      * later rather than as a precedence mistake here.
      *
+     * **This never answers [RunOpponent.RIVAL]**, and that is the same principle the promotion rule
+     * follows rather than a missing branch. §2.36's rival waves are declared by a roster
+     * ([com.cobblemonroguelite.data.trainer.RivalLadder]) and this class must not read datapack content
+     * — which waves are what has to be the same for every player on the server whatever roster happens
+     * to be loaded. A caller that needs the rival waves asks
+     * [com.cobblemonroguelite.data.trainer.TrainerRoster.effectiveKind], which is where both facts are
+     * available; the note on [waveCount] says what that costs here.
+     *
      * Waves past [WaveCompositionConfig.runLength] are still answered rather than refused — see
      * [isBeyondRun].
      */
@@ -136,6 +144,14 @@ class WaveComposition(val config: WaveCompositionConfig = WaveCompositionConfig(
      * count rather than added to it. Whether the plan wanted 60 non-wild waves — which needs the
      * bosses to sit *between* the trainer slots, e.g. a trainer interval that does not divide the
      * boss one — is a design question this class cannot answer for itself.
+     *
+     * **Always 0 for [RunOpponent.RIVAL]**, because [kindOf] cannot see a roster. That is not a bug to
+     * work around here: a rival count is `roster.rival?.meetings?.size`, and answering it from this side
+     * would mean the composition reading datapack content. Note the knock-on for the numbers above — a
+     * six-meeting rival ladder takes five waves *out* of the trainer count and one out of the wild one,
+     * so a 200/5/10 run with §2.36's ladder is 15 trainer + 20 boss + 6 rival + 159 wild rather than the
+     * 20/20/160 §2.19 states. Anyone sizing a band pool off this method is sizing it slightly large,
+     * which is the harmless direction.
      */
     fun waveCount(kind: RunOpponent): Int = (1..config.runLength).count { kindOf(it) == kind }
 }

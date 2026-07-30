@@ -510,6 +510,184 @@ class TrainerRosterParseTest {
         assertTrue(parsed.mentions("wieght", "unknown field"), parsed.messages.toString())
     }
 
+    // ─── §2.36: the rival block ────────────────────────────────────────────
+
+    /**
+     * A twenty-wave run with a two-meeting ladder. Wave 8 is a wild wave under 5/10 and wave 15 a trainer
+     * wave, which is the same one-wild-five-scheduled split §2.36's real ladder has in miniature.
+     */
+    private val withRival = """
+        {
+          "authored_for": { "run_length": 20 },
+          "bands": [
+            { "id": "t", "kind": "trainer", "min_wave": 1, "trainers": [ "test:a" ] },
+            { "id": "b", "kind": "boss", "min_wave": 1, "trainers": [ "test:boss" ] }
+          ],
+          "rival": {
+            "meetings": [
+              { "wave": 8, "trainer": "test:rgl_rival_1" },
+              { "wave": 15, "trainer": "test:rgl_rival_2" }
+            ],
+            "teams": [
+              { "id": "kanto", "slots": [
+                  { "alternatives": [ { "line": [ "cobblemon:bulbasaur", "cobblemon:ivysaur" ] } ] },
+                  { "alternatives": [ { "line": [ "cobblemon:pidgey" ] } ] },
+                  { "alternatives": [ { "line": [ "cobblemon:rattata" ] } ] }
+              ] }
+            ]
+          }
+        }
+    """
+
+    @Test
+    fun `a rival ladder loads with the ramp defaulted`() {
+        val roster = assertNotNull(parse(withRival).roster)
+        val ladder = assertNotNull(roster.rival)
+        assertEquals(listOf(8, 15), ladder.waves())
+        assertEquals("test:rgl_rival_1", ladder.meetings.first().trainerId.toString())
+        assertEquals(listOf("kanto"), ladder.teams.map { it.id })
+        assertTrue(ladder.partySizes.isEmpty(), "an omitted party_size must mean the derived ramp")
+        assertEquals(listOf(2, 3), ladder.meetings.indices.map { ladder.partySizeAt(it) })
+    }
+
+    @Test
+    fun `an absent rival block is not a hole`() {
+        // Unlike an absent band. §2.14's mode is complete without a rival, so nothing is reported — which
+        // is what let this ship without touching a roster anyone had already written.
+        val roster = assertNotNull(parse(minimal).roster)
+        assertNull(roster.rival)
+    }
+
+    @Test
+    fun `an explicit party_size is read positionally`() {
+        val roster = assertNotNull(parse(withRival.replace("\"teams\":", "\"party_size\": [ 1, 3 ], \"teams\":")).roster)
+        val ladder = assertNotNull(roster.rival)
+        assertEquals(listOf(1, 3), ladder.partySizes)
+    }
+
+    @Test
+    fun `a party size past Cobblemon's limit is rejected, not clamped`() {
+        val parsed = parse(withRival.replace("\"teams\":", "\"party_size\": [ 2, 7 ], \"teams\":"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("party_size[1]", "1..6"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `out-of-order meetings are named rather than sorted`() {
+        // The position in the list IS the meeting number, so sorting for the author would move the party
+        // sizes onto different waves — silently, and differently from what they wrote.
+        val parsed = parse(withRival.replace("\"wave\": 8", "\"wave\": 18"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("meetings", "ascending"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `two meetings on one wave are rejected as ambiguous`() {
+        val parsed = parse(withRival.replace("\"wave\": 15", "\"wave\": 8"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("wave 8", "ambiguous"), parsed.messages.toString())
+    }
+
+    /** The same roster with an arbitrary `rival` body, so a test can vary one part without regex surgery. */
+    private fun withRivalBody(body: String) = """
+        {
+          "authored_for": { "run_length": 20 },
+          "bands": [
+            { "id": "t", "kind": "trainer", "min_wave": 1, "trainers": [ "test:a" ] },
+            { "id": "b", "kind": "boss", "min_wave": 1, "trainers": [ "test:boss" ] }
+          ],
+          "rival": { $body }
+        }
+    """
+
+    private val twoMeetings =
+        """"meetings": [ { "wave": 8, "trainer": "test:r1" }, { "wave": 15, "trainer": "test:r2" } ]"""
+
+    @Test
+    fun `a rival with no teams is rejected`() {
+        val parsed = parse(withRivalBody("""$twoMeetings, "teams": []"""))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("teams", "at least one team"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a rival with no meetings is rejected rather than treated as absent`() {
+        // Deleting the block and writing an empty one are different acts, and only one of them is a
+        // roster with no rival. An empty ladder loaded as "no rival" would be a rival block that does
+        // nothing for as long as nobody checked.
+        val parsed = parse(withRivalBody(""""meetings": [], "teams": []"""))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("meetings", "never met"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `duplicate rival team ids are fatal, not last-wins`() {
+        // The id is how every validation message names a team, so two called 'kanto' make all of them
+        // ambiguous — the same reasoning band ids get.
+        val duplicated = withRival.replace(
+            "\"teams\": [",
+            "\"teams\": [ { \"id\": \"kanto\", \"slots\": [ { \"alternatives\": [ { \"line\": [ \"cobblemon:pidgey\" ] } ] } ] },",
+        )
+        val parsed = parse(duplicated)
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("duplicate rival team id", "kanto"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a rival team with no slots is rejected`() {
+        val parsed = parse(withRivalBody("""$twoMeetings, "teams": [ { "id": "kanto", "slots": [] } ]"""))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("slots", "at least one slot"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `a rival stage id that is not an id is named with its field`() {
+        val parsed = parse(withRival.replace("\"test:rgl_rival_1\"", "\"Test:RGL_Rival_1\""))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("trainer", "not a valid id"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `unknown fields inside the rival block are still errors`() {
+        val parsed = parse(withRival.replace("\"meetings\":", "\"meetngs\":"))
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("meetngs", "unknown field"), parsed.messages.toString())
+    }
+
+    @Test
+    fun `kind rival is refused with a pointer at the rival block rather than as a typo`() {
+        // The plausible wrong guess, not a misspelling: RIVAL is a real wave kind, so an author will try
+        // to declare one. A band or a fixed entry cannot, because neither carries a meeting number.
+        val band = parse(minimal.replace("\"kind\": \"trainer\"", "\"kind\": \"rival\""))
+        assertNull(band.roster)
+        assertTrue(band.mentions("kind", "'rival' is not a kind", "'rival' block"), band.messages.toString())
+
+        val fixed = parse(
+            minimal.trimEnd().dropLast(1) + ", \"fixed\": [ { \"wave\": 8, \"kind\": \"rival\", \"trainer\": \"test:r\" } ] }",
+        )
+        assertNull(fixed.roster)
+        assertTrue(fixed.mentions("kind", "'rival' is not a kind"), fixed.messages.toString())
+    }
+
+    @Test
+    fun `a rival team too short for its deepest meeting is reported at load`() {
+        // Not at the meeting. A rival that stops growing is the mechanic quietly not happening, and the
+        // only place it is visible is against the ramp — which is here, while the author has the file open.
+        val parsed = parse(
+            withRivalBody(
+                """
+                $twoMeetings,
+                "teams": [ { "id": "kanto", "slots": [
+                  { "alternatives": [ { "line": [ "cobblemon:bulbasaur" ] } ] },
+                  { "alternatives": [ { "line": [ "cobblemon:pidgey" ] } ] }
+                ] } ]
+                """,
+            ),
+        )
+        assertNull(parsed.roster)
+        assertTrue(parsed.mentions("'kanto'", "2 slots", "asks for 3"), parsed.messages.toString())
+    }
+
     @Test
     fun `the shipped example roster loads clean`() {
         // It ships enabled, so a broken example is an ERROR in every server owner's log on first

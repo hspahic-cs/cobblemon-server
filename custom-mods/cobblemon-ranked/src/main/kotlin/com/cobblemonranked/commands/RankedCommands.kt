@@ -7,6 +7,7 @@ import com.cobblemonranked.bp.BpCommands
 import com.cobblemonranked.config.ArenaPos
 import com.cobblemonranked.config.RankedConfig
 import com.cobblemonranked.decay.DecayManager
+import com.cobblemonranked.permissions.StaffPermissions
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -26,16 +27,31 @@ import net.neoforged.fml.loading.FMLPaths
 
 object RankedCommands {
 
+    /**
+     * Running tournaments is a moderation duty, so `/ranked tournament` gets a node that the
+     * `moderator` group holds. `/ranked admin` (ELO edits, arena geometry, decay) deliberately
+     * does not — it stays op-4-only. See [StaffPermissions].
+     */
+    const val TOURNAMENT_NODE = "cobblemon.staff.tournament"
+
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
             Commands.literal("ranked")
                 .executes { ctx ->
-                    showHelp(ctx.source, ctx.source.hasPermission(4))
+                    showHelp(
+                        ctx.source,
+                        includeTournament = StaffPermissions.check(ctx.source, TOURNAMENT_NODE, 4),
+                        includeAdmin = ctx.source.hasPermission(4),
+                    )
                     1
                 }
                 .then(Commands.literal("help")
                     .executes { ctx ->
-                        showHelp(ctx.source, ctx.source.hasPermission(4))
+                        showHelp(
+                            ctx.source,
+                            includeTournament = StaffPermissions.check(ctx.source, TOURNAMENT_NODE, 4),
+                            includeAdmin = ctx.source.hasPermission(4),
+                        )
                         1
                     }
                 )
@@ -252,7 +268,7 @@ object RankedCommands {
                     )
                 )
                 .then(Commands.literal("tournament")
-                    .requires { it.hasPermission(4) }
+                    .requires { StaffPermissions.check(it, TOURNAMENT_NODE, 4) }
                     .then(Commands.literal("open")
                         .executes { ctx -> tournamentOpen(ctx.source, BattleMode.SINGLES); 1 }
                         .then(Commands.literal("doubles")
@@ -422,7 +438,12 @@ object RankedCommands {
                 .withHoverEvent(HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.literal("§7$url")))))
     }
 
-    private fun showHelp(source: CommandSourceStack, includeAdmin: Boolean) {
+    /**
+     * [includeTournament] and [includeAdmin] are separate because they're separate tiers now:
+     * moderators run tournaments but can't touch ELO or arena geometry. Listing the admin block
+     * to a moderator would just advertise commands they'd be denied.
+     */
+    private fun showHelp(source: CommandSourceStack, includeTournament: Boolean, includeAdmin: Boolean) {
         val lines = mutableListOf(
             "§e[Ranked] §fCommands:",
             "§7  /ranked guide §f— open the rental-teams guide (how to play each team)",
@@ -438,15 +459,20 @@ object RankedCommands {
             "§7  /join §f— enter the active tournament (pick a 9-Pokémon roster)",
             "§7  /ready §f— confirm you're present when you're up in an auto tournament",
         )
-        if (includeAdmin) {
+        if (includeTournament) {
             lines += listOf(
-                "§e[Ranked] §fAdmin (op level 4):",
+                "§e[Ranked] §fStaff — tournaments:",
                 "§7  /ranked tournament open [doubles] §f— open tournament registration (announces /join)",
                 "§7  /ranked tournament close §f— close registration + print ELO seeding to admins",
                 "§7  /ranked tournament close auto §f— close + run a full ELO-seeded double-elim bracket",
                 "§7  /ranked tournament bracket §f— show the running auto-tournament status",
                 "§7  /ranked tournament cancel §f— abort the running auto tournament",
                 "§7  /ranked tournament play <p1> <p2> §f— run a tournament match (each picks 6 of their 9)",
+            )
+        }
+        if (includeAdmin) {
+            lines += listOf(
+                "§e[Ranked] §fAdmin (op level 4):",
                 "§7  /ranked admin setelo <player> <value> §f— override a player's ELO",
                 "§7  /ranked admin decay §f— manually trigger daily decay",
                 "§7  /ranked admin force <player1> <player2> §f— force a match (bypasses daily limit)",

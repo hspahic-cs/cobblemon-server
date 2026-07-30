@@ -63,6 +63,7 @@ exclude_docs: |
   superpowers/
   server-setup.md
   snapshots.md
+  staff-roles.md
   upstream-sources.md
   working-with-mods.md
   loot-tiers.md

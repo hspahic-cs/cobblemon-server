@@ -1,5 +1,6 @@
 package com.cobblemonauction.commands
 
+import com.cobblemonauction.permissions.StaffPermissions
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
@@ -18,9 +19,12 @@ import net.minecraft.world.phys.AABB
  * `/market admin spawn`: a persistent, invulnerable villager tagged so [
  * com.cobblemonauction.gui.AuctionNpcHook] opens the browser on right-click, plus the
  * cobblemon-bridge anchor tag so it's pinned in place while keeping its idle head movement.
- * Op-only (permission level 2).
+ * Staff-only: op level 2, or the `moderator` group via [PERMISSION_NODE].
  */
 object AuctionAdminCommands {
+
+    /** NeoEssentials node that opens this to non-op staff. See [StaffPermissions]. */
+    const val PERMISSION_NODE = "cobblemon.staff.auctionadmin"
 
     /** Interaction tag matched by AuctionNpcHook. */
     private const val AUCTIONEER_TAG = "cobblemon_auction.auctioneer"
@@ -33,7 +37,7 @@ object AuctionAdminCommands {
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
             Commands.literal("auctionadmin")
-                .requires { it.hasPermission(2) }
+                .requires { StaffPermissions.check(it, PERMISSION_NODE, 2) }
                 .then(Commands.literal("spawn").executes { spawnAuctioneer(it.source); 1 })
                 .then(Commands.literal("delete").executes { deleteAuctioneers(it.source); 1 })
         )

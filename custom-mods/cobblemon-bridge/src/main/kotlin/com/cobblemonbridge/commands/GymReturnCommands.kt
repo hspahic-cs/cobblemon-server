@@ -2,14 +2,16 @@ package com.cobblemonbridge.commands
 
 import com.cobblemonbridge.battle.GymReturnHook
 import com.cobblemonbridge.gymtp.WarpPos
+import com.cobblemonbridge.permissions.StaffPermissions
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.Commands
 import net.minecraft.network.chat.Component
 
 /**
- * Op tooling for the gym-victory return point (op level 2). The teleport-after-win for
- * gyms 1-10 is opt-in: it only fires while a return point is set.
+ * Staff tooling for the gym-victory return point (op level 2, or the `moderator` group via
+ * [PERMISSION_NODE]). The teleport-after-win for gyms 1-10 is opt-in: it only fires while a
+ * return point is set.
  *
  *   /gymreturn set    — capture the sender's position+rotation as the return point.
  *   /gymreturn clear  — disable the teleport.
@@ -19,10 +21,13 @@ object GymReturnCommands {
 
     private const val OP_LEVEL = 2
 
+    /** NeoEssentials node that opens this to non-op staff. See [StaffPermissions]. */
+    const val PERMISSION_NODE = "cobblemon.staff.gymreturn"
+
     fun register(dispatcher: CommandDispatcher<CommandSourceStack>) {
         dispatcher.register(
             Commands.literal("gymreturn")
-                .requires { it.hasPermission(OP_LEVEL) }
+                .requires { StaffPermissions.check(it, PERMISSION_NODE, OP_LEVEL) }
                 .then(Commands.literal("set")
                     .executes { ctx -> set(ctx.source); 1 }
                 )

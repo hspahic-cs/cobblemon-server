@@ -6,6 +6,7 @@ import com.cobblemonfeedback.MetadataCollector
 import com.cobblemonfeedback.Payloads
 import com.cobblemonfeedback.R2Client
 import com.cobblemonfeedback.ScreenshotInbox
+import com.cobblemonfeedback.permissions.StaffPermissions
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import net.minecraft.ChatFormatting
@@ -30,6 +31,9 @@ import java.util.concurrent.ConcurrentHashMap
  */
 internal object FeedbackCommand {
     private val log = LoggerFactory.getLogger("cobblemon-feedback/command")
+
+    /** NeoEssentials node that opens `/feedback whois` to non-op staff. See [StaffPermissions]. */
+    private const val WHOIS_NODE = "cobblemon.staff.whois"
 
     /** UUID → epoch-seconds of last submission. */
     private val lastSubmit: MutableMap<UUID, Long> = ConcurrentHashMap()
@@ -94,12 +98,13 @@ internal object FeedbackCommand {
                     )
             )
             .then(
-                // Op-only reverse lookup. Maintainer triages a public issue,
-                // sees `Reporter: anon-7f3e2c1b`, runs this to recover the
-                // player's name + UUID. In-memory cache only — for older
-                // submissions, grep config/cobblemon-feedback/runtime/audit.log.
+                // Staff-only reverse lookup (op 2, or the `moderator` group via
+                // WHOIS_NODE). Maintainer triages a public issue, sees
+                // `Reporter: anon-7f3e2c1b`, runs this to recover the player's
+                // name + UUID. In-memory cache only — for older submissions,
+                // grep config/cobblemon-feedback/runtime/audit.log.
                 Commands.literal("whois")
-                    .requires { it.hasPermission(2) }
+                    .requires { StaffPermissions.check(it, WHOIS_NODE, 2) }
                     .then(
                         Commands.argument("id", StringArgumentType.word())
                             .executes { ctx ->

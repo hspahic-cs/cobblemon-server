@@ -1,5 +1,6 @@
 package com.cobblemonranked.bp
 
+import com.cobblemonranked.permissions.StaffPermissions
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.arguments.IntegerArgumentType
@@ -10,9 +11,12 @@ import net.minecraft.network.chat.Component
 
 object BpCommands {
 
+    /** NeoEssentials node that opens `/bp` to non-op staff. See [StaffPermissions]. */
+    const val PERMISSION_NODE = "cobblemon.staff.bp"
+
     fun buildBpCommand(): LiteralArgumentBuilder<CommandSourceStack> {
         return Commands.literal("bp")
-            .requires { it.hasPermission(2) }
+            .requires { StaffPermissions.check(it, PERMISSION_NODE, 2) }
             .then(
                 Commands.literal("add")
                     .then(

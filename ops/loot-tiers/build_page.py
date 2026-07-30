@@ -119,13 +119,13 @@ footer code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:1
 """
 
 TIERS = [
-    (-1,"Disabled","Intentionally not obtainable — recipe banned and/or stripped from loot. Never use as a reward; if one of these is still dropping, that is a bug."),
     (5,"Mythic","Gates a box legendary or mythical, or guarantees a catch. Never a routine reward."),
     (4,"Legendary","Summons or permanently unlocks a legendary/forme. One-per-player scale."),
     (3,"Epic","Permanent competitive power or a hard-gated component. A real chase reward."),
     (2,"Rare","Strong but repeatable. Fine as the headline reward for a genuine challenge."),
     (1,"Uncommon","Routine reward scale. Safe for regular play loops."),
     (0,"Common","Filler. Safe to hand out in bulk."),
+    (-1,"Disabled","Never award. Either not obtainable (recipe banned and/or stripped from loot — still dropping means a bug to fix), or obtainable but unusable because the mechanic is banned."),
 ]
 
 rows = json.loads(DATA)
@@ -198,7 +198,7 @@ function chip(label, on, attrs='') {{
   return `<button class="f" aria-pressed="${{on}}" ${{attrs}}>${{label}}</button>`;
 }}
 document.getElementById('tiers').innerHTML =
-  [-1,5,4,3,2,1,0].map(t=>chip(t<0?'TX':'T'+t,false,`data-t="${{t}}" style="--c:var(--t${{t<0?'x':t}})"`)).join('');
+  [5,4,3,2,1,0,-1].map(t=>chip(t<0?'TX':'T'+t,false,`data-t="${{t}}" style="--c:var(--t${{t<0?'x':t}})"`)).join('');
 document.getElementById('ns').innerHTML =
   Object.keys(NS).map(n=>chip(NS[n],false,`data-ns="${{n}}"`)).join('');
 
@@ -215,7 +215,7 @@ function srcHtml(r){{
 function render(){{
   const q = state.q.toLowerCase();
   let shown = 0;
-  for (const [t] of [[-1],[5],[4],[3],[2],[1],[0]]) {{
+  for (const [t] of [[5],[4],[3],[2],[1],[0],[-1]]) {{
     const body = document.querySelector(`[data-body="${{t}}"]`);
     const sec  = document.querySelector(`section[data-tier="${{t}}"]`);
     const list = ROWS.filter(r =>

@@ -88,9 +88,9 @@
     {
       "id": "bp:shiny_voucher",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
       "rationale": "Shiny Voucher \u2014 75 BP, ~20x the other vouchers",
       "assignedBy": "override",
       "sources": []
@@ -139,9 +139,9 @@
     {
       "id": "cobblemon:ability_patch",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
       "rationale": "Hidden ability. Deliberately pulled from the Ultra crate.",
       "assignedBy": "override",
       "sources": [
@@ -738,11 +738,11 @@
     {
       "id": "cobblemon:ancient_origin_ball",
       "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Hisuian basic ball",
-      "assignedBy": "rule",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Crafted from 4 Origin Ingots + a RED CHAIN \u2014 consumes a T4 Dialga/Palkia summon item, so not a basic ball",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -1108,27 +1108,6 @@
       ]
     },
     {
-      "id": "cobblemon:apricorn_button",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_button",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_button",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:apricorn_chest_boat",
       "status": null,
       "tier": 1,
@@ -1140,268 +1119,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/apricorn_chest_boat",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_door",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_door",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_door",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_fence",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_fence",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_fence",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_fence_gate",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_fence_gate",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_fence_gate",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_hanging_sign",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_hanging_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:cobblemon/blocks/apricorn_wall_hanging_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_hanging_sign",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_log",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_log",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "mod:botanypots/cobblemon/crop/apricorn_log",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_planks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_planks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_planks",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_pressure_plate",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Arceus plate / type booster",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_pressure_plate",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_pressure_plate",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_sign",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:cobblemon/blocks/apricorn_wall_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_sign",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_stairs",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_trapdoor",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_trapdoor",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_trapdoor",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:apricorn_wood",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/apricorn_wood",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/apricorn_wood",
           "rate": null
         }
       ]
@@ -2140,27 +1857,6 @@
       ]
     },
     {
-      "id": "cobblemon:black_gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/black_gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/black_gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:black_glasses",
       "status": null,
       "tier": 1,
@@ -2187,27 +1883,6 @@
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:black_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/black_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/black_plaque",
           "rate": null
         }
       ]
@@ -2270,106 +1945,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/black_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:black_tumblestone_block",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/black_tumblestone_block",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:black_tumblestone_brick_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/black_tumblestone_brick_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/black_tumblestone_brick_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:black_tumblestone_brick_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/black_tumblestone_brick_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/black_tumblestone_brick_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:black_tumblestone_brick_wall",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/black_tumblestone_brick_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/black_tumblestone_brick_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:black_tumblestone_bricks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/black_tumblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/black_tumblestone_bricks",
           "rate": null
         }
       ]
@@ -2442,27 +2017,6 @@
       ]
     },
     {
-      "id": "cobblemon:blue_gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/blue_gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/blue_gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:blue_mint_leaf",
       "status": null,
       "tier": 1,
@@ -2521,27 +2075,6 @@
           "source": "mod:cobblemon/blocks/blue_mint",
           "detail": "mod loot table",
           "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:blue_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/blue_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/blue_plaque",
-          "rate": null
         }
       ]
     },
@@ -2702,32 +2235,11 @@
       ]
     },
     {
-      "id": "cobblemon:brown_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/brown_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/brown_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:bug_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -2898,153 +2410,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/calm_mint",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_black",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_black",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_black",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_blue",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_blue",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_blue",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_green",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_green",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_green",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_pink",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_pink",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_pink",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_red",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_red",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_red",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_white",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_white",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_white",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:campfire_pot_yellow",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/campfire_pot_yellow",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot_yellow",
           "rate": null
         }
       ]
@@ -3434,132 +2799,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/chipped_pot",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:chiseled_black_tumblestone_bricks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/chiseled_black_tumblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/chiseled_black_tumblestone_bricks",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:chiseled_polished_black_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/chiseled_polished_black_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/chiseled_polished_black_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:chiseled_polished_sky_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/chiseled_polished_sky_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/chiseled_polished_sky_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:chiseled_polished_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/chiseled_polished_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/chiseled_polished_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:chiseled_sky_tumblestone_bricks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/chiseled_sky_tumblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/chiseled_sky_tumblestone_bricks",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:chiseled_tumblestone_bricks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/chiseled_tumblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/chiseled_tumblestone_bricks",
           "rate": null
         }
       ]
@@ -3993,9 +3232,9 @@
     {
       "id": "cobblemon:courage_candy",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
       "assignedBy": "rule",
       "sources": [
@@ -4264,27 +3503,6 @@
       ]
     },
     {
-      "id": "cobblemon:cyan_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/cyan_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/cyan_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:damp_rock",
       "status": null,
       "tier": 1,
@@ -4343,9 +3561,9 @@
     {
       "id": "cobblemon:dark_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -4428,27 +3646,6 @@
         {
           "source": "craft",
           "detail": "7 recipe(s): cobblemon/recipe/dawn_stone_from_blasting_dawn_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:dawn_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/dawn_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/dawn_stone_block",
           "rate": null
         }
       ]
@@ -4638,27 +3835,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/campfire_pot/dire_hit",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:display_case",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/display_case",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/display_case",
           "rate": null
         }
       ]
@@ -4886,9 +4062,9 @@
     {
       "id": "cobblemon:dragon_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -5270,9 +4446,9 @@
     {
       "id": "cobblemon:electric_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -5856,9 +5032,9 @@
     {
       "id": "cobblemon:fairy_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -5924,9 +5100,9 @@
     {
       "id": "cobblemon:fighting_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -6017,9 +5193,9 @@
     {
       "id": "cobblemon:fire_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -6092,27 +5268,6 @@
         {
           "source": "craft",
           "detail": "9 recipe(s): cobblemon/recipe/fire_stone_from_blasting_deepslate_fire_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:fire_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/fire_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/fire_stone_block",
           "rate": null
         }
       ]
@@ -6198,9 +5353,9 @@
     {
       "id": "cobblemon:flying_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -6314,27 +5469,6 @@
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:fossil_analyzer",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Fossil",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/fossil_analyzer",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/fossil_analyzer",
           "rate": null
         }
       ]
@@ -6828,9 +5962,9 @@
     {
       "id": "cobblemon:ghost_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -6872,32 +6006,11 @@
       ]
     },
     {
-      "id": "cobblemon:gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:grass_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -6930,27 +6043,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): mega_showdown/recipe/grassy_seed",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:gray_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/gray_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/gray_plaque",
           "rate": null
         }
       ]
@@ -7085,27 +6177,6 @@
       ]
     },
     {
-      "id": "cobblemon:green_gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/green_gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/green_gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:green_mint_leaf",
       "status": null,
       "tier": 1,
@@ -7168,27 +6239,6 @@
       ]
     },
     {
-      "id": "cobblemon:green_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/green_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/green_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:grepa_berry",
       "status": null,
       "tier": 1,
@@ -7233,9 +6283,9 @@
     {
       "id": "cobblemon:ground_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -7460,32 +6510,11 @@
       ]
     },
     {
-      "id": "cobblemon:healing_machine",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/healing_machine",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/healing_machine",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:health_candy",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
       "assignedBy": "rule",
       "sources": [
@@ -7544,27 +6573,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/campfire_pot/health_mochi",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:hearty_grain_bale",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/hearty_grain_bale",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/hearty_grain_bale",
           "rate": null
         }
       ]
@@ -7990,9 +6998,9 @@
     {
       "id": "cobblemon:ice_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -8101,27 +7109,6 @@
         {
           "source": "craft",
           "detail": "7 recipe(s): cobblemon/recipe/ice_stone_from_blasting_deepslate_ice_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:ice_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/ice_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/ice_stone_block",
           "rate": null
         }
       ]
@@ -8675,27 +7662,6 @@
       ]
     },
     {
-      "id": "cobblemon:leaf_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/leaf_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/leaf_stone_block",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:leek_and_potato_stew",
       "status": null,
       "tier": 1,
@@ -8874,27 +7840,6 @@
       ]
     },
     {
-      "id": "cobblemon:light_blue_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/light_blue_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/light_blue_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:light_clay",
       "status": null,
       "tier": 1,
@@ -8911,48 +7856,6 @@
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:light_gray_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/light_gray_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/light_gray_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:lime_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/lime_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/lime_plaque",
           "rate": null
         }
       ]
@@ -9328,27 +8231,6 @@
       ]
     },
     {
-      "id": "cobblemon:magenta_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/magenta_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/magenta_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:magmarizer",
       "status": null,
       "tier": 2,
@@ -9512,10 +8394,10 @@
     {
       "id": "cobblemon:master_ball",
       "status": null,
-      "tier": 5,
-      "tierLabel": "T5",
-      "tierName": "Mythic",
-      "rationale": "Guaranteed catch. Ultra crate only, 2x at 6.5%.",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Guaranteed catch",
       "assignedBy": "override",
       "sources": [
         {
@@ -9997,9 +8879,9 @@
     {
       "id": "cobblemon:mighty_candy",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
       "assignedBy": "rule",
       "sources": [
@@ -10171,27 +9053,6 @@
       ]
     },
     {
-      "id": "cobblemon:monitor",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/monitor",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/monitor",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:moomoo_milk",
       "status": null,
       "tier": 1,
@@ -10265,27 +9126,6 @@
         {
           "source": "craft",
           "detail": "9 recipe(s): cobblemon/recipe/moon_stone_from_blasting_deepslate_moon_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:moon_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/moon_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/moon_stone_block",
           "rate": null
         }
       ]
@@ -10692,9 +9532,9 @@
     {
       "id": "cobblemon:normal_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -10913,27 +9753,6 @@
       ]
     },
     {
-      "id": "cobblemon:orange_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/orange_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/orange_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:oval_stone",
       "status": null,
       "tier": 2,
@@ -11070,27 +9889,6 @@
       ]
     },
     {
-      "id": "cobblemon:pasture",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/pasture",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/pasture",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:payapa_berry",
       "status": null,
       "tier": 1,
@@ -11107,27 +9905,6 @@
         {
           "source": "mod:rctmod/generic/epic/berries",
           "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:pc",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/pc",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/pc",
           "rate": null
         }
       ]
@@ -11220,37 +9997,6 @@
         },
         {
           "source": "mod:rctmod/generic/uncommon/berries",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:pep_up_flower",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/revival_herb",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "mod:cobblemon/blocks/pep_up_flower",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:cobblemon/blocks/potted_pep_up_flower",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:rctmod/generic/common/nature",
           "detail": "mod loot table",
           "rate": null
         }
@@ -11403,27 +10149,6 @@
       ]
     },
     {
-      "id": "cobblemon:pink_gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/pink_gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/pink_gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:pink_mint_leaf",
       "status": null,
       "tier": 1,
@@ -11482,27 +10207,6 @@
           "source": "mod:cobblemon/blocks/pink_mint",
           "detail": "mod loot table",
           "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:pink_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/pink_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/pink_plaque",
-          "rate": null
         }
       ]
     },
@@ -11601,9 +10305,9 @@
     {
       "id": "cobblemon:poison_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -11682,22 +10386,6 @@
       ]
     },
     {
-      "id": "cobblemon:poke_cake",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot/poke_cake",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:poke_puff",
       "status": null,
       "tier": 1,
@@ -11724,22 +10412,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/poke_rod",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:poke_snack",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/campfire_pot/poke_snack",
           "rate": null
         }
       ]
@@ -11893,258 +10565,6 @@
       ]
     },
     {
-      "id": "cobblemon:polished_black_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_black_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/polished_black_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_black_tumblestone_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_black_tumblestone_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_black_tumblestone_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_black_tumblestone_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_black_tumblestone_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_black_tumblestone_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_black_tumblestone_wall",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_black_tumblestone_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_black_tumblestone_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_sky_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_sky_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/polished_sky_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_sky_tumblestone_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_sky_tumblestone_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_sky_tumblestone_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_sky_tumblestone_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_sky_tumblestone_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_sky_tumblestone_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_sky_tumblestone_wall",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_sky_tumblestone_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_sky_tumblestone_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/polished_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_tumblestone_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_tumblestone_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_tumblestone_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_tumblestone_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_tumblestone_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_tumblestone_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:polished_tumblestone_wall",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/polished_tumblestone_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/polished_tumblestone_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:pomeg_berry",
       "status": null,
       "tier": 1,
@@ -12231,9 +10651,9 @@
     {
       "id": "cobblemon:power_anklet",
       "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
@@ -12262,9 +10682,9 @@
     {
       "id": "cobblemon:power_band",
       "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
@@ -12293,9 +10713,9 @@
     {
       "id": "cobblemon:power_belt",
       "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
@@ -12324,9 +10744,9 @@
     {
       "id": "cobblemon:power_bracer",
       "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
@@ -12411,9 +10831,9 @@
     {
       "id": "cobblemon:power_lens",
       "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
@@ -12442,9 +10862,9 @@
     {
       "id": "cobblemon:power_weight",
       "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "EV training item",
       "assignedBy": "rule",
       "sources": [
@@ -12726,9 +11146,9 @@
     {
       "id": "cobblemon:psychic_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -12802,27 +11222,6 @@
       ]
     },
     {
-      "id": "cobblemon:purple_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/purple_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/purple_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:qualot_berry",
       "status": null,
       "tier": 1,
@@ -12877,9 +11276,9 @@
     {
       "id": "cobblemon:quick_candy",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
       "assignedBy": "rule",
       "sources": [
@@ -13409,27 +11808,6 @@
       ]
     },
     {
-      "id": "cobblemon:red_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/red_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/red_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:relaxed_mint",
       "status": null,
       "tier": 1,
@@ -13759,27 +12137,6 @@
       ]
     },
     {
-      "id": "cobblemon:restoration_tank",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/restoration_tank",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/restoration_tank",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:revival_herb",
       "status": null,
       "tier": 1,
@@ -13964,9 +12321,9 @@
     {
       "id": "cobblemon:rock_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -14211,27 +12568,6 @@
       ]
     },
     {
-      "id": "cobblemon:saccharine_button",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_button",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_button",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:saccharine_chest_boat",
       "status": null,
       "tier": 1,
@@ -14243,158 +12579,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/saccharine_chest_boat",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_door",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_door",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_door",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_fence",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_fence",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_fence",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_fence_gate",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_fence_gate",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_fence_gate",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_hanging_sign",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_hanging_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:cobblemon/blocks/saccharine_wall_hanging_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_hanging_sign",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_log",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_log",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "mod:cobblemon/blocks/saccharine_log_slathered",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_planks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_planks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_planks",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_pressure_plate",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Arceus plate / type booster",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_pressure_plate",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_pressure_plate",
           "rate": null
         }
       ]
@@ -14416,116 +12600,6 @@
         {
           "source": "mod:cobblemon/blocks/saccharine_sapling",
           "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_sign",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:cobblemon/blocks/saccharine_wall_sign",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_sign",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_stairs",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_trapdoor",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_trapdoor",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_trapdoor",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:saccharine_wood",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/saccharine_wood",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/saccharine_wood",
           "rate": null
         }
       ]
@@ -14960,27 +13034,6 @@
       ]
     },
     {
-      "id": "cobblemon:shiny_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/shiny_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/shiny_stone_block",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:shuca_berry",
       "status": null,
       "tier": 1,
@@ -15199,106 +13252,6 @@
       ]
     },
     {
-      "id": "cobblemon:sky_tumblestone_block",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/sky_tumblestone_block",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:sky_tumblestone_brick_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/sky_tumblestone_brick_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/sky_tumblestone_brick_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:sky_tumblestone_brick_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/sky_tumblestone_brick_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/sky_tumblestone_brick_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:sky_tumblestone_brick_wall",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/sky_tumblestone_brick_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/sky_tumblestone_brick_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:sky_tumblestone_bricks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/sky_tumblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/sky_tumblestone_bricks",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:slate_ball",
       "status": null,
       "tier": 1,
@@ -15390,9 +13343,9 @@
     {
       "id": "cobblemon:smart_candy",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
       "assignedBy": "rule",
       "sources": [
@@ -15451,69 +13404,6 @@
       ]
     },
     {
-      "id": "cobblemon:smooth_black_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_black_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/smooth_black_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_black_tumblestone_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_black_tumblestone_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/smooth_black_tumblestone_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_black_tumblestone_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_black_tumblestone_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/smooth_black_tumblestone_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:smooth_rock",
       "status": null,
       "tier": 1,
@@ -15565,132 +13455,6 @@
         {
           "source": "market",
           "detail": "$5,000 (held_items)",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_sky_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_sky_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/smooth_sky_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_sky_tumblestone_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_sky_tumblestone_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/smooth_sky_tumblestone_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_sky_tumblestone_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_sky_tumblestone_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/smooth_sky_tumblestone_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_tumblestone",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Crafting material",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_tumblestone",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/smooth_tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_tumblestone_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_tumblestone_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/smooth_tumblestone_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:smooth_tumblestone_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/smooth_tumblestone_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/smooth_tumblestone_stairs",
           "rate": null
         }
       ]
@@ -15911,9 +13675,9 @@
     {
       "id": "cobblemon:steel_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -15982,75 +13746,6 @@
       ]
     },
     {
-      "id": "cobblemon:stripped_apricorn_log",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/stripped_apricorn_log",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:stripped_apricorn_wood",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/stripped_apricorn_wood",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/stripped_apricorn_wood",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:stripped_saccharine_log",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/stripped_saccharine_log",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:stripped_saccharine_wood",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/stripped_saccharine_wood",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
       "id": "cobblemon:sun_stone",
       "status": null,
       "tier": 0,
@@ -16097,27 +13792,6 @@
         {
           "source": "craft",
           "detail": "9 recipe(s): cobblemon/recipe/sun_stone_from_blasting_deepslate_sun_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:sun_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/sun_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/sun_stone_block",
           "rate": null
         }
       ]
@@ -16424,48 +14098,6 @@
       "sources": []
     },
     {
-      "id": "cobblemon:tatami_block",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/tatami_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/tatami_block",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:tatami_mat",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/tatami_mat",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/tatami_mat",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:terrain_extender",
       "status": null,
       "tier": 1,
@@ -16534,27 +14166,6 @@
         {
           "source": "craft",
           "detail": "7 recipe(s): cobblemon/recipe/thunder_stone_from_blasting_deepslate_thunder_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:thunder_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/thunder_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/thunder_stone_block",
           "rate": null
         }
       ]
@@ -16661,9 +14272,9 @@
     {
       "id": "cobblemon:tough_candy",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "IV candy \u2014 raises a stat's effective IV by 1; heavy player demand",
       "assignedBy": "rule",
       "sources": [
@@ -16742,106 +14353,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): cobblemon/recipe/tumblestone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:tumblestone_block",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/tumblestone_block",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:tumblestone_brick_slab",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/tumblestone_brick_slab",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/tumblestone_brick_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:tumblestone_brick_stairs",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/tumblestone_brick_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/tumblestone_brick_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:tumblestone_brick_wall",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/tumblestone_brick_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): cobblemon/recipe/tumblestone_brick_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:tumblestone_bricks",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/tumblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "3 recipe(s): cobblemon/recipe/tumblestone_bricks",
           "rate": null
         }
       ]
@@ -17221,9 +14732,9 @@
     {
       "id": "cobblemon:water_gem",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Type gem \u2014 one-shot damage boost",
       "assignedBy": "rule",
       "sources": [
@@ -17306,27 +14817,6 @@
         {
           "source": "craft",
           "detail": "7 recipe(s): cobblemon/recipe/water_stone_from_blasting_deepslate_water_stone_ore",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:water_stone_block",
-      "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
-      "rationale": "Evolution stone",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/water_stone_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/water_stone_block",
           "rate": null
         }
       ]
@@ -17514,27 +15004,6 @@
       ]
     },
     {
-      "id": "cobblemon:white_gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/white_gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/white_gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:white_herb",
       "status": null,
       "tier": 1,
@@ -17644,27 +15113,6 @@
           "source": "mod:cobblemon/blocks/white_mint",
           "detail": "mod loot table",
           "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:white_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/white_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/white_plaque",
-          "rate": null
         }
       ]
     },
@@ -17986,48 +15434,6 @@
       ]
     },
     {
-      "id": "cobblemon:yellow_gilded_chest",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/yellow_gilded_chest",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): cobblemon/recipe/yellow_gilded_chest",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "cobblemon:yellow_plaque",
-      "status": null,
-      "tier": 1,
-      "tierLabel": "T1",
-      "tierName": "Uncommon",
-      "rationale": "Standard held / utility item",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:cobblemon/blocks/yellow_plaque",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): cobblemon/recipe/yellow_plaque",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "cobblemon:zinc",
       "status": null,
       "tier": 1,
@@ -18087,9 +15493,9 @@
     {
       "id": "cobbreeding:egg_baby_legend",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
       "rationale": "Cosmetic Pokemon Egg \u2014 baby_legend pool",
       "assignedBy": "override",
       "sources": [
@@ -18208,9 +15614,9 @@
     {
       "id": "gacha:common_key",
       "status": null,
-      "tier": 0,
-      "tierLabel": "T0",
-      "tierName": "Common",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
       "rationale": "Common Crate key \u2014 minecraft:trial_key + gacha_key tag",
       "assignedBy": "override",
       "sources": [
@@ -18234,9 +15640,9 @@
     {
       "id": "gacha:rare_key",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Rare Crate key \u2014 minecraft:ominous_trial_key + gacha_key tag",
       "assignedBy": "override",
       "sources": [
@@ -18255,10 +15661,10 @@
     {
       "id": "gacha:ultra_key",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Ultra Crate key \u2014 minecraft:nether_star + gacha_key tag. Not obtainable outside quests and events.",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Ultra Crate key \u2014 minecraft:nether_star + gacha_key tag",
       "assignedBy": "override",
       "sources": [
         {
@@ -18317,11 +15723,11 @@
     {
       "id": "legendarymonuments:arctic_stone",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary (bird / Heatran)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Articuno",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -18368,10 +15774,10 @@
     {
       "id": "legendarymonuments:celestica_flute",
       "status": null,
-      "tier": 5,
-      "tierLabel": "T5",
-      "tierName": "Mythic",
-      "rationale": "Crafts into the Azure Flute. Same gate, one step removed.",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Crafts into the Azure Flute",
       "assignedBy": "override",
       "sources": [
         {
@@ -18410,9 +15816,9 @@
     {
       "id": "legendarymonuments:curry_of_justice",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Summons Keldeo",
       "assignedBy": "override",
       "sources": [
@@ -18434,7 +15840,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Summons Zekrom",
+      "rationale": "Resurrects Zekrom \u2014 used alongside an electric gem",
       "assignedBy": "override",
       "sources": [
         {
@@ -18476,564 +15882,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:distortion_button",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_button",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_button",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_cobblestone",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_cobblestone",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_cobblestone_bricks",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_cobblestone_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_cobblestone_bricks",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_cobblestone_bricks_slab",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_cobblestone_bricks_slab",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_cobblestone_bricks_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_cobblestone_bricks_stairs",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_cobblestone_bricks_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_cobblestone_bricks_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_cobblestone_bricks_wall",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_cobblestone_bricks_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_cobblestone_bricks_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_crystal",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_crystal",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_crystal_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_crystal_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_deepslate",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_deepslate",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_deepslate_bricks",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_deepslate_bricks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_deepslate_bricks",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_deepslate_bricks_slab",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_deepslate_bricks_slab",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_deepslate_bricks_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_deepslate_bricks_stairs",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_deepslate_bricks_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_deepslate_bricks_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_deepslate_bricks_wall",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_deepslate_bricks_wall",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_deepslate_bricks_wall",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_door",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_door",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_door",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_fence",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_fence",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_fence",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_fence_gate",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_fence_gate",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_fence_gate",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_hanging_sign",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_hanging_sign",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_wall_hanging_sign",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_hanging_sign",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_log",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_log",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_planks",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_planks",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_planks_from_log",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_portal",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_portal_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_pressure_plate",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Arceus plate / type booster",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_pressure_plate",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_pressure_plate",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_sapling",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_sapling",
-          "detail": "mod loot table",
-          "rate": 100.0
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_sign",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_sign",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_wall_sign",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_sign",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_slab",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_slab",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_slab",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_stairs",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_stairs",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_stairs",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_stone",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_stone",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:distortion_trapdoor",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/distortion_trapdoor",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/distortion_trapdoor",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:dragon_golem_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/dragon_golem_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/dragon_golem_block",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:dragon_golem_ingot",
       "status": null,
       "tier": 2,
@@ -19055,7 +15903,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Regidrago gate",
+      "rationale": "Unlocks the Regieleki/Regidrago Room at Snowpoint Temple",
       "assignedBy": "override",
       "sources": [
         {
@@ -19087,27 +15935,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:dream_catcher",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/dream_catcher",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/dream_catcher_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:dream_string",
       "status": null,
       "tier": 1,
@@ -19120,33 +15947,12 @@
     {
       "id": "legendarymonuments:dyna_apple",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Galar apple \u2014 crafts into the galarian urns",
+      "assignedBy": "override",
       "sources": []
-    },
-    {
-      "id": "legendarymonuments:electric_golem_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/electric_golem_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/electric_golem_block",
-          "rate": null
-        }
-      ]
     },
     {
       "id": "legendarymonuments:electric_golem_ingot",
@@ -19170,8 +15976,8 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Chamber / monument gate",
-      "assignedBy": "rule",
+      "rationale": "Unlocks the Regieleki/Regidrago Room at Snowpoint Temple",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -19199,11 +16005,11 @@
     {
       "id": "legendarymonuments:entei_treat",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary at its shrine",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Entei at the Burned Tower",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -19213,12 +16019,22 @@
       ]
     },
     {
+      "id": "legendarymonuments:eternatus_cocoon",
+      "status": null,
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Eternatus",
+      "assignedBy": "override",
+      "sources": []
+    },
+    {
       "id": "legendarymonuments:firescourge_seal",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Locates a shrine",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Locates a shrine \u2014 trader-obtainable, and inert without the banned Arc Phone",
       "assignedBy": "rule",
       "sources": []
     },
@@ -19270,48 +16086,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:galar_particle_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/galar_particle_block",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:galarian_torch",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/galarian_torch",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "mod:legendarymonuments/blocks/galarian_wall_torch",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/galarian_torch_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:galarian_urn_of_embers",
       "status": null,
       "tier": 3,
@@ -19323,27 +16097,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): legendarymonuments/recipe/galarian_urn_of_embers_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:galarian_urn_of_embers_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Legendary-adjacent gate component",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/galarian_urn_of_embers_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/geub",
           "rate": null
         }
       ]
@@ -19365,27 +16118,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:galarian_urn_of_frost_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Legendary-adjacent gate component",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/galarian_urn_of_frost_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/gfub",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:galarian_urn_of_storms",
       "status": null,
       "tier": 3,
@@ -19397,27 +16129,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): legendarymonuments/recipe/galarian_urn_of_storms_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:galarian_urn_of_storms_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Legendary-adjacent gate component",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/galarian_urn_of_storms_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/gsub",
           "rate": null
         }
       ]
@@ -19451,10 +16162,10 @@
     {
       "id": "legendarymonuments:grasswither_seal",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Locates a shrine",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Locates a shrine \u2014 trader-obtainable, and inert without the banned Arc Phone",
       "assignedBy": "rule",
       "sources": []
     },
@@ -19477,66 +16188,25 @@
     {
       "id": "legendarymonuments:groundblight_seal",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Locates a shrine",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Locates a shrine \u2014 trader-obtainable, and inert without the banned Arc Phone",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "legendarymonuments:gs_ball",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a mythical",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Celebi when used on an Ilex Shrine",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
           "detail": "1 recipe(s): legendarymonuments/recipe/gs_ball_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:heroshield",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:herosword",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:ice_golem_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/ice_golem_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/ice_golem_block",
           "rate": null
         }
       ]
@@ -19563,7 +16233,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Regice gate",
+      "rationale": "Unlocks the Regice Room at Snowpoint Temple",
       "assignedBy": "override",
       "sources": [
         {
@@ -19597,31 +16267,31 @@
     {
       "id": "legendarymonuments:icerend_seal",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Locates a shrine",
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Locates a shrine \u2014 trader-obtainable, and inert without the banned Arc Phone",
       "assignedBy": "rule",
       "sources": []
     },
     {
       "id": "legendarymonuments:idealsbottle",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
+      "rationale": "Kyurem pedestal, paired with the Truth Bottle",
+      "assignedBy": "override",
       "sources": []
     },
     {
       "id": "legendarymonuments:latias_treat",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary at its shrine",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Latias at the Southern Island",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -19633,11 +16303,11 @@
     {
       "id": "legendarymonuments:latios_treat",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary at its shrine",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Latios at the Southern Island",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -19649,9 +16319,9 @@
     {
       "id": "legendarymonuments:liberty_pass",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Summons Victini",
       "assignedBy": "override",
       "sources": [
@@ -19668,7 +16338,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Summons Reshiram",
+      "rationale": "Resurrects Reshiram \u2014 used alongside a fire gem",
       "assignedBy": "override",
       "sources": [
         {
@@ -19710,16 +16380,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:lugia_key",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Chamber / monument gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
       "id": "legendarymonuments:lunar_feather",
       "status": null,
       "tier": 1,
@@ -19732,11 +16392,11 @@
     {
       "id": "legendarymonuments:magma_stone",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary (bird / Heatran)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Heatran at his cave in the Nether",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -19751,8 +16411,8 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "rationale": "Melmetal",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "mod:legendarymonuments/blocks/meltan_box",
@@ -19779,11 +16439,11 @@
     {
       "id": "legendarymonuments:molten_stone",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary (bird / Heatran)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Moltres",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -19813,54 +16473,23 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "rationale": "Dropped by Darkrai as he haunts your dreams",
+      "assignedBy": "override",
       "sources": []
     },
     {
       "id": "legendarymonuments:old_sea_map",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons Mew",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Mew in the Final Island",
       "assignedBy": "override",
       "sources": [
         {
           "source": "loot:legendarymonuments/chests/liberty_island_chest",
           "detail": "w=8/856, rolls=14",
           "rate": 12.32
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:ominous_griseous_key",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Chamber / monument gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:origin_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/origin_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/origin_block",
-          "rate": null
         }
       ]
     },
@@ -19898,9 +16527,9 @@
     {
       "id": "legendarymonuments:proof_of_conquest_a",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Summons Azelf",
       "assignedBy": "override",
       "sources": [
@@ -19914,9 +16543,9 @@
     {
       "id": "legendarymonuments:proof_of_conquest_m",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Summons Mesprit",
       "assignedBy": "override",
       "sources": [
@@ -19930,9 +16559,9 @@
     {
       "id": "legendarymonuments:proof_of_conquest_u",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
       "rationale": "Summons Uxie",
       "assignedBy": "override",
       "sources": [
@@ -19946,11 +16575,11 @@
     {
       "id": "legendarymonuments:raikou_treat",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary at its shrine",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Raikou at the Burned Tower",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -19986,8 +16615,8 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "rationale": "Origin ore \u2014 mined from distortion_origin_ore. Smelts to Origin Ingot, which repairs a fragmented Red Chain and crafts the Origin Ball.",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -20028,77 +16657,6 @@
       "sources": []
     },
     {
-      "id": "legendarymonuments:regice_tablet",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Regi chamber gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:regidrago_tablet",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Regi chamber gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:regieleki_tablet",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Regi chamber gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:regirock_tablet",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Regi chamber gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:registeel_tablet",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Regi chamber gate",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:rock_golem_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/rock_golem_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/rock_golem_block",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:rock_golem_ingot",
       "status": null,
       "tier": 2,
@@ -20120,7 +16678,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Regirock gate",
+      "rationale": "Unlocks the Regirock Room at Snowpoint Temple",
       "assignedBy": "override",
       "sources": [
         {
@@ -20152,44 +16710,13 @@
       ]
     },
     {
-      "id": "legendarymonuments:sacred_ash",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": []
-    },
-    {
-      "id": "legendarymonuments:sandstone_pressure_plate",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Arceus plate / type booster",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/sandstone_pressure_plate",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): legendarymonuments/recipe/galar_particle_block_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:silver_wing",
       "status": null,
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "rationale": "Boosts Lugia's Special Attack and Special Defense when held",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -20233,27 +16760,6 @@
       "sources": []
     },
     {
-      "id": "legendarymonuments:steel_golem_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/steel_golem_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/steel_golem_block",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:steel_golem_ingot",
       "status": null,
       "tier": 2,
@@ -20275,7 +16781,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Registeel gate",
+      "rationale": "Unlocks the Registeel Room at Snowpoint Temple",
       "assignedBy": "override",
       "sources": [
         {
@@ -20309,11 +16815,11 @@
     {
       "id": "legendarymonuments:suicune_treat",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary at its shrine",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Summons Suicune at the Burned Tower",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -20323,34 +16829,13 @@
       ]
     },
     {
-      "id": "legendarymonuments:suitcase_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/suitcase_block",
-          "detail": "mod loot table",
-          "rate": 100.0
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/suitcase_block_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:temple_key",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Chamber / monument gate",
-      "assignedBy": "rule",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
+      "rationale": "Hoopa pedestal, paired with the Prison Bottle",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -20369,25 +16854,9 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "rationale": "Unites all regi pauldrons",
+      "assignedBy": "override",
       "sources": []
-    },
-    {
-      "id": "legendarymonuments:titan_hammer",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/titan_hammer",
-          "rate": null
-        }
-      ]
     },
     {
       "id": "legendarymonuments:titan_key",
@@ -20395,7 +16864,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Titan encounter gate",
+      "rationale": "Unlocks the Regigigas Room at Snowpoint Temple",
       "assignedBy": "override",
       "sources": [
         {
@@ -20429,21 +16898,21 @@
     {
       "id": "legendarymonuments:truthbottle",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
+      "rationale": "Kyurem pedestal, paired with the Ideals Bottle",
+      "assignedBy": "override",
       "sources": []
     },
     {
       "id": "legendarymonuments:tuft_of_mew_hair",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a mythical",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Mew DNA \u2014 contains the DNA of every Pokemon",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -20463,27 +16932,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): legendarymonuments/recipe/urn_of_embers_craft",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "legendarymonuments:urn_of_embers_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/urn_of_embers_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/eub",
           "rate": null
         }
       ]
@@ -20510,27 +16958,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:urn_of_frost_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/urn_of_frost_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/fub",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:urn_of_storms",
       "status": null,
       "tier": 3,
@@ -20552,27 +16979,6 @@
       ]
     },
     {
-      "id": "legendarymonuments:urn_of_storms_block",
-      "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Monument item \u2014 treat as gated until pinned otherwise",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:legendarymonuments/blocks/urn_of_storms_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): legendarymonuments/recipe/sub",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "legendarymonuments:uxie_claw",
       "status": null,
       "tier": 3,
@@ -20588,7 +16994,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Summons Lugia",
+      "rationale": "Summons Lugia \u2014 infused with the power of the Legendary Bird Trio",
       "assignedBy": "override",
       "sources": [
         {
@@ -20616,11 +17022,11 @@
     {
       "id": "legendarymonuments:zap_stone",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Summons a legendary (bird / Heatran)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Zapdos",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -20661,7 +17067,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Dialga Origin forme unlock",
+      "rationale": "Amplifies Dialga when held \u2014 Origin forme",
       "assignedBy": "override",
       "sources": [
         {
@@ -20677,7 +17083,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Origin-forme held item",
+      "rationale": "Boosts Dialga's Dragon- and Steel-type moves when held",
       "assignedBy": "override",
       "sources": [
         {
@@ -20921,11 +17327,11 @@
     },
     {
       "id": "mega_showdown:blue_orb",
-      "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Primal Kyogre",
+      "status": "banned-to-use",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Primal reversion is disabled on this server",
       "assignedBy": "override",
       "sources": [
         {
@@ -21000,11 +17406,11 @@
     {
       "id": "mega_showdown:burn_drive",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Genesect \u2014 changes Techno Blast to Fire",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -21064,11 +17470,11 @@
     {
       "id": "mega_showdown:chill_drive",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Genesect \u2014 changes Techno Blast to Ice",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -21078,55 +17484,13 @@
       ]
     },
     {
-      "id": "mega_showdown:chiseled_mega_meteorid_block",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/chiseled_mega_meteorid_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): mega_showdown/recipe/chiseled_mega_meteorid_block",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:chiseled_mega_meteorid_brick",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/chiseled_mega_meteorid_brick",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): mega_showdown/recipe/chiseled_mega_meteorid_brick",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "mega_showdown:cornerstone_mask",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Ogerpon \u2014 Cornerstone forme",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -21175,8 +17539,8 @@
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "rationale": "Deoxys",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "mod:mega_showdown/blocks/deoxys_meteorite",
@@ -21204,11 +17568,11 @@
     {
       "id": "mega_showdown:dna_splicer",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Fuses Reshiram/Zekrom with Kyurem",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -21218,29 +17582,13 @@
       ]
     },
     {
-      "id": "mega_showdown:dormant_crystal",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/dormant_crystal",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "mega_showdown:douse_drive",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Genesect \u2014 changes Techno Blast to Water",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -21689,8 +18037,8 @@
       "tier": 2,
       "tierLabel": "T2",
       "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "rationale": "Shaymin forme change \u2014 Shaymin is only reachable via the ultra_rare gacha egg pool",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "mod:mega_showdown/blocks/gracidea_flower",
@@ -21740,7 +18088,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Giratina Origin forme unlock",
+      "rationale": "Amplifies Giratina when held \u2014 Origin forme",
       "assignedBy": "override",
       "sources": [
         {
@@ -21756,7 +18104,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Origin-forme held item",
+      "rationale": "Boosts Giratina's Dragon- and Ghost-type moves when held",
       "assignedBy": "override",
       "sources": [
         {
@@ -21857,11 +18205,11 @@
     {
       "id": "mega_showdown:hearthflame_mask",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Ogerpon \u2014 Hearthflame forme",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -22006,7 +18354,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Mega evolution enabler",
+      "rationale": "Crafts into the Mega Bracelet",
       "assignedBy": "override",
       "sources": [
         {
@@ -22017,27 +18365,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): mega_showdown/recipe/keystone",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:keystone_block",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/keystone_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/keystone_block",
           "rate": null
         }
       ]
@@ -22190,7 +18517,7 @@
       "tier": 4,
       "tierLabel": "T4",
       "tierName": "Legendary",
-      "rationale": "Palkia Origin forme unlock",
+      "rationale": "Amplifies Palkia when held \u2014 Origin forme",
       "assignedBy": "override",
       "sources": [
         {
@@ -22206,7 +18533,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Origin-forme held item",
+      "rationale": "Boosts Palkia's Dragon- and Water-type moves when held",
       "assignedBy": "override",
       "sources": [
         {
@@ -22550,43 +18877,6 @@
       ]
     },
     {
-      "id": "mega_showdown:mega_meteorid_brick",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/mega_meteorid_brick",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "2 recipe(s): mega_showdown/recipe/mega_meteorid_brick",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:mega_meteorid_radiated_block",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/mega_meteorid_radiated_block",
-          "detail": "mod loot table",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "mega_showdown:mega_ring",
       "status": null,
       "tier": 2,
@@ -22608,7 +18898,7 @@
       "tier": 3,
       "tierLabel": "T3",
       "tierName": "Epic",
-      "rationale": "Mega evolution enabler",
+      "rationale": "Raw Mega Stone",
       "assignedBy": "override",
       "sources": [
         {
@@ -22715,11 +19005,11 @@
     {
       "id": "mega_showdown:n_lunarizer",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Fuses Lunala with Necrozma",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -22731,11 +19021,11 @@
     {
       "id": "mega_showdown:n_solarizer",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Fuses Solgaleo with Necrozma",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -22824,27 +19114,6 @@
         {
           "source": "craft",
           "detail": "1 recipe(s): mega_showdown/recipe/omni_ring",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:pedestal",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/pedestal",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/pedestal",
           "rate": null
         }
       ]
@@ -22980,48 +19249,6 @@
       "sources": []
     },
     {
-      "id": "mega_showdown:polished_mega_meteorid_block",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/polished_mega_meteorid_block",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "4 recipe(s): mega_showdown/recipe/polished_mega_meteorid_block",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:power_spot",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/power_spot",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/power_spot",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "mega_showdown:primarium_z",
       "status": "not-obtainable",
       "tier": -1,
@@ -23034,11 +19261,11 @@
     {
       "id": "mega_showdown:prison_bottle",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
+      "rationale": "Seals away Hoopa",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -23088,27 +19315,6 @@
       ]
     },
     {
-      "id": "mega_showdown:reassembly_unit",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/reassembly_unit",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/reassembly_unit",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "mega_showdown:red_nectar",
       "status": null,
       "tier": 2,
@@ -23126,11 +19332,11 @@
     },
     {
       "id": "mega_showdown:red_orb",
-      "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Primal Groudon",
+      "status": "banned-to-use",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Primal reversion is disabled on this server",
       "assignedBy": "override",
       "sources": [
         {
@@ -23143,11 +19349,11 @@
     {
       "id": "mega_showdown:reins_of_unity",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Fuses Calyrex with Spectrier/Glastrier",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -23229,127 +19435,22 @@
       ]
     },
     {
-      "id": "mega_showdown:rotom_fan",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/rotom_fan",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/rotom_fan",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:rotom_fridge",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/rotom_fridge",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/rotom_fridge",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:rotom_mow",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/rotom_mow",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/rotom_mow",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:rotom_oven",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/rotom_oven",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/rotom_oven",
-          "rate": null
-        }
-      ]
-    },
-    {
-      "id": "mega_showdown:rotom_washing_machine",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
-      "sources": [
-        {
-          "source": "mod:mega_showdown/blocks/rotom_washing_machine",
-          "detail": "mod loot table",
-          "rate": null
-        },
-        {
-          "source": "craft",
-          "detail": "1 recipe(s): mega_showdown/recipe/rotom_washing_machine",
-          "rate": null
-        }
-      ]
-    },
-    {
       "id": "mega_showdown:rusted_shield",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Zamazenta-Crowned gate. Craft banned \u2014 intended to be chest loot instead. NOT YET PLACED IN ANY CHEST.",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
+      "rationale": "Zamazenta pedestal, paired with a Totem of Undying. Craft banned \u2014 intended to be chest loot. NOT YET PLACED IN ANY CHEST.",
       "assignedBy": "override",
       "sources": []
     },
     {
       "id": "mega_showdown:rusted_sword",
       "status": null,
-      "tier": 4,
-      "tierLabel": "T4",
-      "tierName": "Legendary",
-      "rationale": "Zacian-Crowned gate. Craft banned (was iron_sword + netherite_scrap + fire_charge, far too cheap) \u2014 intended to be chest loot instead. NOT YET PLACED IN ANY CHEST.",
+      "tier": 5,
+      "tierLabel": "T5",
+      "tierName": "Mythic",
+      "rationale": "Zacian pedestal, paired with a Totem of Undying. Craft banned \u2014 intended to be chest loot. NOT YET PLACED IN ANY CHEST.",
       "assignedBy": "override",
       "sources": []
     },
@@ -23436,11 +19537,11 @@
     {
       "id": "mega_showdown:shock_drive",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Genesect \u2014 changes Techno Blast to Electric",
+      "assignedBy": "override",
       "sources": [
         {
           "source": "craft",
@@ -24084,21 +20185,21 @@
     {
       "id": "mega_showdown:wellspring_mask",
       "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "tier": 3,
+      "tierLabel": "T3",
+      "tierName": "Epic",
+      "rationale": "Ogerpon \u2014 Wellspring forme",
+      "assignedBy": "override",
       "sources": []
     },
     {
       "id": "mega_showdown:wishing_star",
-      "status": null,
-      "tier": 2,
-      "tierLabel": "T2",
-      "tierName": "Rare",
-      "rationale": "Mega Showdown item (type/forme adjacent)",
-      "assignedBy": "rule",
+      "status": "not-obtainable",
+      "tier": -1,
+      "tierLabel": "TX",
+      "tierName": "Disabled",
+      "rationale": "Dynamax is banned \u2014 item works, the mechanic does not",
+      "assignedBy": "override",
       "sources": []
     },
     {
@@ -25418,10 +21519,10 @@
     {
       "id": "minecraft:nether_star",
       "status": null,
-      "tier": 3,
-      "tierLabel": "T3",
-      "tierName": "Epic",
-      "rationale": "Base item for the Ultra Crate key \u2014 awarding one reads as awarding a key, even though an untagged star will not open a crate",
+      "tier": 4,
+      "tierLabel": "T4",
+      "tierName": "Legendary",
+      "rationale": "Base item for the Ultra Crate key",
       "assignedBy": "override",
       "sources": []
     },
@@ -25440,6 +21541,16 @@
           "rate": null
         }
       ]
+    },
+    {
+      "id": "minecraft:netherite_ingot",
+      "status": null,
+      "tier": 2,
+      "tierLabel": "T2",
+      "tierName": "Rare",
+      "rationale": "Netherite",
+      "assignedBy": "override",
+      "sources": []
     },
     {
       "id": "minecraft:netherite_scrap",

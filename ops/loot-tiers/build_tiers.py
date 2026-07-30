@@ -107,15 +107,15 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     (r":\w+_apricorn(_seed)?$", 1, "Apricorn"),
     (r":(hp_up|protein|iron|calcium|zinc|carbos)$", 1, "Vitamin"),
     (r":\w+_feather$", 1, "EV feather"),
-    (r":(health|quick|mighty|smart|tough|courage)_candy$", 3, "IV candy — raises a stat's effective IV by 1; heavy player demand"),
+    (r":(health|quick|mighty|smart|tough|courage)_candy$", 2, "IV candy — raises a stat's effective IV by 1; heavy player demand"),
     (r":\w*fossil\w*$", 1, "Fossil"),
     (r":\w+_mulch$", 1, "Mulch"),
-    (r":power_(anklet|band|belt|bracer|lens|weight)$", 1, "EV training item"),
+    (r":power_(anklet|band|belt|bracer|lens|weight)$", 2, "EV training item"),
     (r":exp_candy_l$", 1, "Mid exp candy"),
     (r":\w+_tumblestone(_cluster)?$", 1, "Crafting material"),
     (r":\w+_berry$", 1, "Berry"),
     # --- type-flavoured power: rare band
-    (r":\w+_gem$", 3, "Type gem — one-shot damage boost"),
+    (r":\w+_gem$", 2, "Type gem — one-shot damage boost"),
     (r":\w+_tera_shard$", DISABLED, "Tera shard — Tera is banned on this server"),
     (r":\w+ium_z$", DISABLED, "Z-crystal — disabled on this server"),
     (r":blank_z$", DISABLED, "Blank Z-crystal — disabled on this server"),
@@ -142,10 +142,13 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
     # --- LegendaryMonuments families, classified from the mod's own tooltips
     #     (e.g. entei_treat: "can be used to summon Entei at the Burned Tower")
     (r"^legendarymonuments:\w+_treat$", 4, "Summons a legendary at its shrine"),
-    (r"^legendarymonuments:(arctic|molten|zap|magma)_stone$", 4, "Summons a legendary (bird / Heatran)"),
+    (r"^legendarymonuments:arctic_stone$", 4, "Infused with the power of Articuno"),
+    (r"^legendarymonuments:molten_stone$", 4, "Infused with the power of Moltres"),
+    (r"^legendarymonuments:zap_stone$", 4, "Infused with the power of Zapdos"),
+    (r"^legendarymonuments:magma_stone$", 4, "Summons Heatran at his cave in the Nether"),
     (r"^legendarymonuments:(space|time|antimatter)_globe$", 4, "Azure Flute component — the Arceus path"),
     (r"^legendarymonuments:(gs_ball|tuft_of_mew_hair)$", 4, "Summons a mythical"),
-    (r"^legendarymonuments:\w+_seal$", 3, "Locates a shrine"),
+    (r"^legendarymonuments:\w+_seal$", 2, "Locates a shrine — trader-obtainable, and inert without the banned Arc Phone"),
     (r"^legendarymonuments:\w+_tablet$", 3, "Regi chamber gate"),
     (r"^legendarymonuments:galarian_urn_of_\w+$", 3, "Legendary-adjacent gate component"),
     (r"^legendarymonuments:(uxie_claw|azelf_fang|mesprit_plume|fragmented_red_chain)$", 3,
@@ -157,6 +160,12 @@ CATEGORY_RULES: list[tuple[str, int, str]] = [
      "Curry ingredient — a Swords of Justice favourite"),
     (r"^legendarymonuments:(poketreat_box|dream_string|clear_bell|cosmic_bag|galar_particle)$", 1,
      "Utility / crafting material"),
+    # Decorative and building blocks. These were falling through to the T3
+    # "monument item" catch-all, which put distortion stairs on a par with a
+    # legendary gate.
+    (r"^legendarymonuments:\w*(planks|_log|_wood|slab|stairs|wall|door|sign|fence|fence_gate|"
+     r"button|pressure_plate|trapdoor|sapling|bricks|cobblestone|deepslate|_stone$|torch|_block)\w*$",
+     0, "Decorative / building block"),
     # --- everything else held/util
     (r"^cobblemon:", 1, "Standard held / utility item"),
     (r"^mega_showdown:", 2, "Mega Showdown item (type/forme adjacent)"),
@@ -404,6 +413,7 @@ def classify(iid: str, overrides: dict, market: dict) -> tuple[int, str, str]:
 def build() -> tuple[dict, str]:
     raw = load_json(OVERRIDES) or {}
     overrides = {k: v for k, v in raw.items() if not k.startswith("_")}
+    excluded = set(raw.get("_exclude") or [])
 
     market = load_json(MARKET) or {}
     ev = collect_evidence()
@@ -411,6 +421,35 @@ def build() -> tuple[dict, str]:
     universe = collect_universe() | {k for k in ev if k.split(":")[0] in NAMESPACES}
     universe |= set(overrides)
     universe = {u for u in universe if u.split(":")[0] in NAMESPACES}
+
+    # Drop decorative/building blocks across all mods. They ship hundreds
+    # (distortion + apricorn + saccharine wood sets, tumblestone bricks, plaques,
+    # campfire pots, rotom appliances, mega meteorid bricks) and none is a reward
+    # anyone would design around. "block-only" means it has a block.<ns>.<name>
+    # lang key but no item.<ns>.<name> one, so dual-registered things that are
+    # genuinely items -- apricorn fruit, relic coin pouches -- are unaffected.
+    # (distortion planks/stairs/walls, golem blocks, urn blocks) that are
+    # block-only -- no item lang entry -- and are not a reward anyone would
+    # design around. Kept ONLY if something actually grants them, which is how
+    # ancient_rubble_ore stays (it drops at 12.3% in regigigas_chest).
+    _reg = load_json(REGISTRY) or {}
+    decor = {b for b in (_reg.get("blocks") or {})
+             if b not in (_reg.get("items") or {})}
+    # "Granted" means a chest/crate we or the mod curate -- NOT the block's own
+    # self-drop table (every block drops itself when mined, so `mod:.../blocks/x`
+    # would keep all of them).
+    def _granted(i):
+        return any(s["source"].startswith(("loot:", "crate:")) for s in ev.get(i, []))
+    universe -= {b for b in decor if not _granted(b) and b not in overrides}
+
+    # Regi tablets are a reward for catching the Regis, not loot to price.
+    universe -= {u for u in universe
+                 if u.startswith("legendarymonuments:") and u.endswith("_tablet")
+                 and u not in overrides}
+
+    # Explicitly excluded: craft-only items and registered-but-inert ids. Applied
+    # last so it also wins over an override pin.
+    universe -= excluded
 
     # NOTE: do not try to auto-detect dead item ids by "absent from the registry".
     # The registry is harvested from `item.<ns>.<name>` lang keys only, so every

@@ -31,7 +31,7 @@ with what already exists.
 | **T0** | Common | Filler. Safe to hand out in bulk. |
 | **TX** | Disabled | Never award. Two different situations live here, and the per-item status says which: **not obtainable** (recipe banned and/or stripped from loot — if one of these is still dropping, that's a bug to fix, not a tier to change), or **banned to use** (freely obtainable, but the mechanic is disabled and using it is a bannable offence, so the item is worthless as a reward). |
 
-1184 items tiered — T5: 4, T4: 39, T3: 121, T2: 223, T1: 542, T0: 159, TX: 96.
+992 items tiered — T5: 10, T4: 25, T3: 60, T2: 227, T1: 423, T0: 148, TX: 99.
 
 ## Picking a reward
 
@@ -53,9 +53,15 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
-| `cobblemon:master_ball` | Guaranteed catch. Ultra crate only, 2x at 6.5%. | `crate:rare` 0.7%; `crate:ultra` 6.5%; `mod:rctmod/generic/unique/pokeballs` +1 more |
+| `bp:shiny_voucher` | Shiny Voucher — 75 BP, ~20x the other vouchers | *not currently granted anywhere* |
+| `cobbreeding:egg_baby_legend` | Cosmetic Pokemon Egg — baby_legend pool | `crate:pokemon` 0.5% |
 | `legendarymonuments:azure_flute` | Opens the Hall of Origin — ARCEUS. Ultra crate jackpot at 0.8%. | `crate:ultra` 0.8%; `craft` |
-| `legendarymonuments:celestica_flute` | Crafts into the Azure Flute. Same gate, one step removed. | `loot:legendarymonuments/chests/turnback_cave_vault` 1.11% |
+| `legendarymonuments:idealsbottle` | Kyurem pedestal, paired with the Truth Bottle | *not currently granted anywhere* |
+| `legendarymonuments:temple_key` | Hoopa pedestal, paired with the Prison Bottle | *not currently granted anywhere* |
+| `legendarymonuments:truthbottle` | Kyurem pedestal, paired with the Ideals Bottle | *not currently granted anywhere* |
+| `mega_showdown:prison_bottle` | Seals away Hoopa | *not currently granted anywhere* |
+| `mega_showdown:rusted_shield` | Zamazenta pedestal, paired with a Totem of Undying. Craft banned — intended to be chest loot. NOT YET PLACED IN ANY CHEST. | *not currently granted anywhere* |
+| `mega_showdown:rusted_sword` | Zacian pedestal, paired with a Totem of Undying. Craft banned — intended to be chest loot. NOT YET PLACED IN ANY CHEST. | *not currently granted anywhere* |
 | `minecraft:totem_of_undying` | Zacian summon gate. Ultra crate 1.6% is the only intended source. | `crate:ultra` 1.6% |
 
 ## T4 — Legendary
@@ -64,45 +70,31 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
-| `bp:shiny_voucher` | Shiny Voucher — 75 BP, ~20x the other vouchers | *not currently granted anywhere* |
+| `cobblemon:ability_patch` | Hidden ability. Deliberately pulled from the Ultra crate. | `crate:rare` 7.2%; `loot:legendarymonuments/chests/registeel_chest` 6.87%; `mod:rctmod/generic/epic/training` +1 more |
+| `cobblemon:ancient_origin_ball` | Crafted from 4 Origin Ingots + a RED CHAIN — consumes a T4 Dialga/Palkia summon item, so not a basic ball | `craft` |
+| `cobblemon:master_ball` | Guaranteed catch | `crate:rare` 0.7%; `crate:ultra` 6.5%; `mod:rctmod/generic/unique/pokeballs` +1 more |
+| `gacha:ultra_key` | Ultra Crate key — minecraft:nether_star + gacha_key tag | `crate:rare` 0.7%; `crate:ultra` 0.8% |
 | `legendarymonuments:antimatter_globe` | Azure Flute component — the Arceus path | *not currently granted anywhere* |
-| `legendarymonuments:arctic_stone` | Summons a legendary (bird / Heatran) | *not currently granted anywhere* |
-| `legendarymonuments:curry_of_justice` | Summons Keldeo | `crate:ultra` 6.5%; `craft` |
-| `legendarymonuments:darkstone` | Summons Zekrom | `crate:ultra` 4.9%; `craft` |
-| `legendarymonuments:entei_treat` | Summons a legendary at its shrine | `craft` |
+| `legendarymonuments:darkstone` | Resurrects Zekrom — used alongside an electric gem | `crate:ultra` 4.9%; `craft` |
+| `legendarymonuments:eternatus_cocoon` | Eternatus | *not currently granted anywhere* |
 | `legendarymonuments:fullmoon_whistle` | Summons Cresselia | `crate:ultra` 6.5%; `craft` |
 | `legendarymonuments:griseous_key` | Summons Giratina | `loot:legendarymonuments/chests/turnback_cave_chest` 11.36% |
-| `legendarymonuments:gs_ball` | Summons a mythical | `craft` |
-| `legendarymonuments:latias_treat` | Summons a legendary at its shrine | `craft` |
-| `legendarymonuments:latios_treat` | Summons a legendary at its shrine | `craft` |
-| `legendarymonuments:liberty_pass` | Summons Victini | `crate:ultra` 6.5% |
-| `legendarymonuments:lightstone` | Summons Reshiram | `crate:ultra` 4.9%; `craft` |
-| `legendarymonuments:magma_stone` | Summons a legendary (bird / Heatran) | `craft` |
-| `legendarymonuments:molten_stone` | Summons a legendary (bird / Heatran) | *not currently granted anywhere* |
+| `legendarymonuments:lightstone` | Resurrects Reshiram — used alongside a fire gem | `crate:ultra` 4.9%; `craft` |
 | `legendarymonuments:newmoon_whistle` | Summons Darkrai | `crate:ultra` 6.5%; `craft` |
-| `legendarymonuments:old_sea_map` | Summons Mew | `loot:legendarymonuments/chests/liberty_island_chest` 12.32% |
-| `legendarymonuments:proof_of_conquest_a` | Summons Azelf | `crate:ultra` 4.9% |
-| `legendarymonuments:proof_of_conquest_m` | Summons Mesprit | `crate:ultra` 4.9% |
-| `legendarymonuments:proof_of_conquest_u` | Summons Uxie | `crate:ultra` 4.9% |
-| `legendarymonuments:raikou_treat` | Summons a legendary at its shrine | `craft` |
 | `legendarymonuments:rainbow_feather` | Summons Ho-Oh | `crate:ultra` 4.9%; `craft` |
 | `legendarymonuments:red_chain` | Summons Dialga & Palkia | `crate:ultra` 4.9%; `craft` |
 | `legendarymonuments:space_globe` | Azure Flute component — the Arceus path | *not currently granted anywhere* |
-| `legendarymonuments:suicune_treat` | Summons a legendary at its shrine | `craft` |
 | `legendarymonuments:time_globe` | Azure Flute component — the Arceus path | *not currently granted anywhere* |
-| `legendarymonuments:titan_key` | Titan encounter gate | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:tuft_of_mew_hair` | Summons a mythical | *not currently granted anywhere* |
-| `legendarymonuments:vortex_stone` | Summons Lugia | `crate:ultra` 4.9%; `craft` |
-| `legendarymonuments:zap_stone` | Summons a legendary (bird / Heatran) | *not currently granted anywhere* |
-| `mega_showdown:adamant_crystal` | Dialga Origin forme unlock | `loot:legendarymonuments/chests/turnback_cave_vault` 0.11% |
+| `legendarymonuments:titan_key` | Unlocks the Regigigas Room at Snowpoint Temple | `crate:rare` 2.8%; `craft` |
+| `legendarymonuments:vortex_stone` | Summons Lugia — infused with the power of the Legendary Bird Trio | `crate:ultra` 4.9%; `craft` |
+| `mega_showdown:adamant_crystal` | Amplifies Dialga when held — Origin forme | `loot:legendarymonuments/chests/turnback_cave_vault` 0.11% |
 | `mega_showdown:ash_cap` | Uncraftable — craft banned by server-craft-bans; Ultra crate only | *not currently granted anywhere* |
-| `mega_showdown:blue_orb` | Primal Kyogre | `loot:legendarymonuments/chests/lugia_temple_chest` 0.57% |
-| `mega_showdown:griseous_core` | Giratina Origin forme unlock | `loot:legendarymonuments/chests/turnback_cave_vault` 0.11% |
-| `mega_showdown:lustrous_globe` | Palkia Origin forme unlock | `loot:legendarymonuments/chests/turnback_cave_vault` 0.11% |
-| `mega_showdown:red_orb` | Primal Groudon | `loot:legendarymonuments/chests/bell_tower_chest` 0.59% |
-| `mega_showdown:rusted_shield` | Zamazenta-Crowned gate. Craft banned — intended to be chest loot instead. NOT YET PLACED IN ANY CHEST. | *not currently granted anywhere* |
-| `mega_showdown:rusted_sword` | Zacian-Crowned gate. Craft banned (was iron_sword + netherite_scrap + fire_charge, far too cheap) — intended to be chest loot instead. NOT YET PLACED IN ANY CHEST. | *not currently granted anywhere* |
+| `mega_showdown:griseous_core` | Amplifies Giratina when held — Origin forme | `loot:legendarymonuments/chests/turnback_cave_vault` 0.11% |
+| `mega_showdown:lustrous_globe` | Amplifies Palkia when held — Origin forme | `loot:legendarymonuments/chests/turnback_cave_vault` 0.11% |
+| `mega_showdown:n_lunarizer` | Fuses Lunala with Necrozma | `craft` |
+| `mega_showdown:n_solarizer` | Fuses Solgaleo with Necrozma | `craft` |
 | `mega_showdown:zygarde_core` | Zygarde assembly core | `crate:rare` 2.9%; `loot:legendarymonuments/chests/regigigas_chest` 16.94%; `loot:legendarymonuments/chests/registeel_chest` 6.87% |
+| `minecraft:nether_star` | Base item for the Ultra Crate key | *not currently granted anywhere* |
 
 ## T3 — Epic
 
@@ -110,127 +102,66 @@ jackpot band 0.8–1.6%, high band 4.9%.
 
 | Item | Why | Where it comes from |
 |---|---|---|
-| `cobblemon:ability_patch` | Hidden ability. Deliberately pulled from the Ultra crate. | `crate:rare` 7.2%; `loot:legendarymonuments/chests/registeel_chest` 6.87%; `mod:rctmod/generic/epic/training` +1 more |
 | `cobblemon:beast_ball` | Best-in-slot for Ultra Beasts, not purchasable | `loot:rctmod/generic/legendary/pokeballs`; `craft` |
-| `cobblemon:bug_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/rooted_arch_ruins`; `mod:cobblemon/sets/any_type_gem` |
-| `cobblemon:courage_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:dark_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:mega_showdown/archaeology/ruins` 22.73% +4 more |
-| `cobblemon:dragon_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/dragoeleki_chest` 74.23%; `mod:cobbleworkers/dive_treasure` 20.0% +3 more |
-| `cobblemon:electric_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/dragoeleki_chest` 74.23%; `mod:cobblemon/ruins/common/unstable_cave_ruins` +1 more |
-| `cobblemon:fairy_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/toppled_pillars_ruins`; `mod:cobblemon/sets/any_type_gem` |
-| `cobblemon:fighting_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/deserted_town_center_ruins`; `mod:cobblemon/sets/any_type_gem` |
-| `cobblemon:fire_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/bell_tower_chest` 30.22%; `loot:legendarymonuments/chests/liberty_island_chest` 39.31% +4 more |
-| `cobblemon:flying_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/bell_tower_chest` 30.22%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +1 more |
-| `cobblemon:ghost_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75% +4 more |
-| `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/rooted_arch_ruins`; `mod:cobblemon/sets/any_type_gem` |
-| `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/deserted_tower_ruins`; `mod:cobblemon/ruins/common/fallen_statue_ruins` +1 more |
-| `cobblemon:health_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/regice_chest` 85.07%; `mod:cobblemon/ruins/common/hidden_bunker_ruins` +1 more |
-| `cobblemon:mighty_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:mega_showdown/chests/observatory_barrel_3` 59.22%; `mod:cobblemon/ruins/common/deserted_house_ruins` +1 more |
-| `cobblemon:poison_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/mossy_oubliette_ruins`; `mod:cobblemon/sets/any_type_gem` |
-| `cobblemon:psychic_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/liberty_island_chest` 39.31%; `mod:cobblemon/ruins/common/crumbling_arch_ruins` +3 more |
-| `cobblemon:quick_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:rock_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/regirock_chest` 70.66%; `mod:cobblemon/ruins/common/decaying_crypt_ruins` +4 more |
-| `cobblemon:smart_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:legendarymonuments/chests/heatran_cave_chest` 12.01%; `mod:cobblemon/ruins/common/hidden_bunker_ruins` +1 more |
-| `cobblemon:tough_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
-| `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +3 more |
-| `cobbreeding:egg_baby_legend` | Cosmetic Pokemon Egg — baby_legend pool | `crate:pokemon` 0.5% |
 | `cobbreeding:egg_shiny` | Shiny Egg — guaranteed shiny from the rare|uncommon pool | `crate:pokemon` 3.4825%; `crate:ultra` 4.9% |
 | `cobbreeding:egg_ultra_rare` | Ultra Rare Pokemon Egg — ultra_rare pool (includes a Battle Bond Greninja) | `crate:pokemon` 1.4925%; `crate:ultra` 20.2% |
-| `gacha:ultra_key` | Ultra Crate key — minecraft:nether_star + gacha_key tag. Not obtainable outside quests and events. | `crate:rare` 0.7%; `crate:ultra` 0.8% |
+| `gacha:rare_key` | Rare Crate key — minecraft:ominous_trial_key + gacha_key tag | `crate:common` 0.5%; `crate:rare` 1.4% |
+| `legendarymonuments:arctic_stone` | Articuno | *not currently granted anywhere* |
 | `legendarymonuments:azelf_fang` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
+| `legendarymonuments:celestica_flute` | Crafts into the Azure Flute | `loot:legendarymonuments/chests/turnback_cave_vault` 1.11% |
+| `legendarymonuments:curry_of_justice` | Summons Keldeo | `crate:ultra` 6.5%; `craft` |
 | `legendarymonuments:darkstone_shard` | 9 craft into a T4 Dark Stone | `loot:legendarymonuments/chests/bell_tower_chest` 9.07%; `loot:legendarymonuments/chests/liberty_island_chest` 12.32%; `loot:legendarymonuments/chests/lugia_temple_chest` 20.5% |
-| `legendarymonuments:distortion_button` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_button` 100.0%; `craft` |
-| `legendarymonuments:distortion_cobblestone` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_cobblestone` |
-| `legendarymonuments:distortion_cobblestone_bricks` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_cobblestone_bricks` 100.0%; `craft` |
-| `legendarymonuments:distortion_cobblestone_bricks_slab` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_cobblestone_bricks_slab` 100.0%; `craft` |
-| `legendarymonuments:distortion_cobblestone_bricks_stairs` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_cobblestone_bricks_stairs` 100.0%; `craft` |
-| `legendarymonuments:distortion_cobblestone_bricks_wall` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_cobblestone_bricks_wall` 100.0%; `craft` |
-| `legendarymonuments:distortion_crystal` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_crystal` 100.0% |
-| `legendarymonuments:distortion_crystal_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_crystal_block` 100.0% |
-| `legendarymonuments:distortion_deepslate` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_deepslate` |
-| `legendarymonuments:distortion_deepslate_bricks` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_deepslate_bricks` 100.0%; `craft` |
-| `legendarymonuments:distortion_deepslate_bricks_slab` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_deepslate_bricks_slab` 100.0%; `craft` |
-| `legendarymonuments:distortion_deepslate_bricks_stairs` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_deepslate_bricks_stairs` 100.0%; `craft` |
-| `legendarymonuments:distortion_deepslate_bricks_wall` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_deepslate_bricks_wall` 100.0%; `craft` |
-| `legendarymonuments:distortion_door` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_door` 100.0%; `craft` |
-| `legendarymonuments:distortion_fence` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_fence` 100.0%; `craft` |
-| `legendarymonuments:distortion_fence_gate` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_fence_gate` 100.0%; `craft` |
-| `legendarymonuments:distortion_hanging_sign` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_hanging_sign` 100.0%; `mod:legendarymonuments/blocks/distortion_wall_hanging_sign` 100.0%; `craft` |
-| `legendarymonuments:distortion_log` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_log` |
-| `legendarymonuments:distortion_planks` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_planks` 100.0%; `craft` |
-| `legendarymonuments:distortion_portal` | Monument item — treat as gated until pinned otherwise | `craft` |
-| `legendarymonuments:distortion_sapling` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_sapling` 100.0% |
-| `legendarymonuments:distortion_sign` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_sign` 100.0%; `mod:legendarymonuments/blocks/distortion_wall_sign` 100.0%; `craft` |
-| `legendarymonuments:distortion_slab` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_slab` 100.0%; `craft` |
-| `legendarymonuments:distortion_stairs` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_stairs` 100.0%; `craft` |
-| `legendarymonuments:distortion_stone` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_stone` |
-| `legendarymonuments:distortion_trapdoor` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/distortion_trapdoor` 100.0%; `craft` |
-| `legendarymonuments:dragon_golem_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/dragon_golem_block`; `craft` |
-| `legendarymonuments:dragon_golem_key` | Regidrago gate | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:dream_catcher` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/dream_catcher` 100.0%; `craft` |
-| `legendarymonuments:dyna_apple` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:electric_golem_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/electric_golem_block`; `craft` |
-| `legendarymonuments:electric_golem_key` | Chamber / monument gate | `craft` |
-| `legendarymonuments:firescourge_seal` | Locates a shrine | *not currently granted anywhere* |
+| `legendarymonuments:dragon_golem_key` | Unlocks the Regieleki/Regidrago Room at Snowpoint Temple | `crate:rare` 2.8%; `craft` |
+| `legendarymonuments:electric_golem_key` | Unlocks the Regieleki/Regidrago Room at Snowpoint Temple | `craft` |
+| `legendarymonuments:entei_treat` | Summons Entei at the Burned Tower | `craft` |
 | `legendarymonuments:fragmented_red_chain` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
-| `legendarymonuments:galar_particle_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/galar_particle_block` |
-| `legendarymonuments:galarian_torch` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/galarian_torch`; `mod:legendarymonuments/blocks/galarian_wall_torch`; `craft` |
 | `legendarymonuments:galarian_urn_of_embers` | Legendary-adjacent gate component | `craft` |
-| `legendarymonuments:galarian_urn_of_embers_block` | Legendary-adjacent gate component | `mod:legendarymonuments/blocks/galarian_urn_of_embers_block`; `craft` |
 | `legendarymonuments:galarian_urn_of_frost` | Legendary-adjacent gate component | `craft` |
-| `legendarymonuments:galarian_urn_of_frost_block` | Legendary-adjacent gate component | `mod:legendarymonuments/blocks/galarian_urn_of_frost_block`; `craft` |
 | `legendarymonuments:galarian_urn_of_storms` | Legendary-adjacent gate component | `craft` |
-| `legendarymonuments:galarian_urn_of_storms_block` | Legendary-adjacent gate component | `mod:legendarymonuments/blocks/galarian_urn_of_storms_block`; `craft` |
-| `legendarymonuments:grasswither_seal` | Locates a shrine | *not currently granted anywhere* |
-| `legendarymonuments:groundblight_seal` | Locates a shrine | *not currently granted anywhere* |
-| `legendarymonuments:heroshield` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:herosword` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:ice_golem_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/ice_golem_block`; `craft` |
-| `legendarymonuments:ice_golem_key` | Regice gate | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:icerend_seal` | Locates a shrine | *not currently granted anywhere* |
-| `legendarymonuments:idealsbottle` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
+| `legendarymonuments:gs_ball` | Summons Celebi when used on an Ilex Shrine | `craft` |
+| `legendarymonuments:ice_golem_key` | Unlocks the Regice Room at Snowpoint Temple | `crate:rare` 2.8%; `craft` |
+| `legendarymonuments:latias_treat` | Summons Latias at the Southern Island | `craft` |
+| `legendarymonuments:latios_treat` | Summons Latios at the Southern Island | `craft` |
+| `legendarymonuments:liberty_pass` | Summons Victini | `crate:ultra` 6.5% |
 | `legendarymonuments:lightstone_shard` | 9 craft into a T4 Light Stone | `loot:legendarymonuments/chests/bell_tower_chest` 9.07%; `loot:legendarymonuments/chests/liberty_island_chest` 12.32%; `loot:legendarymonuments/chests/lugia_temple_chest` 20.5% |
-| `legendarymonuments:lugia_key` | Chamber / monument gate | *not currently granted anywhere* |
-| `legendarymonuments:meltan_box` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/meltan_box`; `craft` |
+| `legendarymonuments:magma_stone` | Summons Heatran at his cave in the Nether | `craft` |
+| `legendarymonuments:meltan_box` | Melmetal | `mod:legendarymonuments/blocks/meltan_box`; `craft` |
 | `legendarymonuments:mesprit_plume` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
-| `legendarymonuments:nightmare_essence` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:ominous_griseous_key` | Chamber / monument gate | *not currently granted anywhere* |
-| `legendarymonuments:origin_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/origin_block` 100.0%; `craft` |
+| `legendarymonuments:molten_stone` | Moltres | *not currently granted anywhere* |
+| `legendarymonuments:nightmare_essence` | Dropped by Darkrai as he haunts your dreams | *not currently granted anywhere* |
+| `legendarymonuments:old_sea_map` | Summons Mew in the Final Island | `loot:legendarymonuments/chests/liberty_island_chest` 12.32% |
 | `legendarymonuments:origin_ingot` | Repairs the Red Chain — component for a T4 | `loot:legendarymonuments/chests/turnback_cave_vault` 1.11%; `craft` |
-| `legendarymonuments:raw_origin` | Monument item — treat as gated until pinned otherwise | `craft` |
-| `legendarymonuments:regice_tablet` | Regi chamber gate | *not currently granted anywhere* |
-| `legendarymonuments:regidrago_tablet` | Regi chamber gate | *not currently granted anywhere* |
-| `legendarymonuments:regieleki_tablet` | Regi chamber gate | *not currently granted anywhere* |
-| `legendarymonuments:regirock_tablet` | Regi chamber gate | *not currently granted anywhere* |
-| `legendarymonuments:registeel_tablet` | Regi chamber gate | *not currently granted anywhere* |
-| `legendarymonuments:rock_golem_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/rock_golem_block`; `craft` |
-| `legendarymonuments:rock_golem_key` | Regirock gate | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:sacred_ash` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:silver_wing` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:steel_golem_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/steel_golem_block`; `craft` |
-| `legendarymonuments:steel_golem_key` | Registeel gate | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:suitcase_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/suitcase_block` 100.0%; `craft` |
-| `legendarymonuments:temple_key` | Chamber / monument gate | *not currently granted anywhere* |
-| `legendarymonuments:titan_core` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
-| `legendarymonuments:titan_hammer` | Monument item — treat as gated until pinned otherwise | `craft` |
-| `legendarymonuments:truthbottle` | Monument item — treat as gated until pinned otherwise | *not currently granted anywhere* |
+| `legendarymonuments:proof_of_conquest_a` | Summons Azelf | `crate:ultra` 4.9% |
+| `legendarymonuments:proof_of_conquest_m` | Summons Mesprit | `crate:ultra` 4.9% |
+| `legendarymonuments:proof_of_conquest_u` | Summons Uxie | `crate:ultra` 4.9% |
+| `legendarymonuments:raikou_treat` | Summons Raikou at the Burned Tower | `craft` |
+| `legendarymonuments:raw_origin` | Origin ore — mined from distortion_origin_ore. Smelts to Origin Ingot, which repairs a fragmented Red Chain and crafts the Origin Ball. | `craft` |
+| `legendarymonuments:rock_golem_key` | Unlocks the Regirock Room at Snowpoint Temple | `crate:rare` 2.8%; `craft` |
+| `legendarymonuments:silver_wing` | Boosts Lugia's Special Attack and Special Defense when held | *not currently granted anywhere* |
+| `legendarymonuments:steel_golem_key` | Unlocks the Registeel Room at Snowpoint Temple | `crate:rare` 2.8%; `craft` |
+| `legendarymonuments:suicune_treat` | Summons Suicune at the Burned Tower | `craft` |
+| `legendarymonuments:titan_core` | Unites all regi pauldrons | *not currently granted anywhere* |
+| `legendarymonuments:tuft_of_mew_hair` | Mew DNA — contains the DNA of every Pokemon | *not currently granted anywhere* |
 | `legendarymonuments:urn_of_embers` | Legendary-adjacent gate component | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:urn_of_embers_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/urn_of_embers_block`; `craft` |
 | `legendarymonuments:urn_of_frost` | Legendary-adjacent gate component | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:urn_of_frost_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/urn_of_frost_block`; `craft` |
 | `legendarymonuments:urn_of_storms` | Legendary-adjacent gate component | `crate:rare` 2.8%; `craft` |
-| `legendarymonuments:urn_of_storms_block` | Monument item — treat as gated until pinned otherwise | `mod:legendarymonuments/blocks/urn_of_storms_block`; `craft` |
 | `legendarymonuments:uxie_claw` | Red Chain component — crafts into a T4 | *not currently granted anywhere* |
-| `mega_showdown:adamant_orb` | Origin-forme held item | `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
-| `mega_showdown:griseous_orb` | Origin-forme held item | `crate:rare` 4.0%; `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
-| `mega_showdown:keystone` | Mega evolution enabler | `crate:common` 1.9%; `craft` |
-| `mega_showdown:lustrous_orb` | Origin-forme held item | `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
-| `mega_showdown:mega_stone` | Mega evolution enabler | `crate:common` 1.9% |
+| `legendarymonuments:zap_stone` | Zapdos | *not currently granted anywhere* |
+| `mega_showdown:adamant_orb` | Boosts Dialga's Dragon- and Steel-type moves when held | `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
+| `mega_showdown:burn_drive` | Genesect — changes Techno Blast to Fire | `craft` |
+| `mega_showdown:chill_drive` | Genesect — changes Techno Blast to Ice | `craft` |
+| `mega_showdown:cornerstone_mask` | Ogerpon — Cornerstone forme | *not currently granted anywhere* |
+| `mega_showdown:dna_splicer` | Fuses Reshiram/Zekrom with Kyurem | `craft` |
+| `mega_showdown:douse_drive` | Genesect — changes Techno Blast to Water | `craft` |
+| `mega_showdown:griseous_orb` | Boosts Giratina's Dragon- and Ghost-type moves when held | `crate:rare` 4.0%; `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
+| `mega_showdown:hearthflame_mask` | Ogerpon — Hearthflame forme | *not currently granted anywhere* |
+| `mega_showdown:keystone` | Crafts into the Mega Bracelet | `crate:common` 1.9%; `craft` |
+| `mega_showdown:lustrous_orb` | Boosts Palkia's Dragon- and Water-type moves when held | `loot:legendarymonuments/chests/turnback_cave_vault` 0.56%; `craft` |
+| `mega_showdown:mega_stone` | Raw Mega Stone | `crate:common` 1.9% |
+| `mega_showdown:reins_of_unity` | Fuses Calyrex with Spectrier/Glastrier | `craft` |
+| `mega_showdown:shock_drive` | Genesect — changes Techno Blast to Electric | `craft` |
+| `mega_showdown:wellspring_mask` | Ogerpon — Wellspring forme | *not currently granted anywhere* |
 | `mega_showdown:zygarde_cell` | Zygarde assembly component | `loot:legendarymonuments/chests/dragoeleki_chest` 32.01%; `loot:legendarymonuments/chests/regice_chest` 41.11%; `loot:legendarymonuments/chests/regigigas_chest` 16.94% +7 more |
-| `minecraft:nether_star` | Base item for the Ultra Crate key — awarding one reads as awarding a key, even though an untagged star will not open a crate | *not currently granted anywhere* |
 
 ## T2 — Rare
 
@@ -243,34 +174,47 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:ability_capsule` | Swaps between normal abilities | `loot:legendarymonuments/chests/registeel_chest` 78.61%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36%; `mod:rctmod/generic/epic/training` +1 more |
 | `cobblemon:ability_shield` | Premium competitive held item | `loot:rctmod/generic/rare/battle`; `mod:cobblemon/ruins/uncommon/deserted_town_center_ruins`; `mod:cobblemon/ruins/uncommon/fallen_statue_ruins` +6 more |
 | `cobblemon:air_balloon` | Premium competitive held item | `loot:rctmod/generic/rare/battle`; `craft`; `market` |
-| `cobblemon:apricorn_pressure_plate` | Arceus plate / type booster | `mod:cobblemon/blocks/apricorn_pressure_plate`; `craft` |
 | `cobblemon:assault_vest` | Premium competitive held item | `crate:common` 0.5%; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
 | `cobblemon:auspicious_armor` | Evolution item | `crate:common` 0.203%; `loot:legendarymonuments/chests/bell_tower_chest` 9.07%; `mod:cobblemon/injection/chests/bastion_bridge` 100.0% +4 more |
 | `cobblemon:black_augurite` | Evolution item | `crate:common` 0.203%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fossils/uncommon/prehistoric_eroded_pillar` +2 more |
 | `cobblemon:blunder_policy` | Premium competitive held item | `loot:rctmod/generic/rare/battle`; `mod:cobblemon/blocks/blunder_policy`; `craft` +1 more |
 | `cobblemon:booster_energy` | Premium competitive held item | *not currently granted anywhere* |
+| `cobblemon:bug_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/rooted_arch_ruins`; `mod:cobblemon/sets/any_type_gem` |
 | `cobblemon:chipped_pot` | Evolution item | `crate:common` 0.203%; `mod:cobblemon/ruins/uncommon/decaying_crypt_ruins`; `mod:cobblemon/ruins/uncommon/deserted_tower_ruins` +4 more |
 | `cobblemon:choice_band` | Premium competitive held item | `crate:common` 0.5%; `loot:rctmod/generic/legendary/battle`; `craft` +1 more |
 | `cobblemon:choice_scarf` | Premium competitive held item | `crate:common` 0.5%; `loot:rctmod/generic/legendary/battle`; `craft` +1 more |
 | `cobblemon:choice_specs` | Premium competitive held item | `crate:common` 0.5%; `loot:rctmod/generic/legendary/battle`; `craft` +1 more |
 | `cobblemon:clear_amulet` | Premium competitive held item | `mod:mega_showdown/sets/any_showdown_held_item`; `craft`; `market` |
+| `cobblemon:courage_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:covert_cloak` | Premium competitive held item | `mod:cobblemon/ruins/uncommon/deserted_town_center_ruins`; `mod:cobblemon/ruins/uncommon/gimmi_tower_frozen`; `mod:cobblemon/ruins/uncommon/gimmi_tower_junk` +5 more |
 | `cobblemon:cracked_pot` | Evolution item | `crate:common` 0.203%; `mod:cobblemon/ruins/uncommon/decaying_crypt_ruins`; `mod:cobblemon/ruins/uncommon/deserted_tower_ruins` +4 more |
+| `cobblemon:dark_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:mega_showdown/archaeology/ruins` 22.73% +4 more |
 | `cobblemon:deep_sea_scale` | Evolution item | `crate:common` 0.203%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fishing/pokerod_treasure` +5 more |
 | `cobblemon:deep_sea_tooth` | Evolution item | `crate:common` 0.203%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fishing/pokerod_treasure` +5 more |
+| `cobblemon:dragon_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/dragoeleki_chest` 74.23%; `mod:cobbleworkers/dive_treasure` 20.0% +3 more |
 | `cobblemon:dragon_scale` | Evolution item | `crate:common` 0.203%; `mod:cobblemon/fishing/pokerod_treasure`; `mod:cobblemon/shipwreck_coves/gilded_chests/big_treasure` +1 more |
 | `cobblemon:dream_ball` | Specialty ball — Hidden Ability transfer | `crate:common` 4.6%; `loot:rctmod/generic/legendary/pokeballs`; `craft` +1 more |
 | `cobblemon:dubious_disc` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/legendary/evolution`; `craft` |
 | `cobblemon:electirizer` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
+| `cobblemon:electric_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/dragoeleki_chest` 74.23%; `mod:cobblemon/ruins/common/unstable_cave_ruins` +1 more |
 | `cobblemon:eviolite` | Premium competitive held item | `crate:common` 0.5%; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
 | `cobblemon:exp_candy_l` | Feedstock for IV candies — heavy consumption keeps it scarce despite being on the shelf | `craft`; `market` |
 | `cobblemon:exp_candy_xl` | Feedstock for IV candies — heavy consumption keeps it scarce despite being on the shelf | `craft`; `market` |
 | `cobblemon:expert_belt` | Premium competitive held item | `mod:cobblemon/sets/any_ancient_held_item`; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
+| `cobblemon:fairy_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/toppled_pillars_ruins`; `mod:cobblemon/sets/any_type_gem` |
+| `cobblemon:fighting_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/deserted_town_center_ruins`; `mod:cobblemon/sets/any_type_gem` |
+| `cobblemon:fire_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/bell_tower_chest` 30.22%; `loot:legendarymonuments/chests/liberty_island_chest` 39.31% +4 more |
 | `cobblemon:flame_plate` | Arceus plate / type booster | *not currently granted anywhere* |
+| `cobblemon:flying_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/bell_tower_chest` 30.22%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +1 more |
 | `cobblemon:focus_sash` | Premium competitive held item | `crate:common` 0.5%; `loot:rctmod/generic/uncommon/battle`; `mod:cobblemon/ruins/uncommon/deserted_town_center_ruins` +7 more |
 | `cobblemon:galarica_cuff` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
 | `cobblemon:galarica_wreath` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
+| `cobblemon:ghost_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75% +4 more |
+| `cobblemon:grass_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/rooted_arch_ruins`; `mod:cobblemon/sets/any_type_gem` |
+| `cobblemon:ground_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/deserted_tower_ruins`; `mod:cobblemon/ruins/common/fallen_statue_ruins` +1 more |
+| `cobblemon:health_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:heavy_duty_boots` | Premium competitive held item | `crate:common` 0.5%; `loot:rctmod/generic/rare/battle`; `craft` +1 more |
+| `cobblemon:ice_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/regice_chest` 85.07%; `mod:cobblemon/ruins/common/hidden_bunker_ruins` +1 more |
 | `cobblemon:leftovers` | Premium competitive held item | `crate:common` 0.305%; `loot:rctmod/generic/legendary/battle`; `market` |
 | `cobblemon:life_orb` | Premium competitive held item | `crate:common` 0.5%; `loot:rctmod/generic/legendary/battle`; `craft` +1 more |
 | `cobblemon:link_cable` | Evolution item | `loot:legendarymonuments/chests/turnback_cave_chest` 11.36%; `mod:cobblemon/injection/chests/ancient_city` 100.0%; `mod:cobblemon/injection/chests/end_city_treasure` 100.0% +5 more |
@@ -279,34 +223,52 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:malicious_armor` | Evolution item | `crate:common` 0.203%; `mod:cobblemon/injection/chests/nether_bridge` 100.0%; `mod:rctmod/generic/epic/evolution` |
 | `cobblemon:masterpiece_teacup` | Evolution item | `crate:common` 0.203%; `mod:cobblemon/ruins/uncommon/crumbling_arch_ruins`; `mod:cobblemon/ruins/uncommon/deserted_house_ruins` +4 more |
 | `cobblemon:metal_alloy` | Evolution item | `crate:common` 0.203% |
+| `cobblemon:mighty_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:mirror_herb` | Premium competitive held item | `loot:rctmod/generic/uncommon/battle`; `loot:rctmod/generic/uncommon/nature`; `mod:cobbleworkers/archaeology_treasure` 3.45% +6 more |
+| `cobblemon:normal_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:mega_showdown/chests/observatory_barrel_3` 59.22%; `mod:cobblemon/ruins/common/deserted_house_ruins` +1 more |
 | `cobblemon:oval_stone` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution` |
+| `cobblemon:poison_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobblemon/ruins/common/mossy_oubliette_ruins`; `mod:cobblemon/sets/any_type_gem` |
+| `cobblemon:power_anklet` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
+| `cobblemon:power_band` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
+| `cobblemon:power_belt` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
+| `cobblemon:power_bracer` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
+| `cobblemon:power_lens` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
+| `cobblemon:power_weight` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
 | `cobblemon:prism_scale` | Evolution item | `crate:common` 0.203%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fishing/pokerod_treasure` +4 more |
 | `cobblemon:protector` | Evolution item | `crate:common` 0.203%; `loot:rctmod/generic/rare/battle`; `loot:legendarymonuments/chests/regirock_chest` 70.66% +6 more |
+| `cobblemon:psychic_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/liberty_island_chest` 39.31%; `mod:cobblemon/ruins/common/crumbling_arch_ruins` +3 more |
 | `cobblemon:punching_glove` | Premium competitive held item | `craft`; `market` |
+| `cobblemon:quick_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
 | `cobblemon:rare_candy` | Instant level. Purchasable, but heavy demand keeps it scarce. | `crate:common` 5.1%; `crate:rare` 12.0%; `loot:rctmod/generic/epic/medicine` +4 more |
 | `cobblemon:reaper_cloth` | Evolution item | `crate:common` 0.203%; `loot:legendarymonuments/chests/turnback_cave_vault` 5.48%; `mod:rctmod/generic/epic/evolution` +1 more |
+| `cobblemon:rock_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/regirock_chest` 70.66%; `mod:cobblemon/ruins/common/decaying_crypt_ruins` +4 more |
 | `cobblemon:rocky_helmet` | Premium competitive held item | `crate:common` 0.5%; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
-| `cobblemon:saccharine_pressure_plate` | Arceus plate / type booster | `mod:cobblemon/blocks/saccharine_pressure_plate`; `craft` |
 | `cobblemon:sachet` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
+| `cobblemon:smart_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
+| `cobblemon:steel_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:legendarymonuments/chests/heatran_cave_chest` 12.01%; `mod:cobblemon/ruins/common/hidden_bunker_ruins` +1 more |
 | `cobblemon:throat_spray` | Premium competitive held item | `craft`; `market` |
+| `cobblemon:tough_candy` | IV candy — raises a stat's effective IV by 1; heavy player demand | `crate:rare` 0.95%; `craft` |
+| `cobblemon:water_gem` | Type gem — one-shot damage boost | `loot:rctmod/generic/legendary/battle`; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobblemon/ruins/common/deserted_tower_ruins` +3 more |
 | `cobblemon:weakness_policy` | Premium competitive held item | `mod:cobblemon/blocks/weakness_policy`; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
 | `cobblemon:whipped_dream` | Evolution item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution`; `craft` |
 | `cobbreeding:egg_rare` | Rare Pokemon Egg — rare pool. The anchor: a Pokemon Egg is Rare. | `crate:pokemon` 14.925%; `crate:rare` 21.7% |
+| `gacha:common_key` | Common Crate key — minecraft:trial_key + gacha_key tag | `crate:common` 0.5% |
 | `gacha:pokemon_key` | Pokemon Crate key — minecraft:turtle_egg + gacha_key tag | *not currently granted anywhere* |
-| `gacha:rare_key` | Rare Crate key — minecraft:ominous_trial_key + gacha_key tag | `crate:common` 0.5%; `crate:rare` 1.4% |
 | `legendarymonuments:ancient_rubble_ore` | Ore block, mid-tier crafting material | `loot:legendarymonuments/chests/regigigas_chest` 16.94%; `mod:legendarymonuments/blocks/ancient_rubble_ore` 100.0% |
-| `legendarymonuments:distortion_pressure_plate` | Arceus plate / type booster | `mod:legendarymonuments/blocks/distortion_pressure_plate` 100.0%; `craft` |
 | `legendarymonuments:dragon_golem_ingot` | Golem crafting material | `craft` |
 | `legendarymonuments:dragon_pauldron` | Regi armour component | `craft` |
+| `legendarymonuments:dyna_apple` | Galar apple — crafts into the galarian urns | *not currently granted anywhere* |
 | `legendarymonuments:electric_golem_ingot` | Golem crafting material | `craft` |
 | `legendarymonuments:electric_pauldron` | Regi armour component | `craft` |
+| `legendarymonuments:firescourge_seal` | Locates a shrine — trader-obtainable, and inert without the banned Arc Phone | *not currently granted anywhere* |
 | `legendarymonuments:golem_scrap` | Golem crafting material — a component, not a gate | `loot:legendarymonuments/chests/turnback_cave_chest` 1.98%; `loot:legendarymonuments/chests/turnback_cave_vault` 2.22%; `craft` |
+| `legendarymonuments:grasswither_seal` | Locates a shrine — trader-obtainable, and inert without the banned Arc Phone | *not currently granted anywhere* |
+| `legendarymonuments:groundblight_seal` | Locates a shrine — trader-obtainable, and inert without the banned Arc Phone | *not currently granted anywhere* |
 | `legendarymonuments:ice_golem_ingot` | Golem crafting material | `craft` |
 | `legendarymonuments:ice_pauldron` | Regi armour component | `craft` |
+| `legendarymonuments:icerend_seal` | Locates a shrine — trader-obtainable, and inert without the banned Arc Phone | *not currently granted anywhere* |
 | `legendarymonuments:rock_golem_ingot` | Golem crafting material | `craft` |
 | `legendarymonuments:rock_pauldron` | Regi armour component | `craft` |
-| `legendarymonuments:sandstone_pressure_plate` | Arceus plate / type booster | `mod:legendarymonuments/blocks/sandstone_pressure_plate` 100.0%; `craft` |
 | `legendarymonuments:steel_golem_ingot` | Golem crafting material | `craft` |
 | `legendarymonuments:steel_pauldron` | Regi armour component | `craft` |
 | `legendarymonuments:titan_pauldron` | Regi armour component | `craft` |
@@ -327,20 +289,12 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:booster_energy` | Premium competitive held item | `craft` |
 | `mega_showdown:brendan_mega_cuff` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:bug_memory` | Silvally memory | *not currently granted anywhere* |
-| `mega_showdown:burn_drive` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:cameruptite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:charizardite_x` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:charizardite_y` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:chill_drive` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:chiseled_mega_meteorid_block` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/chiseled_mega_meteorid_block`; `craft` |
-| `mega_showdown:chiseled_mega_meteorid_brick` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/chiseled_mega_meteorid_brick`; `craft` |
-| `mega_showdown:cornerstone_mask` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:dark_memory` | Silvally memory | *not currently granted anywhere* |
-| `mega_showdown:deoxys_meteorite` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/deoxys_meteorite` |
+| `mega_showdown:deoxys_meteorite` | Deoxys | `mod:mega_showdown/blocks/deoxys_meteorite` |
 | `mega_showdown:diancite` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:dna_splicer` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:dormant_crystal` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/dormant_crystal` |
-| `mega_showdown:douse_drive` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:draco_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:dragon_memory` | Silvally memory | *not currently granted anywhere* |
 | `mega_showdown:dread_plate` | Arceus plate / type booster | `market` |
@@ -358,11 +312,10 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:gengarite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:ghost_memory` | Silvally memory | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75% |
 | `mega_showdown:glalitite` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:gracidea_flower` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/gracidea_flower`; `mod:mega_showdown/blocks/potted_gracidea` |
+| `mega_showdown:gracidea_flower` | Shaymin forme change — Shaymin is only reachable via the ultra_rare gacha egg pool | `mod:mega_showdown/blocks/gracidea_flower`; `mod:mega_showdown/blocks/potted_gracidea` |
 | `mega_showdown:grass_memory` | Silvally memory | *not currently granted anywhere* |
 | `mega_showdown:ground_memory` | Silvally memory | *not currently granted anywhere* |
 | `mega_showdown:gyaradosite` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:hearthflame_mask` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:heracronite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:houndoominite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:ice_memory` | Silvally memory | *not currently granted anywhere* |
@@ -370,7 +323,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:insect_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:iron_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:kangaskhanite` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:keystone_block` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/keystone_block`; `craft` |
 | `mega_showdown:korrina_glove` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:latiasite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:latiosite` | Mega Showdown item (type/forme adjacent) | `craft` |
@@ -394,46 +346,30 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:mega_bracelet_red` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:mega_bracelet_yellow` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:mega_meteorid_block` | Mega Showdown item (type/forme adjacent) | `loot:mega_showdown/archaeology/ruins` 4.55%; `mod:mega_showdown/chests/observatory_barrel` 59.22%; `mod:mega_showdown/chests/observatory_barrel_3` 59.22% +1 more |
-| `mega_showdown:mega_meteorid_brick` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/mega_meteorid_brick`; `craft` |
-| `mega_showdown:mega_meteorid_radiated_block` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/mega_meteorid_radiated_block` |
 | `mega_showdown:mega_ring` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:meltan` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:metagrossite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:mewtwonite_x` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:mewtwonite_y` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:mind_plate` | Arceus plate / type booster | `market` |
-| `mega_showdown:n_lunarizer` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:n_solarizer` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:omni_ring` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:pedestal` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/pedestal`; `craft` |
 | `mega_showdown:pidgeotite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:pika_case` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:pink_nectar` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:pinsirite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:pixie_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:poison_memory` | Silvally memory | *not currently granted anywhere* |
-| `mega_showdown:polished_mega_meteorid_block` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/polished_mega_meteorid_block`; `craft` |
-| `mega_showdown:power_spot` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/power_spot`; `craft` |
-| `mega_showdown:prison_bottle` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:psychic_memory` | Silvally memory | *not currently granted anywhere* |
 | `mega_showdown:purple_nectar` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:reassembly_unit` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/reassembly_unit`; `craft` |
 | `mega_showdown:red_nectar` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:reins_of_unity` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:reveal_glass` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:rock_memory` | Silvally memory | *not currently granted anywhere* |
 | `mega_showdown:rotom_catalogue` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:rotom_fan` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/rotom_fan`; `craft` |
-| `mega_showdown:rotom_fridge` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/rotom_fridge`; `craft` |
-| `mega_showdown:rotom_mow` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/rotom_mow`; `craft` |
-| `mega_showdown:rotom_oven` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/rotom_oven`; `craft` |
-| `mega_showdown:rotom_washing_machine` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/blocks/rotom_washing_machine`; `craft` |
 | `mega_showdown:sablenite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:salamencite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:sceptilite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:scizorite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:sharpedonite` | Mega Showdown item (type/forme adjacent) | `craft` |
-| `mega_showdown:shock_drive` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:sky_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:slowbronite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:soul_dew` | Mega Showdown item (type/forme adjacent) | `mod:mega_showdown/sets/any_showdown_held_item`; `craft` |
@@ -450,8 +386,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:tyranitarite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:venusaurite` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:water_memory` | Silvally memory | *not currently granted anywhere* |
-| `mega_showdown:wellspring_mask` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
-| `mega_showdown:wishing_star` | Mega Showdown item (type/forme adjacent) | *not currently granted anywhere* |
 | `mega_showdown:yellow_nectar` | Mega Showdown item (type/forme adjacent) | `craft` |
 | `mega_showdown:zap_plate` | Arceus plate / type booster | `market` |
 | `mega_showdown:zygarde_cube` | Mega Showdown item (type/forme adjacent) | `craft` |
@@ -460,6 +394,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `minecraft:elytra` | Vanilla chase item | *not currently granted anywhere* |
 | `minecraft:enchanted_golden_apple` | Vanilla chase item | `loot:legendarymonuments/chests/bell_tower_chest` 2.34%; `loot:legendarymonuments/chests/turnback_cave_vault` 2.22% |
 | `minecraft:heart_of_the_sea` | Vanilla chase item | `loot:legendarymonuments/chests/liberty_island_chest` 12.32%; `loot:legendarymonuments/chests/lugia_temple_chest` 5.54% |
+| `minecraft:netherite_ingot` | Netherite | *not currently granted anywhere* |
 | `minecraft:netherite_scrap` | Netherite path | *not currently granted anywhere* |
 
 ## T1 — Uncommon
@@ -489,19 +424,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:ancient_wing_rod` | Standard held / utility item | `craft` |
 | `cobblemon:apicot_berry` | Berry | `mod:cobblemon/blocks/apicot_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:apricorn_boat` | Standard held / utility item | `craft` |
-| `cobblemon:apricorn_button` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_button`; `craft` |
 | `cobblemon:apricorn_chest_boat` | Standard held / utility item | `craft` |
-| `cobblemon:apricorn_door` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_door`; `craft` |
-| `cobblemon:apricorn_fence` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_fence`; `craft` |
-| `cobblemon:apricorn_fence_gate` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_fence_gate`; `craft` |
-| `cobblemon:apricorn_hanging_sign` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_hanging_sign`; `mod:cobblemon/blocks/apricorn_wall_hanging_sign`; `craft` |
-| `cobblemon:apricorn_log` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_log` 100.0%; `mod:botanypots/cobblemon/crop/apricorn_log` |
-| `cobblemon:apricorn_planks` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_planks` 100.0%; `craft` |
-| `cobblemon:apricorn_sign` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_sign`; `mod:cobblemon/blocks/apricorn_wall_sign`; `craft` |
-| `cobblemon:apricorn_slab` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_slab`; `craft` |
-| `cobblemon:apricorn_stairs` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_stairs`; `craft` |
-| `cobblemon:apricorn_trapdoor` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_trapdoor`; `craft` |
-| `cobblemon:apricorn_wood` | Standard held / utility item | `mod:cobblemon/blocks/apricorn_wood` 100.0%; `craft` |
 | `cobblemon:aprijuice_black` | Standard held / utility item | `craft` |
 | `cobblemon:aprijuice_blue` | Standard held / utility item | `craft` |
 | `cobblemon:aprijuice_green` | Standard held / utility item | `craft` |
@@ -525,39 +448,22 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:black_apricorn` | Apricorn | `mod:cobblemon/blocks/black_apricorn` 100.0%; `mod:rctmod/generic/rare/nature` |
 | `cobblemon:black_apricorn_seed` | Apricorn | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/black_apricorn` 100.0%; `mod:cobblemon/blocks/black_apricorn_sapling` +4 more |
 | `cobblemon:black_belt` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `craft` +1 more |
-| `cobblemon:black_gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/black_gilded_chest` 100.0%; `craft` |
 | `cobblemon:black_glasses` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `craft` +1 more |
-| `cobblemon:black_plaque` | Standard held / utility item | `mod:cobblemon/blocks/black_plaque`; `craft` |
 | `cobblemon:black_sludge` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/legendary/battle`; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36% +1 more |
 | `cobblemon:black_tumblestone` | Crafting material | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/ruins/rare/black_tumblestone`; `mod:rctmod/generic/rare/archeology` +1 more |
-| `cobblemon:black_tumblestone_block` | Standard held / utility item | `craft` |
-| `cobblemon:black_tumblestone_brick_slab` | Standard held / utility item | `mod:cobblemon/blocks/black_tumblestone_brick_slab`; `craft` |
-| `cobblemon:black_tumblestone_brick_stairs` | Standard held / utility item | `mod:cobblemon/blocks/black_tumblestone_brick_stairs` 100.0%; `craft` |
-| `cobblemon:black_tumblestone_brick_wall` | Standard held / utility item | `mod:cobblemon/blocks/black_tumblestone_brick_wall` 100.0%; `craft` |
-| `cobblemon:black_tumblestone_bricks` | Standard held / utility item | `mod:cobblemon/blocks/black_tumblestone_bricks` 100.0%; `craft` |
 | `cobblemon:blue_apricorn` | Apricorn | `mod:cobblemon/blocks/blue_apricorn` 100.0%; `mod:rctmod/generic/rare/nature` |
 | `cobblemon:blue_apricorn_seed` | Apricorn | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/blue_apricorn` 100.0%; `mod:cobblemon/blocks/blue_apricorn_sapling` +4 more |
-| `cobblemon:blue_gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/blue_gilded_chest` 100.0%; `craft` |
 | `cobblemon:blue_mint_leaf` | Nature mint | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/blue_mint` 100.0%; `mod:cobblemon/blocks/blue_mint` 100.0% |
 | `cobblemon:blue_mint_seeds` | Mint seed | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/blue_mint` 100.0%; `mod:cobblemon/blocks/blue_mint` 100.0% +2 more |
-| `cobblemon:blue_plaque` | Standard held / utility item | `mod:cobblemon/blocks/blue_plaque`; `craft` |
 | `cobblemon:bluk_berry` | Berry | `mod:cobblemon/blocks/bluk_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:bold_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
 | `cobblemon:brave_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
 | `cobblemon:bright_powder` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `craft`; `market` |
 | `cobblemon:brittle_candy` | Standard held / utility item | `craft` |
-| `cobblemon:brown_plaque` | Standard held / utility item | `mod:cobblemon/blocks/brown_plaque`; `craft` |
 | `cobblemon:bugwort` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:bygone_sherd` | Standard held / utility item | `mod:cobblemon/ruins/common/decaying_crypt_ruins`; `mod:cobblemon/ruins/uncommon/crumbling_arch_ruins`; `mod:cobblemon/ruins/uncommon/decaying_crypt_ruins` +3 more |
 | `cobblemon:calcium` | Vitamin | `crate:common` 1.183%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36%; `mod:rctmod/generic/uncommon/medicine` +2 more |
 | `cobblemon:calm_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
-| `cobblemon:campfire_pot_black` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_black` 100.0%; `craft` |
-| `cobblemon:campfire_pot_blue` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_blue` 100.0%; `craft` |
-| `cobblemon:campfire_pot_green` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_green` 100.0%; `craft` |
-| `cobblemon:campfire_pot_pink` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_pink` 100.0%; `craft` |
-| `cobblemon:campfire_pot_red` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_red` 100.0%; `craft` |
-| `cobblemon:campfire_pot_white` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_white` 100.0%; `craft` |
-| `cobblemon:campfire_pot_yellow` | Standard held / utility item | `mod:cobblemon/blocks/campfire_pot_yellow` 100.0%; `craft` |
 | `cobblemon:candied_apple` | Standard held / utility item | `craft` |
 | `cobblemon:candied_berry` | Berry | `craft` |
 | `cobblemon:capture_sherd` | Standard held / utility item | `mod:cobblemon/ruins/common/deserted_house_ruins`; `mod:cobblemon/ruins/common/deserted_tower_ruins`; `mod:cobblemon/ruins/uncommon/deserted_house_ruins` +3 more |
@@ -572,12 +478,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:cherish_rod` | Standard held / utility item | `craft` |
 | `cobblemon:chesto_berry` | Berry | `mod:cobblemon/blocks/chesto_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:chilan_berry` | Berry | `mod:cobblemon/blocks/chilan_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
-| `cobblemon:chiseled_black_tumblestone_bricks` | Standard held / utility item | `mod:cobblemon/blocks/chiseled_black_tumblestone_bricks` 100.0%; `craft` |
-| `cobblemon:chiseled_polished_black_tumblestone` | Crafting material | `mod:cobblemon/blocks/chiseled_polished_black_tumblestone` 100.0%; `craft` |
-| `cobblemon:chiseled_polished_sky_tumblestone` | Crafting material | `mod:cobblemon/blocks/chiseled_polished_sky_tumblestone` 100.0%; `craft` |
-| `cobblemon:chiseled_polished_tumblestone` | Crafting material | `mod:cobblemon/blocks/chiseled_polished_tumblestone` 100.0%; `craft` |
-| `cobblemon:chiseled_sky_tumblestone_bricks` | Standard held / utility item | `mod:cobblemon/blocks/chiseled_sky_tumblestone_bricks` 100.0%; `craft` |
-| `cobblemon:chiseled_tumblestone_bricks` | Standard held / utility item | `mod:cobblemon/blocks/chiseled_tumblestone_bricks` 100.0%; `craft` |
 | `cobblemon:chople_berry` | Berry | `mod:cobblemon/blocks/chople_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
 | `cobblemon:citrine_ball` | Standard held / utility item | `mod:cobblemon/injection/chests/spawn_bonus_chest` 14.29%; `mod:cobblemon/sets/any_common_pokeball`; `mod:rctmod/generic/common/pokeballs` +1 more |
 | `cobblemon:citrine_rod` | Standard held / utility item | `mod:rctmod/generic/epic/fishing`; `craft` |
@@ -596,11 +496,9 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:custap_berry` | Berry | `mod:cobblemon/blocks/custap_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:cyan_mint_leaf` | Nature mint | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/cyan_mint` 100.0%; `mod:cobblemon/blocks/cyan_mint` 100.0% |
 | `cobblemon:cyan_mint_seeds` | Mint seed | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/cyan_mint` 100.0%; `mod:cobblemon/blocks/cyan_mint` 100.0% +2 more |
-| `cobblemon:cyan_plaque` | Standard held / utility item | `mod:cobblemon/blocks/cyan_plaque`; `craft` |
 | `cobblemon:damp_rock` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `loot:legendarymonuments/chests/regirock_chest` 29.58%; `mod:cobbleworkers/archaeology_treasure` 3.45% +6 more |
 | `cobblemon:destiny_knot` | Standard held / utility item | `crate:common` 1.5%; `loot:rctmod/generic/rare/battle`; `mod:cobblemon/ruins/uncommon/deserted_town_center_ruins` +7 more |
 | `cobblemon:dire_hit` | Standard held / utility item | `mod:cobblemon/blocks/dire_hit`; `mod:rctmod/generic/common/battle`; `craft` |
-| `cobblemon:display_case` | Standard held / utility item | `mod:cobblemon/blocks/display_case`; `craft` |
 | `cobblemon:dive_ball` | Specialty ball | `loot:legendarymonuments/chests/liberty_island_chest` 39.31%; `loot:legendarymonuments/chests/lugia_temple_chest` 58.54%; `mod:cobbleworkers/dive_treasure` 33.33% +4 more |
 | `cobblemon:dive_rod` | Standard held / utility item | `loot:legendarymonuments/chests/liberty_island_chest` 12.32%; `mod:rctmod/generic/legendary/fishing`; `craft` |
 | `cobblemon:dome_fossil` | Fossil | `loot:rctmod/generic/legendary/archeology`; `mod:cobbleworkers/archaeology_treasure` 6.67%; `mod:cobblemon/fossils/rare/dome_fossil` +4 more |
@@ -625,7 +523,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:float_stone` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `market` |
 | `cobblemon:flower_sweet` | Standard held / utility item | `mod:rctmod/generic/epic/evolution`; `craft` |
 | `cobblemon:focus_band` | Standard held / utility item | `mod:cobblemon/sets/any_ancient_held_item`; `mod:rctmod/generic/epic/battle`; `craft` +1 more |
-| `cobblemon:fossil_analyzer` | Fossil | `mod:cobblemon/blocks/fossil_analyzer`; `craft` |
 | `cobblemon:fossilized_bird` | Fossil | `loot:rctmod/generic/legendary/archeology`; `mod:cobbleworkers/archaeology_treasure` 6.67%; `mod:cobblemon/fossils/rare/bird_fossil` +4 more |
 | `cobblemon:fossilized_dino` | Fossil | `loot:rctmod/generic/legendary/archeology`; `mod:cobbleworkers/archaeology_treasure` 6.67%; `mod:cobblemon/fossils/rare/dino_fossil` +4 more |
 | `cobblemon:fossilized_drake` | Fossil | `loot:rctmod/generic/legendary/archeology`; `mod:cobbleworkers/archaeology_treasure` 6.67%; `mod:cobblemon/fossils/rare/drake_fossil` +4 more |
@@ -638,16 +535,12 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:genius_feather` | EV feather | `loot:legendarymonuments/chests/bell_tower_chest` 62.5%; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `mod:rctmod/generic/uncommon/training` +1 more |
 | `cobblemon:genius_mochi` | Standard held / utility item | `craft` |
 | `cobblemon:gentle_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
-| `cobblemon:gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/gilded_chest` 100.0%; `craft` |
 | `cobblemon:grassy_seed` | Standard held / utility item | `craft` |
-| `cobblemon:gray_plaque` | Standard held / utility item | `mod:cobblemon/blocks/gray_plaque`; `craft` |
 | `cobblemon:great_rod` | Standard held / utility item | `craft` |
 | `cobblemon:green_apricorn` | Apricorn | `mod:cobblemon/blocks/green_apricorn` 100.0%; `mod:rctmod/generic/rare/nature` |
 | `cobblemon:green_apricorn_seed` | Apricorn | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/green_apricorn` 100.0%; `mod:cobblemon/blocks/green_apricorn_sapling` +4 more |
-| `cobblemon:green_gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/green_gilded_chest` 100.0%; `craft` |
 | `cobblemon:green_mint_leaf` | Nature mint | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/green_mint` 100.0%; `mod:cobblemon/blocks/green_mint` 100.0% |
 | `cobblemon:green_mint_seeds` | Mint seed | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/green_mint` 100.0%; `mod:cobblemon/blocks/green_mint` 100.0% +2 more |
-| `cobblemon:green_plaque` | Standard held / utility item | `mod:cobblemon/blocks/green_plaque`; `craft` |
 | `cobblemon:grepa_berry` | Berry | `mod:cobblemon/blocks/grepa_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:grip_claw` | Standard held / utility item | `mod:mega_showdown/sets/any_showdown_held_item`; `market` |
 | `cobblemon:growth_mulch` | Mulch | `mod:rctmod/generic/common/nature`; `craft` |
@@ -658,10 +551,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:heal_ball` | Standard held / utility item | `mod:rctmod/generic/uncommon/pokeballs`; `craft` |
 | `cobblemon:heal_powder` | Standard held / utility item | `mod:cobblemon/ruins/pots/ruins`; `mod:cobblemon/sets/any_natural_heal_item`; `mod:rctmod/generic/rare/medicine` +1 more |
 | `cobblemon:heal_rod` | Standard held / utility item | `craft` |
-| `cobblemon:healing_machine` | Standard held / utility item | `mod:cobblemon/blocks/healing_machine`; `craft` |
 | `cobblemon:health_feather` | EV feather | `loot:legendarymonuments/chests/bell_tower_chest` 62.5%; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `mod:rctmod/generic/uncommon/training` +1 more |
 | `cobblemon:health_mochi` | Standard held / utility item | `craft` |
-| `cobblemon:hearty_grain_bale` | Standard held / utility item | `mod:cobblemon/blocks/hearty_grain_bale` 100.0%; `craft` |
 | `cobblemon:hearty_grains` | Standard held / utility item | `mod:cobblemon/blocks/hearty_grains` 100.0%; `mod:cobblemon/blocks/hearty_grains` 100.0%; `craft` |
 | `cobblemon:heat_rock` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `loot:legendarymonuments/chests/regirock_chest` 29.58%; `mod:legendarymonuments/chests/heatran_cave_chest` 12.01% +6 more |
 | `cobblemon:heavy_ball` | Specialty ball | `loot:legendarymonuments/chests/registeel_chest` 78.61%; `mod:rctmod/generic/rare/pokeballs`; `craft` |
@@ -697,10 +588,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:level_rod` | Standard held / utility item | `craft` |
 | `cobblemon:liechi_berry` | Berry | `mod:cobblemon/blocks/liechi_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:light_ball` | Standard held / utility item | `mod:rctmod/generic/epic/battle`; `market` |
-| `cobblemon:light_blue_plaque` | Standard held / utility item | `mod:cobblemon/blocks/light_blue_plaque`; `craft` |
 | `cobblemon:light_clay` | Standard held / utility item | `craft`; `market` |
-| `cobblemon:light_gray_plaque` | Standard held / utility item | `mod:cobblemon/blocks/light_gray_plaque`; `craft` |
-| `cobblemon:lime_plaque` | Standard held / utility item | `mod:cobblemon/blocks/lime_plaque`; `craft` |
 | `cobblemon:loamy_mulch` | Mulch | `loot:rctmod/generic/uncommon/nature`; `craft` |
 | `cobblemon:lonely_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
 | `cobblemon:love_ball` | Specialty ball | `mod:rctmod/generic/epic/pokeballs`; `craft` |
@@ -714,7 +602,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:lure_rod` | Standard held / utility item | `mod:rctmod/generic/legendary/fishing`; `craft` |
 | `cobblemon:luxury_ball` | Specialty ball | `mod:rctmod/generic/epic/pokeballs`; `craft` |
 | `cobblemon:luxury_rod` | Standard held / utility item | `craft` |
-| `cobblemon:magenta_plaque` | Standard held / utility item | `mod:cobblemon/blocks/magenta_plaque`; `craft` |
 | `cobblemon:magnet` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `loot:legendarymonuments/chests/dragoeleki_chest` 32.01% +3 more |
 | `cobblemon:mago_berry` | Berry | `mod:cobblemon/blocks/mago_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:magost_berry` | Berry | `mod:cobblemon/blocks/magost_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
@@ -730,7 +617,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:miracle_seed` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `craft` +1 more |
 | `cobblemon:misty_seed` | Standard held / utility item | `craft` |
 | `cobblemon:modest_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
-| `cobblemon:monitor` | Standard held / utility item | `mod:cobblemon/blocks/monitor`; `craft` |
 | `cobblemon:moomoo_milk` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:moon_ball` | Specialty ball | `mod:rctmod/generic/rare/pokeballs`; `craft` |
 | `cobblemon:moon_rod` | Standard held / utility item | `craft` |
@@ -756,35 +642,27 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:old_gateau` | Standard held / utility item | `craft` |
 | `cobblemon:open_faced_sandwich` | Standard held / utility item | `craft` |
 | `cobblemon:oran_berry` | Berry | `mod:cobblemon/blocks/oran_berry` 100.0%; `mod:cobblemon/villages/village_pokecenters`; `mod:rctmod/generic/common/berries` |
-| `cobblemon:orange_plaque` | Standard held / utility item | `mod:cobblemon/blocks/orange_plaque`; `craft` |
 | `cobblemon:pamtre_berry` | Berry | `mod:cobblemon/blocks/pamtre_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:park_ball` | Specialty ball | `mod:rctmod/generic/rare/pokeballs`; `craft` |
 | `cobblemon:park_rod` | Standard held / utility item | `craft` |
 | `cobblemon:passho_berry` | Berry | `mod:cobblemon/blocks/passho_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
-| `cobblemon:pasture` | Standard held / utility item | `mod:cobblemon/blocks/pasture`; `craft` |
 | `cobblemon:payapa_berry` | Berry | `mod:cobblemon/blocks/payapa_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
-| `cobblemon:pc` | Standard held / utility item | `mod:cobblemon/blocks/pc`; `craft` |
 | `cobblemon:peat_block` | Standard held / utility item | `crate:common` 0.203%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fossils/uncommon/prehistoric_birch_tree` +5 more |
 | `cobblemon:peat_mulch` | Mulch | `mod:rctmod/generic/rare/nature`; `craft` |
 | `cobblemon:pecha_berry` | Berry | `mod:cobblemon/blocks/pecha_berry` 100.0%; `mod:rctmod/generic/uncommon/berries` |
-| `cobblemon:pep_up_flower` | Standard held / utility item | `mod:cobblemon/blocks/revival_herb` 100.0%; `mod:cobblemon/blocks/pep_up_flower`; `mod:cobblemon/blocks/potted_pep_up_flower` +1 more |
 | `cobblemon:persim_berry` | Berry | `mod:cobblemon/blocks/persim_berry` 100.0%; `mod:rctmod/generic/uncommon/berries` |
 | `cobblemon:petaya_berry` | Berry | `mod:cobblemon/blocks/petaya_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:pewter_crunchies` | Standard held / utility item | `craft` |
 | `cobblemon:pinap_berry` | Berry | `mod:cobblemon/blocks/pinap_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:pink_apricorn` | Apricorn | `loot:rctmod/generic/uncommon/nature`; `mod:cobblemon/blocks/pink_apricorn` 100.0% |
 | `cobblemon:pink_apricorn_seed` | Apricorn | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/pink_apricorn` 100.0%; `mod:cobblemon/blocks/pink_apricorn_sapling` +4 more |
-| `cobblemon:pink_gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/pink_gilded_chest` 100.0%; `craft` |
 | `cobblemon:pink_mint_leaf` | Nature mint | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/pink_mint` 100.0%; `mod:cobblemon/blocks/pink_mint` 100.0% |
 | `cobblemon:pink_mint_seeds` | Mint seed | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/pink_mint` 100.0%; `mod:cobblemon/blocks/pink_mint` 100.0% +2 more |
-| `cobblemon:pink_plaque` | Standard held / utility item | `mod:cobblemon/blocks/pink_plaque`; `craft` |
 | `cobblemon:plume_fossil` | Fossil | `loot:rctmod/generic/legendary/archeology`; `mod:cobbleworkers/archaeology_treasure` 6.67%; `mod:cobblemon/fossils/rare/plume_fossil` +4 more |
 | `cobblemon:poison_barb` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `mod:cobblemon/ruins/common/decaying_crypt_ruins` +4 more |
 | `cobblemon:poke_bait` | Standard held / utility item | `craft` |
-| `cobblemon:poke_cake` | Standard held / utility item | `craft` |
 | `cobblemon:poke_puff` | Standard held / utility item | *not currently granted anywhere* |
 | `cobblemon:poke_rod` | Standard held / utility item | `mod:rctmod/generic/epic/fishing`; `craft` |
-| `cobblemon:poke_snack` | Standard held / utility item | `craft` |
 | `cobblemon:pokedex_black` | Standard held / utility item | `craft` |
 | `cobblemon:pokedex_blue` | Standard held / utility item | `craft` |
 | `cobblemon:pokedex_green` | Standard held / utility item | `craft` |
@@ -793,28 +671,10 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:pokedex_white` | Standard held / utility item | `craft` |
 | `cobblemon:pokedex_yellow` | Standard held / utility item | `craft` |
 | `cobblemon:pokerod_smithing_template` | Standard held / utility item | `mod:cobblemon/injection/gameplay/fishing/treasure` 100.0%; `mod:cobblemon/shipwreck_coves/fishing_boats/fishing_boat`; `mod:cobblemon/shipwreck_coves/gilded_chests/big_treasure` +2 more |
-| `cobblemon:polished_black_tumblestone` | Crafting material | `mod:cobblemon/blocks/polished_black_tumblestone` 100.0%; `craft` |
-| `cobblemon:polished_black_tumblestone_slab` | Standard held / utility item | `mod:cobblemon/blocks/polished_black_tumblestone_slab`; `craft` |
-| `cobblemon:polished_black_tumblestone_stairs` | Standard held / utility item | `mod:cobblemon/blocks/polished_black_tumblestone_stairs` 100.0%; `craft` |
-| `cobblemon:polished_black_tumblestone_wall` | Standard held / utility item | `mod:cobblemon/blocks/polished_black_tumblestone_wall` 100.0%; `craft` |
-| `cobblemon:polished_sky_tumblestone` | Crafting material | `mod:cobblemon/blocks/polished_sky_tumblestone` 100.0%; `craft` |
-| `cobblemon:polished_sky_tumblestone_slab` | Standard held / utility item | `mod:cobblemon/blocks/polished_sky_tumblestone_slab`; `craft` |
-| `cobblemon:polished_sky_tumblestone_stairs` | Standard held / utility item | `mod:cobblemon/blocks/polished_sky_tumblestone_stairs` 100.0%; `craft` |
-| `cobblemon:polished_sky_tumblestone_wall` | Standard held / utility item | `mod:cobblemon/blocks/polished_sky_tumblestone_wall` 100.0%; `craft` |
-| `cobblemon:polished_tumblestone` | Crafting material | `mod:cobblemon/blocks/polished_tumblestone` 100.0%; `craft` |
-| `cobblemon:polished_tumblestone_slab` | Standard held / utility item | `mod:cobblemon/blocks/polished_tumblestone_slab`; `craft` |
-| `cobblemon:polished_tumblestone_stairs` | Standard held / utility item | `mod:cobblemon/blocks/polished_tumblestone_stairs` 100.0%; `craft` |
-| `cobblemon:polished_tumblestone_wall` | Standard held / utility item | `mod:cobblemon/blocks/polished_tumblestone_wall` 100.0%; `craft` |
 | `cobblemon:pomeg_berry` | Berry | `mod:cobblemon/blocks/pomeg_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:ponigiri` | Standard held / utility item | `craft` |
 | `cobblemon:potato_mochi` | Standard held / utility item | `craft` |
-| `cobblemon:power_anklet` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
-| `cobblemon:power_band` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
-| `cobblemon:power_belt` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
-| `cobblemon:power_bracer` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
 | `cobblemon:power_herb` | Standard held / utility item | `loot:rctmod/generic/uncommon/battle`; `loot:rctmod/generic/uncommon/nature`; `mod:cobbleworkers/archaeology_treasure` 3.45% +6 more |
-| `cobblemon:power_lens` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
-| `cobblemon:power_weight` | EV training item | `crate:common` 0.667%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
 | `cobblemon:pp_max` | Standard held / utility item | `loot:rctmod/generic/epic/medicine`; `loot:legendarymonuments/chests/turnback_cave_chest` 1.98%; `craft` |
 | `cobblemon:pp_up` | Standard held / utility item | `loot:legendarymonuments/chests/turnback_cave_chest` 11.36%; `mod:rctmod/generic/rare/medicine`; `craft` |
 | `cobblemon:premier_ball` | Specialty ball | `mod:cobblemon/injection/chests/spawn_bonus_chest` 7.14%; `mod:rctmod/generic/uncommon/pokeballs`; `craft` |
@@ -822,7 +682,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:protective_pads` | Standard held / utility item | `craft`; `market` |
 | `cobblemon:protein` | Vitamin | `crate:common` 1.183%; `loot:legendarymonuments/chests/regirock_chest` 5.59%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36% +2 more |
 | `cobblemon:psychic_seed` | Standard held / utility item | `craft` |
-| `cobblemon:purple_plaque` | Standard held / utility item | `mod:cobblemon/blocks/purple_plaque`; `craft` |
 | `cobblemon:qualot_berry` | Berry | `mod:cobblemon/blocks/qualot_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:quick_ball` | Specialty ball | `crate:common` 3.1%; `mod:rctmod/generic/epic/pokeballs`; `craft` +1 more |
 | `cobblemon:quick_claw` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `market` |
@@ -841,13 +700,11 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:red_card` | Standard held / utility item | `mod:rctmod/generic/epic/battle`; `craft`; `market` |
 | `cobblemon:red_mint_leaf` | Nature mint | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/red_mint` 100.0%; `mod:cobblemon/blocks/red_mint` 100.0% |
 | `cobblemon:red_mint_seeds` | Mint seed | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/red_mint` 100.0%; `mod:cobblemon/blocks/red_mint` 100.0% +2 more |
-| `cobblemon:red_plaque` | Standard held / utility item | `mod:cobblemon/blocks/red_plaque`; `craft` |
 | `cobblemon:relaxed_mint` | Nature mint | `crate:common` 0.195%; `mod:rctmod/generic/rare/nature`; `craft` |
 | `cobblemon:repeat_ball` | Specialty ball | `mod:rctmod/generic/epic/pokeballs`; `craft` |
 | `cobblemon:repeat_rod` | Standard held / utility item | `craft` |
 | `cobblemon:resist_feather` | EV feather | `loot:legendarymonuments/chests/bell_tower_chest` 62.5%; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `mod:rctmod/generic/uncommon/training` +1 more |
 | `cobblemon:resist_mochi` | Standard held / utility item | `craft` |
-| `cobblemon:restoration_tank` | Standard held / utility item | `mod:cobblemon/blocks/restoration_tank`; `craft` |
 | `cobblemon:revival_herb` | Standard held / utility item | `mod:cobblemon/blocks/revival_herb` 100.0%; `mod:cobblemon/sets/any_natural_heal_item`; `mod:rctmod/generic/rare/medicine` +1 more |
 | `cobblemon:ribbon_sweet` | Standard held / utility item | `mod:rctmod/generic/epic/evolution`; `craft` |
 | `cobblemon:rich_mulch` | Mulch | `loot:rctmod/generic/uncommon/nature`; `craft` |
@@ -861,20 +718,8 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:roseli_berry` | Berry | `mod:cobblemon/blocks/roseli_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
 | `cobblemon:rowap_berry` | Berry | `mod:cobblemon/blocks/rowap_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
 | `cobblemon:saccharine_boat` | Standard held / utility item | `craft` |
-| `cobblemon:saccharine_button` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_button`; `craft` |
 | `cobblemon:saccharine_chest_boat` | Standard held / utility item | `craft` |
-| `cobblemon:saccharine_door` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_door`; `craft` |
-| `cobblemon:saccharine_fence` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_fence`; `craft` |
-| `cobblemon:saccharine_fence_gate` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_fence_gate`; `craft` |
-| `cobblemon:saccharine_hanging_sign` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_hanging_sign`; `mod:cobblemon/blocks/saccharine_wall_hanging_sign`; `craft` |
-| `cobblemon:saccharine_log` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_log` 100.0%; `mod:cobblemon/blocks/saccharine_log_slathered` 100.0% |
-| `cobblemon:saccharine_planks` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_planks` 100.0%; `craft` |
 | `cobblemon:saccharine_sapling` | Standard held / utility item | `mod:cobblemon/blocks/potted_saccharine_sapling`; `mod:cobblemon/blocks/saccharine_sapling` |
-| `cobblemon:saccharine_sign` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_sign`; `mod:cobblemon/blocks/saccharine_wall_sign`; `craft` |
-| `cobblemon:saccharine_slab` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_slab`; `craft` |
-| `cobblemon:saccharine_stairs` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_stairs`; `craft` |
-| `cobblemon:saccharine_trapdoor` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_trapdoor`; `craft` |
-| `cobblemon:saccharine_wood` | Standard held / utility item | `mod:cobblemon/blocks/saccharine_wood` 100.0%; `craft` |
 | `cobblemon:safari_ball` | Specialty ball | `mod:rctmod/generic/uncommon/pokeballs`; `craft` |
 | `cobblemon:safari_rod` | Standard held / utility item | `craft` |
 | `cobblemon:safety_goggles` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `craft`; `market` |
@@ -899,27 +744,13 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:sitrus_berry` | Berry | `mod:cobblemon/blocks/sitrus_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
 | `cobblemon:skull_fossil` | Fossil | `loot:rctmod/generic/legendary/archeology`; `mod:cobbleworkers/archaeology_treasure` 6.67%; `mod:cobblemon/fossils/rare/skull_fossil` +4 more |
 | `cobblemon:sky_tumblestone` | Crafting material | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/ruins/rare/sky_tumblestone`; `mod:rctmod/generic/uncommon/archeology` +1 more |
-| `cobblemon:sky_tumblestone_block` | Standard held / utility item | `craft` |
-| `cobblemon:sky_tumblestone_brick_slab` | Standard held / utility item | `mod:cobblemon/blocks/sky_tumblestone_brick_slab`; `craft` |
-| `cobblemon:sky_tumblestone_brick_stairs` | Standard held / utility item | `mod:cobblemon/blocks/sky_tumblestone_brick_stairs` 100.0%; `craft` |
-| `cobblemon:sky_tumblestone_brick_wall` | Standard held / utility item | `mod:cobblemon/blocks/sky_tumblestone_brick_wall` 100.0%; `craft` |
-| `cobblemon:sky_tumblestone_bricks` | Standard held / utility item | `mod:cobblemon/blocks/sky_tumblestone_bricks` 100.0%; `craft` |
 | `cobblemon:slate_ball` | Standard held / utility item | `mod:cobblemon/injection/chests/spawn_bonus_chest` 14.29%; `mod:cobblemon/sets/any_common_pokeball`; `mod:rctmod/generic/common/pokeballs` +1 more |
 | `cobblemon:slate_rod` | Standard held / utility item | `mod:rctmod/generic/epic/fishing`; `craft` |
 | `cobblemon:slow_candy` | Standard held / utility item | `craft` |
 | `cobblemon:small_budding_sky_tumblestone` | Crafting material | `loot:rctmod/generic/legendary/archeology`; `mod:rctmod/generic/common/archeology` |
 | `cobblemon:smoke_ball` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `mod:cobblemon/ruins/uncommon/gimmi_tower_rooted`; `market` |
 | `cobblemon:smoked_tail_curry` | Standard held / utility item | `craft` |
-| `cobblemon:smooth_black_tumblestone` | Crafting material | `mod:cobblemon/blocks/smooth_black_tumblestone` 100.0%; `craft` |
-| `cobblemon:smooth_black_tumblestone_slab` | Standard held / utility item | `mod:cobblemon/blocks/smooth_black_tumblestone_slab`; `craft` |
-| `cobblemon:smooth_black_tumblestone_stairs` | Standard held / utility item | `mod:cobblemon/blocks/smooth_black_tumblestone_stairs` 100.0%; `craft` |
 | `cobblemon:smooth_rock` | Standard held / utility item | `loot:rctmod/generic/rare/battle`; `loot:legendarymonuments/chests/regirock_chest` 29.58%; `mod:cobbleworkers/archaeology_treasure` 3.45% +6 more |
-| `cobblemon:smooth_sky_tumblestone` | Crafting material | `mod:cobblemon/blocks/smooth_sky_tumblestone` 100.0%; `craft` |
-| `cobblemon:smooth_sky_tumblestone_slab` | Standard held / utility item | `mod:cobblemon/blocks/smooth_sky_tumblestone_slab`; `craft` |
-| `cobblemon:smooth_sky_tumblestone_stairs` | Standard held / utility item | `mod:cobblemon/blocks/smooth_sky_tumblestone_stairs` 100.0%; `craft` |
-| `cobblemon:smooth_tumblestone` | Crafting material | `mod:cobblemon/blocks/smooth_tumblestone` 100.0%; `craft` |
-| `cobblemon:smooth_tumblestone_slab` | Standard held / utility item | `mod:cobblemon/blocks/smooth_tumblestone_slab`; `craft` |
-| `cobblemon:smooth_tumblestone_stairs` | Standard held / utility item | `mod:cobblemon/blocks/smooth_tumblestone_stairs` 100.0%; `craft` |
 | `cobblemon:soft_sand` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `craft` +1 more |
 | `cobblemon:soothe_bell` | Standard held / utility item | `loot:legendarymonuments/chests/bell_tower_chest` 9.07%; `mod:rctmod/generic/rare/training`; `craft` +1 more |
 | `cobblemon:spell_tag` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36% +5 more |
@@ -930,10 +761,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:starf_berry` | Berry | `mod:cobblemon/blocks/starf_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:sticky_barb` | Standard held / utility item | `mod:rctmod/generic/epic/battle`; `market` |
 | `cobblemon:strawberry_sweet` | Standard held / utility item | `mod:rctmod/generic/epic/evolution`; `craft` |
-| `cobblemon:stripped_apricorn_log` | Standard held / utility item | `mod:cobblemon/blocks/stripped_apricorn_log` 100.0% |
-| `cobblemon:stripped_apricorn_wood` | Standard held / utility item | `mod:cobblemon/blocks/stripped_apricorn_wood` 100.0%; `craft` |
-| `cobblemon:stripped_saccharine_log` | Standard held / utility item | `mod:cobblemon/blocks/stripped_saccharine_log` 100.0% |
-| `cobblemon:stripped_saccharine_wood` | Standard held / utility item | `mod:cobblemon/blocks/stripped_saccharine_wood` 100.0% |
 | `cobblemon:surprise_mulch` | Mulch | `mod:rctmod/generic/rare/nature`; `craft` |
 | `cobblemon:suspicious_sherd` | Standard held / utility item | `mod:cobblemon/ruins/common/hidden_bunker_ruins`; `mod:cobblemon/ruins/common/unstable_cave_ruins`; `mod:cobblemon/ruins/uncommon/deserted_house_ruins` +3 more |
 | `cobblemon:sweet_apple` | Standard held / utility item | `crate:common` 0.203%; `mod:mega_showdown/archaeology/observatory_sus` 18.75%; `mod:rctmod/generic/epic/evolution` |
@@ -944,8 +771,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:tanga_berry` | Berry | `mod:cobblemon/blocks/tanga_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
 | `cobblemon:tart_apple` | Standard held / utility item | `crate:common` 0.203%; `mod:rctmod/generic/epic/evolution` |
 | `cobblemon:tasty_tail` | Standard held / utility item | *not currently granted anywhere* |
-| `cobblemon:tatami_block` | Standard held / utility item | `mod:cobblemon/blocks/tatami_block` 100.0%; `craft` |
-| `cobblemon:tatami_mat` | Standard held / utility item | `mod:cobblemon/blocks/tatami_mat` 100.0%; `craft` |
 | `cobblemon:terrain_extender` | Standard held / utility item | `craft`; `market` |
 | `cobblemon:timer_ball` | Specialty ball | `crate:common` 4.6%; `loot:legendarymonuments/chests/regigigas_chest` 99.11%; `mod:rctmod/generic/epic/pokeballs` +2 more |
 | `cobblemon:timer_rod` | Standard held / utility item | `craft` |
@@ -953,11 +778,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:touga_berry` | Berry | `mod:cobblemon/blocks/touga_berry` 100.0%; `mod:rctmod/generic/uncommon/berries` |
 | `cobblemon:toxic_orb` | Standard held / utility item | `loot:rctmod/generic/legendary/battle`; `craft`; `market` |
 | `cobblemon:tumblestone` | Standard held / utility item | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/ruins/rare/tumblestone`; `mod:rctmod/generic/rare/archeology` +1 more |
-| `cobblemon:tumblestone_block` | Standard held / utility item | `craft` |
-| `cobblemon:tumblestone_brick_slab` | Standard held / utility item | `mod:cobblemon/blocks/tumblestone_brick_slab`; `craft` |
-| `cobblemon:tumblestone_brick_stairs` | Standard held / utility item | `mod:cobblemon/blocks/tumblestone_brick_stairs` 100.0%; `craft` |
-| `cobblemon:tumblestone_brick_wall` | Standard held / utility item | `mod:cobblemon/blocks/tumblestone_brick_wall` 100.0%; `craft` |
-| `cobblemon:tumblestone_bricks` | Standard held / utility item | `mod:cobblemon/blocks/tumblestone_bricks` 100.0%; `craft` |
 | `cobblemon:twisted_spoon` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `mod:cobblemon/ruins/uncommon/crumbling_arch_ruins` +7 more |
 | `cobblemon:ultra_rod` | Standard held / utility item | `craft` |
 | `cobblemon:unremarkable_teacup` | Standard held / utility item | `crate:common` 0.203%; `mod:cobblemon/ruins/uncommon/crumbling_arch_ruins`; `mod:cobblemon/ruins/uncommon/deserted_house_ruins` +4 more |
@@ -974,11 +794,9 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:wepear_berry` | Berry | `mod:cobblemon/blocks/wepear_berry` 100.0%; `mod:rctmod/generic/rare/berries` |
 | `cobblemon:white_apricorn` | Apricorn | `loot:rctmod/generic/uncommon/nature`; `mod:cobblemon/blocks/white_apricorn` 100.0% |
 | `cobblemon:white_apricorn_seed` | Apricorn | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/white_apricorn` 100.0%; `mod:cobblemon/blocks/potted_white_apricorn_sapling` +4 more |
-| `cobblemon:white_gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/white_gilded_chest` 100.0%; `craft` |
 | `cobblemon:white_herb` | Standard held / utility item | `loot:rctmod/generic/uncommon/battle`; `loot:rctmod/generic/uncommon/nature`; `mod:cobbleworkers/archaeology_treasure` 3.45% +6 more |
 | `cobblemon:white_mint_leaf` | Nature mint | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/white_mint` 100.0%; `mod:cobblemon/blocks/white_mint` 100.0% |
 | `cobblemon:white_mint_seeds` | Mint seed | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/white_mint` 100.0%; `mod:cobblemon/blocks/white_mint` 100.0% +1 more |
-| `cobblemon:white_plaque` | Standard held / utility item | `mod:cobblemon/blocks/white_plaque`; `craft` |
 | `cobblemon:wide_lens` | Standard held / utility item | `craft`; `market` |
 | `cobblemon:wiki_berry` | Berry | `mod:cobblemon/blocks/wiki_berry` 100.0%; `mod:rctmod/generic/legendary/berries` |
 | `cobblemon:wise_glasses` | Standard held / utility item | `crate:common` 0.305%; `loot:rctmod/generic/rare/battle`; `craft` +1 more |
@@ -991,8 +809,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:yache_berry` | Berry | `mod:cobblemon/blocks/yache_berry` 100.0%; `mod:rctmod/generic/epic/berries` |
 | `cobblemon:yellow_apricorn` | Apricorn | `mod:cobblemon/blocks/yellow_apricorn` 100.0%; `mod:rctmod/generic/rare/nature` |
 | `cobblemon:yellow_apricorn_seed` | Apricorn | `loot:rctmod/generic/epic/nature`; `mod:cobblemon/blocks/yellow_apricorn` 100.0%; `mod:cobblemon/blocks/potted_yellow_apricorn_sapling` +4 more |
-| `cobblemon:yellow_gilded_chest` | Standard held / utility item | `mod:cobblemon/blocks/yellow_gilded_chest` 100.0%; `craft` |
-| `cobblemon:yellow_plaque` | Standard held / utility item | `mod:cobblemon/blocks/yellow_plaque`; `craft` |
 | `cobblemon:zinc` | Vitamin | `crate:common` 1.183%; `loot:legendarymonuments/chests/regice_chest` 8.25%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36% +2 more |
 | `cobblemon:zoom_lens` | Standard held / utility item | `craft`; `market` |
 | `cobbreeding:egg_common` | Common Pokemon Egg — common pool | `crate:common` 12.7%; `crate:pokemon` 34.825% |
@@ -1026,7 +842,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:ancient_ivory_ball` | Hisuian basic ball | `mod:rctmod/generic/uncommon/archeology`; `mod:rctmod/generic/uncommon/pokeballs`; `craft` |
 | `cobblemon:ancient_jet_ball` | Hisuian basic ball | `mod:rctmod/generic/epic/archeology`; `mod:rctmod/generic/epic/pokeballs`; `craft` |
 | `cobblemon:ancient_leaden_ball` | Hisuian basic ball | `mod:legendarymonuments/chests/heatran_cave_chest` 40.83%; `mod:rctmod/generic/rare/archeology`; `mod:rctmod/generic/rare/pokeballs` +1 more |
-| `cobblemon:ancient_origin_ball` | Hisuian basic ball | `craft` |
 | `cobblemon:ancient_poke_ball` | Hisuian basic ball | `mod:legendarymonuments/chests/heatran_cave_chest` 48.39%; `mod:rctmod/generic/uncommon/archeology`; `mod:rctmod/generic/uncommon/pokeballs` +1 more |
 | `cobblemon:ancient_roseate_ball` | Hisuian basic ball | `mod:rctmod/generic/uncommon/archeology`; `mod:rctmod/generic/uncommon/pokeballs`; `craft` |
 | `cobblemon:ancient_slate_ball` | Hisuian basic ball | `mod:rctmod/generic/uncommon/archeology`; `mod:rctmod/generic/uncommon/pokeballs`; `craft` |
@@ -1037,7 +852,6 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:awakening` | Status heal | `mod:cobblemon/blocks/awakening`; `mod:cobblemon/villages/village_pokecenters`; `mod:rctmod/generic/common/medicine` +2 more |
 | `cobblemon:burn_heal` | Status heal | `mod:legendarymonuments/chests/heatran_cave_chest` 40.83%; `mod:cobblemon/blocks/burn_heal`; `mod:cobblemon/villages/village_pokecenters` +3 more |
 | `cobblemon:dawn_stone` | Evolution stone | `crate:common` 0.71%; `mod:mega_showdown/archaeology/observatory_sus` 12.5%; `mod:cobblemon/ruins/uncommon/gimmi_tower_frozen` +4 more |
-| `cobblemon:dawn_stone_block` | Evolution stone | `mod:cobblemon/blocks/dawn_stone_block` 100.0%; `craft` |
 | `cobblemon:dusk_stone` | Evolution stone | `crate:common` 0.71%; `loot:legendarymonuments/chests/turnback_cave_chest` 11.36%; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75% +4 more |
 | `cobblemon:dusk_stone_block` | Evolution stone | `loot:legendarymonuments/chests/turnback_cave_vault` 2.22%; `mod:cobblemon/blocks/dusk_stone_block` 100.0%; `craft` |
 | `cobblemon:elixir` | PP consumable | `loot:legendarymonuments/chests/turnback_cave_vault` 5.48%; `mod:cobblemon/shipwreck_coves/spawners/extra_normal` 59.04%; `mod:cobblemon/blocks/elixir` +3 more |
@@ -1048,23 +862,19 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:exp_candy_xs` | Small exp candy | `loot:legendarymonuments/chests/bell_tower_chest` 62.5%; `loot:legendarymonuments/chests/liberty_island_chest` 74.68%; `loot:legendarymonuments/chests/lugia_temple_chest` 91.65% +3 more |
 | `cobblemon:fine_remedy` | Herbal heal | `loot:rctmod/generic/uncommon/nature`; `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75% +4 more |
 | `cobblemon:fire_stone` | Evolution stone | `crate:common` 0.71%; `mod:mega_showdown/archaeology/observatory_sus` 12.5%; `mod:cobblemon/sets/any_evo_stone` +2 more |
-| `cobblemon:fire_stone_block` | Evolution stone | `mod:cobblemon/blocks/fire_stone_block` 100.0%; `craft` |
 | `cobblemon:full_heal` | Status heal | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/shipwreck_coves/spawners/extra_ominous` 67.23%; `mod:cobblemon/shipwreck_coves/spawners/extra_normal` 59.04% +4 more |
 | `cobblemon:full_restore` | Healing consumable | `loot:rctmod/generic/epic/medicine`; `loot:legendarymonuments/chests/turnback_cave_vault` 5.48%; `mod:cobblemon/blocks/full_restore` +2 more |
 | `cobblemon:great_ball` | Basic ball | `crate:common` 4.1%; `loot:legendarymonuments/chests/liberty_island_chest` 74.68%; `mod:mega_showdown/chests/observatory_barrel` 33.33% +4 more |
 | `cobblemon:hyper_potion` | Healing consumable | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/shipwreck_coves/spawners/extra_normal` 59.04%; `mod:legendarymonuments/chests/heatran_cave_chest` 22.75% +4 more |
 | `cobblemon:ice_heal` | Status heal | `mod:cobblemon/blocks/ice_heal`; `mod:cobblemon/villages/village_pokecenters`; `mod:rctmod/generic/common/medicine` +2 more |
 | `cobblemon:ice_stone` | Evolution stone | `crate:common` 0.71%; `loot:legendarymonuments/chests/regice_chest` 41.11%; `mod:cobbleworkers/archaeology_treasure` 3.45% +5 more |
-| `cobblemon:ice_stone_block` | Evolution stone | `mod:cobblemon/blocks/ice_stone_block` 100.0%; `craft` |
 | `cobblemon:leaf_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fossils/common/prehistoric_birch_tree` +5 more |
-| `cobblemon:leaf_stone_block` | Evolution stone | `mod:cobblemon/blocks/leaf_stone_block` 100.0%; `craft` |
 | `cobblemon:max_elixir` | PP consumable | `loot:rctmod/generic/legendary/medicine`; `loot:legendarymonuments/chests/turnback_cave_vault` 5.48%; `mod:cobblemon/shipwreck_coves/spawners/extra_ominous` 67.23% +3 more |
 | `cobblemon:max_ether` | PP consumable | `loot:rctmod/generic/epic/medicine`; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/shipwreck_coves/spawners/extra_ominous` 67.23% +3 more |
 | `cobblemon:max_potion` | Healing consumable | `loot:rctmod/generic/epic/medicine`; `loot:legendarymonuments/chests/turnback_cave_vault` 5.48%; `mod:cobblemon/shipwreck_coves/spawners/extra_ominous` 67.23% +4 more |
 | `cobblemon:max_revive` | Revive consumable | `loot:rctmod/generic/legendary/medicine`; `loot:legendarymonuments/chests/turnback_cave_vault` 5.48%; `mod:cobblemon/shipwreck_coves/spawners/extra_ominous` 67.23% +3 more |
 | `cobblemon:medicinal_leek` | Herbal heal | `loot:rctmod/generic/uncommon/nature`; `mod:cobblemon/blocks/medicinal_leek`; `mod:cobblemon/blocks/medicinal_leek` |
 | `cobblemon:moon_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobblemon/sets/any_evo_stone`; `mod:rctmod/generic/rare/evolution` +1 more |
-| `cobblemon:moon_stone_block` | Evolution stone | `mod:cobblemon/blocks/moon_stone_block` 100.0%; `craft` |
 | `cobblemon:paralyze_heal` | Status heal | `mod:cobblemon/blocks/paralyze_heal`; `mod:cobblemon/villages/village_pokecenters`; `mod:rctmod/generic/common/medicine` +2 more |
 | `cobblemon:poke_ball` | Starter ball | `mod:mega_showdown/chests/observatory_barrel` 33.33%; `mod:cobblemon/injection/chests/spawn_bonus_chest` 21.43%; `mod:cobblemon/sets/any_common_pokeball` +3 more |
 | `cobblemon:potion` | Healing consumable | `mod:cobblemon/blocks/potion`; `mod:rctmod/generic/common/medicine`; `craft` +1 more |
@@ -1074,17 +884,12 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `cobblemon:remedy` | Herbal heal | `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/ruins/pots/ruins` +4 more |
 | `cobblemon:revive` | Revive consumable | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/shipwreck_coves/spawners/extra_normal` 59.04%; `mod:legendarymonuments/chests/heatran_cave_chest` 32.32% +3 more |
 | `cobblemon:shiny_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobblemon/ruins/uncommon/gimmi_tower_deserted`; `mod:cobblemon/ruins/uncommon/gimmi_tower_temperate` +3 more |
-| `cobblemon:shiny_stone_block` | Evolution stone | `mod:cobblemon/blocks/shiny_stone_block` 100.0%; `craft` |
 | `cobblemon:sun_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobbleworkers/archaeology_treasure` 3.45%; `mod:cobblemon/fossils/common/prehistoric_eroded_pillar` +5 more |
-| `cobblemon:sun_stone_block` | Evolution stone | `mod:cobblemon/blocks/sun_stone_block` 100.0%; `craft` |
 | `cobblemon:super_potion` | Healing consumable | `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/blocks/super_potion`; `mod:rctmod/generic/common/medicine` +2 more |
 | `cobblemon:superb_remedy` | Herbal heal | `loot:legendarymonuments/chests/turnback_cave_chest` 33.52%; `loot:legendarymonuments/chests/turnback_cave_vault` 10.75%; `mod:cobblemon/sets/any_natural_heal_item` +3 more |
 | `cobblemon:thunder_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobblemon/sets/any_evo_stone`; `mod:rctmod/generic/uncommon/evolution` +1 more |
-| `cobblemon:thunder_stone_block` | Evolution stone | `mod:cobblemon/blocks/thunder_stone_block` 100.0%; `craft` |
 | `cobblemon:ultra_ball` | Basic ball | `crate:common` 3.1%; `mod:mega_showdown/chests/observatory_barrel` 33.33%; `mod:cobblemon/sets/any_common_pokeball` +3 more |
 | `cobblemon:water_stone` | Evolution stone | `crate:common` 0.71%; `mod:cobbleworkers/dive_treasure` 20.0%; `mod:cobbleworkers/archaeology_treasure` 3.45% +5 more |
-| `cobblemon:water_stone_block` | Evolution stone | `mod:cobblemon/blocks/water_stone_block` 100.0%; `craft` |
-| `gacha:common_key` | Common Crate key — minecraft:trial_key + gacha_key tag | `crate:common` 0.5% |
 | `minecraft:apple` | Vanilla bulk material | `loot:rctmod/generic/uncommon/nature` |
 | `minecraft:arrow` | Vanilla item | `market` |
 | `minecraft:axolotl_bucket` | Vanilla item | `loot:legendarymonuments/chests/liberty_island_chest` 39.31%; `loot:legendarymonuments/chests/lugia_temple_chest` 20.5%; `market` |
@@ -1188,6 +993,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `legendarymonuments:arc_phone` | Recipe disabled by server-no-arc-phone | *not currently granted anywhere* |
 | `mega_showdown:aloraichium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
 | `mega_showdown:blank_z` | Blank Z-crystal — disabled on this server | *not currently granted anywhere* |
+| `mega_showdown:blue_orb` | Primal reversion is disabled on this server | `loot:legendarymonuments/chests/lugia_temple_chest` 0.57% |
 | `mega_showdown:bug_tera_shard` | Tera shard — Tera is banned on this server | *not currently granted anywhere* |
 | `mega_showdown:buginium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
 | `mega_showdown:dark_tera_shard` | Tera shard — Tera is banned on this server | *not currently granted anywhere* |
@@ -1241,6 +1047,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:primarium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
 | `mega_showdown:psychic_tera_shard` | Tera shard — Tera is banned on this server | *not currently granted anywhere* |
 | `mega_showdown:psychium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
+| `mega_showdown:red_orb` | Primal reversion is disabled on this server | `loot:legendarymonuments/chests/bell_tower_chest` 0.59% |
 | `mega_showdown:rock_tera_shard` | Tera is banned on this server — stripped from monument chest loot (was up to 95%/chest) | *not currently granted anywhere* |
 | `mega_showdown:rocket_z_power_ring` | Z-Ring — enabler for the disabled Z-crystals | `craft` |
 | `mega_showdown:rockium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
@@ -1271,6 +1078,7 @@ jackpot band 0.8–1.6%, high band 4.9%.
 | `mega_showdown:ultranecrozium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
 | `mega_showdown:water_tera_shard` | Tera is banned on this server — stripped from monument chest loot (was up to 95%/chest) | *not currently granted anywhere* |
 | `mega_showdown:waterium_z` | Z-crystal — disabled on this server | *not currently granted anywhere* |
+| `mega_showdown:wishing_star` | Dynamax is banned — item works, the mechanic does not | *not currently granted anywhere* |
 | `mega_showdown:z_power_ring` | Z-Ring — enabler for the disabled Z-crystals | `craft` |
 | `mega_showdown:z_ring` | Z-Ring — enabler for the disabled Z-crystals | `craft` |
 | `mega_showdown:z_ring_black` | Z-Ring — enabler for the disabled Z-crystals | `craft` |

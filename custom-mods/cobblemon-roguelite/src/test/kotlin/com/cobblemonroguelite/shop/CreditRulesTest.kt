@@ -18,12 +18,26 @@ class CreditRulesTest {
     private val rules = CreditRules()
 
     @Test
-    fun `boss pays more than trainer pays more than wild at the same wave`() {
-        val wild = rules.creditsFor(50, RunOpponent.WILD)
-        val trainer = rules.creditsFor(50, RunOpponent.TRAINER)
-        val boss = rules.creditsFor(50, RunOpponent.BOSS)
-        assertTrue(wild < trainer, "wild $wild should pay less than trainer $trainer")
-        assertTrue(trainer < boss, "trainer $trainer should pay less than boss $boss")
+    fun `payment is ordered wild then trainer then rival then boss at the same wave`() {
+        // The ordering IS the design statement — a rival sits between a trainer and a boss because it
+        // is hard through its team while taking neither the boss level multiplier nor shields (§2.36).
+        val paid = listOf(RunOpponent.WILD, RunOpponent.TRAINER, RunOpponent.RIVAL, RunOpponent.BOSS)
+            .map { it to rules.creditsFor(50, it) }
+        paid.zipWithNext().forEach { (lower, higher) ->
+            assertTrue(
+                lower.second < higher.second,
+                "${lower.first} paid ${lower.second}, should be less than ${higher.first}'s ${higher.second}",
+            )
+        }
+    }
+
+    @Test
+    fun `every opponent kind has a rate, so a new kind cannot default to zero`() {
+        // The exhaustive `when` in creditsFor makes adding a kind a compile error rather than a silent
+        // unpaid wave — which is how RIVAL was caught when it was added. This pins the outcome.
+        RunOpponent.entries.forEach { kind ->
+            assertTrue(rules.creditsFor(10, kind) > 0, "$kind pays nothing")
+        }
     }
 
     @Test
@@ -59,7 +73,9 @@ class CreditRulesTest {
 
     @Test
     fun `negative settings floor at zero instead of draining the balance`() {
-        val broken = CreditRules(wildBase = -100, trainerBase = -100, bossBase = -100, perWaveHundredths = -100)
+        val broken = CreditRules(
+            wildBase = -100, trainerBase = -100, rivalBase = -100, bossBase = -100, perWaveHundredths = -100,
+        )
         for (kind in RunOpponent.entries) {
             assertEquals(0, broken.creditsFor(100, kind), "$kind should floor at 0")
         }

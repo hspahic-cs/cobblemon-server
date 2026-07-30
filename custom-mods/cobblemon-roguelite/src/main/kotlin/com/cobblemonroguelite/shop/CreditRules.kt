@@ -25,8 +25,8 @@ import com.cobblemonroguelite.integration.RunOpponent
  * cleared would let a player farm the penalty for income. Paying by wave number makes a re-fought
  * wave pay exactly what it paid the first time, which is the property that closes the loop.
  *
- * Boss waves pay more than trainers and trainers more than wild, because that ordering is what makes
- * the shop feel like a reward for the hard waves rather than a tax on the easy ones. The actual
+ * Payment is ordered wild < trainer < rival < boss, because that ordering is what makes the shop feel
+ * like a reward for the hard waves rather than a tax on the easy ones. The actual
  * numbers are a balance decision and belong to the server, which is why they are settings and not
  * constants — see [ShopSettings].
  */
@@ -35,6 +35,16 @@ data class CreditRules(
     val wildBase: Int = 10,
     /** Paid for clearing a plain trainer wave. */
     val trainerBase: Int = 25,
+    /**
+     * Paid for clearing a rival wave (§2.36) — between a trainer and a boss, and that placement is
+     * the point rather than a hedge.
+     *
+     * A rival takes neither the boss level multiplier nor boss shields (§2.32): it is hard because of
+     * its team, which is the one lever it has that a plain trainer does not. Paying it boss rates
+     * would reward it for pressure it does not apply; paying it trainer rates would ignore that a
+     * player meets it six times across a run at a strength no band trainer reaches.
+     */
+    val rivalBase: Int = 40,
     /** Paid for clearing a boss wave. */
     val bossBase: Int = 60,
     /**
@@ -59,6 +69,7 @@ data class CreditRules(
         val base = when (kind) {
             RunOpponent.WILD -> wildBase
             RunOpponent.TRAINER -> trainerBase
+            RunOpponent.RIVAL -> rivalBase
             RunOpponent.BOSS -> bossBase
         }
         val depth = (wave.coerceAtLeast(1) - 1) * perWaveHundredths / HUNDREDTHS

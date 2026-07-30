@@ -56,7 +56,10 @@ object ShopCommands {
     private fun shop(): LiteralArgumentBuilder<CommandSourceStack> =
         Commands.literal("shop")
             .requires { it.entity is ServerPlayer }
-            .executes { ctx -> player(ctx)?.let(::showShop) ?: 0 }
+            // Opens the GUI. The text listing stays reachable as `/roguelite shop list` for players who
+            // prefer it, for screen readers, and for debugging a server where the menu misbehaves.
+            .executes { ctx -> player(ctx)?.let(::openMenu) ?: 0 }
+            .then(Commands.literal("list").executes { ctx -> player(ctx)?.let(::showShop) ?: 0 })
             .then(
                 Commands.literal("buy")
                     .then(
@@ -109,6 +112,12 @@ object ShopCommands {
             .then(Commands.literal("reroll").executes { ctx -> player(ctx)?.let(::reroll) ?: 0 })
 
     // ------------------------------------------------------------------ reads
+
+    /** The GUI, with the text listing as the fallback when there is no run to paint. */
+    private fun openMenu(player: ServerPlayer): Int {
+        if (BetweenWaveMenu.openFor(player)) return 1
+        return showShop(player)
+    }
 
     private fun showShop(player: ServerPlayer): Int {
         val run = runFor(player) ?: return refuse(player, ShopMessages.noRun())

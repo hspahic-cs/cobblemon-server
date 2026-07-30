@@ -15,6 +15,7 @@ import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.integration.RunPayout
 import com.cobblemonroguelite.integration.RunPayouts
 import com.cobblemonroguelite.progression.RunProgression
+import com.cobblemonroguelite.shop.BetweenWaveMenu
 import com.cobblemonroguelite.shop.ShopSettings
 import com.cobblemonroguelite.starter.CobblemonPokedexUnlocks
 import com.cobblemonroguelite.starter.StarterCatalogue
@@ -519,6 +520,18 @@ object RunController {
             is WaveStep.Fight -> {
                 run.advanceTo(step.plan.wave)
                 store.checkpoint(server, player)
+                // §2.12's between-wave step, PUSHED rather than waited for. Opening it here is what
+                // makes the mode playable: a player who has to type `/roguelite reward` after every one
+                // of 200 waves will stop playing long before they run out of waves.
+                //
+                // AFTER the advance and the checkpoint, deliberately. The screen reads the run it is
+                // handed, so opening it first would paint the wave just finished; and a crash between
+                // the two would otherwise leave a shop open on state that was never saved.
+                //
+                // Failure is ignored on purpose: openFor declines for a player who has logged out or is
+                // still in a battle, and neither is a reason to fail a won wave. The commands remain as
+                // the fallback for exactly those cases.
+                server.playerList.getPlayer(player)?.let { runCatching { BetweenWaveMenu.openFor(it) } }
                 // After the advance, so the wave named is the one about to be played rather than the
                 // one that was just cleared inside the cap.
                 auditOverride(server, player, run.wave)

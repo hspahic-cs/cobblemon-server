@@ -43,7 +43,6 @@ class ShopTableParseTest {
         val table = assertNotNull(parsed.table)
         assertEquals(1, table.entries.size)
         val entry = table.entries.single()
-        assertEquals(1.0, entry.weight)
         assertEquals(1, entry.minWave)
         assertNull(entry.maxWave)
         assertNull(entry.priceCurve)
@@ -93,10 +92,13 @@ class ShopTableParseTest {
     }
 
     @Test
-    fun `zero weight loads but is reported, since it can never be offered`() {
-        val parsed = parse(oneEntry(""", "weight": 0"""))
-        assertNotNull(parsed.table)
-        assertTrue(parsed.mentions("weight", "never"), parsed.messages.toString())
+    fun `a weight field is rejected, because the paid row is not a weighted draw`() {
+        // `weight` was a real field until the between-wave step was split in two. It is gone rather
+        // than ignored: the paid row stocks the same items every wave in authored order, so a weight
+        // would be config that silently does nothing — which is worse than an error.
+        val parsed = parse(oneEntry(""", "weight": 2"""))
+        assertNull(parsed.table)
+        assertTrue(parsed.mentions("weight"), parsed.messages.toString())
     }
 
     @Test

@@ -19,7 +19,6 @@ import net.minecraft.resources.ResourceLocation
  *     {
  *       "id": "protein",
  *       "price": 120,
- *       "weight": 2,
  *       "min_wave": 1,
  *       "max_wave": null,
  *       "reward": { "type": "ev", "stat": "attack", "amount": 10 }
@@ -68,9 +67,8 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
             val entry = parseEntry(view)
             if (entry == null || problems.count != before) continue
             if (!seen.add(entry.id)) {
-                // Fatal rather than last-wins: with two entries under one id, both the offer's
-                // de-duplication and `purchase`'s lookup are ambiguous, and a purchase would charge
-                // for one and grant the other.
+                // Fatal rather than last-wins: with two entries under one id, `ShopStock.buy`'s
+                // lookup is ambiguous, so a purchase could charge for one and grant the other.
                 view.problem("id", "duplicate entry id '${entry.id}' in this table")
                 fatal = true
                 continue
@@ -79,7 +77,7 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
         }
 
         if (entries.isEmpty()) {
-            problems.add("entries", "no usable entries — a shop that can offer nothing is not loaded")
+            problems.add("entries", "no usable entries — a shop that can stock nothing is not loaded")
             return null
         }
         if (fatal) return null
@@ -87,17 +85,6 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
         val dropped = entryViews.size - entries.size
         if (dropped > 0) problems.add("entries", "$dropped entry/entries dropped; the rest of the table loaded")
 
-        // Raised here, after the entries are accepted, for the reason spelled out in [parseEntry]:
-        // inside the read loop this warning would be counted as a problem and would drop the entry.
-        // Zeroing an entry is how an author shelves it without deleting it, so it must survive.
-        val shelved = entries.filter { it.weight == 0.0 }.map { it.id }
-        if (shelved.isNotEmpty()) {
-            problems.add(
-                "entries",
-                "weight 0 and can never be offered: ${shelved.joinToString(", ")} " +
-                    "(loaded anyway — this is how an entry is shelved without deleting it)",
-            )
-        }
         return ShopTable(id, entries)
     }
 
@@ -105,7 +92,6 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
         val entryId = view.requireString("id")
         val price = view.requireInt("price")
         val rewardView = view.requireObject("reward")
-        val weight = view.optionalDouble("weight") ?: 1.0
         val minWave = view.optionalInt("min_wave") ?: 1
         val maxWave = view.optionalInt("max_wave")
         val priceCurve = if (view.hasField("price_curve")) parseCurve(view) else null
@@ -126,10 +112,6 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
             view.problem("price", "must not be negative, was $price")
             return null
         }
-        if (weight < 0.0) {
-            view.problem("weight", "must not be negative, was $weight")
-            return null
-        }
         if (minWave < 1) {
             view.problem("min_wave", "must be at least 1, was $minWave")
             return null
@@ -138,20 +120,10 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
             view.problem("max_wave", "must not be below min_wave ($minWave), was $maxWave")
             return null
         }
-        // NOTE: a zero weight is *not* reported here, and that is not an oversight.
-        //
-        // [parse] drops any entry that raised a problem while being read, because a field that failed
-        // its type check must not fall back to a default and load meaning something else. A warning
-        // raised inside this function is indistinguishable from that, so warning about weight 0 here
-        // would DELETE the entry it was only meant to annotate — which is exactly what happened, and
-        // what the parse test now pins. The warning is emitted by [parse] after the entry is accepted.
-        // (RewardTables gets away with the same warning inline because its version sits on the *tier*,
-        // which is not subject to the entry-drop rule.)
         return ShopEntry(
             id = entryId,
             reward = reward,
             price = price,
-            weight = weight,
             minWave = minWave,
             maxWave = maxWave,
             priceCurve = priceCurve,

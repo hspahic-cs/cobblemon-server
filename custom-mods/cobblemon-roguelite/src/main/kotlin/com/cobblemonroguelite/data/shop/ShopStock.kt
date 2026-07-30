@@ -3,7 +3,6 @@ package com.cobblemonroguelite.data.shop
 import com.cobblemonroguelite.data.reward.RunReward
 import com.cobblemonroguelite.data.reward.WeightCurve
 import net.minecraft.resources.ResourceLocation
-import kotlin.random.Random
 
 /**
  * One thing the between-wave shop can sell: a [RunReward], a price in credits, and a depth band.
@@ -30,19 +29,17 @@ import kotlin.random.Random
 data class ShopEntry(
     /**
      * Stable identifier, unique within a table. Authored rather than generated for the same reason
-     * [com.cobblemonroguelite.data.reward.RewardEntry] authors its own: it is what an offer
-     * de-duplicates on, and it is what a purchase names.
+     * [com.cobblemonroguelite.data.reward.RewardEntry] authors its own: it is what a purchase names,
+     * so an auto-generated index would change which item a command buys when the file is reordered.
      */
     val id: String,
     /** What the buyer gets. */
     val reward: RunReward,
     /** Credits charged. Non-negative; a zero-price entry is a giveaway, which is legal if odd. */
     val price: Int,
-    /** How likely this entry is to appear in an offer, relative to others eligible at that wave. */
-    val weight: Double = 1.0,
-    /** First wave this entry can be offered at all. */
+    /** First wave this entry is stocked at all. */
     val minWave: Int = 1,
-    /** Last wave this entry can be offered, or null for "forever". */
+    /** Last wave this entry is stocked, or null for "forever". */
     val maxWave: Int? = null,
     /**
      * Optional per-wave price curve. When set, the price at a wave is [price] scaled by the curve's
@@ -80,63 +77,22 @@ data class ShopEntry(
 }
 
 /**
- * One loaded shop table: everything the between-wave shop can stock.
+ * One loaded shop table: every consumable the paid between-wave row can stock.
  *
- * ### The offer draw, and why it is seeded from outside
+ * ### There is no draw here, and that is deliberate
  *
- * [rollOffer] takes a [Random] rather than making one. §2.16 requires a resumed run to see the same
- * shop it saw before it was paused — a player who logs out staring at a Master Ball must not log in
- * to a different offer, and a shop that re-rolled on resume would be a free reroll for anyone willing
- * to relog. So the caller derives the stream from (run seed, wave, rerolls) and this stays pure.
- *
- * That is also why the reroll *count* is part of the caller's stream input and not state here: the
- * offer has to be a function of things that are persisted, and the count is
- * ([com.cobblemonroguelite.run.RunState]), whereas a `Random` mid-sequence is not.
+ * An earlier version of this class had a `rollOffer` that drew entries by weight from a seeded
+ * `Random`. That was the wrong model — the paid row is *always the same items*, so a player can plan
+ * to save for the expensive one. Selection is now a filter in authored order; see
+ * [com.cobblemonroguelite.shop.ShopStock]. The seeded, rerollable draw belongs to the FREE half of the
+ * step, over the reward tables ([com.cobblemonroguelite.shop.RewardOffer]).
  */
 data class ShopTable(
     val id: ResourceLocation,
     val entries: List<ShopEntry>,
 ) {
 
-    /**
-     * Draw up to [slots] distinct entries eligible at [wave].
-     *
-     * Distinct by [ShopEntry.id], because two of the same item in a four-slot offer is a wasted slot
-     * and reads as a bug. Returns fewer than [slots] when the table has fewer eligible entries, which
-     * is a content thin spot rather than an error — the caller shows a smaller shop.
-     */
-    fun rollOffer(wave: Int, slots: Int, random: Random): List<ShopEntry> {
-        if (slots <= 0) return emptyList()
-        val eligible = entries.filter { it.appearsAt(wave) }
-        val offer = mutableListOf<ShopEntry>()
-        val taken = mutableSetOf<String>()
-        while (offer.size < slots) {
-            val candidates = eligible.filter { it.id !in taken }
-            val picked = pick(candidates, random) ?: break
-            offer += picked
-            taken += picked.id
-        }
-        return offer
-    }
-
-    /** Find an entry by the id a purchase named, or null if the offer is stale. */
+    /** Find an entry by the id a purchase named, or null if the table has no such entry. */
     fun entry(id: String): ShopEntry? = entries.firstOrNull { it.id == id }
 
-    /**
-     * Weighted pick, with the same guard as the reward tables: a candidate list whose weights sum to
-     * zero or less has no meaningful winner, so it yields nothing rather than the first element. An
-     * author who weights everything at zero has said "offer nothing", and silently offering the first
-     * entry would hide that.
-     */
-    private fun pick(candidates: List<ShopEntry>, random: Random): ShopEntry? {
-        if (candidates.isEmpty()) return null
-        val total = candidates.sumOf { it.weight.coerceAtLeast(0.0) }
-        if (total <= 0.0) return null
-        var roll = random.nextDouble() * total
-        for (candidate in candidates) {
-            roll -= candidate.weight.coerceAtLeast(0.0)
-            if (roll <= 0.0) return candidate
-        }
-        return candidates.last()
-    }
 }

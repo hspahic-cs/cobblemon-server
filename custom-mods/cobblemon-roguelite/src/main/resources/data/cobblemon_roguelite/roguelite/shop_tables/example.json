@@ -11,21 +11,29 @@
     "field is an error, so a typo is reported instead of silently taking a default."
   ],
 
-  "_how_the_offer_works": [
-    "The between-wave offer is DERIVED, never stored: it is a function of (run seed, wave, rerolls",
-    "taken), so a paused run resumes to the identical shop (§2.16) and relogging is not a free",
-    "reroll. Two consequences worth knowing:",
+  "_this_is_the_PAID_half": [
+    "The between-wave step has TWO halves and this file is only the second one.",
     "",
-    "  - EDITING THIS FILE CHANGES WHAT LIVE RUNS SEE at waves whose shop they have not opened yet,",
-    "    the same way editing a reward table changes what it rolls next. That is the deliberate trade",
-    "    against a stored offer, which could drift from the table it was drawn from.",
-    "  - How MANY items are offered is not in this file. It is mechanism, not content - see",
-    "    ShopRules.offerSlots (default 4). A shop is a choice, so it deliberately does not scale with",
-    "    the player's balance.",
+    "  1. THREE FREE OPTIONS, one of which the player takes. Random, rarity-tiered, rerollable for",
+    "     credits. Those come from a REWARD table (reward_tables/*.json), not from here - see",
+    "     RewardOffer. Nothing in this file is free and nothing in it is picked one-of.",
+    "  2. THIS: a short row of ordinary consumables, ALWAYS THE SAME ONES, priced, bought as often",
+    "     as the player can afford. See ShopStock.",
     "",
-    "There are no TIERS here, unlike reward_tables. A reward table needs tiers because rarity has to",
-    "ramp with depth on its own; a shop's ramp is the price. Two independent knobs for one feeling",
-    "would make neither predictable."
+    "The split is the feel of the step. The free pick is a choice under scarcity - three doors, one",
+    "key. This row is PLANNING: the Revive is always there, so a player can skip a purchase now and",
+    "save for it. A shop that randomised its stock could not be planned against and would just be a",
+    "worse copy of the free offer.",
+    "",
+    "So there is NO random draw here, no seed and nothing to reroll: stock is the eligible entries in",
+    "AUTHORED ORDER, capped at the wave's slot count. Order matters - re-sorting would make the row",
+    "look random even with fixed contents.",
+    "",
+    "Two things do change with depth. Prices rise (see price_curve below), and the row GETS LONGER -",
+    "three consumables early, five later. How many is mechanism, not content: ShopRules.shopSlots.",
+    "",
+    "There are no TIERS here, unlike reward_tables. Tiers exist so rarity can ramp with depth; this",
+    "row's ramp is its price."
   ],
 
   "_entries": [
@@ -50,10 +58,9 @@
   ],
   "entries": [
     {
-      "_note": "Cheapest tier: always available, no curve, so it stays a filler purchase all run.",
+      "_note": "The cheap staple, always stocked. Weight is unused by this half and may be omitted.",
       "id": "protein",
       "price": 120,
-      "weight": 2,
       "reward": { "type": "ev", "stat": "attack", "amount": 10 }
     },
     {
@@ -70,7 +77,6 @@
       ],
       "id": "ability_patch",
       "price": 400,
-      "weight": 0.5,
       "min_wave": 40,
       "price_curve": [
         { "wave": 40, "weight": 100 },

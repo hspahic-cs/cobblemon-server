@@ -111,45 +111,72 @@ object ShopSettings {
  */
 data class ShopRules(
     /**
-     * How many items are offered between waves.
+     * How many **free** reward options are offered, of which the player takes one ([RewardOffer]).
      *
-     * A fixed number and not "everything affordable", because the shop is a *choice* — PokéRogue's
-     * between-wave screen works because you cannot have all of it. An offer that grows with the
-     * player's balance would turn the late run into a shopping list.
+     * Three, matching PokéRogue. The number is the mechanic: three doors and one key is a choice you
+     * feel, and the tension is in the two you give up. Raising it dilutes that — at six options one of
+     * them is usually obviously best — and lowering it to one removes the decision entirely.
      */
-    val offerSlots: Int = 4,
+    val rewardOptions: Int = 3,
     /**
-     * What a reroll of the offer costs, or null to disable rerolling.
+     * How many **paid** consumables the shop row holds, as `(min_wave, slots)` steps ([ShopStock]).
      *
-     * Null by default. A reroll is a real mechanic in PokéRogue but it interacts with the seeded
-     * offer (§2.16): the draw is a function of (run seed, wave), so a reroll needs to be part of that
-     * function's input or the offer stops being reproducible on a resumed run. [ShopOffer] takes a
-     * reroll count for exactly that reason, and this price is what makes it reachable.
+     * The row grows with depth: PokéRogue shows three consumables early and five by wave 21. Growth is
+     * a step list rather than a formula because it is a content shape, not a curve — an operator adding
+     * a fourth consumable wants to say *when* it appears, not solve for a rate.
+     *
+     * Highest passed `min_wave` wins, so the order written here does not decide anything.
+     */
+    val shopSlots: List<Pair<Int, Int>> = listOf(1 to 3, 20 to 4, 40 to 5),
+    /**
+     * What the first reroll of the free options costs at wave 1, or null to disable rerolling.
+     *
+     * Null by default, because a price is a balance decision and a mode that ships with rerolling
+     * priced by guesswork is worse than one where it is switched off until somebody chooses a number.
      */
     val rerollCost: Int? = null,
     /**
-     * Multiplier applied to a reroll's cost per reroll already taken this wave, in hundredths.
-     * 150 means each reroll costs half again as much as the last, which is what stops a large balance
-     * from simply buying the whole table.
+     * Multiplier applied per reroll already taken *this wave*, in hundredths. 150 means each reroll
+     * costs half again as much as the last, which is what stops a large balance buying the whole table.
      */
     val rerollGrowthHundredths: Int = 150,
+    /**
+     * Added to the reroll price per wave of depth, in hundredths of a credit.
+     *
+     * Their reroll is ₽250 early and ₽750 by wave 21, so it scales with depth as well as with repeats.
+     * Without this the reroll becomes free in real terms as earnings grow — the same failure
+     * [ShopEntry.priceCurve] exists to prevent on the paid row.
+     */
+    val rerollPerWaveHundredths: Int = 2500,
 ) {
 
-    /** What the [taken]-th reroll of this wave costs, or null if rerolling is disabled. */
-    fun rerollPrice(taken: Int): Int? {
+    /** How many paid consumables are stocked at [wave]. */
+    fun shopSlotsAt(wave: Int): Int =
+        shopSlots.filter { it.first <= wave }.maxByOrNull { it.first }?.second ?: 0
+
+    /**
+     * What the [taken]-th reroll at [wave] costs, or null if rerolling is disabled.
+     *
+     * Depth is applied to the base *before* the repeat multiplier, so a second reroll deep in a run is
+     * dearer than a second reroll early — the two scalings compound, which is what keeps rerolling from
+     * becoming the default action once credits are plentiful.
+     */
+    fun rerollPrice(taken: Int, wave: Int = 1): Int? {
         val base = rerollCost ?: return null
-        var price = base.toLong()
+        val withDepth = base + (wave.coerceAtLeast(1) - 1).toLong() * rerollPerWaveHundredths / HUNDREDTHS
+        var price = withDepth.coerceAtLeast(base.toLong())
         repeat(taken.coerceAtLeast(0)) {
-            price = price * rerollGrowthHundredths / 100
+            price = price * rerollGrowthHundredths / HUNDREDTHS
             // A growth multiplier of 100 or less would make rerolls free-or-cheaper forever, and an
             // unbounded price would overflow. Clamping keeps a misconfigured multiplier expensive
             // rather than exploitable.
             if (price > MAX_PRICE) return MAX_PRICE.toInt()
         }
-        return price.coerceAtLeast(base.toLong()).toInt()
+        return price.coerceAtLeast(withDepth).toInt()
     }
 
     private companion object {
         const val MAX_PRICE = 1_000_000L
+        const val HUNDREDTHS = 100L
     }
 }

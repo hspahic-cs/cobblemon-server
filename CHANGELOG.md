@@ -67,6 +67,85 @@ root README.
   `ops/fetch_battle_logs.sh` requires `CONTROL_PLANE` instead of defaulting to a
   hardcoded host.
 
+## [0.33.0] - 2026-07-30
+
+### Added
+- **Moderator staff tier, and staff rank tags in chat.** The server had exactly
+  two tiers — op level 4 or nothing — so every routine duty (muting a spammer,
+  running a tournament, granting BP) needed a full admin. There is now a
+  `moderator` group that carries no vanilla op at all, and Admin/Moderator are
+  visible in chat and the tablist. Documented in `docs/staff-roles.md`.
+
+  Assign people with `permissions user <name> setgroup admin|moderator`
+  (see the doc — group changes need a relog before the new commands
+  tab-complete, and the two current admins need assigning once per server).
+
+  NeoEssentials already shipped `default`/`moderator`/`admin` group definitions
+  and never used them: **every player, including both admins, sat in `default`**,
+  which is why no tags ever rendered. The group definitions are now authored at
+  `modpack/server-overrides/config/neoessentials/permissions.json` so they
+  deploy with the pack. Group *membership* stays runtime state in
+  `config/neoessentials/permissions/playerdata.json`, untouched by deploys.
+
+  Moderators get kick, tempban/unban, mute, jail, freeze, vanish, socialspy,
+  staff chat, and the teleport set. They deliberately do **not** get permanent
+  or IP bans, item spawning, economy edits, kit/warp management, permission
+  management, or `/op`.
+
+- **`StaffPermissions` bridge, so non-op staff can use our commands.** Every
+  custom-mod command gates on vanilla `hasPermission(n)`, which reads only
+  `ops.json` — a non-op moderator would fail all of them, and granting op
+  instead is not an option (see Fixed, below). Six commands now resolve as
+  *vanilla op* **OR** *NeoEssentials node*: `/wild <player>`
+  (`cobblemon.staff.wild`), `/feedback whois` (`…whois`), `/bp add|set`
+  (`…bp`), `/ranked tournament` (`…tournament`), `/gymreturn`
+  (`…gymreturn`), `/auctionadmin` (`…auctionadmin`).
+
+  `/wild` is split: relocating a player is a moderator duty, reconfiguring the
+  wilderness box (`/wild admin`, `cobblemon.staff.wild.admin`) is not.
+  `/ranked admin` — ELO edits, arena geometry, decay — stays op-4-only.
+
+  The op arm is evaluated first, so admins and the console behave bit-identically
+  to before and everything still works if NeoEssentials is removed; a missing
+  PermissionAPI degrades the node arm to `false` with a warn-once rather than
+  throwing, since these are `.requires()` predicates brigadier evaluates while
+  building the command tree it sends to every joining client. The helper is
+  duplicated into cobblemon-bridge/-auction/-feedback/-ranked, same convention
+  as the per-mod `EconomyBridge`, to keep the mods dependency-free of each other.
+
+### Fixed
+- **Staff chat tags could never have rendered — `group:mod` matches nothing.**
+  `chat.json` mapped a format to `group:mod`, but `ChatManager` builds its
+  lookup keys as `group:<groupName>` from `permissions.json`, where the group is
+  named `moderator`. The key was dead config. Same typo in `tablist.json`'s
+  `groupColors` (`mod` → `moderator`). Both fixed; `tablist.json` is now pinned
+  in `server-overrides` so a NeoEssentials update can't revert it, matching what
+  0.7.39 did for `chat.json`.
+
+### Changed
+- **Chat format colours the tag only, not the whole line.** Was
+  `&c[Admin] {username}: {MESSAGE}`, which tinted an admin's entire message red
+  and read like a server error. Now `&c[Admin] &f{username}&7: &r{MESSAGE}` —
+  red `[Admin]`, green `[Mod]`, neutral name and message. Regular players get
+  `{username}: {message}` with no prefix, replacing the `<&7 Name > msg` form
+  the old `default` template produced once groups were actually populated.
+- **Emoji rank badges disabled** (`chat.badges.enabled: false`). The configured
+  badges are `⭐`/`🛡️` and Minecraft's default font has no glyphs for them — with
+  groups finally assigned they would have rendered a missing-glyph box in front
+  of every staff message. Re-enabling needs `useCustomImages` plus a hosted
+  resource pack. This also turns off the in-chat status icons (`💤` AFK, `👻`
+  vanished), which are the same missing-glyph problem; AFK is still surfaced by
+  the tablist's `[AFK]` suffix and by `broadcastAfkMessage`.
+
+### Security
+- **Moderators must never be opped.** NeoEssentials' `opsBypassPermissions`
+  defaults to true and its op test is `hasPermissions(2)`, so op level ≥2
+  silently grants *every* NeoEssentials permission — including `/permissions`,
+  which mints more admins. Op level 1 doesn't bypass but is too weak to be
+  useful. The moderator tier works only because NeoEssentials' own moderation
+  commands gate on nodes alone and need no op; `docs/staff-roles.md` calls this
+  out as the rule that shapes the whole design.
+
 ## [0.32.0] - 2026-07-28
 
 ### Added

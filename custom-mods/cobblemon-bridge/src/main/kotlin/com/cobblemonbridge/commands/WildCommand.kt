@@ -1,6 +1,7 @@
 package com.cobblemonbridge.commands
 
 import com.cobblemonbridge.CobblemonBridge
+import com.cobblemonbridge.permissions.StaffPermissions
 import com.cobblemonbridge.quests.QuestAdvancements
 import com.cobblemonbridge.wild.WildStore
 import com.mojang.brigadier.CommandDispatcher
@@ -40,6 +41,13 @@ object WildCommand {
     var radius: Int = 250
     var cooldownSeconds: Int = 60
 
+    /**
+     * Relocating another player is a moderation duty, so it gets its own node. Reconfiguring the
+     * wilderness box ([NODE_ADMIN]) is not — that one stays admin-only. See [StaffPermissions].
+     */
+    const val NODE_SEND_OTHERS = "cobblemon.staff.wild"
+    const val NODE_ADMIN = "cobblemon.staff.wild.admin"
+
     @Volatile
     private var store: WildStore? = null
 
@@ -76,7 +84,7 @@ object WildCommand {
                     1
                 }
                 .then(Commands.argument("player", EntityArgument.player())
-                    .requires { it.hasPermission(2) }
+                    .requires { StaffPermissions.check(it, NODE_SEND_OTHERS, 2) }
                     .executes { ctx ->
                         val target = EntityArgument.getPlayer(ctx, "player")
                         handleWild(target, enforceCooldown = true)
@@ -87,7 +95,7 @@ object WildCommand {
                     }
                 )
                 .then(Commands.literal("admin")
-                    .requires { it.hasPermission(2) }
+                    .requires { StaffPermissions.check(it, NODE_ADMIN, 2) }
                     .then(Commands.literal("show")
                         .executes { ctx -> adminShow(ctx.source); 1 }
                     )

@@ -153,6 +153,7 @@ class StarterCatalogueTest {
             override fun effectiveCost(player: UUID, species: ResourceLocation, baseCost: Int) =
                 if (player == this@StarterCatalogueTest.player && species == id("alpha")) 1 else baseCost
             override fun ivFloor(player: UUID, species: ResourceLocation) = StarterIvFloor.Base
+            override fun hiddenAbilityUnlocked(player: UUID, species: ResourceLocation) = false
         })
         assertEquals(1, factory().catalogueFor(player).costOf(id("alpha")))
         assertEquals(3, factory().catalogueFor(other).costOf(id("alpha")))
@@ -167,6 +168,7 @@ class StarterCatalogueTest {
             override fun effectiveCost(player: UUID, species: ResourceLocation, baseCost: Int) =
                 if (species == id("alpha")) 0 else baseCost + 5
             override fun ivFloor(player: UUID, species: ResourceLocation) = StarterIvFloor.Base
+            override fun hiddenAbilityUnlocked(player: UUID, species: ResourceLocation) = false
         })
         val catalogue = factory().catalogueFor(player)
         assertEquals(1, catalogue.costOf(id("alpha")))
@@ -180,6 +182,7 @@ class StarterCatalogueTest {
         StarterProgression.set(object : StarterProgression {
             override fun effectiveCost(player: UUID, species: ResourceLocation, baseCost: Int): Int = error("store is down")
             override fun ivFloor(player: UUID, species: ResourceLocation) = StarterIvFloor.Base
+            override fun hiddenAbilityUnlocked(player: UUID, species: ResourceLocation) = false
         })
         assertTrue(factory().catalogueFor(player).options.all { it.cost == 3 })
     }

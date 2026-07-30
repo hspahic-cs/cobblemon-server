@@ -195,8 +195,13 @@ object TrainerTeamGenerator {
      * to disable a line without deleting it; a slot whose every weight is zero falls back to the first
      * alternative rather than failing, because a missing Pokémon at wave 150 is a worse answer than an
      * unintended one.
+     *
+     * `internal` rather than private because [RivalTeamGenerator] draws its slots with this, and it has
+     * to be *this* function rather than a copy: §2.36's growing team is a prefix of one slot list, and a
+     * prefix only stays a prefix while every slot costs exactly one draw. The "still consume a draw"
+     * branch below is load-bearing for the rival even though it was written for a roster edit.
      */
-    private fun pickAlternative(slot: SignatureSlot, rng: WaveRandom): SpeciesLine {
+    internal fun pickAlternative(slot: SignatureSlot, rng: WaveRandom): SpeciesLine {
         val candidates = slot.alternatives.filter { it.weight > 0.0 }
         if (candidates.isEmpty()) return slot.alternatives.first()
         if (candidates.size == 1) {
@@ -226,8 +231,12 @@ object TrainerTeamGenerator {
      * item, so the extra draws buy a higher hit rate, not a stack. Every draw is made whether or not
      * it lands, which keeps members after a lucky one on the same footing as members after an unlucky
      * one — a variable number of draws per member would make the stream impossible to reason about.
+     *
+     * `internal` for [RivalTeamGenerator], which passes `boss = false`: a rival draws from the ordinary
+     * trainer tier on the ordinary per-wave stream, because items are the one part of a rival's team
+     * that is *allowed* to differ between meetings.
      */
-    private fun heldItems(
+    internal fun heldItems(
         members: Int,
         wave: Int,
         boss: Boolean,

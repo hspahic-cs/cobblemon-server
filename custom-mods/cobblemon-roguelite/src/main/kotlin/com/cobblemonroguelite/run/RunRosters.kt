@@ -116,7 +116,14 @@ object RunTrainerSelection {
         // A fixed encounter is an author naming one trainer for one wave, so there is nothing here to
         // avoid: honouring the history would mean silently ignoring the pin, which is the one thing an
         // override is for. Delegated whole so the promote/replace precedence stays in one place.
-        if (roster.isFixed(wave)) return roster.pickFor(wave, kind, seed)
+        //
+        // A §2.36 rival meeting is the same delegation for a stronger reason. The no-repeat window
+        // exists because a *pool* can serve the same trainer twice in a sitting; a rival has no pool,
+        // and its six stage ids are the one set of trainers a run is SUPPOSED to meet repeatedly. Left
+        // to fall through, [eligible] would find nothing to exclude and answer the same way — but only
+        // by accident, and the accident stops holding the moment someone adds a second history-aware
+        // rule here. Stated so the rival is never that rule's collateral.
+        if (roster.isFixed(wave) || roster.isRivalMeeting(wave)) return roster.pickFor(wave, kind, seed)
 
         if (kind == RunOpponent.WILD) return null
         val band = roster.bandFor(wave, kind) ?: return null

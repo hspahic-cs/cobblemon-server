@@ -15,6 +15,12 @@
     "its signature species, and an id that is not fights its RCT trainer's authored team. Levels",
     "always come from the wave curve.",
     "",
+    "Three mechanisms decide who a wave fights, and they are checked fixed -> rival -> band:",
+    "  bands  - the standing rule. A wave range holds a pool and a wave draws from it.",
+    "  fixed  - one wave pinned to one trainer, optionally promoting the wave (see _fixed).",
+    "  rival  - plan 2.36's rival: ONE character met on a fixed schedule whose team GROWS. Not a",
+    "           pool and not a promotion; it needs its own block, and _rival says why.",
+    "",
     "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
     "unknown field is an error, so a typo is reported instead of silently taking a default."
   ],
@@ -102,9 +108,13 @@
   ],
   "fixed": [
     {
-      "_note": "Wave 50 is already a boss wave, so this only pins WHICH boss.",
+      "_note": [
+        "Wave 50 is already a boss wave, so this only pins WHICH boss. Note what this is NOT: a rival.",
+        "A rival is met six times with a growing team, which no number of fixed entries can express -",
+        "see the 'rival' block below."
+      ],
       "wave": 50,
-      "trainer": "cobblemon_roguelite:example_fixed_rival"
+      "trainer": "cobblemon_roguelite:example_fixed_boss"
     },
     {
       "_note": [
@@ -117,6 +127,81 @@
       "trainer": "cobblemon_roguelite:example_fixed_late_boss"
     }
   ],
+
+  "_rival": [
+    "Plan 2.36's rival, and the one encounter kind that is neither a pool nor a pin. Optional - a",
+    "roster with no rival block is a complete roster, because 2.14's mode is trainers, bosses and",
+    "wild waves and the rival is an addition.",
+    "",
+    "WHY IT NEEDS ITS OWN BLOCK. A rival is ONE character met repeatedly whose team GROWS: a starter",
+    "to begin with, one more Pokemon at each meeting. Every other opponent in the mode is decided",
+    "from (seed, wave) and nothing else, which is what makes a resumed run meet the same team - but",
+    "any function of the wave gives a DIFFERENT answer at every meeting, so a rival written as six",
+    "band entries or six fixed entries is six strangers who happen to share a face. So the team is",
+    "written ONCE, in acquisition order, and each meeting brings a PREFIX of it.",
+    "",
+    "meetings: ascending, one per meeting, and the POSITION IN THIS LIST IS THE MEETING NUMBER -",
+    "which is what decides how many Pokemon turn up. They are not re-sorted for you: reordering the",
+    "file would silently move the party sizes onto different waves.",
+    "",
+    "Each meeting names a DIFFERENT trainer id on purpose. The character is one person; the NPC is",
+    "one of six numbered stages, which is how the rival progression RCT ships is modelled (see",
+    "ROGUELITE_SKINS in ops/gen_trainer_texture_pack.py - rgl_rival_1..rgl_rival_6, all from one",
+    "variant line so the face does not change). A stage id must appear NOWHERE ELSE: in a band pool",
+    "it can be drawn at an ordinary trainer wave, out of order, with the wrong meeting's team.",
+    "",
+    "teams: the identities a run may draw from. ONE is the ordinary case and means every run meets",
+    "the same rival. Several is PokeRogue's model, where the rival's team follows a region; which one",
+    "a run gets is a seeded draw on the RUN SEED (never the wave, or the character would change",
+    "person mid-run). CAUTION: editing this list re-points runs already in progress, and unlike a",
+    "band pool the damage is WITHIN one run - appending a team changes the draw's divisor, so a",
+    "player can meet a different rival at their next meeting. Do not edit it while runs are live.",
+    "",
+    "slots: exactly a 'generated' signature slot - same alternatives, same weights, same properties",
+    "fragments. What differs is the MEANING OF THE ORDER. A signature is ace-first and truncated from",
+    "the end when a band wants fewer; a rival's slots are ACQUISITION order and truncated from the",
+    "end because the later ones have not been caught yet. Slot one is the starter. Put whatever the",
+    "last meeting should be a surprise last.",
+    "",
+    "party_size: optional, indexed by meeting. Omitted means 2.36's own ramp - two at the first",
+    "meeting, one more each time, capped at Cobblemon's six - derived from the number of meetings, so",
+    "a four-meeting ladder gets a coherent ramp rather than a clamped copy of a six-meeting one.",
+    "",
+    "WHAT A RIVAL WAVE DOES NOT GET, both decisions rather than gaps: no boss level multiplier and no",
+    "boss shields. A rival is hard because of its team - that is the lever it has that a trainer does",
+    "not. Shields cost the held-item slot and are what makes a BOSS wave read as a wall; a rival that",
+    "was one six times would flatten the difference. It is never catchable, like every trainer-owned",
+    "Pokemon (2.14), and it rolls the reward table for its own kind.",
+    "",
+    "THE LADDER BELOW IS A SHAPE REFERENCE, NOT CONTENT. Two meetings and one two-slot team, which is",
+    "the smallest thing that shows the schema. The real ladder - six meetings and the region teams -",
+    "is server content and belongs in a server-side datapack (2.7); ops/gen_pokerogue_roster.py",
+    "generates it. Note that under the default 5/10 schedule five of 2.36's six waves are already",
+    "trainer waves and only wave 8 is a wild one, so the ladder is mostly re-pointing waves that were",
+    "going to be fights anyway."
+  ],
+  "rival": {
+    "meetings": [
+      { "_note": "Wave 8 is a wild wave under 5/10; the rival block promotes it, which is why no \"kind\" is written or accepted here.", "wave": 8, "trainer": "cobblemon_roguelite:example_rival_1" },
+      { "wave": 25, "trainer": "cobblemon_roguelite:example_rival_2" }
+    ],
+    "teams": [
+      {
+        "_note": [
+          "One team, so every run meets this rival. Slot one is the starter - the Pokemon BOTH meetings",
+          "have in common - and is why the order is acquisition order. Three slots for two meetings",
+          "because the default ramp asks for 2 then 3; a team shorter than the deepest meeting's ramp is",
+          "reported at load, since a rival that stops growing is the mechanic quietly not happening."
+        ],
+        "id": "example",
+        "slots": [
+          { "alternatives": [ { "line": [ "cobblemon:chikorita", "cobblemon:bayleef", "cobblemon:meganium" ] } ] },
+          { "alternatives": [ { "line": [ "cobblemon:hoothoot", "cobblemon:noctowl" ] } ] },
+          { "alternatives": [ { "line": [ "cobblemon:mareep", "cobblemon:flaaffy", "cobblemon:ampharos" ] } ] }
+        ]
+      }
+    ]
+  },
 
   "_generated": [
     "Trainers whose TEAM is generated at the encounter from their signature species, rather than",

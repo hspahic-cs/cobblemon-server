@@ -46,7 +46,12 @@ object RunWaveBattles : RunWaveHandler {
     ): Boolean = when (plan.kind) {
         RunOpponent.WILD -> RunWildBattle.start(server, player, run, plan)
 
-        RunOpponent.TRAINER, RunOpponent.BOSS -> {
+        // §2.36's rival leaves through the same seam as the other two, and for the same reason: the NPC
+        // is an RCT trainer (`rgl_rival_1`..`rgl_rival_6`), so summoning it is on the far side of the
+        // licence boundary. What makes a rival a rival — which meeting, how much of the team it has
+        // gained — is decided in this module and handed over as a team, so a provider written before
+        // §2.36 needs no change to fight one.
+        RunOpponent.TRAINER, RunOpponent.BOSS, RunOpponent.RIVAL -> {
             if (trainer == null) {
                 // The roster served nothing for a wave that needs a trainer. Refused rather than
                 // substituted with a wild encounter: a run that quietly turns its boss waves into

@@ -68,6 +68,30 @@ enum class WaveDrawStream(internal val salt: Long) {
      * every species draw of every in-flight run.
      */
     TRAINER_ITEM(0x4954_454D_0000_0007L),
+
+    /**
+     * Which rival a run gets, of the identities its roster offers — see
+     * [com.cobblemonroguelite.data.trainer.RivalLadder].
+     *
+     * **Drawn once per run, not once per wave**, so the wave slot of [forDraw] is fed a constant
+     * ([com.cobblemonroguelite.data.trainer.RivalLadder.RUN_SCOPED]) instead of a wave number. That is
+     * the same reading [BIOME] takes — it passes a band index where the wave goes — and here it is not
+     * an optimisation but the whole mechanic: a rival that redrew per meeting would be a different
+     * character each time, which is precisely what §2.36 says a rival is not.
+     */
+    RIVAL(0x5249_5641_4C00_0008L),
+
+    /**
+     * Which alternative fills each slot of the rival's team.
+     *
+     * Also run-scoped, and for a sharper reason than [RIVAL]. §2.36's rival *grows*: meeting three
+     * brings meeting two's Pokémon plus one. That is implemented as a **prefix** of one slot list, and
+     * a prefix only stays a prefix if the draws are the same draws — so this stream is keyed on the run
+     * and consumed in slot order, and meeting two's two draws are literally the first two of meeting
+     * three's three. Key it on the wave instead and every meeting re-rolls the whole team: the starter
+     * changes species between meetings, and the "same character" the plan is describing is gone.
+     */
+    RIVAL_TEAM(0x5249_5641_4C54_0009L),
 }
 
 /**

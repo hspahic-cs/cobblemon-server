@@ -299,7 +299,7 @@ object BetweenWaveMenu {
 
         private fun creditsIcon() = label(
             Items.GOLD_NUGGET,
-            "§e${run.credits} credit(s)",
+            "§e${RunCurrency.format(run.credits)}",
             listOf("§7Wave §f${run.wave}", "§8Earned by clearing waves."),
         )
 
@@ -307,8 +307,8 @@ object BetweenWaveMenu {
             val price = entry.priceAt(run.wave)
             val affordable = price <= run.credits
             val colour = if (affordable) "§f" else "§8"
-            val lore = mutableListOf("§7$price credit(s)", describe(entry.reward))
-            lore += if (affordable) "§aClick to buy" else "§cNot enough credits"
+            val lore = mutableListOf("§7${RunCurrency.format(price)}", describe(entry.reward))
+            lore += if (affordable) "§aClick to buy" else "§cNot enough ${RunCurrency.SYMBOL}"
             return label(iconFor(entry.reward), "$colour${entry.id}", lore)
         }
 

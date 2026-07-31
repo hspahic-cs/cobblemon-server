@@ -53,7 +53,7 @@ object ShopMessages {
             grey("/roguelite reward take <id> [slot]")
         }
         if (rerollPrice != null && !alreadyTaken) {
-            lines += grey("/roguelite reroll — $rerollPrice credit(s). You have $credits.")
+            lines += grey("/roguelite reroll — ${RunCurrency.format(rerollPrice)}. You have ${RunCurrency.format(credits)}.")
         }
         return lines
     }
@@ -84,12 +84,12 @@ object ShopMessages {
             return listOf(grey("The shop has nothing stocked at this wave."))
         }
         val lines = mutableListOf<Component>()
-        lines += Component.literal("Shop — you have $credits credit(s).").withStyle(ChatFormatting.AQUA)
+        lines += Component.literal("Shop — you have ${RunCurrency.format(credits)}.").withStyle(ChatFormatting.AQUA)
         stock.forEach { entry ->
             val price = entry.priceAt(wave)
             val affordable = if (price <= credits) ChatFormatting.WHITE else ChatFormatting.DARK_GRAY
             lines += Component.literal("  ${entry.id}").withStyle(affordable)
-                .append(grey("  $price credit(s)"))
+                .append(grey("  ${RunCurrency.format(price)}"))
         }
         lines += grey("/roguelite shop buy <id> [slot] — buy as many as you can afford.")
         return lines
@@ -116,7 +116,7 @@ object ShopMessages {
     // ------------------------------------------------------------------ shared refusals
 
     fun tooPoor(have: Int, need: Int): Component =
-        red("That costs $need credit(s) and you have $have.")
+        red("That costs ${RunCurrency.format(need)} and you have ${RunCurrency.format(have)}.")
 
     fun noSuchEntry(id: String): Component = red("There is no '$id' in this server's tables.")
 

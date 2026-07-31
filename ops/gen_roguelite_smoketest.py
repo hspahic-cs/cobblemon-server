@@ -123,9 +123,8 @@ PALETTES = [
 # down: at the default band length of 10 these hand over at exactly waves 11 and 21, so the re-stamp
 # and the repaint are two things to walk into rather than two things to hope for.
 #
-# `power_spot` is left at its default of true on every palette above — the Tera/Dynamax confinement
-# (§2.5) is "that block exists inside an arena and nowhere else", so turning it off here would make
-# the gimmicks look broken during the very test that is meant to exercise them.
+# `power_spot` is FALSE on every palette above — see the comment where it is written. It was true, and
+# the first playtest could VMax, which is not the mode anyone asked for.
 BIOMES = [
     ("smoke_meadow", "Smoke Meadow", "minecraft:meadow", 1, 10),
     ("smoke_volcano", "Smoke Caldera", "minecraft:basalt_deltas", 11, 20),
@@ -266,6 +265,17 @@ def main():
     for pid, palette in PALETTES:
         write(os.path.join(data, "arena_palettes", f"{pid}.json"), {
             "shape": "circle",
+            # NO POWER SPOT, which is what stops Dynamax/VMax in a run.
+            #
+            # Mega Showdown gates Tera and Dynamax on `power_spot` being nearby; Mega is gated on the
+            # stone and key stone instead, so removing the block bans the two the server bans anyway
+            # (project_server_battle_rules: only Mega is allowed, Tera is banned) and leaves Mega
+            # working. The block's own docs argue it "should stay true" because the confinement is
+            # "this block exists inside an arena and nowhere else" — that argument is about keeping
+            # the gimmicks INSIDE arenas, and is the right default for a server that wants them at
+            # all. This one does not, at least until §2.5's escalation ladder decides which wave
+            # bands unlock what.
+            "power_spot": False,
             "width": ARENA_FOOTPRINT,
             "depth": ARENA_FOOTPRINT,
             "_comment": note + [

@@ -321,10 +321,15 @@ object StarterDraftMenu {
         private fun tabIcon(tab: StarterDraftFilter): ItemStack {
             val selected = tab == filter
             val available = catalogue.options.count(tab::matches)
+            // Amethyst rather than gold nuggets. Nuggets read as loose change on a screen whose currency
+            // is not money, and against a row of Pokémon sprites their gold sits in the same colour
+            // family as half the icons below them. A purple crystal is the one hue nothing else on this
+            // screen uses — the meter owns green/amber/red, the picks are sprites — so the tab row reads
+            // as a distinct band rather than as more of the grid.
             val icon = when (tab) {
                 is StarterDraftFilter.All -> ItemStack(Items.BOOK)
-                is StarterDraftFilter.Exactly -> ItemStack(Items.GOLD_NUGGET, tab.cost)
-                is StarterDraftFilter.AtLeast -> ItemStack(Items.GOLD_NUGGET, tab.cost)
+                is StarterDraftFilter.Exactly -> ItemStack(Items.AMETHYST_SHARD, tab.cost)
+                is StarterDraftFilter.AtLeast -> ItemStack(Items.AMETHYST_SHARD, tab.cost)
             }
             return label(
                 icon,

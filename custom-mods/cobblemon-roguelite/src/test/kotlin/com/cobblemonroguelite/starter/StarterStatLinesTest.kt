@@ -137,7 +137,9 @@ class StarterStatLinesTest {
 
     @Test
     fun `stat rows are all the same width, whatever their digits`() {
-        val visible = { line: String -> line.replace(Regex("§."), "").length }
+        // Pixel width, not character count: the HP label carries padding glyphs the others do not, and
+        // equal-length-but-unequal-width is the exact bug this whole exercise has been about.
+        val visible = StarterStatLines::pixelWidth
         val varied = bulbasaur.copy(
             baseStats = listOf("hp" to 5, "atk" to 130, "def" to 80, "spa" to 255, "spd" to 9, "spe" to 100),
             ivFloor = listOf(0, 31, 5, 10, 9, 30),
@@ -199,15 +201,27 @@ class StarterStatLinesTest {
     }
 
     @Test
-    fun `every stat label is the same width, which is why they are upper case`() {
-        // Minecraft's font is proportional: `t` is 4px against 6px for almost everything else, so the
-        // old `Atk`/`Def` labels made the bars start in different columns.
-        val widths = StarterStatLines.STAT_LABELS.map { label -> label.length }
-        assertEquals(1, widths.distinct().size, "labels are not the same length: ${StarterStatLines.STAT_LABELS}")
-        assertTrue(
-            StarterStatLines.STAT_LABELS.all { label -> label.all { it.isUpperCase() || it == ' ' } },
-            "a lower-case glyph is a different width: ${StarterStatLines.STAT_LABELS}",
-        )
+    fun `every stat label is the same pixel width, HP included`() {
+        // Minecraft's font is proportional, so equal LENGTH is not equal width — `t` is 4px against 6px
+        // for almost everything else, and `HP` is two glyphs where the rest are three. Width is the
+        // property that makes the columns line up, so width is what this asserts.
+        StarterStatLines.STAT_LABELS.forEach { label ->
+            assertEquals(
+                StarterStatLines.LABEL_WIDTH_PX,
+                StarterStatLines.pixelWidth(label),
+                "'$label' is not ${StarterStatLines.LABEL_WIDTH_PX}px",
+            )
+        }
+    }
+
+    @Test
+    fun `padding a label costs as few visible glyphs as possible`() {
+        // 4px spaces first, 2px dots only for the remainder — so HP pays one faint dot, not three.
+        val hp = StarterStatLines.STAT_LABELS.first()
+        assertTrue(hp.startsWith("HP"), hp)
+        assertEquals(1, hp.count { it == '.' }, "HP should need exactly one dot: '$hp'")
+        // A label that already fits is returned untouched, with no stray colour code.
+        assertEquals("ATK", StarterStatLines.padToLabelWidth("ATK"))
     }
 
     @Test
@@ -215,15 +229,17 @@ class StarterStatLinesTest {
         // Width has been the problem twice now: first the single wide "IVs HP10 Atk10 …" line, then the
         // sentence explaining the divider. A tooltip is only as narrow as its longest line, so this
         // pins the thing that keeps regressing rather than trusting the next author to notice.
-        val visible = { line: String -> line.replace(Regex("§."), "").length }
+        val visible = StarterStatLines::pixelWidth
         val rows = StarterStatLines.render(
             bulbasaur.copy(ivFloor = listOf(31, 10, 10, 22, 10, 10), hiddenAbilityUnlocked = true),
         )
         val statRow = visible(rows.single { it.startsWith("§7HP") })
+        // Eight characters' worth of slack, in the units the font actually measures in.
+        val allowance = 8 * 6
         rows.forEach { line ->
             assertTrue(
-                visible(line) <= statRow + 8,
-                "'$line' is ${visible(line)} wide against a stat row's $statRow",
+                visible(line) <= statRow + allowance,
+                "'$line' is ${visible(line)}px against a stat row's ${statRow}px",
             )
         }
     }

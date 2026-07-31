@@ -56,20 +56,57 @@ data class StarterStatSheet(
  */
 object StarterStatLines {
 
+    /** Every three-letter upper-case label: 3 glyphs × 6px. `HP` is padded up to it. */
+    const val LABEL_WIDTH_PX = 18
+
+    /**
+     * Glyph widths in Minecraft's default font, for the handful of characters this file lays out with.
+     *
+     * Six is the width of every upper-case letter and every digit, which is why the labels are upper
+     * case and the numbers are zero-padded. The entries are the exceptions padding is built out of.
+     */
+    private val GLYPH_WIDTHS = mapOf(' ' to 4, '.' to 2, ':' to 2, '|' to 2, 'I' to 4)
+
+    fun glyphWidth(char: Char): Int = GLYPH_WIDTHS[char] ?: 6
+
+    fun pixelWidth(text: String): Int = text.replace(Regex("§."), "").sumOf(::glyphWidth)
+
+    /**
+     * Pad a label out to [LABEL_WIDTH_PX] — the last of the alignment problems.
+     *
+     * `HP` is two glyphs where every other label is three, and there is no 6px blank in the vanilla
+     * font, so the trailing space it used to carry left it 2px short and started that row's number and
+     * bar early. This fills the gap with 4px spaces first and 2px dots only for the remainder, so `HP`
+     * costs exactly one barely-visible dark-grey dot rather than three, and any label added later lands
+     * on the same grid without anybody having to know why.
+     */
+    fun padToLabelWidth(label: String): String {
+        var missing = LABEL_WIDTH_PX - pixelWidth(label)
+        if (missing <= 0) return label
+        val pad = StringBuilder("§8")
+        while (missing >= glyphWidth(' ')) {
+            pad.append(' ')
+            missing -= glyphWidth(' ')
+        }
+        while (missing >= glyphWidth('.')) {
+            pad.append('.')
+            missing -= glyphWidth('.')
+        }
+        return label + pad
+    }
+
     /**
      * Short labels — and **upper case for a reason that is not style**.
      *
-     * Minecraft's default font is proportional, so `Atk` and `Def` are not the same width: `t` is 4px
-     * against 6px for almost everything else, and `HP` is a whole character short of the three-letter
-     * labels. That is what made the six rows look ragged even though every bar is exactly the same
-     * number of pipes. Every upper-case glyph is 6px, so `ATK`/`DEF`/`SPA`/`SPD`/`SPE` all measure 18px
-     * and the columns after them line up.
+     * Minecraft's default font is proportional, so `Atk` and `Def` were not the same width: `t` is 4px
+     * against 6px for almost everything else. That is what made the six rows look ragged even though
+     * every bar is exactly the same number of pipes. Every upper-case glyph is 6px, so ATK/DEF/SPA/SPD/
+     * SPE all measure 18px, and [padToLabelWidth] brings `HP` onto the same grid.
      *
-     * `HP ` is the one residue: a space is 4px, so that row starts its number 2px early. There is no
-     * 6px blank in the vanilla font to pad with, and 2px is a third of a character — it is the closest
-     * this gets without a resource pack.
+     * Declared after the padding helpers on purpose: an object initialises its properties in source
+     * order, so a label list built above [GLYPH_WIDTHS] would read a null map at class-init time.
      */
-    val STAT_LABELS = listOf("HP ", "ATK", "DEF", "SPA", "SPD", "SPE")
+    val STAT_LABELS = listOf("HP", "ATK", "DEF", "SPA", "SPD", "SPE").map(::padToLabelWidth)
 
     /**
      * A horizontal rule, the way the rest of this repo draws one: strikethrough spaces.

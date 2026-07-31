@@ -23,6 +23,53 @@ root README.
   (`--check` fails on stale output).
 
 ### Fixed
+- **`statchic` dropped nothing.** Its `drops` entry named
+  `cobblemon:electic_gem` — missing the `r` — so the drop silently never
+  resolved. Found by the loot-tier sweep.
+
+### Changed
+- **Champion Jax no longer drops a Totem of Undying.** The Totem is the Zacian
+  summon gate, and Jax handed one out *guaranteed* on defeat — a stronger source
+  than the 1.6% Ultra crate roll it was meant to gate. Signature item is now
+  `cobblemon:leftovers`, matching every other champion and Elite Four member
+  (all of whom use competitive held items; Jax's vanilla Totem was the lone
+  outlier). With this and the 0.23.31 chest removal, the Ultra crate is once
+  again the only non-vanilla Totem source.
+- **Monument artifact rarity brought in line with the Ultra crate.** All figures
+  are per chest opened (these pools roll 3–14 times, so per-roll weights
+  understate real supply):
+  - Origin-forme held items `griseous_orb` / `adamant_orb` / `lustrous_orb`:
+    **4.97% → 0.53%** each.
+  - Origin-forme unlocks `griseous_core` / `adamant_crystal` / `lustrous_globe`:
+    **1.01% → 0.11%** each.
+  - `blue_orb` (Primal Kyogre): **2.64% → 0.53%**. It sat untouched at 2.4× the
+    rate of its already-nerfed Groudon counterpart; `red_orb` also moved
+    **1.14% → 0.57%** so the two Primals now match.
+
+  `turnback_cave_vault` and `lugia_temple_chest` were previously un-overridden
+  upstream defaults; both are now ours. Freed weight spreads proportionally
+  across each pool's existing lower-tier entries — no entries added or removed.
+  Since `red_orb`/`blue_orb` were already at `weight: 1`, their nerf is expressed
+  by scaling every *other* entry up instead. See the new datapack README.
+
+- **Repo + VM cleanup (no gameplay impact).** Removed two junk tracked files (a
+  shell-mishap artifact from #56 and an empty `.Rhistory`) and the obsolete
+  `docs/gym-ai-beta-test.md`, which targeted 0.8.1 and was an orphan page — in
+  neither `nav` nor `exclude_docs`.
+- **Docs corrected against reality.** `docs/snapshots.md` still described the
+  pre-2026-07-15 snapshot layout; the logic now lives in
+  `/usr/local/bin/world-snapshot.sh <dev|prod>` with `prod-snapshot.sh` as a thin
+  wrapper, and `dev-reset.sh` is documented but **not currently installed on the
+  VM**. Also fixed `commands.md`, which still claimed homes were hard-capped at
+  5 — extra slots have been purchasable from the Upgrades shop tab.
+- **Scrubbed the VM's LAN address from this public repo** (18 references across
+  6 files). Ops commands now use `$COBBLEMON_SSH` / `$COBBLEMON_DEPLOY_SSH`;
+  `ops/fetch_battle_logs.sh` requires `CONTROL_PLANE` instead of defaulting to a
+  hardcoded host.
+
+## [0.33.1] - 2026-07-31
+
+### Fixed
 - **A stray datapack could half-apply a deploy.**
   `ops/prune-removed-server-datapacks.sh` now warns and skips a `server-*` pack
   it can't delete, and always exits 0, instead of aborting the run.
@@ -87,49 +134,6 @@ root README.
   the separator (`&f{prefix}&r {player}{suffix}`). Chat was never affected —
   `chat.json` hardcodes its spacing instead of using `{prefix}`. Non-staff now
   render with one leading space in the tablist, accepted as the lesser evil.
-- **`statchic` dropped nothing.** Its `drops` entry named
-  `cobblemon:electic_gem` — missing the `r` — so the drop silently never
-  resolved. Found by the loot-tier sweep.
-
-### Changed
-- **Champion Jax no longer drops a Totem of Undying.** The Totem is the Zacian
-  summon gate, and Jax handed one out *guaranteed* on defeat — a stronger source
-  than the 1.6% Ultra crate roll it was meant to gate. Signature item is now
-  `cobblemon:leftovers`, matching every other champion and Elite Four member
-  (all of whom use competitive held items; Jax's vanilla Totem was the lone
-  outlier). With this and the 0.23.31 chest removal, the Ultra crate is once
-  again the only non-vanilla Totem source.
-- **Monument artifact rarity brought in line with the Ultra crate.** All figures
-  are per chest opened (these pools roll 3–14 times, so per-roll weights
-  understate real supply):
-  - Origin-forme held items `griseous_orb` / `adamant_orb` / `lustrous_orb`:
-    **4.97% → 0.53%** each.
-  - Origin-forme unlocks `griseous_core` / `adamant_crystal` / `lustrous_globe`:
-    **1.01% → 0.11%** each.
-  - `blue_orb` (Primal Kyogre): **2.64% → 0.53%**. It sat untouched at 2.4× the
-    rate of its already-nerfed Groudon counterpart; `red_orb` also moved
-    **1.14% → 0.57%** so the two Primals now match.
-
-  `turnback_cave_vault` and `lugia_temple_chest` were previously un-overridden
-  upstream defaults; both are now ours. Freed weight spreads proportionally
-  across each pool's existing lower-tier entries — no entries added or removed.
-  Since `red_orb`/`blue_orb` were already at `weight: 1`, their nerf is expressed
-  by scaling every *other* entry up instead. See the new datapack README.
-
-- **Repo + VM cleanup (no gameplay impact).** Removed two junk tracked files (a
-  shell-mishap artifact from #56 and an empty `.Rhistory`) and the obsolete
-  `docs/gym-ai-beta-test.md`, which targeted 0.8.1 and was an orphan page — in
-  neither `nav` nor `exclude_docs`.
-- **Docs corrected against reality.** `docs/snapshots.md` still described the
-  pre-2026-07-15 snapshot layout; the logic now lives in
-  `/usr/local/bin/world-snapshot.sh <dev|prod>` with `prod-snapshot.sh` as a thin
-  wrapper, and `dev-reset.sh` is documented but **not currently installed on the
-  VM**. Also fixed `commands.md`, which still claimed homes were hard-capped at
-  5 — extra slots have been purchasable from the Upgrades shop tab.
-- **Scrubbed the VM's LAN address from this public repo** (18 references across
-  6 files). Ops commands now use `$COBBLEMON_SSH` / `$COBBLEMON_DEPLOY_SSH`;
-  `ops/fetch_battle_logs.sh` requires `CONTROL_PLANE` instead of defaulting to a
-  hardcoded host.
 
 ## [0.33.0] - 2026-07-30
 

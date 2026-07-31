@@ -123,13 +123,6 @@ sealed interface ResumeResult {
      */
     data class CatchPending(val pokemon: Pokemon, val party: List<Pokemon>) : ResumeResult
 
-    /**
-     * Every run Pokémon has fainted — from OUTSIDE battle, or the wipe check would already have ended
-     * the run. There is no healing inside a run yet, so the honest options are the ones the message
-     * names: abandon, or wait for revive-shaped rewards to exist.
-     */
-    data object PartyFainted : ResumeResult
-
     data class Ended(val report: RunEndReport) : ResumeResult
 }
 
@@ -413,13 +406,17 @@ object RunController {
         // why that side effect belongs on the command that reports it.
         run.pendingCatch?.let { return ResumeResult.CatchPending(it, run.partySnapshot()) }
 
-        // Live-test finding: a run Pokémon can faint OUTSIDE battle (the player flew one into the
-        // void), and a wave fought with an all-fainted party is a battle nobody can act in. Refused
-        // here, next to the other party-state gate, rather than deep in the battle layer — the player
-        // can read the reason and act on it, where a stalled battle reads as the mode being broken.
-        // Out-of-battle damage to run Pokémon at all is a §2.2-reversal question for the humans.
+        // User decision 2026-07-31: an all-fainted party at resume ENDS the run as a wipe, rather
+        // than refusing forever — there is no healing outside the run's own shop, so a refusal was a
+        // soft-lock wearing a message. The order matters against the revive-purchase path: the
+        // between-wave shop opens on waveCleared, BEFORE anyone calls resume, so a player who still
+        // has a marked Revive (or the money for one) uses it there; reaching resume with everyone
+        // still down is the decision to stop. Faint-outside-battle is how this state arises at all —
+        // battle wipes end through pokemonFainted — and whether run Pokémon should be usable as
+        // vehicles in the first place remains an open question.
         if (run.partySnapshot().none { pokemon -> runCatching { !pokemon.isFainted() }.getOrDefault(true) }) {
-            return ResumeResult.PartyFainted
+            player.sendSystemMessage(RunMessages.partyFainted())
+            return ResumeResult.Ended(endRun(server, player.uuid, RunEndCause.PARTY_WIPED))
         }
 
         return when (val step = nextStep(run, depthCapFor(player))) {

@@ -47,13 +47,13 @@ object RewardGrant {
      * alternative is worse, because granting first means a crash between grant and charge is a free
      * item, and an item that cannot be granted is an operator error a refund would hide.
      */
-    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long): GrantResult = when (target) {
+    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long, player: net.minecraft.server.level.ServerPlayer): GrantResult = when (target) {
         is RewardTarget.Unresolved -> GrantResult.Failed(target.reason)
 
         // Party-wide is only ever a bag item today ([RewardTargeting.needsMember]), and a bag item does
         // not touch a Pokémon at all — so this branch is about the run, not the party.
         RewardTarget.WholeParty -> when (reward) {
-            is RunReward.BagItem -> grantBagItem(reward)
+            is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
             else -> GrantResult.Failed("reward ${reward::class.simpleName} needs a party member")
         }
 
@@ -73,12 +73,12 @@ object RewardGrant {
                     "${pokemon.species.name} is not part of this run — rewards can only go to run Pokémon",
                 )
             } else {
-                applyToMember(reward, pokemon, runSeed)
+                applyToMember(reward, pokemon, runSeed, player)
             }
         }
     }
 
-    private fun applyToMember(reward: RunReward, pokemon: Pokemon, runSeed: Long): GrantResult = runCatching {
+    private fun applyToMember(reward: RunReward, pokemon: Pokemon, runSeed: Long, player: net.minecraft.server.level.ServerPlayer): GrantResult = runCatching {
         when (reward) {
             is RunReward.Evs -> grantEvs(reward, pokemon)
             is RunReward.Levels -> grantLevels(reward, pokemon)
@@ -88,7 +88,7 @@ object RewardGrant {
             is RunReward.TechnicalMachine -> grantMove(reward, pokemon)
             // A bag item targeted at a member: legal input, since [RewardTargeting] ignores a slot on a
             // party-wide reward, so treat it as the bag grant it is rather than refusing.
-            is RunReward.BagItem -> grantBagItem(reward)
+            is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
         }
     }.getOrElse { failure ->
         log.warn("roguelite: granting {} to {} threw", reward, pokemon.species.resourceIdentifier, failure)
@@ -217,9 +217,25 @@ object RewardGrant {
      * to put this in. Returning [GrantResult.Failed] means an operator who ships a bag-item entry finds
      * out immediately, which is much better than a purchase that takes credits and does nothing.
      */
-    private fun grantBagItem(reward: RunReward.BagItem): GrantResult {
-        log.warn("roguelite: a bag-item reward was granted and the run bag does not exist yet: {}", reward)
-        return GrantResult.Failed("bag items are not implemented yet — remove this entry from the table")
+    /**
+     * A real, usable Cobblemon item — the §2.11 reversal, finally implementable.
+     *
+     * The plan's open-questions list recorded the direction ("reject player-owned, allow run-issued")
+     * and this stub used to refuse because there was nowhere for a run-issued item to LIVE. The
+     * isolation work built exactly that place: the stack is marked with the run's seed, lands in the
+     * player's swapped inventory, rides [RunState.runBag] across sessions, and is voided with the run
+     * at the final exit — so a granted Revive is a real `cobblemon:revive` that Cobblemon itself
+     * makes usable (and charges the battle turn for), while never being able to leave the run.
+     * [com.cobblemonroguelite.battle.RunBagGuard] is the other half: marked bag items are allowed,
+     * unmarked ones never are.
+     */
+    private fun grantBagItem(reward: RunReward.BagItem, player: net.minecraft.server.level.ServerPlayer, runSeed: Long): GrantResult {
+        val item = BuiltInRegistries.ITEM.getOptional(reward.item).orElse(null)
+            ?: return unresolved("item", reward.item.toString())
+        val count = reward.count.coerceIn(1, item.defaultMaxStackSize)
+        val stack = com.cobblemonroguelite.run.RunItems.mark(ItemStack(item, count), runSeed)
+        if (!player.inventory.add(stack)) player.drop(stack, false)
+        return GrantResult.Ok("${count}x ${item.description.string} added to your run bag")
     }
 
     private fun unresolved(kind: String, id: String): GrantResult {

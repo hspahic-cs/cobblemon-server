@@ -7,8 +7,8 @@ This is TEST SCAFFOLDING, not content. Every number in it was chosen to make a m
 quickly, not to be fun or balanced:
 
   - waves are short and bosses are frequent, so a shield and a rival turn up in minutes
-  - the reward table holds ONE OF EACH RunReward type, including the bag item that is known to
-    fail, because the failure path is a thing to verify rather than avoid
+  - the reward table holds ONE OF EACH RunReward type — including a bag item, which since the
+    §2.11 reversal is a real, usable, run-marked Cobblemon item
   - prices are small so a few waves of credits reach the shop
   - three biomes on disjoint 10-wave windows, each with its own palette, so the §2.24 rotation and
     the §2.19 re-stamp fire on a schedule you can watch rather than on a weighted roll
@@ -63,22 +63,20 @@ REWARDS = [
     ("smoke_ability", "rare", {"type": "ability"}),
     ("smoke_held_item", "rare", {"type": "held_item", "item": "cobblemon:leftovers"}),
     ("smoke_tm", "rare", {"type": "move", "move": "earthquake"}),
-    ("smoke_bag_item_EXPECT_FAILURE", "rare", {"type": "item", "item": "cobblemon:revive", "count": 1}),
+    ("smoke_bag_revive", "rare", {"type": "item", "item": "cobblemon:revive", "count": 1}),
 ]
 
 # PokéRogue's own price multiples (docs/roguelite-economy-reference.md), against the shared wave-money
-# curve rather than flat numbers — so the shop stays in reach at wave 150 without a second table.
-#
-# The REWARDS behind them are still ours and still placeholders: §2.11 removed the run bag, so we have
-# no potions or revives to sell. The names below say what each slot is standing in FOR, so that when
-# consumables exist the multiplier is already the right one.
+# curve — and REAL Cobblemon consumables, not stand-ins, since the §2.11 reversal landed: a purchased
+# Revive is a marked cobblemon:revive in the swapped inventory, usable the way Cobblemon makes it
+# usable (a battle throw costs the turn), and voided with the run. Their tier-1 row exactly.
 SHOP = [
-    # (id, cost multiple, stand-in reward)
-    ("stands_in_for_potion", 0.2, {"type": "ev", "stat": "hp", "amount": 10}),
-    ("stands_in_for_ether", 0.4, {"type": "level", "amount": 1}),
-    ("stands_in_for_revive", 2.0, {"type": "held_item", "item": "cobblemon:focus_sash"}),
-    ("stands_in_for_full_heal", 1.0, {"type": "nature", "nature": "adamant"}),
-    ("stands_in_for_max_potion", 1.5, {"type": "ev", "stat": "speed", "amount": 20}),
+    # (id, cost multiple, reward)
+    ("potion", 0.2, {"type": "item", "item": "cobblemon:potion", "count": 1}),
+    ("ether", 0.4, {"type": "item", "item": "cobblemon:ether", "count": 1}),
+    ("super_potion", 0.45, {"type": "item", "item": "cobblemon:super_potion", "count": 1}),
+    ("full_heal", 1.0, {"type": "item", "item": "cobblemon:full_heal", "count": 1}),
+    ("revive", 2.0, {"type": "item", "item": "cobblemon:revive", "count": 1}),
 ]
 
 # THE REASON A SMOKE RUN COULD NOT BE PLAYED AT ALL.
@@ -234,8 +232,8 @@ def main():
     # --- the free half ---
     write(os.path.join(data, "reward_tables", "default.json"), {
         "_comment": note + [
-            "One entry per RunReward type. smoke_bag_item_EXPECT_FAILURE is meant to fail: §2.11's run",
-            "bag does not exist, and RewardGrant reports that rather than silently doing nothing.",
+            "One entry per RunReward type. The bag item is a real marked cobblemon:revive now —",
+            "the §2.11 reversal — usable in and out of battle, dying with the run.",
         ],
         "tiers": [
             {"id": "common", "curve": [{"wave": 1, "weight": 100}]},

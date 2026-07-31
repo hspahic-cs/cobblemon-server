@@ -69,17 +69,14 @@ object RunBagGuard {
     private fun refuse(event: ICancellableEvent, player: ServerPlayer?, stack: ItemStack) {
         if (player == null || stack.isEmpty) return
         val fighting = RunBattles.isFighting(player.uuid)
-        // §7.2 of the isolation design: the gate widens from "in a wave battle" to "swapped at all".
-        // While tagged, an UNMARKED bag item should not exist — it slipped in past the stash — so it
-        // is refused anywhere as the backstop for worn-slot gaps; a MARKED one is the run's own and
-        // follows §2.36 (usable between waves, refused in battle by the original gate below).
         val tagged = RunInventoryStash.isTagged(player)
         if (!fighting && !tagged) return
         if (!isBagItem(stack)) return
-        if (fighting) {
-            event.isCanceled = true
-            return
-        }
+        // The §2.11 reversal, implemented (user decision 2026-07-31): run-ISSUED bag items — marked
+        // with the run's seed at their mint — are usable anywhere in a run, including battle, where
+        // Cobblemon itself charges the turn for the throw. Player-owned (unmarked) bag items stay
+        // refused everywhere: they are the free-healing economy §2.11 was written against, and while
+        // swapped they should not even exist — an unmarked bag item here slipped past the stash.
         if (!RunItems.isRunItem(stack)) event.isCanceled = true
     }
 

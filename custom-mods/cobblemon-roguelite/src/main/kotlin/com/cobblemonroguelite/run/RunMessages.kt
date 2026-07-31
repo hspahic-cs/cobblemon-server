@@ -72,8 +72,7 @@ object RunMessages {
     )
 
     fun partyFainted(): Component = literal(
-        "Every Pokémon in your run has fainted, and there is no healing inside a run yet. " +
-            "/roguelite abandon confirm ends the run and pays out what it owes.",
+        "Every Pokémon in your run has fainted — the run is over.",
     )
 
     fun stashRefused(reason: String): Component =

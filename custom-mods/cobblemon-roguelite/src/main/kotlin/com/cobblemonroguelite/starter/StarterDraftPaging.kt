@@ -44,8 +44,8 @@ object StarterDraftPaging {
      *
      * It has fallen 45 → 36 → 32 as the chrome arrived, which sounds like a loss and is not: 45 a page
      * was thirteen pages of *undifferentiated* catalogue, and the only way to find anything in it was
-     * to page. Cost tabs cut 542 to at most 179 and usually far less, and sort puts the end you want
-     * first — so the number of pages a player actually walks went down, not up.
+     * to page. Cost tabs cut 542 to at most 179 and usually far less, so the number of pages a player
+     * actually walks went down, not up.
      */
     const val PER_PAGE = 32
 
@@ -65,63 +65,17 @@ object StarterDraftPaging {
 }
 
 /**
- * How the grid is ordered, cycled by the header button.
- *
- * ### Why sorting lives here and not in the catalogue
- *
- * [StarterCatalogue.options] is cheapest-first and must stay that way: it is the order the *validator*
- * and the log lines use, and two builds of the same catalogue are required to render identically. This
- * is a view over that list. Nothing downstream reads the sorted copy except the paint, so a player
- * changing sort cannot change what they are allowed to buy — only where it is on screen.
- *
- * ### Every mode breaks ties on the full id
- *
- * Cost is not unique and neither is a species path across namespaces, so a comparator that stopped at
- * the visible key would leave equal entries free to swap places between repaints — species jumping
- * around under a cursor that has not moved. The id makes each order total.
- */
-enum class StarterDraftSort {
-
-    /** The catalogue's own order. Default, because the affordable end is the end a new player needs. */
-    CHEAPEST,
-
-    /** Costliest first — "what is the best thing I can afford", which is the other way people shop. */
-    COSTLIEST,
-
-    /** By species name. The one order that does not move when prices change, so it is how you find a
-     *  Pokémon you already have in mind rather than one you are choosing between. */
-    ALPHABETICAL,
-    ;
-
-    val label: String
-        get() = when (this) {
-            CHEAPEST -> "Cheapest first"
-            COSTLIEST -> "Most expensive first"
-            ALPHABETICAL -> "A to Z"
-        }
-
-    fun next(): StarterDraftSort = entries[(ordinal + 1) % entries.size]
-
-    fun sort(options: List<StarterOption>): List<StarterOption> = when (this) {
-        CHEAPEST -> options.sortedWith(compareBy({ it.cost }, { it.species.toString() }))
-        COSTLIEST -> options.sortedWith(compareByDescending<StarterOption> { it.cost }.thenBy { it.species.toString() })
-        // The path, not the full id: `cobblemon:bulbasaur` sorts under B, which is what a player reading
-        // "A to Z" means. The namespace only breaks ties, where an addon's Bulbasaur would otherwise be
-        // free to swap places with Cobblemon's.
-        ALPHABETICAL -> options.sortedWith(compareBy({ it.species.path }, { it.species.toString() }))
-    }
-}
-
-/**
  * Which slice of the catalogue the grid is showing, chosen from the tabs along the top.
  *
- * ### Why filtering and not just sorting
+ * ### Why filtering, and why it replaced sorting
  *
- * Sort answers "where do I start reading"; it does not stop the list being 542 long. Under §2.13 the
- * question a player is actually asking is "what can I get for 3 points", and that is a *subset*, not
- * a starting position — with sort alone they still page past everything cheaper to find where 3s end
- * and 4s begin. The tabs make the budget arithmetic the axis you navigate by, which is what the
- * budget was for.
+ * A sort control answers "where do I start reading"; it does not stop the list being 542 long. Under
+ * §2.13 the question a player is actually asking is "what can I get for 3 points", and that is a
+ * *subset*, not a starting position — sorting alone still makes them page past everything cheaper to
+ * find where the 3s end and the 4s begin. The tabs make the budget arithmetic the axis you navigate
+ * by, which is what the budget was for, and they absorbed the sort control outright: inside a
+ * single-cost tab every entry ties on cost, so [StarterCatalogue.options]'s (cost, id) order leaves
+ * the grid alphabetical with no control to press.
  *
  * ### Why the top of the range gets bucketed
  *
@@ -179,13 +133,13 @@ sealed interface StarterDraftFilter {
  *
  * ### Why a gauge and not a number
  *
- * There is a number too — it is on the budget icon. This is the thing you can read without reading:
- * the panes fill left to right and change colour as they go, so "am I nearly out" is answered by a
+ * The exact numbers are on every segment's tooltip. The gauge is the part you can read *without*
+ * reading: the column fills and changes colour as it goes, so "am I nearly out" is answered by a
  * glance at a shape rather than by subtracting one number from another mid-draft.
  *
  * ### The colour is the position, not the total
  *
- * Each segment is coloured by *where in the budget it sits* — the first three green, the fourth amber,
+ * Each segment is coloured by *where in the budget it sits* — the lower three green, the fourth amber,
  * the last red — the way a fuel gauge is. The alternative, recolouring every filled segment according
  * to the overall fraction, makes the whole bar change colour at once on a single click and loses the
  * "you are entering the last of it" reading, which is the only part a player has to act on.
@@ -198,7 +152,7 @@ sealed interface StarterDraftFilter {
  */
 object StarterDraftMeter {
 
-    /** One per row of the chest below the header, so the meter reads as a bar rather than as five items. */
+    /** One per chest row below the tabs, so the right-hand column reads as one bar rather than five items. */
     const val SEGMENTS = 5
 
     enum class Zone { GREEN, AMBER, RED }

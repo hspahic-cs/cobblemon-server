@@ -72,7 +72,7 @@ class StarterStatLinesTest {
         assertTrue(lines.any { it.contains("Grass / Poison") })
         assertTrue(lines.any { it.contains("BST") && it.contains("318") })
         assertTrue(lines.any { it.contains("Overgrow") })
-        assertTrue(lines.any { it.contains("Medium Slow") })
+        assertTrue(lines.any { it.contains("Growth:") && it.contains("Medium Slow") })
         // One row per stat, each labelled — six bars with no labels would be unreadable as a group.
         StarterStatLines.STAT_LABELS.forEach { label ->
             assertTrue(lines.any { it.contains(label.trim()) }, "no row for $label")
@@ -103,7 +103,8 @@ class StarterStatLinesTest {
         assertTrue(hp.contains("31"), "the IV is not on its stat's row: $hp")
 
         val atk = rows.single { it.startsWith("§7ATK") }
-        assertTrue(atk.contains(" 5"), "the second IV landed on the wrong row: $atk")
+        // Single digits are zero-padded now, so the IV of 5 is the two-glyph field, not a bare " 5".
+        assertTrue(atk.contains(StarterStatLines.figure(5, 2)), "the second IV landed on the wrong row: $atk")
         // Every stat row carries one, so none of the six is left unexplained.
         assertEquals(6, rows.count { it.contains(StarterStatLines.COLUMN_DIVIDER) })
     }
@@ -119,14 +120,48 @@ class StarterStatLinesTest {
     }
 
     @Test
-    fun `the sheet says whether the floor is the base one or an earned one`() {
-        val base = StarterStatLines.render(bulbasaur.copy(ivFloor = List(6) { StarterIvFloor.BASE }))
-        assertTrue(base.any { it.contains("every run starts here") }, "base floor unlabelled: $base")
+    fun `a number field is the same pixel width at one, two and three digits`() {
+        // The reported bug: a space is 4px and a digit is 6px, so padStart made `ATK  80` 2px narrower
+        // than `ATK 130` and every bar after it started early. Padding with dimmed zeros makes the field
+        // exactly three digit glyphs whatever the number.
+        val digits = { field: String -> field.replace(Regex("§."), "").length }
+        listOf(5, 80, 130, 255).forEach { value ->
+            assertEquals(3, digits(StarterStatLines.figure(value, 3)), "figure($value) is not three glyphs")
+        }
+        // The pad is dimmed, not white, so it reads as alignment rather than as 080.
+        assertTrue(StarterStatLines.figure(80, 3).startsWith("§80"), StarterStatLines.figure(80, 3))
+        assertTrue(StarterStatLines.figure(130, 3).startsWith("§f"), StarterStatLines.figure(130, 3))
+        // And an over-long number is never truncated to fit the field.
+        assertEquals("§f1000", StarterStatLines.figure(1000, 3))
+    }
 
-        val earned = StarterStatLines.render(bulbasaur.copy(ivFloor = listOf(31, 10, 10, 22, 10, 10)))
-        assertTrue(earned.any { it.contains("your best so far") }, "earned floor unlabelled: $earned")
-        // Both name the column the numbers are in, since nothing else does any more.
-        assertTrue(earned.any { it.contains("IVs") })
+    @Test
+    fun `stat rows are all the same width, whatever their digits`() {
+        val visible = { line: String -> line.replace(Regex("§."), "").length }
+        val varied = bulbasaur.copy(
+            baseStats = listOf("hp" to 5, "atk" to 130, "def" to 80, "spa" to 255, "spd" to 9, "spe" to 100),
+            ivFloor = listOf(0, 31, 5, 10, 9, 30),
+        )
+        val rows = StarterStatLines.render(varied).filter { it.contains(StarterStatLines.COLUMN_DIVIDER) }
+        assertEquals(6, rows.size)
+        assertEquals(1, rows.map(visible).distinct().size, "rows are ragged: ${rows.map(visible)}")
+    }
+
+    @Test
+    fun `growth is coloured by whether it helps`() {
+        assertEquals("§a", StarterStatLines.growthColour("Fast"))
+        assertEquals("§c", StarterStatLines.growthColour("Slow"))
+        // Cobblemon hands these over with underscores; the sheet capitalises them for display, so both
+        // spellings have to land on the same colour.
+        assertEquals(StarterStatLines.growthColour("medium_fast"), StarterStatLines.growthColour("Medium Fast"))
+    }
+
+    @Test
+    fun `the IV column carries no explanatory line`() {
+        // It went through three wordings, each either the widest line on the panel or too terse to earn
+        // its row. The column is two glyphs behind a divider; a player works that out once.
+        val rows = StarterStatLines.render(bulbasaur.copy(ivFloor = listOf(31, 10, 10, 22, 10, 10)))
+        assertTrue(rows.none { it.contains("every run") || it.contains("best so far") }, "$rows")
     }
 
     @Test
@@ -141,9 +176,11 @@ class StarterStatLinesTest {
     fun `the panel is three blocks separated by rules`() {
         val rows = StarterStatLines.render(bulbasaur.copy(ivFloor = List(6) { StarterIvFloor.BASE }))
         assertEquals(2, rows.count { it == StarterStatLines.RULE }, "expected identity | stats | trailer")
-        // Growth belongs with "what is this species", not alone at the bottom.
-        val identity = rows.first()
-        assertTrue(identity.contains("Grass / Poison") && identity.contains("Medium Slow"), identity)
+        assertTrue(rows.first().contains("Grass / Poison"), rows.first())
+        // Growth is its own row at the bottom, and carries a colour of its own.
+        val growth = rows.last()
+        assertTrue(growth.contains("Growth:") && growth.contains("Medium Slow"), growth)
+        assertTrue(growth.contains(StarterStatLines.growthColour("Medium Slow")), growth)
     }
 
     @Test

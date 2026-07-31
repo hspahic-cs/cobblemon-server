@@ -83,6 +83,38 @@ object StarterStatLines {
     /** Between a base stat and its IV. Not a pipe: the bars are pipes, and a pipe would join them. */
     const val COLUMN_DIVIDER = " §8: "
 
+    /**
+     * A number in a fixed-width field, padded with **dimmed leading zeros** rather than with spaces.
+     *
+     * This is the fix for the last of the alignment problems: a space is 4px and a digit is 6px, so
+     * `" 80"` is 2px narrower than `"130"` and every bar after it started 2px early. Padding with real
+     * digits makes the field exactly `width × 6px` whatever the number, so the bars, the divider and
+     * the IV column all sit in the same place on all six rows.
+     *
+     * The pad is `§8`, which on a tooltip's background is nearly invisible — it reads as alignment
+     * rather than as `080`. The honest alternative was moving the numbers to the end of the row where
+     * raggedness has nothing to push, but that separates each number from the bar it describes.
+     */
+    fun figure(value: Int, width: Int): String {
+        val digits = value.toString()
+        if (digits.length >= width) return "§f$digits"
+        return "§8" + "0".repeat(width - digits.length) + "§f" + digits
+    }
+
+    /**
+     * Growth rate, coloured by whether it helps.
+     *
+     * A run is a level treadmill (§2.6), so how fast a species levels is a real thing to weigh and not
+     * trivia — which is what makes it worth a colour rather than the grey it had. Fast is green, medium
+     * amber, slow red; `erratic` and `fluctuating` are grouped by where they spend most of a run's
+     * level range rather than by their name.
+     */
+    fun growthColour(growthRate: String): String = when (growthRate.lowercase().replace(" ", "_")) {
+        "fast", "erratic" -> "§a"
+        "medium_fast", "medium" -> "§e"
+        else -> "§c"
+    }
+
     const val BAR_WIDTH = 10
 
     /**
@@ -140,13 +172,8 @@ object StarterStatLines {
     fun render(sheet: StarterStatSheet): List<String> {
         val lines = mutableListOf<String>()
 
-        // Types and growth read as one fact — what this species is — so they share a line.
-        val identity = buildList {
-            if (sheet.types.isNotEmpty()) add(sheet.types.joinToString(" / "))
-            sheet.growthRate?.let { add(it) }
-        }
-        if (identity.isNotEmpty()) lines += "§7" + identity.joinToString(" §8· §7")
-        if (sheet.baseStats.isNotEmpty() && identity.isNotEmpty()) lines += RULE
+        if (sheet.types.isNotEmpty()) lines += "§7${sheet.types.joinToString(" / ")}"
+        if (sheet.baseStats.isNotEmpty() && lines.isNotEmpty()) lines += RULE
 
         // The IV rides on the stat row it belongs to, behind a divider, rather than in a row of its own.
         //
@@ -163,9 +190,9 @@ object StarterStatLines {
             // makes six bars unreadable as a group, which is the only reason to draw them together.
             val name = STAT_LABELS.getOrElse(index) { label }
             val iv = sheet.ivFloor?.getOrNull(index)?.let { floor ->
-                COLUMN_DIVIDER + "§f${floor.toString().padStart(2)} ${bar(floor, StarterIvFloor.MAX_IV, IV_BAR_WIDTH)}"
+                COLUMN_DIVIDER + "${figure(floor, 2)} ${bar(floor, StarterIvFloor.MAX_IV, IV_BAR_WIDTH)}"
             }.orEmpty()
-            lines += "§7$name §f${value.toString().padStart(3)} ${bar(value)}$iv"
+            lines += "§7$name ${figure(value, 3)} ${bar(value)}$iv"
         }
         if (sheet.baseStats.isNotEmpty()) lines += "§7BST §f${sheet.baseStatTotal}"
 
@@ -180,16 +207,11 @@ object StarterStatLines {
         }
         // Names the right-hand column, which is now the only thing that does — and says which floor it
         // is, a fixed starting point or a high-water mark you have raised, which is why §2.17 exists.
-        // Kept short deliberately. The long version — "Right of the divider: IVs. Every run starts
-        // here." — named the column perfectly and was half again as wide as a stat row, which would have
-        // made it the widest line on the panel and undone the point of splitting the IVs out of one.
-        sheet.ivFloor?.let { floor ->
-            trailer += if (floor.all { it <= StarterIvFloor.BASE }) {
-                "§8IVs · every run starts here"
-            } else {
-                "§8IVs · your best so far"
-            }
-        }
+        // No line explaining the IV column any more. It went through three wordings, each of which was
+        // either the widest line on the panel or too terse to earn its row, and the column it described
+        // is two glyphs wide with a divider in front of it — the tooltip is better off letting a player
+        // work that out once than repeating it on all 542 species forever.
+        sheet.growthRate?.let { trailer += "§7Growth: ${growthColour(it)}$it" }
         if (trailer.isNotEmpty()) {
             if (lines.isNotEmpty()) lines += RULE
             lines += trailer

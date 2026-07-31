@@ -53,6 +53,18 @@ import java.util.UUID
  * with the validator and one that cannot — and the drifting version is always the one no test covers.
  * Confirming re-validates through [RunController.chooseStarters], so nothing here is trusted.
  *
+ * ### Two controls were removed rather than kept
+ *
+ * A sort cycle and a stats toggle used to sit on the control row, and the screen read as cluttered with
+ * them there — five competing icon languages across a book, nuggets, a hopper, a spyglass, dyes and
+ * glass panes, on a screen whose whole job is "look at Pokémon".
+ *
+ * Neither was load-bearing once the cost tabs existed. [StarterCatalogue.options] is ordered by (cost,
+ * then id), so inside a single-cost tab every entry ties on cost and the tie-break carries it — the
+ * grid is alphabetical for free, which was the only ordering the sort cycle offered that the tabs do
+ * not. The stats toggle guarded against a noisy tooltip, and the tooltip stopped being noisy; a toggle
+ * whose off state nobody wants is a slot spent on nothing.
+ *
  * ### Why the catalogue is captured when the screen opens
  *
  * [StarterCatalogue] exists to make "the numbers a player was shown" and "the numbers they are judged
@@ -85,12 +97,16 @@ object StarterDraftMenu {
      */
     private val GRID_SLOTS: List<Int> = (1..4).flatMap { row -> (0..7).map { column -> row * 9 + column } }
 
-    /** Row 5, left to right: the two page arrows, the picks, sort, stats, confirm. */
+    /**
+     * Row 5, left to right: the two page arrows, the picks, confirm.
+     *
+     * A sort cycle and a stats toggle used to sit at 50 and 51; both are gone, for the reasons in this
+     * file's header. Their slots stay empty rather than being backfilled, because the row reads as three
+     * groups — navigate, draft, commit — and filling the gap would merge the last two.
+     */
     private const val PREVIOUS_SLOT = 45
     private const val NEXT_SLOT = 46
     private val PICK_SLOTS = listOf(47, 48, 49)
-    private const val SORT_SLOT = 50
-    private const val STATS_SLOT = 51
     private const val CONFIRM_SLOT = 52
 
     init {
@@ -142,14 +158,6 @@ object StarterDraftMenu {
 
         private var page = 0
 
-        /**
-         * The grid's order. A view, not a rule — see [StarterDraftSort].
-         *
-         * Held on the menu next to [page] because it is the same kind of thing: where the player is
-         * looking. Neither survives the window closing, and neither is worth persisting.
-         */
-        private var sort = StarterDraftSort.CHEAPEST
-
         /** Which cost tab is open. [StarterDraftFilter.All] until a player narrows it. */
         private var filter: StarterDraftFilter = StarterDraftFilter.All
 
@@ -160,16 +168,6 @@ object StarterDraftMenu {
          * would be a distinct-and-sort over 542 entries on every click to reach the same answer.
          */
         private val tabs: List<StarterDraftFilter> = StarterDraftFilter.tabsFor(catalogue.options, TAB_SLOTS.size)
-
-        /**
-         * Whether icons carry their [StarterStatSheet].
-         *
-         * Default on: a player who does not know the panel exists will never press a button to find
-         * it, and the sheet is the difference between choosing on price and choosing on merit. Off is
-         * for the player who has learned the catalogue and wants the tooltip out of the way — the same
-         * reason PokéRogue's own panel has a toggle rather than being always-on.
-         */
-        private var showStats = true
 
         /**
          * Sheets built once per open, not once per paint.
@@ -202,11 +200,6 @@ object StarterDraftMenu {
             if (button != 0 || (clickType != ClickType.PICKUP && clickType != ClickType.QUICK_MOVE)) return
 
             when {
-                slotId == SORT_SLOT -> cycleSort()
-                slotId == STATS_SLOT -> {
-                    showStats = !showStats
-                    paint()
-                }
                 slotId in TAB_SLOTS -> selectTab(TAB_SLOTS.indexOf(slotId))
                 slotId in GRID_SLOTS -> toggleFromGrid(GRID_SLOTS.indexOf(slotId))
                 slotId in PICK_SLOTS -> removePick(PICK_SLOTS.indexOf(slotId))
@@ -218,20 +211,7 @@ object StarterDraftMenu {
 
         // ------------------------------------------------------------------ actions
 
-        /**
-         * Re-sort, and go back to page 1.
-         *
-         * Staying on page 7 of a list that has just been reordered shows a screenful the player has no
-         * way to relate to what they clicked. The point of sorting is to bring something to the front,
-         * so the front is where it puts you.
-         */
-        private fun cycleSort() {
-            sort = sort.next()
-            page = 0
-            paint()
-        }
-
-        /** Same reset as [cycleSort], and for the same reason: the page you were on no longer means anything. */
+        /** Resets to page 1: the page you were on no longer means anything against a different list. */
         private fun selectTab(index: Int) {
             val chosen = tabs.getOrNull(index) ?: return
             if (chosen == filter) return
@@ -290,9 +270,14 @@ object StarterDraftMenu {
 
         // ------------------------------------------------------------------ painting
 
-        /** Filter first, then sort. Sorting the whole catalogue to then discard most of it is the same
-         *  answer for more work, and the tab is the coarser cut. */
-        private fun visible(): List<StarterOption> = sort.sort(catalogue.options.filter(filter::matches))
+        /**
+         * The open tab's slice, in the catalogue's own order.
+         *
+         * That order is (cost, then id), which is why the sort control could go: inside a single-cost
+         * tab every entry ties on cost, so the tie-break carries it and the grid is alphabetical for
+         * free — which was the only thing the sort cycle offered that the tabs do not.
+         */
+        private fun visible(): List<StarterOption> = catalogue.options.filter(filter::matches)
 
         private fun currentPage(): StarterDraftPage = StarterDraftPaging.pageAt(visible(), page)
 
@@ -302,8 +287,6 @@ object StarterDraftMenu {
             for (slot in 0 until SLOTS) container.setItem(slot, ItemStack.EMPTY)
 
             val shown = currentPage()
-            container.setItem(SORT_SLOT, sortIcon())
-            container.setItem(STATS_SLOT, statsToggleIcon())
             tabs.forEachIndexed { index, tab ->
                 TAB_SLOTS.getOrNull(index)?.let { container.setItem(it, tabIcon(tab)) }
             }
@@ -355,22 +338,6 @@ object StarterDraftMenu {
             )
         }
 
-        private fun sortIcon() = label(
-            Items.HOPPER,
-            "§bSort: §f${sort.label}",
-            listOf("§7Click to change.", "§8Next: ${sort.next().label}", "§8Order only — prices do not change."),
-        )
-
-        private fun statsToggleIcon() = label(
-            if (showStats) Items.SPYGLASS else Items.GRAY_DYE,
-            if (showStats) "§bStats: §fshown" else "§8Stats: hidden",
-            listOf(
-                "§7Types, base stats, ability and growth",
-                "§7on every Pokémon in the grid.",
-                "§8Click to ${if (showStats) "hide" else "show"}.",
-            ),
-        )
-
         private fun sheetFor(species: ResourceLocation): StarterStatSheet? =
             sheets.getOrPut(species) { StarterStatSheets.of(viewer, species) }
 
@@ -421,7 +388,7 @@ object StarterDraftMenu {
             val lore = mutableListOf("§7${option.cost} point(s)")
             // Between the price and the verdict: the price is why you are looking, the sheet is what
             // you look at, and "click to add" is the last line either way so it never moves.
-            if (showStats) sheetFor(option.species)?.let { lore += StarterStatLines.render(it) }
+            sheetFor(option.species)?.let { lore += StarterStatLines.render(it) }
             lore += when {
                 picked -> "§aIn your draft (slot ${picks.indexOf(option.species) + 1}) — click to remove"
                 takeable -> "§aClick to add"
@@ -450,7 +417,7 @@ object StarterDraftMenu {
             val lore = mutableListOf("§7${cost ?: "?"} point(s)")
             // The sheet again, so a player comparing their three picks against each other does not have
             // to go back to the grid and find them.
-            if (showStats) sheetFor(species)?.let { lore += StarterStatLines.render(it) }
+            sheetFor(species)?.let { lore += StarterStatLines.render(it) }
             // Said here rather than in a tooltip nobody reads: the draft order is the party order, so
             // slot 1 is the Pokémon that leads the first wave.
             lore += if (index == 0) "§7Leads the first wave." else "§7Party slot ${index + 1}."

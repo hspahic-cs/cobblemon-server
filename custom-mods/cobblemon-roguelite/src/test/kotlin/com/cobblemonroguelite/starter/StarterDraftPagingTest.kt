@@ -80,52 +80,6 @@ class StarterDraftPagingTest {
     }
 
     @Test
-    fun `sorting is a permutation, so no mode can hide a species`() {
-        // The whole risk of a view over the catalogue: a comparator that drops or duplicates an entry
-        // would take a species out of the draft without anything refusing it.
-        val all = options(50)
-        StarterDraftSort.entries.forEach { mode ->
-            assertEquals(all.toSet(), mode.sort(all).toSet(), "$mode changed the contents")
-            assertEquals(all.size, mode.sort(all).size, "$mode changed the size")
-        }
-    }
-
-    @Test
-    fun `each sort mode orders by the thing it is named after`() {
-        val all = options(20).shuffled(kotlin.random.Random(7))
-
-        assertEquals(
-            all.map { it.cost }.sorted(),
-            StarterDraftSort.CHEAPEST.sort(all).map { it.cost },
-        )
-        assertEquals(
-            all.map { it.cost }.sortedDescending(),
-            StarterDraftSort.COSTLIEST.sort(all).map { it.cost },
-        )
-        assertEquals(
-            all.map { it.species.path }.sorted(),
-            StarterDraftSort.ALPHABETICAL.sort(all).map { it.species.path },
-        )
-    }
-
-    @Test
-    fun `equal costs are broken by id, so a repaint cannot reshuffle the grid`() {
-        val flat = listOf("charmander", "bulbasaur", "squirtle").map {
-            StarterOption(ResourceLocation.fromNamespaceAndPath("cobblemon", it), 5)
-        }
-        val once = StarterDraftSort.CHEAPEST.sort(flat)
-        assertEquals(once, StarterDraftSort.CHEAPEST.sort(flat.reversed()))
-        assertEquals(listOf("bulbasaur", "charmander", "squirtle"), once.map { it.species.path })
-    }
-
-    @Test
-    fun `cycling the sort returns to where it started`() {
-        var mode = StarterDraftSort.CHEAPEST
-        repeat(StarterDraftSort.entries.size) { mode = mode.next() }
-        assertEquals(StarterDraftSort.CHEAPEST, mode)
-    }
-
-    @Test
     fun `tabs are derived from the costs actually in the catalogue`() {
         // A new player's catalogue is the baseline pool and nothing else, so a fixed 1..10 tab row would
         // be six tabs that open onto nothing.

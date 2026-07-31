@@ -2,6 +2,7 @@ package com.cobblemonroguelite.data.reward
 
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemonroguelite.data.JsonView
+import com.cobblemonroguelite.run.RunPassive
 import net.minecraft.resources.ResourceLocation
 
 /**
@@ -79,6 +80,15 @@ sealed interface RunReward {
      */
     data class Credits(val multiplier: Double) : RunReward
 
+    /**
+     * One stack of a run passive — §2.43's team-wide permanent buff, PokéRogue's EXP items being
+     * the first three. No party target and no item: the stack lands on
+     * [com.cobblemonroguelite.run.RunState.passiveStacks] and is read by the battle layer's EXP
+     * hook. The set of kinds is [RunPassive]'s closed enum, for the same reason this interface is
+     * sealed — a passive nobody's code reads is a purchase that does nothing.
+     */
+    data class Passive(val passive: RunPassive) : RunReward
+
     companion object {
 
         /**
@@ -108,6 +118,7 @@ sealed interface RunReward {
                 "held_item" -> parseId(view, "item", MINECRAFT)?.let { HeldItem(it) }
                 "move" -> nonBlank(view, "move")?.let { TechnicalMachine(it) }
                 "credits" -> parseCredits(view)
+                "passive" -> parsePassive(view)
                 else -> {
                     view.problem("type", "unknown reward type '$type' (expected one of: ${TYPES.joinToString(", ")})")
                     null
@@ -168,6 +179,21 @@ sealed interface RunReward {
             return Credits(multiplier)
         }
 
+        /**
+         * `{ "type": "passive", "passive": "exp_charm" }`. The set is closed ([RunPassive]), so an
+         * unknown name is rejected *naming the whole valid set* — with three members, listing them
+         * is worth more to the table's author than any guess at what they meant.
+         */
+        private fun parsePassive(view: JsonView): RunReward? {
+            val name = nonBlank(view, "passive") ?: return null
+            val passive = RunPassive.byId(name)
+            if (passive == null) {
+                view.problem("passive", "'$name' is not a run passive (expected one of: ${RunPassive.ids.joinToString(", ")})")
+                return null
+            }
+            return Passive(passive)
+        }
+
         private fun nonBlank(view: JsonView, key: String): String? {
             val value = view.requireString(key) ?: return null
             if (value.isBlank()) {
@@ -212,7 +238,7 @@ sealed interface RunReward {
         /** The per-stat EV ceiling in the games. Used only to catch a slipped digit, not to balance. */
         private const val EV_LIMIT = 252
 
-        private val TYPES = listOf("ev", "level", "nature", "ability", "item", "held_item", "move", "credits")
+        private val TYPES = listOf("ev", "level", "nature", "ability", "item", "held_item", "move", "credits", "passive")
 
         /**
          * EV-bearing stats only. `evasion` and `accuracy` are [Stats] entries but are battle-only and

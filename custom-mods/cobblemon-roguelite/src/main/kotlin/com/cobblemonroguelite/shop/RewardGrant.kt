@@ -51,17 +51,23 @@ object RewardGrant {
     fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, run: RunState, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = when (target) {
         is RewardTarget.Unresolved -> GrantResult.Failed(target.reason)
 
-        // Party-wide is a bag item or a credits grant ([RewardTargeting.needsMember]), and neither
-        // touches a Pokémon at all — so this branch is about the run, not the party.
+        // Party-wide is a bag item, a credits grant or a passive ([RewardTargeting.needsMember]),
+        // and none of them touches a Pokémon at all — so this branch is about the run, not the party.
         RewardTarget.WholeParty -> when (reward) {
             is RunReward.BagItem -> grantBagItem(reward, player, run.seed)
             is RunReward.Credits -> grantCredits(reward, run)
+            is RunReward.Passive -> grantPassive(reward, run)
             else -> GrantResult.Failed("reward ${reward::class.simpleName} needs a party member")
         }
 
         is RewardTarget.Member -> {
             val pokemon = party.getOrNull(target.index)
-            if (pokemon == null) {
+            if (reward is RunReward.Passive) {
+                // Legal input, same rule as a bag item aimed at a member: [RewardTargeting] ignores a
+                // slot on a party-wide reward, so a caller that resolved a member anyway still means
+                // the run-wide grant.
+                grantPassive(reward, run)
+            } else if (pokemon == null) {
                 // Reachable if the party shrank between targeting and applying — a faint that emptied a
                 // slot, or a swap-or-release resolved in between.
                 GrantResult.Failed("party slot ${target.index + 1} is no longer there")
@@ -92,6 +98,9 @@ object RewardGrant {
             // slot on a party-wide reward, so treat it as the run-level grant it is rather than refusing.
             is RunReward.BagItem -> grantBagItem(reward, player, run.seed)
             is RunReward.Credits -> grantCredits(reward, run)
+            // Unreachable — apply() routes passives before resolving a member — but the `when` has to
+            // say something, and "needs no member" is at least true.
+            is RunReward.Passive -> GrantResult.Failed("a passive is run-wide and never targets a member")
         }
     }.getOrElse { failure ->
         log.warn("roguelite: granting {} to {} threw", reward, pokemon.species.resourceIdentifier, failure)
@@ -281,6 +290,28 @@ object RewardGrant {
         }
         run.credits = (run.credits.toLong() + amount).coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
         return GrantResult.Ok("${RunCurrency.format(amount)} added — you now have ${RunCurrency.format(run.credits)}")
+    }
+
+    /**
+     * One stack of a §2.43 passive onto [com.cobblemonroguelite.run.RunState.passiveStacks].
+     *
+     * The cap is each kind's PokéRogue max ([com.cobblemonroguelite.run.RunPassive.maxStacks]), and
+     * hitting it is [GrantResult.NoEffect] — nothing is broken, the player simply owns the whole
+     * stack already. The Ok message states the new rank against the cap because a permanent,
+     * invisible buff has exactly one moment of feedback: this line.
+     *
+     * The caller checkpoints the run after a grant (all the shop paths already do), which is what
+     * carries the stack across a relog — the map rides [RunState.toNbt] like credits do.
+     */
+    private fun grantPassive(reward: RunReward.Passive, run: RunState): GrantResult {
+        val passive = reward.passive
+        val current = run.passiveStacks[passive.id] ?: 0
+        val now = com.cobblemonroguelite.run.RunPassive.stackAfterGrant(current, passive)
+            ?: return GrantResult.NoEffect(
+                "${passive.displayName} is already at its maximum rank (${passive.maxStacks})",
+            )
+        run.passiveStacks[passive.id] = now
+        return GrantResult.Ok("${passive.displayName} is now rank $now/${passive.maxStacks} — it lasts the whole run")
     }
 
     private fun unresolved(kind: String, id: String): GrantResult {

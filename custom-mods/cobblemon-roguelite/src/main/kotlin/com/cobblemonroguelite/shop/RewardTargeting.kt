@@ -46,11 +46,13 @@ object RewardTargeting {
      * move are all per-Pokémon facts. [RunReward.BagItem] does not, because a run's bag belongs to the
      * run rather than to a member (§2.11) — which is also why evolution items are bag items and not
      * held items. [RunReward.Credits] does not either: it writes to the run's balance, which no
-     * Pokémon owns.
+     * Pokémon owns. Nor does [RunReward.Passive], and more strongly: §2.43's passives are
+     * *team-wide by definition*, so a slot on one would be a question with no answer.
      */
     fun needsMember(reward: RunReward): Boolean = when (reward) {
         is RunReward.BagItem,
         is RunReward.Credits,
+        is RunReward.Passive,
         -> false
         is RunReward.Evs,
         is RunReward.Levels,

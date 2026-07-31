@@ -267,7 +267,8 @@ class RewardTableParseTest {
                 { "id": "e", "weight": 1, "reward": { "type": "ability", "ability": "intimidate" } },
                 { "id": "f", "weight": 1, "reward": { "type": "item", "item": "cobblemon:metal_coat", "count": 2 } },
                 { "id": "g", "weight": 1, "reward": { "type": "held_item", "item": "cobblemon:leftovers" } },
-                { "id": "h", "weight": 1, "reward": { "type": "move", "move": "flamethrower" } }
+                { "id": "h", "weight": 1, "reward": { "type": "move", "move": "flamethrower" } },
+                { "id": "i", "weight": 1, "reward": { "type": "passive", "passive": "exp_charm" } }
               ]
             }
             """
@@ -285,6 +286,27 @@ class RewardTableParseTest {
         assertEquals(RunReward.BagItem(ResourceLocation.fromNamespaceAndPath("cobblemon", "metal_coat"), 2), byId["f"])
         assertEquals(RunReward.HeldItem(ResourceLocation.fromNamespaceAndPath("cobblemon", "leftovers")), byId["g"])
         assertEquals(RunReward.TechnicalMachine("flamethrower"), byId["h"])
+        // §2.43 (end): passives joined the surface after the playtest ruled held-item stand-ins out.
+        assertEquals(RunReward.Passive(com.cobblemonroguelite.run.RunPassive.EXP_CHARM), byId["i"])
+    }
+
+    @Test
+    fun `an unknown passive name lists the three that exist`() {
+        // "exp_balance" is the realistic mistake: it IS a PokéRogue EXP item, just one this module
+        // deliberately does not implement — so the rejection has to name what is available.
+        val parsed = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "passive", "passive": "exp_balance" } } ] }""")
+        assertNull(parsed.table)
+        assertTrue(
+            parsed.mentions("reward.passive", "'exp_balance'", "exp_charm", "super_exp_charm", "exp_share"),
+            parsed.messages.toString(),
+        )
+    }
+
+    @Test
+    fun `a blank passive name is a mistake, not a shorthand`() {
+        val parsed = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "passive", "passive": "" } } ] }""")
+        assertNull(parsed.table)
+        assertTrue(parsed.mentions("reward.passive", "blank"), parsed.messages.toString())
     }
 
     @Test

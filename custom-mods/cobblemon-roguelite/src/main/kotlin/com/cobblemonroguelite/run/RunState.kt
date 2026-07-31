@@ -153,6 +153,18 @@ data class RunState(
      * follow-up and the capture half persists so a mid-implementation restart loses nothing.
      */
     val carriedBoosts: MutableMap<java.util.UUID, Map<String, Int>> = mutableMapOf(),
+
+    /**
+     * §2.43 (end): the run's team-wide permanent buffs — [RunPassive.id] → stack count. Written by
+     * the reward path ([com.cobblemonroguelite.shop.RewardGrant]) under each kind's [RunPassive.maxStacks]
+     * cap, read by [com.cobblemonroguelite.battle.RunExpPassives] on every battle EXP gain. Dies with
+     * the run like [credits] (§2.35). Server thread only, like the wave step that grants into it.
+     *
+     * Keyed by the wire id rather than the enum so an id this build does not know survives a
+     * round-trip instead of being silently deleted — it is read by nothing, which is also why keeping
+     * it is safe.
+     */
+    val passiveStacks: MutableMap<String, Int> = mutableMapOf(),
     /**
      * How many times the free reward offer has been rerolled **on the current wave**, and whether the
      * one free option has already been taken.
@@ -376,6 +388,14 @@ data class RunState(
             }
             tag.put("carriedBoosts", boosts)
         }
+        // Absent and empty mean the same thing (no passives), so no schema bump — the same rule the
+        // run bag and carried boosts follow, and the reason a run saved before passives existed
+        // still loads.
+        if (passiveStacks.isNotEmpty()) {
+            val passives = CompoundTag()
+            passiveStacks.forEach { (id, count) -> passives.putInt(id, count) }
+            tag.put(PASSIVES_KEY, passives)
+        }
         tag.putInt("bossesCleared", bossesCleared)
         payoutTable?.let { tag.putString("payoutTable", it.toString()) }
         trainerRoster?.let { tag.putString("trainerRoster", it.toString()) }
@@ -430,6 +450,8 @@ data class RunState(
         private const val SCHEMA_KEY = "schemaVersion"
 
         private const val PENDING_CATCH_KEY = "pendingCatch"
+
+        private const val PASSIVES_KEY = "passives"
 
         private const val LAST_ACTIVE_KEY = "lastActiveAt"
 
@@ -511,6 +533,17 @@ data class RunState(
                         if (it == null) log.warn("roguelite: dropping unreadable run-bag stack from checkpoint")
                     }
                 }.toMutableList(),
+                // Absent reads as an empty compound, i.e. no passives — which is what a run saved by
+                // a build without passives had. Known kinds are clamped to their cap so a hand-edited
+                // count cannot exceed what the reward path could grant; unknown ids are kept as-is
+                // (see the property doc), and non-positive counts are dropped as damage.
+                passiveStacks = tag.getCompound(PASSIVES_KEY).let { passives ->
+                    passives.allKeys.mapNotNull { id ->
+                        val count = passives.getInt(id)
+                        if (count < 1) return@mapNotNull null
+                        id to (RunPassive.byId(id)?.let { count.coerceAtMost(it.maxStacks) } ?: count)
+                    }.toMap().toMutableMap()
+                },
                 bossesCleared = tag.getInt("bossesCleared"),
                 // An unparseable id restores as null rather than failing the run: null falls back to
                 // the default table at payout, which is a table the player might still be paid from,

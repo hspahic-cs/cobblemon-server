@@ -145,5 +145,8 @@ object RunWaveBattles : RunWaveHandler {
         // subscription that can only ever fire on somebody else's catch.
         RunCapture.register()
         RunDexGuard.register()
+        // §2.43's run passives: registered with the battle layer because everything they do is
+        // gated on battle EXP — a build with no battle layer has no gains for them to touch.
+        RunExpPassives.register()
     }
 }

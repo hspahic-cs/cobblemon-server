@@ -82,7 +82,33 @@ object ArenaSpawnSuppressor {
         // would sail into the arena untouched.
         NeoForge.EVENT_BUS.addListener(EventPriority.LOWEST, true, ::suppressFinalizeSpawn)
         NeoForge.EVENT_BUS.addListener(::purgeDiskLoaded)
+        NeoForge.EVENT_BUS.addListener(::suppressDeathLoot)
         log.debug("roguelite: arena spawn suppression active")
+    }
+
+    /**
+     * No death loot in arena space: a KO'd wave Pokémon drops nothing.
+     *
+     * Cobblemon species carry vanilla-style drop tables (the playtest's exit quarantine was full of
+     * them — feathers, string, raw chicken, a Dragon Fang), and PokéRogue KOs drop nothing: the
+     * wave's payout is the reward pick and the credits, not a floor of part-loot. The stacks were
+     * already being voided at exit by the stash quarantine, so this closes clutter rather than a
+     * leak — but it closes it at the source, where the player never sees items the run was always
+     * going to confiscate.
+     *
+     * Experience orbs are left alone: Cobblemon grants battle EXP directly (§2.21), and any stray
+     * vanilla orb is harmless — collecting it touches the player's real XP bar, which the run does
+     * not manage. What this does NOT cover: mods that grant server money on Pokémon KO/pickup
+     * ("found money" features) — that is an economy-config question, not an entity event.
+     */
+    private fun suppressDeathLoot(event: net.neoforged.neoforge.event.entity.living.LivingDropsEvent) {
+        val entity = event.entity
+        val level = entity.level()
+        if (level.isClientSide) return
+        val layout = RunSettings.arenaLayout
+        if (layout.isArenaSpace(level.dimension().location(), entity.blockPosition())) {
+            event.isCanceled = true
+        }
     }
 
     /**

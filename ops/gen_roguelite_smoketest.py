@@ -432,6 +432,32 @@ def main():
             "_note": "Shields from wave 6 so the very first boss is a wall - that is what #34 verifies.",
             "boss_shields": [{"min_wave": 6, "shields": 2}, {"min_wave": 24, "shields": 3, "members": 2}],
         },
+        # §2.36's rival, testable at last (added 2026-07-31 after the reference-run comparison —
+        # PokéRogue meets Rival Ivy at wave 8 and ours had no rival block to meet anyone). Six REAL
+        # rct ids (verified against the jar, verified NOT in any band pool — the validator rejects
+        # rival stages that a band could also draw). Six different campers standing in for one
+        # recurring character: visually wrong (six skins), mechanically the full ladder — the
+        # growing-prefix team, meetings at PokéRogue's own waves. The rgl_rival_* skins are Q2 work.
+        "rival": {
+            "meetings": [
+                {"wave": w, "trainer": f"rctmod:{t}"}
+                for w, t in zip(
+                    [8, 25, 55, 95, 145, 195],
+                    ["camper_liam_008e", "camper_ethan_0090", "camper_ricky_0091",
+                     "camper_jeff_0092", "camper_chris_0094", "camper_drew_0095"],
+                )
+            ],
+            "teams": [
+                {"id": "smoke_rival", "slots": [
+                    {"alternatives": [{"line": ["cobblemon:torchic", "cobblemon:combusken", "cobblemon:blaziken"]}]},
+                    {"alternatives": [{"line": ["cobblemon:pidgey", "cobblemon:pidgeotto", "cobblemon:pidgeot"]}]},
+                    {"alternatives": [{"line": ["cobblemon:abra", "cobblemon:kadabra", "cobblemon:alakazam"]}]},
+                    {"alternatives": [{"line": ["cobblemon:machop", "cobblemon:machoke", "cobblemon:machamp"]}]},
+                    {"alternatives": [{"line": ["cobblemon:magikarp", "cobblemon:gyarados"]}]},
+                    {"alternatives": [{"line": ["cobblemon:dratini", "cobblemon:dragonair", "cobblemon:dragonite"]}]},
+                ]},
+            ],
+        },
     })
 
     # --- the free half ---

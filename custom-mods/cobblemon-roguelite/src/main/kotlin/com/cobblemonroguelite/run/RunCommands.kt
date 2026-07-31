@@ -16,6 +16,9 @@ import net.minecraft.commands.arguments.ResourceLocationArgument
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
+import org.slf4j.LoggerFactory
+
+private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
 
 /**
  * `/roguelite` — the player's whole interface to the mode until there is a GUI.
@@ -110,8 +113,9 @@ object RunCommands {
                         .executes { player(it)?.let(::warnAbandon) ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let(::abandon) ?: 0 }),
                 )
-                // Last, and the only branch above that is not player-only.
-                .then(overrideCommand()),
+                // Last, and the only branches above that are not player-only.
+                .then(overrideCommand())
+                .then(stashCommand()),
         )
     }
 
@@ -134,6 +138,71 @@ object RunCommands {
      * track is precisely when it would silently end somebody's in-flight testing. `list` answers the
      * question that leads to it, and the restart clears the rest.
      */
+    /**
+     * §9 of the isolation design, the minimum that makes row 3 survivable: `stash inspect` is the
+     * diagnosis tool, `stash forfeit` is row 3's only exit besides restoring a file from backup.
+     * Level 2 for the same reason `override` is. The full surface (archive re-restore, quarantine
+     * release/void) is deliberately deferred — every path it serves is recoverable by hand from the
+     * files, and a dupe-guarded restore command deserves its own careful pass (F3), not a late-night
+     * addition.
+     */
+    private fun stashCommand(): LiteralArgumentBuilder<CommandSourceStack> =
+        Commands.literal("stash")
+            .requires { it.hasPermission(2) }
+            .then(
+                Commands.literal("inspect").then(
+                    Commands.argument("player", EntityArgument.player()).executes { ctx ->
+                        val target = EntityArgument.getPlayer(ctx, "player")
+                        val files = RunInventoryStash.files(ctx.source.server)
+                        val tag = RunInventoryStash.tagOf(target)?.toString() ?: "none"
+                        val live = if (files.exists(target.uuid)) "present" else "absent"
+                        val archives = files.listArchives(target.uuid).size
+                        val quarantine = files.listQuarantine(target.uuid).size
+                        ctx.source.sendSuccess({
+                            Component.literal(
+                                "${target.gameProfile.name}: tag=$tag, stash=$live, " +
+                                    "$archives archive(s), $quarantine quarantine file(s)",
+                            )
+                        }, false)
+                        1
+                    },
+                ),
+            )
+            .then(
+                Commands.literal("forfeit").then(
+                    Commands.argument("player", EntityArgument.player()).then(
+                        Commands.literal("confirm").executes { ctx ->
+                            val target = EntityArgument.getPlayer(ctx, "player")
+                            val swapId = RunInventoryStash.tagOf(target)?.toString()
+                            if (swapId == null) {
+                                ctx.source.sendFailure(Component.literal("${target.gameProfile.name} carries no stash tag."))
+                                return@executes 0
+                            }
+                            if (RunInventoryStash.files(ctx.source.server).exists(target.uuid)) {
+                                // Refused rather than allowed-with-force: forfeiting a tag whose file
+                                // EXISTS is never right — the exit swap can just run. This command is
+                                // for the file that is genuinely gone.
+                                ctx.source.sendFailure(
+                                    Component.literal("A stash file exists for ${target.gameProfile.name} — relog them instead; forfeit is only for a lost file."),
+                                )
+                                return@executes 0
+                            }
+                            target.persistentData
+                                .getCompound(net.minecraft.world.entity.player.Player.PERSISTED_NBT_TAG)
+                                .remove(RunInventoryStash.TAG_KEY)
+                            log.warn(
+                                "roguelite: OP {} forfeited stash {} for {} — the loss is acknowledged, not resolved",
+                                ctx.source.textName, swapId, target.gameProfile.name,
+                            )
+                            ctx.source.sendSuccess({
+                                Component.literal("Forfeited stash $swapId for ${target.gameProfile.name}. Deliberately ugly; it should be.")
+                            }, true)
+                            1
+                        },
+                    ),
+                ),
+            )
+
     private fun overrideCommand(): LiteralArgumentBuilder<CommandSourceStack> =
         Commands.literal("override")
             .requires { it.hasPermission(2) }

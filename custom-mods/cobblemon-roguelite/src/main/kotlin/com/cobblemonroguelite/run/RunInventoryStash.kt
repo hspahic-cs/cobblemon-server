@@ -154,6 +154,11 @@ object RunInventoryStash {
 
         // E4. One in-memory block: clear everything, zero XP, drop effects, tag, install the run bag.
         val memoryRollback = captureLiveState(player)
+        // Held aside before installRunBag clears it, because the E5 failure path below must put it
+        // back: rolling back the inventory without restoring the bag would delete the run's items
+        // from RunState in memory — found in self-review, the exact class of asymmetric-rollback bug
+        // F2 was about, one layer down.
+        val bagInstalled = run.runBag.toList()
         clearLiveState(player)
         persisted(player).putString(TAG_KEY, swapId.toString())
         installRunBag(player, run)
@@ -164,6 +169,8 @@ object RunInventoryStash {
         if (!savePlayerDurably(player)) {
             restoreLiveState(player, memoryRollback)
             persisted(player).remove(TAG_KEY)
+            run.runBag.clear()
+            run.runBag.addAll(bagInstalled)
             log.error("roguelite: entry save failed for {} — swap rolled back", player.gameProfile.name)
             return EntryResult.Refused("your inventory could not be stored safely (save failed), so the run was not started")
         }

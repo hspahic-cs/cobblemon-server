@@ -115,7 +115,8 @@ object RunCommands {
                 )
                 // Last, and the only branches above that are not player-only.
                 .then(overrideCommand())
-                .then(stashCommand()),
+                .then(stashCommand())
+                .then(creditsCommand()),
         )
     }
 
@@ -196,6 +197,44 @@ object RunCommands {
                             )
                             ctx.source.sendSuccess({
                                 Component.literal("Forfeited stash $swapId for ${target.gameProfile.name}. Deliberately ugly; it should be.")
+                            }, true)
+                            1
+                        },
+                    ),
+                ),
+            )
+
+    /**
+     * `/roguelite credits give <player> <amount>` — op-only ₽ for a live run.
+     *
+     * Exists because the economy cannot currently be tested without it: wild waves pay nothing by
+     * decision, and trainer waves pay through a seam no dev server registers — so a tester at wave 3
+     * has a shop full of real Revives and ₽0 forever. Also the ordinary ops tool for compensating a
+     * player after a bug. Run-scoped like the credits themselves: no run, nothing to give to.
+     */
+    private fun creditsCommand(): LiteralArgumentBuilder<CommandSourceStack> =
+        Commands.literal("credits")
+            .requires { it.hasPermission(2) }
+            .then(
+                Commands.literal("give").then(
+                    Commands.argument("player", EntityArgument.player()).then(
+                        Commands.argument("amount", IntegerArgumentType.integer(1, 1_000_000)).executes { ctx ->
+                            val target = EntityArgument.getPlayer(ctx, "player")
+                            val amount = IntegerArgumentType.getInteger(ctx, "amount")
+                            val store = RunStore.of(ctx.source.server)
+                            val run = store.get(target.uuid)
+                            if (run == null) {
+                                ctx.source.sendFailure(Component.literal("${target.gameProfile.name} has no run in progress."))
+                                return@executes 0
+                            }
+                            run.credits += amount
+                            store.checkpoint(ctx.source.server, target.uuid)
+                            log.info(
+                                "roguelite: OP {} gave {} {} credits (now {})",
+                                ctx.source.textName, target.gameProfile.name, amount, run.credits,
+                            )
+                            ctx.source.sendSuccess({
+                                Component.literal("Gave ${target.gameProfile.name} ₽$amount — they now have ₽${run.credits}.")
                             }, true)
                             1
                         },

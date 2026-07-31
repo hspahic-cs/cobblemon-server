@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.events.CobblemonEvents
 import com.cobblemon.mod.common.api.events.pokemon.PokedexDataChangedEvent
 import com.cobblemon.mod.common.util.getPlayer
 import com.cobblemonroguelite.arena.RunArenas
+import com.cobblemonroguelite.run.RunPartySwap
 import net.minecraft.server.level.ServerPlayer
 import org.slf4j.LoggerFactory
 import java.util.concurrent.atomic.AtomicBoolean
@@ -77,5 +78,13 @@ object RunDexGuard {
     }
 
     private fun isInsideARun(player: ServerPlayer): Boolean =
-        RunBattles.isFighting(player.uuid) || RunArenas.isInArena(player)
+        RunBattles.isFighting(player.uuid) ||
+            RunArenas.isInArena(player) ||
+            // §2.2-reversed. Installing a run party calls `PlayerPartyStore.add` six times, and that is
+            // a dex write per Pokémon — so a player would unlock species by DRAFTING them, never having
+            // caught one, which hands them §2.15's meta-progression for free. Neither gate above covers
+            // it: the first install runs a moment before the arena teleport, and the login reconcile can
+            // run with the player standing anywhere. Scoped to the operation rather than to "has a run",
+            // so it still cannot eat a dex entry earned legitimately while paused.
+            RunPartySwap.isSwapping(player.uuid)
 }

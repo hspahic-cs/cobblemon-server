@@ -73,6 +73,37 @@ object RunPartySwap {
         data class Refused(val reason: String) : SwapResult
     }
 
+    /**
+     * Players whose party is being swapped right now, for [RunDexGuard] to veto dex writes during.
+     *
+     * ### Why the arena test is not enough
+     *
+     * `PlayerPartyStore.add` emits `POKEMON_GAINED`, Cobblemon turns that into `PokedexManager.catch`,
+     * and §2.15 makes the server Pokédex the meta-progression that unlocks starters. So installing a
+     * run party writes six dex entries — and a player would unlock species permanently by *drafting*
+     * them, without ever catching one.
+     *
+     * [RunDexGuard] already vetoes dex writes, but it gates on being in a battle or in an arena, and
+     * neither is true at every install: the first install runs a moment before the arena teleport, and
+     * the login reconcile can run with the player standing anywhere in the world. A flag scoped to the
+     * exact operation covers all of them, and — unlike widening the guard to "has a run" — cannot eat
+     * a dex entry the player legitimately earned while paused (§2.3), which the guard's own docs call
+     * out as the worse failure.
+     */
+    private val swapping = java.util.concurrent.ConcurrentHashMap.newKeySet<java.util.UUID>()
+
+    fun isSwapping(player: java.util.UUID): Boolean = swapping.contains(player)
+
+    /** Run [block] with dex writes for [player] vetoed. Always clears, including on a throw. */
+    private fun <T> suppressingDex(player: ServerPlayer, block: () -> T): T {
+        swapping.add(player.uuid)
+        return try {
+            block()
+        } finally {
+            swapping.remove(player.uuid)
+        }
+    }
+
     fun isRunPokemon(pokemon: Pokemon): Boolean = pokemon.persistentData.contains(RUN_MARKER_KEY)
 
     fun isStashed(pokemon: Pokemon): Boolean = pokemon.persistentData.contains(STASH_SLOT_KEY)
@@ -83,7 +114,11 @@ object RunPartySwap {
      * Idempotent by way of [reconcile]: calling it when the swap is already in place stashes nothing,
      * because the party holds only run-marked Pokémon and there is nothing of the player's to take.
      */
-    fun install(player: ServerPlayer, run: RunState): SwapResult {
+    fun install(player: ServerPlayer, run: RunState): SwapResult = suppressingDex(player) {
+        installUnguarded(player, run)
+    }
+
+    private fun installUnguarded(player: ServerPlayer, run: RunState): SwapResult {
         val party = partyOf(player) ?: return SwapResult.Refused("the party store is unavailable")
         val pc = pcOf(player) ?: return SwapResult.Refused("the PC store is unavailable")
 
@@ -154,7 +189,11 @@ object RunPartySwap {
      * Returns the number of Pokémon handed back. The run's own are released — they never existed
      * outside the run (§2.2's isolation still holds for *persistence*) — but only ever by marker.
      */
-    fun restore(player: ServerPlayer): Int {
+    fun restore(player: ServerPlayer): Int = suppressingDex(player) {
+        restoreUnguarded(player)
+    }
+
+    private fun restoreUnguarded(player: ServerPlayer): Int {
         val party = partyOf(player) ?: return 0
         val pc = pcOf(player) ?: return 0
 

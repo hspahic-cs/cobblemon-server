@@ -44,6 +44,34 @@ root README.
   exact thing this script exists to prevent. A lingering datapack is a visible
   warning (surfaced as a GitHub Actions annotation) and a one-line manual fix; a
   half-applied deploy is silent.
+- **Staff group definitions never actually applied on 0.33.0.** Shipping
+  `config/neoessentials/permissions.json` through `modpack/server-overrides/` is
+  silently useless, so it's been deleted and replaced with
+  `ops/apply-staff-groups.sh`.
+
+  The file looks like config but is *state*: NeoEssentials loads it into a
+  `PermissionManager` at boot, and `PermissionSystem.shutdown()` calls
+  `PermissionStorage.save()` on the way down, rewriting it from memory. A deploy
+  rsyncs configs while the **old** server is still running and then restarts it,
+  so the shutdown save clobbers the new file before the new process ever reads
+  it. On the 0.33.0 dev deploy the rsync wrote it at 23:50 owned by `deployer`;
+  after the 23:55 restart it was owned by `sysadmin` with the pre-deploy
+  contents, in NeoEssentials' own field order. dev came up with the old 23-node
+  moderator group and zero `cobblemon.staff.*` nodes.
+
+  `chat.json` and `tablist.json` were unaffected — NeoEssentials only rewrites
+  the permission store — so the chat tags and tablist colours from 0.33.0 are
+  live and correct.
+
+  The script applies the same groups through `/permissions` commands, which
+  mutate the live `PermissionManager` and persist via its own save. Idempotent,
+  `--dry-run` supported, roles only — it never assigns a person to a group, so
+  re-running can't change who is staff. **Run it once per server**; 0.33.0's
+  moderator tier does nothing until then.
+
+  It deliberately does *not* end with `permissions reload`:
+  `PermissionSystem.reload()` re-reads the file from disk and would discard
+  everything just applied.
 - **`statchic` dropped nothing.** Its `drops` entry named
   `cobblemon:electic_gem` — missing the `r` — so the drop silently never
   resolved. Found by the loot-tier sweep.

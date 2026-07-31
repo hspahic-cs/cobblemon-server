@@ -736,6 +736,9 @@ object BetweenWaveMenu {
             // These two already name a real item, so they show it. Unchanged.
             is RunReward.BagItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.CHEST)
             is RunReward.HeldItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.PAPER)
+            // The same vanilla item the mint uses, so the button shows what will actually land on
+            // the Pokémon. The id is vanilla and cannot be absent; the fallback is ceremony.
+            is RunReward.ModifierItem -> BuiltInRegistries.ITEM.getOptional(reward.modifier.baseItem).orElse(Items.PAPER)
         }
 
         /**
@@ -781,6 +784,10 @@ object BetweenWaveMenu {
             is RunReward.AbilityPatch -> "§7Ability -> ${reward.ability ?: "hidden ability"}"
             is RunReward.BagItem -> "§7${reward.count}x ${reward.item.path} (bag)"
             is RunReward.HeldItem -> "§7Held item -> ${reward.item.path}"
+            // The blurb states the effect; the parenthetical states §2.34's ladder, because "I
+            // already have one of these" is exactly the moment the pick is at its best.
+            is RunReward.ModifierItem ->
+                "§7${reward.modifier.displayName}: ${reward.modifier.blurb} (upgrades in place if held)"
             is RunReward.TechnicalMachine -> "§7Teaches ${reward.move}"
         }
 

@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.data.shop
 
 import com.cobblemonroguelite.data.reward.RunReward
+import com.cobblemonroguelite.shop.ShopSettings
 import com.cobblemonroguelite.data.reward.WeightCurve
 import net.minecraft.resources.ResourceLocation
 
@@ -37,6 +38,19 @@ data class ShopEntry(
     val reward: RunReward,
     /** Credits charged. Non-negative; a zero-price entry is a giveaway, which is legal if odd. */
     val price: Int,
+    /**
+     * Price as a multiple of the wave's own value, instead of a flat number.
+     *
+     * This is how PokéRogue prices its entire shop — a Potion is 0.2× what the wave is worth, a Revive
+     * 2×, a Sacred Ash 10× — and it is the field that keeps a shop in reach at wave 150 without anybody
+     * authoring a second table for late waves. A flat [price] cannot do that: it is either trivial late
+     * or unaffordable early, and a per-wave [priceCurve] only papers over it by making the author
+     * describe the same growth twice.
+     *
+     * When set it wins outright, and [price] and [priceCurve] are ignored. See
+     * `docs/roguelite-economy-reference.md` for their multiplier table.
+     */
+    val costMultiplier: Double? = null,
     /** First wave this entry is stocked at all. */
     val minWave: Int = 1,
     /** Last wave this entry is stocked, or null for "forever". */
@@ -65,6 +79,12 @@ data class ShopEntry(
      * whose price wraps into a negative and pays the player to take it.
      */
     fun priceAt(wave: Int): Int {
+        // The multiplier is checked first and returns outright, so the two pricing models can never
+        // compose into a number neither of them describes.
+        costMultiplier?.let { multiple ->
+            val scaled = ShopSettings.credits.curve.amountAt(wave, multiple)
+            return scaled.coerceIn(0, MAX_PRICE)
+        }
         val curve = priceCurve ?: return price.coerceIn(0, MAX_PRICE)
         val scaled = price.toLong() * curve.weightAt(wave).toLong() / HUNDREDTHS
         return scaled.coerceIn(0L, MAX_PRICE.toLong()).toInt()

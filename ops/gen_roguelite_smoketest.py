@@ -66,10 +66,19 @@ REWARDS = [
     ("smoke_bag_item_EXPECT_FAILURE", "rare", {"type": "item", "item": "cobblemon:revive", "count": 1}),
 ]
 
+# PokéRogue's own price multiples (docs/roguelite-economy-reference.md), against the shared wave-money
+# curve rather than flat numbers — so the shop stays in reach at wave 150 without a second table.
+#
+# The REWARDS behind them are still ours and still placeholders: §2.11 removed the run bag, so we have
+# no potions or revives to sell. The names below say what each slot is standing in FOR, so that when
+# consumables exist the multiplier is already the right one.
 SHOP = [
-    ("smoke_potion", 20, {"type": "ev", "stat": "hp", "amount": 10}),
-    ("smoke_ether", 40, {"type": "level", "amount": 1}),
-    ("smoke_revive", 100, {"type": "held_item", "item": "cobblemon:focus_sash"}),
+    # (id, cost multiple, stand-in reward)
+    ("stands_in_for_potion", 0.2, {"type": "ev", "stat": "hp", "amount": 10}),
+    ("stands_in_for_ether", 0.4, {"type": "level", "amount": 1}),
+    ("stands_in_for_revive", 2.0, {"type": "held_item", "item": "cobblemon:focus_sash"}),
+    ("stands_in_for_full_heal", 1.0, {"type": "nature", "nature": "adamant"}),
+    ("stands_in_for_max_potion", 1.5, {"type": "ev", "stat": "speed", "amount": 20}),
 ]
 
 # THE REASON A SMOKE RUN COULD NOT BE PLAYED AT ALL.
@@ -240,10 +249,10 @@ def main():
 
     # --- the paid half ---
     write(os.path.join(data, "shop_tables", "default.json"), {
-        "_comment": note + ["Cheap on purpose: a few waves of credits should reach the shop."],
+        "_comment": note + ["Priced as multiples of the wave curve, PokéRogue-style — see docs/roguelite-economy-reference.md."],
         "entries": [
-            {"id": sid, "price": price, "min_wave": 1, "reward": reward}
-            for sid, price, reward in SHOP
+            {"id": sid, "cost_multiplier": multiple, "min_wave": 1, "reward": reward}
+            for sid, multiple, reward in SHOP
         ],
     })
 

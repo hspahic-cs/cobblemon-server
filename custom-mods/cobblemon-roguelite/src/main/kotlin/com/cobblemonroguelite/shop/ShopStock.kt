@@ -43,6 +43,12 @@ object ShopStock {
      * move around between waves also reads as random even when the contents are fixed.
      */
     fun stockAt(table: ShopTable, wave: Int, slots: Int? = null): List<ShopEntry> {
+        // No shop on a boss wave. PokéRogue's rule, and it lands on our boss cadence for free because
+        // §2.19 puts a boss on every tenth wave too. The reason it is worth copying: a player who has
+        // just been handed the wave's reward AND a shop after the hardest fight of the block is being
+        // given two decisions where the boss should have been the moment. Skipping it also means the
+        // money from a boss is carried into the next block rather than spent on the spot.
+        if (ShopSettings.shop.closedAt(wave)) return emptyList()
         val count = slots ?: ShopSettings.shop.shopSlotsAt(wave)
         if (count <= 0) return emptyList()
         return table.entries.filter { it.appearsAt(wave) }.take(count)

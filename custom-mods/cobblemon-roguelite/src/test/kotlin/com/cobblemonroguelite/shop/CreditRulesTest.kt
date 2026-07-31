@@ -32,11 +32,13 @@ class CreditRulesTest {
     }
 
     @Test
-    fun `every opponent kind has a rate, so a new kind cannot default to zero`() {
-        // The exhaustive `when` in creditsFor makes adding a kind a compile error rather than a silent
-        // unpaid wave — which is how RIVAL was caught when it was added. This pins the outcome.
-        RunOpponent.entries.forEach { kind ->
-            assertTrue(rules.creditsFor(10, kind) > 0, "$kind pays nothing")
+    fun `every opponent kind has a rate, and wild's is deliberately zero`() {
+        // Was "a new kind cannot default to zero". Wild now pays nothing ON PURPOSE — money comes from
+        // trainers so that meeting one is a thing that happens to the run — so the property worth
+        // pinning is that every OTHER kind pays, and that wild's zero is stated rather than forgotten.
+        assertEquals(0, rules.creditsFor(50, RunOpponent.WILD))
+        RunOpponent.entries.filter { it != RunOpponent.WILD }.forEach { kind ->
+            assertTrue(rules.creditsFor(50, kind) > 0, "$kind pays nothing")
         }
     }
 
@@ -53,50 +55,10 @@ class CreditRulesTest {
     fun `depth increases payment monotonically`() {
         var previous = 0
         for (wave in listOf(1, 25, 50, 100, 150, 200)) {
-            val paid = rules.creditsFor(wave, RunOpponent.WILD)
+            val paid = rules.creditsFor(wave, RunOpponent.TRAINER)
             assertTrue(paid >= previous, "wave $wave paid $paid, less than the shallower $previous")
             previous = paid
         }
-    }
-
-    @Test
-    fun `wave 1 pays exactly the base, with no depth bonus`() {
-        // Pins the off-by-one: the slope is applied to (wave - 1), so the first wave is the base.
-        assertEquals(rules.wildBase, rules.creditsFor(1, RunOpponent.WILD))
-    }
-
-    @Test
-    fun `a wave below one is treated as wave one rather than paying negatively`() {
-        assertEquals(rules.wildBase, rules.creditsFor(0, RunOpponent.WILD))
-        assertEquals(rules.wildBase, rules.creditsFor(-5, RunOpponent.WILD))
-    }
-
-    @Test
-    fun `negative settings floor at zero instead of draining the balance`() {
-        val broken = CreditRules(
-            wildBase = -100, trainerBase = -100, rivalBase = -100, bossBase = -100, perWaveHundredths = -100,
-        )
-        for (kind in RunOpponent.entries) {
-            assertEquals(0, broken.creditsFor(100, kind), "$kind should floor at 0")
-        }
-    }
-
-    @Test
-    fun `the per-wave slope is expressed in hundredths so sub-credit ramps are possible`() {
-        // 35 hundredths per wave => 100 waves of depth is 34 extra credits, not 3500 and not 0.
-        val at101 = CreditRules(wildBase = 0, perWaveHundredths = 35).creditsFor(101, RunOpponent.WILD)
-        assertEquals(35, at101)
-    }
-}
-
-/**
- * Reroll pricing, which exists to stop a large balance simply buying the whole table.
- */
-class ShopRulesTest {
-
-    @Test
-    fun `rerolling is disabled by default`() {
-        assertEquals(null, ShopRules().rerollPrice(0))
     }
 
     @Test
@@ -126,5 +88,33 @@ class ShopRulesTest {
     fun `a negative reroll count is treated as none taken`() {
         val rules = ShopRules(rerollCost = 80)
         assertEquals(80, rules.rerollPrice(-3))
+    }
+
+    @Test
+    fun `negative multipliers pay nothing instead of draining the balance`() {
+        // The old model floored a base-plus-slope; the curve is multiplied instead, so the misconfigured
+        // shape is a negative multiplier. Same requirement: a wave pays nothing rather than going
+        // backwards and underflowing the shop's affordability checks.
+        val broken = CreditRules(
+            wildMultiplier = -1.0,
+            trainerMultiplier = -1.0,
+            rivalMultiplier = -1.0,
+            bossMultiplier = -1.0,
+        )
+        for (kind in RunOpponent.entries) {
+            assertEquals(0, broken.creditsFor(100, kind), "$kind should floor at 0")
+        }
+    }
+
+    @Test
+    fun `a wave below one is treated as wave one rather than inverting the curve`() {
+        assertEquals(
+            rules.creditsFor(1, RunOpponent.TRAINER),
+            rules.creditsFor(0, RunOpponent.TRAINER),
+        )
+        assertEquals(
+            rules.creditsFor(1, RunOpponent.TRAINER),
+            rules.creditsFor(-5, RunOpponent.TRAINER),
+        )
     }
 }

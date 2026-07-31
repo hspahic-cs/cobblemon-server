@@ -105,7 +105,10 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
 
     private fun parseEntry(view: JsonView): ShopEntry? {
         val entryId = view.requireString("id")
-        val price = view.requireInt("price")
+        // `price` becomes optional the moment `cost_multiplier` is written, because the multiplier
+        // replaces it outright — requiring both would make every author write a number that is ignored.
+        val costMultiplier = view.optionalDouble("cost_multiplier")
+        val price = if (costMultiplier != null) (view.optionalInt("price") ?: 0) else view.requireInt("price")
         val rewardView = view.requireObject("reward")
         val minWave = view.optionalInt("min_wave") ?: 1
         val maxWave = view.optionalInt("max_wave")
@@ -119,6 +122,12 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
 
         if (entryId.isBlank()) {
             view.problem("id", "must not be blank")
+            return null
+        }
+        if (costMultiplier != null && costMultiplier < 0.0) {
+            // Same reasoning as a negative price, one level up: a negative multiple pays the player to
+            // take the item, which is an income loop that scales with depth.
+            view.problem("cost_multiplier", "must not be negative, was $costMultiplier")
             return null
         }
         if (price < 0) {
@@ -142,6 +151,7 @@ object ShopTables : RogueliteDataRegistry<ShopTable>("shop_tables") {
             minWave = minWave,
             maxWave = maxWave,
             priceCurve = priceCurve,
+            costMultiplier = costMultiplier,
         )
     }
 

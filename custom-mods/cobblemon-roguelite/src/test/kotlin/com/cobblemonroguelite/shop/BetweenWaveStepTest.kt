@@ -179,40 +179,42 @@ class ShopStockTest {
     fun `stock takes no seed, so there is nothing to reroll`() {
         // Signature-level assertion again: if stockAt ever needs a seed, this half has drifted back
         // towards being a second random offer.
-        assertEquals(ShopStock.stockAt(table, 10), ShopStock.stockAt(table, 10))
+        assertEquals(ShopStock.stockAt(table, 11), ShopStock.stockAt(table, 11))
     }
 
     @Test
     fun `the row grows with depth`() {
-        assertEquals(3, ShopStock.stockAt(table, 10).size)
-        assertEquals(4, ShopStock.stockAt(table, 20).size)
-        assertEquals(5, ShopStock.stockAt(table, 40).size)
+        // Waves off the boss cadence: the shop is shut on every tenth, so 11/21/41 rather
+        // than 10/20/40 — the rule under test here is how the row GROWS, not when it closes.
+        assertEquals(3, ShopStock.stockAt(table, 11).size)
+        assertEquals(4, ShopStock.stockAt(table, 21).size)
+        assertEquals(5, ShopStock.stockAt(table, 41).size)
     }
 
     @Test
     fun `an item is stocked only once its own min_wave is reached, independent of slot count`() {
         // Two different tools: min_wave says an item exists, the slot count says how many fit.
         assertTrue(ShopStock.stockAt(table, 19).none { it.id == "super_potion" })
-        assertTrue(ShopStock.stockAt(table, 20).any { it.id == "super_potion" })
+        assertTrue(ShopStock.stockAt(table, 21).any { it.id == "super_potion" })
     }
 
     @Test
     fun `stock keeps the authored order rather than sorting by price`() {
         // A row whose entries move between waves reads as random even when the contents are fixed.
-        assertEquals(listOf("potion", "ether", "revive"), ShopStock.stockAt(table, 10).map { it.id })
+        assertEquals(listOf("potion", "ether", "revive"), ShopStock.stockAt(table, 11).map { it.id })
     }
 
     @Test
     fun `slots at zero stock nothing rather than defaulting to everything`() {
         ShopSettings.shop = ShopRules(shopSlots = emptyList())
-        assertEquals(emptyList(), ShopStock.stockAt(table, 10))
+        assertEquals(emptyList(), ShopStock.stockAt(table, 11))
     }
 
     // --- buying ----------------------------------------------------------------------------------
 
     @Test
     fun `buying a stocked item charges its price and reports the remainder`() {
-        val ok = assertIs<PurchaseResult.Ok>(ShopStock.buy(table, 10, credits = 500, entryId = "ether"))
+        val ok = assertIs<PurchaseResult.Ok>(ShopStock.buy(table, 11, credits = 500, entryId = "ether"))
         assertEquals(100, ok.price)
         assertEquals(400, ok.remaining)
     }
@@ -222,7 +224,7 @@ class ShopStockTest {
         // The paid row is not pick-one. Two purchases of the same consumable is the normal case.
         var credits = 500
         repeat(3) {
-            val ok = assertIs<PurchaseResult.Ok>(ShopStock.buy(table, 10, credits, "potion"))
+            val ok = assertIs<PurchaseResult.Ok>(ShopStock.buy(table, 11, credits, "potion"))
             credits = ok.remaining
         }
         assertEquals(350, credits)
@@ -230,19 +232,19 @@ class ShopStockTest {
 
     @Test
     fun `buying something not yet stocked is refused as NotStocked`() {
-        assertIs<PurchaseResult.NotStocked>(ShopStock.buy(table, 10, 9999, "full_heal"))
+        assertIs<PurchaseResult.NotStocked>(ShopStock.buy(table, 11, 9999, "full_heal"))
     }
 
     @Test
     fun `buying an unknown id is a different refusal`() {
-        assertEquals(PurchaseResult.NoSuchEntry("nope"), ShopStock.buy(table, 10, 9999, "nope"))
+        assertEquals(PurchaseResult.NoSuchEntry("nope"), ShopStock.buy(table, 11, 9999, "nope"))
     }
 
     @Test
     fun `an unaffordable purchase reports both numbers and takes nothing`() {
         assertEquals(
             PurchaseResult.NotEnoughCredits(have = 20, need = 500),
-            ShopStock.buy(table, 10, credits = 20, entryId = "revive"),
+            ShopStock.buy(table, 11, credits = 20, entryId = "revive"),
         )
     }
 
@@ -255,5 +257,15 @@ class ShopStockTest {
         )
         assertEquals(50, ShopStock.stockAt(curved, 1).single().priceAt(1))
         assertEquals(100, ShopStock.stockAt(curved, 101).single().priceAt(101))
+    }
+
+    @Test
+    fun `the shop is shut on a boss wave, however much is stocked`() {
+        // PokéRogue's rule, and §2.19 puts our bosses on the same cadence. A player who has just been
+        // handed the wave's reward AND a shop after the hardest fight of the block is getting two
+        // decisions where the boss should have been the moment.
+        assertEquals(emptyList(), ShopStock.stockAt(table, 10))
+        assertEquals(emptyList(), ShopStock.stockAt(table, 20))
+        assertTrue(ShopStock.stockAt(table, 11).isNotEmpty(), "the wave after a boss should stock normally")
     }
 }

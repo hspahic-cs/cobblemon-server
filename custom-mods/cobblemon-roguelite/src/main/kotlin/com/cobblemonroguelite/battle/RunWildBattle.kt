@@ -171,6 +171,10 @@ object RunWildBattle {
         // plan: a roster promotion can make this wave a boss, and the plan is the only thing that
         // knows. [RunCapture] reads it back to decide whether a thrown ball may reach the run party.
         RunBattles.track(server, battle, player.uuid, plan.wave, entity, catchable = plan.catchable)
+        // PokéRogue's stat carryover: the lead's stages from the last wild wave, re-applied through
+        // the sim's own boost pathway. Wild waves only by construction — a trainer wave cleared the
+        // map before this battle existed (RunCarriedBoosts.resetForWave).
+        RunCarriedBoosts.applyTo(battle, player.uuid, run)
         log.info(
             "roguelite: {} started wild wave {} against {} (level {})",
             player.gameProfile.name, plan.wave, wild.species.name, wild.level,

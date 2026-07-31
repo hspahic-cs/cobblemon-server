@@ -10,28 +10,16 @@ import java.util.UUID
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/battle")
 
 /**
- * PokéRogue's stat-stage carryover, half-built on purpose.
+ * PokéRogue's stat-stage carryover (user decision 2026-07-31): stages — buffs AND debuffs — persist
+ * across **wild** waves and reset at any **trainer** battle.
  *
- * ### The rule being mirrored (user decision 2026-07-31)
- *
- * Stat stages (and eventually forms) persist across **wild** waves and reset at **trainer** battles.
- * Ours resets everything every wave, because each wave is its own Cobblemon/Showdown battle and
- * battle state dies with the battle by construction — so carrying it means capturing the player
- * side's stages when a wild wave ends and re-applying them when the next battle starts.
- *
- * ### Which half this is, and why the other half is a stub
- *
- * **Capture, persistence and the reset rule are real** — [captureFrom] reads
- * `BattlePokemon.statChanges` (Cobblemon's own bookkeeping of the `|boost|` stream) for every
- * surviving party member, [RunState.carriedBoosts] rides the ordinary checkpoints, and
- * [resetForWave] clears on any non-wild wave, which is exactly PokéRogue's reset point.
- *
- * **Injection is deliberately inert** ([applyTo] logs and does nothing), because `statChanges` is a
- * *mirror* of Showdown state, not an input to it — writing the map back would change what the client
- * displays while the simulator disagrees, which corrupts battles rather than merely missing. The
- * real injection has to reach the Showdown side (the candidate mechanisms are a synthetic bag-item
- * instruction per stage, or a mega_showdown-style script hook) and gets its own researched pass; a
- * wrong guess here costs every battle after wave 1, which is why this file refuses to guess.
+ * Three parts, one rule each: [captureFrom] reads the ACTIVE Pokémon's `statChanges` at wild-wave
+ * victory (Cobblemon's mirror of the `|boost|` stream); [resetForWave] clears on any non-wild wave,
+ * PokéRogue's own reset point; and [applyTo] re-applies at the next battle's start through the sim's
+ * `>eval` input — the one write path where the SIMULATOR is the thing that changes, with the client
+ * and Cobblemon's mirror fed by the ordinary protocol stream that falls out. An earlier revision
+ * stubbed the injection while that mechanism was unverified; the dev jar's battle-stream.js keeps
+ * Showdown's eval chunk, so the stub died the day it was born.
  */
 object RunCarriedBoosts {
 
@@ -43,12 +31,15 @@ object RunCarriedBoosts {
      */
     fun captureFrom(battle: PokemonBattle, playerId: UUID, run: RunState) {
         val carried = mutableMapOf<UUID, Map<String, Int>>()
+        // The ACTIVE Pokémon only — PokéRogue's own semantics: stages live on the Pokémon that is on
+        // the field, and a switch already reset them mid-battle. Reading the whole party would carry
+        // stale mirror values for benched members whose |unboost| stream stopped at their switch-out.
         battle.actors.filter { it.uuid == playerId }.forEach { actor ->
-            actor.pokemonList.forEach { member: BattlePokemon ->
+            actor.activePokemon.mapNotNull { it.battlePokemon }.forEach { member: BattlePokemon ->
                 val stages = member.statChanges
                     .filterValues { it != 0 }
                     .entries
-                    .associate { (stat, stage) -> stat.showdownId to stage }
+                    .associate { (stat, stage) -> stat.showdownId to stage.coerceIn(-6, 6) }
                 if (stages.isNotEmpty() && member.health > 0) {
                     carried[member.effectedPokemon.uuid] = stages
                 }
@@ -74,15 +65,39 @@ object RunCarriedBoosts {
     }
 
     /**
-     * THE STUB. Logs what a real injection would apply and touches nothing — see the class docs for
-     * why guessing here is worse than waiting.
+     * The injection, no longer a stub — through the sim's own `>eval` input.
+     *
+     * ### Why this is safe where writing `statChanges` was not
+     *
+     * The deployed battle-stream.js keeps Showdown's `case "eval"` chunk (verified on the dev jar,
+     * lines 172–207), which evaluates in battle scope with `p1active` pre-bound. Calling
+     * **`battle.boost(...)`** there runs the simulator's own boost pathway: the stages change in the
+     * AUTHORITY, the `|-boost|` protocol lines stream back out, Cobblemon's interpreter mirrors them
+     * into `statChanges`, and the client draws its arrows — one source of truth, everything
+     * downstream of it fed the normal way. The string is built from `showdownId`s and clamped ints,
+     * so nothing player-controlled can reach the eval.
+     *
+     * ### Ordering
+     *
+     * [PokemonBattle.writeShowdownAction] appends to the same input queue the battle start went
+     * through, so the boost lands after the sim has started and before any turn-1 choice — the
+     * "start of battle" a player would describe. Only the LEAD is applied: stages belong to the
+     * Pokémon on the field, and if the party was reordered between waves the carried entry simply
+     * finds nobody and expires, which is also what PokéRogue does to a mon that left the field.
      */
     fun applyTo(battle: PokemonBattle, playerId: UUID, run: RunState) {
         if (run.carriedBoosts.isEmpty()) return
-        log.debug(
-            "roguelite: {} carried boost entr(ies) NOT applied to the new battle — injection is not " +
-                "implemented yet (mirror-only statChanges; needs a Showdown-side mechanism)",
-            run.carriedBoosts.size,
+        val lead = battle.actors.firstOrNull { it.uuid == playerId }
+            ?.activePokemon?.firstOrNull()?.battlePokemon ?: return
+        val stages = run.carriedBoosts[lead.effectedPokemon.uuid] ?: return
+        val table = stages.entries
+            .filter { (stat, stage) -> stat.matches(Regex("[a-z]+")) && stage != 0 }
+            .joinToString(",") { (stat, stage) -> "$stat:${stage.coerceIn(-6, 6)}" }
+        if (table.isEmpty()) return
+        battle.writeShowdownAction(">eval battle.boost({$table}, p1active)")
+        log.info(
+            "roguelite: re-applied carried stages {{{}}} to {}'s lead at wave {}",
+            table, playerId, run.wave,
         )
     }
 }

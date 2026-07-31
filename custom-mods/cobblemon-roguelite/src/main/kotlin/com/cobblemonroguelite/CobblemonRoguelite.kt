@@ -2,6 +2,7 @@ package com.cobblemonroguelite
 
 import com.cobblemonroguelite.arena.ArenaSpawnSuppressor
 import com.cobblemonroguelite.battle.RunWaveBattles
+import com.cobblemonroguelite.data.wild.WildSpeciesPools
 import com.cobblemonroguelite.boss.BossShieldBattle
 import com.cobblemonroguelite.data.RogueliteData
 import com.cobblemonroguelite.payout.PendingPayoutHooks
@@ -9,6 +10,7 @@ import com.cobblemonroguelite.progression.CandyCommands
 import com.cobblemonroguelite.shop.ShopCommands
 import com.cobblemonroguelite.progression.ProgressionHooks
 import com.cobblemonroguelite.run.RunCommands
+import com.cobblemonroguelite.wave.WildPools
 import com.cobblemonroguelite.run.RunLoginHooks
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
@@ -62,6 +64,12 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
             // Cobblemon broadcast them as raw red chat, pipes and all, which looks to a player like
             // the mod crashing every time a boss takes a hit.
             it.enqueueWork(BossShieldBattle::install)
+            // Hands the datapack-loaded wild pool to the generator's seam. Separate from registering
+            // the registry itself because the two answer different questions — the registry decides
+            // what a `/reload` reads, this decides who is asked at wave time — and because the pool it
+            // installs is a LIVE VIEW rather than a snapshot, so a reload reaches the generator with
+            // nothing re-installed. Without this line the registry loads files nobody consults.
+            it.enqueueWork { WildPools.register(WildSpeciesPools.asWavePool()) }
         }
 
         // Game bus, not the mod bus: commands and player lifecycle are server-runtime events.

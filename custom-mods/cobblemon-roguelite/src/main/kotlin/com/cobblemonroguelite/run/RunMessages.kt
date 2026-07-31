@@ -175,12 +175,31 @@ object RunMessages {
     }
 
     /**
-     * Said when the wave handler refuses. Names the state of the world rather than an error, because
-     * on a build with no handler registered this is not a fault — it is the mode being unfinished,
-     * and the player's run is intact.
+     * Said when the wave handler refuses.
+     *
+     * ### It used to claim battles were not implemented, and that cost an evening
+     *
+     * The old wording was "run battles are not implemented on this server yet", said for *every*
+     * refusal. On the first server that got far enough to fight, battles were implemented and
+     * installed — the actual cause was an unconfigured wild pool — and the message sent both the
+     * player and the next reader looking at the wrong layer entirely. A message that names a cause it
+     * has not checked is worse than one that names none.
+     *
+     * So it now distinguishes the one thing this layer can actually know ([RunWaves.isImplemented])
+     * from everything else, and in the everything-else case says only what is true: the wave did not
+     * start, the run is intact, and the reason is in the log. Nothing here can be more specific
+     * without the handler reporting *why* it refused, which is a wider change than this deserves —
+     * [com.cobblemonroguelite.run.RunWaveHandler] returns a boolean by design.
      */
     fun waveUnavailable(wave: Int): Component =
-        literal("Wave $wave cannot be started — run battles are not implemented on this server yet. Your run is safe.")
+        if (!RunWaves.isImplemented()) {
+            literal("Wave $wave cannot be started — run battles are not implemented on this server yet. Your run is safe.")
+        } else {
+            literal(
+                "Wave $wave could not be started. Your run is safe and nothing was lost — tell an " +
+                    "operator, who will find the reason in the server log.",
+            )
+        }
 
     /**
      * Said when the run's trainer roster is not loaded. Does not name the id, for

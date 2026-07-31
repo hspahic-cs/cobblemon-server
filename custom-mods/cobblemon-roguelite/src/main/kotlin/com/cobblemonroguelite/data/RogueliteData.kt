@@ -9,6 +9,7 @@ import com.cobblemonroguelite.data.shop.ShopTables
 import com.cobblemonroguelite.data.starter.HiddenAbilityTables
 import com.cobblemonroguelite.data.starter.StarterCostTables
 import com.cobblemonroguelite.data.trainer.TrainerRosters
+import com.cobblemonroguelite.data.wild.WildSpeciesPools
 import org.slf4j.LoggerFactory
 
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/data")
@@ -96,6 +97,15 @@ object RogueliteData {
         // the stamp while the build id is unchanged, and the id does not change when its contents do.
         CobblemonDataProvider.register(ArenaPalettes, reloadable = true)
         CobblemonDataProvider.register(RunBiomes, reloadable = true)
+        // The wild pool, and the reason it is a registry at all: [com.cobblemonroguelite.wave.WildPools]
+        // is a code seam whose default refuses, and before this there was no way to fill it from data.
+        // A server therefore started, drafted, teleported into a stamped arena, and refused wave 1 —
+        // while telling the player battles were not implemented, which was never true.
+        //
+        // Reloadable like the rest. Editing it changes what an in-flight run meets at waves it has not
+        // reached, exactly as editing a trainer roster does; a wave already generated is not re-rolled,
+        // because the encounter is derived from (seed, wave) at the moment the wave starts.
+        CobblemonDataProvider.register(WildSpeciesPools, reloadable = true)
         log.info("roguelite: datapack registries registered — tables load from data/<namespace>/{}/", RogueliteDataRegistry.ROOT)
     }
 }

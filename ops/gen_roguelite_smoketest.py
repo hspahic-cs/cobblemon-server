@@ -115,6 +115,37 @@ BIOMES = [
     ("smoke_tundra", "Smoke Tundra", "minecraft:snowy_slopes", 21, None),
 ]
 
+# THE SECOND REASON A RUN COULD NOT BE PLAYED.
+#
+# With the arena fixed, a run started, drafted and teleported correctly — and then refused wave 1,
+# telling the player "run battles are not implemented on this server yet". They were implemented and
+# installed. What was missing was this: WildPools had no pool, so the generator had nothing to draw
+# and every wild wave refused. Wild waves are most of a run.
+#
+# Wave windows overlap on purpose, so most waves have several candidates and the draw is visibly a
+# draw. Fully-evolved species appear late rather than being scaled up from Caterpie, since the level
+# curve makes anything survivable and a wave-40 Metapod reads as the pool being broken.
+WILD_POOL = [
+    # (species, weight, min_wave, max_wave)
+    ("cobblemon:caterpie", 3, 1, 8),
+    ("cobblemon:pidgey", 3, 1, 12),
+    ("cobblemon:rattata", 3, 1, 12),
+    ("cobblemon:zubat", 2, 1, 15),
+    ("cobblemon:geodude", 2, 4, 20),
+    ("cobblemon:machop", 2, 4, 20),
+    ("cobblemon:growlithe", 2, 6, 24),
+    ("cobblemon:abra", 1, 6, 24),
+    ("cobblemon:haunter", 2, 12, 34),
+    ("cobblemon:kadabra", 2, 12, 34),
+    ("cobblemon:machoke", 2, 14, 36),
+    ("cobblemon:golbat", 2, 14, 36),
+    ("cobblemon:arcanine", 2, 26, None),
+    ("cobblemon:alakazam", 1, 26, None),
+    ("cobblemon:snorlax", 1, 30, None),
+    ("cobblemon:gyarados", 1, 30, None),
+    ("cobblemon:dragonite", 1, 40, None),
+]
+
 
 def write(path, payload):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -239,6 +270,19 @@ def main():
             **({"max_wave": hi} if hi else {}),
             "weight": 1,
         })
+
+    # --- something to fight, which is the difference between a run and a walk ---
+    write(os.path.join(data, "wild_pools", "smoke.json"), {
+        "_comment": note + [
+            "Without at least one enabled entry here, WildPools has no pool, the generator draws",
+            "nothing and every wild wave refuses to start — which the player is told as a wave that",
+            "'could not be started'. Wild waves are most of a run.",
+        ],
+        "entries": [
+            {"species": species, "weight": weight, "min_wave": lo, **({"max_wave": hi} if hi else {})}
+            for species, weight, lo, hi in WILD_POOL
+        ],
+    })
 
     print("\nNEXT, and read the caveats above first:")
     print(f"  scp -r {os.path.relpath(args.out, ROOT)} "

@@ -5,6 +5,7 @@ import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.composition.WavePlan
 import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.wave.WaveDrawStream
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import com.cobblemonroguelite.wave.WaveRandom
 import net.minecraft.resources.ResourceLocation
 
@@ -239,9 +240,11 @@ data class TrainerRoster(
      * it as a failure and must not substitute anything: an authored Elite Four member replaced by a
      * generated team would be the one fight in the run that somebody tuned, silently regenerated.
      *
-     * [level] and [boss] come from the wave's [WavePlan] — the plan produced by [planFor], so
-     * promotions are already applied. Passing the *scheduled* kind instead would give a promoted Elite
-     * Four wave the ordinary trainer item tier.
+     * [curve] is the run's level curve — member levels are per-slot ([WaveLevelCurve.partyMemberLevel],
+     * PokéRogue's `getPartyLevels`), not the wave's flat [WavePlan.level], which now serves only the
+     * wild path and the authored-team forcing on the far side of the seam. [boss] comes from the
+     * wave's plan — the one produced by [planFor], so promotions are already applied; passing the
+     * *scheduled* kind instead would give a promoted Elite Four wave the ordinary trainer item tier.
      *
      * ### The rival is answered first, and matched on the id as well as the wave
      *
@@ -251,13 +254,13 @@ data class TrainerRoster(
      * in code) roster with a fixed entry on a meeting wave would hand this the *fixed* trainer, and
      * handing back the rival's team for it would give some Elite Four member the rival's growing party.
      */
-    fun teamFor(trainerId: ResourceLocation, wave: Int, level: Int, boss: Boolean, seed: Long): GeneratedTeam? {
+    fun teamFor(trainerId: ResourceLocation, wave: Int, curve: WaveLevelCurve, boss: Boolean, seed: Long): GeneratedTeam? {
         val ladder = rival
         if (ladder != null && ladder.meetingAt(wave)?.trainerId == trainerId) {
-            return RivalTeamGenerator.generate(ladder, wave, level, seed, generation)
+            return RivalTeamGenerator.generate(ladder, wave, curve, seed, generation)
         }
         return generated[trainerId]?.let {
-            TrainerTeamGenerator.generate(it, wave, level, boss, seed, generation)
+            TrainerTeamGenerator.generate(it, wave, curve, boss, seed, generation)
         }
     }
 

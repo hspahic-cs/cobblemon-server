@@ -8,6 +8,7 @@ import com.cobblemonroguelite.integration.RunTrainerBattleRequest
 import com.cobblemonroguelite.integration.RunTrainerBattles
 import com.cobblemonroguelite.run.RunRoster
 import com.cobblemonroguelite.run.RunRosters
+import com.cobblemonroguelite.run.RunSettings
 import com.cobblemonroguelite.run.RunState
 import com.cobblemonroguelite.run.RunWaveHandler
 import com.cobblemonroguelite.run.RunWaves
@@ -107,7 +108,10 @@ object RunWaveBattles : RunWaveHandler {
         val team = roster.teamFor(
             trainerId = trainer.trainerId,
             wave = plan.wave,
-            level = plan.level,
+            // The live curve, not [plan.level]: a generated team's levels are per member
+            // (PokéRogue's getPartyLevels spread), so the flat wave level stops here — it still
+            // rides the seam for the authored path's forcing and for the log line.
+            curve = RunSettings.composition.config.curve,
             boss = plan.kind == RunOpponent.BOSS,
             seed = run.seed,
         )

@@ -3,6 +3,7 @@ package com.cobblemonroguelite.data.trainer
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.integration.RunOpponent
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -62,8 +63,10 @@ class RivalTeamGeneratorTest {
 
     private val rules = TeamGenerationRules()
 
+    private val curve = WaveLevelCurve()
+
     private fun teamAt(wave: Int, seed: Long = 7L, on: RivalLadder = ladder, using: TeamGenerationRules = rules) =
-        RivalTeamGenerator.generate(on, wave, level = 50, seed = seed, rules = using)
+        RivalTeamGenerator.generate(on, wave, curve, seed = seed, rules = using)
 
     private fun names(wave: Int, seed: Long = 7L, on: RivalLadder = ladder) =
         teamAt(wave, seed, on)!!.members.map { it.species.id.path }
@@ -155,7 +158,7 @@ class RivalTeamGeneratorTest {
             val team = when {
                 ladder.isMeeting(wave) -> teamAt(wave, seed)
                 composition.kindOf(wave) != RunOpponent.WILD ->
-                    TrainerTeamGenerator.generate(brock, wave, 50, boss = false, seed = seed, rules = rules)
+                    TrainerTeamGenerator.generate(brock, wave, curve, boss = false, seed = seed, rules = rules)
                 else -> null
             }
             team?.let { wave to it }

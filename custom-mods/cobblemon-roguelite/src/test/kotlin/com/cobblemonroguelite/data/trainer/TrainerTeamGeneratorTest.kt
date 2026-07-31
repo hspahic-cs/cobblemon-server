@@ -4,6 +4,8 @@ import com.cobblemonroguelite.boss.BossShields
 import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.integration.RunOpponent
+import com.cobblemonroguelite.wave.PartyMemberStrength
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -69,8 +71,11 @@ class TrainerTeamGeneratorTest {
 
     private val rules = TeamGenerationRules()
 
+    /** The default curve is PokéRogue's Classic verbatim, which is what a real run uses (§2.19). */
+    private val curve = WaveLevelCurve()
+
     private fun generate(wave: Int, seed: Long = 7L, boss: Boolean = false, entry: TrainerEntry = brock) =
-        TrainerTeamGenerator.generate(entry, wave, level = 50, boss = boss, seed = seed, rules = rules)
+        TrainerTeamGenerator.generate(entry, wave, curve, boss = boss, seed = seed, rules = rules)
 
     private fun names(team: GeneratedTeam) = team.members.map { it.species.id.path }
 
@@ -99,7 +104,7 @@ class TrainerTeamGeneratorTest {
                 .filter { composition.kindOf(it) != RunOpponent.WILD }
                 .associateWith { wave ->
                     val boss = composition.kindOf(wave) == RunOpponent.BOSS
-                    TrainerTeamGenerator.generate(brock, wave, level = 50, boss = boss, seed = seed, rules = rules)
+                    TrainerTeamGenerator.generate(brock, wave, curve, boss = boss, seed = seed, rules = rules)
                 }
 
         val first = play()
@@ -195,11 +200,53 @@ class TrainerTeamGeneratorTest {
         assertTrue(properties.none { it.contains("moves=") }, "movesets are Cobblemon's to derive")
     }
 
+    /**
+     * PokéRogue's `getPartyLevels`, checked against values computed by hand from their formula —
+     * see docs/roguelite-trainer-battles.md §1.3 for the transcription of record.
+     *
+     * Wave 44: base = 1 + 44/2 + (44/25)² = 26.0976. Ace (STRONGER, ×1.25) → ceil = 33; STRONG
+     * (×1.2) → 32; AVERAGE → multiplier 1.1 + 0.025·⌊44/25⌋ = 1.125, offset −⌊(44/50)·1⌋ = 0 →
+     * ceil(26.0976 × 1.125) = 30. Party size 4 → strengths [STRONGER, STRONG, AVERAGE, AVERAGE].
+     */
     @Test
-    fun `every member is at the wave level`() {
-        val team = TrainerTeamGenerator.generate(brock, 44, level = 63, boss = false, seed = 7L, rules = rules)
-        assertTrue(team.members.all { it.level == 63 })
-        assertTrue(team.propertiesStrings().all { it.contains(" level=63") })
+    fun `member levels follow getPartyLevels, ace ahead of the curve`() {
+        val team = TrainerTeamGenerator.generate(brock, 44, curve, boss = false, seed = 7L, rules = rules)
+        assertEquals(listOf(33, 32, 30, 30), team.members.map { it.level })
+        assertTrue(team.propertiesStrings()[0].contains(" level=33"), team.propertiesStrings()[0])
+    }
+
+    /** §2.19's flat tail: past ~wave 138 the whole party sits at the cap, and that is the decision. */
+    @Test
+    fun `late-run parties clamp to the level cap`() {
+        assertTrue(generate(150).members.all { it.level == 100 })
+    }
+
+    /**
+     * The strength spread is ace-first (our slot order — PokéRogue's templates put the ace last and
+     * ours mirror them) and takes no draws, so retuning it can never move another roll.
+     */
+    @Test
+    fun `the strength spread is ace-first and scales with party size`() {
+        assertEquals(listOf(PartyMemberStrength.STRONGER), TrainerTeamGenerator.strengthsFor(1))
+        assertEquals(
+            listOf(PartyMemberStrength.STRONGER, PartyMemberStrength.AVERAGE),
+            TrainerTeamGenerator.strengthsFor(2),
+        )
+        assertEquals(
+            listOf(
+                PartyMemberStrength.STRONGER, PartyMemberStrength.STRONG,
+                PartyMemberStrength.AVERAGE, PartyMemberStrength.AVERAGE,
+            ),
+            TrainerTeamGenerator.strengthsFor(4),
+        )
+        // PokéRogue's six-slot gym-leader template (3 avg, 2 strong, 1 stronger), mirrored.
+        assertEquals(
+            listOf(
+                PartyMemberStrength.STRONGER, PartyMemberStrength.STRONG, PartyMemberStrength.STRONG,
+                PartyMemberStrength.AVERAGE, PartyMemberStrength.AVERAGE, PartyMemberStrength.AVERAGE,
+            ),
+            TrainerTeamGenerator.strengthsFor(6),
+        )
     }
 
     @Test
@@ -219,7 +266,7 @@ class TrainerTeamGeneratorTest {
         )
 
         fun items(wave: Int, boss: Boolean) =
-            TrainerTeamGenerator.generate(brock, wave, 50, boss, 7L, tiered).members.map { it.heldItem }
+            TrainerTeamGenerator.generate(brock, wave, curve, boss, 7L, tiered).members.map { it.heldItem }
 
         assertTrue(items(10, boss = false).all { it == null }, "no tier covers wave 10")
         assertTrue(items(40, boss = false).all { it == berry })
@@ -248,8 +295,8 @@ class TrainerTeamGeneratorTest {
         )
         for (wave in listOf(5, 45, 120, 195)) {
             assertEquals(
-                names(TrainerTeamGenerator.generate(brock, wave, 50, false, 7L, rules)),
-                names(TrainerTeamGenerator.generate(brock, wave, 50, false, 7L, withItems)),
+                names(TrainerTeamGenerator.generate(brock, wave, curve, false, 7L, rules)),
+                names(TrainerTeamGenerator.generate(brock, wave, curve, false, 7L, withItems)),
                 "wave $wave changed species when held items were added",
             )
         }
@@ -325,9 +372,9 @@ class TrainerTeamGeneratorTest {
         )
 
         assertTrue(roster.validate().isEmpty(), roster.validate().toString())
-        assertEquals(4, roster.teamFor(generatedId, 15, 40, boss = false, seed = 7L)?.members?.size)
+        assertEquals(4, roster.teamFor(generatedId, 15, curve, boss = false, seed = 7L)?.members?.size)
         // The Elite Four case: no entry, so no generated team, so the authored RCT team is fought.
-        assertNull(roster.teamFor(authoredId, 20, 40, boss = true, seed = 7L))
+        assertNull(roster.teamFor(authoredId, 20, curve, boss = true, seed = 7L))
     }
 
     @Test
@@ -388,7 +435,7 @@ class TrainerTeamGeneratorTest {
     )
 
     private fun team(wave: Int, boss: Boolean, rules: TeamGenerationRules = shieldRules) =
-        TrainerTeamGenerator.generate(brock, wave = wave, level = 60, boss = boss, seed = 11L, rules = rules)
+        TrainerTeamGenerator.generate(brock, wave = wave, curve = curve, boss = boss, seed = 11L, rules = rules)
 
     /**
      * Shields are a boss-wave property and nothing else.
@@ -515,9 +562,10 @@ class TrainerTeamGeneratorTest {
      */
     @Test
     fun `a shielded member's properties string carries the shield item`() {
+        // Wave 100: base = 1 + 50 + (100/25)² = 67; the ace is STRONGER → ceil(67 × 1.25) = 84.
         val ace = team(wave = 100, boss = true).members.first()
         assertEquals(
-            "species=cobblemon:steelix level=60 " + BossShields.heldItemProperty(3),
+            "species=cobblemon:steelix level=84 " + BossShields.heldItemProperty(3),
             ace.propertiesString(),
         )
         // Space-separated tokens: species, level, held_item. A fourth would mean the fragment split.

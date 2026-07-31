@@ -2,6 +2,7 @@ package com.cobblemonroguelite.composition
 
 import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.wave.StaticWaveSpeciesPool
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import com.cobblemonroguelite.wave.WaveSpecies
 import com.cobblemonroguelite.wave.WildWaveGenerator
 import net.minecraft.resources.ResourceLocation
@@ -17,7 +18,8 @@ import kotlin.test.assertTrue
  */
 class WaveCompositionCurveTest {
 
-    private val curve = WaveCompositionConfig.pokeRogueClassicCurve()
+    // The default curve IS PokéRogue's Classic now — its constants moved into WaveLevelCurve itself.
+    private val curve = WaveLevelCurve()
     private val composition = WaveComposition()
 
     /** `1 + wave/2 + (wave/25)²`, written out independently of the implementation. */

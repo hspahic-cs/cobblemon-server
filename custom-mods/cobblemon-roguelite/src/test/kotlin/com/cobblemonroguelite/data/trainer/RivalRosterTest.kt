@@ -4,6 +4,7 @@ import com.cobblemonroguelite.composition.WaveComposition
 import com.cobblemonroguelite.composition.WaveCompositionConfig
 import com.cobblemonroguelite.integration.RunOpponent
 import com.cobblemonroguelite.wave.WaveDrawStream
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import com.cobblemonroguelite.wave.WaveRandom
 import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
@@ -175,7 +176,7 @@ class RivalRosterTest {
         val shielded = TeamGenerationRules(bossShields = listOf(BossShieldTier(minWave = 1, shields = 4, members = 6)))
         val roster = roster().copy(generation = shielded)
         val plan = roster.planFor(195, 7L, composition)
-        val built = assertNotNull(roster.teamFor(stage(6), 195, plan.level, plan.kind == RunOpponent.BOSS, 7L))
+        val built = assertNotNull(roster.teamFor(stage(6), 195, WaveLevelCurve(), plan.kind == RunOpponent.BOSS, 7L))
         assertTrue(built.members.all { it.shields == 0 })
     }
 
@@ -216,7 +217,7 @@ class RivalRosterTest {
         val pick = assertNotNull(roster.pickFor(55, RunOpponent.BOSS, seed = 7L))
         assertEquals(id("e4_1"), pick.trainerId)
         assertEquals(TrainerPickSource.FIXED, pick.source)
-        assertNull(roster.teamFor(id("e4_1"), 55, 60, boss = true, seed = 7L), "the fixed trainer took the rival's team")
+        assertNull(roster.teamFor(id("e4_1"), 55, WaveLevelCurve(), boss = true, seed = 7L), "the fixed trainer took the rival's team")
     }
 
     // ─── the team the roster hands over ────────────────────────────────────
@@ -224,23 +225,26 @@ class RivalRosterTest {
     @Test
     fun `the roster builds the rival's team from the ladder and not from generated`() {
         val roster = roster()
-        val built = assertNotNull(roster.teamFor(stage(3), 55, level = 60, boss = false, seed = 7L))
+        val built = assertNotNull(roster.teamFor(stage(3), 55, WaveLevelCurve(), boss = false, seed = 7L))
         assertEquals(4, built.members.size, "meeting 3 should bring four")
-        assertTrue(built.members.all { it.level == 60 })
+        // Wave 55: base = 1 + 27.5 + (55/25)² = 33.34. Per-member getPartyLevels, ace first:
+        // STRONGER → ceil(×1.25) = 42; STRONG → ceil(×1.2) = 41; AVERAGE → multiplier
+        // 1.1 + 0.025·⌊55/25⌋ = 1.15, offset −⌊(55/50)·1⌋ = −1 → ceil(33.34 × 1.15) − 1 = 38.
+        assertEquals(listOf(42, 41, 38, 38), built.members.map { it.level })
     }
 
     @Test
     fun `a different trainer on a meeting wave gets no rival team`() {
         // The id guard. Without it a fixed encounter that beat the ladder would be handed the rival's
         // growing party, which is the one way this could go wrong and still look like it worked.
-        assertNull(roster().teamFor(id("someone_else"), 55, 60, boss = false, seed = 7L))
+        assertNull(roster().teamFor(id("someone_else"), 55, WaveLevelCurve(), boss = false, seed = 7L))
     }
 
     @Test
     fun `a generated leader on a non-meeting wave is untouched by the ladder`() {
         val leader = TrainerEntry(id("t_a"), listOf(slot("onix", "steelix"), slot("geodude", "golem")))
         val roster = roster(generated = mapOf(leader.trainerId to leader))
-        val built = assertNotNull(roster.teamFor(id("t_a"), 15, 30, boss = false, seed = 7L))
+        val built = assertNotNull(roster.teamFor(id("t_a"), 15, WaveLevelCurve(), boss = false, seed = 7L))
         assertEquals(listOf("onix", "geodude"), built.members.map { it.species.id.path })
     }
 

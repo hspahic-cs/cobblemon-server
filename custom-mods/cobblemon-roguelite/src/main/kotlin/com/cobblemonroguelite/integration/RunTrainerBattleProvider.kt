@@ -19,9 +19,12 @@ private val log = LoggerFactory.getLogger("cobblemon_roguelite/integration")
  * reports, from the only side of the seam that can see the registry.
  *
  * [plan] rides along whole rather than being unpacked into a level and a boss flag. The provider
- * needs the level (§2.6 mutates the NPC's team to it) and the kind (bosses take the ×1.2 the curve
- * has already applied), and handing it the plan means a later field on [WavePlan] reaches
- * implementations without a second version of this class.
+ * needs the level **for authored fights only** — §2.6 mutates an authored NPC team to it, and an
+ * authored boss's level carries the ×1.2 the curve applied. A generated team carries its own
+ * per-member levels (PokéRogue's `getPartyLevels` spread, [com.cobblemonroguelite.wave.WaveLevelCurve.partyMemberLevel])
+ * inside its properties strings, and a provider must **not** flatten one to the plan's level — that
+ * would erase exactly the spread §2.30's generator wrote. Handing over the plan whole also means a
+ * later field on [WavePlan] reaches implementations without a second version of this class.
  */
 data class RunTrainerBattleRequest(
     val plan: WavePlan,
@@ -66,8 +69,8 @@ data class RunTrainerBattleRequest(
  *
  * ### The provider owns the whole battle, including its end
  *
- * An implementation summons the trainer, scales the team to [RunTrainerBattleRequest.plan]'s level
- * and starts the battle. It does **not** report the outcome, the faints, or who is on the field:
+ * An implementation summons the trainer, scales an *authored* team to [RunTrainerBattleRequest.plan]'s
+ * level (a generated team arrives already levelled, per member) and starts the battle. It does **not** report the outcome, the faints, or who is on the field:
  * the module adopts any battle that starts while a run carries a battle marker
  * (`battle/RunBattles`), so permadeath, §2.10's field tracking and the wave result all run on
  * trainer waves without the provider knowing they exist. A provider that also reported them would

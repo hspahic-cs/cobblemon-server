@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.data.trainer
 
 import com.cobblemonroguelite.wave.WaveDrawStream
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import com.cobblemonroguelite.wave.WaveRandom
 
 /**
@@ -49,8 +50,11 @@ object RivalTeamGenerator {
      * [TrainerRoster.teamFor] already returns for an authored fight, so a caller that routes on
      * nullability keeps working.
      *
-     * @param level the wave's level from the curve. A rival carries the ordinary trainer level; the
-     *   boss ×1.2 is not applied to rival waves and [RivalLadder] says why.
+     * @param curve the run's level curve. Levels are per member ([WaveLevelCurve.partyMemberLevel]),
+     *   spread by [TrainerTeamGenerator.strengthsFor] exactly as a generated trainer's are — the
+     *   rival's ace is the starter-line slot, which the spread rewards for the same reason §2.32
+     *   shields go on slot one. No boss ×1.2 is applied to rival waves and [RivalLadder] says why;
+     *   under PokéRogue's `getPartyLevels` port there is no flat multiplier to apply anyway.
      * @param rules shared with generated trainers, and shared on purpose: the evolution schedule and
      *   the held-item tiers are the roster's answer to "how strong is content at wave N", and a rival
      *   with its own copy would drift out of step with the leaders around it. Only
@@ -61,7 +65,7 @@ object RivalTeamGenerator {
     fun generate(
         ladder: RivalLadder,
         wave: Int,
-        level: Int,
+        curve: WaveLevelCurve,
         seed: Long,
         rules: TeamGenerationRules,
     ): GeneratedTeam? {
@@ -82,12 +86,13 @@ object RivalTeamGenerator {
         val stageIndex = rules.evolution.stageIndexFor(wave)
         val species = lines.map { it.stageAt(stageIndex) }
         val items = TrainerTeamGenerator.heldItems(species.size, wave, boss = false, seed = seed, rules = rules)
+        val strengths = TrainerTeamGenerator.strengthsFor(species.size)
 
         return GeneratedTeam(
             species.mapIndexed { index, member ->
                 // shields defaulted to 0 rather than passed: §2.32's mechanic belongs to boss waves,
                 // and a rival is not one.
-                GeneratedMember(member, level, items[index])
+                GeneratedMember(member, curve.partyMemberLevel(wave, strengths[index]), items[index])
             },
         )
     }

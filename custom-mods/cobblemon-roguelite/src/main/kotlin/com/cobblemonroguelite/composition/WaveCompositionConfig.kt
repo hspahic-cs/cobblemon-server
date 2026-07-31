@@ -32,14 +32,16 @@ import net.minecraft.resources.ResourceLocation
  * @property trainerInterval every Nth wave is an authored trainer instead of a wild encounter.
  * @property bossInterval every Nth wave is a boss. Boss beats trainer where they collide; see
  *   [WaveComposition.kindOf].
- * @property curve shared by all three wave kinds — see [pokeRogueClassicCurve].
+ * @property curve shared by all three wave kinds. [WaveLevelCurve]'s defaults *are* PokéRogue's
+ *   Classic constants (§2.19 adopted their run length precisely so the curve could be theirs
+ *   literally), so the default here is simply the default curve.
  * @property rewards which reward table a wave rolls from.
  */
 data class WaveCompositionConfig(
     val runLength: Int = 200,
     val trainerInterval: Int = 5,
     val bossInterval: Int = 10,
-    val curve: WaveLevelCurve = pokeRogueClassicCurve(),
+    val curve: WaveLevelCurve = WaveLevelCurve(),
     val rewards: RewardRouting = RewardRouting(),
 ) {
     init {
@@ -64,38 +66,6 @@ data class WaveCompositionConfig(
     fun intervalsAligned(): Boolean = bossInterval % trainerInterval == 0
 
     companion object {
-        /**
-         * PokéRogue's Classic curve, verbatim: `1 + wave/2 + (wave/25)²`, bosses ×1.2 (§2.19).
-         *
-         * These are theirs and not ours *because* [runLength] is theirs. The reason §2.14 refused to
-         * port the constants was that a curve tuned for 200 waves would have a ~10-wave slice
-         * fighting level 6 Pokémon; §2.19 removed that objection by adopting the run length the curve
-         * was tuned for, so retuning them now would only reintroduce the mismatch from the other end.
-         * [WaveLevelCurve]'s own defaults remain the placeholders they say they are — this is the
-         * configuration a real run uses.
-         *
-         * **The ceiling is load-bearing, not a safety rail.** Cobblemon's `maxPokemonLevel` is 100 and
-         * is a *global* config value, so it cannot be raised for runs alone. Their curve passes 100 at
-         * about wave 138 (bosses around 120) and would reach 165 by wave 200, so the last ~30% of a
-         * run is flat at 100 by decision (§2.19): difficulty there has to come from team quality, held
-         * items and boss design. Anyone reading a flat tail in the level column is looking at the
-         * intended behaviour, not a clamped bug.
-         *
-         * **Still placeholders: the three jitter fields**, left at [WaveLevelCurve]'s defaults because
-         * §2.19 fixes the mean curve and says nothing about spread. Note what those defaults do over
-         * 200 waves — `spreadNarrowingWaves = 6` was picked for a ~10-wave slice, so jitter sits on its
-         * floor from roughly wave 30 onward and the back three quarters of a run has almost no level
-         * variance. That is a tuning gap for the balance owner, not something to invent here.
-         */
-        fun pokeRogueClassicCurve(): WaveLevelCurve = WaveLevelCurve(
-            baseLevel = 1.0,
-            linearPerWave = 0.5,
-            quadraticDivisor = 25.0,
-            bossMultiplier = 1.2,
-            minLevel = 1,
-            maxLevel = COBBLEMON_MAX_LEVEL,
-        )
-
         /**
          * Cobblemon's global `maxPokemonLevel`. Duplicated as a constant rather than read from their
          * config because this has to be known while *planning* a run — including in tests with no

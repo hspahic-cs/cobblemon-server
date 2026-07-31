@@ -1,7 +1,9 @@
 package com.cobblemonroguelite.data.trainer
 
 import com.cobblemonroguelite.boss.BossShields
+import com.cobblemonroguelite.wave.PartyMemberStrength
 import com.cobblemonroguelite.wave.WaveDrawStream
+import com.cobblemonroguelite.wave.WaveLevelCurve
 import com.cobblemonroguelite.wave.WaveRandom
 import net.minecraft.resources.ResourceLocation
 
@@ -45,7 +47,9 @@ data class GeneratedTeam(val members: List<GeneratedMember>) {
             member.heldItem != null -> " @${member.heldItem.path}"
             else -> ""
         }
-        member.species.id.path + item
+        // The level is per member now (PokéRogue's getPartyLevels spread), so a log line without it
+        // would hide exactly the thing a "that boss felt overtuned" report needs checked.
+        member.species.id.path + " L${member.level}" + item
     }
 }
 
@@ -83,17 +87,21 @@ object TrainerTeamGenerator {
      * fights their RCT team as written, which is how the Elite Four and the champion stay hand-made
      * (§2.30). Only a trainer with a signature entry generates.
      *
-     * @param level the wave's level, from the curve, already carrying §2.19's boss multiplier. Applied
-     *   to every member: the bridge forces the opponent team to this level anyway, and writing it into
-     *   the properties string is what makes Cobblemon derive the moveset *for that level* — the whole
-     *   reason generation replaces authoring.
+     * @param curve the run's level curve. Levels are **per member**, PokéRogue's `getPartyLevels`
+     *   ([WaveLevelCurve.partyMemberLevel]): the ace runs ahead of the curve and the filler drifts
+     *   below it, per [strengthsFor]. No flat wave level and no boss ×1.2 — a generated boss's step
+     *   up is the strength spread plus §2.32's shields, which is PokéRogue's own design (their
+     *   `bossMultiplier` belongs to the wild path). Writing each member's level into its properties
+     *   string is what makes Cobblemon derive the moveset *for that level* — the whole reason
+     *   generation replaces authoring — and it is why the bridge must not flatten a generated team
+     *   to the wave level afterwards.
      * @param boss whether this wave is a boss wave **as the run sees it**, promotions included. Read
-     *   by held items and by §2.32's shields; the level multiplier is already in [level].
+     *   by held items and by §2.32's shields.
      */
     fun generate(
         entry: TrainerEntry,
         wave: Int,
-        level: Int,
+        curve: WaveLevelCurve,
         boss: Boolean,
         seed: Long,
         rules: TeamGenerationRules,
@@ -111,11 +119,40 @@ object TrainerTeamGenerator {
 
         val items = heldItems(species.size, wave, boss, seed, rules)
         val shields = bossShields(species.size, wave, boss, rules)
+        val strengths = strengthsFor(species.size)
         return GeneratedTeam(
             species.mapIndexed { index, member ->
-                GeneratedMember(member, level, items[index], shields[index])
+                GeneratedMember(member, curve.partyMemberLevel(wave, strengths[index]), items[index], shields[index])
             },
         )
+    }
+
+    /**
+     * The [PartyMemberStrength] of each party slot, ace first — the input to
+     * [WaveLevelCurve.partyMemberLevel]'s per-member spread.
+     *
+     * **Not a draw, for [bossShields]' second reason:** it takes nothing from any stream, so adding
+     * or retuning the spread cannot move any other roll of an in-flight run.
+     *
+     * The shape is PokéRogue's late gym-leader template (their six-slot form is 3 average, 2 strong,
+     * 1 stronger) **mirrored**, because their templates put the ace last and our signature slots put
+     * it first ([slotsFor] — slot one is the Terastallised signature in their Paldea data, and
+     * §2.32's shields are applied from the front on the same reading). Scaled down by the same rule
+     * their smaller templates follow — one stronger ace, roughly a third of the party strong, the
+     * rest average: 6 → [STRONGER, STRONG, STRONG, AVG×3], 4 → [STRONGER, STRONG, AVG×2],
+     * 2 → [STRONGER, AVERAGE]. No WEAK/WEAKER tiers: those belong to their *generic-class*
+     * templates, and every trainer a roster bothers to generate for is a named character.
+     */
+    internal fun strengthsFor(size: Int): List<PartyMemberStrength> {
+        require(size >= 1) { "a party has at least one member, got $size" }
+        val strong = if (size >= 3) size / 3 else 0
+        return List(size) { index ->
+            when {
+                index == 0 -> PartyMemberStrength.STRONGER
+                index <= strong -> PartyMemberStrength.STRONG
+                else -> PartyMemberStrength.AVERAGE
+            }
+        }
     }
 
     /**

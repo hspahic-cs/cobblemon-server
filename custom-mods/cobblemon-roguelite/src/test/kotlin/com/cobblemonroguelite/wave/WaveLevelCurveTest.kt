@@ -7,10 +7,11 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 /**
- * The curve's *shape*, never its tuning. Every constant in [WaveLevelCurve] is a placeholder, so
- * asserting particular levels here would just cement numbers nobody has signed off on; these tests
- * pin the properties the shape is supposed to have — rising, accelerating, narrowing, bounded —
- * which are what would actually be broken by a bad edit.
+ * Two kinds of assertion, and the split matters. The mean-curve constants are **PokéRogue's Classic
+ * verbatim** (§2.19), so those get pinned to exact values — a drifted constant is a port error, not
+ * a tuning choice. The jitter fields are still placeholders, so everything about spread pins only
+ * the *shape* — narrowing, bounded, floored — and cementing particular spreads here would just
+ * freeze numbers nobody has signed off on.
  */
 class WaveLevelCurveTest {
 
@@ -36,6 +37,37 @@ class WaveLevelCurveTest {
     fun `boss waves scale off the same curve`() {
         val plain = curve.meanLevelAt(10, boss = false)
         assertEquals(plain * curve.bossMultiplier, curve.meanLevelAt(10, boss = true), 1e-9)
+    }
+
+    /** The defaults ARE their curve: `1 + wave/2 + (wave/25)²`, bosses ×1.2. Checked at a round wave. */
+    @Test
+    fun `the default constants are PokéRogue's Classic verbatim`() {
+        assertEquals(30.0, curve.meanLevelAt(50), 1e-9) // 1 + 25 + 4
+        assertEquals(36.0, curve.meanLevelAt(50, boss = true), 1e-9)
+        assertEquals(100, curve.maxLevel, "the level-100 flat tail is §2.19's decision")
+    }
+
+    /**
+     * `getPartyLevels`, transcribed values — wave 100, base 67, every strength tier by hand:
+     * WEAKER  min(0.95+0.025·4, 1.2)=1.05, offset −⌊2·3⌋=−6 → ceil(70.35)−6 = 65
+     * WEAK    1.1, −4 → 70;  AVERAGE 1.2 (capped), −2 → 79;  STRONG ceil(80.4) = 81;
+     * STRONGER ceil(83.75) = 84. Strictly rising, which is the property the tiers exist for.
+     */
+    @Test
+    fun `partyMemberLevel matches getPartyLevels by hand at wave 100`() {
+        val levels = PartyMemberStrength.entries.map { curve.partyMemberLevel(100, it) }
+        assertEquals(listOf(65, 70, 79, 81, 84), levels)
+    }
+
+    @Test
+    fun `partyMemberLevel takes no boss multiplier and clamps to the band`() {
+        // Their getPartyLevels has no boss term — a boss trainer's step up is strength spread plus
+        // shields. And a deep wave clamps: base at 200 is 165, far past the cap.
+        assertEquals(
+            curve.partyMemberLevel(40, PartyMemberStrength.STRONGER),
+            WaveLevelCurve(bossMultiplier = 99.0).partyMemberLevel(40, PartyMemberStrength.STRONGER),
+        )
+        assertEquals(100, curve.partyMemberLevel(200, PartyMemberStrength.WEAKER))
     }
 
     @Test

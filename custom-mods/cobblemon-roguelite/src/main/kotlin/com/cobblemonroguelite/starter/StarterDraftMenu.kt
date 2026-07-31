@@ -23,6 +23,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.ItemLore
+import java.util.UUID
 
 /**
  * The starter draft: a server-side chest GUI for spending the §2.13 budget, opened by `/roguelite
@@ -67,6 +68,9 @@ object StarterDraftMenu {
     /** Row 0, far left: cycles [StarterDraftSort]. */
     private const val SORT_SLOT = 0
 
+    /** Row 0, beside the sort: shows or hides [StarterStatSheet] on every icon. */
+    private const val STATS_SLOT = 1
+
     /**
      * Row 0, far right: [StarterDraftMeter]'s five segments, filling towards the right-hand edge.
      *
@@ -101,7 +105,7 @@ object StarterDraftMenu {
         val container = SimpleContainer(SLOTS)
         player.openMenu(
             SimpleMenuProvider(
-                { syncId, inv, _ -> Impl(syncId, inv, container, catalogue) },
+                { syncId, inv, _ -> Impl(syncId, inv, container, catalogue, player.uuid) },
                 Component.literal("Choose your starters — ${catalogue.budget} points"),
             ),
         )
@@ -113,6 +117,9 @@ object StarterDraftMenu {
         inv: Inventory,
         private val container: Container,
         private val catalogue: StarterCatalogue,
+        /** Whose progression the stat sheets are read against — the IV floor and the hidden-ability
+         *  unlock are per player (§2.15, §2.17), so a shared sheet would show one player another's. */
+        private val viewer: UUID,
     ) : ChestMenu(MenuType.GENERIC_9x6, syncId, inv, container, ROWS) {
 
         /**
@@ -133,6 +140,26 @@ object StarterDraftMenu {
          * looking. Neither survives the window closing, and neither is worth persisting.
          */
         private var sort = StarterDraftSort.CHEAPEST
+
+        /**
+         * Whether icons carry their [StarterStatSheet].
+         *
+         * Default on: a player who does not know the panel exists will never press a button to find
+         * it, and the sheet is the difference between choosing on price and choosing on merit. Off is
+         * for the player who has learned the catalogue and wants the tooltip out of the way — the same
+         * reason PokéRogue's own panel has a toggle rather than being always-on.
+         */
+        private var showStats = true
+
+        /**
+         * Sheets built once per open, not once per paint.
+         *
+         * Painting touches thirty-six icons and every sheet is a species lookup plus two progression
+         * reads. None of the inputs can change while the window is open — the catalogue is captured,
+         * and the IV floor only moves when a run ends — so rebuilding them on every click would be
+         * work with no possible different answer.
+         */
+        private val sheets = mutableMapOf<ResourceLocation, StarterStatSheet?>()
 
         init {
             paint()
@@ -156,6 +183,10 @@ object StarterDraftMenu {
 
             when {
                 slotId == SORT_SLOT -> cycleSort()
+                slotId == STATS_SLOT -> {
+                    showStats = !showStats
+                    paint()
+                }
                 slotId in GRID_FIRST until GRID_FIRST + GRID_SLOTS -> toggleFromGrid(slotId - GRID_FIRST)
                 slotId in PICK_SLOTS -> removePick(PICK_SLOTS.indexOf(slotId))
                 slotId == PREVIOUS_SLOT -> turnTo(page - 1)
@@ -239,6 +270,7 @@ object StarterDraftMenu {
 
             val shown = currentPage()
             container.setItem(SORT_SLOT, sortIcon())
+            container.setItem(STATS_SLOT, statsToggleIcon())
             paintMeter()
             shown.options.forEachIndexed { index, option ->
                 container.setItem(GRID_FIRST + index, optionIcon(option))
@@ -258,6 +290,19 @@ object StarterDraftMenu {
             "§bSort: §f${sort.label}",
             listOf("§7Click to change.", "§8Next: ${sort.next().label}", "§8Order only — prices do not change."),
         )
+
+        private fun statsToggleIcon() = label(
+            if (showStats) Items.SPYGLASS else Items.GRAY_DYE,
+            if (showStats) "§bStats: §fshown" else "§8Stats: hidden",
+            listOf(
+                "§7Types, base stats, ability and growth",
+                "§7on every Pokémon in the grid.",
+                "§8Click to ${if (showStats) "hide" else "show"}.",
+            ),
+        )
+
+        private fun sheetFor(species: ResourceLocation): StarterStatSheet? =
+            sheets.getOrPut(species) { StarterStatSheets.of(viewer, species) }
 
         /**
          * The gauge, painted whether or not anything is spent.
@@ -297,6 +342,9 @@ object StarterDraftMenu {
             // the confirm button asks, so the grid cannot disagree with it.
             val takeable = picked || StarterSelection.validate(catalogue, picks + option.species) is StarterSelectionResult.Accepted
             val lore = mutableListOf("§7${option.cost} point(s)")
+            // Between the price and the verdict: the price is why you are looking, the sheet is what
+            // you look at, and "click to add" is the last line either way so it never moves.
+            if (showStats) sheetFor(option.species)?.let { lore += StarterStatLines.render(it) }
             lore += when {
                 picked -> "§aIn your draft (slot ${picks.indexOf(option.species) + 1}) — click to remove"
                 takeable -> "§aClick to add"
@@ -322,18 +370,15 @@ object StarterDraftMenu {
                 )
             }
             val cost = catalogue.costOf(species)
-            return label(
-                speciesIcon(species),
-                "§a${index + 1}. ${nameOf(species)}",
-                glint = true,
-                lore = listOf(
-                    "§7${cost ?: "?"} point(s)",
-                    // Said here rather than in a tooltip nobody reads: the draft order is the party
-                    // order, so slot 1 is the Pokémon that leads the first wave.
-                    if (index == 0) "§7Leads the first wave." else "§7Party slot ${index + 1}.",
-                    "§cClick to remove",
-                ),
-            )
+            val lore = mutableListOf("§7${cost ?: "?"} point(s)")
+            // The sheet again, so a player comparing their three picks against each other does not have
+            // to go back to the grid and find them.
+            if (showStats) sheetFor(species)?.let { lore += StarterStatLines.render(it) }
+            // Said here rather than in a tooltip nobody reads: the draft order is the party order, so
+            // slot 1 is the Pokémon that leads the first wave.
+            lore += if (index == 0) "§7Leads the first wave." else "§7Party slot ${index + 1}."
+            lore += "§cClick to remove"
+            return label(speciesIcon(species), "§a${index + 1}. ${nameOf(species)}", lore, glint = true)
         }
 
         private fun budgetIcon(): ItemStack {

@@ -8,6 +8,7 @@ import com.cobblemonroguelite.data.reward.RunReward
 import com.cobblemonroguelite.data.shop.ShopEntry
 import com.cobblemonroguelite.data.shop.ShopTables
 import com.cobblemonroguelite.run.RunCommands
+import com.cobblemonroguelite.run.RunPassive
 import com.cobblemonroguelite.run.RunState
 import com.cobblemonroguelite.run.RunStore
 import net.minecraft.core.component.DataComponents
@@ -455,7 +456,7 @@ object BetweenWaveMenu {
                         return
                     }
                     run.credits = result.remaining
-                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run, player, forgetMoveSlot)
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, granted))
                 }
@@ -483,7 +484,7 @@ object BetweenWaveMenu {
                         player.sendSystemMessage(ShopMessages.needsSlot(target.reason))
                         return
                     }
-                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run, player, forgetMoveSlot)
                     run.rewardTakenThisWave = true
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.taken(entryId, granted))
@@ -733,6 +734,14 @@ object BetweenWaveMenu {
             is RunReward.Mint -> cobblemon("${reward.nature.path}_mint", Items.SUGAR)
             is RunReward.AbilityPatch -> cobblemon("ability_patch", Items.NETHER_STAR)
             is RunReward.TechnicalMachine -> tmIcon(reward.move)
+            // The EXP Share is a real Cobblemon item, so its icon can be the thing itself; the charms
+            // have no item anywhere (they are PokéRogue UI art), so the closest honest stand-ins are
+            // the EXP candies, sized with the boost.
+            is RunReward.Passive -> when (reward.passive) {
+                RunPassive.EXP_SHARE -> cobblemon("exp_share", Items.AMETHYST_SHARD)
+                RunPassive.EXP_CHARM -> cobblemon("exp_candy_m", Items.EXPERIENCE_BOTTLE)
+                RunPassive.SUPER_EXP_CHARM -> cobblemon("exp_candy_xl", Items.EXPERIENCE_BOTTLE)
+            }
             // These two already name a real item, so they show it. Unchanged.
             is RunReward.BagItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.CHEST)
             is RunReward.HeldItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.PAPER)
@@ -782,6 +791,20 @@ object BetweenWaveMenu {
             is RunReward.BagItem -> "§7${reward.count}x ${reward.item.path} (bag)"
             is RunReward.HeldItem -> "§7Held item -> ${reward.item.path}"
             is RunReward.TechnicalMachine -> "§7Teaches ${reward.move}"
+            is RunReward.Passive -> describePassive(reward.passive)
+        }
+
+        /**
+         * Built from the passive's own numbers rather than hand-written per kind, so a tuning change
+         * in [RunPassive] cannot leave this lore describing the old effect.
+         */
+        private fun describePassive(passive: RunPassive): String {
+            val effect = when {
+                passive.expBoostPctPerStack > 0 -> "+${passive.expBoostPctPerStack}% battle EXP per rank"
+                passive.sharePctPerStack > 0 -> "party shares ${passive.sharePctPerStack}% of EXP per rank"
+                else -> "run passive"
+            }
+            return "§7${passive.displayName}: $effect (whole team, all run)"
         }
 
         private fun signed(amount: Int) = if (amount >= 0) "+$amount" else "$amount"

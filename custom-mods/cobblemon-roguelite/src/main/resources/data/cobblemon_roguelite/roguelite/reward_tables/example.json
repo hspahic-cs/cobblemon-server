@@ -63,6 +63,13 @@
       "tier": "rare",
       "weight": 1,
       "reward": { "type": "move", "move": "flamethrower" }
+    },
+    {
+      "id": "example_passive",
+      "tier": "rare",
+      "weight": 1,
+      "_reward": "A run passive: one stack of a team-wide buff that lasts the whole run. Valid names: exp_charm, super_exp_charm, exp_share.",
+      "reward": { "type": "passive", "passive": "exp_charm" }
     }
   ]
 }

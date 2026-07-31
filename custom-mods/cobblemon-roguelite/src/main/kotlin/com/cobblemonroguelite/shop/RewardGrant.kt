@@ -47,19 +47,25 @@ object RewardGrant {
      * alternative is worse, because granting first means a crash between grant and charge is a free
      * item, and an item that cannot be granted is an operator error a refund would hide.
      */
-    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = when (target) {
+    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, run: com.cobblemonroguelite.run.RunState, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = when (target) {
         is RewardTarget.Unresolved -> GrantResult.Failed(target.reason)
 
-        // Party-wide is only ever a bag item today ([RewardTargeting.needsMember]), and a bag item does
-        // not touch a Pokémon at all — so this branch is about the run, not the party.
+        // Party-wide is a bag item or a passive ([RewardTargeting.needsMember]), and neither touches
+        // a Pokémon at all — so this branch is about the run, not the party.
         RewardTarget.WholeParty -> when (reward) {
-            is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
+            is RunReward.BagItem -> grantBagItem(reward, player, run.seed)
+            is RunReward.Passive -> grantPassive(reward, run)
             else -> GrantResult.Failed("reward ${reward::class.simpleName} needs a party member")
         }
 
         is RewardTarget.Member -> {
             val pokemon = party.getOrNull(target.index)
-            if (pokemon == null) {
+            if (reward is RunReward.Passive) {
+                // Legal input, same rule as a bag item aimed at a member: [RewardTargeting] ignores a
+                // slot on a party-wide reward, so a caller that resolved a member anyway still means
+                // the run-wide grant.
+                grantPassive(reward, run)
+            } else if (pokemon == null) {
                 // Reachable if the party shrank between targeting and applying — a faint that emptied a
                 // slot, or a swap-or-release resolved in between.
                 GrantResult.Failed("party slot ${target.index + 1} is no longer there")
@@ -73,7 +79,7 @@ object RewardGrant {
                     "${pokemon.species.name} is not part of this run — rewards can only go to run Pokémon",
                 )
             } else {
-                applyToMember(reward, pokemon, runSeed, player, forgetMoveSlot)
+                applyToMember(reward, pokemon, run.seed, player, forgetMoveSlot)
             }
         }
     }
@@ -89,6 +95,9 @@ object RewardGrant {
             // A bag item targeted at a member: legal input, since [RewardTargeting] ignores a slot on a
             // party-wide reward, so treat it as the bag grant it is rather than refusing.
             is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
+            // Unreachable — apply() routes passives before resolving a member — but the `when` has to
+            // say something, and "needs no member" is at least true.
+            is RunReward.Passive -> GrantResult.Failed("a passive is run-wide and never targets a member")
         }
     }.getOrElse { failure ->
         log.warn("roguelite: granting {} to {} threw", reward, pokemon.species.resourceIdentifier, failure)
@@ -254,6 +263,28 @@ object RewardGrant {
         val stack = com.cobblemonroguelite.run.RunItems.mark(ItemStack(item, count), runSeed)
         if (!player.inventory.add(stack)) player.drop(stack, false)
         return GrantResult.Ok("${count}x ${item.description.string} added to your run bag")
+    }
+
+    /**
+     * One stack of a §2.43 passive onto [com.cobblemonroguelite.run.RunState.passiveStacks].
+     *
+     * The cap is each kind's PokéRogue max ([com.cobblemonroguelite.run.RunPassive.maxStacks]), and
+     * hitting it is [GrantResult.NoEffect] — nothing is broken, the player simply owns the whole
+     * stack already. The Ok message states the new rank against the cap because a permanent,
+     * invisible buff has exactly one moment of feedback: this line.
+     *
+     * The caller checkpoints the run after a grant (all the shop paths already do), which is what
+     * carries the stack across a relog — the map rides [RunState.toNbt] like credits do.
+     */
+    private fun grantPassive(reward: RunReward.Passive, run: com.cobblemonroguelite.run.RunState): GrantResult {
+        val passive = reward.passive
+        val current = run.passiveStacks[passive.id] ?: 0
+        val now = com.cobblemonroguelite.run.RunPassive.stackAfterGrant(current, passive)
+            ?: return GrantResult.NoEffect(
+                "${passive.displayName} is already at its maximum rank (${passive.maxStacks})",
+            )
+        run.passiveStacks[passive.id] = now
+        return GrantResult.Ok("${passive.displayName} is now rank $now/${passive.maxStacks} — it lasts the whole run")
     }
 
     private fun unresolved(kind: String, id: String): GrantResult {

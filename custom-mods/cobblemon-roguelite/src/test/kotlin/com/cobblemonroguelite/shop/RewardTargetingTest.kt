@@ -45,6 +45,15 @@ class RewardTargetingTest {
     }
 
     @Test
+    fun `a passive is party-wide because §2_43's buffs are team-wide by definition`() {
+        val passive = RunReward.Passive(com.cobblemonroguelite.run.RunPassive.EXP_CHARM)
+        assertTrue(!RewardTargeting.needsMember(passive), "a passive should not need a slot")
+        // A chosen slot on a passive is ignored, not refused — the player asked for something
+        // coherent and named a member that does not change the outcome (same rule as bag items).
+        assertEquals(RewardTarget.WholeParty, RewardTargeting.resolve(passive, chosenSlot = 2, partySize = 3))
+    }
+
+    @Test
     fun `a per-Pokemon reward with no slot chosen is refused, not applied to the lead`() {
         // Defaulting to the lead is the tempting shortcut: a player who meant to patch their sweeper
         // would silently patch whatever was first, and would only find out much later.

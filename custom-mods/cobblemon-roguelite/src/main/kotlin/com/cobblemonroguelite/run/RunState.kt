@@ -4,6 +4,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.arena.ArenaBuild
 import net.minecraft.core.RegistryAccess
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.item.ItemStack
 import net.minecraft.nbt.ListTag
 import net.minecraft.resources.ResourceLocation
 import org.slf4j.LoggerFactory
@@ -135,6 +136,14 @@ data class RunState(
     var wave: Int = 1,
     val party: MutableList<Pokemon> = mutableListOf(),
     var credits: Int = 0,
+
+    /**
+     * §2.11's run bag: every ItemStack the run has granted and the player is not currently holding
+     * live — captured at each arena exit (isolation design X1) and reinstalled at the next entry.
+     * Marked stacks only ([com.cobblemonroguelite.run.RunItems]); dies with the run like [credits]
+     * (§2.35). Server thread only, like everything else the wave step touches.
+     */
+    val runBag: MutableList<ItemStack> = mutableListOf(),
     /**
      * How many times the free reward offer has been rerolled **on the current wave**, and whether the
      * one free option has already been taken.
@@ -317,6 +326,13 @@ data class RunState(
         tag.putInt("rerollsThisWave", rerollsThisWave)
         tag.putBoolean("rewardTakenThisWave", rewardTakenThisWave)
         tag.putLong("seed", seed)
+        // Absent and empty mean the same thing (the trainerMemory argument), so no schema bump: an
+        // old save reads back as an empty bag, which is also what it was.
+        if (runBag.isNotEmpty()) {
+            val bag = ListTag()
+            runBag.forEach { stack -> bag.add(stack.save(registryAccess)) }
+            tag.put("runBag", bag)
+        }
         tag.putInt("bossesCleared", bossesCleared)
         payoutTable?.let { tag.putString("payoutTable", it.toString()) }
         trainerRoster?.let { tag.putString("trainerRoster", it.toString()) }
@@ -437,6 +453,14 @@ data class RunState(
                 rerollsThisWave = tag.getInt("rerollsThisWave"),
                 rewardTakenThisWave = tag.getBoolean("rewardTakenThisWave"),
                 seed = tag.getLong("seed"),
+                runBag = tag.getList("runBag", 10 /* TAG_COMPOUND */).mapNotNull { element ->
+                    // parse() over raw errors: an unreadable bag stack (mod removed mid-run) is
+                    // dropped WITH a log line — run property, so dropping is legal, and quieter than
+                    // discarding the whole run over a consumable.
+                    ItemStack.parse(registryAccess, element).orElse(null).also {
+                        if (it == null) log.warn("roguelite: dropping unreadable run-bag stack from checkpoint")
+                    }
+                }.toMutableList(),
                 bossesCleared = tag.getInt("bossesCleared"),
                 // An unparseable id restores as null rather than failing the run: null falls back to
                 // the default table at payout, which is a table the player might still be paid from,

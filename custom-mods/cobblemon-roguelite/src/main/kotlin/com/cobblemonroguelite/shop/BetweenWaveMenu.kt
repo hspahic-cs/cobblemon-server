@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.shop
 
+import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.data.reward.RewardEntry
 import com.cobblemonroguelite.data.reward.RewardTables
@@ -13,6 +14,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.Style
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
@@ -68,10 +70,28 @@ object BetweenWaveMenu {
     private const val ROWS = 6
     private const val SLOTS = ROWS * 9
 
-    /** Row 0 is the paid row, left-aligned; slot 8 is the credit counter. */
+    /** Row 0 holds the paid row, centred; slot 8 is the money counter. */
     private const val CREDITS_SLOT = 8
     private const val SHOP_FIRST = 0
     private const val SHOP_LAST = 6
+
+    /**
+     * Where a row of [count] items sits so it reads as centred rather than as a row that ran out.
+     *
+     * Left-aligned, three items in a seven-slot row looked like four slots had failed to load — the eye
+     * reads a ragged right edge as missing content, not as space. The free options below have always
+     * been centred (20/22/24), so this also stops the two halves of §2.12 disagreeing about where the
+     * middle of the screen is.
+     *
+     * Centred within [SHOP_FIRST]..[SHOP_LAST] and never past it: the counter lives at slot 8 and a row
+     * that grew into it would paint over the one number the player is spending against.
+     */
+    private fun shopSlotsFor(count: Int): List<Int> {
+        val span = SHOP_LAST - SHOP_FIRST + 1
+        val shown = count.coerceIn(0, span)
+        val start = SHOP_FIRST + (span - shown) / 2
+        return (start until start + shown).toList()
+    }
 
     /** Row 2, centred: the three free options. A fourth would need this list extending. */
     private val OFFER_SLOTS = listOf(20, 22, 24)
@@ -170,7 +190,11 @@ object BetweenWaveMenu {
         // ------------------------------------------------------------------ actions
 
         private fun beginShop(player: ServerPlayer, slotId: Int) {
-            val entry = stock().getOrNull(slotId - SHOP_FIRST) ?: return
+            // Indexed through the same centring the paint uses, not by subtracting SHOP_FIRST. That
+            // subtraction was correct only while the row was left-aligned, and would now buy whichever
+            // item happened to sit that many slots from the edge.
+            val stocked = stock().take(SHOP_LAST - SHOP_FIRST + 1)
+            val entry = shopSlotsFor(stocked.size).indexOf(slotId).takeIf { it >= 0 }?.let(stocked::get) ?: return
             // Affordability is checked by ShopStock.buy, not here. Checking twice is how the GUI and the
             // command start disagreeing, and this copy is the one no test covers.
             val needsMember = RewardTargeting.needsMember(entry.reward)
@@ -293,8 +317,9 @@ object BetweenWaveMenu {
 
             container.setItem(CREDITS_SLOT, creditsIcon())
 
-            stock().take(SHOP_LAST - SHOP_FIRST + 1).forEachIndexed { index, entry ->
-                container.setItem(SHOP_FIRST + index, shopIcon(entry))
+            val stocked = stock().take(SHOP_LAST - SHOP_FIRST + 1)
+            shopSlotsFor(stocked.size).forEachIndexed { index, slot ->
+                container.setItem(slot, shopIcon(stocked[index]))
             }
 
             val waiting = pending
@@ -392,15 +417,44 @@ object BetweenWaveMenu {
          * more than consistency — with a paper fallback when it is not installed.
          */
         private fun iconFor(reward: RunReward): Item = when (reward) {
-            is RunReward.Evs -> Items.POTION
-            is RunReward.Levels -> Items.EXPERIENCE_BOTTLE
-            is RunReward.Mint -> Items.SUGAR
-            is RunReward.AbilityPatch -> Items.NETHER_STAR
-            is RunReward.BagItem -> Items.CHEST
-            is RunReward.TechnicalMachine -> Items.ENCHANTED_BOOK
-            is RunReward.HeldItem ->
-                BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.PAPER)
+            // The vitamin that actually raises that stat, so the icon IS the thing rather than a
+            // generic potion six times over.
+            is RunReward.Evs -> cobblemon(
+                when (reward.stat) {
+                    Stats.HP -> "hp_up"
+                    Stats.ATTACK -> "protein"
+                    Stats.DEFENCE -> "iron"
+                    Stats.SPECIAL_ATTACK -> "calcium"
+                    Stats.SPECIAL_DEFENCE -> "zinc"
+                    Stats.SPEED -> "carbos"
+                    else -> "hp_up"
+                },
+                Items.POTION,
+            )
+
+            is RunReward.Levels -> cobblemon("rare_candy", Items.EXPERIENCE_BOTTLE)
+            // The mint for that exact nature — `adamant_mint`, `jolly_mint` and so on — falling back to
+            // the generic sugar only if a nature has no mint on this server.
+            is RunReward.Mint -> cobblemon("${reward.nature.path}_mint", Items.SUGAR)
+            is RunReward.AbilityPatch -> cobblemon("ability_patch", Items.NETHER_STAR)
+            is RunReward.TechnicalMachine -> cobblemon("tm_case", Items.ENCHANTED_BOOK)
+            // These two already name a real item, so they show it. Unchanged.
+            is RunReward.BagItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.CHEST)
+            is RunReward.HeldItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.PAPER)
         }
+
+        /**
+         * A Cobblemon item by path, or [fallback] when this server does not have it.
+         *
+         * The fallback is not defensive noise: these are ids resolved at runtime against whatever
+         * Cobblemon version is installed, and an id that has been renamed would otherwise resolve to
+         * air — an invisible, unclickable-looking button. Falling back to the vanilla stand-in the
+         * screen used before means a renamed item degrades to the old icon rather than to nothing.
+         */
+        private fun cobblemon(path: String, fallback: Item): Item =
+            BuiltInRegistries.ITEM
+                .getOptional(ResourceLocation.fromNamespaceAndPath("cobblemon", path))
+                .orElse(fallback)
 
         private fun describe(reward: RunReward): String = when (reward) {
             is RunReward.Evs -> "§7${signed(reward.amount)} ${reward.stat.identifier.path} EVs"

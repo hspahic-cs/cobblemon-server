@@ -84,6 +84,19 @@ object BetweenWaveMenu {
     private val PARTY_SLOTS = (27..32).toList()
 
     /**
+     * Rows 1 and 4, drawn as solid bars.
+     *
+     * The screen was mostly holes — three items in a row of seven, three options adrift in the middle,
+     * and two whole empty rows — which reads as a menu that failed to load rather than as a menu with
+     * space in it. Filling the gaps is half the fix; the other half is that these two rows are not
+     * decoration. They sit exactly on §2.12's seam: everything above the first bar is PAID and drawn
+     * from your money, everything between the bars is the FREE pick, and the bottom bar separates both
+     * from the actions. That split is the whole design of the step and until now nothing on screen
+     * said so.
+     */
+    private val DIVIDER_ROWS = ((9..17) + (36..44)).toList()
+
+    /**
      * Open the screen for [player], or do nothing if they have no run.
      *
      * Called both by the command (`/roguelite shop`) and automatically on a cleared wave, which is the
@@ -274,6 +287,9 @@ object BetweenWaveMenu {
         /** Repaint in place. Cheaper than reopening, and it keeps the window from flickering shut. */
         private fun paint() {
             for (slot in 0 until SLOTS) container.setItem(slot, ItemStack.EMPTY)
+            // Painted first so every real button overwrites it, which means a slot that gains a purpose
+            // later cannot be silently covered by filler.
+            DIVIDER_ROWS.forEach { container.setItem(it, divider()) }
 
             container.setItem(CREDITS_SLOT, creditsIcon())
 
@@ -294,8 +310,29 @@ object BetweenWaveMenu {
                 container.setItem(REROLL_SLOT, rerollIcon())
                 container.setItem(CONTINUE_SLOT, continueIcon())
             }
+            // Last: anything still empty becomes background. A chest slot with nothing in it reads as
+            // a slot you could put something into — which on a menu where every click is a button is
+            // exactly the wrong invitation.
+            for (slot in 0 until SLOTS) {
+                if (container.getItem(slot).isEmpty) container.setItem(slot, background())
+            }
             broadcastChanges()
         }
+
+        /** The seam between the paid half and the free one. */
+        private fun divider() = blank(Items.CYAN_STAINED_GLASS_PANE)
+
+        /** Everything else that would otherwise be a hole. */
+        private fun background() = blank(Items.GRAY_STAINED_GLASS_PANE)
+
+        /**
+         * A pane with no name and no lore.
+         *
+         * The name is a single space rather than empty: an empty custom name makes the client fall back
+         * to the item's own name, so the screen would be captioned "Gray Stained Glass Pane" nine times
+         * over on hover.
+         */
+        private fun blank(item: Item): ItemStack = label(item, " ", emptyList())
 
         private fun creditsIcon() = label(
             Items.GOLD_NUGGET,

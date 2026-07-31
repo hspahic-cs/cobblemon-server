@@ -1,6 +1,7 @@
 package com.cobblemonroguelite.shop
 
 import com.cobblemonroguelite.integration.RunOpponent
+import kotlin.math.ceil
 
 /**
  * What a cleared wave pays, and what the between-wave shop charges for the privilege of caring.
@@ -150,12 +151,19 @@ data class ShopRules(
      * Null by default, because a price is a balance decision and a mode that ships with rerolling
      * priced by guesswork is worse than one where it is switched off until somebody chooses a number.
      */
-    val rerollCost: Int? = null,
+    /**
+     * The reroll's base price, or null to disable rerolling entirely.
+     *
+     * 250 is PokéRogue's, and it is deliberately not cheap: it is priced against the wave curve such
+     * that an early reroll is a real fraction of what a trainer wave pays.
+     */
+    val rerollCost: Int? = 250,
     /**
      * Multiplier applied per reroll already taken *this wave*, in hundredths. 150 means each reroll
      * costs half again as much as the last, which is what stops a large balance buying the whole table.
      */
-    val rerollGrowthHundredths: Int = 150,
+    /** 200 = doubling per reroll, which is theirs. See [rerollPrice] for why exponential. */
+    val rerollGrowthHundredths: Int = 200,
     /**
      * Added to the reroll price per wave of depth, in hundredths of a credit.
      *
@@ -163,7 +171,8 @@ data class ShopRules(
      * Without this the reroll becomes free in real terms as earnings grow — the same failure
      * [ShopEntry.priceCurve] exists to prevent on the paid row.
      */
-    val rerollPerWaveHundredths: Int = 2500,
+    /** Waves per price step — the reroll costs the same across a block of this many. Their 10. */
+    val rerollBlockLength: Int = 10,
 
     /**
      * The shop is shut on every wave that is a multiple of this. 10 is §2.19's boss cadence and
@@ -192,10 +201,28 @@ data class ShopRules(
      * dearer than a second reroll early — the two scalings compound, which is what keeps rerolling from
      * becoming the default action once credits are plentiful.
      */
+    /**
+     * What the next reroll costs, or null when rerolling is disabled.
+     *
+     * PokéRogue's shape: `ceil(wave / 10) × base × 2^rerolls`. Two deliberate properties in that.
+     *
+     * **The depth term steps per block, not per wave.** A reroll costs the same across waves 11–20 and
+     * then steps, which makes it a decision about *where you are in the run* rather than a number that
+     * creeps every single wave. Ours ramped per wave, so the price was never twice the same and could
+     * never be learned.
+     *
+     * **The growth is doubling.** One reroll is a shrug, two is a real cost, three is a statement — an
+     * exponential is what makes "reroll again?" a genuine question every time rather than a tax that
+     * scales gently enough to always pay. See `docs/roguelite-economy-reference.md`.
+     */
     fun rerollPrice(taken: Int, wave: Int = 1): Int? {
         val base = rerollCost ?: return null
-        val withDepth = base + (wave.coerceAtLeast(1) - 1).toLong() * rerollPerWaveHundredths / HUNDREDTHS
-        var price = withDepth.coerceAtLeast(base.toLong())
+        val block = ceil(wave.coerceAtLeast(1).toDouble() / rerollBlockLength).toLong().coerceAtLeast(1)
+        // The un-grown price for this block, and the floor below. A growth multiplier of 100 is "no
+        // growth" and 50 would be "each reroll is half price", which makes rerolling free in practice —
+        // the floor keeps that misconfiguration merely pointless instead of exploitable.
+        val floor = block * base
+        var price = floor
         repeat(taken.coerceAtLeast(0)) {
             price = price * rerollGrowthHundredths / HUNDREDTHS
             // A growth multiplier of 100 or less would make rerolls free-or-cheaper forever, and an
@@ -203,7 +230,7 @@ data class ShopRules(
             // rather than exploitable.
             if (price > MAX_PRICE) return MAX_PRICE.toInt()
         }
-        return price.coerceAtLeast(withDepth).toInt()
+        return price.coerceIn(floor, MAX_PRICE).toInt()
     }
 
     private companion object {

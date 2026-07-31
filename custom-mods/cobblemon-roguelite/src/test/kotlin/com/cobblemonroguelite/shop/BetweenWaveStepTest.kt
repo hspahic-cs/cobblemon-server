@@ -110,13 +110,19 @@ class RewardOfferTest {
     // --- rerolls ---------------------------------------------------------------------------------
 
     @Test
-    fun `rerolling is disabled until the server prices it`() {
+    fun `rerolling ships enabled, and a null price still turns it off`() {
+        // It used to be disabled until a host mod priced it, and nothing ever did — so the between-wave
+        // step shipped without a mechanic PokéRogue treats as core, and no server could switch it on
+        // without code. The default is now theirs; null remains the off switch.
+        assertIs<RerollResult.Ok>(RewardOffer.reroll(credits = 9999, rerollsTaken = 0, wave = 1))
+
+        ShopSettings.shop = ShopRules(rerollCost = null)
         assertEquals(RerollResult.Disabled, RewardOffer.reroll(credits = 9999, rerollsTaken = 0, wave = 1))
     }
 
     @Test
     fun `each reroll this wave costs more than the last`() {
-        ShopSettings.shop = ShopRules(rerollCost = 100, rerollGrowthHundredths = 150, rerollPerWaveHundredths = 0)
+        ShopSettings.shop = ShopRules(rerollCost = 100, rerollGrowthHundredths = 150)
         val prices = (0..3).map { assertIs<RerollResult.Ok>(RewardOffer.reroll(99_999, it, 1)).price }
         assertEquals(listOf(100, 150, 225, 337), prices)
     }
@@ -125,11 +131,17 @@ class RewardOfferTest {
     fun `rerolling costs more deeper into the run`() {
         // Theirs is 250 early and 750 by wave 21. Without depth scaling the reroll becomes free in real
         // terms as earnings grow — the same failure the paid row's price curve prevents.
-        ShopSettings.shop = ShopRules(rerollCost = 250, rerollPerWaveHundredths = 2500)
+        ShopSettings.shop = ShopRules(rerollCost = 250)
         val early = assertIs<RerollResult.Ok>(RewardOffer.reroll(99_999, 0, wave = 1)).price
         val deep = assertIs<RerollResult.Ok>(RewardOffer.reroll(99_999, 0, wave = 21)).price
         assertEquals(250, early)
-        assertTrue(deep > early, "wave 21 reroll $deep should cost more than wave 1's $early")
+        // Exactly theirs now rather than merely "more": ceil(21/10) x 250.
+        assertEquals(750, deep)
+
+        // And it steps per block rather than per wave, so a price can be learned.
+        val elevenToTwenty = (11..20).map { assertIs<RerollResult.Ok>(RewardOffer.reroll(99_999, 0, it)).price }
+        assertEquals(1, elevenToTwenty.distinct().size, "reroll price moved within a block: $elevenToTwenty")
+        assertEquals(500, elevenToTwenty.first())
     }
 
     @Test

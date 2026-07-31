@@ -64,7 +64,19 @@ object StarterDraftMenu {
     private const val ROWS = 6
     private const val SLOTS = ROWS * 9
 
-    /** Rows 0–4. Kept as one number with [StarterDraftPaging.PER_PAGE] so they cannot disagree. */
+    /** Row 0, far left: cycles [StarterDraftSort]. */
+    private const val SORT_SLOT = 0
+
+    /**
+     * Row 0, far right: [StarterDraftMeter]'s five segments, filling towards the right-hand edge.
+     *
+     * Right-aligned rather than centred so the bar ends where the eye already goes for a "how full"
+     * reading, and so the sort button at the other end of the row is never mistaken for part of it.
+     */
+    private val METER_SLOTS = listOf(4, 5, 6, 7, 8)
+
+    /** Rows 1–4, full width. Kept as one number with [StarterDraftPaging.PER_PAGE] so they cannot disagree. */
+    private const val GRID_FIRST = 9
     private const val GRID_SLOTS = StarterDraftPaging.PER_PAGE
 
     /** Row 5, left to right: page back, the picks, the budget, confirm, page forward. */
@@ -114,6 +126,14 @@ object StarterDraftMenu {
 
         private var page = 0
 
+        /**
+         * The grid's order. A view, not a rule — see [StarterDraftSort].
+         *
+         * Held on the menu next to [page] because it is the same kind of thing: where the player is
+         * looking. Neither survives the window closing, and neither is worth persisting.
+         */
+        private var sort = StarterDraftSort.CHEAPEST
+
         init {
             paint()
         }
@@ -135,7 +155,8 @@ object StarterDraftMenu {
             if (button != 0 || (clickType != ClickType.PICKUP && clickType != ClickType.QUICK_MOVE)) return
 
             when {
-                slotId < GRID_SLOTS -> toggleFromGrid(slotId)
+                slotId == SORT_SLOT -> cycleSort()
+                slotId in GRID_FIRST until GRID_FIRST + GRID_SLOTS -> toggleFromGrid(slotId - GRID_FIRST)
                 slotId in PICK_SLOTS -> removePick(PICK_SLOTS.indexOf(slotId))
                 slotId == PREVIOUS_SLOT -> turnTo(page - 1)
                 slotId == NEXT_SLOT -> turnTo(page + 1)
@@ -145,8 +166,21 @@ object StarterDraftMenu {
 
         // ------------------------------------------------------------------ actions
 
-        private fun toggleFromGrid(slotId: Int) {
-            val option = currentPage().options.getOrNull(slotId) ?: return
+        /**
+         * Re-sort, and go back to page 1.
+         *
+         * Staying on page 7 of a list that has just been reordered shows a screenful the player has no
+         * way to relate to what they clicked. The point of sorting is to bring something to the front,
+         * so the front is where it puts you.
+         */
+        private fun cycleSort() {
+            sort = sort.next()
+            page = 0
+            paint()
+        }
+
+        private fun toggleFromGrid(index: Int) {
+            val option = currentPage().options.getOrNull(index) ?: return
             // Clicking a picked species un-picks it, wherever it is clicked from. The alternative —
             // only the pick row removes — makes a player hunt for the slot they used, and the grid is
             // where their cursor already is.
@@ -195,13 +229,20 @@ object StarterDraftMenu {
 
         // ------------------------------------------------------------------ painting
 
-        private fun currentPage(): StarterDraftPage = StarterDraftPaging.pageAt(catalogue.options, page)
+        private fun currentPage(): StarterDraftPage =
+            StarterDraftPaging.pageAt(sort.sort(catalogue.options), page)
+
+        private fun spent(): Int = picks.sumOf { catalogue.costOf(it) ?: 0 }
 
         private fun paint() {
             for (slot in 0 until SLOTS) container.setItem(slot, ItemStack.EMPTY)
 
             val shown = currentPage()
-            shown.options.forEachIndexed { index, option -> container.setItem(index, optionIcon(option)) }
+            container.setItem(SORT_SLOT, sortIcon())
+            paintMeter()
+            shown.options.forEachIndexed { index, option ->
+                container.setItem(GRID_FIRST + index, optionIcon(option))
+            }
 
             PICK_SLOTS.forEachIndexed { index, slot -> container.setItem(slot, pickIcon(picks.getOrNull(index), index)) }
 
@@ -212,6 +253,44 @@ object StarterDraftMenu {
             broadcastChanges()
         }
 
+        private fun sortIcon() = label(
+            Items.HOPPER,
+            "§bSort: §f${sort.label}",
+            listOf("§7Click to change.", "§8Next: ${sort.next().label}", "§8Order only — prices do not change."),
+        )
+
+        /**
+         * The gauge, painted whether or not anything is spent.
+         *
+         * An unlit bar of grey panes is the empty state rather than five blank slots: a meter that only
+         * appears once you have spent something is a meter nobody learns to read.
+         */
+        private fun paintMeter() {
+            val spent = spent()
+            val lit = StarterDraftMeter.filled(spent, catalogue.budget)
+            METER_SLOTS.forEachIndexed { index, slot ->
+                val on = index < lit
+                val zone = StarterDraftMeter.zoneOf(index)
+                val item = when {
+                    !on -> Items.LIGHT_GRAY_STAINED_GLASS_PANE
+                    zone == StarterDraftMeter.Zone.GREEN -> Items.LIME_STAINED_GLASS_PANE
+                    zone == StarterDraftMeter.Zone.AMBER -> Items.YELLOW_STAINED_GLASS_PANE
+                    else -> Items.RED_STAINED_GLASS_PANE
+                }
+                container.setItem(
+                    slot,
+                    label(
+                        item,
+                        "§f$spent §7of §f${catalogue.budget}§7 point(s) used",
+                        listOf(
+                            "§7${catalogue.budget - spent} left to spend.",
+                            "§8The bar fills as you pick; red is the last of it.",
+                        ),
+                    ),
+                )
+            }
+        }
+
         private fun optionIcon(option: StarterOption): ItemStack {
             val picked = option.species in picks
             // The validator, not a budget subtraction. See the class comment: this is the same question
@@ -219,13 +298,19 @@ object StarterDraftMenu {
             val takeable = picked || StarterSelection.validate(catalogue, picks + option.species) is StarterSelectionResult.Accepted
             val lore = mutableListOf("§7${option.cost} point(s)")
             lore += when {
-                picked -> "§aPicked — click to remove"
+                picked -> "§aIn your draft (slot ${picks.indexOf(option.species) + 1}) — click to remove"
                 takeable -> "§aClick to add"
                 picks.size >= StarterSelection.MAX_STARTERS -> "§8Draft is full"
                 else -> "§cNot enough points left"
             }
             val colour = if (picked) "§a" else if (takeable) "§f" else "§8"
-            return label(speciesIcon(option.species), "$colour${nameOf(option.species)}", lore)
+            // Two markers for one state, because a chest slot has nothing to draw a border on and no way
+            // to tint the square itself. The enchantment glint is what carries at a glance across a grid
+            // of thirty-six; the tick and the green name are what is left on a client whose resource pack
+            // suppresses glint, and they read without relying on colour. A stack count was the obvious
+            // third and does not work: vanilla hides a count of 1, so the first pick would show nothing.
+            val name = if (picked) "$colour✔ ${nameOf(option.species)}" else "$colour${nameOf(option.species)}"
+            return label(speciesIcon(option.species), name, lore, glint = picked)
         }
 
         private fun pickIcon(species: ResourceLocation?, index: Int): ItemStack {
@@ -240,7 +325,8 @@ object StarterDraftMenu {
             return label(
                 speciesIcon(species),
                 "§a${index + 1}. ${nameOf(species)}",
-                listOf(
+                glint = true,
+                lore = listOf(
                     "§7${cost ?: "?"} point(s)",
                     // Said here rather than in a tooltip nobody reads: the draft order is the party
                     // order, so slot 1 is the Pokémon that leads the first wave.
@@ -251,7 +337,7 @@ object StarterDraftMenu {
         }
 
         private fun budgetIcon(): ItemStack {
-            val spent = picks.sumOf { catalogue.costOf(it) ?: 0 }
+            val spent = spent()
             return label(
                 Items.GOLD_NUGGET,
                 "§e${catalogue.budget - spent} of ${catalogue.budget} point(s) left",
@@ -316,15 +402,19 @@ object StarterDraftMenu {
         private fun nameOf(species: ResourceLocation): String =
             runCatching { PokemonSpecies.getByIdentifier(species)?.name }.getOrNull() ?: species.path
 
-        private fun label(icon: ItemStack, name: String, lore: List<String>): ItemStack {
+        private fun label(icon: ItemStack, name: String, lore: List<String>, glint: Boolean = false): ItemStack {
             val stack = if (icon.isEmpty) ItemStack(Items.PAPER) else icon
             stack.set(DataComponents.CUSTOM_NAME, line(name))
             stack.set(DataComponents.LORE, ItemLore(lore.map { line(it) as Component }))
+            // Set explicitly either way rather than only when true: these stacks are rebuilt per paint,
+            // but PokemonItem.from is free to hand back something already carrying components, and an
+            // un-picked species that glinted would be the same bug as a picked one that did not.
+            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, glint)
             return stack
         }
 
-        private fun label(item: Item, name: String, lore: List<String>): ItemStack =
-            label(ItemStack(item), name, lore)
+        private fun label(item: Item, name: String, lore: List<String>, glint: Boolean = false): ItemStack =
+            label(ItemStack(item), name, lore, glint)
 
         /** Italics off, the way every other menu in this repo builds a label. */
         private fun line(text: String): MutableComponent =

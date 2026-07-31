@@ -63,11 +63,13 @@ class StarterDraftPagingTest {
 
     @Test
     fun `a page index past the end clamps to the last page rather than throwing`() {
-        val all = options(100)
+        // Sized off PER_PAGE rather than off a literal: this test is about the clamp, and it should not
+        // start failing the next time a row is given to the header.
+        val all = options(StarterDraftPaging.PER_PAGE * 2 + 3)
         val page = StarterDraftPaging.pageAt(all, 99)
         assertEquals(2, page.index)
         assertEquals(3, page.pageCount)
-        assertEquals(all.drop(90), page.options)
+        assertEquals(all.takeLast(3), page.options)
     }
 
     @Test
@@ -75,6 +77,89 @@ class StarterDraftPagingTest {
         val page = StarterDraftPaging.pageAt(options(100), -4)
         assertEquals(0, page.index)
         assertFalse(page.hasPrevious)
+    }
+
+    @Test
+    fun `sorting is a permutation, so no mode can hide a species`() {
+        // The whole risk of a view over the catalogue: a comparator that drops or duplicates an entry
+        // would take a species out of the draft without anything refusing it.
+        val all = options(50)
+        StarterDraftSort.entries.forEach { mode ->
+            assertEquals(all.toSet(), mode.sort(all).toSet(), "$mode changed the contents")
+            assertEquals(all.size, mode.sort(all).size, "$mode changed the size")
+        }
+    }
+
+    @Test
+    fun `each sort mode orders by the thing it is named after`() {
+        val all = options(20).shuffled(kotlin.random.Random(7))
+
+        assertEquals(
+            all.map { it.cost }.sorted(),
+            StarterDraftSort.CHEAPEST.sort(all).map { it.cost },
+        )
+        assertEquals(
+            all.map { it.cost }.sortedDescending(),
+            StarterDraftSort.COSTLIEST.sort(all).map { it.cost },
+        )
+        assertEquals(
+            all.map { it.species.path }.sorted(),
+            StarterDraftSort.ALPHABETICAL.sort(all).map { it.species.path },
+        )
+    }
+
+    @Test
+    fun `equal costs are broken by id, so a repaint cannot reshuffle the grid`() {
+        val flat = listOf("charmander", "bulbasaur", "squirtle").map {
+            StarterOption(ResourceLocation.fromNamespaceAndPath("cobblemon", it), 5)
+        }
+        val once = StarterDraftSort.CHEAPEST.sort(flat)
+        assertEquals(once, StarterDraftSort.CHEAPEST.sort(flat.reversed()))
+        assertEquals(listOf("bulbasaur", "charmander", "squirtle"), once.map { it.species.path })
+    }
+
+    @Test
+    fun `cycling the sort returns to where it started`() {
+        var mode = StarterDraftSort.CHEAPEST
+        repeat(StarterDraftSort.entries.size) { mode = mode.next() }
+        assertEquals(StarterDraftSort.CHEAPEST, mode)
+    }
+
+    @Test
+    fun `the meter is empty at nothing spent and full at the budget`() {
+        assertEquals(0, StarterDraftMeter.filled(spent = 0, budget = 10))
+        assertEquals(StarterDraftMeter.SEGMENTS, StarterDraftMeter.filled(spent = 10, budget = 10))
+    }
+
+    @Test
+    fun `any spending at all lights the first segment`() {
+        // A player who spends 1 of 10 and sees an empty bar reads it as "the click did nothing".
+        assertEquals(1, StarterDraftMeter.filled(spent = 1, budget = 10))
+        assertEquals(1, StarterDraftMeter.filled(spent = 1, budget = 100))
+    }
+
+    @Test
+    fun `the meter clamps instead of overflowing on an impossible spend`() {
+        assertEquals(StarterDraftMeter.SEGMENTS, StarterDraftMeter.filled(spent = 99, budget = 10))
+        assertEquals(0, StarterDraftMeter.filled(spent = -1, budget = 10))
+        // A zero budget is an operator fault, not a divide-by-zero.
+        assertEquals(StarterDraftMeter.SEGMENTS, StarterDraftMeter.filled(spent = 1, budget = 0))
+    }
+
+    @Test
+    fun `the meter fills monotonically across the budget`() {
+        val filled = (0..10).map { StarterDraftMeter.filled(it, 10) }
+        assertEquals(filled.sorted(), filled)
+        assertTrue(filled.all { it in 0..StarterDraftMeter.SEGMENTS })
+    }
+
+    @Test
+    fun `only the last segment is red and only the one before it is amber`() {
+        val zones = (0 until StarterDraftMeter.SEGMENTS).map(StarterDraftMeter::zoneOf)
+        assertEquals(1, zones.count { it == StarterDraftMeter.Zone.RED })
+        assertEquals(1, zones.count { it == StarterDraftMeter.Zone.AMBER })
+        assertEquals(StarterDraftMeter.Zone.RED, zones.last())
+        assertEquals(StarterDraftMeter.Zone.GREEN, zones.first())
     }
 
     @Test

@@ -361,7 +361,12 @@ object RunCommands {
         return 1
     }
 
-    private fun resume(player: ServerPlayer): Int {
+    /**
+     * Internal for the same reason [chooseStarters] is: [com.cobblemonroguelite.shop.BetweenWaveMenu]
+     * advances to the next wave through it (taking the free reward, or pressing Continue), and the
+     * result-to-message mapping must exist exactly once.
+     */
+internal fun resume(player: ServerPlayer): Int {
         when (val result = RunController.resume(player.server, player)) {
             ResumeResult.NoRun -> player.sendSystemMessage(RunMessages.noRun())
             is ResumeResult.AwaitingStarter -> player.sendSystemMessage(RunMessages.catalogue(result.catalogue))

@@ -7,6 +7,7 @@ import com.cobblemonroguelite.data.reward.RewardTables
 import com.cobblemonroguelite.data.reward.RunReward
 import com.cobblemonroguelite.data.shop.ShopEntry
 import com.cobblemonroguelite.data.shop.ShopTables
+import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunState
 import com.cobblemonroguelite.run.RunStore
 import net.minecraft.core.component.DataComponents
@@ -180,7 +181,13 @@ object BetweenWaveMenu {
 
             when {
                 pending != null -> resolvePending(sp, slotId)
-                slotId == CONTINUE_SLOT -> sp.closeContainer()
+                slotId == CONTINUE_SLOT -> {
+                    // #5 from the playtest: closing the shop dead-ended and nothing started the next
+                    // wave — waveCleared deliberately does not chain (§2.12 owns the gap), so the
+                    // gap's END has to. Continue IS the end of the between-wave step.
+                    sp.closeContainer()
+                    RunCommands.resume(sp)
+                }
                 slotId == REROLL_SLOT -> reroll(sp)
                 slotId in SHOP_FIRST..SHOP_LAST -> beginShop(sp, slotId)
                 slotId in OFFER_SLOTS -> beginOffer(sp, slotId)
@@ -271,6 +278,13 @@ object BetweenWaveMenu {
                     run.rewardTakenThisWave = true
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.taken(entryId, granted))
+                    // #2 from the playtest: the free pick is one-per-wave, so taking it IS the
+                    // decision this screen exists for — the next battle follows without a second
+                    // click. The paid row stays browsable by buying BEFORE picking, and Continue
+                    // covers the pick-nothing case.
+                    player.closeContainer()
+                    RunCommands.resume(player)
+                    return
                 }
 
                 is TakeResult.NoSuchEntry -> player.sendSystemMessage(ShopMessages.noSuchEntry(result.id))
@@ -324,10 +338,27 @@ object BetweenWaveMenu {
 
             val waiting = pending
             if (waiting != null) {
-                container.setItem(REROLL_SLOT, label(Items.BARRIER, "§cCancel", listOf("§7Click anywhere else too.")))
+                // The whole screen becomes the question. The first version added two paper icons to a
+                // row of an otherwise fully-painted menu, and the playtest read it as "clicking the
+                // item did nothing" — a picker that has to be noticed is a picker that failed. So the
+                // shop row and offers are NOT painted while a target is pending: every slot is either
+                // a Pokémon, the cancel button, or an arrow pointing at the party row.
+                for (slot in 0 until SLOTS) container.setItem(slot, background())
+                DIVIDER_ROWS.forEach { container.setItem(it, divider()) }
+                container.setItem(
+                    4,
+                    label(
+                        Items.OAK_SIGN,
+                        "§bWho gets §f${waiting.label}§b?",
+                        listOf("§7Click one of your Pokémon below.", "§8Anywhere else cancels."),
+                    ),
+                )
                 run.partySnapshot().forEachIndexed { index, pokemon ->
                     PARTY_SLOTS.getOrNull(index)?.let { container.setItem(it, partyIcon(pokemon, index + 1, waiting)) }
                 }
+                container.setItem(REROLL_SLOT, label(Items.BARRIER, "§cCancel", listOf("§7Click anywhere else too.")))
+                broadcastChanges()
+                return
             } else {
                 offer().forEachIndexed { index, entry ->
                     OFFER_SLOTS.getOrNull(index)?.let { container.setItem(it, offerIcon(entry)) }
@@ -399,14 +430,20 @@ object BetweenWaveMenu {
             listOf("§7Closes this screen.", "§8Then /roguelite resume for the next wave."),
         )
 
-        private fun partyIcon(pokemon: Pokemon, slot: Int, waiting: Pending): ItemStack = label(
-            Items.PAPER,
-            "§f$slot. ${runCatching { pokemon.species.name }.getOrDefault("?")}",
-            listOf(
-                "§7Level ${runCatching { pokemon.level }.getOrDefault(0)}",
-                "§aClick to apply §f${waiting.label}",
-            ),
-        )
+        private fun partyIcon(pokemon: Pokemon, slot: Int, waiting: Pending): ItemStack {
+            // The real sprite, the way the starter draft and cobblemon-ranked's menus do it — a row of
+            // identical paper is what made the picker invisible in the first playtest.
+            val icon = runCatching { com.cobblemon.mod.common.item.PokemonItem.from(pokemon) }
+                .getOrNull()?.takeIf { !it.isEmpty } ?: ItemStack(Items.PAPER)
+            return label(
+                icon,
+                "§f$slot. ${runCatching { pokemon.species.name }.getOrDefault("?")}",
+                listOf(
+                    "§7Level ${runCatching { pokemon.level }.getOrDefault(0)}",
+                    "§aClick to apply §f${waiting.label}",
+                ),
+            )
+        }
 
         /**
          * A vanilla icon per reward kind.
@@ -467,6 +504,13 @@ object BetweenWaveMenu {
         }
 
         private fun signed(amount: Int) = if (amount >= 0) "+$amount" else "$amount"
+
+        private fun label(icon: ItemStack, name: String, lore: List<String>): ItemStack {
+            val stack = if (icon.isEmpty) ItemStack(Items.PAPER) else icon
+            stack.set(DataComponents.CUSTOM_NAME, line(name))
+            stack.set(DataComponents.LORE, ItemLore(lore.map { line(it) as Component }))
+            return stack
+        }
 
         private fun label(item: Item, name: String, lore: List<String>): ItemStack {
             val stack = ItemStack(item)

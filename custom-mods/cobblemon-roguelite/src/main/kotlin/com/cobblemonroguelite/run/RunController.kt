@@ -243,7 +243,25 @@ object RunController {
      */
     fun pause(server: MinecraftServer, player: ServerPlayer, confirmed: Boolean): PauseAdvice {
         val store = RunStore.of(server)
-        return RunPause.advise(store.get(player.uuid), store.pending(player.uuid) != null, confirmed)
+        val advice = RunPause.advise(store.get(player.uuid), store.pending(player.uuid) != null, confirmed)
+
+        // §2.2-reversed. Pausing used to change nothing — §2.22 says so, and that was right when the
+        // run party lived in our own store. Now it does not: a player who paused walked away holding
+        // the run's Pokémon, with their own team still in the PC, which is the loose-run-Pokémon leak
+        // §2.2 was written to prevent and a party screen that lies about what they own.
+        //
+        // Only from between waves. Mid-battle is left alone even when acknowledged, because the live
+        // battle holds BattlePokemon wrapping these objects and pulling them out of the party under it
+        // is a worse failure than the one being fixed — the acknowledgement already tells the player
+        // that leaving now costs them the wave.
+        //
+        // The run's Pokémon are removed from the party, NOT destroyed: they are still in RunState, and
+        // the reconcile on the next resume puts them back. Nothing about the run is lost by pausing.
+        if (advice is PauseAdvice.BetweenWaves) {
+            runCatching { RunPartySwap.restore(player) }
+                .onFailure { log.error("roguelite: could not hand {}'s own party back on pause", player.gameProfile.name, it) }
+        }
+        return advice
     }
 
     /** Price a run for a confirmation prompt. Takes nothing; consumes no free allowance. */

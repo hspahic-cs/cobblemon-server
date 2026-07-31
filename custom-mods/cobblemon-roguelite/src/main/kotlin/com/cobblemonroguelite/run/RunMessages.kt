@@ -3,6 +3,8 @@ package com.cobblemonroguelite.run
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.starter.StarterCatalogue
 import com.cobblemonroguelite.starter.StarterSelection
+import com.cobblemonroguelite.integration.RunOpponent
+import com.cobblemonroguelite.integration.RunTrainerBattles
 import com.cobblemonroguelite.starter.StarterSelectionResult
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
@@ -99,7 +101,10 @@ object RunMessages {
     fun started(team: List<String>, spent: Int, remaining: Int): Component {
         val unspent = if (remaining > 0) " $remaining point(s) unspent." else ""
         return literal(
-            "Your run begins with ${team.joinToString(", ")} at level 1 for $spent point(s).$unspent " +
+            // Read from the config rather than written out. It said "level 1" and the starters now
+            // begin at 5, which is exactly how a message becomes a lie nobody notices.
+            "Your run begins with ${team.joinToString(", ")} at level ${RunSettings.current.starterLevel} " +
+                "for $spent point(s).$unspent " +
                 "/roguelite resume to fight wave 1.",
         )
     }
@@ -191,8 +196,18 @@ object RunMessages {
      * without the handler reporting *why* it refused, which is a wider change than this deserves —
      * [com.cobblemonroguelite.run.RunWaveHandler] returns a boolean by design.
      */
-    fun waveUnavailable(wave: Int): Component =
-        if (!RunWaves.isImplemented()) {
+    fun waveUnavailable(wave: Int, kind: RunOpponent? = null): Component =
+        // A trainer or boss wave on a server with no trainer provider is not a fault and not a mystery
+        // — it is §2.6's licence question, unresolved. Saying so beats sending the player to an
+        // operator who will find "the trainer battle provider is not implemented" in the log and have
+        // nothing to do about it. This is the third rewording of this message: the first two both
+        // named a cause they had not checked.
+        if (kind != null && kind != RunOpponent.WILD && !RunTrainerBattles.isImplemented()) {
+            literal(
+                "Wave $wave is a trainer battle, and trainer waves are not available on this server yet " +
+                    "— only wild waves are. Your run is safe and stays on this wave.",
+            )
+        } else if (!RunWaves.isImplemented()) {
             literal("Wave $wave cannot be started — run battles are not implemented on this server yet. Your run is safe.")
         } else {
             literal(

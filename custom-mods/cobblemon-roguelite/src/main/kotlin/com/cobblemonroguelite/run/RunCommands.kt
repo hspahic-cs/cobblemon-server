@@ -366,7 +366,8 @@ object RunCommands {
             ResumeResult.NoRun -> player.sendSystemMessage(RunMessages.noRun())
             is ResumeResult.AwaitingStarter -> player.sendSystemMessage(RunMessages.catalogue(result.catalogue))
             is ResumeResult.WaveStarted -> Unit // the battle itself is the feedback
-            is ResumeResult.WaveUnavailable -> player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave))
+            is ResumeResult.WaveUnavailable ->
+                player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave, result.plan.kind))
             is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
             is ResumeResult.RosterUnavailable -> player.sendSystemMessage(RunMessages.rosterUnavailable())
             // Both lines: what is blocking the run, then the decision itself. A player who typed

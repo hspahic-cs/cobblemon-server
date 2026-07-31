@@ -90,14 +90,17 @@ SHOP = [
 # that fit one arena would not transfer to the next. Odd, so there is a true centre block to build
 # symmetry around, at local (31, 0, 31).
 #
-# 41 rather than the full 64 box leaves 11 blocks of margin on every side, inside the box and so
-# still swept and repainted — that margin is where a backdrop, walls or terrain go without any of it
-# falling outside the volume the mode tidies up.
+# 51 rather than the full 64 box leaves 6 blocks of margin on every side, inside the box and so still
+# swept and repainted — that margin is where a backdrop, walls or terrain go without any of it falling
+# outside the volume the mode tidies up.
+#
+# Was 41 until it was stood in: five blocks more radius, because a 41 island is a tad small once two
+# Pokémon models and their animations are on it.
 #
 # These varied 41 -> 31 -> 21 before standardising, to exercise the box sweep clearing what a larger
 # earlier band dirtied. That coverage is now only in ArenaBoxScanTest, which is where it belongs
 # anyway — it was never worth paying for in the shape of the arenas players stand in.
-ARENA_FOOTPRINT = 41
+ARENA_FOOTPRINT = 51
 
 PALETTES = [
     ("smoke_meadow", {

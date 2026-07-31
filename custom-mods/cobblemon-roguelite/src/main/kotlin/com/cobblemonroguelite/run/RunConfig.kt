@@ -48,7 +48,9 @@ import net.minecraft.resources.ResourceLocation
  *   real prices and what it uses instead.
  * @property starterBudget §2.13. Points a player has to spend on their starting team. See
  *   [RunConfig.DEFAULT_STARTER_BUDGET] for why this one is a decision and not a placeholder.
- * @property starterLevel §2.21. A run starter begins at 1 and levels on the curve by battle EXP.
+ * @property starterLevel §2.21. PokéRogue's own starting level, and the reason it is 5 rather than 1:
+ *   a level-1 starter has one move, no second stage in reach, and dies to the first wild crit — the
+ *   first ten waves read as a coin flip instead of as a run. Levelling from there is the curve's job.
  * @property biomeBandLength §2.24: how many waves a run spends in one biome. 10 is PokéRogue's own
  *   region cadence and is a decision rather than a placeholder, in the way [starterBudget] is —
  *   raising it does not make transitions rarer so much as change what a run *is*, since the biome is
@@ -73,7 +75,7 @@ data class RunConfig(
     val starterPool: StarterPoolSource = PlaceholderStarterPoolSource,
     val starterCosts: StarterCostSource = DefaultStarterCosts,
     val starterBudget: Int = DEFAULT_STARTER_BUDGET,
-    val starterLevel: Int = 1,
+    val starterLevel: Int = 5,
     val biomeBandLength: Int = DEFAULT_BIOME_BAND_LENGTH,
     val expiry: RunExpiryPolicy = RunExpiryPolicy(),
     val arena: ArenaConfig = ArenaConfig(),

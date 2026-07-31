@@ -243,7 +243,7 @@ object BetweenWaveMenu {
                         return
                     }
                     run.credits = result.remaining
-                    val granted = RewardGrant.apply(result.entry.reward, target, party)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed)
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, granted))
                 }
@@ -267,7 +267,7 @@ object BetweenWaveMenu {
                         player.sendSystemMessage(ShopMessages.needsSlot(target.reason))
                         return
                     }
-                    val granted = RewardGrant.apply(result.entry.reward, target, party)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed)
                     run.rewardTakenThisWave = true
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.taken(entryId, granted))

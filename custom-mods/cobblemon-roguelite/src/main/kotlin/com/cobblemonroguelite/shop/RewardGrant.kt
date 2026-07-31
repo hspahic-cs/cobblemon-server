@@ -7,6 +7,8 @@ import com.cobblemon.mod.common.api.pokemon.Natures
 import com.cobblemon.mod.common.api.pokemon.stats.SidemodEvSource
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.data.reward.RunReward
+import com.cobblemonroguelite.run.RunItems
+import com.cobblemonroguelite.run.RunPartySwap
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -45,7 +47,7 @@ object RewardGrant {
      * alternative is worse, because granting first means a crash between grant and charge is a free
      * item, and an item that cannot be granted is an operator error a refund would hide.
      */
-    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>): GrantResult = when (target) {
+    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long): GrantResult = when (target) {
         is RewardTarget.Unresolved -> GrantResult.Failed(target.reason)
 
         // Party-wide is only ever a bag item today ([RewardTargeting.needsMember]), and a bag item does
@@ -61,19 +63,28 @@ object RewardGrant {
                 // Reachable if the party shrank between targeting and applying — a faint that emptied a
                 // slot, or a swap-or-release resolved in between.
                 GrantResult.Failed("party slot ${target.index + 1} is no longer there")
+            } else if (!RunPartySwap.isRunPokemon(pokemon)) {
+                // H2/H8 (isolation design §7.7): a reward must never land on a Pokémon the run did not
+                // make. The case is reachable only when a real Pokémon has been smuggled into the run
+                // party — and grantHeldItem DESTROYS whatever it displaces, so aiming it at a smuggled
+                // Garchomp would delete a real held item with no crash involved. Refusing here keeps
+                // every branch below safe without each one having to know why.
+                GrantResult.Failed(
+                    "${pokemon.species.name} is not part of this run — rewards can only go to run Pokémon",
+                )
             } else {
-                applyToMember(reward, pokemon)
+                applyToMember(reward, pokemon, runSeed)
             }
         }
     }
 
-    private fun applyToMember(reward: RunReward, pokemon: Pokemon): GrantResult = runCatching {
+    private fun applyToMember(reward: RunReward, pokemon: Pokemon, runSeed: Long): GrantResult = runCatching {
         when (reward) {
             is RunReward.Evs -> grantEvs(reward, pokemon)
             is RunReward.Levels -> grantLevels(reward, pokemon)
             is RunReward.Mint -> grantMint(reward, pokemon)
             is RunReward.AbilityPatch -> grantAbility(reward, pokemon)
-            is RunReward.HeldItem -> grantHeldItem(reward, pokemon)
+            is RunReward.HeldItem -> grantHeldItem(reward, pokemon, runSeed)
             is RunReward.TechnicalMachine -> grantMove(reward, pokemon)
             // A bag item targeted at a member: legal input, since [RewardTargeting] ignores a slot on a
             // party-wide reward, so treat it as the bag grant it is rather than refusing.
@@ -161,10 +172,15 @@ object RewardGrant {
      * decide not to overwrite the Leftovers they were relying on. Silently destroying it would be the
      * same act without the warning.
      */
-    private fun grantHeldItem(reward: RunReward.HeldItem, pokemon: Pokemon): GrantResult {
+    private fun grantHeldItem(reward: RunReward.HeldItem, pokemon: Pokemon, runSeed: Long): GrantResult {
         val item = BuiltInRegistries.ITEM.getOptional(reward.item).orElse(null)
             ?: return unresolved("item", reward.item.toString())
-        val displaced = pokemon.swapHeldItem(ItemStack(item, 1))
+        // Marked at the mint (H8). This stack will sit on a Pokémon in the player's REAL party under
+        // §2.2-reversed, where the party UI can take it off into the inventory — an unmarked stack
+        // there is indistinguishable from the player's own property and walks out of the run. Marking
+        // here also makes the displacement below safe: with apply() refusing unmarked targets, the
+        // only thing swapHeldItem can ever destroy is run property.
+        val displaced = pokemon.swapHeldItem(RunItems.mark(ItemStack(item, 1), runSeed))
         val note = if (displaced.isEmpty) "" else " (replaced ${displaced.hoverName.string}, which is gone)"
         return GrantResult.Ok("${pokemon.species.name}: holding ${item.description.string}$note")
     }

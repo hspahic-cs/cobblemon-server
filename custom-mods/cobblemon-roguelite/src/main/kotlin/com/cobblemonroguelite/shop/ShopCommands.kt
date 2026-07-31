@@ -164,7 +164,7 @@ object ShopCommands {
                     return refuse(player, ShopMessages.needsSlot(target.reason))
                 }
                 run.credits = result.remaining
-                val granted = RewardGrant.apply(result.entry.reward, target, party)
+                val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed)
                 RunStore.of(player.server).checkpoint(player.server, player.uuid)
                 player.sendSystemMessage(ShopMessages.bought(result.entry.id, result.price, run.credits, granted))
                 if (granted is GrantResult.Failed) {
@@ -198,7 +198,7 @@ object ShopCommands {
                 // there is nothing to refund, and a failed grant that left the option takeable would let
                 // a player retry the same broken entry forever instead of taking one of the other two.
                 // A Failed result names the entry, so an operator can see which one to fix.
-                val granted = RewardGrant.apply(result.entry.reward, target, party)
+                val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed)
                 run.rewardTakenThisWave = true
                 RunStore.of(player.server).checkpoint(player.server, player.uuid)
                 player.sendSystemMessage(ShopMessages.taken(result.entry.id, granted))

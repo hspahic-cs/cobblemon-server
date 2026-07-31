@@ -126,6 +126,51 @@ class StarterDraftPagingTest {
     }
 
     @Test
+    fun `tabs are derived from the costs actually in the catalogue`() {
+        // A new player's catalogue is the baseline pool and nothing else, so a fixed 1..10 tab row would
+        // be six tabs that open onto nothing.
+        val sparse = listOf(3, 3, 5, 8).mapIndexed { index, cost ->
+            StarterOption(ResourceLocation.fromNamespaceAndPath("cobblemon", "mon$index"), cost)
+        }
+        val tabs = StarterDraftFilter.tabsFor(sparse, maxTabs = 9)
+        assertEquals(
+            listOf("All", "3", "5", "8"),
+            tabs.map { it.label },
+        )
+    }
+
+    @Test
+    fun `more distinct costs than tabs buckets the tail and loses nothing`() {
+        // PokéRogue's real shape: ten costs, nine slots.
+        val all = (1..10).flatMap { cost ->
+            List(3) { StarterOption(ResourceLocation.fromNamespaceAndPath("cobblemon", "c${cost}_$it"), cost) }
+        }
+        val tabs = StarterDraftFilter.tabsFor(all, maxTabs = 9)
+
+        assertEquals(9, tabs.size)
+        assertEquals(listOf("All", "1", "2", "3", "4", "5", "6", "7", "8+"), tabs.map { it.label })
+        // The load-bearing property: every species is reachable through some tab.
+        val reachable = all.filter { option -> tabs.any { it.matches(option) } }
+        assertEquals(all.size, reachable.size)
+        assertEquals(9, all.count { StarterDraftFilter.AtLeast(8).matches(it) })
+    }
+
+    @Test
+    fun `a tab matches exactly its own cost`() {
+        val three = StarterOption(ResourceLocation.fromNamespaceAndPath("cobblemon", "a"), 3)
+        val four = StarterOption(ResourceLocation.fromNamespaceAndPath("cobblemon", "b"), 4)
+        assertTrue(StarterDraftFilter.Exactly(3).matches(three))
+        assertFalse(StarterDraftFilter.Exactly(3).matches(four))
+        assertTrue(StarterDraftFilter.All.matches(four))
+    }
+
+    @Test
+    fun `an empty catalogue still gets an All tab rather than an empty row`() {
+        assertEquals(listOf(StarterDraftFilter.All), StarterDraftFilter.tabsFor(emptyList(), maxTabs = 9))
+        assertEquals(listOf(StarterDraftFilter.All), StarterDraftFilter.tabsFor(options(5), maxTabs = 1))
+    }
+
+    @Test
     fun `the meter is empty at nothing spent and full at the budget`() {
         assertEquals(0, StarterDraftMeter.filled(spent = 0, budget = 10))
         assertEquals(StarterDraftMeter.SEGMENTS, StarterDraftMeter.filled(spent = 10, budget = 10))

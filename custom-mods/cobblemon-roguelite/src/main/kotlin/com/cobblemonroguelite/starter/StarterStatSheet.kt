@@ -41,7 +41,7 @@ data class StarterStatSheet(
     val hiddenAbility: String? = null,
     val hiddenAbilityUnlocked: Boolean = false,
     val growthRate: String? = null,
-    /** §2.17's floor, in [CobblemonBaseStatTotal.STAT_ORDER]. Null when the player has earned nothing yet. */
+    /** §2.17's floor, in [CobblemonBaseStatTotal.STAT_ORDER]. Null only when it could not be read. */
     val ivFloor: List<Int>? = null,
 ) {
     val baseStatTotal: Int get() = baseStats.sumOf { it.second }
@@ -106,10 +106,22 @@ object StarterStatLines {
         if (sheet.baseStats.isNotEmpty()) lines += "§7BST §f${sheet.baseStatTotal}"
 
         sheet.ivFloor?.let { floor ->
-            // One line, not six bars. This is a floor a player has earned, so what they need is the
-            // number; the hexagon is the part a real screen would do better and this deliberately does
-            // not try to imitate.
-            lines += "§7IVs at least §f${floor.joinToString(" ")}"
+            // Always shown, including at the floor everybody starts on. It was hidden there at first, on
+            // the grounds that six identical numbers across 542 rows is noise — but that reasoning had
+            // it backwards: this is the number that says what the Pokémon you are about to buy will
+            // actually BE, and a player who only ever sees it on species they have already levelled
+            // cannot learn that the line exists, let alone that raising it is a thing they can do.
+            //
+            // Labelled and aligned to the base-stat rows above, so the six numbers read as the same six
+            // stats in the same order rather than as an unlabelled sextet.
+            lines += "§7IVs " + floor.mapIndexed { index, value ->
+                "§8${STAT_LABELS.getOrElse(index) { "" }.trim()}§f${value.toString().padStart(2)}"
+            }.joinToString(" ")
+            lines += if (floor.all { it <= StarterIvFloor.BASE }) {
+                "§8Every run of this species starts here."
+            } else {
+                "§8Your best so far — runs start at least here."
+            }
         }
 
         if (sheet.abilities.isNotEmpty()) lines += "§7Ability: §f${sheet.abilities.joinToString(", ")}"
@@ -158,13 +170,12 @@ object StarterStatSheets {
         val unlocked = hidden != null &&
             runCatching { progression?.hiddenAbilityUnlocked(player, species) }.getOrNull() == true
 
-        // Null unless the player is actually above the floor everybody starts at: a line reading "IVs
-        // at least 10 10 10 10 10 10" on every species is six numbers of noise on the screen where a
-        // player is comparing thirty-six of them.
+        // Null only when the progression store could not answer. The base floor is shown like any
+        // other: it is what the starter's IVs will be, which is a fact about the purchase and not a
+        // reward notification.
         val floor = runCatching {
             progression?.ivFloor(player, species)?.let { earned ->
                 CobblemonBaseStatTotal.STAT_ORDER.map(earned::floorFor)
-                    .takeIf { values -> values.any { it > StarterIvFloor.BASE } }
             }
         }.getOrNull()
 

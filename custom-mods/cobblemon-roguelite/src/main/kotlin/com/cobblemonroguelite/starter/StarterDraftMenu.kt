@@ -65,30 +65,39 @@ object StarterDraftMenu {
     private const val ROWS = 6
     private const val SLOTS = ROWS * 9
 
-    /** Row 0, far left: cycles [StarterDraftSort]. */
-    private const val SORT_SLOT = 0
-
-    /** Row 0, beside the sort: shows or hides [StarterStatSheet] on every icon. */
-    private const val STATS_SLOT = 1
+    /** Row 0, all nine slots: [StarterDraftFilter.tabsFor]'s cost tabs. */
+    private val TAB_SLOTS = (0..8).toList()
 
     /**
-     * Row 0, far right: [StarterDraftMeter]'s five segments, filling towards the right-hand edge.
+     * The right-hand column, **bottom to top** — [StarterDraftMeter]'s five segments.
      *
-     * Right-aligned rather than centred so the bar ends where the eye already goes for a "how full"
-     * reading, and so the sort button at the other end of the row is never mistaken for part of it.
+     * Bottom-up because that is the only way a vertical gauge reads: a bar that drains downwards as
+     * you spend would say the opposite of what it means. It owns the column outright, which is why the
+     * grid is eight wide rather than nine.
      */
-    private val METER_SLOTS = listOf(4, 5, 6, 7, 8)
+    private val METER_SLOTS = listOf(53, 44, 35, 26, 17)
 
-    /** Rows 1–4, full width. Kept as one number with [StarterDraftPaging.PER_PAGE] so they cannot disagree. */
-    private const val GRID_FIRST = 9
-    private const val GRID_SLOTS = StarterDraftPaging.PER_PAGE
+    /**
+     * Rows 1–4, columns 0–7. Not contiguous, because the meter has the ninth column.
+     *
+     * Built from the layout rather than written out so it cannot drift from
+     * [StarterDraftPaging.PER_PAGE]; the `require` is what says so out loud if it ever does.
+     */
+    private val GRID_SLOTS: List<Int> = (1..4).flatMap { row -> (0..7).map { column -> row * 9 + column } }
 
-    /** Row 5, left to right: page back, the picks, the budget, confirm, page forward. */
+    /** Row 5, left to right: the two page arrows, the picks, sort, stats, confirm. */
     private const val PREVIOUS_SLOT = 45
+    private const val NEXT_SLOT = 46
     private val PICK_SLOTS = listOf(47, 48, 49)
-    private const val BUDGET_SLOT = 51
+    private const val SORT_SLOT = 50
+    private const val STATS_SLOT = 51
     private const val CONFIRM_SLOT = 52
-    private const val NEXT_SLOT = 53
+
+    init {
+        require(GRID_SLOTS.size == StarterDraftPaging.PER_PAGE) {
+            "the grid holds ${GRID_SLOTS.size} slots but a page is ${StarterDraftPaging.PER_PAGE} entries"
+        }
+    }
 
     /**
      * Open the draft for [player], or return false if they have no pending start.
@@ -141,6 +150,17 @@ object StarterDraftMenu {
          */
         private var sort = StarterDraftSort.CHEAPEST
 
+        /** Which cost tab is open. [StarterDraftFilter.All] until a player narrows it. */
+        private var filter: StarterDraftFilter = StarterDraftFilter.All
+
+        /**
+         * The tabs, derived once from the captured catalogue.
+         *
+         * Constant for the life of the window because the catalogue is, so recomputing them per paint
+         * would be a distinct-and-sort over 542 entries on every click to reach the same answer.
+         */
+        private val tabs: List<StarterDraftFilter> = StarterDraftFilter.tabsFor(catalogue.options, TAB_SLOTS.size)
+
         /**
          * Whether icons carry their [StarterStatSheet].
          *
@@ -187,7 +207,8 @@ object StarterDraftMenu {
                     showStats = !showStats
                     paint()
                 }
-                slotId in GRID_FIRST until GRID_FIRST + GRID_SLOTS -> toggleFromGrid(slotId - GRID_FIRST)
+                slotId in TAB_SLOTS -> selectTab(TAB_SLOTS.indexOf(slotId))
+                slotId in GRID_SLOTS -> toggleFromGrid(GRID_SLOTS.indexOf(slotId))
                 slotId in PICK_SLOTS -> removePick(PICK_SLOTS.indexOf(slotId))
                 slotId == PREVIOUS_SLOT -> turnTo(page - 1)
                 slotId == NEXT_SLOT -> turnTo(page + 1)
@@ -206,6 +227,15 @@ object StarterDraftMenu {
          */
         private fun cycleSort() {
             sort = sort.next()
+            page = 0
+            paint()
+        }
+
+        /** Same reset as [cycleSort], and for the same reason: the page you were on no longer means anything. */
+        private fun selectTab(index: Int) {
+            val chosen = tabs.getOrNull(index) ?: return
+            if (chosen == filter) return
+            filter = chosen
             page = 0
             paint()
         }
@@ -260,8 +290,11 @@ object StarterDraftMenu {
 
         // ------------------------------------------------------------------ painting
 
-        private fun currentPage(): StarterDraftPage =
-            StarterDraftPaging.pageAt(sort.sort(catalogue.options), page)
+        /** Filter first, then sort. Sorting the whole catalogue to then discard most of it is the same
+         *  answer for more work, and the tab is the coarser cut. */
+        private fun visible(): List<StarterOption> = sort.sort(catalogue.options.filter(filter::matches))
+
+        private fun currentPage(): StarterDraftPage = StarterDraftPaging.pageAt(visible(), page)
 
         private fun spent(): Int = picks.sumOf { catalogue.costOf(it) ?: 0 }
 
@@ -271,18 +304,43 @@ object StarterDraftMenu {
             val shown = currentPage()
             container.setItem(SORT_SLOT, sortIcon())
             container.setItem(STATS_SLOT, statsToggleIcon())
+            tabs.forEachIndexed { index, tab ->
+                TAB_SLOTS.getOrNull(index)?.let { container.setItem(it, tabIcon(tab)) }
+            }
             paintMeter()
             shown.options.forEachIndexed { index, option ->
-                container.setItem(GRID_FIRST + index, optionIcon(option))
+                GRID_SLOTS.getOrNull(index)?.let { container.setItem(it, optionIcon(option)) }
             }
 
             PICK_SLOTS.forEachIndexed { index, slot -> container.setItem(slot, pickIcon(picks.getOrNull(index), index)) }
 
             if (shown.hasPrevious) container.setItem(PREVIOUS_SLOT, pageIcon("Previous", shown))
             if (shown.hasNext) container.setItem(NEXT_SLOT, pageIcon("Next", shown))
-            container.setItem(BUDGET_SLOT, budgetIcon())
             container.setItem(CONFIRM_SLOT, confirmIcon())
             broadcastChanges()
+        }
+
+        /**
+         * One cost tab.
+         *
+         * Selection is marked the same way a picked species is — glint, tick, green — rather than with
+         * a fourth visual language nobody has learned yet. The count is the useful part of the tooltip:
+         * "3 points, 179 available" is what tells a player which tab is worth opening.
+         */
+        private fun tabIcon(tab: StarterDraftFilter): ItemStack {
+            val selected = tab == filter
+            val available = catalogue.options.count(tab::matches)
+            val name = if (selected) "§a✔ ${tab.label}" else "§f${tab.label}"
+            return label(
+                if (tab is StarterDraftFilter.All) Items.BOOK else Items.GOLD_NUGGET,
+                name,
+                listOf(
+                    if (tab is StarterDraftFilter.All) "§7Every Pokémon you can buy" else "§7Costing §f${tab.label}§7 point(s)",
+                    "§7$available available",
+                    if (selected) "§8Showing this now." else "§8Click to show only these.",
+                ),
+                glint = selected,
+            )
         }
 
         private fun sortIcon() = label(
@@ -309,6 +367,10 @@ object StarterDraftMenu {
          *
          * An unlit bar of grey panes is the empty state rather than five blank slots: a meter that only
          * appears once you have spent something is a meter nobody learns to read.
+         *
+         * Every segment carries the exact numbers, which is why there is no separate budget icon any
+         * more: the column is five slots a cursor crosses constantly, so the readout is never more than
+         * a hover away and a sixth button competing for the control row was not earning its slot.
          */
         private fun paintMeter() {
             val spent = spent()
@@ -330,6 +392,9 @@ object StarterDraftMenu {
                         listOf(
                             "§7${catalogue.budget - spent} left to spend.",
                             "§8The bar fills as you pick; red is the last of it.",
+                            // §2.13: there is nothing to do with leftover points, and a player who does
+                            // not know that will keep looking for the shop that spends them.
+                            "§8Points left over are not carried into the run.",
                         ),
                     ),
                 )
@@ -379,20 +444,6 @@ object StarterDraftMenu {
             lore += if (index == 0) "§7Leads the first wave." else "§7Party slot ${index + 1}."
             lore += "§cClick to remove"
             return label(speciesIcon(species), "§a${index + 1}. ${nameOf(species)}", lore, glint = true)
-        }
-
-        private fun budgetIcon(): ItemStack {
-            val spent = spent()
-            return label(
-                Items.GOLD_NUGGET,
-                "§e${catalogue.budget - spent} of ${catalogue.budget} point(s) left",
-                listOf(
-                    "§7Spent §f$spent",
-                    // §2.13: there is nothing to do with leftover points, and a player who does not know
-                    // that will keep looking for the shop that spends them.
-                    "§8Points left over are not carried into the run.",
-                ),
-            )
         }
 
         private fun confirmIcon(): ItemStack = when (val result = StarterSelection.validate(catalogue, picks)) {

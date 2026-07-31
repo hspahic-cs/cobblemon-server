@@ -92,11 +92,26 @@ class StarterStatLinesTest {
     }
 
     @Test
-    fun `the IV floor line appears only when there is one to show`() {
-        assertTrue(StarterStatLines.render(bulbasaur).none { it.contains("IVs") })
+    fun `the IV line is shown at the base floor too, labelled per stat`() {
+        // Hidden at base at first, which had it backwards: this is what the Pokémon you are buying will
+        // BE, and a line that only appears on species you have already levelled is one nobody learns.
+        val base = StarterStatLines.render(bulbasaur.copy(ivFloor = List(6) { StarterIvFloor.BASE }))
+        val line = base.single { it.contains("IVs") }
+        StarterStatLines.STAT_LABELS.forEach { assertTrue(line.contains(it.trim()), "no ${it.trim()} in $line") }
+        assertTrue(base.any { it.contains("Every run of this species starts here") })
+    }
 
+    @Test
+    fun `an earned floor says it is earned`() {
         val earned = StarterStatLines.render(bulbasaur.copy(ivFloor = listOf(31, 10, 10, 22, 10, 10)))
-        assertTrue(earned.any { it.contains("IVs at least") && it.contains("31") && it.contains("22") })
+        assertTrue(earned.any { it.contains("IVs") && it.contains("31") && it.contains("22") })
+        assertTrue(earned.any { it.contains("Your best so far") })
+    }
+
+    @Test
+    fun `no floor at all prints no IV line`() {
+        // The progression store failing to answer is not the same as a floor of zero.
+        assertTrue(StarterStatLines.render(bulbasaur).none { it.contains("IVs") })
     }
 
     @Test

@@ -233,6 +233,17 @@ object RunBattles {
         val live = battles.remove(battle.battleId) ?: return
         byPlayer.remove(live.player, live.battleId)
         val won = live.player in winners
+        // The stat-stage snapshot happens HERE, at event receipt, not inside the deferred block: one
+        // tick later the end-of-battle sequence has recalled the field and the read is empty — which
+        // is exactly how the first wiring silently never carried anything. Pure mirror-map read,
+        // safe on the event's thread; the store into the run stays on the server thread below.
+        val carriedStages = if (won) {
+            runCatching { RunCarriedBoosts.snapshot(battle, live.player, live.reportedField) }
+                .onFailure { log.warn("roguelite: boost snapshot failed for wave {}", live.wave, it) }
+                .getOrDefault(emptyMap())
+        } else {
+            emptyMap()
+        }
         live.server.execute {
             // Not when it was captured: the capture already removed the entity, and discarding on top
             // of that is a discard of whatever now occupies the reference.
@@ -240,10 +251,9 @@ object RunBattles {
             if (!stillOnline(live)) return@execute
             if (won) {
                 // The stat-stage carryover's capture half (PokéRogue's wild-wave persistence rule):
-                // read before waveCleared advances anything, from the battle that just ended.
+                // stored before waveCleared advances anything.
                 RunStore.of(live.server).get(live.player)?.let { run ->
-                    runCatching { RunCarriedBoosts.captureFrom(battle, live.player, run) }
-                        .onFailure { log.warn("roguelite: boost capture failed for wave {}", live.wave, it) }
+                    RunCarriedBoosts.store(run, carriedStages)
                 }
                 RunController.waveCleared(live.server, live.player)
             } else {

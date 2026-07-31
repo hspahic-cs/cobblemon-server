@@ -29,13 +29,31 @@ object RunCarriedBoosts {
      * Keyed by Pokémon UUID so a boost follows its owner and dies with it — a fainted member's entry
      * is simply never read again, and permadeath removes the Pokémon the key points at.
      */
-    fun captureFrom(battle: PokemonBattle, playerId: UUID, run: RunState) {
+    /**
+     * Read the field's surviving stages the moment the victory event arrives — NOT a tick later.
+     *
+     * The first wiring deferred the whole capture into `server.execute`, and it read empty every
+     * single time (playtest, 2026-07-31: the carry "not happening at all"): by the next tick
+     * Cobblemon's end-of-battle sequence has recalled the active positions, so `activePokemon` is
+     * a list of nobody. This snapshot runs synchronously at event receipt, while the field still
+     * exists; it is a pure read of the mirror maps, safe off-thread, and the caller stores the
+     * result into the run on the server thread as before.
+     *
+     * [lastField] — the §2.10 field tracker's per-tick record — is the belt-and-braces: if the
+     * active list has already been emptied even at event time, whoever it last reported as on the
+     * field is who the stages belong to, read from the full battle team instead.
+     */
+    fun snapshot(battle: PokemonBattle, playerId: UUID, lastField: List<UUID>): Map<UUID, Map<String, Int>> {
         val carried = mutableMapOf<UUID, Map<String, Int>>()
         // The ACTIVE Pokémon only — PokéRogue's own semantics: stages live on the Pokémon that is on
         // the field, and a switch already reset them mid-battle. Reading the whole party would carry
         // stale mirror values for benched members whose |unboost| stream stopped at their switch-out.
         battle.actors.filter { it.uuid == playerId }.forEach { actor ->
-            actor.activePokemon.mapNotNull { it.battlePokemon }.forEach { member: BattlePokemon ->
+            val active = actor.activePokemon.mapNotNull { it.battlePokemon }
+            val members = active.ifEmpty {
+                actor.pokemonList.filter { it.effectedPokemon.uuid in lastField }
+            }
+            members.forEach { member: BattlePokemon ->
                 val stages = member.statChanges
                     .filterValues { it != 0 }
                     .entries
@@ -45,10 +63,15 @@ object RunCarriedBoosts {
                 }
             }
         }
+        return carried
+    }
+
+    /** Store a [snapshot] into [run], on the server thread. Split from the read — see [snapshot]. */
+    fun store(run: RunState, carried: Map<UUID, Map<String, Int>>) {
         run.carriedBoosts.clear()
         run.carriedBoosts.putAll(carried)
         if (carried.isNotEmpty()) {
-            log.debug("roguelite: carried {} boosted member(s) out of wave {}", carried.size, run.wave)
+            log.info("roguelite: carried {} boosted member(s) out of wave {}", carried.size, run.wave)
         }
     }
 

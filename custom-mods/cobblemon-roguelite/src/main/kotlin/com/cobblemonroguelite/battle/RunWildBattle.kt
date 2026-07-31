@@ -74,12 +74,25 @@ object RunWildBattle {
     private const val OPPONENT_DISTANCE = 6.0
 
     /**
-     * Zero means the wild Pokémon cannot flee, and neither can the battle end because the player
-     * walked away — the same value `PokemonEntity.forceBattle` uses for a fight that is not
-     * declinable. A wave that could be ended by stepping backwards is a wave with a free exit, and
-     * §2.10 spent a whole decision making sure leaving a fight costs more than fighting it.
+     * **Minus one** means the wild Pokémon cannot flee. Not zero.
+     *
+     * This was 0f, on the stated belief that zero was the "cannot flee" sentinel, and the first wave
+     * anybody fought ended instantly with the opponent fleeing. `PokemonBattle.checkFlee` reads:
+     *
+     * ```
+     * fleeDistance == -1f            -> stays (this is the sentinel)
+     * distanceToOpponent < fleeDistance -> stays
+     * ```
+     *
+     * so 0f asks "is the distance less than zero", which nothing is — the actor was treated as having
+     * fled before the first turn. The sentinel is a magic number in someone else's jar with no
+     * constant to import, which is exactly the kind of value worth writing the mechanism down for.
+     *
+     * A wave that could be ended by stepping backwards is a wave with a free exit, and §2.10 spent a
+     * whole decision making sure leaving a fight costs more than fighting it — so "never flees" is the
+     * intent either way, and only the encoding was wrong.
      */
-    private const val FLEE_DISTANCE = 0f
+    private const val FLEE_DISTANCE = -1f
 
     /**
      * Start [plan] for [player]. False means the wave did not start and the run is untouched.

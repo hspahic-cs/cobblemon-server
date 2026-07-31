@@ -1,7 +1,15 @@
 package com.cobblemonbridge.roguelite
 
+import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
+import com.cobblemon.mod.common.api.battles.model.ai.BattleAI
+import com.cobblemon.mod.common.battles.ActiveBattlePokemon
+import com.cobblemon.mod.common.battles.BattleSide
+import com.cobblemon.mod.common.battles.MoveActionResponse
+import com.cobblemon.mod.common.battles.ShowdownActionResponse
+import com.cobblemon.mod.common.battles.ShowdownMoveset
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon
+import com.cobblemon.mod.common.net.messages.client.battle.BattleHealthChangePacket
 import com.cobblemon.mod.common.pokemon.Pokemon
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -199,15 +207,49 @@ object RctTrainerParts {
     fun actorFor(rctId: String, entity: Entity, team: List<BattlePokemon>): BattleActor? {
         val npc = npc(rctId) ?: return null
         return try {
-            val ai = npcAiM!!.invoke(npc)
+            val ai = npcAiM!!.invoke(npc) as? BattleAI ?: return null
             val name = (entity.displayName?.string ?: rctId).replace(LEVEL_SUFFIX, "")
             actorCtor!!.newInstance(
-                name, entity, entity.uuid, team, emptyBagCtor!!.newInstance(), ai,
+                name, entity, entity.uuid, team, emptyBagCtor!!.newInstance(), NoGimmickAI(ai),
             ) as BattleActor
         } catch (e: Throwable) {
             log.error("could not build an RCT battle actor for trainer '{}'", rctId, e)
             null
         }
+    }
+
+    /**
+     * The authored AI with its gimmick choices stripped — wave opponents never Dynamax, Tera or
+     * Mega, whatever their brain asks for.
+     *
+     * Two reasons, found the same evening (dev, 2026-07-31). The design one: PokéRogue's wave
+     * opponents do not use gimmicks — a boss's step-up is §2.32's shields — and a wave-10 Gigantamax
+     * is a wall nobody authored. The mechanical one is worse: Misty's AI Dynamaxed, then chose
+     * Dynamax **again**, and Showdown's refusal (`|error|[Invalid choice] Can't move: You can only
+     * Dynamax once per battle`) is a protocol line Cobblemon has no interpretation for — the choice
+     * is never re-made and the battle hangs with the player unable to move. Removing the power spot
+     * from the arena palettes did not touch either: the AI side never needed one.
+     *
+     * Stripping the CHOICE rather than configuring the gimmick away is deliberate: Mega Showdown's
+     * enable flags are global (they serve ranked and the gyms), and `BattleFormat.ruleSet` is
+     * already known not to be the lever. The response object is ours to edit between the brain and
+     * the engine, and a `MoveActionResponse` with `gimmickID = null` is exactly the same move,
+     * un-gimmicked.
+     */
+    private class NoGimmickAI(private val inner: BattleAI) : BattleAI {
+        override fun choose(
+            activeBattlePokemon: ActiveBattlePokemon,
+            battle: PokemonBattle,
+            side: BattleSide,
+            moveset: ShowdownMoveset?,
+            forceSwitch: Boolean,
+        ): ShowdownActionResponse {
+            val choice = inner.choose(activeBattlePokemon, battle, side, moveset, forceSwitch)
+            if (choice is MoveActionResponse && choice.gimmickID != null) choice.gimmickID = null
+            return choice
+        }
+
+        override fun onHealthChange(packet: BattleHealthChangePacket) = inner.onHealthChange(packet)
     }
 
     /**

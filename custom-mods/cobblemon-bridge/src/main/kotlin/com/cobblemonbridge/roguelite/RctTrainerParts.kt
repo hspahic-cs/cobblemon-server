@@ -64,9 +64,11 @@ object RctTrainerParts {
     private var npcCls: Class<*>? = null
     private var npcTeamM: Method? = null
     private var npcAiM: Method? = null
-    private var npcBagM: Method? = null
-    private var bagCloneM: Method? = null
     private var actorCtor: Constructor<*>? = null
+    private var emptyBagCtor: Constructor<*>? = null
+
+    /** RCT display names end in the authored team's level — see [actorFor] for why it goes. */
+    private val LEVEL_SUFFIX = Regex(""" ?Lv\.\d+$""")
     private var mobEntityTypeM: Method? = null
     private var mobSetTrainerIdM: Method? = null
     private var mobSetPersistentM: Method? = null
@@ -92,9 +94,14 @@ object RctTrainerParts {
                 npcCls = Class.forName(TRAINER_NPC)
                 npcTeamM = npcCls!!.getMethod("getTeam")
                 npcAiM = npcCls!!.getMethod("getBattleAI")
-                npcBagM = npcCls!!.getMethod("getBag")
+                // The Q4 ruling (strip the bag) is implemented as an EMPTY bag, never null.
+                // Learned on dev 2026-07-31: RCT's own RCTBattleAI calls getBag().getItems()
+                // unconditionally (ResponseBuilder.suggestItems), so a null bag NPEs the battle
+                // tick on the first turn of any trainer whose JSON declares the rct AI — the wave
+                // dies two seconds in with "a battle error has occurred". An empty bag has nothing
+                // to suggest, which is the ruling, minus the crash.
                 val bagCls = Class.forName(TRAINER_BAG)
-                bagCloneM = bagCls.getMethod("clone")
+                emptyBagCtor = bagCls.getConstructor()
 
                 val aiCls = Class.forName("com.cobblemon.mod.common.api.battles.model.ai.BattleAI")
                 actorCtor = Class.forName(TRAINER_ACTOR).getConstructor(
@@ -177,17 +184,25 @@ object RctTrainerParts {
      * way except who built it.
      *
      * [team] is ours — built with `BattlePokemon.safeCopyOf`, which is what makes the wave's level
-     * mutation land on a battle clone and never on the authored trainer (§2.6). The bag is cloned
-     * for the same reason the actor takes one at all: `TrainerBag` is stateful across a battle, and
-     * handing over the registry's instance would let one wave spend another's items.
+     * mutation land on a battle clone and never on the authored trainer (§2.6). The bag is an
+     * **empty** `TrainerBag` (§4 Q4, ruled 2026-07-31): PokéRogue trainers never heal or item
+     * mid-fight — their difficulty is party composition — and RCT's authored bags would make wave
+     * difficulty depend on which RCT trainer id a roster happened to name. Empty rather than null
+     * because RCT's `RCTBattleAI` reads `getBag().getItems()` without a null check and a null bag
+     * killed every rct-AI battle on its first turn (dev, 2026-07-31).
+     *
+     * The actor's name strips RCT's ` Lv.N` suffix. That N is the *authored* team's level — the
+     * skier's JSON says 36 — and the team actually fielded is the generated one at the wave's
+     * level, so "Skier Kaitlyn Lv.36" sending out a level-5 Koffing reads as a bug in every battle
+     * message. The overworld nameplate is rctmod's renderer and out of reach from here.
      */
     fun actorFor(rctId: String, entity: Entity, team: List<BattlePokemon>): BattleActor? {
         val npc = npc(rctId) ?: return null
         return try {
             val ai = npcAiM!!.invoke(npc)
-            val bag = npcBagM!!.invoke(npc)?.let { bagCloneM!!.invoke(it) }
+            val name = (entity.displayName?.string ?: rctId).replace(LEVEL_SUFFIX, "")
             actorCtor!!.newInstance(
-                entity.displayName?.string ?: rctId, entity, entity.uuid, team, bag, ai,
+                name, entity, entity.uuid, team, emptyBagCtor!!.newInstance(), ai,
             ) as BattleActor
         } catch (e: Throwable) {
             log.error("could not build an RCT battle actor for trainer '{}'", rctId, e)
@@ -212,6 +227,17 @@ object RctTrainerParts {
      * because a live `TrainerMob` walks up to players and starts battles on sight. In a one-player
      * arena that is a second, RCT-driven battle attempt against the run's own wave.
      */
+    /**
+     * Every wave NPC carries this **command tag**, which vanilla serialises with the entity. It is
+     * the leftover-trainer fix (dev, 2026-07-31): a wipe teleports the player out and drops the
+     * arena's chunk ticket inside the sweep's 20-tick window, the NPC unloads to disk reading as
+     * `isRemoved` (so the sweep skips it), and the *saved* trainer re-materialises the next time
+     * that arena slot loads — after the stamp sweep has already run, because entities load a beat
+     * behind their chunks. The tag is what lets [RogueliteTrainerBattles] recognise and discard a
+     * resurrected NPC at `EntityJoinLevelEvent`, which fires for disk loads exactly.
+     */
+    const val WAVE_NPC_TAG = "cobblemon_roguelite_wave_npc"
+
     fun spawn(level: ServerLevel, rctId: String, x: Double, y: Double, z: Double, yaw: Float): Entity? {
         if (!resolve()) return null
         return try {
@@ -221,6 +247,7 @@ object RctTrainerParts {
             mob.moveTo(x, y, z, yaw, 0f)
             mobSetPersistentM!!.invoke(mob, true, true)
             (mob as? Mob)?.isNoAi = true
+            mob.addTag(WAVE_NPC_TAG)
             if (!level.addFreshEntity(mob)) {
                 mob.discard()
                 log.error("the world refused the trainer entity for '{}' at {} {} {}", rctId, x, y, z)

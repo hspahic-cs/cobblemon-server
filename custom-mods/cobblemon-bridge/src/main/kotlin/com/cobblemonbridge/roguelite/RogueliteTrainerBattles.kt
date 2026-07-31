@@ -48,14 +48,16 @@ import kotlin.math.sin
  *    party, and a run's party deliberately is not there (§1.1).
  * 3. **The team, from whichever of the two paths this wave uses** — see [teamFor]. Roguelite either
  *    sends generated properties strings (plan §2.30) or sends none, meaning the RCT trainer's own
- *    authored team. Both then take the wave's level on the opponent's side at `BattleStartedEvent.Pre`
- *    — verified on dev 2026-07-28: the write lands, Showdown packs the team afterwards, and RCT does
- *    not re-derive it. The NPC team is a `safeCopyOf` battle clone, so unlike the player-side gym
- *    downlevel in [com.cobblemonbridge.battle.GymBattleAdjustHook] this needs **no** NBT restore
- *    machinery: the authored trainer is never touched, and a crash mid-battle leaves nothing to put
- *    back. On the generated path the level is already in the properties string, so the forcing is a
- *    no-op there and the *moveset* is the one Cobblemon derives for that level — which is the whole
- *    reason §2.30 generates rather than authors.
+ *    authored team. Only the *authored* team takes the wave's level on the opponent's side at
+ *    `BattleStartedEvent.Pre` — forcing is still the mechanism that scales an E4/champion team
+ *    somebody tuned. Verified on dev 2026-07-28: the write lands, Showdown packs the team
+ *    afterwards, and RCT does not re-derive it. A *generated* team carries its own per-member
+ *    levels in the properties strings (PokéRogue's `getPartyLevels` spread: the ace above the
+ *    curve, weak members below it) and must not be flattened — the moveset Cobblemon derives for
+ *    each member's own level is the whole reason §2.30 generates rather than authors. The NPC team
+ *    is a `safeCopyOf` battle clone either way, so unlike the player-side gym downlevel in
+ *    [com.cobblemonbridge.battle.GymBattleAdjustHook] this needs **no** NBT restore machinery: the
+ *    authored trainer is never touched, and a crash mid-battle leaves nothing to put back.
  * 4. **Nothing else.** The faints, the field, the result and §2.10's disconnect marker are all
  *    roguelite's — its battle layer adopts any battle that starts while a run carries a battle
  *    marker, which is exactly the window this call sits in. Reporting them from here would double
@@ -101,6 +103,36 @@ object RogueliteTrainerBattles {
         if (!RogueliteSeam.install(::begin)) return
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, ::applyWaveLevel)
         NeoForge.EVENT_BUS.addListener<ServerTickEvent.Post> { sweep() }
+        NeoForge.EVENT_BUS.addListener(::discardResurrected)
+    }
+
+    /**
+     * Discard a wave NPC the moment it loads back in from disk.
+     *
+     * The 20-tick [sweep] loses a race it cannot win (found on dev 2026-07-31): a wipe teleports
+     * the player out and releases the arena's chunk ticket, the NPC unloads to disk before the next
+     * sweep tick — unloaded reads as `isRemoved`, so the sweep skips it — and the trainer is back,
+     * standing in the arena, when the next run loads that slot. The stamp sweep does not catch it
+     * either, because entities load a beat *behind* their chunks in 1.21 and the stamp sweeps
+     * immediately. `EntityJoinLevelEvent` fires exactly at that late entity load, so the leftover
+     * dies the moment it exists again.
+     *
+     * Keyed on the persistent command tag rather than on [npcs], deliberately: the map is
+     * process-local, so after a server restart it knows nothing — and a tagged NPC loading from
+     * disk is *by definition* not a live wave's, because live NPCs never unload while their battle
+     * holds the arena's chunk ticket.
+     */
+    private fun discardResurrected(event: net.neoforged.neoforge.event.entity.EntityJoinLevelEvent) {
+        if (event.level.isClientSide) return
+        val entity = event.entity
+        if (!entity.tags.contains(RctTrainerParts.WAVE_NPC_TAG)) return
+        if (event.loadedFromDisk()) {
+            entity.discard()
+            CobblemonBridge.logger.info(
+                "roguelite: discarded a leftover wave trainer that loaded back in from disk at {} {} {}",
+                entity.blockX, entity.blockY, entity.blockZ,
+            )
+        }
     }
 
     // ─── Starting the wave ─────────────────────────────────────────────────
@@ -185,8 +217,13 @@ object RogueliteTrainerBattles {
         }
 
         // Stashed *before* startBattle, because startBattle posts BATTLE_STARTED_PRE synchronously —
-        // the subscriber runs inside the call below, not after it.
-        pendingLevels[player.uuid] = wave.level to System.currentTimeMillis()
+        // the subscriber runs inside the call below, not after it. Authored teams only: a generated
+        // team carries per-member levels in its properties strings (the ace above the curve, weak
+        // members below it), and flattening those to the wave level would erase exactly the spread
+        // §2.30 generates.
+        if (wave.teamProperties.isEmpty()) {
+            pendingLevels[player.uuid] = wave.level to System.currentTimeMillis()
+        }
 
         val started = BattleRegistry.startBattle(
             battleFormat = runFormat(),
@@ -293,7 +330,10 @@ object RogueliteTrainerBattles {
     // ─── The wave's level, on the opponent only ────────────────────────────
 
     /**
-     * Force every opponent Pokémon to the wave's level at `BattleStartedEvent.Pre`.
+     * Force every opponent Pokémon to the wave's level at `BattleStartedEvent.Pre` — authored waves
+     * only, because [begin] only stashes a level for them. A generated team already carries its
+     * per-member levels in the properties strings (the ace above the curve, weak members below it),
+     * and flattening that spread here would undo the one thing generation buys.
      *
      * The timing is structural rather than lucky: `startBattle` posts this event and only then calls
      * `startShowdown`, which packs each team by reading `effectedPokemon` fresh — so every Pre

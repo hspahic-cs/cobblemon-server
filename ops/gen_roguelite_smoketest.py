@@ -409,13 +409,15 @@ def main():
 
     write(os.path.join(data, "trainer_rosters", "default.json"), {
         "_comment": note + [
-            "authored_for is SHORT on purpose: a 60-wave run at trainer-every-3/boss-every-6 reaches a",
+            "authored_for MUST match the live schedule (the mod's default 200/5/10) — the loader",
+            "validates against it, and the old 60/3/6 header got the whole roster REJECTED once the",
+            "rival block landed: meetings at 95/145/195 read as past-the-end of a 60-wave run.",
             "shielded boss in minutes, where the shipping 200/5/10 schedule would take an evening.",
             "Since 2026-07-31 every band trainer has a `generated` entry, so trainer AND boss waves",
             "take the §2.30 generated-team path; the authored path is only reachable via the",
             "roster-missing fallback — a deliberate coverage loss, see BOSS_GENERATED in the script.",
         ],
-        "authored_for": {"run_length": 60, "trainer_interval": 3, "boss_interval": 6},
+        "authored_for": {"run_length": 200, "trainer_interval": 5, "boss_interval": 10},
         "bands": [
             # Re-banded to the short schedule: the generated bands are cut for 200 waves.
             {**band, "min_wave": 1, "max_wave": 20} if i == 0

@@ -6,6 +6,7 @@ import com.cobblemonroguelite.run.RunCommands
 import com.cobblemonroguelite.run.RunController
 import com.cobblemonroguelite.run.RunStatus
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.chat.Style
@@ -321,15 +322,16 @@ object StarterDraftMenu {
         private fun tabIcon(tab: StarterDraftFilter): ItemStack {
             val selected = tab == filter
             val available = catalogue.options.count(tab::matches)
-            // Amethyst rather than gold nuggets. Nuggets read as loose change on a screen whose currency
-            // is not money, and against a row of Pokémon sprites their gold sits in the same colour
-            // family as half the icons below them. A purple crystal is the one hue nothing else on this
-            // screen uses — the meter owns green/amber/red, the picks are sprites — so the tab row reads
-            // as a distinct band rather than as more of the grid.
+            // Poké Balls, by request (2026-07-31 playtest — amethyst read as an arbitrary crystal on
+            // a Pokémon screen). The stack SIZE still carries the point cost, which is the part that
+            // was ever load-bearing; the ball is the one icon nobody has to learn on this screen.
+            val ball = BuiltInRegistries.ITEM.getOptional(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("cobblemon", "poke_ball"),
+            ).orElse(Items.SNOWBALL)
             val icon = when (tab) {
                 is StarterDraftFilter.All -> ItemStack(Items.BOOK)
-                is StarterDraftFilter.Exactly -> ItemStack(Items.AMETHYST_SHARD, tab.cost)
-                is StarterDraftFilter.AtLeast -> ItemStack(Items.AMETHYST_SHARD, tab.cost)
+                is StarterDraftFilter.Exactly -> ItemStack(ball, tab.cost)
+                is StarterDraftFilter.AtLeast -> ItemStack(ball, tab.cost)
             }
             return label(
                 icon,

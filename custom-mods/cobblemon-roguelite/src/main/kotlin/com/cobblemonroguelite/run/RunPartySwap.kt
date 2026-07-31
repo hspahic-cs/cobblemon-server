@@ -174,8 +174,12 @@ object RunPartySwap {
         }
 
         log.info(
-            "roguelite: swapped {}'s party for their run — {} stashed to the PC, {} installed",
+            "roguelite: swapped {}'s party for their run — {} stashed to the PC, {} installed ({})",
             player.gameProfile.name, moved.size, installed,
+            // Species and levels, because the first playtest reported run levels "resetting" across
+            // a pause/resume and no log line could say whether install put back the levels restore
+            // took out. Every seam the party crosses now records what crossed it.
+            describeLevels(runParty),
         )
         // Said out loud, which is the clearest gap prior art showed up (docs/roguelite-prior-art.md):
         // Quick Teams notifies on screen when it moves Pokémon between the party and the PC, we did
@@ -256,8 +260,8 @@ object RunPartySwap {
 
         if (runOwned.isNotEmpty() || returned > 0) {
             log.info(
-                "roguelite: restored {}'s party — {} run Pokémon released, {} of their own returned",
-                player.gameProfile.name, runOwned.size, returned,
+                "roguelite: restored {}'s party — {} run Pokémon released ({}), {} of their own returned",
+                player.gameProfile.name, runOwned.size, describeLevels(runOwned), returned,
             )
         }
         if (returned > 0) player.sendSystemMessage(RunMessages.partyReturned(returned))
@@ -349,8 +353,21 @@ object RunPartySwap {
                 )
             }
         }
-        log.info("roguelite: re-pointed {}'s run party at the {} Pokémon they are holding", player.gameProfile.name, live.size)
+        log.info(
+            "roguelite: re-pointed {}'s run party at the {} Pokémon they are holding ({})",
+            player.gameProfile.name, live.size, describeLevels(live),
+        )
     }
+
+    /**
+     * `species Lnn` per member, for the seam logs above. The first playtest reported run levels
+     * "resetting" across a creative-mode pause and resume, and no log line recorded levels at any
+     * of the three seams the party crosses — so the report could not even be localised to a seam.
+     */
+    private fun describeLevels(party: List<Pokemon>): String =
+        party.joinToString(", ") { p ->
+            runCatching { "${p.species.name} L${p.level}" }.getOrDefault("?")
+        }
 
     /** Undo the moves already made, so a refused install leaves the party exactly as it was found. */
     private fun rollBackInstall(party: PokemonStore<*>, pc: PCStore, moved: List<Pair<Pokemon, Int>>) {

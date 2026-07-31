@@ -151,8 +151,24 @@ object RunWaves {
         run: RunState,
         plan: WavePlan,
         trainer: TrainerPick?,
-    ): Boolean =
-        runCatching { handler.beginWave(server, player, run, plan, trainer) }
+    ): Boolean {
+        val started = runCatching { handler.beginWave(server, player, run, plan, trainer) }
             .onFailure { log.error("roguelite: wave handler failed for {} at wave {}", player.uuid, plan.wave, it) }
             .getOrDefault(false)
+        // Announced from the one choke point every wave passes through, so no handler has to
+        // remember to. First playtest (2026-07-31): the player could not tell which wave they were
+        // on, which turns "wave 10 felt broken" reports into "some wave felt broken" reports — the
+        // wave number is the key every log line is filed under.
+        //
+        // Action bar AND chat, not either. The chat-only first cut was invisible in practice: the
+        // announcement fires the instant the battle starts, which is the instant Cobblemon's battle
+        // overlay takes the screen, so the line was only ever discoverable by scrolling back. The
+        // action bar renders over the overlay; the chat line stays as the scrollback record.
+        if (started) {
+            val message = RunMessages.waveStarted(plan, trainer)
+            player.sendSystemMessage(message)
+            player.displayClientMessage(message, true)
+        }
+        return started
+    }
 }

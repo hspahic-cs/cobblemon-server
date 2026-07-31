@@ -188,6 +188,9 @@ object RewardGrant {
     /**
      * A TM.
      *
+     * Gated on the species' learnset first ([TmEligibility] — the 2026-07-31 playtest ruling), because
+     * `MoveSet` itself enforces nothing and would put Earthquake on a Magikarp without complaint.
+     *
      * Added to a free move slot when there is one, and otherwise **refused** rather than overwriting a
      * move. Overwriting is what mainline does, but mainline asks first; a command that silently replaced
      * a move would be the single most destructive thing in this file, since a move is not recoverable
@@ -197,9 +200,13 @@ object RewardGrant {
         val template = runCatching { Moves.getByName(reward.move) }.getOrNull()
             ?: return unresolved("move", reward.move)
         val moveSet = pokemon.moveSet
-        if (moveSet.getMoves().any { it.name.equals(template.name, ignoreCase = true) }) {
-            return GrantResult.NoEffect("${pokemon.species.name} already knows ${template.displayName.string}")
-        }
+        // Both the learnset gate and the already-knows check, in one call: [TmEligibility] owns the
+        // rule so this backstop and the GUI's pre-take intercept cannot drift apart. NoEffect rather
+        // than Failed, because a Bulbasaur that cannot learn Earthquake is nobody's bug — the table
+        // is fine, the party is fine, the player just aimed at the wrong member and can aim again.
+        // The GUI refuses BEFORE the take/charge; this branch is the backstop for the command path,
+        // where the credits are already spent (see apply() on why that ordering is deliberate).
+        TmEligibility.blockReason(template, pokemon)?.let { return GrantResult.NoEffect(it) }
         if (!moveSet.hasSpace()) {
             // A full moveset is no longer a dead end: the between-wave menu asks WHICH move to forget
             // — mainline's own flow, the playtest's "TMs don't work" — and passes the slot here. The

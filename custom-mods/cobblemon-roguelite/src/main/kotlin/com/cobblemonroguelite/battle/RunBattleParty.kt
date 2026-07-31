@@ -82,10 +82,19 @@ object RunBattleParty {
             return null
         }
 
+        // The lead is the Pokémon that ended the previous wave on the field (PokéRogue's
+        // continuity, [RunState.lastLead]) when it is still standing, else party slot 1. Fainted
+        // leads fall through: sending out a fainted Pokémon is a refusal Cobblemon makes for us,
+        // as a wave that cannot start.
+        val lead = run.lastLead
+            ?.let { uuid -> members.firstOrNull { it.uuid == uuid } }
+            ?.takeIf { runCatching { !it.isFainted() }.getOrDefault(true) }
+            ?: members.first()
+
         // clone = false is what makes the battle mutate the run party rather than a copy of it, and
         // healPokemon = false is what stops the wave transition undoing the last one. Both defaults
         // in Cobblemon are the other way round, which is why they are spelled out.
-        val team = store.toBattleTeam(clone = false, healPokemon = false, leadingPokemon = members.first().uuid)
+        val team = store.toBattleTeam(clone = false, healPokemon = false, leadingPokemon = lead.uuid)
         return team.takeIf { it.isNotEmpty() }
     }
 }

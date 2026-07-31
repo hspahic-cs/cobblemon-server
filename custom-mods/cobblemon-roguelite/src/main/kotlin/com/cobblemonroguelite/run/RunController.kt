@@ -564,6 +564,9 @@ object RunController {
     fun waveCleared(server: MinecraftServer, player: UUID): WaveStep? {
         val store = RunStore.of(server)
         val run = store.get(player) ?: return null
+        // The winning field becomes the next wave's lead (PokéRogue's continuity), read before the
+        // marker is cleared because the marker is the only thing that knows who was out.
+        run.battle?.onField?.firstOrNull()?.let { run.lastLead = it }
         // The battle resolved, so the marker goes. Clearing on *every* exit from a battle is what
         // keeps §2.10 from firing on people who did nothing wrong: a marker left behind by a won
         // wave turns the player's next ordinary logout into a rage-quit.
@@ -604,6 +607,16 @@ object RunController {
         // player perceives no difference. This is the only progression write outside the capture path,
         // and like that one it touches nothing of the player's real data: see [RunProgression].
         RunProgression.creditWaveFriendship(server, player, run.partySnapshot())
+
+        // PokéRogue's X0 rule, ruled in 2026-07-31: clearing every tenth wave fully heals the party
+        // — HP, status and PP. On the wave NUMBER, not the kind, exactly as theirs is: a promoted
+        // boss elsewhere does not heal, the block boundary does. This is the mode's only free heal,
+        // and it is what makes a 200-wave run a chain of ten-wave gauntlets rather than a war of
+        // attrition the shop alone must carry.
+        if (cleared.plan.wave % 10 == 0) {
+            run.partySnapshot().forEach { pokemon -> runCatching { pokemon.heal() } }
+            server.playerList.getPlayer(player)?.sendSystemMessage(RunMessages.partyHealed(cleared.plan.wave))
+        }
 
         // The depth cap is re-read from the player, so a run cleared by a player who has since logged
         // out falls back to "no cap" for this one decision. That errs towards letting the run
@@ -686,20 +699,25 @@ object RunController {
     )
 
     /**
-     * Permadeath: [pokemon] is gone from the run for good (§2.13).
+     * A run Pokémon fainted in battle.
      *
-     * **Identity contract.** [RunState.kill] matches on UUID, so whatever the battle layer hands back
-     * has to be the run Pokémon or a `clone(newUUID = false)` of it. A default `clone()` makes this
-     * call a silent no-op: the party never shrinks, the run never wipes, and nothing in the log says
-     * so. Nor may the battle layer `heal()` the party between waves — that removes the attrition the
-     * whole mode is built on, and it is just as invisible.
+     * **Reversed 2026-07-31 — this no longer removes anything.** §2.13's permadeath deleted the
+     * fainted Pokémon here, and the first playtest caught the contradiction: the tables sell
+     * Revives (ruled in), and a deleted Pokémon is not a revive target — the player watched their
+     * Dondozo vanish from the party and correctly read it as a bug. PokéRogue's own rule ships
+     * instead: a fainted member stays in the party at 0 HP, revivable between waves; the run ends
+     * when everyone is down at once ([RunState.isWiped]), which the *battle loss* path checks —
+     * a mid-battle faint is never the moment the run ends, because the battle is still deciding.
      *
-     * Returns the wipe report when that was the last party member.
+     * What survives of the old contract: §2.10's disconnect penalty still kills through
+     * [RunState.kill] — rage-quitting still costs the Pokémon on the field — and the checkpoint
+     * below still runs so the fainted state reaches disk before a crash could shed it.
      */
     fun pokemonFainted(server: MinecraftServer, player: UUID, pokemon: Pokemon): RunEndReport? {
         val store = RunStore.of(server)
         val run = store.get(player) ?: return null
-        if (!run.kill(pokemon)) {
+        val inRun = run.partySnapshot().any { it.uuid == pokemon.uuid }
+        if (!inRun) {
             log.warn(
                 "roguelite: faint reported for {} that is not in {}'s run party — check the battle party " +
                     "is built with clone(newUUID = false)",
@@ -707,26 +725,8 @@ object RunController {
             )
             return null
         }
-
-        // §2.2-reversed: permadeath has to reach the player's party too, or the run believes the
-        // Pokémon is gone while it is still sitting in a party slot — visible, selectable, and
-        // fightable with. Only ever the one that just fainted, and only when it is run-marked, so this
-        // cannot reach anything of the player's even if a faint is reported for the wrong Pokémon.
-        //
-        // Not fatal if it fails: the run's own record is authoritative for whether the run is over, and
-        // a stranded corpse is cleaned up by the restore at run end.
-        if (RunPartySwap.isRunPokemon(pokemon)) {
-            server.playerList.getPlayer(player)?.let { online ->
-                runCatching { Cobblemon.storage.getParty(online).remove(pokemon) }
-                    .onFailure { log.error("roguelite: could not remove a fainted run Pokémon from {}'s party", player, it) }
-            }
-        }
-
-        if (!run.isWiped()) {
-            store.checkpoint(server, player)
-            return null
-        }
-        return endRun(server, player, RunEndCause.PARTY_WIPED)
+        store.checkpoint(server, player)
+        return null
     }
 
     /**
@@ -862,8 +862,9 @@ object RunController {
         run.battle = null
         if (run.isWiped()) return endRun(server, player, RunEndCause.PARTY_WIPED)
         log.warn(
-            "roguelite: {} lost wave {} with {} Pokémon still alive — run left in place",
-            player, run.wave, run.partySnapshot().size,
+            "roguelite: {} lost wave {} with {} Pokémon still standing — run left in place",
+            player, run.wave,
+            run.partySnapshot().count { p -> runCatching { !p.isFainted() }.getOrDefault(true) },
         )
         return null
     }
@@ -977,7 +978,15 @@ object RunController {
      * says so, and a handler that never calls it leaves the penalty landing on the lead rather than on
      * whoever was actually out — the right *size* of loss aimed at the wrong Pokémon.
      */
-    private fun openingField(run: RunState): List<UUID> = run.partySnapshot().take(1).map { it.uuid }
+    private fun openingField(run: RunState): List<UUID> {
+        val party = run.partySnapshot()
+        // The continuity lead if it is still alive and in the party, else slot 1 — the same choice
+        // the battle layer makes when it builds the team, and it must be the SAME choice: this list
+        // aims §2.10's penalty, and aiming it at slot 1 while the lead is someone else would put a
+        // disconnect's permadeath on a Pokémon that was never on the field.
+        val lead = run.lastLead?.let { uuid -> party.firstOrNull { it.uuid == uuid } } ?: party.firstOrNull()
+        return listOfNotNull(lead?.uuid)
+    }
 
     /**
      * The battle layer reporting who is on the field now — §2.10's penalty is aimed by this.

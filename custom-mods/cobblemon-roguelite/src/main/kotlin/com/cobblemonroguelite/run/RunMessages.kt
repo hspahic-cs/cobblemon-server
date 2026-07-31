@@ -1,6 +1,8 @@
 package com.cobblemonroguelite.run
 
 import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemonroguelite.composition.WavePlan
+import com.cobblemonroguelite.data.trainer.TrainerPick
 import com.cobblemonroguelite.starter.StarterCatalogue
 import com.cobblemonroguelite.starter.StarterSelection
 import com.cobblemonroguelite.integration.RunOpponent
@@ -260,6 +262,28 @@ object RunMessages {
     fun atWave(wave: Int, party: Int, depthCap: Int?): Component {
         val cap = depthCap?.let { " (your badges allow $it)" } ?: ""
         return literal("Wave $wave$cap, $party Pokémon alive.")
+    }
+
+    /**
+     * Said at the start of every wave, from [RunWaves.begin].
+     *
+     * The first playtest's quietest finding: nothing on screen said which wave was being fought, so
+     * the player's bug reports could not name one — and the wave number is the key every server-side
+     * log line is filed under. Gold for bosses because that wave IS the event of its block; the
+     * rival is named as what it is for the same reason.
+     */
+    /** The X0 full heal, said so the free heal is never mistaken for a bug in the damage model. */
+    fun partyHealed(wave: Int): Component =
+        Component.literal("Wave $wave cleared — your party has been fully healed.").withStyle(ChatFormatting.GREEN)
+
+    fun waveStarted(plan: WavePlan, trainer: TrainerPick?): Component {
+        val who = trainer?.trainerId?.path?.let { " — $it" } ?: ""
+        return when (plan.kind) {
+            RunOpponent.WILD -> Component.literal("Wave ${plan.wave}.").withStyle(ChatFormatting.GRAY)
+            RunOpponent.TRAINER -> Component.literal("Wave ${plan.wave} — trainer battle$who.").withStyle(ChatFormatting.YELLOW)
+            RunOpponent.RIVAL -> Component.literal("Wave ${plan.wave} — your rival$who.").withStyle(ChatFormatting.YELLOW)
+            RunOpponent.BOSS -> Component.literal("Wave ${plan.wave} — BOSS$who.").withStyle(ChatFormatting.GOLD)
+        }
     }
 
     /**

@@ -264,7 +264,12 @@ object BetweenWaveMenu {
                         { cancelled -> BetweenWaveMenu.openFor(cancelled) },
                         { pokemon ->
                             val table = RewardTables.default()
-                            val take = table?.let { RewardOffer.take(it, run.wave, run.seed, run.rerollsThisWave, entryId) }
+                            val take = table?.let {
+                                RewardOffer.take(
+                                    it, run.wave, run.seed, run.rerollsThisWave, entryId,
+                                    party = RewardOffer.partyStateOf(run.partySnapshot()),
+                                )
+                            }
                             if (take is TakeResult.Ok) {
                                 val outcome = runCatching { selectingItem.applyToPokemon(online, sample.copy(), pokemon) }
                                 if (outcome.isSuccess) {
@@ -297,6 +302,20 @@ object BetweenWaveMenu {
                 return
             }
             val slot = index + 1
+
+            // The learnset gate, BEFORE the pending pick is cleared: an ineligible Pokémon keeps the
+            // PICKER open rather than bouncing the player back to the grid, because the whole point of
+            // refusing (TmEligibility's ruling) is that they aim at a different member — and the
+            // members that qualify are painted right there. Clearing pending first and refusing after
+            // would make every wrong click cost two more clicks to get back to this screen.
+            (rewardOf(waiting.paid, waiting.entryId) as? RunReward.TechnicalMachine)?.let { tm ->
+                val blocked = run.partySnapshot().getOrNull(slot - 1)?.let { tmBlockReason(tm, it) }
+                if (blocked != null) {
+                    player.sendSystemMessage(Component.literal("$blocked — pick another Pokémon."))
+                    paint()
+                    return
+                }
+            }
             pending = null
 
             if (interceptTm(player, waiting.paid, waiting.entryId, waiting.label, slot)) return
@@ -321,10 +340,13 @@ object BetweenWaveMenu {
         private fun interceptTm(player: ServerPlayer, paid: Boolean, entryId: String, label: String, memberSlot: Int): Boolean {
             val reward = rewardOf(paid, entryId) as? RunReward.TechnicalMachine ?: return false
             val pokemon = run.partySnapshot().getOrNull(memberSlot - 1) ?: return false
-            if (pokemon.moveSet.getMoves().any { it.name.equals(reward.move, ignoreCase = true) }) {
-                player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
-                    "${pokemon.species.name} already knows that move — nothing was taken.",
-                ))
+            // Already-knows AND the learnset gate, through the same [TmEligibility] the grant's
+            // backstop uses — the second playtest ruling folded into the shape the first one built.
+            // A solo party reaches here without ever seeing the picker, so this is where a Magikarp
+            // holding the run's only slot finds out the TM is not for it, with nothing yet spent.
+            val blocked = tmBlockReason(reward, pokemon)
+            if (blocked != null) {
+                player.sendSystemMessage(Component.literal("$blocked — nothing was taken."))
                 paint()
                 return true
             }
@@ -334,6 +356,20 @@ object BetweenWaveMenu {
                 return true
             }
             return false
+        }
+
+        /**
+         * [TmEligibility.blockReason] over a live party member, or null when the TM may proceed.
+         *
+         * An **unresolvable move id** is deliberately null — "may proceed" — rather than a refusal:
+         * naming a move this server does not have is [RewardGrant]'s `unresolved()` case, and letting
+         * the click fall through means the operator-facing message (and the log line) comes from the
+         * one place that owns it, instead of this menu inventing a second wording.
+         */
+        private fun tmBlockReason(reward: RunReward.TechnicalMachine, pokemon: Pokemon): String? {
+            val template = runCatching { com.cobblemon.mod.common.api.moves.Moves.getByName(reward.move) }.getOrNull()
+                ?: return null
+            return runCatching { TmEligibility.blockReason(template, pokemon) }.getOrNull()
         }
 
         private fun resolveMoveChoice(player: ServerPlayer, slotId: Int) {
@@ -435,9 +471,13 @@ object BetweenWaveMenu {
 
         private fun finishOffer(player: ServerPlayer, entryId: String, slot: Int?, forgetMoveSlot: Int? = null) {
             val table = RewardTables.default() ?: return
-            when (val result = RewardOffer.take(table, run.wave, run.seed, run.rerollsThisWave, entryId)) {
+            val party = run.partySnapshot()
+            val result = RewardOffer.take(
+                table, run.wave, run.seed, run.rerollsThisWave, entryId,
+                party = RewardOffer.partyStateOf(party),
+            )
+            when (result) {
                 is TakeResult.Ok -> {
-                    val party = run.partySnapshot()
                     val target = RewardTargeting.resolve(result.entry.reward, slot, party.size)
                     if (target is RewardTarget.Unresolved) {
                         player.sendSystemMessage(ShopMessages.needsSlot(target.reason))
@@ -488,8 +528,15 @@ object BetweenWaveMenu {
             ShopTables.default()?.let { ShopStock.stockAt(it, run.wave) }.orEmpty()
 
         private fun offer(): List<RewardEntry> =
-            RewardTables.default()?.let { RewardOffer.offerFor(it, run.wave, run.seed, run.rerollsThisWave) }
-                .orEmpty()
+            // The party state makes the scaled entries live: a full-health party sees no potions in
+            // its three. Computed fresh per paint, so healing from the shop row immediately stops
+            // the free half offering what the player just bought.
+            RewardTables.default()?.let {
+                RewardOffer.offerFor(
+                    it, run.wave, run.seed, run.rerollsThisWave,
+                    party = RewardOffer.partyStateOf(run.partySnapshot()),
+                )
+            }.orEmpty()
 
         /** Repaint in place. Cheaper than reopening, and it keeps the window from flickering shut. */
         private fun paint() {
@@ -552,8 +599,18 @@ object BetweenWaveMenu {
                         listOf("§7Click one of your Pokémon below.", "§8Anywhere else cancels."),
                     ),
                 )
+                // The picker "filter" for a TM: ineligible members are painted greyed with the reason
+                // rather than removed. Removing them would renumber the row (the 1-based slot the
+                // player sees IS the party slot everywhere else in this mod) and would hide WHY a
+                // Pokémon is not an option — "can't learn it" painted on the sprite answers the
+                // question the empty slot would raise. The click side of the same rule lives in
+                // resolvePending, which keeps this screen open when a greyed member is clicked anyway.
+                val pendingTm = rewardOf(waiting.paid, waiting.entryId) as? RunReward.TechnicalMachine
                 run.partySnapshot().forEachIndexed { index, pokemon ->
-                    PARTY_SLOTS.getOrNull(index)?.let { container.setItem(it, partyIcon(pokemon, index + 1, waiting)) }
+                    PARTY_SLOTS.getOrNull(index)?.let {
+                        val blocked = pendingTm?.let { tm -> tmBlockReason(tm, pokemon) }
+                        container.setItem(it, partyIcon(pokemon, index + 1, waiting, blocked))
+                    }
                 }
                 container.setItem(REROLL_SLOT, label(Items.BARRIER, "§cCancel", listOf("§7Click anywhere else too.")))
                 broadcastChanges()
@@ -629,19 +686,21 @@ object BetweenWaveMenu {
             listOf("§7Closes this screen.", "§8Then /roguelite resume for the next wave."),
         )
 
-        private fun partyIcon(pokemon: Pokemon, slot: Int, waiting: Pending): ItemStack {
+        private fun partyIcon(pokemon: Pokemon, slot: Int, waiting: Pending, blocked: String? = null): ItemStack {
             // The real sprite, the way the starter draft and cobblemon-ranked's menus do it — a row of
-            // identical paper is what made the picker invisible in the first playtest.
+            // identical paper is what made the picker invisible in the first playtest. A blocked
+            // member (a TM its species cannot learn) KEEPS the sprite: swapping it for a barrier
+            // would make the row unreadable as a party, and the grey name plus the red reason already
+            // say everything the barrier would.
             val icon = runCatching { com.cobblemon.mod.common.item.PokemonItem.from(pokemon) }
                 .getOrNull()?.takeIf { !it.isEmpty } ?: ItemStack(Items.PAPER)
-            return label(
-                icon,
-                "§f$slot. ${runCatching { pokemon.species.name }.getOrDefault("?")}",
-                listOf(
-                    "§7Level ${runCatching { pokemon.level }.getOrDefault(0)}",
-                    "§aClick to apply §f${waiting.label}",
-                ),
-            )
+            val name = runCatching { pokemon.species.name }.getOrDefault("?")
+            val level = "§7Level ${runCatching { pokemon.level }.getOrDefault(0)}"
+            return if (blocked != null) {
+                label(icon, "§8$slot. $name", listOf(level, "§c$blocked"))
+            } else {
+                label(icon, "§f$slot. $name", listOf(level, "§aClick to apply §f${waiting.label}"))
+            }
         }
 
         /**
@@ -673,10 +732,33 @@ object BetweenWaveMenu {
             // the generic sugar only if a nature has no mint on this server.
             is RunReward.Mint -> cobblemon("${reward.nature.path}_mint", Items.SUGAR)
             is RunReward.AbilityPatch -> cobblemon("ability_patch", Items.NETHER_STAR)
-            is RunReward.TechnicalMachine -> cobblemon("tm_case", Items.ENCHANTED_BOOK)
+            is RunReward.TechnicalMachine -> tmIcon(reward.move)
             // These two already name a real item, so they show it. Unchanged.
             is RunReward.BagItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.CHEST)
             is RunReward.HeldItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.PAPER)
+        }
+
+        /**
+         * The icon for a TM reward: the ACTUAL TM disc for that move, when this server has one.
+         *
+         * Cobblemon 1.7.3 ships no TM items at all — the old `cobblemon:tm_case` id here resolved to
+         * nothing on every server and always degraded to the enchanted-book fallback. The TM items
+         * that do exist come from SimpleTMs (`simpletms:tm_<move id>`, one per move, type-coloured),
+         * which this server runs but this mod deliberately does not depend on (§1.2) — so the id is
+         * assembled at runtime and looked up the same optional way every `cobblemon:` icon is. The
+         * `tr_` twin is tried second because SimpleTMs registers both 1:1 and a server could
+         * conceivably disable one side; the enchanted book stays as the no-SimpleTMs fallback, which
+         * is exactly what a standalone install painted before.
+         */
+        private fun tmIcon(move: String): Item {
+            val id = tmItemId(move)
+            return BuiltInRegistries.ITEM
+                .getOptional(ResourceLocation.fromNamespaceAndPath("simpletms", id))
+                .or {
+                    BuiltInRegistries.ITEM
+                        .getOptional(ResourceLocation.fromNamespaceAndPath("simpletms", "tr_" + id.removePrefix("tm_")))
+                }
+                .orElseGet { cobblemon("tm_case", Items.ENCHANTED_BOOK) }
         }
 
         /**
@@ -723,3 +805,16 @@ object BetweenWaveMenu {
             Component.literal(text).setStyle(Style.EMPTY.withItalic(false))
     }
 }
+
+/**
+ * The SimpleTMs item path for [move]: `tm_` plus the move's Showdown-style id.
+ *
+ * SimpleTMs keys its items by the lowercase-alphanumeric move id (`tm_uturn`, `tm_willowisp` — see
+ * `ops/gen-tm-items.py`, which reads that list straight out of the SimpleTMs jar), while a reward
+ * table's `move` field is hand-typed and may carry hyphens or capitals. Normalising here means a
+ * table that says "U-turn" still finds the disc. Top-level and internal rather than private to the
+ * menu, because it is the one piece of the icon path that is pure — the tests pin the normalisation
+ * so a renamed move id fails a test instead of silently painting the fallback book.
+ */
+internal fun tmItemId(move: String): String =
+    "tm_" + move.lowercase().filter { it in 'a'..'z' || it in '0'..'9' }

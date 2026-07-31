@@ -182,8 +182,33 @@ data class RunState(
     val startedUnderOverride: Boolean = false,
     var lastActiveAtEpochMs: Long = System.currentTimeMillis(),
 ) {
-    /** A run ends when every party member has fainted — permadeath, not a whiteout. */
-    fun isWiped(): Boolean = synchronized(party) { party.isEmpty() }
+    /**
+     * The Pokémon that was on the field when the last wave ended, so the next wave sends it back
+     * out — PokéRogue's behaviour, asked for in the first playtest: every wave opening on party
+     * slot 1 makes the slot-1 Pokémon the only one that ever fights unless the player re-sorts
+     * their party between waves.
+     *
+     * A body property, not a constructor field, and therefore **deliberately not persisted**: after
+     * a relog the lead falls back to party order, which is visible, harmless, and cheaper than a
+     * save-format change. Written by [RunController.waveCleared] from the §2.10 field marker just
+     * before that marker is cleared; read by the battle layer when it builds the next team.
+     */
+    var lastLead: java.util.UUID? = null
+
+    /**
+     * A run ends when every party member is down.
+     *
+     * **Reversed 2026-07-31 (first playtest): a faint is a faint, not a death.** §2.13 originally
+     * removed fainted Pokémon from the run outright, and the playtest surfaced what that broke: the
+     * shop and reward tables sell Revives (ruled in), and a Revive with no fainted Pokémon to
+     * target is a purchase that can never do anything — the two rules contradicted and the revive
+     * economy is the one PokéRogue actually has. So fainted members now *stay*, at 0 HP, revivable
+     * between waves, exactly as in PokéRogue; the wipe is everyone down at once. The empty-party
+     * check remains for the one path that still removes Pokémon: §2.10's disconnect penalty.
+     */
+    fun isWiped(): Boolean = synchronized(party) {
+        party.isEmpty() || party.all { pokemon -> runCatching { pokemon.isFainted() }.getOrDefault(false) }
+    }
 
     /**
      * §2.23: mark the run as played, right now.

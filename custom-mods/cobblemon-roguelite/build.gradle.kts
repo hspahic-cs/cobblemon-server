@@ -13,6 +13,8 @@ repositories {
     mavenCentral()
     maven("https://artefacts.cobblemon.com/releases")
     maven("https://thedarkcolour.github.io/KotlinForForge/")
+    // Accessories (worn-slot API) — compileOnly below, runtime-optional.
+    maven("https://maven.wispforest.io/releases")
 }
 
 neoForge {
@@ -41,6 +43,19 @@ neoForge {
 dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:${project.property("kotlin_for_forge_version")}")
     implementation("com.cobblemon:neoforge:${project.property("cobblemon_version")}")
+
+    // compileOnly, and the version is PINNED to the jar the modpack ships (modpack/mods/
+    // accessories.pw.toml) rather than a range: the compat class is verified against exactly the
+    // API that will load it. Runtime-optional — the class touches Accessories types only inside
+    // method bodies, is registered only behind ModList.isLoaded("accessories"), and a server
+    // without the mod never loads it (§2.9's standalone rule holds: this is an optional integration,
+    // not a dependency).
+    compileOnly("io.wispforest:accessories-neoforge:1.1.0-beta.53+1.21.1") {
+        // The API jar alone. Its transitives (owo-lib, forgified-fabric-api) live on mavens this
+        // build does not add and are not needed to compile against the four API types the compat
+        // class touches — and compileOnly means nothing of any of it ships or loads from here.
+        isTransitive = false
+    }
 
     // Deliberately NOT depended on: our other custom mods (cobblemon-bridge, cobblemon-ranked,
     // cobblemon-poke-ai). This module must stay independently buildable and shippable — see

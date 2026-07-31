@@ -40,3 +40,12 @@ side = "BOTH"
 #   rctmod         — authored boss/wave trainers and their AI types
 #   mega_showdown  — Tera/Dynamax gimmick waves; absent means the gimmick ladder stays off
 # Neither is required to load, and neither may become `required` without re-checking its licence.
+
+# Optional, ordered AFTER so the Accessories API is initialised before our provider registration
+# reads it. A server without the mod loads this jar unchanged — the compat class stays unloaded.
+[[dependencies.cobblemon_roguelite]]
+modId = "accessories"
+type = "optional"
+versionRange = "[1.1.0,)"
+ordering = "AFTER"
+side = "BOTH"

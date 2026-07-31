@@ -71,6 +71,17 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
             // installs is a LIVE VIEW rather than a snapshot, so a reload reaches the generator with
             // nothing re-installed. Without this line the registry loads files nobody consults.
             it.enqueueWork { WildPools.register(WildSpeciesPools.asWavePool()) }
+            // D3: the Accessories worn-slot provider, behind the isLoaded guard that keeps this jar
+            // bootable without the mod — AccessoriesCompat touches io.wispforest types only in method
+            // bodies, so the class never even loads on a server that skips this branch. Registered in
+            // enqueueWork with the rest so provider order is deterministic across boots.
+            if (net.neoforged.fml.ModList.get().isLoaded("accessories")) {
+                it.enqueueWork {
+                    com.cobblemonroguelite.integration.StashSlotProviders.register(
+                        com.cobblemonroguelite.compat.AccessoriesCompat,
+                    )
+                }
+            }
         }
 
         // Game bus, not the mod bus: commands and player lifecycle are server-runtime events.

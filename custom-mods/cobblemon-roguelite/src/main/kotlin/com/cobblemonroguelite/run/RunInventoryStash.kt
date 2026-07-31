@@ -100,9 +100,19 @@ object RunInventoryStash {
             return EntryResult.Refused("runs cannot be entered in ${if (player.isCreative) "creative" else "spectator"} mode")
         }
         if (isTagged(player)) {
-            // A tag at entry means the last session never reconciled. Entry may proceed only once a
-            // reconcile resolves it clean — and the reconcile is the caller's to run, because it may
-            // need to eject or restore, which are not this function's verbs.
+            // Found live: resume runs between EVERY wave — the auto-advance calls it after each
+            // reward — so a tag here is usually not a stale swap at all, it is THIS run's swap,
+            // already in place. Verified against the stash header (same swapId, same run seed)
+            // rather than assumed: the whole point of the tag naming its file is that "already
+            // swapped" is checkable, and a tag from a different swap or a different run stays the
+            // refusal it always was.
+            val header = runCatching { files.readStash(player.uuid) }.getOrNull()?.getCompound("header")
+            if (header != null &&
+                header.getString("swapId") == tagOf(player)?.toString() &&
+                header.getLong("runSeed") == run.seed
+            ) {
+                return EntryResult.Ok
+            }
             return EntryResult.Refused("a previous run's items are still stored — relog, or ask an operator (unreconciled stash)")
         }
         if (files.exists(player.uuid)) {

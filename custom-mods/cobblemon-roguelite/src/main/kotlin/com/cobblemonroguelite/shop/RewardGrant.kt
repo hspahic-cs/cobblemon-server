@@ -47,7 +47,7 @@ object RewardGrant {
      * alternative is worse, because granting first means a crash between grant and charge is a free
      * item, and an item that cannot be granted is an operator error a refund would hide.
      */
-    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long, player: net.minecraft.server.level.ServerPlayer): GrantResult = when (target) {
+    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = when (target) {
         is RewardTarget.Unresolved -> GrantResult.Failed(target.reason)
 
         // Party-wide is only ever a bag item today ([RewardTargeting.needsMember]), and a bag item does
@@ -73,19 +73,19 @@ object RewardGrant {
                     "${pokemon.species.name} is not part of this run — rewards can only go to run Pokémon",
                 )
             } else {
-                applyToMember(reward, pokemon, runSeed, player)
+                applyToMember(reward, pokemon, runSeed, player, forgetMoveSlot)
             }
         }
     }
 
-    private fun applyToMember(reward: RunReward, pokemon: Pokemon, runSeed: Long, player: net.minecraft.server.level.ServerPlayer): GrantResult = runCatching {
+    private fun applyToMember(reward: RunReward, pokemon: Pokemon, runSeed: Long, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = runCatching {
         when (reward) {
             is RunReward.Evs -> grantEvs(reward, pokemon)
             is RunReward.Levels -> grantLevels(reward, pokemon)
             is RunReward.Mint -> grantMint(reward, pokemon)
             is RunReward.AbilityPatch -> grantAbility(reward, pokemon)
             is RunReward.HeldItem -> grantHeldItem(reward, pokemon, runSeed)
-            is RunReward.TechnicalMachine -> grantMove(reward, pokemon)
+            is RunReward.TechnicalMachine -> grantMove(reward, pokemon, forgetMoveSlot)
             // A bag item targeted at a member: legal input, since [RewardTargeting] ignores a slot on a
             // party-wide reward, so treat it as the bag grant it is rather than refusing.
             is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
@@ -193,7 +193,7 @@ object RewardGrant {
      * a move would be the single most destructive thing in this file, since a move is not recoverable
      * inside a run. Refusing tells the player to make room, which is a decision they can act on.
      */
-    private fun grantMove(reward: RunReward.TechnicalMachine, pokemon: Pokemon): GrantResult {
+    private fun grantMove(reward: RunReward.TechnicalMachine, pokemon: Pokemon, forgetMoveSlot: Int? = null): GrantResult {
         val template = runCatching { Moves.getByName(reward.move) }.getOrNull()
             ?: return unresolved("move", reward.move)
         val moveSet = pokemon.moveSet
@@ -201,8 +201,19 @@ object RewardGrant {
             return GrantResult.NoEffect("${pokemon.species.name} already knows ${template.displayName.string}")
         }
         if (!moveSet.hasSpace()) {
-            return GrantResult.NoEffect(
-                "${pokemon.species.name} knows four moves already — forget one before using this",
+            // A full moveset is no longer a dead end: the between-wave menu asks WHICH move to forget
+            // — mainline's own flow, the playtest's "TMs don't work" — and passes the slot here. The
+            // refusal stays for every caller that did not ask, because overwriting silently is the
+            // single most destructive thing this file could do (a move is not recoverable in-run).
+            val slot = forgetMoveSlot
+                ?: return GrantResult.NoEffect(
+                    "${pokemon.species.name} knows four moves already — forget one before using this",
+                )
+            val forgotten = moveSet.getMoves().getOrNull(slot)
+                ?: return GrantResult.Failed("move slot ${slot + 1} is empty — nothing to forget")
+            moveSet.setMove(slot, template.create())
+            return GrantResult.Ok(
+                "${pokemon.species.name} forgot ${forgotten.displayName.string} and learned ${template.displayName.string}",
             )
         }
         moveSet.add(template.create())

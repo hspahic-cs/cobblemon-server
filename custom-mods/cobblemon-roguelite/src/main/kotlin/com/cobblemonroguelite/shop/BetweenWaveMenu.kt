@@ -159,6 +159,19 @@ object BetweenWaveMenu {
 
         private data class Pending(val paid: Boolean, val entryId: String, val label: String)
 
+        /**
+         * A TM aimed at a Pokémon whose moveset is full: the take/buy has NOT happened yet, and does
+         * not until a move is chosen — the playtest's "TMs don't work" was exactly this path
+         * consuming the wave's one free pick and then refusing to overwrite. [memberSlot] is 1-based
+         * like everything the player sees.
+         */
+        private data class PendingMove(val paid: Boolean, val entryId: String, val label: String, val memberSlot: Int)
+
+        private var pendingMove: PendingMove? = null
+
+        /** Row 3 again: up to four moves to forget. Same row as the party picker, same reading. */
+        private val MOVE_SLOTS = listOf(27, 28, 29, 30)
+
         init {
             paint()
         }
@@ -182,6 +195,7 @@ object BetweenWaveMenu {
             if (button != 0 || (clickType != ClickType.PICKUP && clickType != ClickType.QUICK_MOVE)) return
 
             when {
+                pendingMove != null -> resolveMoveChoice(sp, slotId)
                 pending != null -> resolvePending(sp, slotId)
                 slotId == CONTINUE_SLOT -> {
                     // #5 from the playtest: closing the shop dead-ended and nothing started the next
@@ -238,10 +252,54 @@ object BetweenWaveMenu {
             }
             val slot = index + 1
             pending = null
+
+            // A TM is intercepted BEFORE the take or the purchase, because both are irreversible and
+            // the grant can still refuse: a full moveset used to consume the free pick and then teach
+            // nothing. Known-move cancels outright; full-moveset diverts to the forget screen.
+            val reward = rewardOf(waiting)
+            if (reward is RunReward.TechnicalMachine) {
+                val pokemon = run.partySnapshot().getOrNull(slot - 1)
+                val known = pokemon?.moveSet?.getMoves().orEmpty().any { it.name.equals(reward.move, ignoreCase = true) }
+                if (pokemon != null && known) {
+                    // Nothing was consumed: the take/buy has not run yet, which is the whole point of
+                    // intercepting here.
+                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+                        "${pokemon.species.name} already knows that move — nothing was taken.",
+                    ))
+                    paint()
+                    return
+                }
+                if (pokemon != null && !pokemon.moveSet.hasSpace()) {
+                    pendingMove = PendingMove(waiting.paid, waiting.entryId, waiting.label, slot)
+                    paint()
+                    return
+                }
+            }
             if (waiting.paid) finishShop(player, waiting.entryId, slot) else finishOffer(player, waiting.entryId, slot)
         }
 
-        private fun finishShop(player: ServerPlayer, entryId: String, slot: Int?) {
+        /** The offer/stock entry a pending click refers to, or null if the wave moved on. */
+        private fun rewardOf(waiting: Pending): RunReward? =
+            if (waiting.paid) stock().firstOrNull { it.id == waiting.entryId }?.reward
+            else offer().firstOrNull { it.id == waiting.entryId }?.reward
+
+        private fun resolveMoveChoice(player: ServerPlayer, slotId: Int) {
+            val waiting = pendingMove ?: return
+            val index = MOVE_SLOTS.indexOf(slotId)
+            if (index < 0) {
+                pendingMove = null
+                paint()
+                return
+            }
+            pendingMove = null
+            if (waiting.paid) {
+                finishShop(player, waiting.entryId, waiting.memberSlot, forgetMoveSlot = index)
+            } else {
+                finishOffer(player, waiting.entryId, waiting.memberSlot, forgetMoveSlot = index)
+            }
+        }
+
+        private fun finishShop(player: ServerPlayer, entryId: String, slot: Int?, forgetMoveSlot: Int? = null) {
             val table = ShopTables.default() ?: return
             when (val result = ShopStock.buy(table, run.wave, run.credits, entryId)) {
                 is PurchaseResult.Ok -> {
@@ -252,7 +310,7 @@ object BetweenWaveMenu {
                         return
                     }
                     run.credits = result.remaining
-                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, granted))
                 }
@@ -266,7 +324,7 @@ object BetweenWaveMenu {
             paint()
         }
 
-        private fun finishOffer(player: ServerPlayer, entryId: String, slot: Int?) {
+        private fun finishOffer(player: ServerPlayer, entryId: String, slot: Int?, forgetMoveSlot: Int? = null) {
             val table = RewardTables.default() ?: return
             when (val result = RewardOffer.take(table, run.wave, run.seed, run.rerollsThisWave, entryId)) {
                 is TakeResult.Ok -> {
@@ -276,7 +334,7 @@ object BetweenWaveMenu {
                         player.sendSystemMessage(ShopMessages.needsSlot(target.reason))
                         return
                     }
-                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
                     run.rewardTakenThisWave = true
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.taken(entryId, granted))
@@ -336,6 +394,36 @@ object BetweenWaveMenu {
             val stocked = stock().take(SHOP_LAST - SHOP_FIRST + 1)
             shopSlotsFor(stocked.size).forEachIndexed { index, slot ->
                 container.setItem(slot, shopIcon(stocked[index]))
+            }
+
+            val forgetting = pendingMove
+            if (forgetting != null) {
+                for (slot in 0 until SLOTS) container.setItem(slot, background())
+                DIVIDER_ROWS.forEach { container.setItem(it, divider()) }
+                val pokemon = run.partySnapshot().getOrNull(forgetting.memberSlot - 1)
+                container.setItem(
+                    4,
+                    label(
+                        Items.OAK_SIGN,
+                        "§bForget which move for §f${forgetting.label}§b?",
+                        listOf("§7${pokemon?.species?.name ?: "?"} knows four moves.", "§8Anywhere else cancels."),
+                    ),
+                )
+                pokemon?.moveSet?.getMoves()?.forEachIndexed { index, move ->
+                    MOVE_SLOTS.getOrNull(index)?.let { slot ->
+                        container.setItem(
+                            slot,
+                            label(
+                                Items.PAPER,
+                                "§f${move.displayName.string}",
+                                listOf("§cClick to forget this move", "§7and learn the new one instead."),
+                            ),
+                        )
+                    }
+                }
+                container.setItem(REROLL_SLOT, label(Items.BARRIER, "§cCancel", listOf("§7Keeps all four moves.")))
+                broadcastChanges()
+                return
             }
 
             val waiting = pending

@@ -36,7 +36,10 @@ object RunIsolationGuards {
      */
     private val strikes = mutableMapOf<UUID, String>()
 
-    private const val POLL_INTERVAL_TICKS = 60
+    /** One second. Was three — the live test found the exit "slightly delayed", and the human's
+     *  ruling is that players should not be outside mid-run at all, so the window shrinks: two
+     *  strikes at this cadence confirms displacement in one to two seconds. */
+    private const val POLL_INTERVAL_TICKS = 20
 
     fun register() {
         if (!registered.compareAndSet(false, true)) return

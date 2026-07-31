@@ -121,6 +121,12 @@ object RunLoginHooks {
         if (reconciliation.returnedFromArena && reconciliation.status is RunStatus.InProgress) {
             player.sendSystemMessage(RunLifecycleMessages.returnedFromArena())
         }
+        // The corner display, after ALL of the deciding above: the reconcile can have expired the run
+        // or ended it under §2.10's penalty, and [RunHud.sync] reads the store rather than trusting
+        // this handler's view — so a bar only appears for a run that survived the login. This site
+        // covers login-with-a-run; the bar for a fresh start and for every later change is raised at
+        // the sites that write the numbers.
+        RunHud.sync(player)
     }
 
     /**
@@ -167,6 +173,11 @@ object RunLoginHooks {
     fun onLogout(event: PlayerEvent.PlayerLoggedOutEvent) {
         val player = event.entity as? ServerPlayer ?: return
         val server = player.server ?: return
+        // The HUD bar is session state and this is the end of the session. Dropped unconditionally —
+        // before the has-a-run check below, because the bar map holding a [ServerPlayer] reference
+        // past the disconnect is the leak, run or no run. The run itself is untouched; the next
+        // login's sync redraws the bar from the store.
+        RunHud.remove(player.uuid)
         val store = RunStore.of(server)
         // Opportunistic exit swap (design §5's logout door): the entity is still whole and vanilla's
         // own save runs after this event, so a restore done here reaches disk with no work from us.

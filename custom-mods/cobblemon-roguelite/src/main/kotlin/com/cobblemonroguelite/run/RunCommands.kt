@@ -229,6 +229,9 @@ object RunCommands {
                             }
                             run.credits += amount
                             store.checkpoint(ctx.source.server, target.uuid)
+                            // A credits write is a HUD write, op-granted or not — the target seeing
+                            // their bar tick up IS the op's confirmation the grant landed.
+                            RunHud.sync(target)
                             log.info(
                                 "roguelite: OP {} gave {} {} credits (now {})",
                                 ctx.source.textName, target.gameProfile.name, amount, run.credits,

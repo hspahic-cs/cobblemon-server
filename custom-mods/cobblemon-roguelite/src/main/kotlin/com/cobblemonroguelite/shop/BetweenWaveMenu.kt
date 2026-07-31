@@ -243,6 +243,46 @@ object BetweenWaveMenu {
             ) {
                 return
             }
+            // The free row's consumables follow the same immediate-use ruling as the shop's: the
+            // overlay opens BEFORE the take, so cancelling keeps the wave's one free pick — the same
+            // nothing-irreversible-before-the-choice shape as the TM gate above.
+            val bagReward = entry.reward as? RunReward.BagItem
+            val selectingItem = bagReward?.let {
+                BuiltInRegistries.ITEM.getOptional(it.item).orElse(null) as? com.cobblemon.mod.common.api.item.PokemonSelectingItem
+            }
+            if (bagReward != null && selectingItem != null) {
+                val entryId = entry.id
+                player.closeContainer()
+                com.cobblemonroguelite.run.RunTicks.schedule(2) {
+                    val online = player.server.playerList.getPlayer(player.uuid) ?: return@schedule
+                    val sample = com.cobblemonroguelite.run.RunItems.mark(ItemStack(selectingItem as Item, 1), run.seed)
+                    com.cobblemon.mod.common.api.callback.PartySelectCallbacks.createFromPokemon(
+                        online,
+                        sample.hoverName,
+                        run.partySnapshot(),
+                        { pokemon -> runCatching { selectingItem.canUseOnPokemon(sample, pokemon) }.getOrDefault(false) },
+                        { cancelled -> BetweenWaveMenu.openFor(cancelled) },
+                        { pokemon ->
+                            val table = RewardTables.default()
+                            val take = table?.let { RewardOffer.take(it, run.wave, run.seed, run.rerollsThisWave, entryId) }
+                            if (take is TakeResult.Ok) {
+                                val outcome = runCatching { selectingItem.applyToPokemon(online, sample.copy(), pokemon) }
+                                if (outcome.isSuccess) {
+                                    run.rewardTakenThisWave = true
+                                    checkpoint(online)
+                                    online.sendSystemMessage(
+                                        ShopMessages.taken(entryId, GrantResult.Ok("used on ${pokemon.species.name}")),
+                                    )
+                                } else {
+                                    log.warn("roguelite: free-pick instant-use apply failed for {}", entryId, outcome.exceptionOrNull())
+                                }
+                            }
+                            BetweenWaveMenu.openFor(online)
+                        },
+                    )
+                }
+                return
+            }
             finishOffer(player, entry.id, slot = null)
         }
 
@@ -316,34 +356,59 @@ object BetweenWaveMenu {
             val table = ShopTables.default() ?: return
             when (val result = ShopStock.buy(table, run.wave, run.credits, entryId)) {
                 is PurchaseResult.Ok -> {
-                    // User decision 2026-07-31: buying a consumable USES it, through Cobblemon's own
-                    // party-select overlay — the same screen right-clicking a potion opens — so the
-                    // heal is a purchase, not a purchase plus an errand. Only the SHOP does this; the
-                    // free row and inventory use keep their ordinary behaviour. The stack goes into
-                    // the inventory FIRST and the overlay consumes it from there, so cancelling the
-                    // overlay leaves a bought item rather than an evaporated purchase; the chest is
-                    // closed first because two screens cannot stack, and the use call rides two ticks
-                    // behind the close so the client has processed it.
+                    // User decision 2026-07-31, second revision: buying a consumable IS using it,
+                    // and a player may never hold one. The first version parked the stack in the
+                    // inventory as cancel-safety; the ruling is stricter — immediate use only — and
+                    // Cobblemon's PartySelectCallbacks makes the stricter version the cleaner one,
+                    // because it has an explicit CANCEL callback: nothing is charged and nothing is
+                    // minted until a Pokémon is actually chosen. Cancel returns to the shop with the
+                    // money unspent; selection charges, applies through Cobblemon's own
+                    // applyToPokemon (its healing rules, its refusals), and returns to the shop —
+                    // which is also where the still-untaken free pick lives, answering "does it go
+                    // back if I haven't picked one of the three yet" with yes, always.
                     val bagReward = result.entry.reward as? RunReward.BagItem
                     val selectingItem = bagReward?.let {
                         BuiltInRegistries.ITEM.getOptional(it.item).orElse(null) as? com.cobblemon.mod.common.api.item.PokemonSelectingItem
                     }
                     if (bagReward != null && selectingItem != null) {
-                        run.credits = result.remaining
-                        val stack = com.cobblemonroguelite.run.RunItems.mark(
-                            ItemStack(selectingItem as Item, bagReward.count.coerceAtLeast(1)),
-                            run.seed,
-                        )
-                        if (!player.inventory.add(stack)) player.drop(stack, false)
-                        checkpoint(player)
-                        player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, GrantResult.Ok("choose who gets it")))
                         player.closeContainer()
+                        val entryId = result.entry.id
                         com.cobblemonroguelite.run.RunTicks.schedule(2) {
                             val online = player.server.playerList.getPlayer(player.uuid) ?: return@schedule
-                            if (!stack.isEmpty) {
-                                runCatching { selectingItem.use(online, stack) }
-                                    .onFailure { log.warn("roguelite: instant-use failed for {}", entryId, it) }
-                            }
+                            val sample = com.cobblemonroguelite.run.RunItems.mark(
+                                ItemStack(selectingItem as Item, 1), run.seed,
+                            )
+                            com.cobblemon.mod.common.api.callback.PartySelectCallbacks.createFromPokemon(
+                                online,
+                                sample.hoverName,
+                                run.partySnapshot(),
+                                { pokemon -> runCatching { selectingItem.canUseOnPokemon(sample, pokemon) }.getOrDefault(false) },
+                                { cancelled -> BetweenWaveMenu.openFor(cancelled) },
+                                { pokemon ->
+                                    // Charged HERE, at selection — revalidated through the same
+                                    // ShopStock.buy every other purchase uses, because the overlay
+                                    // outlives this click and single-sourcing affordability is what
+                                    // keeps the GUI unable to disagree with the rules.
+                                    when (val charge = ShopStock.buy(table, run.wave, run.credits, entryId)) {
+                                        is PurchaseResult.Ok -> {
+                                            val outcome = runCatching { selectingItem.applyToPokemon(online, sample.copy(), pokemon) }
+                                            if (outcome.isSuccess) {
+                                                run.credits = charge.remaining
+                                                checkpoint(online)
+                                                online.sendSystemMessage(
+                                                    ShopMessages.bought(entryId, charge.price, run.credits, GrantResult.Ok("used on ${pokemon.species.name}")),
+                                                )
+                                            } else {
+                                                log.warn("roguelite: instant-use apply failed for {}", entryId, outcome.exceptionOrNull())
+                                            }
+                                        }
+                                        is PurchaseResult.NotEnoughCredits ->
+                                            online.sendSystemMessage(ShopMessages.tooPoor(charge.have, charge.need))
+                                        else -> Unit
+                                    }
+                                    BetweenWaveMenu.openFor(online)
+                                },
+                            )
                         }
                         return
                     }

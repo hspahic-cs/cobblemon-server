@@ -106,6 +106,30 @@ items. Cross-run *unlocks* (new starters, run modifiers) are a different thing: 
 economy and duplicate no Pokémon, and they are the standard answer to "why start run #12". They
 are neither permitted nor forbidden by this decision. See §5.
 
+**REVERSED 2026-07-31 — the run party becomes the player's real party.** The isolation above holds
+for *persistence* (nothing still leaves the run) but not for *storage*: on entering a run the
+player's own party is moved to their PC and the run party is put into the party slots, and on
+leaving, the run Pokémon are removed and the stashed party comes back.
+
+**Why the reversal.** The run party being invisible to Cobblemon means the player cannot open their
+own party screen, cannot see the run team in the HUD, and cannot use any of Cobblemon's party UI on
+the Pokémon they are actually playing. That is not a small friction — it is most of what a player
+does between battles, and every part of it would otherwise have to be rebuilt inside chest menus.
+
+**What this costs, stated plainly, because the sentence above called it "the single largest
+correctness risk in the project" and that assessment was not wrong.** A crash, restart, disconnect
+or botched restore between the two swaps leaves a player's real team in the PC and run Pokémon in
+their party. So the implementation is not "move six Pokémon"; the load-bearing parts are:
+
+- **Restore is idempotent and runs on login**, not only on run end. The stash is persisted run state
+  and the recovery path is the *normal* path, exercised every session, not an error branch.
+- **Nothing the player owned is ever released.** Only Pokémon the run created may be removed, and
+  they carry a marker saying so. A release path that decides by position in the party is one
+  off-by-one away from deleting somebody's Garchomp.
+- **A run refuses to start if the PC cannot hold the stash.** Refusing is free; making room is not.
+- **The stash records identity, not just contents**, so a restore can prove it is putting back the
+  same Pokémon it took.
+
 ### 2.3 Runs are checkpointable
 
 **Considered:** run dies with the session (tower's current behaviour) · run survives across

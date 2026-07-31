@@ -26,6 +26,36 @@ object RunMessages {
 
     fun noRun(): Component = literal("You have no run in progress. /roguelite start begins one.")
 
+    /**
+     * §2.2-reversed, said out loud.
+     *
+     * The swap moves the player's whole team into their PC and puts the run's in its place, and until
+     * now it did that in silence — which the first playtest read as the mode having done nothing, or
+     * having lost something. Prior art (docs/roguelite-prior-art.md) notifies on screen for exactly
+     * this move; this is that.
+     *
+     * Names the PC specifically, because the recovery for every possible failure below is "your
+     * Pokémon are in your PC", and a player who has been told that once will look there.
+     */
+    fun partyStashed(count: Int): Component = literal(
+        "Your $count Pokémon are safe in your PC for the run. You will get them back when it ends.",
+    )
+
+    fun partyReturned(count: Int): Component =
+        literal("Your run is over and your $count Pokémon are back in your party.")
+
+    /**
+     * Some of their team could not be put back and is still in the PC.
+     *
+     * Told rather than logged, because the player counts their party, finds it short, and concludes
+     * the mode ate one. It is recoverable and automatic — the next login retries — but only somebody
+     * who knows that will wait rather than panic.
+     */
+    fun partyStranded(count: Int): Component = literal(
+        "$count of your Pokémon could not be moved back into your party and are still in your PC. " +
+            "Nothing is lost — log out and back in and it will try again.",
+    )
+
     fun alreadyRunning(): Component =
         literal("You already have a run in progress. Finish it, or /roguelite abandon to walk away.")
 

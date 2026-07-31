@@ -177,6 +177,11 @@ object RunPartySwap {
             "roguelite: swapped {}'s party for their run — {} stashed to the PC, {} installed",
             player.gameProfile.name, moved.size, installed,
         )
+        // Said out loud, which is the clearest gap prior art showed up (docs/roguelite-prior-art.md):
+        // Quick Teams notifies on screen when it moves Pokémon between the party and the PC, we did
+        // not, and the first playtest produced exactly the confusion that predicts — "my team is still
+        // in my party". A swap nobody is told about is indistinguishable from a swap that failed.
+        if (moved.isNotEmpty()) player.sendSystemMessage(RunMessages.partyStashed(moved.size))
         return SwapResult.Installed(stashed = moved.size, installed = installed)
     }
 
@@ -240,6 +245,12 @@ object RunPartySwap {
                 player.gameProfile.name, runOwned.size, returned,
             )
         }
+        if (returned > 0) player.sendSystemMessage(RunMessages.partyReturned(returned))
+        // The failure Quick Teams also surfaces on screen rather than only in a log: some of their
+        // Pokémon are sitting in the PC, still marked, and the next login will try again. A player who
+        // is not told this counts their party, finds it short, and concludes the mode ate one.
+        val stranded = stashed.size - returned
+        if (stranded > 0) player.sendSystemMessage(RunMessages.partyStranded(stranded))
         return returned
     }
 

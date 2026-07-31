@@ -56,8 +56,32 @@ data class StarterStatSheet(
  */
 object StarterStatLines {
 
-    /** Short labels, six characters of value and bar. Long enough to read, short enough not to wrap. */
-    val STAT_LABELS = listOf("HP ", "Atk", "Def", "SpA", "SpD", "Spe")
+    /**
+     * Short labels — and **upper case for a reason that is not style**.
+     *
+     * Minecraft's default font is proportional, so `Atk` and `Def` are not the same width: `t` is 4px
+     * against 6px for almost everything else, and `HP` is a whole character short of the three-letter
+     * labels. That is what made the six rows look ragged even though every bar is exactly the same
+     * number of pipes. Every upper-case glyph is 6px, so `ATK`/`DEF`/`SPA`/`SPD`/`SPE` all measure 18px
+     * and the columns after them line up.
+     *
+     * `HP ` is the one residue: a space is 4px, so that row starts its number 2px early. There is no
+     * 6px blank in the vanilla font to pad with, and 2px is a third of a character — it is the closest
+     * this gets without a resource pack.
+     */
+    val STAT_LABELS = listOf("HP ", "ATK", "DEF", "SPA", "SPD", "SPE")
+
+    /**
+     * A horizontal rule, the way the rest of this repo draws one: strikethrough spaces.
+     *
+     * The unicode box-drawing characters would be sharper and come from the fallback font, which is the
+     * same trap the bars avoid. Twenty-five spaces is about the width of a stat row, so the rule ends
+     * where the block it is separating ends.
+     */
+    val RULE = "§8§m" + " ".repeat(25)
+
+    /** Between a base stat and its IV. Not a pipe: the bars are pipes, and a pipe would join them. */
+    const val COLUMN_DIVIDER = " §8: "
 
     const val BAR_WIDTH = 10
 
@@ -100,48 +124,76 @@ object StarterStatLines {
         return "$colour${"|".repeat(filled)}§8${"|".repeat(width - filled)}"
     }
 
-    /** The whole panel, in the order PokéRogue's own left column reads: what it is, then how good it is. */
+    /**
+     * The whole panel, in the order PokéRogue's own left column reads: what it is, then how good it is.
+     *
+     * ### Three blocks, two rules
+     *
+     * Identity, numbers, abilities. Every line used to sit in one undifferentiated stack of thirteen,
+     * which is what made a tooltip carrying good information read as clutter — nothing told the eye
+     * where one kind of fact stopped and the next began. The rules do that, and they cost two lines to
+     * save the reader from scanning eleven.
+     *
+     * Growth rate moved up onto the identity line for the same reason: alone at the bottom it was a
+     * whole row spent on a minor fact, and it belongs with "what is this species" anyway.
+     */
     fun render(sheet: StarterStatSheet): List<String> {
         val lines = mutableListOf<String>()
 
-        if (sheet.types.isNotEmpty()) lines += "§7${sheet.types.joinToString(" / ")}"
+        // Types and growth read as one fact — what this species is — so they share a line.
+        val identity = buildList {
+            if (sheet.types.isNotEmpty()) add(sheet.types.joinToString(" / "))
+            sheet.growthRate?.let { add(it) }
+        }
+        if (identity.isNotEmpty()) lines += "§7" + identity.joinToString(" §8· §7")
+        if (sheet.baseStats.isNotEmpty() && identity.isNotEmpty()) lines += RULE
 
-        // The IV rides on the stat row it belongs to rather than in a row of its own.
+        // The IV rides on the stat row it belongs to, behind a divider, rather than in a row of its own.
         //
         // It was one wide line — "IVs HP10 Atk10 Def10 SpA10 SpD10 Spe10" — which in play was the widest
         // thing on the screen and asked a player to match six numbers back to six rows by counting. Per
         // stat is right; six SEPARATE per-stat rows would be right too, except the tooltip already runs
-        // most of the screen's height, and "HP 100 |||||||||| IV 10 |||||" says the same thing on the
-        // row that already exists for it.
+        // most of the screen's height, so it shares the row that already exists for that stat.
+        //
+        // The word "IV" used to be repeated on all six rows. The divider says the same thing once per
+        // row without any words at all, and the trailer names the column — six repetitions of a
+        // two-letter label is exactly the kind of thing that adds up to "cluttered".
         sheet.baseStats.forEachIndexed { index, (label, value) ->
             // Padded to three so the bars start in the same column on every row; a ragged left edge
             // makes six bars unreadable as a group, which is the only reason to draw them together.
             val name = STAT_LABELS.getOrElse(index) { label }
             val iv = sheet.ivFloor?.getOrNull(index)?.let { floor ->
-                "  §7IV §f${floor.toString().padStart(2)} ${bar(floor, StarterIvFloor.MAX_IV, IV_BAR_WIDTH)}"
+                COLUMN_DIVIDER + "§f${floor.toString().padStart(2)} ${bar(floor, StarterIvFloor.MAX_IV, IV_BAR_WIDTH)}"
             }.orEmpty()
             lines += "§7$name §f${value.toString().padStart(3)} ${bar(value)}$iv"
         }
         if (sheet.baseStats.isNotEmpty()) lines += "§7BST §f${sheet.baseStatTotal}"
 
-        // Kept even now the numbers are on the rows: without it the IV column is unexplained, and which
-        // of the two it is — a fixed starting point or a high-water mark you have raised — is the whole
-        // reason §2.17 exists.
-        sheet.ivFloor?.let { floor ->
-            lines += if (floor.all { it <= StarterIvFloor.BASE }) {
-                "§8IVs: every run of this species starts here."
-            } else {
-                "§8IVs: your best so far — runs start at least here."
-            }
-        }
-
-        if (sheet.abilities.isNotEmpty()) lines += "§7Ability: §f${sheet.abilities.joinToString(", ")}"
+        // Abilities and the IV note are the third block: what is true about this species beyond its
+        // numbers. Assembled first so the rule is only drawn when there is something under it.
+        val trailer = mutableListOf<String>()
+        if (sheet.abilities.isNotEmpty()) trailer += "§7Ability: §f${sheet.abilities.joinToString(", ")}"
         sheet.hiddenAbility?.let {
             // Shown locked rather than hidden, the way PokéRogue shows a padlocked passive: knowing a
             // species HAS one you have not unlocked is the part that makes the unlock worth wanting.
-            lines += if (sheet.hiddenAbilityUnlocked) "§7Hidden: §f$it" else "§7Hidden: §8$it §7(locked)"
+            trailer += if (sheet.hiddenAbilityUnlocked) "§7Hidden: §f$it" else "§7Hidden: §8$it §7(locked)"
         }
-        sheet.growthRate?.let { lines += "§8Growth: $it" }
+        // Names the right-hand column, which is now the only thing that does — and says which floor it
+        // is, a fixed starting point or a high-water mark you have raised, which is why §2.17 exists.
+        // Kept short deliberately. The long version — "Right of the divider: IVs. Every run starts
+        // here." — named the column perfectly and was half again as wide as a stat row, which would have
+        // made it the widest line on the panel and undone the point of splitting the IVs out of one.
+        sheet.ivFloor?.let { floor ->
+            trailer += if (floor.all { it <= StarterIvFloor.BASE }) {
+                "§8IVs · every run starts here"
+            } else {
+                "§8IVs · your best so far"
+            }
+        }
+        if (trailer.isNotEmpty()) {
+            if (lines.isNotEmpty()) lines += RULE
+            lines += trailer
+        }
 
         return lines
     }

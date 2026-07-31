@@ -45,11 +45,39 @@ ssh cobblemon bash -s -- dev  < ops/apply-staff-groups.sh
 ssh cobblemon bash -s -- prod < ops/apply-staff-groups.sh
 ```
 
-Add `--dry-run` to print the ~78 console lines instead of sending them. The
-script is idempotent — it only creates missing groups, and re-adding a node a
-group already has is a no-op — so it's safe to re-run after any deploy. It
-defines **roles only** and never assigns a person to a group, so re-running can't
+Add `--dry-run` to print the console lines instead of sending them. It defines
+**roles only** and never assigns a person to a group, so re-running can't
 silently change who is staff.
+
+**It is authoritative, not additive.** Each group is `clear`ed before its nodes
+are re-added, so a node dropped from the script actually goes away. Without that
+the script could only ever add: the first dev run left the pre-existing
+moderator group's `neoessentials.item.*` (item spawning), `economy.admin`,
+`kits.admin.*`, `warp.create`/`delete`, `spawn.set` and `permissions.reload` in
+place — precisely the powers this tier is supposed to exclude. The cost is that
+any **group**-level node granted by hand is wiped on the next run; per-**user**
+grants (`permissions user <n> add …`) are untouched, so purchased `/sethome`
+slots and the like survive.
+
+!!! warning "Failures here are silent"
+
+    The script pushes lines into the server's screen session and never sees a
+    return code. A malformed command logs `Incorrect argument for command` to the
+    console and the script carries on reporting success. If you change it, run it
+    once and grep the server log:
+
+    ```
+    grep -iE 'incorrect|unknown|not found' /opt/cobblemon-dev/logs/latest.log
+    ```
+
+    The exact forms, verified against `1.0.2.5+build.1074` — all three differ
+    from the obvious guess:
+
+    | Action | Correct | Wrong |
+    |---|---|---|
+    | create | `permissions create group <g>` | `permissions group create <g>` |
+    | inherit | `permissions group <g> inherit add <parent>` | `… inherit <parent>` |
+    | clear | `permissions group <g> clear` | — |
 
 ### Why groups aren't deployed
 
@@ -198,6 +226,23 @@ under `chat.chat-format`. Keys are matched **literally** against the group name:
 that typo is why staff tags were invisible before 0.33.0, and the same typo was
 in `tablist.json`'s `groupColors`. Only the `[Tag]` is coloured; the name and
 message stay neutral so a staff line doesn't read as a server error.
+
+**Group prefixes cannot carry a trailing space.** NeoEssentials trims them on
+`setprefix`, so `&2[Mod] ` is stored as `&2[Mod]` — the console confirms it
+(`Set prefix '&2[Mod]' for group 'moderator'`). Chat is unaffected because
+`chat.json` hardcodes its own spacing rather than using `{prefix}`, but the
+tablist reads `{prefix}` directly, so its `playerFormat` carries the separator:
+`&f{prefix}&r {player}{suffix}`. Side effect: non-staff, whose prefix is the
+glyph-less colour code `&7`, render with one leading space in the tablist.
+
+Reload either file without a restart:
+
+```
+neoessentials reload
+```
+
+(`tablist reload` is not a console command, despite what `tablist.json`'s own
+header comment says.)
 
 Emoji rank badges (`chat.badges`) are **off on purpose**. The configured badges
 are `⭐`/`🛡️`, and Minecraft's default font has no glyphs for them — with groups

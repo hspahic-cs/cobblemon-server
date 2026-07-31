@@ -156,21 +156,38 @@ fi
 
 apply_group() {
   local group="$1" prefix="$2" inherits="$3" nodes="$4" node
-  # `create` on an existing group is a harmless "already exists"; keeps this re-runnable.
-  console "permissions group create ${group}"
-  # setprefix takes a greedyString, so the trailing space in "&2[Mod] " is preserved — it's what
-  # separates the tag from the name in tablist's "&f{prefix}&r{player}". Don't strip it.
+  # Exact syntax matters and the failures are quiet — a wrong form logs "Incorrect argument for
+  # command" to the console and the script sails on, because we're pushing lines into a screen
+  # session and never see a return code. Verified against 1.0.2.5+build.1074:
+  #   create   -> `permissions create group <name>`   (NOT `group create <name>`)
+  #   inherit  -> `permissions group <g> inherit add <parent>`  (NOT `inherit <parent>`)
+  console "permissions create group ${group}"
+
+  # Authoritative, not additive: clear first so a node dropped from the lists above actually goes
+  # away. Without this the script can only ever ADD — the first dev run left the old moderator
+  # group's neoessentials.item.* (item spawning), economy.admin, kits.admin.*, warp.create/delete,
+  # spawn.set and permissions.reload in place, i.e. exactly the powers this tier excludes.
+  # Consequence: any group-level node granted by hand is wiped on the next run. That's intended —
+  # these lists are the source of truth. Per-USER grants (`permissions user <n> add …`) are
+  # untouched, so purchased /sethome slots and the like survive.
+  console "permissions group ${group} clear"
+
+  # NeoEssentials trims the prefix, so a trailing space cannot survive `setprefix` no matter how
+  # it's quoted (greedyString reads it, then the handler strips it — the console log confirms:
+  # "Set prefix '&2[Mod]' for group 'moderator'"). The tag/name separator therefore lives in
+  # tablist.json's playerFormat instead, and chat.json hardcodes its own spacing.
   console "permissions group ${group} setprefix ${prefix}"
-  [ -n "$inherits" ] && console "permissions group ${group} inherit ${inherits}"
+
+  [ -n "$inherits" ] && console "permissions group ${group} inherit add ${inherits}"
   while read -r node; do
     [ -n "$node" ] || continue
     console "permissions group ${group} add ${node}"
   done <<< "$nodes"
 }
 
-apply_group default   "&7"         ""          "$DEFAULT_NODES"
-apply_group moderator "&2[Mod] "   "default"   "$MODERATOR_NODES"
-apply_group admin     "&c[Admin] " "moderator" "$ADMIN_NODES"
+apply_group default   "&7"        ""          "$DEFAULT_NODES"
+apply_group moderator "&2[Mod]"   "default"   "$MODERATOR_NODES"
+apply_group admin     "&c[Admin]" "moderator" "$ADMIN_NODES"
 
 # NO `permissions reload` here. PermissionSystem.reload() re-reads permissions.json from disk, which
 # would discard everything above — the whole point is that the on-disk file is stale. The command

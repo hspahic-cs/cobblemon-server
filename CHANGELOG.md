@@ -72,6 +72,21 @@ root README.
   It deliberately does *not* end with `permissions reload`:
   `PermissionSystem.reload()` re-reads the file from disk and would discard
   everything just applied.
+
+  The script `clear`s each group before re-adding, so it's authoritative rather
+  than additive — a node dropped from the lists actually goes away. Applied to
+  dev, that removed nine nodes the pre-existing moderator group still carried and
+  the standard mod kit excludes: `neoessentials.item.*` (item spawning),
+  `economy.admin`, `kits.admin.create`/`delete`/`list`,
+  `teleport.warp.create`/`delete`, `teleport.spawn.set` and
+  `permissions.reload`. Group-level manual grants are wiped on each run;
+  per-user grants are untouched.
+- **Tablist rendered `[Mod]Steve` with no space.** NeoEssentials trims group
+  prefixes on `setprefix`, so `&2[Mod] ` is stored as `&2[Mod]` and a prefix can
+  never carry its own trailing space. `tablist.json`'s `playerFormat` now holds
+  the separator (`&f{prefix}&r {player}{suffix}`). Chat was never affected —
+  `chat.json` hardcodes its spacing instead of using `{prefix}`. Non-staff now
+  render with one leading space in the tablist, accepted as the lesser evil.
 - **`statchic` dropped nothing.** Its `drops` entry named
   `cobblemon:electic_gem` — missing the `r` — so the drop silently never
   resolved. Found by the loot-tier sweep.

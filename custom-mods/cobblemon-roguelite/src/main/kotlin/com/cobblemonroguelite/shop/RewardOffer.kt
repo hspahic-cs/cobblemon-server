@@ -1,5 +1,7 @@
 package com.cobblemonroguelite.shop
 
+import com.cobblemon.mod.common.pokemon.Pokemon
+import com.cobblemonroguelite.data.reward.PartyState
 import com.cobblemonroguelite.data.reward.RewardEntry
 import com.cobblemonroguelite.data.reward.RewardTable
 import kotlin.random.Random
@@ -45,19 +47,35 @@ object RewardOffer {
      */
     private const val SALT = 0x0FFE4_2EA4DL
 
-    /** The three (by default) rewards on offer at [wave]. */
-    fun offerFor(table: RewardTable, wave: Int, seed: Long, rerolls: Int = 0, options: Int? = null): List<RewardEntry> =
-        table.rollOffer(wave, options ?: ShopSettings.shop.rewardOptions, streamFor(wave, seed, rerolls))
+    /**
+     * The three (by default) rewards on offer at [wave].
+     *
+     * [party] drives the `scaled_by` entries (a full-health party is not offered potions — the
+     * PokéRogue behaviour the economy reference singles out as the one to copy). Passing null keeps
+     * every conditional entry at its written weight; the command and menu paths both have the run
+     * party and must pass it.
+     */
+    fun offerFor(
+        table: RewardTable,
+        wave: Int,
+        seed: Long,
+        rerolls: Int = 0,
+        options: Int? = null,
+        party: PartyState? = null,
+    ): List<RewardEntry> =
+        table.rollOffer(wave, options ?: ShopSettings.shop.rewardOptions, streamFor(wave, seed, rerolls), party)
 
     /**
      * Resolve the player taking [entryId] from this wave's offer.
      *
      * The offer is recomputed here rather than accepted from the caller, which is the guard that makes
      * a stale screen safe: an id that is in the table but not among the three on offer is refused, and
-     * an id from the *previous* reroll is refused because the reroll count no longer matches.
+     * an id from the *previous* reroll is refused because the reroll count no longer matches. [party]
+     * makes that guard cover the scaled entries too: healing between screen and pick legitimately
+     * removes a healing option, and the recompute is what notices.
      */
-    fun take(table: RewardTable, wave: Int, seed: Long, rerolls: Int, entryId: String): TakeResult {
-        val offer = offerFor(table, wave, seed, rerolls)
+    fun take(table: RewardTable, wave: Int, seed: Long, rerolls: Int, entryId: String, party: PartyState? = null): TakeResult {
+        val offer = offerFor(table, wave, seed, rerolls, party = party)
         val entry = offer.firstOrNull { it.id == entryId }
             ?: return if (table.entries.none { it.id == entryId }) {
                 TakeResult.NoSuchEntry(entryId)
@@ -77,6 +95,31 @@ object RewardOffer {
         val price = ShopSettings.shop.rerollPrice(rerollsTaken, wave) ?: return RerollResult.Disabled
         if (credits < price) return RerollResult.NotEnoughCredits(have = credits, need = price)
         return RerollResult.Ok(price = price, remaining = credits - price)
+    }
+
+    /**
+     * The [PartyState] the scaled entries read, from the real run party.
+     *
+     * Lives here rather than in the data module so `data/reward` never imports a Cobblemon type —
+     * the same boundary the trainer generator keeps. Health reads are defensive
+     * ([Pokemon.isFainted] can throw during entity teardown, per RunController's own guard) and a
+     * member that cannot be read counts as healthy: the failure mode is a Potion offered
+     * unnecessarily, not a Revive hidden from a party that needs one... which would also be wrong,
+     * but the conservative direction is the one that never deletes an option the player needed.
+     */
+    fun partyStateOf(party: List<Pokemon>): PartyState {
+        var missing = 0.0
+        var fainted = 0
+        for (pokemon in party) {
+            runCatching {
+                if (pokemon.isFainted()) {
+                    fainted++
+                } else if (pokemon.maxHealth > 0) {
+                    missing += (pokemon.maxHealth - pokemon.currentHealth).toDouble() / pokemon.maxHealth
+                }
+            }
+        }
+        return PartyState(missingHealth = missing, fainted = fainted)
     }
 
     /**

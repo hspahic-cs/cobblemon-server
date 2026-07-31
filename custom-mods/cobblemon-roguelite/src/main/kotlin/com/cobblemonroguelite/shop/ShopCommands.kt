@@ -94,7 +94,10 @@ object ShopCommands {
                                 val offered = player(ctx)?.let { p ->
                                     runFor(p)?.let { run ->
                                         rewardTable()?.let { t ->
-                                            RewardOffer.offerFor(t, run.wave, run.seed, run.rerollsThisWave)
+                                            RewardOffer.offerFor(
+                                                t, run.wave, run.seed, run.rerollsThisWave,
+                                                party = RewardOffer.partyStateOf(run.partySnapshot()),
+                                            )
                                         }
                                     }
                                 }.orEmpty()
@@ -130,7 +133,10 @@ object ShopCommands {
     private fun showReward(player: ServerPlayer): Int {
         val run = runFor(player) ?: return refuse(player, ShopMessages.noRun())
         val table = rewardTable() ?: return refuse(player, ShopMessages.noRewardTable())
-        val offer = RewardOffer.offerFor(table, run.wave, run.seed, run.rerollsThisWave)
+        val offer = RewardOffer.offerFor(
+            table, run.wave, run.seed, run.rerollsThisWave,
+            party = RewardOffer.partyStateOf(run.partySnapshot()),
+        )
         val rerollPrice = ShopSettings.shop.rerollPrice(run.rerollsThisWave, run.wave)
         ShopMessages.reward(offer, run.credits, run.rewardTakenThisWave, rerollPrice)
             .forEach(player::sendSystemMessage)
@@ -185,7 +191,11 @@ object ShopCommands {
         if (run.rewardTakenThisWave) return refuse(player, ShopMessages.alreadyTaken())
         val table = rewardTable() ?: return refuse(player, ShopMessages.noRewardTable())
 
-        return when (val result = RewardOffer.take(table, run.wave, run.seed, run.rerollsThisWave, entryId)) {
+        val takeResult = RewardOffer.take(
+            table, run.wave, run.seed, run.rerollsThisWave, entryId,
+            party = RewardOffer.partyStateOf(run.partySnapshot()),
+        )
+        return when (val result = takeResult) {
             is TakeResult.NoSuchEntry -> refuse(player, ShopMessages.noSuchEntry(result.id))
             is TakeResult.NotOffered -> refuse(player, ShopMessages.notOffered(result.id))
             is TakeResult.Ok -> {

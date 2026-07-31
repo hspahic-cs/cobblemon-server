@@ -43,13 +43,22 @@ data class RewardTable(
      * [random] is passed in rather than taken from a global source because run generation is seeded
      * (`RunState.seed`) — an unseeded draw here would make rewards reroll on resume, which is the
      * exploit §2.3 is holding the seed to prevent.
+     *
+     * [party] feeds the [RewardEntry.scaledBy] conditions and may be null, which means "no party
+     * scaling" — every conditional entry keeps its written weight. Callers that *have* a party must
+     * pass it: a null here is what makes a full-health party see Revives, which is exactly the
+     * failure the condition mechanism exists to prevent.
      */
-    fun roll(wave: Int, random: Random, exclude: Set<String> = emptySet()): RewardEntry? {
-        val eligible = entries.filter { it.appearsAt(wave) && it.id !in exclude }
+    fun roll(wave: Int, random: Random, exclude: Set<String> = emptySet(), party: PartyState? = null): RewardEntry? {
+        // Filtered on the *effective* weight, not just the wave band: an entry scaled to zero (a
+        // Revive with nobody fainted) must not exist for this draw at all. Leaving it in would let
+        // the tier pick land on a tier whose every entry is currently zero, which turns "no Revives
+        // today" into "one of your three options is silently missing".
+        val eligible = entries.filter { it.appearsAt(wave) && it.id !in exclude && it.weightAt(party) > 0.0 }
         if (eligible.isEmpty()) return null
         val byTier = eligible.groupBy { it.tier }
         val tier = pick(tiers.filter { it.id in byTier }, random) { it.curve.weightAt(wave) } ?: return null
-        return pick(byTier.getValue(tier.id), random) { it.weight }
+        return pick(byTier.getValue(tier.id), random) { it.weightAt(party) }
     }
 
     /**
@@ -60,11 +69,11 @@ data class RewardTable(
      * [count] — possibly none — when the table runs out of eligible entries, which is why the caller
      * gets a list rather than a fixed-size array.
      */
-    fun rollOffer(wave: Int, count: Int, random: Random): List<RewardEntry> {
+    fun rollOffer(wave: Int, count: Int, random: Random, party: PartyState? = null): List<RewardEntry> {
         val offer = mutableListOf<RewardEntry>()
         val taken = mutableSetOf<String>()
         while (offer.size < count) {
-            val entry = roll(wave, random, taken) ?: break
+            val entry = roll(wave, random, taken, party) ?: break
             offer += entry
             taken += entry.id
         }
@@ -135,6 +144,49 @@ data class WeightCurve(val points: List<CurvePoint>) {
 data class CurvePoint(val wave: Int, val weight: Double)
 
 /**
+ * What a reward roll is allowed to know about the run party.
+ *
+ * A deliberately tiny summary rather than the party itself, so the reward layer stays a pure data
+ * module a test can drive with two numbers — the same reasoning that keeps game objects out of
+ * [com.cobblemonroguelite.data.trainer.GeneratedMember]. Computed by the shop layer from the real
+ * party at the moment of the roll.
+ *
+ * @property missingHealth sum over the party of each member's missing-HP fraction, so 0.0 is a
+ *   full-health party and a party of six at half health is 3.0.
+ * @property fainted how many members are currently fainted.
+ */
+data class PartyState(val missingHealth: Double, val fainted: Int) {
+    init {
+        require(missingHealth >= 0.0) { "missingHealth is a sum of fractions, got $missingHealth" }
+        require(fainted >= 0) { "fainted is a count, got $fainted" }
+    }
+}
+
+/**
+ * The party conditions an entry's weight can scale by — PokéRogue's healing-item weight *functions*
+ * (`(party: Pokemon[]) => …` in their `init-modifier-pools.ts`), reshaped into a closed set.
+ *
+ * Reshaped, not ported: their every healing item carries its own bespoke piecewise function, and a
+ * datapack cannot ship code (`RunReward` is sealed for the same §2.12 reason). What survives is the
+ * property that made the design worth stealing — **a full-health party is not offered potions, a
+ * party with no faints is not offered revives** — as the written weight multiplied by a linear
+ * factor of the party's actual state. The per-item piecewise shapes are the fidelity paid for
+ * keeping content out of code.
+ */
+enum class PartyCondition {
+    /** Weight × the party's total missing-HP fraction ([PartyState.missingHealth]). Zero when whole. */
+    INJURED,
+
+    /** Weight × the fainted count. Zero while everyone stands. */
+    FAINTED;
+
+    fun factor(party: PartyState): Double = when (this) {
+        INJURED -> party.missingHealth
+        FAINTED -> party.fainted.toDouble()
+    }
+}
+
+/**
  * One rewardable thing.
  *
  * @property id table-local and required. It names the entry in every log line the loader writes, and
@@ -146,6 +198,12 @@ data class CurvePoint(val wave: Int, val weight: Double)
  *   rejected at load rather than left as a line the author thinks is doing something.
  * @property minWave first wave this can appear on, inclusive.
  * @property maxWave last wave, inclusive, or null for no limit.
+ * @property scaledBy scales [weight] by the party's state at roll time, or null for the written
+ *   weight always. One consequence is deliberate and worth knowing: a scaled offer is a function of
+ *   the party *now*, so drinking a Potion between opening the screen and picking can change what is
+ *   on offer — [com.cobblemonroguelite.shop.RewardOffer.take] recomputes and refuses a vanished
+ *   entry through its existing stale-screen guard, and the player sees a fresh offer that no longer
+ *   wastes a slot on healing they just did.
  */
 data class RewardEntry(
     val id: String,
@@ -154,6 +212,14 @@ data class RewardEntry(
     val minWave: Int,
     val maxWave: Int?,
     val reward: RunReward,
+    val scaledBy: PartyCondition? = null,
 ) {
     fun appearsAt(wave: Int): Boolean = wave >= minWave && (maxWave == null || wave <= maxWave)
+
+    /** The weight this draw actually uses: the written weight, scaled when a condition applies. */
+    fun weightAt(party: PartyState?): Double {
+        val condition = scaledBy ?: return weight
+        if (party == null) return weight
+        return weight * condition.factor(party)
+    }
 }

@@ -110,4 +110,66 @@ class RewardTableRollTest {
             table.rollOffer(wave = 4, count = 2, random = Random(99)).map { it.id },
         )
     }
+
+    // ─── party-scaled weights (PokéRogue's healing-item weight functions, reshaped) ───
+
+    private fun scaled(name: String, tier: String, condition: PartyCondition, weight: Double = 1.0) =
+        RewardEntry(name, tier, weight, 1, null, RunReward.Levels(1), scaledBy = condition)
+
+    private val whole = PartyState(missingHealth = 0.0, fainted = 0)
+    private val battered = PartyState(missingHealth = 2.5, fainted = 2)
+
+    @Test
+    fun `a scaled entry does not exist for a party that does not need it`() {
+        val table = RewardTable(
+            id,
+            tiers = listOf(RewardTier("t", WeightCurve.flat())),
+            entries = listOf(
+                scaled("potion", "t", PartyCondition.INJURED),
+                scaled("revive", "t", PartyCondition.FAINTED),
+                entry("candy", "t"),
+            ),
+        )
+        // The PokéRogue property this whole mechanism exists for: a full-health party is never
+        // offered healing, so its picks all land on the one thing it can use.
+        val random = Random(7)
+        assertTrue((1..60).map { table.roll(5, random, party = whole)!!.id }.all { it == "candy" })
+        // A battered party sees all three.
+        val drawn = (1..200).map { table.roll(5, random, party = battered)!!.id }.toSet()
+        assertEquals(setOf("potion", "revive", "candy"), drawn)
+    }
+
+    @Test
+    fun `a null party keeps every written weight`() {
+        val table = RewardTable(
+            id,
+            tiers = listOf(RewardTier("t", WeightCurve.flat())),
+            entries = listOf(scaled("revive", "t", PartyCondition.FAINTED), entry("candy", "t")),
+        )
+        // Null means "no scaling", not "empty party": every conditional entry stays at its written
+        // weight, which is what a caller with no party in scope gets and must know it is getting.
+        val random = Random(11)
+        val drawn = (1..100).map { table.roll(5, random, party = null)!!.id }.toSet()
+        assertEquals(setOf("revive", "candy"), drawn)
+    }
+
+    @Test
+    fun `a tier whose entries all scale to zero loses the tier, not the option`() {
+        val table = RewardTable(
+            id,
+            tiers = listOf(
+                RewardTier("healing", WeightCurve(listOf(CurvePoint(1, 1000.0)))),
+                RewardTier("rare", WeightCurve(listOf(CurvePoint(1, 1.0)))),
+            ),
+            entries = listOf(
+                scaled("revive", "healing", PartyCondition.FAINTED),
+                entry("candy", "rare"),
+            ),
+        )
+        // The eligibility filter runs before the tier pick. If it ran after, the heavily-weighted
+        // healing tier would win the tier roll, find nothing drawable inside, and the player's
+        // three-option offer would silently arrive with two.
+        repeat(50) { assertEquals("candy", table.roll(5, Random(it), party = whole)!!.id) }
+        assertEquals(1, table.rollOffer(5, 3, Random(3), party = whole).size)
+    }
 }

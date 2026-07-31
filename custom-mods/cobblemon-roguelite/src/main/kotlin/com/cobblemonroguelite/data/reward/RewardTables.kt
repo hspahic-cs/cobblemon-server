@@ -215,9 +215,24 @@ object RewardTables : RogueliteDataRegistry<RewardTable>("reward_tables") {
         val maxWave = view.optionalInt("max_wave")
         val rewardView = view.requireObject("reward")
         val reward = rewardView?.let { RunReward.parse(it) }
+        val scaledByName = view.optionalString("scaled_by")
+        // Unknown names are rejected rather than ignored, for the file's own stated reason: a
+        // misspelt "scaled_by": "injured " that silently loaded flat would hand Revives to a full
+        // party, which is precisely the behaviour the field exists to prevent.
+        val scaledBy = scaledByName?.let { name ->
+            PartyCondition.entries.firstOrNull { it.name.equals(name, ignoreCase = true) }
+        }
         view.expectNoUnknownKeys()
 
         var ok = entryId != null && tier != null && weight != null && reward != null
+        if (scaledByName != null && scaledBy == null) {
+            view.problem(
+                "scaled_by",
+                "unknown party condition '$scaledByName' (expected one of: " +
+                    PartyCondition.entries.joinToString(", ") { it.name.lowercase() } + ")",
+            )
+            ok = false
+        }
         if (entryId != null && entryId.isBlank()) {
             view.problem("id", "must not be blank")
             ok = false
@@ -243,6 +258,7 @@ object RewardTables : RogueliteDataRegistry<RewardTable>("reward_tables") {
             minWave = minWave ?: 1,
             maxWave = maxWave,
             reward = reward!!,
+            scaledBy = scaledBy,
         )
     }
 

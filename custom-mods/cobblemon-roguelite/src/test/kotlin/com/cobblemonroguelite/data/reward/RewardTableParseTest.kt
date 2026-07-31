@@ -302,6 +302,24 @@ class RewardTableParseTest {
     }
 
     @Test
+    fun `scaled_by parses case-insensitively and an unknown condition is named`() {
+        val parsed = parse(
+            """{ "entries": [ { "id": "revive", "weight": 3, "scaled_by": "fainted",
+                 "reward": { "type": "item", "item": "cobblemon:revive", "count": 1 } } ] }""",
+        )
+        assertEquals(PartyCondition.FAINTED, assertNotNull(parsed.table).entries.single().scaledBy)
+
+        // Rejected, not ignored: a misspelt condition silently loading flat would hand Revives to a
+        // full party — the exact behaviour the field exists to prevent.
+        val bad = parse(
+            """{ "entries": [ { "id": "revive", "weight": 3, "scaled_by": "fainted ",
+                 "reward": { "type": "item", "item": "cobblemon:revive", "count": 1 } } ] }""",
+        )
+        assertNull(bad.table)
+        assertTrue(bad.mentions("scaled_by", "injured", "fainted"), bad.messages.toString())
+    }
+
+    @Test
     fun `the shipped example table is a valid table`() {
         // It ships in the jar's data folder, so if it stops parsing every server logs a rejected
         // file on boot — and the one file an owner copies to start from would be broken.

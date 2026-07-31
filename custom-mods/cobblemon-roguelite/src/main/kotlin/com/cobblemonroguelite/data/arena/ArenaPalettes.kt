@@ -65,6 +65,7 @@ object ArenaPalettes : RogueliteDataRegistry<ArenaPalette>("arena_palettes") {
         val before = problems.count
 
         val floor = parseBlock(root, "floor")
+        val shape = parseShape(root)
         val width = root.optionalInt("width")
         val depth = root.optionalInt("depth")
         val rim = root.optionalObject("rim")?.let(::parseRim)
@@ -82,12 +83,31 @@ object ArenaPalettes : RogueliteDataRegistry<ArenaPalette>("arena_palettes") {
         return ArenaPalette(
             id = id,
             floor = floor!!,
+            shape = shape,
             width = width,
             depth = depth,
             rim = rim,
             pillars = pillars,
             powerSpot = powerSpot,
         )
+    }
+
+    /**
+     * `"shape": "circle" | "square"`, defaulting to square.
+     *
+     * An unrecognised value is a problem rather than a fallback to the default: a typo like `"round"`
+     * would otherwise produce a square island with nothing in the log, and the author would be left
+     * looking at their blocks wondering which field they got wrong.
+     */
+    private fun parseShape(view: JsonView): ArenaShape {
+        val text = view.optionalString("shape") ?: return ArenaShape.SQUARE
+        return ArenaShape.entries.firstOrNull { it.name.equals(text, ignoreCase = true) } ?: run {
+            view.problem(
+                "shape",
+                "'$text' is not a shape — expected one of ${ArenaShape.entries.joinToString("/") { it.name.lowercase() }}",
+            )
+            ArenaShape.SQUARE
+        }
     }
 
     private fun parseRim(view: JsonView): ArenaRim? {

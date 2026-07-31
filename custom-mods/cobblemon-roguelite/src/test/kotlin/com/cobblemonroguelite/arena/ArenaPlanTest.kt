@@ -3,6 +3,7 @@ package com.cobblemonroguelite.arena
 import com.cobblemonroguelite.data.arena.ArenaPalette
 import com.cobblemonroguelite.data.arena.ArenaPillars
 import com.cobblemonroguelite.data.arena.ArenaRim
+import com.cobblemonroguelite.data.arena.ArenaShape
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.levelgen.structure.BoundingBox
@@ -46,9 +47,11 @@ class ArenaPlanTest {
         rim: ArenaRim? = null,
         pillars: ArenaPillars? = null,
         powerSpot: Boolean = true,
+        shape: ArenaShape = ArenaShape.SQUARE,
     ) = ArenaPalette(
         id = ResourceLocation.fromNamespaceAndPath("test", "example"),
         floor = floor,
+        shape = shape,
         width = width,
         depth = depth,
         rim = rim,
@@ -224,5 +227,89 @@ class ArenaPlanTest {
     fun `pillars that would pass through each other are refused`() {
         val detail = refusal(palette(width = 5, depth = 5, pillars = ArenaPillars(pillarBlock, height = 4, inset = 3)))
         assertTrue("inset" in detail, detail)
+    }
+
+    // ------------------------------------------------------------------ circular islands
+
+    @Test
+    fun `a circular island fills its footprint as a disc, not a square`() {
+        val square = plan(palette(width = 41, depth = 41)).blocks.keys
+        val circle = plan(palette(width = 41, depth = 41, shape = ArenaShape.CIRCLE)).blocks.keys
+
+        // A disc inscribed in a 41x41 square is about pi/4 of it, and every cell of it is also a cell
+        // of the square — the circle carves the same footprint rather than moving it.
+        assertTrue(circle.size < square.size, "a disc should be smaller than its bounding square")
+        assertTrue(circle.size > square.size / 2, "a disc should be most of its bounding square")
+        assertTrue(square.containsAll(circle), "the disc left its bounding footprint")
+    }
+
+    @Test
+    fun `a circular island is symmetric about its centre block`() {
+        // The property a builder actually needs: something built on one side of the island fits the
+        // other. An off-by-half in the radius maths gives an island a column wider on one side, which
+        // nobody notices until they build something symmetrical on it.
+        val floorCells = plan(palette(width = 41, depth = 41, shape = ArenaShape.CIRCLE))
+            .blocks.keys.filter { it.y == defaultBox.minY() }
+        val centreX = floorCells.minOf { it.x } + (floorCells.maxOf { it.x } - floorCells.minOf { it.x }) / 2
+        val centreZ = floorCells.minOf { it.z } + (floorCells.maxOf { it.z } - floorCells.minOf { it.z }) / 2
+        val cells = floorCells.map { it.x to it.z }.toSet()
+
+        cells.forEach { (x, z) ->
+            val mirroredX = 2 * centreX - x
+            val mirroredZ = 2 * centreZ - z
+            assertTrue(mirroredX to z in cells, "($x,$z) has no mirror across x")
+            assertTrue(x to mirroredZ in cells, "($x,$z) has no mirror across z")
+        }
+    }
+
+    @Test
+    fun `a circular rim follows the edge of the disc and stands on its own floor`() {
+        val plan = plan(
+            palette(width = 41, depth = 41, shape = ArenaShape.CIRCLE, rim = ArenaRim(rimBlock, height = 2)),
+        )
+        val floorY = defaultBox.minY()
+        val floorCells = plan.blocks.filter { it.key.y == floorY }.keys.map { it.x to it.z }.toSet()
+        val rimCells = plan.blocks.filter { it.key.y == floorY + 1 }.keys
+
+        assertTrue(rimCells.isNotEmpty(), "a circular rim placed nothing")
+        // The bug this exists to catch: a rim derived from the bounding box rather than the disc would
+        // ring the square, leaving rim blocks hovering over the void outside the island.
+        rimCells.forEach { pos ->
+            assertTrue(pos.x to pos.z in floorCells, "rim at (${pos.x},${pos.z}) has no floor under it")
+        }
+    }
+
+    @Test
+    fun `a square island keeps exactly the plan it had before shapes existed`() {
+        // SQUARE is the default and has to stay bit-identical, since every palette written before the
+        // field existed is one.
+        val before = plan(palette(width = 21, depth = 21, rim = ArenaRim(rimBlock, height = 2)))
+        val after = plan(
+            palette(width = 21, depth = 21, rim = ArenaRim(rimBlock, height = 2), shape = ArenaShape.SQUARE),
+        )
+        assertEquals(before.blocks, after.blocks)
+        assertEquals(before.powerSpot, after.powerSpot)
+    }
+
+    @Test
+    fun `pillars on a circular island stand on the island`() {
+        // On a square they go in the corners; a disc has none, so they go on the diagonals. Either way
+        // the thing that must hold is that they are standing on floor rather than in the void.
+        val plan = plan(
+            palette(
+                width = 41,
+                depth = 41,
+                shape = ArenaShape.CIRCLE,
+                pillars = ArenaPillars(pillarBlock, height = 5, inset = 4),
+            ),
+        )
+        val floorY = defaultBox.minY()
+        val floorCells = plan.blocks.filter { it.key.y == floorY }.keys.map { it.x to it.z }.toSet()
+        val pillarCells = plan.blocks.filter { it.value == pillarBlock }.keys
+
+        assertEquals(4, pillarCells.map { it.x to it.z }.distinct().size, "expected four pillars")
+        pillarCells.forEach { pos ->
+            assertTrue(pos.x to pos.z in floorCells, "pillar at (${pos.x},${pos.z}) is standing in the void")
+        }
     }
 }

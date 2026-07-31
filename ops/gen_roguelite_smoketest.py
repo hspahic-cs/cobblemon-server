@@ -82,22 +82,36 @@ SHOP = [
 # A biome carrying a palette is the mechanism as designed, which is why this is a datapack fix and
 # not a code change: nothing about §2.29 has to be reversed for the smoke test to have a floor.
 #
-# The three shrink, 41 -> 31 -> 21. That is on purpose: ArenaConfig documents that the box sweep has
-# to clear what an EARLIER band dirtied when a later band's build is smaller, and a run that only
-# ever grew would never test it.
+# THE STANDARD ARENA FOOTPRINT. See docs/roguelite-arena-spec.md, which is the builder-facing
+# version of this number and the thing to hand somebody detailing an arena.
+#
+# 41x41, the same for every biome, because the arenas are being hand-detailed one at a time: a
+# footprint that varied per biome would mean every build started by re-measuring, and a detail pass
+# that fit one arena would not transfer to the next. Odd, so there is a true centre block to build
+# symmetry around, at local (31, 0, 31).
+#
+# 41 rather than the full 64 box leaves 11 blocks of margin on every side, inside the box and so
+# still swept and repainted — that margin is where a backdrop, walls or terrain go without any of it
+# falling outside the volume the mode tidies up.
+#
+# These varied 41 -> 31 -> 21 before standardising, to exercise the box sweep clearing what a larger
+# earlier band dirtied. That coverage is now only in ArenaBoxScanTest, which is where it belongs
+# anyway — it was never worth paying for in the shape of the arenas players stand in.
+ARENA_FOOTPRINT = 41
+
 PALETTES = [
     ("smoke_meadow", {
-        "floor": "minecraft:grass_block", "width": 41, "depth": 41,
+        "floor": "minecraft:grass_block",
         "rim": {"block": "minecraft:mossy_cobblestone", "height": 2},
         "pillars": {"block": "minecraft:oak_log", "height": 6, "inset": 3},
     }),
     ("smoke_volcano", {
-        "floor": "minecraft:basalt", "width": 31, "depth": 31,
+        "floor": "minecraft:basalt",
         "rim": {"block": "minecraft:polished_basalt", "height": 3},
         "pillars": {"block": "minecraft:magma_block", "height": 8, "inset": 4},
     }),
     ("smoke_tundra", {
-        "floor": "minecraft:snow_block", "width": 21, "depth": 21,
+        "floor": "minecraft:snow_block",
         "rim": {"block": "minecraft:packed_ice", "height": 2},
     }),
 ]
@@ -248,6 +262,9 @@ def main():
     # --- somewhere to stand, which is the difference between a testable run and no run ---
     for pid, palette in PALETTES:
         write(os.path.join(data, "arena_palettes", f"{pid}.json"), {
+            "shape": "circle",
+            "width": ARENA_FOOTPRINT,
+            "depth": ARENA_FOOTPRINT,
             "_comment": note + [
                 "Blocks, not taste. Without a palette the arena build falls back to ArenaBuilds.default",
                 "— `cobblemon_roguelite:arena`, an .nbt nothing ships — so no arena is stamped, no player",

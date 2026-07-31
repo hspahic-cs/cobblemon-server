@@ -40,9 +40,23 @@ import net.minecraft.resources.ResourceLocation
  *   It is a field at all so that an owner who has banned the gimmick can say so rather than having
  *   to notice that we place a block from a mod they did not want.
  */
+/**
+ * Whether the island is square or round.
+ *
+ * Round is what the arenas are being detailed as, and it is a real difference rather than a finish:
+ * a square platform in a void dimension reads as a chunk of a world that was cut out, and a disc
+ * reads as somewhere that was always an island. `width`/`depth` keep their meaning either way — they
+ * are the bounding footprint, and a circle is inscribed in it.
+ *
+ * SQUARE stays the default so that a palette written before this existed keeps producing exactly what
+ * it used to. Nothing about a shipped arena depends on that; it is the smaller surprise.
+ */
+enum class ArenaShape { SQUARE, CIRCLE }
+
 data class ArenaPalette(
     val id: ResourceLocation,
     val floor: ResourceLocation,
+    val shape: ArenaShape = ArenaShape.SQUARE,
     val width: Int? = null,
     val depth: Int? = null,
     val rim: ArenaRim? = null,

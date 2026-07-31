@@ -2,6 +2,7 @@ package com.cobblemonroguelite.arena
 
 import com.cobblemonroguelite.data.arena.ArenaPalette
 import com.cobblemonroguelite.data.arena.ArenaPalettes
+import com.cobblemonroguelite.data.arena.ArenaShape
 import net.minecraft.core.BlockPos
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.levelgen.structure.BoundingBox
@@ -159,10 +160,15 @@ class ArenaPlan internal constructor(
             val z0 = box.minZ() + (box.zSpan - depth) / 2
             val floorY = box.minY()
 
+            // The footprint as a predicate, so the floor, the rim and the edge test are all asking one
+            // question. A circle written three times is three chances to disagree about which cells are
+            // in it, and the disagreement would show as a rim floating a block off its own floor.
+            val inFootprint = footprintTest(palette.shape, x0, z0, width, depth)
+
             val blocks = LinkedHashMap<BlockPos, ResourceLocation>()
             for (x in x0 until x0 + width) {
                 for (z in z0 until z0 + depth) {
-                    blocks[BlockPos(x, floorY, z)] = palette.floor
+                    if (inFootprint(x, z)) blocks[BlockPos(x, floorY, z)] = palette.floor
                 }
             }
 
@@ -171,7 +177,14 @@ class ArenaPlan internal constructor(
                     val y = floorY + level
                     for (x in x0 until x0 + width) {
                         for (z in z0 until z0 + depth) {
-                            val onEdge = x == x0 || x == x0 + width - 1 || z == z0 || z == z0 + depth - 1
+                            // On the edge means "in the footprint, with a neighbour that is not" —
+                            // derived rather than compared against the bounding box, because on a
+                            // circle the edge is not where the box ends. It gives the same ring as
+                            // before on a square, which is what keeps this one code path.
+                            val onEdge = inFootprint(x, z) && (
+                                !inFootprint(x - 1, z) || !inFootprint(x + 1, z) ||
+                                    !inFootprint(x, z - 1) || !inFootprint(x, z + 1)
+                                )
                             if (onEdge) blocks[BlockPos(x, y, z)] = rim.block
                         }
                     }
@@ -182,11 +195,14 @@ class ArenaPlan internal constructor(
             // ran last. Order between two writers of one cell is exactly the kind of thing that is
             // stable until somebody reorders the code, so it is stated here rather than left to luck.
             pillars?.let { spec ->
-                val xs = listOf(x0 + spec.inset, x0 + width - 1 - spec.inset)
-                val zs = listOf(z0 + spec.inset, z0 + depth - 1 - spec.inset)
-                for (x in xs.distinct()) {
-                    for (z in zs.distinct()) {
-                        for (level in 1..spec.height) blocks[BlockPos(x, floorY + level, z)] = spec.block
+                for (position in pillarPositions(palette.shape, x0, z0, width, depth, spec.inset)) {
+                    // Skipped rather than clamped when it lands off the island: on a circle an inset
+                    // large enough to pull a pillar past the centre, or small enough to put it in the
+                    // void outside the disc, is an authoring mistake — and a pillar standing on nothing
+                    // is more obviously wrong than one silently moved somewhere it was not asked for.
+                    if (!inFootprint(position.first, position.second)) continue
+                    for (level in 1..spec.height) {
+                        blocks[BlockPos(position.first, floorY + level, position.second)] = spec.block
                     }
                 }
             }
@@ -203,6 +219,80 @@ class ArenaPlan internal constructor(
             powerSpot?.let { blocks.remove(it) }
 
             return ArenaPlanResult.Planned(ArenaPlan(palette.id, blocks, powerSpot))
+        }
+
+        /**
+         * Which cells of the bounding footprint are actually island.
+         *
+         * ### The circle is measured from cell centres, not corners
+         *
+         * `(x + 0.5)` against a radius of `(width - 1) / 2` is what makes an odd-width disc come out
+         * symmetric with a true centre block, which is the property a builder detailing an arena
+         * actually needs — an off-by-half here produces an island one column wider on one side, and
+         * nobody notices until they build something symmetrical on it.
+         *
+         * ### Ellipse, not circle, when the footprint is not square
+         *
+         * Width and depth stay independent, so a 41×21 palette is a long island rather than a circle
+         * with the ends cut off. Nothing ships that shape, but the alternative is silently ignoring one
+         * of two numbers an author wrote down.
+         */
+        private fun footprintTest(
+            shape: ArenaShape,
+            x0: Int,
+            z0: Int,
+            width: Int,
+            depth: Int,
+        ): (Int, Int) -> Boolean = when (shape) {
+            ArenaShape.SQUARE -> { x, z -> x in x0 until x0 + width && z in z0 until z0 + depth }
+            ArenaShape.CIRCLE -> {
+                val centreX = x0 + (width - 1) / 2.0
+                val centreZ = z0 + (depth - 1) / 2.0
+                val radiusX = width / 2.0
+                val radiusZ = depth / 2.0
+                { x, z ->
+                    val dx = (x - centreX) / radiusX
+                    val dz = (z - centreZ) / radiusZ
+                    dx * dx + dz * dz <= 1.0
+                }
+            }
+        }
+
+        /**
+         * Where the four pillars stand.
+         *
+         * A square has corners and a circle does not, so on a circle they go on the diagonals — the
+         * points a corner would have been if the island had them — which reads as a colonnade round the
+         * island rather than as four blocks in the sea. `inset` keeps its meaning either way: how far in
+         * from the edge, measured along the direction the pillar sits in.
+         */
+        private fun pillarPositions(
+            shape: ArenaShape,
+            x0: Int,
+            z0: Int,
+            width: Int,
+            depth: Int,
+            inset: Int,
+        ): List<Pair<Int, Int>> = when (shape) {
+            ArenaShape.SQUARE -> {
+                val xs = listOf(x0 + inset, x0 + width - 1 - inset).distinct()
+                val zs = listOf(z0 + inset, z0 + depth - 1 - inset).distinct()
+                xs.flatMap { x -> zs.map { z -> x to z } }
+            }
+
+            ArenaShape.CIRCLE -> {
+                val centreX = x0 + (width - 1) / 2.0
+                val centreZ = z0 + (depth - 1) / 2.0
+                // The diagonal of the inset ellipse. `/ sqrt(2)` is what puts them at 45°, which is the
+                // only placement that is symmetric under both axes on a round island.
+                val reachX = (width / 2.0 - inset) / kotlin.math.sqrt(2.0)
+                val reachZ = (depth / 2.0 - inset) / kotlin.math.sqrt(2.0)
+                listOf(-1, 1).flatMap { sx ->
+                    listOf(-1, 1).map { sz ->
+                        Math.round(centreX + sx * reachX).toInt() to Math.round(centreZ + sz * reachZ).toInt()
+                    }
+                }.distinct()
+            }
         }
 
         private fun doesNotFit(palette: ArenaPalette, detail: String) =

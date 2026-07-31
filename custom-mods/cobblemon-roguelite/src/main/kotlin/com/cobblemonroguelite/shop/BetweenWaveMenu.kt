@@ -8,6 +8,7 @@ import com.cobblemonroguelite.data.reward.RunReward
 import com.cobblemonroguelite.data.shop.ShopEntry
 import com.cobblemonroguelite.data.shop.ShopTables
 import com.cobblemonroguelite.run.RunCommands
+import com.cobblemonroguelite.run.RunHud
 import com.cobblemonroguelite.run.RunState
 import com.cobblemonroguelite.run.RunStore
 import net.minecraft.core.component.DataComponents
@@ -431,6 +432,9 @@ object BetweenWaveMenu {
                                             if (outcome.isSuccess) {
                                                 run.credits = charge.remaining
                                                 checkpoint(online)
+                                                // Credits moved, so the HUD's ₽ is stale until told —
+                                                // the bar is synced from its write sites, not a tick.
+                                                RunHud.sync(online)
                                                 online.sendSystemMessage(
                                                     ShopMessages.bought(entryId, charge.price, run.credits, GrantResult.Ok("used on ${pokemon.species.name}")),
                                                 )
@@ -457,6 +461,8 @@ object BetweenWaveMenu {
                     run.credits = result.remaining
                     val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
                     checkpoint(player)
+                    // Same as the instant-use path above: a credits write is a HUD write.
+                    RunHud.sync(player)
                     player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, granted))
                 }
 
@@ -509,6 +515,8 @@ object BetweenWaveMenu {
                     run.credits = result.remaining
                     run.rerollsThisWave++
                     checkpoint(player)
+                    // Same as the purchase paths: a credits write is a HUD write.
+                    RunHud.sync(player)
                 }
 
                 is RerollResult.NotEnoughCredits ->

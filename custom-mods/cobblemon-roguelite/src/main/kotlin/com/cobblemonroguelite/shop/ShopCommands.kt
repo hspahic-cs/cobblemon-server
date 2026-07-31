@@ -4,6 +4,7 @@ import com.cobblemonroguelite.data.reward.RewardTable
 import com.cobblemonroguelite.data.reward.RewardTables
 import com.cobblemonroguelite.data.shop.ShopTable
 import com.cobblemonroguelite.data.shop.ShopTables
+import com.cobblemonroguelite.run.RunHud
 import com.cobblemonroguelite.run.RunState
 import com.cobblemonroguelite.run.RunStore
 import com.mojang.brigadier.CommandDispatcher
@@ -172,6 +173,8 @@ object ShopCommands {
                 run.credits = result.remaining
                 val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player)
                 RunStore.of(player.server).checkpoint(player.server, player.uuid)
+                // A credits write is a HUD write — the bar is synced from its write sites, not a tick.
+                RunHud.sync(player)
                 player.sendSystemMessage(ShopMessages.bought(result.entry.id, result.price, run.credits, granted))
                 if (granted is GrantResult.Failed) {
                     log.warn(
@@ -229,6 +232,8 @@ object ShopCommands {
                 run.credits = result.remaining
                 run.rerollsThisWave++
                 RunStore.of(player.server).checkpoint(player.server, player.uuid)
+                // Same as `buy`: a credits write is a HUD write.
+                RunHud.sync(player)
                 showReward(player)
                 1
             }

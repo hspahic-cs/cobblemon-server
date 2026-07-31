@@ -384,6 +384,10 @@ object RunController {
             )
         }
         store.checkpoint(server, player.uuid)
+        // The run now exists, so the corner display goes up — this is the earliest moment the bar
+        // has true numbers to show (wave 1, ₽0), and the player who just bought a team is standing
+        // at exactly the point PokéRogue starts drawing its.
+        RunHud.sync(player)
         log.info(
             "roguelite: {} started a run (seed={}, team={}, spent={}/{})",
             player.gameProfile.name, run.seed, species, selection.spent, catalogue.budget,
@@ -419,6 +423,12 @@ object RunController {
             return ResumeResult.Ended(endRun(server, player.uuid, RunEndCause.PARTY_WIPED))
         }
 
+        // The HUD's belt-and-braces site: login and every mutation already sync it, so on the happy
+        // path this changes nothing and sends nothing — but resume is the one verb a player reaches
+        // for when something looks wrong, so it is where a bar lost to any bug rights itself. After
+        // the wipe check above (no bar for a run about to end) and before the step below, whose
+        // EndRun branch removes it again through [endRun] — idempotence makes that ordering safe.
+        RunHud.sync(player)
         return when (val step = nextStep(run, depthCapFor(player))) {
             is WaveStep.EndRun -> ResumeResult.Ended(endRun(server, player.uuid, step.cause))
             // Logged at ERROR because only an operator can act on it and nothing else will say so: the
@@ -623,7 +633,7 @@ object RunController {
         // continue, which the next resume re-checks with the player present.
         val cap = server.playerList.getPlayer(player)?.let { depthCapFor(it) }
         val step = RunProgress.afterVictory(cleared.plan, run.seed, composition, roster, run.trainerMemory, cap)
-        return when (step) {
+        val outcome = when (step) {
             is WaveStep.Fight -> {
                 run.advanceTo(step.plan.wave)
                 store.checkpoint(server, player)
@@ -659,6 +669,13 @@ object RunController {
                 step
             }
         }
+        // One HUD write for the whole verb, after the branch has settled: this is the site where BOTH
+        // of the bar's numbers move (the credits above, the wave in the branches), so syncing once
+        // here instead of at each write is what keeps a cleared wave to a single name-update packet.
+        // Safe on every branch — the EndRun one has already removed the bar and a sync against the
+        // now-empty store is a no-op.
+        RunHud.sync(server, player)
+        return outcome
     }
 
     /**
@@ -906,6 +923,11 @@ object RunController {
         val store = RunStore.of(server)
         val run = store.end(server, player)
         val wave = run?.wave ?: 1
+        // The bar goes with the run, and this being the single end funnel is why the HUD needs no
+        // per-cause handling: wipe, abandon, completion and expiry all pass through here. Straight
+        // after the store write, so nothing below (payouts can throw through a provider) can leave a
+        // dead run's numbers on screen.
+        RunHud.remove(player)
         val outcome = cause.outcome
 
         // Said out loud, because it is the one casualty of a run end that nothing else accounts for:

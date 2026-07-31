@@ -29,6 +29,15 @@ class RewardTargetingTest {
     }
 
     @Test
+    fun `a credits reward is party-wide because the balance belongs to the run`() {
+        // If this flips to needing a member, every Nugget pick starts demanding a party slot that
+        // changes nothing — and a solo pick in the GUI would open a pointless picker screen.
+        val credits = RunReward.Credits(2.5)
+        assertTrue(!RewardTargeting.needsMember(credits), "credits should not need a slot")
+        assertEquals(RewardTarget.WholeParty, RewardTargeting.resolve(credits, chosenSlot = null, partySize = 3))
+    }
+
+    @Test
     fun `every per-Pokemon reward type needs a member`() {
         val perPokemon = listOf(
             evs,

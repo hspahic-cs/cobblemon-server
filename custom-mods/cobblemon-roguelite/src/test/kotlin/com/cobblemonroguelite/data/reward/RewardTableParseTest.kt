@@ -288,6 +288,36 @@ class RewardTableParseTest {
     }
 
     @Test
+    fun `a credits reward parses as a multiplier of the wave curve`() {
+        // The 2026-07-31 restoration of PokéRogue's money items: a multiplier, never a flat amount —
+        // the amount is resolved against the shared wave-money curve at grant time.
+        val parsed = parse("""{ "entries": [ { "id": "big_nugget", "weight": 12, "reward": { "type": "credits", "multiplier": 2.5 } } ] }""")
+        val table = assertNotNull(parsed.table)
+        assertTrue(parsed.problems.isEmpty(), "unexpected problems: ${parsed.messages}")
+        assertEquals(RunReward.Credits(2.5), table.entries.single().reward)
+    }
+
+    @Test
+    fun `a credits reward of nothing is rejected`() {
+        val zero = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "credits", "multiplier": 0 } } ] }""")
+        assertNull(zero.table)
+        assertTrue(zero.mentions("reward.multiplier", "greater than 0"), zero.messages.toString())
+
+        val negative = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "credits", "multiplier": -1.5 } } ] }""")
+        assertNull(negative.table)
+        assertTrue(negative.mentions("reward.multiplier", "greater than 0", "-1.5"), negative.messages.toString())
+    }
+
+    @Test
+    fun `a credits reward with a flat amount is rejected as an unknown field`() {
+        // The mistake this schema invites: someone writes "amount" expecting a constant payout. There
+        // is no constant form on purpose — see WaveMoneyCurve — so the field must be named, not ignored.
+        val parsed = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "credits", "multiplier": 1.0, "amount": 500 } } ] }""")
+        assertNull(parsed.table)
+        assertTrue(parsed.mentions("reward.amount", "unknown field"), parsed.messages.toString())
+    }
+
+    @Test
     fun `battle-only stats are not EV stats`() {
         val parsed = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "ev", "stat": "evasion", "amount": 4 } } ] }""")
         assertNull(parsed.table)

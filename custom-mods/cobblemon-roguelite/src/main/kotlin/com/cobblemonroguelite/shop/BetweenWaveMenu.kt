@@ -455,7 +455,7 @@ object BetweenWaveMenu {
                         return
                     }
                     run.credits = result.remaining
-                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run, player, forgetMoveSlot)
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, granted))
                 }
@@ -483,7 +483,7 @@ object BetweenWaveMenu {
                         player.sendSystemMessage(ShopMessages.needsSlot(target.reason))
                         return
                     }
-                    val granted = RewardGrant.apply(result.entry.reward, target, party, run.seed, player, forgetMoveSlot)
+                    val granted = RewardGrant.apply(result.entry.reward, target, party, run, player, forgetMoveSlot)
                     run.rewardTakenThisWave = true
                     checkpoint(player)
                     player.sendSystemMessage(ShopMessages.taken(entryId, granted))
@@ -733,6 +733,8 @@ object BetweenWaveMenu {
             is RunReward.Mint -> cobblemon("${reward.nature.path}_mint", Items.SUGAR)
             is RunReward.AbilityPatch -> cobblemon("ability_patch", Items.NETHER_STAR)
             is RunReward.TechnicalMachine -> tmIcon(reward.move)
+            // The money counter's own icon (creditsIcon), so "this pays ₽" reads at a glance.
+            is RunReward.Credits -> Items.GOLD_NUGGET
             // These two already name a real item, so they show it. Unchanged.
             is RunReward.BagItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.CHEST)
             is RunReward.HeldItem -> BuiltInRegistries.ITEM.getOptional(reward.item).orElse(Items.PAPER)
@@ -782,6 +784,10 @@ object BetweenWaveMenu {
             is RunReward.BagItem -> "§7${reward.count}x ${reward.item.path} (bag)"
             is RunReward.HeldItem -> "§7Held item -> ${reward.item.path}"
             is RunReward.TechnicalMachine -> "§7Teaches ${reward.move}"
+            // The concrete number at THIS wave, not the multiplier: "×2.5" means nothing on a screen
+            // where every price is already in ₽. Resolved through the same curve the grant pays from.
+            is RunReward.Credits ->
+                "§7+${RunCurrency.format(ShopSettings.credits.curve.amountAt(run.wave, reward.multiplier))} on the spot"
         }
 
         private fun signed(amount: Int) = if (amount >= 0) "+$amount" else "$amount"

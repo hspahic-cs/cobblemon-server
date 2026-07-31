@@ -92,26 +92,46 @@ class StarterStatLinesTest {
     }
 
     @Test
-    fun `the IV line is shown at the base floor too, labelled per stat`() {
-        // Hidden at base at first, which had it backwards: this is what the Pokémon you are buying will
-        // BE, and a line that only appears on species you have already levelled is one nobody learns.
+    fun `each IV rides on its own stat row rather than in one wide line`() {
+        // The wide "IVs HP10 Atk10 …" line asked a player to match six numbers back to six rows by
+        // counting, and was the widest thing on the screen.
+        val rows = StarterStatLines.render(bulbasaur.copy(ivFloor = listOf(31, 5, 10, 22, 10, 10)))
+
+        val hp = rows.single { it.startsWith("§7HP") }
+        assertTrue(hp.contains("45"), "the base stat left the row: $hp")
+        assertTrue(hp.contains("IV") && hp.contains("31"), "the IV is not on its stat's row: $hp")
+
+        val atk = rows.single { it.startsWith("§7Atk") }
+        assertTrue(atk.contains("IV") && atk.contains(" 5"), "the second IV landed on the wrong row: $atk")
+        // Every stat row carries one, so none of the six is left unexplained.
+        assertEquals(6, rows.count { it.contains("IV ") })
+    }
+
+    @Test
+    fun `IV bars are narrower than base stat bars and scale to 31`() {
+        val rows = StarterStatLines.render(bulbasaur.copy(ivFloor = List(6) { StarterIvFloor.MAX_IV }))
+        val hp = rows.single { it.startsWith("§7HP") }
+        // Base-stat bar plus IV bar, and nothing else on the row draws pipes.
+        assertEquals(StarterStatLines.BAR_WIDTH + StarterStatLines.IV_BAR_WIDTH, pipes(hp))
+        // A perfect IV fills its bar.
+        assertEquals(StarterStatLines.IV_BAR_WIDTH, pipes(hp.substringAfter("IV")))
+    }
+
+    @Test
+    fun `the sheet says whether the floor is the base one or an earned one`() {
         val base = StarterStatLines.render(bulbasaur.copy(ivFloor = List(6) { StarterIvFloor.BASE }))
-        val line = base.single { it.contains("IVs") }
-        StarterStatLines.STAT_LABELS.forEach { assertTrue(line.contains(it.trim()), "no ${it.trim()} in $line") }
-        assertTrue(base.any { it.contains("Every run of this species starts here") })
-    }
+        assertTrue(base.any { it.contains("every run of this species starts here") })
 
-    @Test
-    fun `an earned floor says it is earned`() {
         val earned = StarterStatLines.render(bulbasaur.copy(ivFloor = listOf(31, 10, 10, 22, 10, 10)))
-        assertTrue(earned.any { it.contains("IVs") && it.contains("31") && it.contains("22") })
-        assertTrue(earned.any { it.contains("Your best so far") })
+        assertTrue(earned.any { it.contains("your best so far") })
     }
 
     @Test
-    fun `no floor at all prints no IV line`() {
+    fun `no floor at all leaves the stat rows alone`() {
         // The progression store failing to answer is not the same as a floor of zero.
-        assertTrue(StarterStatLines.render(bulbasaur).none { it.contains("IVs") })
+        val rows = StarterStatLines.render(bulbasaur)
+        assertTrue(rows.none { it.contains("IV") })
+        assertEquals(StarterStatLines.BAR_WIDTH, pipes(rows.single { it.startsWith("§7HP") }))
     }
 
     @Test

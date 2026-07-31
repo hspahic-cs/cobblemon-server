@@ -321,19 +321,31 @@ object StarterDraftMenu {
         }
 
         /**
-         * One cost tab.
+         * One cost tab: **as many nuggets as the tab costs**.
+         *
+         * The first version was one nugget per tab with the price in the custom name, and in play that
+         * was a row of six identical nuggets — the name only renders on hover, so the tab row carried
+         * no information until you pointed at it one slot at a time. A stack count renders in the slot
+         * itself, so "which of these is the 3-point tab" is answered by looking.
+         *
+         * The 1-point tab is the known rough edge: vanilla hides a count of 1, so it shows a bare
+         * nugget. It is still the leftmost tab after All and it still says so on hover, and there is no
+         * component that forces the count to draw — the alternative would be a client mod for one slot.
          *
          * Selection is marked the same way a picked species is — glint, tick, green — rather than with
-         * a fourth visual language nobody has learned yet. The count is the useful part of the tooltip:
-         * "3 points, 179 available" is what tells a player which tab is worth opening.
+         * a fourth visual language nobody has learned yet.
          */
         private fun tabIcon(tab: StarterDraftFilter): ItemStack {
             val selected = tab == filter
             val available = catalogue.options.count(tab::matches)
-            val name = if (selected) "§a✔ ${tab.label}" else "§f${tab.label}"
+            val icon = when (tab) {
+                is StarterDraftFilter.All -> ItemStack(Items.BOOK)
+                is StarterDraftFilter.Exactly -> ItemStack(Items.GOLD_NUGGET, tab.cost)
+                is StarterDraftFilter.AtLeast -> ItemStack(Items.GOLD_NUGGET, tab.cost)
+            }
             return label(
-                if (tab is StarterDraftFilter.All) Items.BOOK else Items.GOLD_NUGGET,
-                name,
+                icon,
+                if (selected) "§a✔ ${tab.label}" else "§f${tab.label}",
                 listOf(
                     if (tab is StarterDraftFilter.All) "§7Every Pokémon you can buy" else "§7Costing §f${tab.label}§7 point(s)",
                     "§7$available available",

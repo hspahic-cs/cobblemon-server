@@ -73,6 +73,15 @@ object StarterStatLines {
     const val BASE_STAT_FULL = 160
 
     /**
+     * The IV bar, deliberately half the width of the base-stat bar beside it.
+     *
+     * Two full-width bars on one row read as equally important and they are not: the base stat is what
+     * the species *is* and the IV is the roll on top of it. Narrower also keeps the row shorter than
+     * the single wide "IVs …" line this replaced, which was the widest thing on the screen.
+     */
+    const val IV_BAR_WIDTH = 5
+
+    /**
      * A bar of pipes, coloured by how full it is.
      *
      * Pipes rather than block-drawing characters: `█` and `░` come from the unicode fallback font,
@@ -97,30 +106,32 @@ object StarterStatLines {
 
         if (sheet.types.isNotEmpty()) lines += "§7${sheet.types.joinToString(" / ")}"
 
+        // The IV rides on the stat row it belongs to rather than in a row of its own.
+        //
+        // It was one wide line — "IVs HP10 Atk10 Def10 SpA10 SpD10 Spe10" — which in play was the widest
+        // thing on the screen and asked a player to match six numbers back to six rows by counting. Per
+        // stat is right; six SEPARATE per-stat rows would be right too, except the tooltip already runs
+        // most of the screen's height, and "HP 100 |||||||||| IV 10 |||||" says the same thing on the
+        // row that already exists for it.
         sheet.baseStats.forEachIndexed { index, (label, value) ->
             // Padded to three so the bars start in the same column on every row; a ragged left edge
             // makes six bars unreadable as a group, which is the only reason to draw them together.
             val name = STAT_LABELS.getOrElse(index) { label }
-            lines += "§7$name §f${value.toString().padStart(3)} ${bar(value)}"
+            val iv = sheet.ivFloor?.getOrNull(index)?.let { floor ->
+                "  §7IV §f${floor.toString().padStart(2)} ${bar(floor, StarterIvFloor.MAX_IV, IV_BAR_WIDTH)}"
+            }.orEmpty()
+            lines += "§7$name §f${value.toString().padStart(3)} ${bar(value)}$iv"
         }
         if (sheet.baseStats.isNotEmpty()) lines += "§7BST §f${sheet.baseStatTotal}"
 
+        // Kept even now the numbers are on the rows: without it the IV column is unexplained, and which
+        // of the two it is — a fixed starting point or a high-water mark you have raised — is the whole
+        // reason §2.17 exists.
         sheet.ivFloor?.let { floor ->
-            // Always shown, including at the floor everybody starts on. It was hidden there at first, on
-            // the grounds that six identical numbers across 542 rows is noise — but that reasoning had
-            // it backwards: this is the number that says what the Pokémon you are about to buy will
-            // actually BE, and a player who only ever sees it on species they have already levelled
-            // cannot learn that the line exists, let alone that raising it is a thing they can do.
-            //
-            // Labelled and aligned to the base-stat rows above, so the six numbers read as the same six
-            // stats in the same order rather than as an unlabelled sextet.
-            lines += "§7IVs " + floor.mapIndexed { index, value ->
-                "§8${STAT_LABELS.getOrElse(index) { "" }.trim()}§f${value.toString().padStart(2)}"
-            }.joinToString(" ")
             lines += if (floor.all { it <= StarterIvFloor.BASE }) {
-                "§8Every run of this species starts here."
+                "§8IVs: every run of this species starts here."
             } else {
-                "§8Your best so far — runs start at least here."
+                "§8IVs: your best so far — runs start at least here."
             }
         }
 

@@ -3,11 +3,11 @@
   "_configVersion_comment": "DO NOT MODIFY: This field is used by NeoEssentials for automatic config updates.",
   "chat": {
     "chat-format": {
-      "default": "<{neoessentials_prefix} {neoessentials_username} {neoessentials_suffix}> {MESSAGE}",
-      "group:admin": "&c[Admin] {neoessentials_username}: {MESSAGE}",
-      "group:mod": "&2[Mod] {neoessentials_username}: {MESSAGE}",
-      "world:creative": "&b[C] {neoessentials_username}: {MESSAGE}"
+      "default": "&f{neoessentials_username}&7: &r{MESSAGE}",
+      "group:moderator": "&2[Mod] &f{neoessentials_username}&7: &r{MESSAGE}",
+      "group:admin": "&c[Admin] &f{neoessentials_username}&7: &r{MESSAGE}"
     },
+    "chat-format-note": "Keys are matched literally against the player's NeoEssentials group name from permissions.json, as 'group:<name>' (ChatManager builds 'group:<g>:world:<w>' > 'group:<g>' > 'world:<w>' > 'default'). The group is named 'moderator', so a 'group:mod' key silently never matches — that bug is what kept staff tags invisible before 0.33.0. Only the [Tag] is colored; the name and message stay neutral so staff chat doesn't read as a server error.",
     "chat-format-description": "Chat format template. You can use a string (for global format) or an object for per-group/world formats. Keys: 'default', 'group:GROUPNAME', 'world:WORLDNAME', or 'group:GROUP:world:WORLD'. Placeholders: {neoessentials_displayname}, {neoessentials_username}, {MESSAGE}, {neoessentials_prefix}, {neoessentials_suffix}, {neoessentials_world}, {neoessentials_x}, {neoessentials_y}, {neoessentials_z}, {neoessentials_health}, {neoessentials_level}, and more via PlaceholderAPI. Legacy uppercase placeholders like {USERNAME}, {PREFIX}, {SUFFIX} are automatically converted for backwards compatibility. Use '&' for color codes (e.g., &c for red, &6 for gold).",
     "enableChatEnhancements": true,
     "enableChatEnhancements_comment": "Enable Phase 2 chat enhancements (clickable names, mentions, URLs, item links). Set to false to use basic chat formatting only.",
@@ -33,8 +33,8 @@
       "permission": "neoessentials.chat.mention"
     },
     "badges": {
-      "enabled": true,
-      "enabled_comment": "Enable badge/icon system. Shows rank badges and status icons in chat.",
+      "enabled": false,
+      "enabled_comment": "DISABLED ON PURPOSE (0.33.0): rankBadges below are emoji (U+2B50, U+1F6E1) and Minecraft's default font has no glyphs for them — with groups actually assigned, staff lines would render a missing-glyph box before the prefix. The &c[Admin] / &2[Mod] prefixes in permissions.json are the rank indicator instead. Re-enable only alongside useCustomImages + a resource pack.",
       "badgePosition": "before_prefix",
       "badgePosition_comment": "Where to show badges: 'before_prefix', 'after_prefix', 'before_name', 'after_name'.",
       "useCustomImages": false,

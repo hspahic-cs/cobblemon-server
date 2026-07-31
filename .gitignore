@@ -81,3 +81,13 @@ ops/skin-staging/*
 
 # Generated throwaway smoke-test datapack (ops/gen_roguelite_smoketest.py) — never promoted
 ops/roguelite-smoketest-pack/
+
+# Editor / tool scratch artifacts (a stray .Rhistory and a shell-mishap file
+# both made it into git before these were ignored)
+.Rhistory
+.Rapp.history
+*.bak
+*.orig
+*.rej
+*.swp
+*~

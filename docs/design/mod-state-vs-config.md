@@ -90,7 +90,7 @@ mods are out of scope — we treat them as configure-once-per-environment.
 
 ```
 rsync -rltzO modpack/server-overrides/config/ \
-  deployer@192.168.1.20:/opt/cobblemon-<env>/config/
+  $COBBLEMON_DEPLOY_SSH:/opt/cobblemon-<env>/config/
 ```
 
 Repo only contains `authored/` paths, so the rsync touches design data only.

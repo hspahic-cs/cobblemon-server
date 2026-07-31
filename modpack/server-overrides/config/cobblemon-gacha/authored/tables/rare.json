@@ -264,8 +264,9 @@
       "weightPct": 3.9,
       "items": [
         {
-          "type": "vanilla",
-          "id": "cobblemon:tr_voucher",
+          "type": "placeholder",
+          "kind": "voucher",
+          "label": "TR Voucher",
           "count": 1
         }
       ],
@@ -277,8 +278,9 @@
       "weightPct": 2.9,
       "items": [
         {
-          "type": "vanilla",
-          "id": "cobblemon:held_item_voucher",
+          "type": "placeholder",
+          "kind": "voucher",
+          "label": "Held Item Voucher",
           "count": 1
         }
       ],

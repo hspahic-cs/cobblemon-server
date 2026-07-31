@@ -6,21 +6,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mega_showdown:ice_tera_shard",
-          "weight": 100,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1,
-                "max": 6
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
           "name": "cobblemon:ice_gem",
           "weight": 100,
           "functions": [

@@ -12,6 +12,233 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **Server-wide loot tier list** (`docs/loot-tiers.md`, generated from
+  `ops/loot-tiers/`). A canonical T0–T5 rarity ladder covering 433 items, so new
+  games, quests, crates and rewards can be priced against what already exists
+  rather than by feel. Tiers come from explicit pins plus category rules; the
+  crate/chest/trainer drop rates behind each item are recorded as *evidence* but
+  deliberately don't set the tier, since that would let a mispriced item justify
+  its own mispricing. Regenerate with `python3 ops/loot-tiers/build_tiers.py`
+  (`--check` fails on stale output).
+
+### Fixed
+- **`statchic` dropped nothing.** Its `drops` entry named
+  `cobblemon:electic_gem` — missing the `r` — so the drop silently never
+  resolved. Found by the loot-tier sweep.
+
+### Changed
+- **Champion Jax no longer drops a Totem of Undying.** The Totem is the Zacian
+  summon gate, and Jax handed one out *guaranteed* on defeat — a stronger source
+  than the 1.6% Ultra crate roll it was meant to gate. Signature item is now
+  `cobblemon:leftovers`, matching every other champion and Elite Four member
+  (all of whom use competitive held items; Jax's vanilla Totem was the lone
+  outlier). With this and the 0.23.31 chest removal, the Ultra crate is once
+  again the only non-vanilla Totem source.
+- **Monument artifact rarity brought in line with the Ultra crate.** All figures
+  are per chest opened (these pools roll 3–14 times, so per-roll weights
+  understate real supply):
+  - Origin-forme held items `griseous_orb` / `adamant_orb` / `lustrous_orb`:
+    **4.97% → 0.53%** each.
+  - Origin-forme unlocks `griseous_core` / `adamant_crystal` / `lustrous_globe`:
+    **1.01% → 0.11%** each.
+  - `blue_orb` (Primal Kyogre): **2.64% → 0.53%**. It sat untouched at 2.4× the
+    rate of its already-nerfed Groudon counterpart; `red_orb` also moved
+    **1.14% → 0.57%** so the two Primals now match.
+
+  `turnback_cave_vault` and `lugia_temple_chest` were previously un-overridden
+  upstream defaults; both are now ours. Freed weight spreads proportionally
+  across each pool's existing lower-tier entries — no entries added or removed.
+  Since `red_orb`/`blue_orb` were already at `weight: 1`, their nerf is expressed
+  by scaling every *other* entry up instead. See the new datapack README.
+
+- **Repo + VM cleanup (no gameplay impact).** Removed two junk tracked files (a
+  shell-mishap artifact from #56 and an empty `.Rhistory`) and the obsolete
+  `docs/gym-ai-beta-test.md`, which targeted 0.8.1 and was an orphan page — in
+  neither `nav` nor `exclude_docs`.
+- **Docs corrected against reality.** `docs/snapshots.md` still described the
+  pre-2026-07-15 snapshot layout; the logic now lives in
+  `/usr/local/bin/world-snapshot.sh <dev|prod>` with `prod-snapshot.sh` as a thin
+  wrapper, and `dev-reset.sh` is documented but **not currently installed on the
+  VM**. Also fixed `commands.md`, which still claimed homes were hard-capped at
+  5 — extra slots have been purchasable from the Upgrades shop tab.
+- **Scrubbed the VM's LAN address from this public repo** (18 references across
+  6 files). Ops commands now use `$COBBLEMON_SSH` / `$COBBLEMON_DEPLOY_SSH`;
+  `ops/fetch_battle_logs.sh` requires `CONTROL_PLANE` instead of defaulting to a
+  hardcoded host.
+
+## [0.33.1] - 2026-07-31
+
+### Fixed
+- **A stray datapack could half-apply a deploy.**
+  `ops/prune-removed-server-datapacks.sh` now warns and skips a `server-*` pack
+  it can't delete, and always exits 0, instead of aborting the run.
+
+  The prune sits *upstream* of the config rsync, the atomic swap and the
+  restart, so a hard failure there didn't merely skip a cleanup — it left new
+  mods staged, configs never copied, the server never restarted and
+  `.deployed_version` never written. The run went red while the server quietly
+  kept serving the old version, which reads much more like a no-op than a
+  failure.
+
+  This blocked the 0.33.0 dev deploy. A hand-made `server-roguelite-smoketest`
+  datapack had been created on the dev VM as `sysadmin` with mode 0755; deploys
+  run as `deployer`, which is in the `sysadmin` group but had no group-write bit
+  on that directory and so couldn't unlink the children. Any `server-*`
+  directory dropped on a VM by hand could have done the same, on prod too.
+
+  Tradeoff, taken deliberately: an undeletable retired pack now *lingers* — the
+  exact thing this script exists to prevent. A lingering datapack is a visible
+  warning (surfaced as a GitHub Actions annotation) and a one-line manual fix; a
+  half-applied deploy is silent.
+- **Staff group definitions never actually applied on 0.33.0.** Shipping
+  `config/neoessentials/permissions.json` through `modpack/server-overrides/` is
+  silently useless, so it's been deleted and replaced with
+  `ops/apply-staff-groups.sh`.
+
+  The file looks like config but is *state*: NeoEssentials loads it into a
+  `PermissionManager` at boot, and `PermissionSystem.shutdown()` calls
+  `PermissionStorage.save()` on the way down, rewriting it from memory. A deploy
+  rsyncs configs while the **old** server is still running and then restarts it,
+  so the shutdown save clobbers the new file before the new process ever reads
+  it. On the 0.33.0 dev deploy the rsync wrote it at 23:50 owned by `deployer`;
+  after the 23:55 restart it was owned by `sysadmin` with the pre-deploy
+  contents, in NeoEssentials' own field order. dev came up with the old 23-node
+  moderator group and zero `cobblemon.staff.*` nodes.
+
+  `chat.json` and `tablist.json` were unaffected — NeoEssentials only rewrites
+  the permission store — so the chat tags and tablist colours from 0.33.0 are
+  live and correct.
+
+  The script applies the same groups through `/permissions` commands, which
+  mutate the live `PermissionManager` and persist via its own save. Idempotent,
+  `--dry-run` supported, roles only — it never assigns a person to a group, so
+  re-running can't change who is staff. **Run it once per server**; 0.33.0's
+  moderator tier does nothing until then.
+
+  It deliberately does *not* end with `permissions reload`:
+  `PermissionSystem.reload()` re-reads the file from disk and would discard
+  everything just applied.
+
+  The script `clear`s each group before re-adding, so it's authoritative rather
+  than additive — a node dropped from the lists actually goes away. Applied to
+  dev, that removed nine nodes the pre-existing moderator group still carried and
+  the standard mod kit excludes: `neoessentials.item.*` (item spawning),
+  `economy.admin`, `kits.admin.create`/`delete`/`list`,
+  `teleport.warp.create`/`delete`, `teleport.spawn.set` and
+  `permissions.reload`. Group-level manual grants are wiped on each run;
+  per-user grants are untouched.
+- **Tablist rendered `[Mod]Steve` with no space.** NeoEssentials trims group
+  prefixes on `setprefix`, so `&2[Mod] ` is stored as `&2[Mod]` and a prefix can
+  never carry its own trailing space. `tablist.json`'s `playerFormat` now holds
+  the separator (`&f{prefix}&r {player}{suffix}`). Chat was never affected —
+  `chat.json` hardcodes its spacing instead of using `{prefix}`. Non-staff now
+  render with one leading space in the tablist, accepted as the lesser evil.
+
+## [0.33.0] - 2026-07-30
+
+### Added
+- **Moderator staff tier, and staff rank tags in chat.** The server had exactly
+  two tiers — op level 4 or nothing — so every routine duty (muting a spammer,
+  running a tournament, granting BP) needed a full admin. There is now a
+  `moderator` group that carries no vanilla op at all, and Admin/Moderator are
+  visible in chat and the tablist. Documented in `docs/staff-roles.md`.
+
+  Assign people with `permissions user <name> setgroup admin|moderator`
+  (see the doc — group changes need a relog before the new commands
+  tab-complete, and the two current admins need assigning once per server).
+
+  NeoEssentials already shipped `default`/`moderator`/`admin` group definitions
+  and never used them: **every player, including both admins, sat in `default`**,
+  which is why no tags ever rendered. The group definitions are now authored at
+  `modpack/server-overrides/config/neoessentials/permissions.json` so they
+  deploy with the pack. Group *membership* stays runtime state in
+  `config/neoessentials/permissions/playerdata.json`, untouched by deploys.
+
+  Moderators get kick, tempban/unban, mute, jail, freeze, vanish, socialspy,
+  staff chat, and the teleport set. They deliberately do **not** get permanent
+  or IP bans, item spawning, economy edits, kit/warp management, permission
+  management, or `/op`.
+
+- **`StaffPermissions` bridge, so non-op staff can use our commands.** Every
+  custom-mod command gates on vanilla `hasPermission(n)`, which reads only
+  `ops.json` — a non-op moderator would fail all of them, and granting op
+  instead is not an option (see Fixed, below). Six commands now resolve as
+  *vanilla op* **OR** *NeoEssentials node*: `/wild <player>`
+  (`cobblemon.staff.wild`), `/feedback whois` (`…whois`), `/bp add|set`
+  (`…bp`), `/ranked tournament` (`…tournament`), `/gymreturn`
+  (`…gymreturn`), `/auctionadmin` (`…auctionadmin`).
+
+  `/wild` is split: relocating a player is a moderator duty, reconfiguring the
+  wilderness box (`/wild admin`, `cobblemon.staff.wild.admin`) is not.
+  `/ranked admin` — ELO edits, arena geometry, decay — stays op-4-only.
+
+  The op arm is evaluated first, so admins and the console behave bit-identically
+  to before and everything still works if NeoEssentials is removed; a missing
+  PermissionAPI degrades the node arm to `false` with a warn-once rather than
+  throwing, since these are `.requires()` predicates brigadier evaluates while
+  building the command tree it sends to every joining client. The helper is
+  duplicated into cobblemon-bridge/-auction/-feedback/-ranked, same convention
+  as the per-mod `EconomyBridge`, to keep the mods dependency-free of each other.
+
+### Fixed
+- **Staff chat tags could never have rendered — `group:mod` matches nothing.**
+  `chat.json` mapped a format to `group:mod`, but `ChatManager` builds its
+  lookup keys as `group:<groupName>` from `permissions.json`, where the group is
+  named `moderator`. The key was dead config. Same typo in `tablist.json`'s
+  `groupColors` (`mod` → `moderator`). Both fixed; `tablist.json` is now pinned
+  in `server-overrides` so a NeoEssentials update can't revert it, matching what
+  0.7.39 did for `chat.json`.
+
+### Changed
+- **Chat format colours the tag only, not the whole line.** Was
+  `&c[Admin] {username}: {MESSAGE}`, which tinted an admin's entire message red
+  and read like a server error. Now `&c[Admin] &f{username}&7: &r{MESSAGE}` —
+  red `[Admin]`, green `[Mod]`, neutral name and message. Regular players get
+  `{username}: {message}` with no prefix, replacing the `<&7 Name > msg` form
+  the old `default` template produced once groups were actually populated.
+- **Emoji rank badges disabled** (`chat.badges.enabled: false`). The configured
+  badges are `⭐`/`🛡️` and Minecraft's default font has no glyphs for them — with
+  groups finally assigned they would have rendered a missing-glyph box in front
+  of every staff message. Re-enabling needs `useCustomImages` plus a hosted
+  resource pack. This also turns off the in-chat status icons (`💤` AFK, `👻`
+  vanished), which are the same missing-glyph problem; AFK is still surfaced by
+  the tablist's `[AFK]` suffix and by `broadcastAfkMessage`.
+
+### Security
+- **Moderators must never be opped.** NeoEssentials' `opsBypassPermissions`
+  defaults to true and its op test is `hasPermissions(2)`, so op level ≥2
+  silently grants *every* NeoEssentials permission — including `/permissions`,
+  which mints more admins. Op level 1 doesn't bypass but is too weak to be
+  useful. The moderator tier works only because NeoEssentials' own moderation
+  commands gate on nodes alone and need no op; `docs/staff-roles.md` calls this
+  out as the rule that shapes the whole design.
+
+## [0.32.0] - 2026-07-28
+
+### Added
+- **Configurable battle speed (`/battlespeed`).** Server-wide multiplier on how fast battles play
+  out — `1.0` is stock Cobblemon, `2.0` halves every pause. Op-only, changes apply mid-battle, and
+  the value persists to `config/cobblemon-bridge/runtime/battle_speed.json`.
+
+  All battle pacing in Cobblemon 1.7.3 is server-side and funnels through two places, so the
+  bridge scales both with the same multiplier:
+  - `WaitDispatch(seconds)` — every fixed pause in the battle flow (send-out, faints, ability
+    pop-ups, win banner). `PokemonBattle.tick()` drains its dispatch deque in a loop rather than
+    one per tick, so shortened delays genuinely run back-to-back.
+  - `SchedulingFunctionsKt.delayedFuture(seconds)` inside the seven action-effect keyframes —
+    move animation pacing. Scaled alongside the flow so the interpreter doesn't just arrive at
+    each animation sooner and then wait out an unshortened timeline.
+
+  Nothing about battle *logic* changes — turn order, damage and RNG are untouched. Because the
+  client's Bedrock model animations still play at their authored rate, past roughly 2x moves
+  start visibly clipping into each other; 1.5–2.0 is the usable band and the command warns above
+  2x. Both mixins are `require = 0`, so a future Cobblemon refactor degrades to stock pacing
+  instead of failing the mixin apply on boot; `/battlespeed` with no argument reports whether the
+  hooks are live.
+
+  Ranked note: the time bank counts real seconds, so faster battles mean more turns per bank.
+
 ## [0.31.2] - 2026-07-26
 
 ### Fixed

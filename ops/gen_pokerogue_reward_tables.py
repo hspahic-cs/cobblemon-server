@@ -187,6 +187,12 @@ REWARD_ENTRIES = (
         entry("rarer_candy", "ultra", 4, {"type": "level", "amount": 2},
               note="RESHAPE: their exact rarer-candy effect is in the unresolved list; two levels stands in"),
         entry("quick_claw", "ultra", 3, held("quick_claw")),
+        # The EXP items as run passives — team-wide, permanent, their stacks/percentages verbatim
+        # (Charm +25%/stack ×99, Super +60%/stack ×30, Share 20%/stack ÷ participants ×5).
+        entry("exp_share", "ultra", 10, {"type": "passive", "passive": "exp_share"}),
+        entry("exp_charm", "ultra", 8, {"type": "passive", "passive": "exp_charm"}),
+        # §2.33's first tiered modifier item: auto-revive once at half HP, consumed.
+        entry("reviver_seed", "ultra", 4, {"type": "modifier_item", "item": "reviver_seed"}),
         entry("wide_lens", "ultra", 7, held("wide_lens")),
         entry("big_nugget", "ultra", 12, credits(2.5), max_wave=198,
               note="MoneyRewardModifierType 2.5x the wave-money formula; their classic wave-199 stop"),
@@ -209,7 +215,10 @@ REWARD_ENTRIES = (
               note="RESHAPE of ABILITY_CHARM: direct HA grant instead of odds boost; their weight and their wave-189 stop (skipInClassicAfterWave)",
               ),
         # MASTER — 0.1%. Their master tier is mostly meta (charms, vouchers); the ball is what maps.
+        entry("super_exp_charm", "rogue", 8, {"type": "passive", "passive": "super_exp_charm"}),
         entry("master_ball", "master", 24, bag("master_ball", 1)),
+        # §2.33's headline item, at their MASTER weight: extra strikes per tier, upgrade 1→2.
+        entry("multi_lens", "master", 18, {"type": "modifier_item", "item": "multi_lens"}),
     ]
 )
 
@@ -229,13 +238,9 @@ DROPPED = {
     "VOUCHER": "egg-gacha meta currency", "VOUCHER_PLUS": "egg-gacha meta", "VOUCHER_PREMIUM": "egg-gacha meta",
     "CATCHING_CHARM": "0-weight in classic", "SHINY_CHARM": "meta odds — Unchained streaks own shiny odds",
     "HEALING_CHARM": "passive %-boost, no channel",
-    # Ruled 2026-07-31 (playtest): their EXP items are TEAM-WIDE PERMANENT run buffs — Share gives
-    # every party member a cut of participants' EXP, Charm raises total EXP % — not held items.
-    # The first cut shipped them as cobblemon:exp_share/lucky_egg held items, which misrepresents
-    # both. Out until the run-passive mechanism exists (run-scoped stacks + an EXP-event multiplier).
-    "EXP_CHARM": "team-wide permanent buff — needs the run-passive mechanism",
-    "SUPER_EXP_CHARM": "team-wide permanent buff — needs the run-passive mechanism",
-    "EXP_SHARE": "team-wide permanent buff — needs the run-passive mechanism",
+    # The EXP items are run PASSIVES (mapped below): team-wide permanent buffs on the run-passive
+    # mechanism, their stacks and percentages verbatim — not held items, which the first cut got wrong.
+    "EXP_CHARM": None, "SUPER_EXP_CHARM": None, "EXP_SHARE": None,
     "MEMORY_MUSHROOM": "no move-relearn channel; TM entries cover move acquisition",
     "PP_UP": None, "PP_MAX": None,  # mapped
     "SPECIES_STAT_BOOSTER": "species-conditional (Light Ball etc.); needs a species-in-party condition first",
@@ -243,7 +248,7 @@ DROPPED = {
     "SOUL_DEW": "Latias/Latios-only in Showdown, species-conditional",
     "TOXIC_ORB": "ability-conditional in theirs; junk pick without the condition", "FLAME_ORB": "ability-conditional",
     "MYSTICAL_ROCK": "ability-conditional weather item",
-    "REVIVER_SEED": "§2.33 tiered-item harness not built yet", "MULTI_LENS": "§2.33 harness not built",
+    "REVIVER_SEED": None, "MULTI_LENS": None,  # mapped below via the §2.33 modifier_item harness
     "BATON": "their custom switch-item, no Showdown equivalent", "GRIP_CLAW": "Cobblemon blocks item theft (§2.34)",
     "MINI_BLACK_HOLE": "Cobblemon blocks item theft", "BERRY_POUCH": "redundant — consumed:false is free (§2.34)",
     "TERA_SHARD": "§2.5 in-run gimmick wiring undecided", "TERA_ORB": "§2.5 undecided",

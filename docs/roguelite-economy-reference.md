@@ -161,8 +161,15 @@ letting it clog the roll.
 
 ## What this means for ours
 
-Ours already has the shape — `ShopSettings.shopSlotsAt`, `rerollPrice`, a per-entry `price` — so this
-is a re-numbering rather than a rebuild. The pieces that do not exist yet:
+**Status 2026-07-31: transcribed.** `ops/gen_pokerogue_reward_tables.py` emits the mirrored
+reward + shop tables (`ops/roguelite-tables-pack`) from the full extraction in
+`ops/pokerogue-modifier-pools.json` — tier odds verbatim (768/195/48/12/1 over 1024), their shop
+rows and multiples verbatim, healing weights as `scaled_by` party conditions. Of the numbered
+gaps below: 1, 2 and 4 were already built (`WaveMoney`, `cost_multiplier`, `ShopStock`'s
+boss-wave closure), 6 is now built (`RewardEntry.scaledBy` — injured/fainted, a reshape of their
+per-item weight functions), 5's tier odds are in the emitted table while the **luck upgrade loop
+stays unmirrored** (no luck stat), and 3 was a decision, not a gap. The list is kept as written
+because it documents why each mechanism exists:
 
 1. **A wave-money curve.** We have no equivalent of `getWaveMoneyAmount`; the smoke table has flat
    prices. This is the one new mechanism.

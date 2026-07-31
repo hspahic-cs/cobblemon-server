@@ -95,8 +95,9 @@ Two things worth keeping: **trainer and wild levels share one base curve** (`src
 `getLevelForWave()` uses the same `baseLevel`, with a `bossMultiplier = 1.2` for boss waves — the
 same ×1.2 our wave curve already applies, per the `RunTrainerBattleRequest` KDoc), and party
 members are **not all one level** — strength tiers spread them, with weak members slowly catching
-up in multiplier but drifting down in offset. Ours flattens the party to `plan.level`; the
-per-member spread is the roster generator's business if we ever want it (see Q5).
+up in multiplier but drifting down in offset. Ours mirrors this on generated teams (roguelite's
+generator carries per-member levels in the properties strings); only authored teams are flattened
+to `plan.level` (§2.2 step 7).
 
 **Party size / templates** — `src/data/trainers/trainer-party-template.ts`:
 `TrainerPartyTemplate(size, strength, sameSpecies?, balanced?)`, named `ONE_AVG` …
@@ -128,9 +129,12 @@ empty, duplicates rerolled, all draws wave-seeded — the same determinism barga
 `src/phases/trainer-victory-phase.ts`: victory BGM → `MoneyRewardPhase(config.moneyMultiplier)` →
 one `ModifierRewardPhase` per authored reward func → (boss trainers) an egg-voucher phase →
 `battle:trainerDefeated` text → one seeded-random line from `trainer.getVictoryMessages()`. The
-post-wave item select then draws from `ModifierPoolType.TRAINER` instead of `WILD`. Our
-equivalents: credits in `RunController.waveCleared` (§2.4), the between-wave shop/reward GUI, and
-RCT's own trainer chat lines stand in for victory dialogue (Q5).
+post-wave item select draws from the **PLAYER** pool after every wave — an earlier revision of
+this section claimed it switched to `ModifierPoolType.TRAINER` after trainer fights, which the
+2026-07-31 extraction (`ops/pokerogue-modifier-pools.json`) disproved: the WILD/TRAINER pools
+generate held items *on enemy Pokémon* at spawn, and the pick is always PLAYER. Our equivalents:
+credits in `RunController.waveCleared` (§2.4), the between-wave shop/reward GUI, and RCT's own
+trainer chat lines stand in for victory dialogue (Q5).
 
 ---
 
@@ -166,8 +170,9 @@ level caps. What we take instead, all via public API:
 - `TrainerRegistry.getById(id, TrainerNPC.class)` → the authored **team** and authored **AI**.
 - `BattleManager$TrainerEntityBattleActor(name, entity, uuid, team, bag, ai)` → the opponent-side
   actor, so the battle behaves like an RCT trainer battle in every way except who built it. The
-  `TrainerBag` is **cloned** (stateful across a battle; sharing the registry's instance would let
-  one wave spend another's items).
+  `bag` argument is **null** (Q4, resolved 2026-07-31): PokéRogue trainers never heal/item
+  mid-fight — their difficulty is party composition — and RCT's authored bags would make wave
+  difficulty depend on which RCT trainer id a roster happened to name.
 - `TrainerMob` entity, spawned **synchronously** via `EntityType.create` + `addFreshEntity`
   (RctTrainerParts.kt:215) — deliberately *not* the tower's `rctmod trainer summon_persistent`,
   which materialises over following ticks, needs a box search to find the entity again, and needs
@@ -205,16 +210,20 @@ level caps. What we take instead, all via public API:
    machinery is needed, because there is nothing to restore.
 6. **Spawn the NPC** 6.0 blocks in front of the player (`OPPONENT_DISTANCE`, same figure as
    `RunWildBattle`), facing back at them.
-7. **Stash the wave level, then `BattleRegistry.startBattle`** with
+7. **Stash the wave level (authored waves only), then `BattleRegistry.startBattle`** with
    `BattleFormat.GEN_9_SINGLES + BAG_CLAUSE` (copied, never mutated — the shared instance serves
-   ranked too) and RCT's actor on side 2. The stash (player UUID → level, 10 s TTL) is consumed by
-   a `BATTLE_STARTED_PRE` subscriber that forces every **non-player** actor's
-   `effectedPokemon.level` to the wave's level. The timing is structural: `startBattle` posts Pre
-   and only then calls `startShowdown`, which packs teams by reading `effectedPokemon` fresh —
-   verified on dev 2026-07-28 (plan §2.6 revision: the write lands, a recheck three seconds in
-   still read the forced level, stats rescaled). On the generated path the level is already in the
-   properties string so the forcing is a no-op — and the *moveset* is the one Cobblemon derives
-   for that level, which is the whole reason §2.30 generates instead of stretching authored teams.
+   ranked too) and RCT's actor on side 2. The stash (player UUID → level, 10 s TTL) is made only
+   when `teamProperties` is empty, and is consumed by a `BATTLE_STARTED_PRE` subscriber that
+   forces every **non-player** actor's `effectedPokemon.level` to the wave's level — forcing is
+   still the mechanism that scales the authored E4/champion teams. The timing is structural:
+   `startBattle` posts Pre and only then calls `startShowdown`, which packs teams by reading
+   `effectedPokemon` fresh — verified on dev 2026-07-28 (plan §2.6 revision: the write lands, a
+   recheck three seconds in still read the forced level, stats rescaled). Generated teams are
+   never forced: they carry per-member levels in the properties strings (PokéRogue's
+   `getPartyLevels` spread — the ace above the curve, weak members below it), and flattening them
+   to `plan.level` would erase exactly the spread §2.30 generates. The *moveset* is the one
+   Cobblemon derives for each member's own level, which is the whole reason §2.30 generates
+   instead of stretching authored teams.
 8. On any startBattle refusal: unstash, `entity.discard()` (an NPC left standing outlives the
    wave, survives into the next stamp, and is an RCT trainer a player can walk into), return
    false. On success: remember `battleId → entity` and return true. **Nothing else is reported** —
@@ -271,9 +280,11 @@ live leftover `TrainerMob` (even NoAi) is right-clickable.
   wild path had to learn `-1f` is the no-flee sentinel the hard way, RunWildBattle.kt:77–95).
   `RunBattles` still subscribes `BATTLE_FLED` defensively and treats it as "wave not fought,
   re-fight" (RunBattles.kt:162–169). Matches PokéRogue: no running from trainer battles.
-- **Items:** `BAG_CLAUSE` in the format plus `RunBagGuard` (§2.11), same as wild waves. The
-  *trainer's* bag is RCT's authored one, cloned per battle — a divergence-in-detail from PokéRogue
-  (their trainers don't use items mid-battle; RCT's may, if the authored trainer carries a bag).
+- **Items:** `BAG_CLAUSE` in the format plus `RunBagGuard` (§2.11), same as wild waves — that
+  covers the *player's* bag. The *trainer's* bag is stripped (null into the actor, Q4 resolved
+  2026-07-31): PokéRogue trainers never use items mid-battle — their difficulty is party
+  composition — and RCT's authored bags would make wave difficulty depend on which RCT trainer id
+  a roster happened to name.
 - **AI:** the opponent runs RCT's **authored per-trainer AI** (`npc.getBattleAI()`, wired through
   `TrainerEntityBattleActor`), i.e. whatever the trainer JSON declares (registry: `rb`/`cbl`/
   `rct`/`sd5`; the gyms run the poke-engine bridge via `pe`). This is *different* from the wild
@@ -307,7 +318,7 @@ says so: "NOT the rgl_* ids: those name trainers nothing defines yet" — which 
 | Use the trainer the run handed us, never draw our own | `begin()` resolves `wave.trainerId` only | code read |
 | Run party on the player's side, uncloned | `RogueliteSeam.runTeam` → `RunBattleParty.teamFor` | code read |
 | Empty `teamProperties` = authored team, not refusal | `teamFor()` authored branch | code read + KDoc "the empty case is a fight, not a failure" |
-| Scale opponent to `plan.level`, never touch the authored trainer | `BATTLE_STARTED_PRE` write onto `safeCopyOf` clones | **dev-verified 2026-07-28** (plan §2.6) |
+| Scale opponent to `plan.level`, never touch the authored trainer | `BATTLE_STARTED_PRE` write onto `safeCopyOf` clones — authored waves only; generated teams keep their per-member levels | **dev-verified 2026-07-28** (plan §2.6) |
 | Re-take the chunk ticket before summoning | `holdArena` → `RunArenas.prepare` per call | code read |
 | Synchronous summon or true-then-adopt | fully synchronous (`addFreshEntity`) | code read |
 | Report nothing after `true` (adoption owns the end) | provider ends at `return true`; only the NPC sweep remains | code read |
@@ -335,13 +346,30 @@ says so: "NOT the rgl_* ids: those name trainers nothing defines yet" — which 
   couples to the gym-AI bridge being up; `TrainerEntityBattleActor` takes the AI as a constructor
   argument, so swapping in `RunBattleAi.create(...)` is a one-line change *if* wanted. Decide when
   authoring the `rgl_*` JSONs, not before.
-- **Q4 — The trainer's bag.** RCT trainers may use authored bag items mid-battle; PokéRogue's
+- **Q4 — The trainer's bag.** ~~RCT trainers may use authored bag items mid-battle; PokéRogue's
   trainers never heal/item mid-fight (their difficulty is party composition). Keep the bag
-  (RCT-authentic) or pass `null` into the actor (PokéRogue-faithful)? Currently kept, cloned.
+  (RCT-authentic) or pass `null` into the actor (PokéRogue-faithful)?~~ **Resolved 2026-07-31:
+  strip the bag** — `null` into the actor. PokéRogue-faithful, and it keeps wave difficulty from
+  depending on which RCT trainer id a roster happened to name (see §2.4 Items).
 - **Q5 — PokéRogue rules we have consciously not mirrored** (confirm they stay unmirrored):
   per-wave money on wild waves (diverged: wild pays 0, see CreditRules); trainer dialogue/victory
   messages (RCT trainers have their own chat lines; roguelite adds none); double battles
   (`GEN_9_SINGLES` forced for every wave — an authored trainer declaring doubles is overridden,
-  RogueliteTrainerBattles.kt:281–291); PokéRogue party-size/level templates (ours come from the
-  roster's `TeamGenerationRules` + wave curve instead — see §1 for theirs, kept as a balancing
-  reference only).
+  RogueliteTrainerBattles.kt:281–291); PokéRogue party-size templates (ours come from the roster's
+  `TeamGenerationRules` instead — see §1 for theirs). **No longer on this list as of 2026-07-31:
+  per-member levels.** `getPartyLevels` is now ported verbatim
+  (`WaveLevelCurve.partyMemberLevel`), applied to every generated team with an ace-first strength
+  spread (`TrainerTeamGenerator.strengthsFor` — their late gym-leader template mirrored, because
+  our slot one is the ace where theirs is last). Two consequences worth knowing: generated teams
+  no longer take the flat wave level (the bridge's forcing is authored-path-only now), and
+  generated *bosses* take no ×1.2 — their `getPartyLevels` has no boss term, so a boss's step up
+  is the strength spread plus §2.32 shields, exactly as in PokéRogue. The wild-path curve
+  constants also stopped being placeholders: `WaveLevelCurve`'s defaults are their Classic curve
+  verbatim (`1 + wave/2 + (wave/25)²`, bosses ×1.2).
+- **Ruling verified 2026-07-31 — victories award only ₽.** §1.5 lists what PokéRogue's trainer
+  victory grants beyond money (one `ModifierRewardPhase` per authored reward func, egg vouchers
+  for bosses). Audited `RunController.waveCleared`: a won trainer/boss/rival wave grants exactly
+  the `creditsFor` credits (pinned by `CreditRulesTest`), the §2.15 friendship progression stamp
+  (every wave, not a victory reward), and the between-wave menu opening (the per-wave reward
+  *pick*, routed by §2.12's tables — the analogue of their post-wave item select, not of their
+  victory rewards). No item grant, no voucher analogue, nothing per-trainer. Nothing to change.

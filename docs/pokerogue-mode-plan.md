@@ -1432,6 +1432,110 @@ is unchanged — transcription is private server content, and a published build 
 defaults. What extraction cannot give us is anything Minecraft-shaped, which is exactly the list
 above.
 
+### 2.40 Balance rulings, 2026-07-31
+
+Four decisions from the balance pass, recorded here; the detail lives in
+`docs/roguelite-trainer-battles.md` (§2.4, §4).
+
+- **The wild curve constants stopped being placeholders.** `WaveLevelCurve`'s defaults are now
+  PokéRogue's Classic verbatim (`1 + wave/2 + (wave/25)²`, bosses ×1.2, cap 100) — §2.19 already
+  decided this; the code caught up and `pokeRogueClassicCurve()` was retired as redundant. The
+  jitter fields remain placeholders.
+- **`getPartyLevels` is ported verbatim** (`WaveLevelCurve.partyMemberLevel`) and applied to every
+  generated team: per-member levels with an ace-first strength spread, no jitter, and **no boss
+  ×1.2** — their party-level formula has no boss term, so a generated boss's step-up is the
+  strength spread plus §2.32 shields. The bridge's flat level-forcing is authored-path-only now;
+  flattening a generated team would erase the spread.
+- **Trainer bags are stripped** (Q4 resolved): `null` into the RCT actor. PokéRogue trainers never
+  item mid-fight, and an authored bag would couple wave difficulty to which RCT id a roster named.
+- **Victories award only ₽** — verified, not changed: `waveCleared` grants credits, the §2.15
+  friendship stamp, and the between-wave pick; no per-trainer item grants, no voucher analogue.
+
+The smoke roster (`ops/gen_roguelite_smoketest.py`) was switched to the generated-teams path for
+every trainer and boss band at the same time, so Q1's end-to-end smoke run exercises generation
+and the level spread rather than the authored path.
+
+### 2.41 Reward and shop tables are PokéRogue transcriptions, 2026-07-31
+
+The §3 blocker "reward table contents" is closed by §2.39's standing rule: extracted, not
+authored. `ops/pokerogue-modifier-pools.json` holds the full extraction (their
+`init-modifier-pools.ts` at commit `0d94c5bb`, every PLAYER/WILD/TRAINER-pool entry with its
+weight or weight-function description), and `ops/gen_pokerogue_reward_tables.py` maps it through
+§2.34's dispositions into `ops/roguelite-tables-pack` — server-side content per §2.7, replacing
+the smoke-test tables. What is verbatim, reshaped, and dropped:
+
+- **Verbatim:** tier odds (their 1024-roll windows, 75/19/4.7/1.2/0.1% as flat tier curves), the
+  static entry weights, the shop's seven-row unlock schedule (waves 1/21/51/81/111/141/171) and
+  cost multiples, three options per pick, boss waves shopless.
+- **Reshaped, and this grew a mechanism:** their healing items weight themselves by *party
+  state* (`(party) => …` functions). `RewardEntry.scaledBy` now carries that as two closed
+  conditions — `injured` (× total missing-HP fraction) and `fainted` (× fainted count) — fed
+  from the real party at roll time. A full-health party is never offered potions, which the
+  economy reference called the one idea to take first. Consequence: healing between opening the
+  screen and picking legitimately re-rolls the healing slots; `take`'s existing stale-screen
+  guard covers it. Generator entries (BERRY, MINT, TM, type/temp boosters) fan out into
+  per-item entries splitting the generator's weight.
+- **Dropped, each with its reason in the script's `DROPPED` table:** money/meta items (no
+  channel, §2.35), species/ability-conditional items (no condition to express — a future
+  `scaled_by` axis), §2.33 tiered items (harness not built), item-theft items (Cobblemon
+  blocks), gimmick unlocks (§2.5 wiring undecided). The generator fails if a re-extraction
+  contains an id that is neither mapped nor dropped.
+- **Not mirrored:** the looping luck upgrade (no luck stat — recorded divergence), their TM
+  tier contents (per-species learnset partitions; `TM_MOVES` in the script is a curated
+  operator knob, the one hand-authored list in the file).
+- **Correction from the extraction:** the post-wave pick always draws their PLAYER pool;
+  `ModifierPoolType.TRAINER`/`WILD` are enemy held-item pools. The trainer-battles doc §1.5 was
+  wrong about this and is fixed.
+
+### 2.42 First-playtest rulings, 2026-07-31 evening
+
+Rulings from the first real dev runs, each reversing or completing an earlier section:
+
+- **A faint is a faint, not a death — §2.13's permadeath is reversed.** The playtest caught the
+  contradiction directly: the tables sell Revives (ruled in with §2.11's reversal), and a
+  permadeath-deleted Pokémon is not a revive target — the player watched a fainted Dondozo vanish
+  and correctly read it as a bug. PokéRogue's own rule ships instead: fainted members stay in the
+  party at 0 HP, revivable between waves; the wipe is everyone down at once
+  (`RunState.isWiped`). §2.10's disconnect penalty still kills — rage-quitting still costs the
+  on-field Pokémon — and is now the *only* way a run Pokémon dies before the run does.
+- **The X0 full heal is in** (PokéRogue's rule): clearing every tenth wave fully heals the party.
+  Keyed on the wave number, not the kind, as theirs is. This retires the "no healing between
+  waves ever" reading of §2.13 — attrition now runs inside ten-wave blocks, not across the run.
+- **Power spots are OUT of arena palettes (stopgap).** The wave-10 boss Gigantamaxed through the
+  palette's power spot — the AI side needs no band, so the spot armed the boss, not the player.
+  PokéRogue bosses never Dynamax (shields are their boss mechanic). §2.5's in-run gimmick design,
+  when it happens, must express "player may, boss may not"; the block alone cannot.
+- **Wave starts are announced** (action bar + chat) and reward TMs are learnset-gated with real
+  SimpleTMs icons — quality-of-life rulings from the same session, detail in the code.
+
+### 2.43 Verified: bosses are WILD, gyms are the X20-every-30 — composition realignment pending
+
+Read from their source 2026-07-31 evening (`src/game-mode.ts`, `src/battle.ts`), prompted by the
+playtest reference run:
+
+- `isBoss(waveIndex)` is `waveIndex % 10 === 0` — deterministic, every X0 wave.
+- `isWaveTrainer` classic is `waveIndex % 30 === 20` — the gym-leader waves: 20/50/80/110/140/170.
+- Therefore **the X0 waves that are not gym waves (10, 30, 40, 60, 70, 90, …) are wild BOSS
+  Pokémon** — ×1.2 level, shield segments, catchable. Shields are a *wild* mechanic in PokéRogue;
+  their trainers never have them. Generic trainers appear on ordinary waves by `arena.trainerChance`
+  roll, not on an interval.
+
+Our schedule (trainer every 5, boss *trainer* every 10, shields on generated trainer teams) was
+§2.14's recorded simplification, now measurably off-model. The faithful restructure, **scoped but
+not yet built**: (a) `WaveComposition` gains the gym schedule (%30==20) and marks non-gym X0 waves
+as wild-boss; (b) the wild path attaches §2.32's shield item to the wild boss and keeps it
+catchable; (c) generic trainer waves become a seeded per-wave chance rather than every-5th (roster
+band validation must switch from gap-coverage-of-scheduled-waves to coverage-of-all-waves); (d)
+boss *trainers* keep shields only where authored (E4/champion may — that is our call, theirs do
+not). Rival meetings (8/25/55/95/145/195) already match — the smoke roster simply has no rival
+block yet, so no meeting has been seen in testing.
+
+**Also ruled, same session:** their EXP items (EXP Share / EXP Charm / Super EXP Charm) are
+**team-wide permanent run buffs**, not held items — Share cuts participants' EXP to the whole
+party, Charm scales total EXP. The first-cut held-item stand-ins are removed from the tables;
+the faithful shape is a **run-passive mechanism** (run-scoped stacks read by an EXP-event
+multiplier), which is also the natural home for Healing Charm if it ever ships.
+
 ---
 
 ## 3. Preliminary plan

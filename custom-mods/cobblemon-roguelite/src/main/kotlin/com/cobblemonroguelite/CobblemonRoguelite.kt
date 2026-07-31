@@ -10,6 +10,7 @@ import com.cobblemonroguelite.progression.CandyCommands
 import com.cobblemonroguelite.shop.ShopCommands
 import com.cobblemonroguelite.progression.ProgressionHooks
 import com.cobblemonroguelite.run.RunCommands
+import com.cobblemonroguelite.run.RunIsolationGuards
 import com.cobblemonroguelite.wave.WildPools
 import com.cobblemonroguelite.run.RunLoginHooks
 import net.neoforged.bus.api.IEventBus
@@ -85,6 +86,10 @@ class CobblemonRoguelite(modBus: IEventBus, container: ModContainer) {
             ShopCommands.register(it.dispatcher)
         }
         NeoForge.EVENT_BUS.register(RunLoginHooks)
+        // The isolation guards (drops/XP cancel, D2 command refusal, ender chest, displacement poll).
+        // Game bus like the hooks above; every guard keys on the swap tag, so they are all no-ops for
+        // every player until an inventory is actually swapped.
+        RunIsolationGuards.register()
         // Binds the per-species progression store (§2.15 candy, §2.17 IV floors) to starter selection
         // for the lifetime of the server. A game-bus listener because there is no server at setup and
         // the store is world save data; without it selection quietly stays at base prices and base IVs,

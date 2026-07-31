@@ -103,6 +103,13 @@ sealed interface ResumeResult {
     data class RosterUnavailable(val rosterId: ResourceLocation?) : ResumeResult
 
     /**
+     * The inventory could not be stashed (isolation design E0–E5), so the wave did not start and
+     * nothing observable changed. The reason is already worded for the player — every E-protocol
+     * refusal is — so the command layer relays it rather than translating it.
+     */
+    data class StashRefused(val reason: String) : ResumeResult
+
+    /**
      * §2.13: a caught Pokémon is waiting on a swap-or-release decision, so the run does not advance.
      *
      * A gate rather than a nudge. The held catch lives in one field on the run and nowhere else, so a
@@ -245,21 +252,26 @@ object RunController {
         val store = RunStore.of(server)
         val advice = RunPause.advise(store.get(player.uuid), store.pending(player.uuid) != null, confirmed)
 
-        // §2.2-reversed. Pausing used to change nothing — §2.22 says so, and that was right when the
-        // run party lived in our own store. Now it does not: a player who paused walked away holding
-        // the run's Pokémon, with their own team still in the PC, which is the loose-run-Pokémon leak
-        // §2.2 was written to prevent and a party screen that lies about what they own.
+        // D1 (isolation design): pause is a FULL arena exit — the human's stated intent, and the fix
+        // for draft 1's fatal case (F1: a paused player standing in the arena holding their real
+        // inventory, one death away from the drops guard voiding it, holding their dynamax_band next
+        // to the power spot). The X-protocol first, then the party, then the same teleport-and-release
+        // RunArenas.exit does for a run end. After this block the player is an ordinary citizen of the
+        // server holding nothing of the run's — which is what makes the D2 command refusal, the drops
+        // guard and the ender-chest guard all correct in keying on the tag: a paused player has none.
         //
-        // Only from between waves. Mid-battle is left alone even when acknowledged, because the live
-        // battle holds BattlePokemon wrapping these objects and pulling them out of the party under it
-        // is a worse failure than the one being fixed — the acknowledgement already tells the player
-        // that leaving now costs them the wave.
-        //
-        // The run's Pokémon are removed from the party, NOT destroyed: they are still in RunState, and
-        // the reconcile on the next resume puts them back. Nothing about the run is lost by pausing.
+        // Only from between waves. Mid-battle pause stays §2.22 disclosure-only, because the live
+        // battle holds BattlePokemon wrapping these objects, and pulling them out from under it is
+        // worse than the leak — the acknowledgement already says leaving now costs the wave.
         if (advice is PauseAdvice.BetweenWaves) {
+            val run = store.get(player.uuid)
+            runCatching { RunInventoryStash.exitSwap(player, run) }
+                .onFailure { log.error("roguelite: pause exit swap failed for {}", player.gameProfile.name, it) }
             runCatching { RunPartySwap.restore(player) }
                 .onFailure { log.error("roguelite: could not hand {}'s own party back on pause", player.gameProfile.name, it) }
+            RunArenas.exit(server, player, run)
+            store.checkpoint(server, player.uuid)
+            run?.let { player.sendSystemMessage(RunMessages.pausedFully(it.wave)) }
         }
         return advice
     }
@@ -416,15 +428,30 @@ object RunController {
                 // decide and the player's to be told about, and those are two layers. See
                 // [announceBiome].
                 val wasIn = run.biome?.biome
-                // §2.2-reversed. Idempotent: on every wave after the first the party already holds the
-                // run's Pokémon and this stashes nothing. Placed beside the arena enter because the two
-                // are the same act — putting the player somewhere the run controls, holding what the
-                // run gave them — and a wave that started with the player's own team in the party would
-                // fight the wave with their real Pokémon.
+                // The two swaps, in the isolation design's order: inventory first (E-protocol —
+                // every refusal happens before anything observable changes), then the party. Both are
+                // arena-session-keyed now: they run here, on the way in, and NOWHERE else — the login
+                // reconcile sweeps rather than installs (§2's revised contract).
+                when (val stash = RunInventoryStash.enterSwap(player, run)) {
+                    is RunInventoryStash.EntryResult.Refused -> {
+                        player.sendSystemMessage(RunMessages.stashRefused(stash.reason))
+                        return ResumeResult.StashRefused(stash.reason)
+                    }
+                    RunInventoryStash.EntryResult.Ok -> Unit
+                }
                 runCatching { RunPartySwap.reconcile(player, run) }
                     .onFailure { log.error("roguelite: could not install {}'s run party", player.gameProfile.name, it) }
                 when (val arena = RunArenas.enter(server, player, run)) {
-                    is ArenaResult.Failure -> ResumeResult.ArenaUnavailable(arena.error)
+                    is ArenaResult.Failure -> {
+                        // Both swaps undone: the player was not moved, and leaving them outside the
+                        // arena tagged and holding run Pokémon is exactly the leak window §2 closes.
+                        // exitSwap is the X-protocol, so this is a pause in all but name.
+                        runCatching { RunInventoryStash.exitSwap(player, run) }
+                            .onFailure { log.error("roguelite: could not undo the entry swap after an arena failure", it) }
+                        runCatching { RunPartySwap.restore(player) }
+                            .onFailure { log.error("roguelite: could not undo the party install after an arena failure", it) }
+                        ResumeResult.ArenaUnavailable(arena.error)
+                    }
                     is ArenaResult.Success -> {
                         announceBiome(player, run, wasIn)
                         // Stamped *before* the handler is called, not after. A handler that blocks,
@@ -859,6 +886,14 @@ object RunController {
         // un-restored party is recoverable on the next login, a run stuck open is not. An offline
         // player is skipped entirely and reconciled when they next join.
         server.playerList.getPlayer(player)?.let { online ->
+            // The inventory first (X-protocol), the party second, and BOTH before the arena exit and
+            // the payout below — X6's rule: the §2.20 payout must land in the *restored* real
+            // inventory, and this ordering inside the single endRun funnel is what covers the login
+            // path too (F10: penalise → endRun → deliver used to run against the still-swapped bag).
+            // run is null here on purpose: the store already ended it, and a bag with no run dies
+            // with it (§2.35) — exitSwap's row-4 semantics.
+            runCatching { RunInventoryStash.exitSwap(online, null) }
+                .onFailure { log.error("roguelite: could not restore {}'s inventory at run end", player, it) }
             runCatching { RunPartySwap.restore(online) }
                 .onFailure { log.error("roguelite: could not restore {}'s party at run end", player, it) }
         }

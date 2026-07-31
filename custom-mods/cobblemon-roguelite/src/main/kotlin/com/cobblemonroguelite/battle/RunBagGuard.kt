@@ -6,6 +6,8 @@ import com.cobblemon.mod.common.item.battle.BagItemLike
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
 import net.neoforged.bus.api.ICancellableEvent
+import com.cobblemonroguelite.run.RunInventoryStash
+import com.cobblemonroguelite.run.RunItems
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import org.slf4j.LoggerFactory
@@ -66,9 +68,19 @@ object RunBagGuard {
 
     private fun refuse(event: ICancellableEvent, player: ServerPlayer?, stack: ItemStack) {
         if (player == null || stack.isEmpty) return
-        if (!RunBattles.isFighting(player.uuid)) return
+        val fighting = RunBattles.isFighting(player.uuid)
+        // §7.2 of the isolation design: the gate widens from "in a wave battle" to "swapped at all".
+        // While tagged, an UNMARKED bag item should not exist — it slipped in past the stash — so it
+        // is refused anywhere as the backstop for worn-slot gaps; a MARKED one is the run's own and
+        // follows §2.36 (usable between waves, refused in battle by the original gate below).
+        val tagged = RunInventoryStash.isTagged(player)
+        if (!fighting && !tagged) return
         if (!isBagItem(stack)) return
-        event.isCanceled = true
+        if (fighting) {
+            event.isCanceled = true
+            return
+        }
+        if (!RunItems.isRunItem(stack)) event.isCanceled = true
     }
 
     /**

@@ -41,6 +41,55 @@ object RunMessages {
         "Your $count Pokémon are safe in your PC for the run. You will get them back when it ends.",
     )
 
+    // ------------------------------------------------------------------ §8 of the isolation design.
+    // Silence is indistinguishable from failure; every message names numbers, because numbers are
+    // what a player checks.
+
+    fun stashStored(stacks: Int): Component = literal(
+        "Stored your $stacks item stack(s), your gear and your XP — they return when you leave the run.",
+    )
+
+    fun stashReturned(stacks: Int): Component = literal("Returned your $stacks item stack(s).")
+
+    fun stashResidue(count: Int): Component = literal(
+        "$count of your items could not be restored (a mod may have been removed). They are kept " +
+            "safe — an operator can recover them.",
+    )
+
+    fun stashQuarantined(count: Int): Component = literal(
+        "$count item(s) acquired during the run were set aside for review — an operator will return " +
+            "anything that is yours.",
+    )
+
+    /** Row 3. Names the swapId because it is the one string an operator can act on. */
+    fun stashAlarm(swapId: String): Component = literal(
+        "Your stored items cannot be found. Nothing has been touched. Contact an operator — " +
+            "reference $swapId.",
+    )
+
+    fun stashRolledBack(): Component = literal(
+        "Your items could not be returned just now — nothing is lost; it will retry, or relog.",
+    )
+
+    fun stashRefused(reason: String): Component =
+        literal("The run cannot start: $reason.")
+
+    fun pausedFully(wave: Int): Component = literal(
+        "Run paused. Your items and party are back; your run is saved at wave $wave.",
+    )
+
+    fun displacedExit(): Component = literal(
+        "You left the arena — your run is paused and your items are back.",
+    )
+
+    fun commandRefusedDuringRun(): Component = literal(
+        "That command is disabled during a run. /roguelite pause first — your run keeps its progress.",
+    )
+
+    fun enderChestRefusedDuringRun(): Component = literal(
+        "Your ender chest is out of reach during a run.",
+    )
+
     fun partyReturned(count: Int): Component =
         literal("Your run is over and your $count Pokémon are back in your party.")
 

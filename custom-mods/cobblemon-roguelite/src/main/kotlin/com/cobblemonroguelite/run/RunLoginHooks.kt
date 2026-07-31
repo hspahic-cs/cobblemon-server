@@ -62,6 +62,10 @@ object RunLoginHooks {
      */
     @SubscribeEvent
     fun onServerStarted(event: ServerStartedEvent) {
+        // Orphan .tmp files are writes that died mid-protocol; by construction they were never the
+        // authoritative copy of anything, which is what makes this the one delete that needs no look.
+        runCatching { RunInventoryStash.files(event.server).sweepOrphanTemps() }
+            .onFailure { log.warn("roguelite: stash temp sweep failed", it) }
         runCatching { RunController.expireStaleRuns(event.server) }
             .onSuccess { if (it > 0) log.info("roguelite: expiry sweep discarded {} unplayed run(s) (§2.23)", it) }
             .onFailure { log.error("roguelite: the run expiry sweep failed — no runs were discarded", it) }
@@ -71,17 +75,15 @@ object RunLoginHooks {
     fun onLogin(event: PlayerEvent.PlayerLoggedInEvent) {
         val player = event.entity as? ServerPlayer ?: return
         val reconciliation = RunController.reconcileOnLogin(player.server, player)
-        // §2.2-reversed. Before any message, because every line below describes a party, and this is
-        // what makes the party the one being described.
-        //
-        // This is the RECOVERY path and it is deliberately the normal one: it runs on every join, so a
-        // crash between the two halves of a swap, a server killed mid-run, or a run deleted by an
-        // operator all present as the same thing — party and PC disagreeing with the run store — and
-        // are fixed by the code that does nothing on an ordinary login. Wrapped because a storage fault
-        // must not cost the player their login.
+        // The isolation design's §6 table, run as the NORMAL path on every join: a crash between the
+        // two halves of a swap, a kill -9, an operator deleting run state and a world rollback all
+        // present as one input tuple here, and are fixed by the code that does nothing on an ordinary
+        // login. reconcileOnLogin above has already ejected anyone inside arena space (row 6), so the
+        // verdict is computed against where the player is NOW. Wrapped because a storage fault must
+        // not cost the player their login.
         runCatching {
-            RunPartySwap.reconcile(player, (reconciliation.status as? RunStatus.InProgress)?.run)
-        }.onFailure { log.error("roguelite: could not reconcile {}'s party on login", player.gameProfile.name, it) }
+            RunIsolation.reconcile(player, (reconciliation.status as? RunStatus.InProgress)?.run)
+        }.onFailure { log.error("roguelite: could not reconcile {}'s isolation state on login", player.gameProfile.name, it) }
         // First of everything, because it is about a run that no longer exists and every line below it
         // describes the world as it is now. Reversed, a player reads "you have no run" and then finds
         // out why, having already concluded the server lost it.
@@ -147,11 +149,34 @@ object RunLoginHooks {
      * three fields the release clears is written to a checkpoint, precisely so that a crash — which
      * skips this handler entirely — cannot restore a lease either.
      */
+    /**
+     * The death door (design §5): the clone carries the tag — `PlayerPersisted` survives
+     * `restoreFrom`, the property three stores already lean on — and the respawn reconcile finishes
+     * the exit. keepInventory on or off both land here: off had its drops cancelled by the guard
+     * (the real items are on disk), on carries run items to the respawn where the sweep voids them.
+     */
+    @SubscribeEvent
+    fun onRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+        val player = event.entity as? ServerPlayer ?: return
+        runCatching {
+            RunIsolation.reconcile(player, RunStore.of(player.server).get(player.uuid))
+        }.onFailure { log.error("roguelite: respawn reconcile failed for {}", player.gameProfile.name, it) }
+    }
+
     @SubscribeEvent
     fun onLogout(event: PlayerEvent.PlayerLoggedOutEvent) {
         val player = event.entity as? ServerPlayer ?: return
         val server = player.server ?: return
         val store = RunStore.of(server)
+        // Opportunistic exit swap (design §5's logout door): the entity is still whole and vanilla's
+        // own save runs after this event, so a restore done here reaches disk with no work from us.
+        // The login reconcile remains the guarantee — this is the fast path, not the safety.
+        if (RunInventoryStash.isTagged(player)) {
+            runCatching {
+                RunInventoryStash.exitSwap(player, store.get(player.uuid))
+                RunPartySwap.restore(player)
+            }.onFailure { log.error("roguelite: logout exit swap failed for {} — login will reconcile", player.gameProfile.name, it) }
+        }
         val run = store.get(player.uuid) ?: return
         val slot = run.arenaSlot
         RunArenas.release(server, run)

@@ -77,6 +77,18 @@ data class RunConfig(
     val starterBudget: Int = DEFAULT_STARTER_BUDGET,
     val starterLevel: Int = 5,
     val biomeBandLength: Int = DEFAULT_BIOME_BAND_LENGTH,
+
+    /**
+     * D2 (isolation design): command roots refused while a player's inventory is swapped. Lowercase,
+     * matched against the parsed root literal. Configurable because host command sets vary (§1.2) —
+     * this default is our NeoEssentials set plus the obvious aliases, and design §14 Q5 asks the
+     * human to confirm it against prod. Refusing the command is the primary mechanism; the
+     * displacement poll is the backstop for teleports that arrive some other way.
+     */
+    val blockedCommandsDuringRun: Set<String> = setOf(
+        "home", "homes", "warp", "spawn", "tpa", "tpahere", "tpaccept", "tpacancel",
+        "back", "rtp", "wild", "enderchest", "ec",
+    ),
     val expiry: RunExpiryPolicy = RunExpiryPolicy(),
     val arena: ArenaConfig = ArenaConfig(),
 ) {

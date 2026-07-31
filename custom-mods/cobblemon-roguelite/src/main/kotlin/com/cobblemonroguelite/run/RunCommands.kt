@@ -369,6 +369,8 @@ object RunCommands {
             is ResumeResult.WaveUnavailable ->
                 player.sendSystemMessage(RunMessages.waveUnavailable(result.plan.wave, result.plan.kind))
             is ResumeResult.ArenaUnavailable -> player.sendSystemMessage(RunMessages.arenaUnavailable())
+            // Already messaged inside resume (the refusal happens mid-protocol); nothing to add here.
+            is ResumeResult.StashRefused -> Unit
             is ResumeResult.RosterUnavailable -> player.sendSystemMessage(RunMessages.rosterUnavailable())
             // Both lines: what is blocking the run, then the decision itself. A player who typed
             // `resume` wants the next thing to type, and sending them to another command to find out

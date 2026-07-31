@@ -202,6 +202,21 @@ object RunPartySwap {
         val party = partyOf(player) ?: return 0
         val pc = pcOf(player) ?: return 0
 
+        // H1 (isolation design §7.7): the PC is swept for run-marked Pokémon too, not only the party.
+        // A run Pokémon a player deposited into a PC box mid-session was touched by neither of the
+        // original sweeps and survived the run — the legendary faucet §2.2 exists to close. The window
+        // is closed by construction now (run Pokémon exist in real stores only inside the arena, which
+        // has no PC), so this is the crash-stranded-state backstop, and it is marker-keyed like every
+        // destructive act.
+        pc.toList().filter(::isRunPokemon).forEach { stray ->
+            if (pc.remove(stray)) {
+                log.warn(
+                    "roguelite: swept run Pokémon {} out of {}'s PC — it should never have been there",
+                    stray.species.name, player.gameProfile.name,
+                )
+            }
+        }
+
         // Run Pokémon first, because the party has to have room before anything can come back into it.
         // `toList()` because removing while iterating a store is a concurrent modification.
         val runOwned = party.toList().filter(::isRunPokemon)

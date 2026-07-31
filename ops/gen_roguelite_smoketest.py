@@ -10,6 +10,8 @@ quickly, not to be fun or balanced:
   - the reward table holds ONE OF EACH RunReward type, including the bag item that is known to
     fail, because the failure path is a thing to verify rather than avoid
   - prices are small so a few waves of credits reach the shop
+  - three biomes on disjoint 10-wave windows, each with its own palette, so the §2.24 rotation and
+    the §2.19 re-stamp fire on a schedule you can watch rather than on a weighted roll
 
 The real tables are a balance decision and belong to the server operator (plan §2.7). Nothing here
 should ever be promoted to prod: it writes to `cobblemon_roguelite:default`, which is the id the mod
@@ -68,6 +70,49 @@ SHOP = [
     ("smoke_potion", 20, {"type": "ev", "stat": "hp", "amount": 10}),
     ("smoke_ether", 40, {"type": "level", "amount": 1}),
     ("smoke_revive", 100, {"type": "held_item", "item": "cobblemon:focus_sash"}),
+]
+
+# THE REASON A SMOKE RUN COULD NOT BE PLAYED AT ALL.
+#
+# RunArenas resolves the build as `biome?.arenaBuild ?: config.builds.buildFor(wave)`, and with no
+# biome loaded that fallback is ArenaBuilds.default — `cobblemon_roguelite:arena`, a template the mod
+# deliberately does not ship (§2.29: content is not the module's to invent, so it fails loudly). So
+# every wave failed to stamp, nobody was ever teleported, and no wave could be fought.
+#
+# A biome carrying a palette is the mechanism as designed, which is why this is a datapack fix and
+# not a code change: nothing about §2.29 has to be reversed for the smoke test to have a floor.
+#
+# The three shrink, 41 -> 31 -> 21. That is on purpose: ArenaConfig documents that the box sweep has
+# to clear what an EARLIER band dirtied when a later band's build is smaller, and a run that only
+# ever grew would never test it.
+PALETTES = [
+    ("smoke_meadow", {
+        "floor": "minecraft:grass_block", "width": 41, "depth": 41,
+        "rim": {"block": "minecraft:mossy_cobblestone", "height": 2},
+        "pillars": {"block": "minecraft:oak_log", "height": 6, "inset": 3},
+    }),
+    ("smoke_volcano", {
+        "floor": "minecraft:basalt", "width": 31, "depth": 31,
+        "rim": {"block": "minecraft:polished_basalt", "height": 3},
+        "pillars": {"block": "minecraft:magma_block", "height": 8, "inset": 4},
+    }),
+    ("smoke_tundra", {
+        "floor": "minecraft:snow_block", "width": 21, "depth": 21,
+        "rim": {"block": "minecraft:packed_ice", "height": 2},
+    }),
+]
+
+# Disjoint windows, not weights. A smoke test wants the transition to happen at a wave you can write
+# down: at the default band length of 10 these hand over at exactly waves 11 and 21, so the re-stamp
+# and the repaint are two things to walk into rather than two things to hope for.
+#
+# `power_spot` is left at its default of true on every palette above — the Tera/Dynamax confinement
+# (§2.5) is "that block exists inside an arena and nowhere else", so turning it off here would make
+# the gimmicks look broken during the very test that is meant to exercise them.
+BIOMES = [
+    ("smoke_meadow", "Smoke Meadow", "minecraft:meadow", 1, 10),
+    ("smoke_volcano", "Smoke Caldera", "minecraft:basalt_deltas", 11, 20),
+    ("smoke_tundra", "Smoke Tundra", "minecraft:snowy_slopes", 21, None),
 ]
 
 
@@ -168,6 +213,32 @@ def main():
              "grant": {"type": "item", "item": "cobblemon:poke_ball", "count": 1}},
         ],
     })
+
+    # --- somewhere to stand, which is the difference between a testable run and no run ---
+    for pid, palette in PALETTES:
+        write(os.path.join(data, "arena_palettes", f"{pid}.json"), {
+            "_comment": note + [
+                "Blocks, not taste. Without a palette the arena build falls back to ArenaBuilds.default",
+                "— `cobblemon_roguelite:arena`, an .nbt nothing ships — so no arena is stamped, no player",
+                "is teleported, and no wave can be fought. That is what this file is for.",
+            ],
+            **palette,
+        })
+
+    for bid, name, mc_biome, lo, hi in BIOMES:
+        write(os.path.join(data, "biomes", f"{bid}.json"), {
+            "_comment": note + [
+                "Enabled (weight 1) unlike the shipped example, and windowed so the handover waves are",
+                "predictable: 1-10, 11-20, 21+. Each names its own palette, so crossing a window",
+                "re-stamps the arena AND repaints the box.",
+            ],
+            "display_name": name,
+            "arena_palette": f"{NS}:{bid}",
+            "minecraft_biome": mc_biome,
+            "min_wave": lo,
+            **({"max_wave": hi} if hi else {}),
+            "weight": 1,
+        })
 
     print("\nNEXT, and read the caveats above first:")
     print(f"  scp -r {os.path.relpath(args.out, ROOT)} "

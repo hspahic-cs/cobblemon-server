@@ -2,6 +2,7 @@ package com.cobblemonroguelite.data.reward
 
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemonroguelite.data.DataProblems
+import com.cobblemonroguelite.modifier.PlayerModifier
 import net.minecraft.resources.ResourceLocation
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -351,6 +352,23 @@ class RewardTableParseTest {
         val parsed = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "held_item", "item": "stick" } } ] }""")
         val table = assertNotNull(parsed.table)
         assertEquals(RunReward.HeldItem(ResourceLocation.fromNamespaceAndPath("minecraft", "stick")), table.entries.single().reward)
+    }
+
+    @Test
+    fun `a modifier_item names a known tiered line`() {
+        val parsed = parse("""{ "entries": [ { "id": "lens", "weight": 18, "reward": { "type": "modifier_item", "item": "multi_lens" } } ] }""")
+        val table = assertNotNull(parsed.table)
+        assertEquals(RunReward.ModifierItem(PlayerModifier.MULTI_LENS), table.entries.single().reward)
+    }
+
+    @Test
+    fun `an unknown modifier_item id is refused with the closed set named`() {
+        // Unlike held_item ids (an optional mod's id is legitimate somewhere), the modifier set is
+        // closed — each line needs a JS file and mint code — so a typo is refutable at load and
+        // must be, or the pick fails at grant time with the credits already gone.
+        val parsed = parse("""{ "entries": [ { "id": "x", "weight": 1, "reward": { "type": "modifier_item", "item": "multilens" } } ] }""")
+        assertNull(parsed.table)
+        assertTrue(parsed.mentions("reward.item", "'multilens'", "multi_lens", "reviver_seed"), parsed.messages.toString())
     }
 
     @Test

@@ -59,6 +59,7 @@ object RewardTargeting {
         is RunReward.Mint,
         is RunReward.AbilityPatch,
         is RunReward.HeldItem,
+        is RunReward.ModifierItem,
         is RunReward.TechnicalMachine,
         -> true
     }

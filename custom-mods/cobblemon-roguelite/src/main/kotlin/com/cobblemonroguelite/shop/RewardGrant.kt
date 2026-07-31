@@ -7,6 +7,7 @@ import com.cobblemon.mod.common.api.pokemon.Natures
 import com.cobblemon.mod.common.api.pokemon.stats.SidemodEvSource
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.data.reward.RunReward
+import com.cobblemonroguelite.modifier.ModifierItems
 import com.cobblemonroguelite.run.RunItems
 import com.cobblemonroguelite.run.RunPartySwap
 import com.cobblemonroguelite.run.RunState
@@ -93,6 +94,7 @@ object RewardGrant {
             is RunReward.Mint -> grantMint(reward, pokemon)
             is RunReward.AbilityPatch -> grantAbility(reward, pokemon)
             is RunReward.HeldItem -> grantHeldItem(reward, pokemon, run.seed)
+            is RunReward.ModifierItem -> grantModifierItem(reward, pokemon, run.seed)
             is RunReward.TechnicalMachine -> grantMove(reward, pokemon, forgetMoveSlot)
             // A bag item or credits targeted at a member: legal input, since [RewardTargeting] ignores a
             // slot on a party-wide reward, so treat it as the run-level grant it is rather than refusing.
@@ -195,6 +197,45 @@ object RewardGrant {
         val displaced = pokemon.swapHeldItem(RunItems.mark(ItemStack(item, 1), runSeed))
         val note = if (displaced.isEmpty) "" else " (replaced ${displaced.hoverName.string}, which is gone)"
         return GrantResult.Ok("${pokemon.species.name}: holding ${item.description.string}$note")
+    }
+
+    /**
+     * A tiered modifier item — §2.33's line, and the one held-item grant that is a LADDER rather
+     * than a placement.
+     *
+     * [ModifierItems.decide] enforces §2.34's rule: holding a lower tier of the same line upgrades
+     * it in place, holding the ceiling is a [GrantResult.NoEffect] (nothing broken, aim elsewhere),
+     * and holding anything else gets tier 1 with the displaced item reported-not-recovered, exactly
+     * like [grantHeldItem] and for the same §2.11 reason. The upgrade path deliberately does NOT
+     * warn about displacement — what it displaced is the tier below itself, which is the point.
+     *
+     * The mint carries the whole §2.33 mapping (base item + `held_item_effect` component naming the
+     * Showdown id + run mark); see [ModifierItems.mintStack]. Swap safety is [apply]'s run-Pokémon
+     * gate, same as every branch here.
+     */
+    private fun grantModifierItem(reward: RunReward.ModifierItem, pokemon: Pokemon, runSeed: Long): GrantResult {
+        val modifier = reward.modifier
+        val heldId = ModifierItems.heldShowdownId(pokemon.heldItem())
+        return when (val decision = ModifierItems.decide(modifier, heldId)) {
+            ModifierItems.Decision.AlreadyMax -> GrantResult.NoEffect(
+                "${pokemon.species.name} already holds ${ModifierItems.displayName(modifier, modifier.maxTier)}" +
+                    " — the line goes no higher",
+            )
+            is ModifierItems.Decision.Grant -> {
+                val stack = ModifierItems.mintStack(modifier, decision.tier, runSeed)
+                if (stack.isEmpty) return unresolved("item", modifier.baseItem.toString())
+                val displaced = pokemon.swapHeldItem(stack)
+                val name = ModifierItems.displayName(modifier, decision.tier)
+                if (decision.upgradedFrom != null) {
+                    GrantResult.Ok(
+                        "${pokemon.species.name}: ${ModifierItems.displayName(modifier, decision.upgradedFrom)} -> $name",
+                    )
+                } else {
+                    val note = if (displaced.isEmpty) "" else " (replaced ${displaced.hoverName.string}, which is gone)"
+                    GrantResult.Ok("${pokemon.species.name}: holding $name$note")
+                }
+            }
+        }
     }
 
     /**

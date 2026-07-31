@@ -2,6 +2,7 @@ package com.cobblemonroguelite.data.reward
 
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemonroguelite.data.JsonView
+import com.cobblemonroguelite.modifier.PlayerModifier
 import com.cobblemonroguelite.run.RunPassive
 import net.minecraft.resources.ResourceLocation
 
@@ -66,6 +67,15 @@ sealed interface RunReward {
     /** An item attached to a party member. Never stacks, hence no count. */
     data class HeldItem(val item: ResourceLocation) : RunReward
 
+    /**
+     * A tiered modifier held item — §2.33's line, distinct from [HeldItem] because granting one is
+     * not idempotent placement but a *ladder step*: a holder already on the line goes up a tier
+     * rather than gaining a second copy (§2.34). The id names a [PlayerModifier], a closed set like
+     * the reward types themselves, because each line needs a JS file and mint code to exist —
+     * a datapack cannot invent one, so an unknown id here is always a typo worth naming at load.
+     */
+    data class ModifierItem(val modifier: PlayerModifier) : RunReward
+
     /** A TM: teach [move] to a party member. */
     data class TechnicalMachine(val move: String) : RunReward
 
@@ -116,6 +126,7 @@ sealed interface RunReward {
                 "ability" -> parseAbilityPatch(view)
                 "item" -> parseBagItem(view)
                 "held_item" -> parseId(view, "item", MINECRAFT)?.let { HeldItem(it) }
+                "modifier_item" -> parseModifierItem(view)
                 "move" -> nonBlank(view, "move")?.let { TechnicalMachine(it) }
                 "credits" -> parseCredits(view)
                 "passive" -> parsePassive(view)
@@ -194,6 +205,25 @@ sealed interface RunReward {
             return Passive(passive)
         }
 
+        /**
+         * A [ModifierItem], whose id — unlike every open-set id in this file — CAN be checked at
+         * load: the set is closed (see the subtype docs), so an unknown value is a mistake now, not
+         * an optional mod later, and it is named with the accepted values the way the EV stats are.
+         */
+        private fun parseModifierItem(view: JsonView): RunReward? {
+            val raw = nonBlank(view, "item") ?: return null
+            val modifier = PlayerModifier.byId(raw)
+            if (modifier == null) {
+                view.problem(
+                    "item",
+                    "'$raw' is not a tiered modifier item (expected one of: " +
+                        "${PlayerModifier.entries.joinToString(", ") { it.id }})",
+                )
+                return null
+            }
+            return ModifierItem(modifier)
+        }
+
         private fun nonBlank(view: JsonView, key: String): String? {
             val value = view.requireString(key) ?: return null
             if (value.isBlank()) {
@@ -238,7 +268,7 @@ sealed interface RunReward {
         /** The per-stat EV ceiling in the games. Used only to catch a slipped digit, not to balance. */
         private const val EV_LIMIT = 252
 
-        private val TYPES = listOf("ev", "level", "nature", "ability", "item", "held_item", "move", "credits", "passive")
+        private val TYPES = listOf("ev", "level", "nature", "ability", "item", "held_item", "modifier_item", "move", "credits", "passive")
 
         /**
          * EV-bearing stats only. `evasion` and `accuracy` are [Stats] entries but are battle-only and

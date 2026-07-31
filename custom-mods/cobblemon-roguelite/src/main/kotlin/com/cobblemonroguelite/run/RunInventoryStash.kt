@@ -153,6 +153,30 @@ object RunInventoryStash {
         }
 
         // E4. One in-memory block: clear everything, zero XP, drop effects, tag, install the run bag.
+        //
+        // "Everything" INCLUDES the worn slots — the first live test proved what happens when it does
+        // not: the band and pauldron stayed on through the run (the Dynamax hole wide open), were
+        // quarantined at exit as "acquired during the run", AND were restored from the snapshot's
+        // providers section — the player kept the originals and the quarantine gained copies, a
+        // duplication per exit, three times before anyone noticed. Cleared here, after the snapshot
+        // is durable, with per-slot rollback through the provider on any failure.
+        val clearedWorn = mutableListOf<Pair<com.cobblemonroguelite.integration.StashSlotProvider, Pair<String, ItemStack>>>()
+        for (provider in StashSlotProviders.all) {
+            val worn = runCatching { provider.slots(player) }.getOrElse {
+                rollBackWorn(player, clearedWorn)
+                log.error("roguelite: provider '{}' failed to enumerate at E4", provider.id, it)
+                return EntryResult.Refused("worn equipment could not be cleared — tell an operator (provider ${provider.id})")
+            }
+            for ((key, stack) in worn) {
+                val cleared = runCatching { provider.clear(player, key) }.isSuccess
+                if (!cleared) {
+                    rollBackWorn(player, clearedWorn)
+                    return EntryResult.Refused("worn equipment could not be cleared (provider ${provider.id})")
+                }
+                clearedWorn += provider to (key to stack)
+            }
+        }
+
         val memoryRollback = captureLiveState(player)
         // Held aside before installRunBag clears it, because the E5 failure path below must put it
         // back: rolling back the inventory without restoring the bag would delete the run's items
@@ -168,6 +192,7 @@ object RunInventoryStash {
         // E3's file becomes row-2 stale and is archived at the next opportunity.
         if (!savePlayerDurably(player)) {
             restoreLiveState(player, memoryRollback)
+            rollBackWorn(player, clearedWorn)
             persisted(player).remove(TAG_KEY)
             run.runBag.clear()
             run.runBag.addAll(bagInstalled)
@@ -507,6 +532,24 @@ object RunInventoryStash {
     }.onFailure {
         log.error("roguelite: durable playerdata save failed for {}", player.gameProfile.name, it)
     }.isSuccess
+
+    /** Put worn stacks back through their providers — the E4/E5 refusal path's other half. */
+    private fun rollBackWorn(
+        player: ServerPlayer,
+        cleared: List<Pair<com.cobblemonroguelite.integration.StashSlotProvider, Pair<String, ItemStack>>>,
+    ) {
+        cleared.asReversed().forEach { (provider, slot) ->
+            val (key, stack) = slot
+            val back = runCatching { provider.restore(player, key, stack) }.getOrDefault(false)
+            if (!back) {
+                // Nowhere worse than the inventory: the swap is being rolled back, so the inventory is
+                // (or is about to be) the player's own again, and a worn item in a pocket beats one
+                // that exists nowhere.
+                giveOrDrop(player, listOf(stack))
+                log.warn("roguelite: rollback returned a worn item to {}'s inventory instead of slot {}", player.gameProfile.name, key)
+            }
+        }
+    }
 
     private fun assertServerThread(player: ServerPlayer) {
         check(player.server.isSameThread) {

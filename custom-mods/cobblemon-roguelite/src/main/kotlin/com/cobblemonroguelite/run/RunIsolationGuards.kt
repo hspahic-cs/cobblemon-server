@@ -92,6 +92,10 @@ object RunIsolationGuards {
         // the player is standing, and they walk away with their own inventory. The same sweep ejects
         // tagless players found inside arena space (row 8, the /tpahere mule).
         NeoForge.EVENT_BUS.addListener<ServerTickEvent.Post> { event ->
+            // Every tick, before the poll's early-return: the delayed-task queue is what staggers a
+            // battle start off a party install (bug #5), and a queue on the poll cadence would turn a
+            // 20-tick delay into 60.
+            RunTicks.tick(event.server)
             if (event.server.tickCount % POLL_INTERVAL_TICKS != 0) return@addListener
             for (player in event.server.playerList.players) {
                 val tagged = RunInventoryStash.isTagged(player)

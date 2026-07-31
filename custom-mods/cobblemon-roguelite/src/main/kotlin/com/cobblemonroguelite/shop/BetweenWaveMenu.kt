@@ -76,6 +76,9 @@ object BetweenWaveMenu {
     private const val SHOP_FIRST = 0
     private const val SHOP_LAST = 6
 
+    /** Columns 2/4/6 first — the free row's columns — then the gaps, then the far edge. */
+    private val SHOP_FILL_ORDER = listOf(2, 4, 6, 1, 3, 5, 0)
+
     /**
      * Where a row of [count] items sits so it reads as centred rather than as a row that ran out.
      *
@@ -84,15 +87,14 @@ object BetweenWaveMenu {
      * been centred (20/22/24), so this also stops the two halves of §2.12 disagreeing about where the
      * middle of the screen is.
      *
-     * Centred within [SHOP_FIRST]..[SHOP_LAST] and never past it: the counter lives at slot 8 and a row
-     * that grew into it would paint over the one number the player is spending against.
+     * Revised after the playtest: not merely centred, but ALIGNED with the free row below. The three
+     * free options sit at columns 2/4/6, and a centred-contiguous paid row of three sat at 2/3/4 —
+     * two rows both claiming to be the middle of the screen and agreeing about nothing. The paid row
+     * now fills the same columns first and the gaps between them as stock grows, so the two halves of
+     * §2.12 read as one grid. Never past column 6: the counter lives at slot 8.
      */
-    private fun shopSlotsFor(count: Int): List<Int> {
-        val span = SHOP_LAST - SHOP_FIRST + 1
-        val shown = count.coerceIn(0, span)
-        val start = SHOP_FIRST + (span - shown) / 2
-        return (start until start + shown).toList()
-    }
+    private fun shopSlotsFor(count: Int): List<Int> =
+        SHOP_FILL_ORDER.take(count.coerceIn(0, SHOP_FILL_ORDER.size)).sorted()
 
     /** Row 2, centred: the three free options. A fourth would need this list extending. */
     private val OFFER_SLOTS = listOf(20, 22, 24)

@@ -71,6 +71,11 @@ object RunMessages {
         "Your items could not be returned just now — nothing is lost; it will retry, or relog.",
     )
 
+    fun partyFainted(): Component = literal(
+        "Every Pokémon in your run has fainted, and there is no healing inside a run yet. " +
+            "/roguelite abandon confirm ends the run and pays out what it owes.",
+    )
+
     fun stashRefused(reason: String): Component =
         literal("The run cannot start: $reason.")
 

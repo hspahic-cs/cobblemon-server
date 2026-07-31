@@ -35,6 +35,9 @@ import java.util.concurrent.ThreadLocalRandom
 
 private val log = LoggerFactory.getLogger("cobblemon_roguelite/run")
 
+/** How long a freshly-installed party settles before its first battle. See the resume path. */
+private const val PARTY_SYNC_DELAY_TICKS = 20
+
 /** Where a player stands with the mode right now. The three states a command can find them in. */
 sealed interface RunStatus {
 
@@ -119,6 +122,13 @@ sealed interface ResumeResult {
      * and the next wave.
      */
     data class CatchPending(val pokemon: Pokemon, val party: List<Pokemon>) : ResumeResult
+
+    /**
+     * Every run Pokémon has fainted — from OUTSIDE battle, or the wipe check would already have ended
+     * the run. There is no healing inside a run yet, so the honest options are the ones the message
+     * names: abandon, or wait for revive-shaped rewards to exist.
+     */
+    data object PartyFainted : ResumeResult
 
     data class Ended(val report: RunEndReport) : ResumeResult
 }
@@ -403,6 +413,15 @@ object RunController {
         // why that side effect belongs on the command that reports it.
         run.pendingCatch?.let { return ResumeResult.CatchPending(it, run.partySnapshot()) }
 
+        // Live-test finding: a run Pokémon can faint OUTSIDE battle (the player flew one into the
+        // void), and a wave fought with an all-fainted party is a battle nobody can act in. Refused
+        // here, next to the other party-state gate, rather than deep in the battle layer — the player
+        // can read the reason and act on it, where a stalled battle reads as the mode being broken.
+        // Out-of-battle damage to run Pokémon at all is a §2.2-reversal question for the humans.
+        if (run.partySnapshot().none { pokemon -> runCatching { !pokemon.isFainted() }.getOrDefault(true) }) {
+            return ResumeResult.PartyFainted
+        }
+
         return when (val step = nextStep(run, depthCapFor(player))) {
             is WaveStep.EndRun -> ResumeResult.Ended(endRun(server, player.uuid, step.cause))
             // Logged at ERROR because only an operator can act on it and nothing else will say so: the
@@ -439,8 +458,9 @@ object RunController {
                     }
                     RunInventoryStash.EntryResult.Ok -> Unit
                 }
-                runCatching { RunPartySwap.reconcile(player, run) }
+                val partyFreshlyInstalled = runCatching { RunPartySwap.reconcile(player, run) }
                     .onFailure { log.error("roguelite: could not install {}'s run party", player.gameProfile.name, it) }
+                    .getOrDefault(false)
                 when (val arena = RunArenas.enter(server, player, run)) {
                     is ArenaResult.Failure -> {
                         // Both swaps undone: the player was not moved, and leaving them outside the
@@ -458,29 +478,49 @@ object RunController {
                         // or that hands the battle to a thread and returns, can lose the player
                         // between the two calls, and a battle nobody marked is a battle a player can
                         // walk out of for free — which is the hole §2.10 exists to close.
-                        run.battle = RunBattleMarker(step.plan.wave, ServerBootId.current, openingField(run))
-                        // §2.23's activity clock. Stamped on the wave *starting* and not only on it
-                        // being cleared, because a player who is fighting is playing: a run parked on a
-                        // wave somebody keeps failing to survive is in use, and an expiry that only
-                        // counted wins would delete it out from under the attempt.
-                        run.touch()
-                        // Checkpointed because entering just wrote the entry point, and losing it costs
-                        // the player their way home. The marker and the activity stamp ride along;
-                        // neither needs its own flush (see [RunState.battle]).
-                        store.checkpoint(server, player.uuid)
-                        // `step.trainer` is who this wave fights, already reconciled against fixed
-                        // encounters and this run's no-repeat window, and it is handed straight to the
-                        // handler. A handler that drew its own instead would summon a different
-                        // opponent from the one the run planned, and the run's own log — including the
-                        // no-repeat memory — would describe a battle that never happened.
-                        if (RunWaves.begin(server, player, run, step.plan, step.trainer)) {
-                            ResumeResult.WaveStarted(step.plan)
+                        val startWave: () -> Boolean = {
+                            run.battle = RunBattleMarker(step.plan.wave, ServerBootId.current, openingField(run))
+                            // §2.23's activity clock. Stamped on the wave *starting* and not only on it
+                            // being cleared, because a player who is fighting is playing: a run parked
+                            // on a wave somebody keeps failing to survive is in use, and an expiry that
+                            // only counted wins would delete it out from under the attempt.
+                            run.touch()
+                            // Checkpointed because entering just wrote the entry point, and losing it
+                            // costs the player their way home. The marker and the activity stamp ride
+                            // along; neither needs its own flush (see [RunState.battle]).
+                            store.checkpoint(server, player.uuid)
+                            // `step.trainer` is who this wave fights, already reconciled against fixed
+                            // encounters and this run's no-repeat window. A handler that drew its own
+                            // would summon a different opponent from the one the run planned.
+                            val ok = RunWaves.begin(server, player, run, step.plan, step.trainer)
+                            // On refusal there is nothing to attribute. Cleared in memory only: the
+                            // stale copy on disk carries this boot's id, and the only way to read that
+                            // copy back is a restart, which resolves as a clean resume.
+                            if (!ok) run.battle = null
+                            ok
+                        }
+                        if (!partyFreshlyInstalled) {
+                            if (startWave()) {
+                                ResumeResult.WaveStarted(step.plan)
+                            } else {
+                                ResumeResult.WaveUnavailable(step.plan)
+                            }
                         } else {
-                            // No battle started, so there is nothing to attribute. Cleared in memory
-                            // only: the stale copy on disk carries this boot's id, and the only way
-                            // to read that copy back is a restart, which resolves as a clean resume.
-                            run.battle = null
-                            ResumeResult.WaveUnavailable(step.plan)
+                            // The first live test's bug #5: a battle begun in the same tick as a party
+                            // install builds the client's battle GUI against the party it had BEFORE
+                            // the install packets applied — no move buttons, no opponent HP bar, stuck
+                            // at T0. One second of settle is invisible next to the arena teleport, and
+                            // only the first wave of a session pays it (every later wave's party is
+                            // already installed). The preconditions are re-checked at fire time
+                            // because a player can pause or vanish inside twenty ticks.
+                            RunTicks.schedule(PARTY_SYNC_DELAY_TICKS) {
+                                val online = server.playerList.getPlayer(player.uuid) ?: return@schedule
+                                if (!RunInventoryStash.isTagged(online)) return@schedule
+                                if (!startWave()) {
+                                    online.sendSystemMessage(RunMessages.waveUnavailable(step.plan.wave, step.plan.kind))
+                                }
+                            }
+                            ResumeResult.WaveStarted(step.plan)
                         }
                     }
                 }

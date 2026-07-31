@@ -226,6 +226,7 @@ object BetweenWaveMenu {
                 paint()
                 return
             }
+            if (needsMember && interceptTm(player, paid = true, entryId = entry.id, label = entry.id, memberSlot = 1)) return
             finishShop(player, entry.id, slot = null)
         }
 
@@ -235,6 +236,11 @@ object BetweenWaveMenu {
             if (RewardTargeting.needsMember(entry.reward) && run.partySnapshot().size > 1) {
                 pending = Pending(paid = false, entryId = entry.id, label = entry.id)
                 paint()
+                return
+            }
+            if (RewardTargeting.needsMember(entry.reward) &&
+                interceptTm(player, paid = false, entryId = entry.id, label = entry.id, memberSlot = 1)
+            ) {
                 return
             }
             finishOffer(player, entry.id, slot = null)
@@ -253,35 +259,42 @@ object BetweenWaveMenu {
             val slot = index + 1
             pending = null
 
-            // A TM is intercepted BEFORE the take or the purchase, because both are irreversible and
-            // the grant can still refuse: a full moveset used to consume the free pick and then teach
-            // nothing. Known-move cancels outright; full-moveset diverts to the forget screen.
-            val reward = rewardOf(waiting)
-            if (reward is RunReward.TechnicalMachine) {
-                val pokemon = run.partySnapshot().getOrNull(slot - 1)
-                val known = pokemon?.moveSet?.getMoves().orEmpty().any { it.name.equals(reward.move, ignoreCase = true) }
-                if (pokemon != null && known) {
-                    // Nothing was consumed: the take/buy has not run yet, which is the whole point of
-                    // intercepting here.
-                    player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
-                        "${pokemon.species.name} already knows that move — nothing was taken.",
-                    ))
-                    paint()
-                    return
-                }
-                if (pokemon != null && !pokemon.moveSet.hasSpace()) {
-                    pendingMove = PendingMove(waiting.paid, waiting.entryId, waiting.label, slot)
-                    paint()
-                    return
-                }
-            }
+            if (interceptTm(player, waiting.paid, waiting.entryId, waiting.label, slot)) return
             if (waiting.paid) finishShop(player, waiting.entryId, slot) else finishOffer(player, waiting.entryId, slot)
         }
 
         /** The offer/stock entry a pending click refers to, or null if the wave moved on. */
-        private fun rewardOf(waiting: Pending): RunReward? =
-            if (waiting.paid) stock().firstOrNull { it.id == waiting.entryId }?.reward
-            else offer().firstOrNull { it.id == waiting.entryId }?.reward
+        private fun rewardOf(paid: Boolean, entryId: String): RunReward? =
+            if (paid) stock().firstOrNull { it.id == entryId }?.reward
+            else offer().firstOrNull { it.id == entryId }?.reward
+
+        /**
+         * The TM gate, BEFORE the take or the purchase — both are irreversible and the grant can
+         * still refuse, which is how the playtest lost a free pick to a full moveset. True means the
+         * click was handled here (cancelled or diverted to the forget screen) and the caller stops.
+         *
+         * One function for BOTH entry paths, because the first version lived only inside the
+         * party-picker resolution — and a party of one skips the picker entirely, which is exactly
+         * the party the playtest had. Solo parties come through [beginShop]/[beginOffer] with
+         * [memberSlot] = 1; multi parties come through [resolvePending] with the picked slot.
+         */
+        private fun interceptTm(player: ServerPlayer, paid: Boolean, entryId: String, label: String, memberSlot: Int): Boolean {
+            val reward = rewardOf(paid, entryId) as? RunReward.TechnicalMachine ?: return false
+            val pokemon = run.partySnapshot().getOrNull(memberSlot - 1) ?: return false
+            if (pokemon.moveSet.getMoves().any { it.name.equals(reward.move, ignoreCase = true) }) {
+                player.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+                    "${pokemon.species.name} already knows that move — nothing was taken.",
+                ))
+                paint()
+                return true
+            }
+            if (!pokemon.moveSet.hasSpace()) {
+                pendingMove = PendingMove(paid, entryId, label, memberSlot)
+                paint()
+                return true
+            }
+            return false
+        }
 
         private fun resolveMoveChoice(player: ServerPlayer, slotId: Int) {
             val waiting = pendingMove ?: return
@@ -303,6 +316,37 @@ object BetweenWaveMenu {
             val table = ShopTables.default() ?: return
             when (val result = ShopStock.buy(table, run.wave, run.credits, entryId)) {
                 is PurchaseResult.Ok -> {
+                    // User decision 2026-07-31: buying a consumable USES it, through Cobblemon's own
+                    // party-select overlay — the same screen right-clicking a potion opens — so the
+                    // heal is a purchase, not a purchase plus an errand. Only the SHOP does this; the
+                    // free row and inventory use keep their ordinary behaviour. The stack goes into
+                    // the inventory FIRST and the overlay consumes it from there, so cancelling the
+                    // overlay leaves a bought item rather than an evaporated purchase; the chest is
+                    // closed first because two screens cannot stack, and the use call rides two ticks
+                    // behind the close so the client has processed it.
+                    val bagReward = result.entry.reward as? RunReward.BagItem
+                    val selectingItem = bagReward?.let {
+                        BuiltInRegistries.ITEM.getOptional(it.item).orElse(null) as? com.cobblemon.mod.common.api.item.PokemonSelectingItem
+                    }
+                    if (bagReward != null && selectingItem != null) {
+                        run.credits = result.remaining
+                        val stack = com.cobblemonroguelite.run.RunItems.mark(
+                            ItemStack(selectingItem as Item, bagReward.count.coerceAtLeast(1)),
+                            run.seed,
+                        )
+                        if (!player.inventory.add(stack)) player.drop(stack, false)
+                        checkpoint(player)
+                        player.sendSystemMessage(ShopMessages.bought(entryId, result.price, run.credits, GrantResult.Ok("choose who gets it")))
+                        player.closeContainer()
+                        com.cobblemonroguelite.run.RunTicks.schedule(2) {
+                            val online = player.server.playerList.getPlayer(player.uuid) ?: return@schedule
+                            if (!stack.isEmpty) {
+                                runCatching { selectingItem.use(online, stack) }
+                                    .onFailure { log.warn("roguelite: instant-use failed for {}", entryId, it) }
+                            }
+                        }
+                        return
+                    }
                     val party = run.partySnapshot()
                     val target = RewardTargeting.resolve(result.entry.reward, slot, party.size)
                     if (target is RewardTarget.Unresolved) {

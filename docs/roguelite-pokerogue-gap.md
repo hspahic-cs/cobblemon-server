@@ -34,6 +34,17 @@ deliberately out of scope. Nothing here re-litigates a settled decision.
   ours does now too via `cost_multiplier`; what is missing is only their *stock-row unlock cadence*,
   the 30-wave `slice`, which our `shopSlotsAt` bands approximate but were not tuned to match).
 
+- **Stat stages and battle forms persisting across wild waves** (playtest request 2026-07-31,
+  PokéRogue's rule: boosts and forms carry between wild waves, reset at trainer battles). Ours
+  resets everything every wave, because each wave is its own Cobblemon/Showdown battle and battle
+  state dies with the battle by construction. Carrying it means capturing the player side's stat
+  stages (and volatile form changes) at battle end and re-injecting them at the next battle's start
+  — most plausibly by dispatching `|boost|` instructions into the new Showdown battle the way
+  mega_showdown injects its own custom instructions, keyed off a new `RunState` field, cleared on
+  trainer/boss waves. Genuinely delicate battle-engine work: the injection point, timing against the
+  first request, and the client's stat display all need live verification. Deferred to its own pass
+  rather than rushed — a wrong `|boost|` injection corrupts battles rather than merely missing.
+
 ## Designed or half-built, waiting on existing plans
 
 - **Trainer/boss/rival battles** — the largest gap in play, and not an oversight: `RunTrainerBattles`

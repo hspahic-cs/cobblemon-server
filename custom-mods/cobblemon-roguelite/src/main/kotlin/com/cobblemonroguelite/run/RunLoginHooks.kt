@@ -71,6 +71,17 @@ object RunLoginHooks {
     fun onLogin(event: PlayerEvent.PlayerLoggedInEvent) {
         val player = event.entity as? ServerPlayer ?: return
         val reconciliation = RunController.reconcileOnLogin(player.server, player)
+        // §2.2-reversed. Before any message, because every line below describes a party, and this is
+        // what makes the party the one being described.
+        //
+        // This is the RECOVERY path and it is deliberately the normal one: it runs on every join, so a
+        // crash between the two halves of a swap, a server killed mid-run, or a run deleted by an
+        // operator all present as the same thing — party and PC disagreeing with the run store — and
+        // are fixed by the code that does nothing on an ordinary login. Wrapped because a storage fault
+        // must not cost the player their login.
+        runCatching {
+            RunPartySwap.reconcile(player, (reconciliation.status as? RunStatus.InProgress)?.run)
+        }.onFailure { log.error("roguelite: could not reconcile {}'s party on login", player.gameProfile.name, it) }
         // First of everything, because it is about a run that no longer exists and every line below it
         // describes the world as it is now. Reversed, a player reads "you have no run" and then finds
         // out why, having already concluded the server lost it.

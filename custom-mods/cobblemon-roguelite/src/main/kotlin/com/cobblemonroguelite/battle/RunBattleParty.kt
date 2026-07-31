@@ -1,7 +1,8 @@
 package com.cobblemonroguelite.battle
 
-import com.cobblemon.mod.common.api.storage.party.PartyStore
+import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon
+import com.cobblemonroguelite.run.RunPartySwap
 import com.cobblemonroguelite.run.RunState
 import net.minecraft.server.level.ServerPlayer
 import org.slf4j.LoggerFactory
@@ -55,25 +56,36 @@ object RunBattleParty {
      * starting a battle with a partial team would silently disqualify the members that were dropped.
      */
     fun teamFor(player: ServerPlayer, run: RunState): List<BattlePokemon>? {
-        val party = run.partySnapshot()
-        if (party.isEmpty()) return null
+        // The player's OWN store, since §2.2's reversal put the run party in it. Building a second
+        // store here and adding the same objects to it — which is what this did before the reversal —
+        // would re-stamp their `storeCoordinates` while they are still sitting in the player's party
+        // slots, which is one Pokémon in two stores and the shortest path from a duplicate to a
+        // deletion. See [RunPartySwap], which refuses to do the same thing in the other direction.
+        val store = runCatching { Cobblemon.storage.getParty(player) }
+            .onFailure { log.error("roguelite: could not reach {}'s party for a wave", player.gameProfile.name, it) }
+            .getOrNull() ?: return null
 
-        val store = PartyStore(player.uuid)
-        party.forEach { pokemon ->
-            if (!store.add(pokemon)) {
-                log.error(
-                    "roguelite: {}'s run party would not fit a battle store ({} members) — refusing the wave " +
-                        "rather than fighting it a Pokémon short",
-                    player.gameProfile.name, party.size,
-                )
-                return null
-            }
+        val members = store.toList()
+        if (members.isEmpty()) return null
+
+        // THE GUARD THAT MATTERS. If anything in the party is not the run's, the swap did not take —
+        // and fighting the wave anyway would put the player's real Pokémon into a battle that mutates
+        // them uncloned and can permanently kill them. Refusing costs a wave; the alternative costs a
+        // team, so this refuses even though the run is otherwise fine.
+        val foreign = members.filterNot(RunPartySwap::isRunPokemon)
+        if (foreign.isNotEmpty()) {
+            log.error(
+                "roguelite: refusing {}'s wave — their party holds {} Pokémon the run did not put there " +
+                    "({}). The run party swap did not take; nothing has been risked.",
+                player.gameProfile.name, foreign.size, foreign.joinToString { it.species.name },
+            )
+            return null
         }
 
         // clone = false is what makes the battle mutate the run party rather than a copy of it, and
         // healPokemon = false is what stops the wave transition undoing the last one. Both defaults
         // in Cobblemon are the other way round, which is why they are spelled out.
-        val team = store.toBattleTeam(clone = false, healPokemon = false, leadingPokemon = party.first().uuid)
+        val team = store.toBattleTeam(clone = false, healPokemon = false, leadingPokemon = members.first().uuid)
         return team.takeIf { it.isNotEmpty() }
     }
 }

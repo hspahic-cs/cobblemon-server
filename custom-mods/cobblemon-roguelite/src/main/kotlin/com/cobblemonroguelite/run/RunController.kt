@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemon.mod.common.Cobblemon
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.arena.ArenaFailure
 import com.cobblemonroguelite.arena.ArenaResult
@@ -397,6 +398,13 @@ object RunController {
                 // decide and the player's to be told about, and those are two layers. See
                 // [announceBiome].
                 val wasIn = run.biome?.biome
+                // §2.2-reversed. Idempotent: on every wave after the first the party already holds the
+                // run's Pokémon and this stashes nothing. Placed beside the arena enter because the two
+                // are the same act — putting the player somewhere the run controls, holding what the
+                // run gave them — and a wave that started with the player's own team in the party would
+                // fight the wave with their real Pokémon.
+                runCatching { RunPartySwap.reconcile(player, run) }
+                    .onFailure { log.error("roguelite: could not install {}'s run party", player.gameProfile.name, it) }
                 when (val arena = RunArenas.enter(server, player, run)) {
                     is ArenaResult.Failure -> ResumeResult.ArenaUnavailable(arena.error)
                     is ArenaResult.Success -> {
@@ -613,6 +621,21 @@ object RunController {
             )
             return null
         }
+
+        // §2.2-reversed: permadeath has to reach the player's party too, or the run believes the
+        // Pokémon is gone while it is still sitting in a party slot — visible, selectable, and
+        // fightable with. Only ever the one that just fainted, and only when it is run-marked, so this
+        // cannot reach anything of the player's even if a faint is reported for the wrong Pokémon.
+        //
+        // Not fatal if it fails: the run's own record is authoritative for whether the run is over, and
+        // a stranded corpse is cleaned up by the restore at run end.
+        if (RunPartySwap.isRunPokemon(pokemon)) {
+            server.playerList.getPlayer(player)?.let { online ->
+                runCatching { Cobblemon.storage.getParty(online).remove(pokemon) }
+                    .onFailure { log.error("roguelite: could not remove a fainted run Pokémon from {}'s party", player, it) }
+            }
+        }
+
         if (!run.isWiped()) {
             store.checkpoint(server, player)
             return null
@@ -644,10 +667,29 @@ object RunController {
         // failure in the one branch that is already shouting about a bug.
         if (routing !is CatchRouting.AlreadyDeciding) store.checkpoint(server, player)
         when (routing) {
-            is CatchRouting.Joined -> log.info(
-                "roguelite: {} caught {} (level {}) into run party slot {}",
-                player, pokemon.species.name, pokemon.level, routing.slot,
-            )
+            is CatchRouting.Joined -> {
+                // §2.2-reversed. RunCapture has already taken this out of the player's real storage,
+                // and the run party is now the visible party — so without this the catch joins the run
+                // and disappears from the party screen the player is looking at. Marked first, so it is
+                // releasable at run end like anything else the run handed over; §2.2's isolation still
+                // holds for persistence, and this Pokémon does not survive the run.
+                server.playerList.getPlayer(player)?.let { online ->
+                    runCatching {
+                        pokemon.persistentData.putLong(RunPartySwap.RUN_MARKER_KEY, run.seed)
+                        Cobblemon.storage.getParty(online).add(pokemon)
+                    }.onFailure {
+                        log.error(
+                            "roguelite: {} caught {} into the run but it could not be put in their party — " +
+                                "the run holds it and the next login will reconcile",
+                            player, pokemon.species.name, it,
+                        )
+                    }
+                }
+                log.info(
+                    "roguelite: {} caught {} (level {}) into run party slot {}",
+                    player, pokemon.species.name, pokemon.level, routing.slot,
+                )
+            }
 
             is CatchRouting.HeldForDecision -> log.info(
                 "roguelite: {} caught {} with a full run party — held pending swap or release",
@@ -788,6 +830,19 @@ object RunController {
                 "roguelite: {}'s run ended holding an undecided {} — it goes with the run (§2.2)",
                 player, it.species.name,
             )
+        }
+
+        // §2.2-reversed: the player's own team comes back and the run's is released. Every end path
+        // funnels through here — wipe, abandon, completion, expiry — which is the whole reason this is
+        // the only call site rather than six.
+        //
+        // Before the arena exit rather than after, so the swap is undone while the player is still
+        // somewhere the run controls. Wrapped, because a storage fault must not stop a run ending: an
+        // un-restored party is recoverable on the next login, a run stuck open is not. An offline
+        // player is skipped entirely and reconciled when they next join.
+        server.playerList.getPlayer(player)?.let { online ->
+            runCatching { RunPartySwap.restore(online) }
+                .onFailure { log.error("roguelite: could not restore {}'s party at run end", player, it) }
         }
 
         // Before the payout, because the payout can throw through a provider and a player left

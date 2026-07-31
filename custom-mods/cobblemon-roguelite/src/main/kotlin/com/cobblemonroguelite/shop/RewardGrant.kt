@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonroguelite.data.reward.RunReward
 import com.cobblemonroguelite.run.RunItems
 import com.cobblemonroguelite.run.RunPartySwap
+import com.cobblemonroguelite.run.RunState
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
@@ -47,13 +48,14 @@ object RewardGrant {
      * alternative is worse, because granting first means a crash between grant and charge is a free
      * item, and an item that cannot be granted is an operator error a refund would hide.
      */
-    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, runSeed: Long, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = when (target) {
+    fun apply(reward: RunReward, target: RewardTarget, party: List<Pokemon>, run: RunState, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = when (target) {
         is RewardTarget.Unresolved -> GrantResult.Failed(target.reason)
 
-        // Party-wide is only ever a bag item today ([RewardTargeting.needsMember]), and a bag item does
-        // not touch a Pokémon at all — so this branch is about the run, not the party.
+        // Party-wide is a bag item or a credits grant ([RewardTargeting.needsMember]), and neither
+        // touches a Pokémon at all — so this branch is about the run, not the party.
         RewardTarget.WholeParty -> when (reward) {
-            is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
+            is RunReward.BagItem -> grantBagItem(reward, player, run.seed)
+            is RunReward.Credits -> grantCredits(reward, run)
             else -> GrantResult.Failed("reward ${reward::class.simpleName} needs a party member")
         }
 
@@ -73,22 +75,23 @@ object RewardGrant {
                     "${pokemon.species.name} is not part of this run — rewards can only go to run Pokémon",
                 )
             } else {
-                applyToMember(reward, pokemon, runSeed, player, forgetMoveSlot)
+                applyToMember(reward, pokemon, run, player, forgetMoveSlot)
             }
         }
     }
 
-    private fun applyToMember(reward: RunReward, pokemon: Pokemon, runSeed: Long, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = runCatching {
+    private fun applyToMember(reward: RunReward, pokemon: Pokemon, run: RunState, player: net.minecraft.server.level.ServerPlayer, forgetMoveSlot: Int? = null): GrantResult = runCatching {
         when (reward) {
             is RunReward.Evs -> grantEvs(reward, pokemon)
             is RunReward.Levels -> grantLevels(reward, pokemon)
             is RunReward.Mint -> grantMint(reward, pokemon)
             is RunReward.AbilityPatch -> grantAbility(reward, pokemon)
-            is RunReward.HeldItem -> grantHeldItem(reward, pokemon, runSeed)
+            is RunReward.HeldItem -> grantHeldItem(reward, pokemon, run.seed)
             is RunReward.TechnicalMachine -> grantMove(reward, pokemon, forgetMoveSlot)
-            // A bag item targeted at a member: legal input, since [RewardTargeting] ignores a slot on a
-            // party-wide reward, so treat it as the bag grant it is rather than refusing.
-            is RunReward.BagItem -> grantBagItem(reward, player, runSeed)
+            // A bag item or credits targeted at a member: legal input, since [RewardTargeting] ignores a
+            // slot on a party-wide reward, so treat it as the run-level grant it is rather than refusing.
+            is RunReward.BagItem -> grantBagItem(reward, player, run.seed)
+            is RunReward.Credits -> grantCredits(reward, run)
         }
     }.getOrElse { failure ->
         log.warn("roguelite: granting {} to {} threw", reward, pokemon.species.resourceIdentifier, failure)
@@ -254,6 +257,30 @@ object RewardGrant {
         val stack = com.cobblemonroguelite.run.RunItems.mark(ItemStack(item, count), runSeed)
         if (!player.inventory.add(stack)) player.drop(stack, false)
         return GrantResult.Ok("${count}x ${item.description.string} added to your run bag")
+    }
+
+    /**
+     * Credits, straight onto the run's balance.
+     *
+     * The amount is the shared wave-money curve at the **current** wave times the reward's
+     * multiplier — the exact call the shop's `cost_multiplier` resolves through
+     * ([com.cobblemonroguelite.data.shop.ShopEntry.priceAt]), so what a Nugget pays and what a
+     * Potion costs move together by construction and can never drift apart. This is the reason
+     * [apply] takes the [RunState] rather than just its seed: a credits grant has no Pokémon to
+     * land on, only the run itself.
+     *
+     * Internal rather than private so the arithmetic is testable without a booted game — the only
+     * grant in this file that can be, since it touches no Cobblemon type.
+     */
+    internal fun grantCredits(reward: RunReward.Credits, run: RunState): GrantResult {
+        val amount = ShopSettings.credits.curve.amountAt(run.wave, reward.multiplier)
+        if (amount <= 0) {
+            // Reachable only with a misconfigured curve. NoEffect rather than Failed: nothing broke
+            // and nothing was lost, this wave is just worth nothing.
+            return GrantResult.NoEffect("the wave-money curve pays nothing at wave ${run.wave}")
+        }
+        run.credits = (run.credits.toLong() + amount).coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+        return GrantResult.Ok("${RunCurrency.format(amount)} added — you now have ${RunCurrency.format(run.credits)}")
     }
 
     private fun unresolved(kind: String, id: String): GrantResult {

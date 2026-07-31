@@ -100,13 +100,21 @@ def split(prefix, tier, total_weight, items, reward_of, min_wave=1, note=None):
     ]
 
 
-def entry(eid, tier, weight, reward, scaled_by=None, min_wave=1, note=None):
+def entry(eid, tier, weight, reward, scaled_by=None, min_wave=1, max_wave=None, note=None):
     out = {"id": eid, "tier": tier, "weight": weight, "min_wave": min_wave, "reward": reward}
+    if max_wave is not None:
+        out["max_wave"] = max_wave
     if scaled_by:
         out["scaled_by"] = scaled_by
     if note:
         out["_note"] = note
     return out
+
+
+def credits(multiplier):
+    """Their MoneyRewardModifierType: money as a multiple of the wave-money formula. Our `credits`
+    reward resolves through the same shared curve (WaveMoneyCurve) at the wave it is granted."""
+    return {"type": "credits", "multiplier": multiplier}
 
 
 # ── The free pick: their PLAYER pool through the §2.34 dispositions ─────────────────
@@ -152,6 +160,8 @@ REWARD_ENTRIES = (
         entry("dire_hit", "great", 4, bag("dire_hit")),
         entry("soothe_bell", "great", 2, held("soothe_bell"),
               note="friendship feeds §2.15 candy via creditWaveFriendship"),
+        entry("nugget", "great", 5, credits(1.0), max_wave=198,
+              note="MoneyRewardModifierType 1x the wave-money formula; their classic wave-199 stop"),
     ]
     + split("tm_great", "great", 3, TM_MOVES["great"], tm, note="CURATED — see TM_MOVES")
     + [
@@ -178,6 +188,8 @@ REWARD_ENTRIES = (
               note="RESHAPE: their exact rarer-candy effect is in the unresolved list; two levels stands in"),
         entry("quick_claw", "ultra", 3, held("quick_claw")),
         entry("wide_lens", "ultra", 7, held("wide_lens")),
+        entry("big_nugget", "ultra", 12, credits(2.5), max_wave=198,
+              note="MoneyRewardModifierType 2.5x the wave-money formula; their classic wave-199 stop"),
     ]
     + split("boost", "ultra", 9, TYPE_BOOSTERS, held,
             note="ATTACK_TYPE_BOOSTER w9 fanned across all 18 types")
@@ -191,26 +203,28 @@ REWARD_ENTRIES = (
         entry("scope_lens", "rogue", 4, held("scope_lens")),
         entry("focus_band", "rogue", 5, held("focus_band")),
         entry("kings_rock", "rogue", 3, held("kings_rock")),
-        entry("ability_patch", "rogue", 6, {"type": "ability"},
-              note="RESHAPE of ABILITY_CHARM: direct HA grant instead of odds boost; their weight and their wave-189 stop",
+        entry("relic_gold", "rogue", 2, credits(10.0), max_wave=198,
+              note="MoneyRewardModifierType 10x the wave-money formula; their classic wave-199 stop"),
+        entry("ability_patch", "rogue", 6, {"type": "ability"}, max_wave=189,
+              note="RESHAPE of ABILITY_CHARM: direct HA grant instead of odds boost; their weight and their wave-189 stop (skipInClassicAfterWave)",
               ),
         # MASTER — 0.1%. Their master tier is mostly meta (charms, vouchers); the ball is what maps.
         entry("master_ball", "master", 24, bag("master_ball", 1)),
     ]
 )
-# ability_patch keeps their skipInClassicAfterWave(189) as a hard gate:
-for e in REWARD_ENTRIES:
-    if e["id"] == "ability_patch":
-        e["max_wave"] = 189
 
 # Their-id → why it is not in the table. Audited against the extraction at generation time so a
 # re-extract that grows the pool fails loudly instead of silently under-mirroring.
 DROPPED = {
     "LURE": "no wild-lure system", "SUPER_LURE": "no wild-lure system", "MAX_LURE": "no wild-lure system",
     "SACRED_ASH": "no such Cobblemon item; nearest is max_revive which already maps",
-    "NUGGET": "money item — credits come only from CreditRules (§2.35)", "BIG_NUGGET": "money item",
-    "RELIC_GOLD": "money item", "AMULET_COIN": "money item", "GOLDEN_PUNCH": "money item",
-    "COIN_CASE": "money item", "LOCK_CAPSULE": "0-weight in classic anyway; reroll-lock UI does not exist",
+    # NUGGET/BIG_NUGGET/RELIC_GOLD restored 2026-07-31 as `credits` rewards (multiplier of the
+    # shared wave-money curve, exactly their MoneyRewardModifierType shape). The remaining money
+    # modifiers stay out: they are passive %-boosts, not one-shot grants.
+    "NUGGET": None, "BIG_NUGGET": None, "RELIC_GOLD": None,
+    "AMULET_COIN": "passive money %-boost, no channel", "GOLDEN_PUNCH": "passive money-on-hit, no channel",
+    "COIN_CASE": "passive money interest, no channel",
+    "LOCK_CAPSULE": "0-weight in classic anyway; reroll-lock UI does not exist",
     "MAP": "no biome-choice mechanic", "IV_SCANNER": "IVs visible via Cobblemon UI",
     "VOUCHER": "egg-gacha meta currency", "VOUCHER_PLUS": "egg-gacha meta", "VOUCHER_PREMIUM": "egg-gacha meta",
     "CATCHING_CHARM": "0-weight in classic", "SHINY_CHARM": "meta odds — Unchained streaks own shiny odds",

@@ -68,6 +68,17 @@ sealed interface RunReward {
     /** A TM: teach [move] to a party member. */
     data class TechnicalMachine(val move: String) : RunReward
 
+    /**
+     * Run credits, i.e. what PokéRogue's Nugget is (2026-07-31: their money items restored as this,
+     * one type for all three). [multiplier] scales the shared wave-money curve
+     * ([com.cobblemonroguelite.shop.WaveMoneyCurve]) at the wave the reward is granted — a multiplier
+     * rather than an amount for the same reason the shop's `cost_multiplier` is one: a flat number is
+     * decisive early and pocket change late, and the curve is the thing both halves of the economy
+     * already price against. Theirs are 1x (Nugget), 2.5x (Big Nugget) and 10x (Relic Gold) of the
+     * same formula.
+     */
+    data class Credits(val multiplier: Double) : RunReward
+
     companion object {
 
         /**
@@ -96,6 +107,7 @@ sealed interface RunReward {
                 "item" -> parseBagItem(view)
                 "held_item" -> parseId(view, "item", MINECRAFT)?.let { HeldItem(it) }
                 "move" -> nonBlank(view, "move")?.let { TechnicalMachine(it) }
+                "credits" -> parseCredits(view)
                 else -> {
                     view.problem("type", "unknown reward type '$type' (expected one of: ${TYPES.joinToString(", ")})")
                     null
@@ -147,6 +159,15 @@ sealed interface RunReward {
             return AbilityPatch(ability)
         }
 
+        private fun parseCredits(view: JsonView): RunReward? {
+            val multiplier = view.requireDouble("multiplier") ?: return null
+            if (multiplier <= 0.0) {
+                view.problem("multiplier", "must be greater than 0, was $multiplier — a reward of no credits is not a reward")
+                return null
+            }
+            return Credits(multiplier)
+        }
+
         private fun nonBlank(view: JsonView, key: String): String? {
             val value = view.requireString(key) ?: return null
             if (value.isBlank()) {
@@ -191,7 +212,7 @@ sealed interface RunReward {
         /** The per-stat EV ceiling in the games. Used only to catch a slipped digit, not to balance. */
         private const val EV_LIMIT = 252
 
-        private val TYPES = listOf("ev", "level", "nature", "ability", "item", "held_item", "move")
+        private val TYPES = listOf("ev", "level", "nature", "ability", "item", "held_item", "move", "credits")
 
         /**
          * EV-bearing stats only. `evasion` and `accuracy` are [Stats] entries but are battle-only and

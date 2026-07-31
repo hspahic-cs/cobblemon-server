@@ -42,13 +42,16 @@ object RewardTargeting {
     /**
      * Whether [reward] has to be pointed at one party member.
      *
-     * The five that do all write to a *Pokémon*: EVs, levels, a nature, an ability, a held item and a
-     * move are all per-Pokémon facts. The one that does not is [RunReward.BagItem], because a run's bag
-     * belongs to the run rather than to a member (§2.11) — which is also why evolution items are bag
-     * items and not held items.
+     * The ones that do all write to a *Pokémon*: EVs, levels, a nature, an ability, a held item and a
+     * move are all per-Pokémon facts. [RunReward.BagItem] does not, because a run's bag belongs to the
+     * run rather than to a member (§2.11) — which is also why evolution items are bag items and not
+     * held items. [RunReward.Credits] does not either: it writes to the run's balance, which no
+     * Pokémon owns.
      */
     fun needsMember(reward: RunReward): Boolean = when (reward) {
-        is RunReward.BagItem -> false
+        is RunReward.BagItem,
+        is RunReward.Credits,
+        -> false
         is RunReward.Evs,
         is RunReward.Levels,
         is RunReward.Mint,

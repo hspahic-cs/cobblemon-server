@@ -23,6 +23,27 @@ root README.
   (`--check` fails on stale output).
 
 ### Fixed
+- **A stray datapack could half-apply a deploy.**
+  `ops/prune-removed-server-datapacks.sh` now warns and skips a `server-*` pack
+  it can't delete, and always exits 0, instead of aborting the run.
+
+  The prune sits *upstream* of the config rsync, the atomic swap and the
+  restart, so a hard failure there didn't merely skip a cleanup — it left new
+  mods staged, configs never copied, the server never restarted and
+  `.deployed_version` never written. The run went red while the server quietly
+  kept serving the old version, which reads much more like a no-op than a
+  failure.
+
+  This blocked the 0.33.0 dev deploy. A hand-made `server-roguelite-smoketest`
+  datapack had been created on the dev VM as `sysadmin` with mode 0755; deploys
+  run as `deployer`, which is in the `sysadmin` group but had no group-write bit
+  on that directory and so couldn't unlink the children. Any `server-*`
+  directory dropped on a VM by hand could have done the same, on prod too.
+
+  Tradeoff, taken deliberately: an undeletable retired pack now *lingers* — the
+  exact thing this script exists to prevent. A lingering datapack is a visible
+  warning (surfaced as a GitHub Actions annotation) and a one-line manual fix; a
+  half-applied deploy is silent.
 - **`statchic` dropped nothing.** Its `drops` entry named
   `cobblemon:electic_gem` — missing the `r` — so the drop silently never
   resolved. Found by the loot-tier sweep.

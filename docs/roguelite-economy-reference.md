@@ -92,6 +92,73 @@ Doubling per reroll within a wave, and the `ceil(wave/10)` factor means a reroll
 a block of ten and steps up between them. The rarity-lock variant sums tier values `[50, 125, 300,
 750, 2000]` instead of the flat 250.
 
+## The free reward roll — tiers and weights
+
+This is the *other* half, and it is a different system to the shop: the three options offered after a
+wave are rolled from a weighted pool, not bought. Source is `src/modifier/init-modifier-pools.ts` and
+`src/modifier/modifier-type.ts`.
+
+### Which tier an option comes from
+
+```ts
+const tierValue = randSeedInt(1024);
+if (tierValue > 255)      tier = COMMON;
+else if (tierValue > 60)  tier = GREAT;
+else if (tierValue > 12)  tier = ULTRA;
+else if (tierValue)       tier = ROGUE;
+else                      tier = MASTER;
+```
+
+| Tier | Window | Chance |
+|---|---|---|
+| Common | 256–1023 | **75%** |
+| Great | 61–255 | **19.0%** |
+| Ultra | 13–60 | **4.7%** |
+| Rogue | 1–12 | **1.2%** |
+| Master | 0 | **0.1%** |
+
+Then **luck upgrades**, which is the part worth stealing:
+
+```ts
+const upgradeOdds = Math.floor(128 / ((partyLuckValue + 4) / 4));
+do { upgraded = randSeedInt(upgradeOdds) < 4; if (upgraded) upgradeCount++; } while (upgraded);
+tier += upgradeCount;
+```
+
+It loops, so a lucky roll can climb more than one tier. At luck 0 that is `4/128` = 3.1% per step. If
+the resulting tier's pool is empty the tier walks back *down* until it finds one, which is what keeps
+a narrow pool from producing nothing.
+
+### What is in each tier
+
+Entry counts: **Common 10, Great 24, Ultra 26, Rogue 19, Master 7.**
+
+Static weights, the ones that are plain numbers:
+
+| Tier | Entries |
+|---|---|
+| Common | Poké Ball 6, Temp Stat Booster 4, Rare Candy 2, Berry 2, TM 2 |
+| Great | Great Ball 6, Dire Hit 4, TM 3, Base Stat Booster 3, PP Up 2, Species Stat Booster 2, Soothe Bell 2 |
+| Ultra | Ultra Ball 15, Rare Species Stat Booster 12, TM 11, Attack Type Booster 9, Wide Lens 7, Mint 4, Reviver Seed 4, Rarer Candy 4, PP Max 3, Quick Claw 3 |
+| Rogue | Rogue Ball 16, Soul Dew 7, Grip Claw 5, Focus Band 5, Berry Pouch 4, Scope Lens 4, Leftovers 3, Shell Bell 3, King's Rock 3, Baton 2 |
+| Master | Master Ball 24, Healing Charm 18, Multi Lens 18, Shiny Charm 14 |
+
+### The thing to actually copy
+
+**Most healing items have weight *functions*, not numbers.** Potion, Super Potion, Hyper Potion, Max
+Potion, Full Restore, Revive, Max Revive, Sacred Ash, Ether, Elixir and Full Heal all take
+`(party: Pokemon[]) => …` and weight themselves by how hurt, fainted or PP-drained the party actually
+is. A full-health party is not offered potions; a party with two faints sees revives.
+
+That is the single best idea in their reward design and it costs us nothing structurally — our
+`RewardEntry` already resolves per wave, and the weight would just need the party in scope. Without
+it, a flat table hands out revives to a full party and reads as the mode wasting your pick.
+
+Others are conditional in ways worth knowing: evolution items and form-change items scale their weight
+with `waveIndex` (deeper runs offer them more), several are `skipInLastClassicWave`, and ball entries
+drop to weight 0 once you are at the cap — so "you already have plenty" removes an option rather than
+letting it clog the roll.
+
 ## What this means for ours
 
 Ours already has the shape — `ShopSettings.shopSlotsAt`, `rerollPrice`, a per-entry `price` — so this
@@ -104,6 +171,11 @@ is a re-numbering rather than a rebuild. The pieces that do not exist yet:
 3. **Money only on trainer waves**, which is a deliberate divergence from PokéRogue — they pay out on
    every wave. Decided for ours because it makes trainer waves matter beyond difficulty.
 4. **No shop on boss waves**, which we would get by matching their `wave % 10` rule.
+5. **Tier odds on the free roll.** Ours has tiers with per-wave weight curves; theirs is a flat
+   75/19/4.7/1.2/0.1 with a *looping* luck upgrade on top. The loop is what makes a good-luck run feel
+   different rather than slightly better, and we have no luck stat to hang it on yet.
+6. **Party-aware reward weights**, which is the one to take first — see above. It is the difference
+   between a reward screen that reads the run and one that offers revives to a full party.
 
 **§2.7 applies to all of it.** PokéRogue's numbers are their data: the *mechanism* (a configurable
 curve, price multipliers) belongs in the mod, and these constants belong in a server-side datapack

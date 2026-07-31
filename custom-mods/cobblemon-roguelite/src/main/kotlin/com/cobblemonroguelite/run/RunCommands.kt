@@ -1,5 +1,6 @@
 package com.cobblemonroguelite.run
 
+import com.cobblemonroguelite.starter.StarterDraftMenu
 import com.cobblemonroguelite.starter.StarterSelection
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.IntegerArgumentType
@@ -52,7 +53,13 @@ object RunCommands {
                         .executes { player(it)?.let(::quoteStart) ?: 0 }
                         .then(Commands.literal("confirm").executes { player(it)?.let(::start) ?: 0 }),
                 )
-                .then(playerOnly(Commands.literal("starter")).then(starterArgument(1)))
+                .then(
+                    // Bare `starter` reopens the draft; the species arguments stay for scripts, for
+                    // tests, and for a player who closed the window and would rather type.
+                    playerOnly(Commands.literal("starter"))
+                        .executes { player(it)?.let(::openDraft) ?: 0 }
+                        .then(starterArgument(1)),
+                )
                 .then(playerOnly(Commands.literal("status")).executes { player(it)?.let(::status) ?: 0 })
                 .then(playerOnly(Commands.literal("resume")).executes { player(it)?.let(::resume) ?: 0 })
                 .then(
@@ -276,13 +283,39 @@ object RunCommands {
             }
 
             is RunStartResult.CatalogueReady -> {
+                // Chat first, then the screen. The message is not redundant: it survives the window
+                // being closed, and it is the only thing a player has if the draft cannot open (an
+                // empty catalogue, which is an operator fault the GUI has no good way to show).
                 player.sendSystemMessage(RunMessages.catalogue(result.catalogue))
+                // Wrapped for the same reason RunController wraps the between-wave screen: a menu that
+                // throws must not take the started run down with it, since the run is already paid for
+                // and `/roguelite starter` is still a way through.
+                runCatching { StarterDraftMenu.openFor(player) }
                 1
             }
         }
     }
 
-    private fun chooseStarters(player: ServerPlayer, species: List<ResourceLocation>): Int =
+    /**
+     * `/roguelite starter` with nothing after it.
+     *
+     * Falls back to the chat catalogue rather than reporting "no screen": the reasons the draft will
+     * not open are "you have no pending start" and "your catalogue is empty", and both of those are
+     * things [RunMessages] already says properly.
+     */
+    private fun openDraft(player: ServerPlayer): Int {
+        if (runCatching { StarterDraftMenu.openFor(player) }.getOrDefault(false)) return 1
+        return status(player)
+    }
+
+    /**
+     * Internal rather than private because [com.cobblemonroguelite.starter.StarterDraftMenu] confirms
+     * through it. The mapping from a [StarterChoiceResult] to the line a player reads exists once, so
+     * the GUI and the command cannot come to say different things about the same refusal.
+     *
+     * Returns 1 on a started run, which is what the menu reads to decide whether to close itself.
+     */
+    internal fun chooseStarters(player: ServerPlayer, species: List<ResourceLocation>): Int =
         when (val result = RunController.chooseStarters(player.server, player, species)) {
             is StarterChoiceResult.Started -> {
                 player.sendSystemMessage(

@@ -43,9 +43,12 @@ side = "BOTH"
 
 # Optional, ordered AFTER so the Accessories API is initialised before our provider registration
 # reads it. A server without the mod loads this jar unchanged — the compat class stays unloaded.
+# The range includes pre-releases EXPLICITLY: maven ordering puts 1.1.0-beta.53 BELOW 1.1.0, and a
+# range of [1.1.0,) took the dev server down at boot — an optional dependency that IS present but
+# out of range is a hard error, not a skip. Learned 2026-07-31, the hard way.
 [[dependencies.cobblemon_roguelite]]
 modId = "accessories"
 type = "optional"
-versionRange = "[1.1.0,)"
+versionRange = "[1.1.0-beta,)"
 ordering = "AFTER"
 side = "BOTH"

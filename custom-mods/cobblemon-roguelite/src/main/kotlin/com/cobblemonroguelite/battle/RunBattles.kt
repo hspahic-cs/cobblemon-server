@@ -239,6 +239,12 @@ object RunBattles {
             if (!captured) live.opponent?.takeIf { !it.isRemoved }?.discard()
             if (!stillOnline(live)) return@execute
             if (won) {
+                // The stat-stage carryover's capture half (PokéRogue's wild-wave persistence rule):
+                // read before waveCleared advances anything, from the battle that just ended.
+                RunStore.of(live.server).get(live.player)?.let { run ->
+                    runCatching { RunCarriedBoosts.captureFrom(battle, live.player, run) }
+                        .onFailure { log.warn("roguelite: boost capture failed for wave {}", live.wave, it) }
+                }
                 RunController.waveCleared(live.server, live.player)
             } else {
                 RunController.waveLost(live.server, live.player)

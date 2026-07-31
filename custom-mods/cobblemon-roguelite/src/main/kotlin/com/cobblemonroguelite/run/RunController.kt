@@ -476,6 +476,10 @@ object RunController {
                         // between the two calls, and a battle nobody marked is a battle a player can
                         // walk out of for free — which is the hole §2.10 exists to close.
                         val startWave: () -> Boolean = {
+                            // PokéRogue's reset point: a trainer/boss/rival wave clears carried
+                            // stages before it begins; a wild wave keeps them (capture side lives in
+                            // RunBattles, injection is the researched follow-up).
+                            com.cobblemonroguelite.battle.RunCarriedBoosts.resetForWave(run, step.plan.kind)
                             run.battle = RunBattleMarker(step.plan.wave, ServerBootId.current, openingField(run))
                             // §2.23's activity clock. Stamped on the wave *starting* and not only on it
                             // being cleared, because a player who is fighting is playing: a run parked

@@ -144,6 +144,15 @@ data class RunState(
      * (§2.35). Server thread only, like everything else the wave step touches.
      */
     val runBag: MutableList<ItemStack> = mutableListOf(),
+
+    /**
+     * Stat stages carried between wild waves (PokéRogue's rule, user decision 2026-07-31), keyed by
+     * Pokémon UUID, values showdownId→stage. Written by
+     * [com.cobblemonroguelite.battle.RunCarriedBoosts] at wild-wave victory, cleared by any
+     * non-wild wave, currently READ by nothing that changes a battle — injection is a researched
+     * follow-up and the capture half persists so a mid-implementation restart loses nothing.
+     */
+    val carriedBoosts: MutableMap<java.util.UUID, Map<String, Int>> = mutableMapOf(),
     /**
      * How many times the free reward offer has been rerolled **on the current wave**, and whether the
      * one free option has already been taken.
@@ -333,6 +342,15 @@ data class RunState(
             runBag.forEach { stack -> bag.add(stack.save(registryAccess)) }
             tag.put("runBag", bag)
         }
+        if (carriedBoosts.isNotEmpty()) {
+            val boosts = CompoundTag()
+            carriedBoosts.forEach { (uuid, stages) ->
+                val entry = CompoundTag()
+                stages.forEach { (stat, stage) -> entry.putInt(stat, stage) }
+                boosts.put(uuid.toString(), entry)
+            }
+            tag.put("carriedBoosts", boosts)
+        }
         tag.putInt("bossesCleared", bossesCleared)
         payoutTable?.let { tag.putString("payoutTable", it.toString()) }
         trainerRoster?.let { tag.putString("trainerRoster", it.toString()) }
@@ -453,6 +471,13 @@ data class RunState(
                 rerollsThisWave = tag.getInt("rerollsThisWave"),
                 rewardTakenThisWave = tag.getBoolean("rewardTakenThisWave"),
                 seed = tag.getLong("seed"),
+                carriedBoosts = tag.getCompound("carriedBoosts").let { boosts ->
+                    boosts.allKeys.mapNotNull { key ->
+                        val uuid = runCatching { java.util.UUID.fromString(key) }.getOrNull() ?: return@mapNotNull null
+                        val entry = boosts.getCompound(key)
+                        uuid to entry.allKeys.associateWith { entry.getInt(it) }
+                    }.toMap().toMutableMap()
+                },
                 runBag = tag.getList("runBag", 10 /* TAG_COMPOUND */).mapNotNull { element ->
                     // parse() over raw errors: an unreadable bag stack (mod removed mid-run) is
                     // dropped WITH a log line — run property, so dropping is legal, and quieter than

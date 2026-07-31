@@ -56,7 +56,15 @@
       "Placeholders: {prefix}, {player}, {suffix}, {displayname}, {group}",
       "This controls the display name shown next to the player's head in the tablist."
     ],
-    "playerFormat": "&f{prefix}&r{player}{suffix}",
+    "_doc_playerFormat_spacing": [
+      "The space before {player} is load-bearing. NeoEssentials TRIMS group prefixes on setprefix,",
+      "so '&2[Mod] ' is stored as '&2[Mod]' and a prefix can never carry its own trailing space —",
+      "without the space here the tablist renders '[Mod]Steve'. Chat is unaffected: chat.json",
+      "hardcodes its own spacing rather than using {prefix}.",
+      "Cost: non-staff (prefix '&7', a colour code with no glyph) render as ' Steve' with one",
+      "leading space. Accepted as the lesser evil."
+    ],
+    "playerFormat": "&f{prefix}&r {player}{suffix}",
 
     "_doc_hideVanished": "When true, vanished players are hidden from the {online} count and from other players' tablists. Players with 'neoessentials.vanish.see' still see vanished players.",
     "hideVanished": true,

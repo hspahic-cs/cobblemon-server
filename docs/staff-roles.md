@@ -1,11 +1,19 @@
 # Staff roles: Admin and Moderator
 
-Two staff tiers, both driven by NeoEssentials' built-in permission groups. The
-groups are defined in version control at
-`modpack/server-overrides/config/neoessentials/permissions.json` and deploy with
-every release. **Who is in each group is runtime state** — it lives in
-`config/neoessentials/permissions/playerdata.json` on each server and is never
-overwritten by a deploy, so you assign people once per instance with a command.
+Two staff tiers, both driven by NeoEssentials' built-in permission groups.
+
+**Neither the groups nor their membership can be deployed as config files.** Both
+live under `config/neoessentials/` but are really *runtime state* that
+NeoEssentials owns — see [Why groups aren't deployed](#why-groups-arent-deployed).
+Setting up a server is therefore two manual steps, each run once per instance:
+
+1. **Define the roles** — `ops/apply-staff-groups.sh`, below.
+2. **Assign the people** — `permissions user <name> setgroup …`, below.
+
+The chat and tablist *formatting* (`chat.json`, `tablist.json`) does deploy
+normally — NeoEssentials only rewrites the permission store, not those. So a
+fresh server renders staff tags correctly the moment groups exist, but shows
+nothing until step 1 has been run.
 
 | Tier | Vanilla op | Chat tag | What they can do |
 |---|---|---|---|
@@ -25,6 +33,76 @@ at level 1 doesn't help either: level 1 grants nothing useful and still doesn't
 bypass. The moderator tier only works because NeoEssentials' own moderation
 commands (`/kick`, `/tempban`, `/mute`, `/jail`, `/freeze`, `/vanish`, `/tp`)
 gate purely on permission nodes and need no op.
+
+## Defining the roles
+
+Once per server, and again after anything resets the permission store. Run as
+the service user (`sysadmin`) — the screen session it writes into is owned by
+`sysadmin`:
+
+```
+ssh cobblemon bash -s -- dev  < ops/apply-staff-groups.sh
+ssh cobblemon bash -s -- prod < ops/apply-staff-groups.sh
+```
+
+Add `--dry-run` to print the console lines instead of sending them. It defines
+**roles only** and never assigns a person to a group, so re-running can't
+silently change who is staff.
+
+**It is authoritative, not additive.** Each group is `clear`ed before its nodes
+are re-added, so a node dropped from the script actually goes away. Without that
+the script could only ever add: the first dev run left the pre-existing
+moderator group's `neoessentials.item.*` (item spawning), `economy.admin`,
+`kits.admin.*`, `warp.create`/`delete`, `spawn.set` and `permissions.reload` in
+place — precisely the powers this tier is supposed to exclude. The cost is that
+any **group**-level node granted by hand is wiped on the next run; per-**user**
+grants (`permissions user <n> add …`) are untouched, so purchased `/sethome`
+slots and the like survive.
+
+!!! warning "Failures here are silent"
+
+    The script pushes lines into the server's screen session and never sees a
+    return code. A malformed command logs `Incorrect argument for command` to the
+    console and the script carries on reporting success. If you change it, run it
+    once and grep the server log:
+
+    ```
+    grep -iE 'incorrect|unknown|not found' /opt/cobblemon-dev/logs/latest.log
+    ```
+
+    The exact forms, verified against `1.0.2.5+build.1074` — all three differ
+    from the obvious guess:
+
+    | Action | Correct | Wrong |
+    |---|---|---|
+    | create | `permissions create group <g>` | `permissions group create <g>` |
+    | inherit | `permissions group <g> inherit add <parent>` | `… inherit <parent>` |
+    | clear | `permissions group <g> clear` | — |
+
+### Why groups aren't deployed
+
+`config/neoessentials/permissions.json` looks like config but is state.
+NeoEssentials loads it into a `PermissionManager` at boot, and
+`PermissionSystem.shutdown()` calls `PermissionStorage.save()` on the way down,
+rewriting the file from memory.
+
+A deploy rsyncs configs **while the old server is still running**, then restarts
+it — so the shutdown save clobbers the new file before the new process ever
+reads it. Observed on the 0.33.0 dev deploy: the rsync wrote the file at 23:50
+owned by `deployer`; after the 23:55 restart it was owned by `sysadmin` with the
+pre-deploy contents, in NeoEssentials' own field order. Shipping the file through
+`modpack/server-overrides/` is silently useless, which is why it isn't there.
+
+Applying the groups through `/permissions` commands instead mutates the live
+`PermissionManager`, and each command persists via `PermissionManager.save()`.
+They then survive the same shutdown save that used to be the problem.
+
+!!! warning "Never run `permissions reload` to apply groups"
+
+    `PermissionSystem.reload()` re-reads `permissions.json` **from disk**, which
+    discards anything applied in-memory. If the on-disk file is stale — and after
+    a deploy it usually is — a reload silently reverts your setup. The script
+    deliberately does not issue one.
 
 ## Appointing staff
 
@@ -121,10 +199,16 @@ client.
 
 To open one more command to moderators: add
 `StaffPermissions.check(it, "cobblemon.staff.<name>", <oldOpLevel>)` in place of
-`it.hasPermission(<oldOpLevel>)`, then add the node to the `moderator` group in
-`permissions.json`. Copy `StaffPermissions.kt` into the mod if it isn't there
-yet — it is duplicated per mod on purpose, same as the `EconomyBridge` pattern,
-so the mods stay dependency-free of each other.
+`it.hasPermission(<oldOpLevel>)`, then add the node to `MODERATOR_NODES` in
+`ops/apply-staff-groups.sh` and re-run it on each server. Copy
+`StaffPermissions.kt` into the mod if it isn't there yet — it is duplicated per
+mod on purpose, same as the `EconomyBridge` pattern, so the mods stay
+dependency-free of each other.
+
+Note the split: the *code* half (which node gates which command) deploys
+normally; the *grant* half (which group holds that node) does not, and needs the
+script re-run. A node added in code but never granted just means moderators
+silently don't get the command.
 
 ## Chat and tablist tags
 
@@ -142,6 +226,23 @@ under `chat.chat-format`. Keys are matched **literally** against the group name:
 that typo is why staff tags were invisible before 0.33.0, and the same typo was
 in `tablist.json`'s `groupColors`. Only the `[Tag]` is coloured; the name and
 message stay neutral so a staff line doesn't read as a server error.
+
+**Group prefixes cannot carry a trailing space.** NeoEssentials trims them on
+`setprefix`, so `&2[Mod] ` is stored as `&2[Mod]` — the console confirms it
+(`Set prefix '&2[Mod]' for group 'moderator'`). Chat is unaffected because
+`chat.json` hardcodes its own spacing rather than using `{prefix}`, but the
+tablist reads `{prefix}` directly, so its `playerFormat` carries the separator:
+`&f{prefix}&r {player}{suffix}`. Side effect: non-staff, whose prefix is the
+glyph-less colour code `&7`, render with one leading space in the tablist.
+
+Reload either file without a restart:
+
+```
+neoessentials reload
+```
+
+(`tablist reload` is not a console command, despite what `tablist.json`'s own
+header comment says.)
 
 Emoji rank badges (`chat.badges`) are **off on purpose**. The configured badges
 are `⭐`/`🛡️`, and Minecraft's default font has no glyphs for them — with groups

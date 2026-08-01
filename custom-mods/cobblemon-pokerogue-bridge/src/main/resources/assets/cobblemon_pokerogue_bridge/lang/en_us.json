@@ -1,0 +1,32 @@
+{
+  "_comment": "All player-facing PokeRogue-bridge flavor text. Resolved SERVER-side with String.format: %s = text, %d = number, in the order documented per key. Rewrite freely; keep the placeholders.",
+
+  "_wave.threshold": "%s = player, %d = wave threshold crossed",
+  "pokerogue.presentation.wave.threshold": "%s's dream deepens... wave %d.",
+
+  "_run.ended": "%s = player, %d = final wave",
+  "pokerogue.presentation.run.ended": "%s woke up — the dream ended at wave %d.",
+
+  "_run.victory": "chat: %s = player, %d = final wave; title has no placeholders; subtitle: %s = player, %d = final wave",
+  "pokerogue.presentation.run.victory.chat": "%s's dream came true — the run was won at wave %d!",
+  "pokerogue.presentation.run.victory.title": "A dream came true",
+  "pokerogue.presentation.run.victory.subtitle": "%s conquered the dream at wave %d",
+
+  "_milestone": "chat: %s = player, %s = milestone name; title: %s = milestone name; subtitle: %s = player",
+  "pokerogue.presentation.milestone.chat": "%s's dream reached a new depth: %s",
+  "pokerogue.presentation.milestone.title": "%s",
+  "pokerogue.presentation.milestone.subtitle": "%s is dreaming",
+
+  "_wake": "shown privately to the runner when their run ends; %d = final wave",
+  "pokerogue.presentation.wake.title": "You wake up…",
+  "pokerogue.presentation.wake.subtitle": "You remember reaching wave %d",
+  "pokerogue.presentation.wake.subtitle.victory": "You remember winning it all at wave %d",
+  "pokerogue.presentation.wake.chat": "The dream fades. You made it to wave %d.",
+  "pokerogue.presentation.wake.chat.victory": "The dream fades — but you won it, at wave %d. It felt real.",
+
+  "_tab.suffix": "appended to the tab-list name while dreaming; %d = current wave",
+  "pokerogue.presentation.tab.suffix": " 💤 wave %d",
+
+  "_ghost.nameplate": "%s = player, %d = current wave",
+  "pokerogue.presentation.ghost.nameplate": "%s's dream — wave %d"
+}

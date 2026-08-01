@@ -43,7 +43,6 @@ public final class CobblemonPokerogueBridge {
         NeoForge.EVENT_BUS.addListener((RegisterCommandsEvent e) -> PokerogueCommand.register(e.getDispatcher()));
         NeoForge.EVENT_BUS.addListener(this::onServerAboutToStart);
         NeoForge.EVENT_BUS.addListener(this::onServerStopped);
-        // MERGE POINT: PresentationFeatures.init() is wired here by the presentation branch
         LOGGER.info("Cobblemon PokeRogue Bridge constructed");
     }
 
@@ -67,11 +66,25 @@ public final class CobblemonPokerogueBridge {
             RunTracker tracker = new RunTracker();
             DbPoller poller = new DbPoller(event.getServer(), config, links, db, tracker, milestones);
             services = new BridgeServices(config, links, db, tracker, milestones, poller, event.getServer());
+            initPresentation(config);
             poller.start();
         } catch (IOException | RuntimeException e) {
             LOGGER.error("PokeRogue bridge failed to initialize — the bridge is DISABLED this session", e);
             services = null;
         }
+    }
+
+    /** Presentation registers game-event handlers, so it must only ever happen once per JVM. */
+    private static boolean presentationInited = false;
+
+    private static void initPresentation(BridgeConfig config) {
+        if (presentationInited) return;
+        presentationInited = true;
+        var shrine = config.shrine == null ? null
+                : new com.cobblemonpokerogue.bridge.presentation.PresentationConfig.ShrinePos(
+                        config.shrine.dimension, config.shrine.x, config.shrine.y, config.shrine.z);
+        com.cobblemonpokerogue.bridge.presentation.PresentationFeatures.init(
+                new com.cobblemonpokerogue.bridge.presentation.PresentationConfig(shrine != null, shrine));
     }
 
     private void onServerStopped(ServerStoppedEvent event) {

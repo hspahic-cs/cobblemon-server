@@ -42,6 +42,25 @@ GRANT ALL PRIVILEGES ON pokeroguedb.* TO 'pokerogue'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 
+# Read-only DB account for the MC reward-bridge mod (SELECT only). Password lives
+# sysadmin-readable because the MC server process runs as sysadmin and copies it
+# into config/cobblemon-pokerogue-bridge/config.json.
+BRIDGE_CRED=/home/sysadmin/pokerogue-bridge-db.txt
+if [[ -f $BRIDGE_CRED ]]; then
+  BPASS=$(cut -d: -f2 < "$BRIDGE_CRED")
+else
+  BPASS=$(openssl rand -hex 24)
+fi
+mysql <<SQL
+CREATE USER IF NOT EXISTS 'pokerogue_bridge'@'localhost' IDENTIFIED BY '$BPASS';
+ALTER USER 'pokerogue_bridge'@'localhost' IDENTIFIED BY '$BPASS';
+GRANT SELECT ON pokeroguedb.* TO 'pokerogue_bridge'@'localhost';
+FLUSH PRIVILEGES;
+SQL
+printf 'pokerogue_bridge:%s\n' "$BPASS" > "$BRIDGE_CRED"
+chown sysadmin:sysadmin "$BRIDGE_CRED"
+chmod 600 "$BRIDGE_CRED"
+
 id -u pokerogue &>/dev/null || useradd -r -s /usr/sbin/nologin -d /opt/pokerogue pokerogue
 
 # --- promote staged artifacts ---

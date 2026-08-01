@@ -22,3 +22,12 @@ type = "required"
 versionRange = "[21.1,)"
 ordering = "NONE"
 side = "BOTH"
+
+# The presentation layer (dream ghosts) spawns Cobblemon PokemonEntity — hard dependency.
+# Range note (repo memory): [X,) excludes X-beta.N prereleases; 1.7.3 stable is fine.
+[[dependencies.cobblemon_pokerogue_bridge]]
+modId = "cobblemon"
+type = "required"
+versionRange = "[1.7,)"
+ordering = "AFTER"
+side = "SERVER"

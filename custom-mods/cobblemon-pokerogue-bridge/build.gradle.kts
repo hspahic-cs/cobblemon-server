@@ -8,6 +8,8 @@ group = project.property("maven_group") as String
 
 repositories {
     mavenCentral()
+    maven("https://artefacts.cobblemon.com/releases")
+    maven("https://thedarkcolour.github.io/KotlinForForge/")
 }
 
 neoForge {
@@ -39,6 +41,10 @@ dependencies {
         }
     }
     implementation("org.mariadb.jdbc:mariadb-java-client:${project.property("mariadb_version")}")
+    // Presentation layer (dream ghosts) spawns Cobblemon PokemonEntity; Kotlin stdlib is
+    // needed to compile Java against Cobblemon's Kotlin-authored API.
+    implementation("thedarkcolour:kotlinforforge-neoforge:${project.property("kotlin_for_forge_version")}")
+    implementation("com.cobblemon:neoforge:${project.property("cobblemon_version")}")
 }
 
 java {

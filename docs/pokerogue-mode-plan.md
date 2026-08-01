@@ -1538,6 +1538,71 @@ multiplier), which is also the natural home for Healing Charm if it ever ships.
 
 ---
 
+### 2.44 The hosted pivot: self-host the real game, bridge the rewards, 2026-08-01
+
+Ruled after the 2026-07-31 playtest marathon: instead of continuing to mirror PokéRogue inside
+Cobblemon, **self-host the actual game** (pagefaultgames/pokerogue frontend +
+pagefaultgames/rogueserver backend) and connect it to the server through a reward bridge.
+`cobblemon-roguelite` is parked, not deleted — its isolation/arena/battle plumbing is unique, the
+dev server still runs it, and every decision above stands as the record of what mirroring costs.
+
+**Hosting (decided 2026-07-31, built in `ops/pokerogue/`):** native on the cobblemon VM, not
+Docker (none installed; everything there is already systemd-native) and not k8s (the stack is
+stateful and belongs next to the MC servers it rewards). nginx serves the built frontend on
+`:8000` and reverse-proxies the API same-origin at `:8000/api/`; `rogueserver` (a single static
+Go binary, cross-compiled from the Mac) runs as the `pokerogue` system user on localhost `:8001`;
+MariaDB is localhost-only. The binary is built `-tags=devsetup` so the schema self-creates.
+Same-origin is load-bearing, found the hard way: the beta frontend stamps every request with a
+custom `PKR-Client-Version` header, which fails rogueserver's CORS preflight cross-origin
+("Unknown login error!"). It also makes 8000 the single public port. The frontend bakes its API
+URL (`<origin>/api`) at build time, so going public is exactly: rebuild with the public URL,
+re-run setup, forward 8000 on the router.
+
+**Accounts:** real rogueserver accounts (username/password, `VITE_BYPASS_LOGIN=0`), because
+per-player saves and the reward bridge both need identity. OAuth stays unconfigured.
+
+**Reward bridge (designed, not yet built):** a poller on `pokeroguedb.accountStats` — rogueserver
+keeps exactly the monotonic per-account counters a milestone system wants (`sessionsWon`,
+`classicSessionsPlayed`, `highestEndlessWave`, `highestLevel`, `pokemonCaught`, `pokemonHatched`,
+`eggsPulled`, vouchers) — diffed against a bridge-side state file, mapped through a
+user-authored milestone table to in-game grants via RCON/bridge, same service pattern as
+`ops/poke-engine-bridge`. Two rules carried in from the ruling: **milestones only, never raw
+web-side quantities** (the web save is client-trusting, so a cheated save can at worst skip to a
+milestone cap, not print money), and the milestone table is **content — the human authors it**.
+
+**Immersion plan (ruled 2026-08-01).** The game is a browser tab; immersion comes from making the
+*run* a server event. Approved: (1) run announcements in MC chat from the bridge's DB poll,
+loudness gated by milestone rarity — `sessionSaveData` is zstd-JSON, so live wave/party/death are
+readable; (2) a physical shrine ("Dream Machine") at spawn — link dispensed and milestone rewards
+*claimed* there via NPC, never auto-mailed; (3) a "Dream Journal" written book item the bridge
+keeps rewritten (clickable link, linked account, stats, unclaimed milestones); (5) frontend
+reskin — server name/splashes, and gym-leader/rival display names swapped to our gym leaders via
+a locales patch in the build script (rename content is the human's); (6) a leaderboard wall at
+the shrine the bridge rewrites. Second round, also approved: (7) "dreaming" presence — tab-list
+suffix (`💤 wave 42`) while a run is active, body-at-the-shrine framing; (8) the wake-up moment —
+when a run ends and the player is online, a personal fade/title ("You wake up… you remember
+reaching wave 143") with a private one-line summary, so every run ends inside Minecraft; (9) live
+dream ghosts — a translucent display entity of the runner's current lead Pokémon at the shrine
+with a nameplate, driven from the session JSON. Rejected or parked, don't re-propose: the
+daily-seed race (their `dailyRuns` shared seed), permanent-firsts plaques, milestone chat titles,
+Discord webhook echo, starter-nudge query param, and the communal champion-clear buff.
+Write-direction ideas (gifting eggs/starters into PokéRogue saves) stay deferred: we own the DB
+but not their save format; a bad write corrupts a run.
+
+**Open questions:**
+- *Account linking.* `/pokerogue link <username>` storing an MC↔account mapping is the shape;
+  what proves ownership is not settled. On a small trusted server, first-come-first-served with
+  collisions flagged to staff is probably enough; a challenge-code scheme (bridge sets a code,
+  player proves login by e.g. a named new save slot) is the escalation if it isn't.
+- *Client UX.* **RESOLVED 2026-08-01: MCEF fails, links win.** The spike (merged 332cbeb) was
+  tested against the self-hosted instance on macOS ARM: CEF initialized, the screen stayed white —
+  the pre-registered fail criterion (PokéRogue is a WebGL app; MCEF's off-screen rendering can't
+  paint it). The client mod and MCEF were removed from the test instance; the module stays in the
+  repo as a record. The link UX (`/pokerogue` → clickable URL) lands in the reward-bridge server
+  mod, whose command tree needs to exist for `/pokerogue link` anyway.
+- *Public exposure.* Router forwards and the public hostname are operator actions, Discord-only,
+  never committed.
+
 ## 3. Preliminary plan
 
 The original three-phase plan described a ten-wave vertical slice, and §2.19's 200-wave decision

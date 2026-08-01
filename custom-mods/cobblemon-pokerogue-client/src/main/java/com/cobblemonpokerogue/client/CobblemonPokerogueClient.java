@@ -31,8 +31,13 @@ import org.lwjgl.glfw.GLFW;
 public final class CobblemonPokerogueClient {
     public static final String MOD_ID = "cobblemon_pokerogue_client";
 
-    /** Spike target. The self-hosted instance replaces this later. */
+    /**
+     * Fallback target. The real URL (the self-hosted instance) comes from
+     * {@code config/cobblemon-pokerogue-client.properties}, which is written with this
+     * default on first launch and never committed — the hosted address is per-install.
+     */
     public static final String POKEROGUE_URL = "https://pokerogue.net";
+    private static final String CONFIG_FILE = "cobblemon-pokerogue-client.properties";
 
     public static final KeyMapping OPEN_KEY = new KeyMapping(
             "key.cobblemon_pokerogue_client.open",
@@ -94,6 +99,28 @@ public final class CobblemonPokerogueClient {
             return;
         }
         // MCEF classes are only touched from here on (inside PokerogueScreen).
-        PokerogueScreen.open(minecraft, POKEROGUE_URL);
+        PokerogueScreen.open(minecraft, loadUrl());
+    }
+
+    /** Read the target URL from the client config, seeding the file on first use. */
+    private static String loadUrl() {
+        java.nio.file.Path file = net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get().resolve(CONFIG_FILE);
+        java.util.Properties props = new java.util.Properties();
+        try {
+            if (java.nio.file.Files.notExists(file)) {
+                props.setProperty("url", POKEROGUE_URL);
+                try (var out = java.nio.file.Files.newOutputStream(file)) {
+                    props.store(out, "PokeRogue browser target (set to the self-hosted instance)");
+                }
+                return POKEROGUE_URL;
+            }
+            try (var in = java.nio.file.Files.newInputStream(file)) {
+                props.load(in);
+            }
+            String url = props.getProperty("url", POKEROGUE_URL).trim();
+            return url.isEmpty() ? POKEROGUE_URL : url;
+        } catch (java.io.IOException e) {
+            return POKEROGUE_URL;
+        }
     }
 }

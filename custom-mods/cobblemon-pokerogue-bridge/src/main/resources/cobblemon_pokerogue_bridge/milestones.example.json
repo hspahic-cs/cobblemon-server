@@ -1,0 +1,33 @@
+[
+  {
+    "id": "placeholder_first_clear",
+    "stat": "sessionsWon",
+    "threshold": 1,
+    "tier": 3,
+    "display": "PLACEHOLDER - First Classic Clear",
+    "rewards": [
+      "say PLACEHOLDER reward: %player% cleared a PokeRogue run. Author the real table in milestones.json."
+    ]
+  },
+  {
+    "id": "placeholder_caught_50",
+    "stat": "pokemonCaught",
+    "threshold": 50,
+    "tier": 1,
+    "display": "PLACEHOLDER - 50 Pokemon Caught",
+    "rewards": [
+      "say PLACEHOLDER reward for %player% (pokemonCaught >= 50)"
+    ]
+  },
+  {
+    "id": "placeholder_endless_100",
+    "stat": "highestEndlessWave",
+    "threshold": 100,
+    "tier": 2,
+    "display": "PLACEHOLDER - Endless Wave 100",
+    "rewards": [
+      "say PLACEHOLDER reward for %player% (highestEndlessWave >= 100)",
+      "say PLACEHOLDER a milestone may run several commands, all as the server console"
+    ]
+  }
+]

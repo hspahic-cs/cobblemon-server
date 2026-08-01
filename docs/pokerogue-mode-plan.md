@@ -1577,8 +1577,9 @@ readable; (2) a physical shrine ("Dream Machine") at spawn — link dispensed an
 *claimed* there via NPC, never auto-mailed; (3) a "Dream Journal" written book item the bridge
 keeps rewritten (clickable link, linked account, stats, unclaimed milestones); (5) frontend
 reskin — server name/splashes, and gym-leader/rival display names swapped to our gym leaders via
-a locales patch in the build script (rename content is the human's); (6) a leaderboard wall at
-the shrine the bridge rewrites. Second round, also approved: (7) "dreaming" presence — tab-list
+a locales patch in the build script — **content SKIPPED by ruling 2026-08-01**: the mechanism
+(ops/pokerogue/reskin/) stays built with placeholders, but no real renames/splashes are planned;
+don't re-propose; (6) a leaderboard wall at the shrine the bridge rewrites. Second round, also approved: (7) "dreaming" presence — tab-list
 suffix (`💤 wave 42`) while a run is active, body-at-the-shrine framing; (8) the wake-up moment —
 when a run ends and the player is online, a personal fade/title ("You wake up… you remember
 reaching wave 143") with a private one-line summary, so every run ends inside Minecraft; (9) live
@@ -1588,6 +1589,35 @@ daily-seed race (their `dailyRuns` shared seed), permanent-firsts plaques, miles
 Discord webhook echo, starter-nudge query param, and the communal champion-clear buff.
 Write-direction ideas (gifting eggs/starters into PokéRogue saves) stay deferred: we own the DB
 but not their save format; a bad write corrupts a run.
+
+### 2.45 Hosted payout design, scoped 2026-08-01
+
+Scoped live with the human; numbers marked (tune) are theirs to finalize.
+
+- **Pay-to-dream, hard-gated.** A run cannot happen unpaid: `/pokerogue enter` (later the shrine
+  NPC) charges a flat 5,000₽ (§2.28's fee, same abandon-prices-restart semantics) and writes one
+  armed-run credit to `bridgeRunArming` — the one table the bridge's otherwise-SELECT-only DB user
+  may write. A second rogueserver patch consumes a credit when a save starts a NEW run (no
+  bridgeRunState row / seed change) and rejects the save when there is none; a frontend patch turns
+  that rejection into a friendly "pay at the shrine" message. Known seams, accepted: the block
+  lands at the first save (~1 wave of ghost play), and in-flight runs at ship time are
+  grandfathered. Refined at build time: the gate and the payout are both **classic-only** —
+  daily/challenge/endless stay free practice with no payout, rather than charging for modes
+  that never pay.
+- **Repeatable payout: pokemon-crate keys by deepest wave.** 50→1, 100→2, 150→3, 200→4 (tune),
+  granted via the existing `/gacha grant`, claimed through the shrine flow. Deliberately never
+  egg-crate keys: PokéRogue meta-progression makes veteran clears routine, so the repeatable
+  column must not mint top-tier loot (the §2.20 filter logic — scarcity lives in placement, not
+  in hoping wave 200 stays hard).
+- **One-time wave milestones** at first-ever 50/100/150/200 (needs the bridge-side maxClassicWave
+  virtual stat — accountStats has no classic-depth column): common/rare/ultra key jackpots and a
+  server-wide title at 200 (tune). Cheat bound: milestones one-time + every paid run costs 5k +
+  optional max-armed-runs/day cap.
+- **Pokemon-crate pity (gacha-mod feature, not bridge):** the table is ~80% common/uncommon with
+  Ultra Rare at 1.5%; every 10th pokemon-key roll draws only Ultra-Rare-or-jackpot (70/22.5/7.5
+  tune), counter resets on any Jackpot-class drop, progress visible to the player.
+- **Rejected en route:** paying out raw eggs directly (crates give the shared spectacle + pity a
+  home); flat depth→egg-tier bands (veteran inflation); reskin content (§2.44 note).
 
 **Open questions:**
 - *Account linking.* `/pokerogue link <username>` storing an MC↔account mapping is the shape;

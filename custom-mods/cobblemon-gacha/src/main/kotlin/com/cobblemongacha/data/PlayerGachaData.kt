@@ -16,4 +16,11 @@ data class PlayerGachaData(
      * player receives it exactly once on their next login.
      */
     var grantedWelcomeKeys: Boolean = false,
+    /**
+     * Pokémon-crate pity counter (§2.45): incremented on every pokemon-crate roll, reset to 0
+     * whenever a Jackpot-tier entry drops (naturally lucky or via pity). When it reaches
+     * `PityConfig.pityEvery` the roll draws only from the Jackpot tier. Existing records
+     * (no such key in players.json) deserialize to `0` — a fresh counter.
+     */
+    var pokemonPity: Int = 0,
 )

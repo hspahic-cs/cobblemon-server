@@ -5,6 +5,7 @@ import com.cobblemongacha.announce.PullAnnouncer
 import com.cobblemongacha.config.GachaConfig
 import com.cobblemongacha.config.CrateCoord
 import com.cobblemongacha.config.LootTableLoader
+import com.cobblemongacha.config.PityConfig
 import com.cobblemongacha.data.KeyTier
 import com.cobblemongacha.gui.OddsMenu
 import com.cobblemongacha.gui.RollMenu
@@ -49,7 +50,17 @@ object GachaCommands {
                                 return@executes 0
                             }
                             val table = CobblemonGacha.tables[tier] ?: return@executes 0
-                            OddsMenu.openFor(sp, tier, table); 1
+                            OddsMenu.openFor(sp, tier, table)
+                            // Pokémon crate has the §2.45 pity system — surface the rule and
+                            // this player's counter alongside the odds GUI.
+                            if (tier == KeyTier.POKEMON) {
+                                val pity = CobblemonGacha.pityConfig
+                                val count = CobblemonGacha.playerStore.get(sp.uuid)?.pokemonPity ?: 0
+                                sp.sendSystemMessage(Component.literal(
+                                    "§7[Gacha] Pity: §f$count/${pity.pityEvery} §7— every §f${pity.pityEvery}th §7Pokémon roll guarantees §6Ultra Rare§7+; a §dJackpot§7-tier drop resets the counter"
+                                ))
+                            }
+                            1
                         })
                 )
                 // Reward grants live at the top level (not under `admin`) so they're callable
@@ -216,6 +227,7 @@ object GachaCommands {
     private fun adminReload(source: CommandSourceStack): Int {
         val dir = FMLPaths.CONFIGDIR.get()
         CobblemonGacha.config = GachaConfig.load(dir)
+        CobblemonGacha.pityConfig = PityConfig.load(dir)
         CobblemonGacha.tables = LootTableLoader.loadAll(dir)
         source.sendSystemMessage(Component.literal("§a[Gacha] Reloaded config + ${CobblemonGacha.tables.size} tables"))
         return 1

@@ -24,8 +24,8 @@
   "pokerogue.presentation.wake.chat": "The dream fades. You made it to wave %d.",
   "pokerogue.presentation.wake.chat.victory": "The dream fades — but you won it, at wave %d. It felt real.",
 
-  "_tab.suffix": "appended to the tab-list name while dreaming; %d = current wave",
-  "pokerogue.presentation.tab.suffix": " 💤 wave %d",
+  "_tab.suffix": "appended to the tab-list name while dreaming; %d = current wave (rendered gray by DreamingPresence)",
+  "pokerogue.presentation.tab.suffix": " 💤%d",
 
   "_ghost.nameplate": "%s = player, %d = current wave",
   "pokerogue.presentation.ghost.nameplate": "%s's dream — wave %d"

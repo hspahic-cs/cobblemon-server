@@ -1,0 +1,110 @@
+diff --git a/api/endpoints.go b/api/endpoints.go
+index 4292da9..906d38f 100644
+--- a/api/endpoints.go
++++ b/api/endpoints.go
+@@ -226,6 +226,12 @@ func handleSession(w http.ResponseWriter, r *http.Request) {
+ 
+ 		err = savedata.UpdateSession(db.Store, uuid, slot, session)
+ 		if err != nil {
++			// cobblemon-server run-gate patch (§2.45): unpaid new classic run.
++			if errors.Is(err, db.ErrRunNotArmed) {
++				w.WriteHeader(http.StatusPaymentRequired)
++				w.Write([]byte("run-not-armed"))
++				return
++			}
+ 			httpError(w, r, fmt.Errorf("failed to put session data: %s", err), http.StatusInternalServerError)
+ 			return
+ 		}
+@@ -396,6 +402,12 @@ func handleUpdateAll(w http.ResponseWriter, r *http.Request) {
+ 
+ 	err = savedata.Update(db.Store, uuid, data.SessionSlotId, data.Session)
+ 	if err != nil {
++		// cobblemon-server run-gate patch (§2.45): unpaid new classic run.
++		if errors.Is(err, db.ErrRunNotArmed) {
++			w.WriteHeader(http.StatusPaymentRequired)
++			w.Write([]byte("run-not-armed"))
++			return
++		}
+ 		httpError(w, r, err, http.StatusInternalServerError)
+ 		return
+ 	}
+diff --git a/db/db.go b/db/db.go
+index ec4cbf8..164977e 100644
+--- a/db/db.go
++++ b/db/db.go
+@@ -77,5 +77,18 @@ func Init(username, password, protocol, address, database string) error {
+ 		return err
+ 	}
+ 
++	// cobblemon-server run-gate patch (§2.45): paid-run credits. The MC bridge
++	// arms a run by incrementing credits after payment (the one table its
++	// otherwise-SELECT-only DB user may write); StoreSessionSaveData consumes
++	// one when the first save of a NEW classic run arrives.
++	_, err = handle.Exec(`CREATE TABLE IF NOT EXISTS bridgeRunArming (
++		uuid BINARY(16) NOT NULL PRIMARY KEY,
++		credits INT NOT NULL DEFAULT 0,
++		updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
++	)`)
++	if err != nil {
++		return err
++	}
++
+ 	return nil
+ }
+diff --git a/db/savedata.go b/db/savedata.go
+index ad24b2c..a0a03d0 100644
+--- a/db/savedata.go
++++ b/db/savedata.go
+@@ -19,12 +19,19 @@ package db
+ 
+ import (
+ 	"bytes"
++	"database/sql"
+ 	"encoding/gob"
++	"errors"
+ 
+ 	"github.com/klauspost/compress/zstd"
+ 	"github.com/pagefaultgames/rogueserver/defs"
+ )
+ 
++// cobblemon-server run-gate patch (§2.45): sentinel returned when a save that
++// starts a new classic run arrives with no armed-run credit; the API layer maps
++// it to HTTP 402 with body "run-not-armed".
++var ErrRunNotArmed = errors.New("run-not-armed")
++
+ func (s *store) TryAddSeedCompletion(uuid []byte, seed string, mode int) (bool, error) {
+ 	var count int
+ 	err := handle.QueryRow("SELECT COUNT(*) FROM dailyRunCompletions WHERE uuid = ? AND seed = ?", uuid, seed).Scan(&count)
+@@ -146,6 +153,32 @@ func (s *store) GetLatestSessionSaveDataSlot(uuid []byte) (int, error) {
+ }
+ 
+ func (s *store) StoreSessionSaveData(uuid []byte, data defs.SessionSaveData, slot int) error {
++	// cobblemon-server run-gate patch (§2.45): a save that starts a NEW classic
++	// run — no bridgeRunState row for (uuid, slot), or a different seed — must
++	// atomically consume a paid credit from bridgeRunArming. Continuing saves of
++	// an existing run and non-classic modes pass untouched.
++	if int(data.GameMode) == 0 {
++		var existingSeed string
++		err := handle.QueryRow("SELECT seed FROM bridgeRunState WHERE uuid = ? AND slot = ?", uuid, slot).Scan(&existingSeed)
++		newRun := errors.Is(err, sql.ErrNoRows)
++		if err != nil && !newRun {
++			return err
++		}
++		if newRun || existingSeed != data.Seed {
++			res, err := handle.Exec("UPDATE bridgeRunArming SET credits = credits - 1 WHERE uuid = ? AND credits > 0", uuid)
++			if err != nil {
++				return err
++			}
++			n, err := res.RowsAffected()
++			if err != nil {
++				return err
++			}
++			if n == 0 {
++				return ErrRunNotArmed
++			}
++		}
++	}
++
+ 	buf := new(bytes.Buffer)
+ 
+ 	zw, err := zstd.NewWriter(buf)

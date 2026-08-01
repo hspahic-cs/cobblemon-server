@@ -55,6 +55,15 @@ mysql <<SQL
 CREATE USER IF NOT EXISTS 'pokerogue_bridge'@'localhost' IDENTIFIED BY '$BPASS';
 ALTER USER 'pokerogue_bridge'@'localhost' IDENTIFIED BY '$BPASS';
 GRANT SELECT ON pokeroguedb.* TO 'pokerogue_bridge'@'localhost';
+-- §2.45 run-gate: the one table the bridge may write — armed-run credits.
+-- Created here (rogueserver's db.Init also creates it, but create-before-grant
+-- means the grant never races the table on a fresh VM).
+CREATE TABLE IF NOT EXISTS pokeroguedb.bridgeRunArming (
+  uuid BINARY(16) NOT NULL PRIMARY KEY,
+  credits INT NOT NULL DEFAULT 0,
+  updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+GRANT SELECT, INSERT, UPDATE, DELETE ON pokeroguedb.bridgeRunArming TO 'pokerogue_bridge'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 printf 'pokerogue_bridge:%s\n' "$BPASS" > "$BRIDGE_CRED"

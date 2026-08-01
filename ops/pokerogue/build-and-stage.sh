@@ -24,11 +24,13 @@ SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 if [[ $WHAT == all || $WHAT == server ]]; then
   ( cd "$VENDOR/rogueserver"
-    # bridgeRunState side table for the MC reward bridge (session blobs are gob,
-    # unreadable outside Go). Restore-then-apply, same idempotence contract as
-    # the frontend patches.
-    git checkout -- db/
-    git apply "$SELF_DIR/patches/rogueserver-bridge-run-state.patch"
+    # cobblemon-server patches: bridgeRunState mirror + §2.45 run-gate. Applied
+    # in sorted filename order — each patch is generated on top of the previous
+    # one, so the order is load-bearing. Restore-then-apply keeps this idempotent.
+    git checkout -- .
+    for p in "$SELF_DIR"/patches/rogueserver-*.patch; do
+      git apply "$p"
+    done
     GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags=devsetup -o /tmp/rogueserver-linux-amd64 . )
   ssh cobblemon 'mkdir -p ~/pokerogue-staging'
   scp -q /tmp/rogueserver-linux-amd64 "$STAGING/rogueserver"
@@ -44,6 +46,12 @@ if [[ $WHAT == all || $WHAT == frontend ]]; then
     # front the site with TLS.
     git checkout -- src/utils/cookies.ts
     sed -i '' -e 's/;Secure;/;/g' -e 's/Domain=\${window.location.hostname};//' src/utils/cookies.ts
+    # §2.45 run-gate: friendly message when the server rejects an unpaid new
+    # classic run (402 "run-not-armed"). Restore-then-apply, and ordered before
+    # the reskin so the two never fight over files (this patch stays out of
+    # locales/, which the reskin applier restores).
+    git checkout -- src/api/savedata-api.ts src/api/session-savedata-api.ts src/system/game-data.ts
+    git apply "$SELF_DIR/patches/pokerogue-run-not-armed.patch"
     # Server reskin (title/splashes/trainer names) — restore-then-merge, same
     # idempotence contract as the cookie patch. Overlays: ops/pokerogue/reskin/.
     python3 "$SELF_DIR/apply-reskin.py" .

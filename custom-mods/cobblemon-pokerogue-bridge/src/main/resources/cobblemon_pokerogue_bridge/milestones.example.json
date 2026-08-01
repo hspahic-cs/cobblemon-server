@@ -1,5 +1,8 @@
 [
   {
+    "_": "Entries with only a '_' key are comments and skipped. 'stat' names any numeric accountStats column (sessionsWon, pokemonCaught, highestEndlessWave, ...) OR the bridge-side virtual stat 'maxClassicWave': the deepest CLASSIC wave the bridge has ever observed for the account (accountStats has no classic-depth column; the bridge tracks it from run saves and persists it in state.json). Milestones are one-time per account; rewards run as the server console on /pokerogue claim."
+  },
+  {
     "id": "placeholder_first_clear",
     "stat": "sessionsWon",
     "threshold": 1,
@@ -28,6 +31,46 @@
     "rewards": [
       "say PLACEHOLDER reward for %player% (highestEndlessWave >= 100)",
       "say PLACEHOLDER a milestone may run several commands, all as the server console"
+    ]
+  },
+  {
+    "id": "placeholder_classic_wave_50",
+    "stat": "maxClassicWave",
+    "threshold": 50,
+    "tier": 2,
+    "display": "PLACEHOLDER - First Classic Wave 50",
+    "rewards": [
+      "say PLACEHOLDER one-time jackpot for %player% (first-ever classic wave 50)"
+    ]
+  },
+  {
+    "id": "placeholder_classic_wave_100",
+    "stat": "maxClassicWave",
+    "threshold": 100,
+    "tier": 2,
+    "display": "PLACEHOLDER - First Classic Wave 100",
+    "rewards": [
+      "say PLACEHOLDER one-time jackpot for %player% (first-ever classic wave 100)"
+    ]
+  },
+  {
+    "id": "placeholder_classic_wave_150",
+    "stat": "maxClassicWave",
+    "threshold": 150,
+    "tier": 2,
+    "display": "PLACEHOLDER - First Classic Wave 150",
+    "rewards": [
+      "say PLACEHOLDER one-time jackpot for %player% (first-ever classic wave 150)"
+    ]
+  },
+  {
+    "id": "placeholder_classic_wave_200",
+    "stat": "maxClassicWave",
+    "threshold": 200,
+    "tier": 3,
+    "display": "PLACEHOLDER - First Classic Wave 200",
+    "rewards": [
+      "say PLACEHOLDER ultra jackpot + server-wide title for %player% (first-ever classic wave 200)"
     ]
   }
 ]

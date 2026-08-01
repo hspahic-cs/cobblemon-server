@@ -104,6 +104,12 @@ public final class DbPoller implements AutoCloseable {
             // stats keys are already lowercased usernames, so wonThisPoll is too.
             tracker.process(server, linked, headers, runStates, wonThisPoll, db::hasCompletion);
 
+            // Feed the maxClassicWave virtual stat BEFORE evaluating, so a first-ever wave
+            // milestone fires on the same poll that observed the crossing save.
+            for (Map.Entry<String, Integer> e : tracker.liveClassicMaxWaves().entrySet()) {
+                milestones.observeClassicWave(e.getKey(), e.getValue());
+            }
+
             for (Map.Entry<String, Map<String, Long>> e : stats.entrySet()) {
                 LinkStore.Entry link = linked.get(e.getKey());
                 if (link == null) continue;

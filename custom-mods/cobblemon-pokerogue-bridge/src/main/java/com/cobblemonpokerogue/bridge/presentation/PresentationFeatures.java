@@ -28,7 +28,7 @@ public final class PresentationFeatures {
         }
         initialized = true;
 
-        DreamLang lang = DreamLang.load();
+        DreamLang lang = DreamLang.shared();
         DreamAnnouncer announcer = new DreamAnnouncer(lang);
         DreamingPresence presence = new DreamingPresence(lang);
         DreamGhost ghost = new DreamGhost(cfg, lang);

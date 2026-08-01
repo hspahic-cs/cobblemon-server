@@ -20,7 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Read-only access to the self-hosted rogueserver MariaDB ({@code pokeroguedb}).
+ * Access to the self-hosted rogueserver MariaDB ({@code pokeroguedb}) — read-only except for
+ * the single {@link #armRun} write to {@code bridgeRunArming} (the DB user's grants match).
  *
  * <p>Single connection, owned and used exclusively by the poller thread (link validation is
  * routed onto the same executor), recreated lazily after failures. DriverManager is
@@ -106,6 +107,61 @@ public final class PokerogueDb implements AutoCloseable {
     }
 
     /**
+     * @return the account's {@code BINARY(16)} uuid, or null if no such account exists.
+     */
+    public synchronized byte[] lookupAccountUuid(String username) throws SQLException {
+        try (PreparedStatement ps = connection().prepareStatement(
+                "SELECT uuid FROM accounts WHERE username = ?")) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getBytes(1) : null;
+            }
+        }
+    }
+
+    /**
+     * Writes one armed-run credit to {@code bridgeRunArming} — the ONE table this otherwise
+     * SELECT-only DB user may write (frozen contract with the rogueserver arming patch, plan
+     * §2.45; the patched rogueserver consumes credits when a NEW classic run first saves).
+     * The connection's read-only flag is flipped around the statement because {@link #connection}
+     * sets it defensively; DB-level grants remain the real enforcement.
+     *
+     * @return true when the credit was written; false when the table does not exist yet
+     *         (unpatched rogueserver — warned once, caller must refuse cleanly and not charge).
+     * @throws SQLException on any other failure (caller must refund).
+     */
+    public synchronized boolean armRun(byte[] accountUuid) throws SQLException {
+        Connection c = connection();
+        try {
+            c.setReadOnly(false);
+            try (PreparedStatement ps = c.prepareStatement(
+                    "INSERT INTO bridgeRunArming (uuid, credits) VALUES (?, 1)"
+                            + " ON DUPLICATE KEY UPDATE credits = credits + 1")) {
+                ps.setBytes(1, accountUuid);
+                ps.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            if (isMissingTable(e)) {
+                if (!warnedNoArmingTable) {
+                    LOGGER.warn("bridgeRunArming table not found — rogueserver is missing the arming"
+                            + " patch; /pokerogue enter refuses (and charges nothing) until it lands");
+                    warnedNoArmingTable = true;
+                }
+                return false;
+            }
+            throw e;
+        } finally {
+            try {
+                c.setReadOnly(true);
+            } catch (SQLException reset) {
+                // A connection that cannot restore read-only is not worth keeping.
+                invalidate();
+            }
+        }
+    }
+
+    /**
      * All numeric accountStats columns for the given usernames, keyed by lowercased username
      * then by column name (playTime, battles, classicSessionsPlayed, sessionsWon,
      * highestEndlessWave, highestLevel, pokemonSeen, pokemonDefeated, pokemonCaught,
@@ -180,6 +236,7 @@ public final class PokerogueDb implements AutoCloseable {
 
     private boolean warnedNoBridgeTable = false;
     private boolean warnedNoCompletionsTable = false;
+    private boolean warnedNoArmingTable = false;
 
     /**
      * bridgeRunState rows for the given usernames, or NULL when the table does not exist —

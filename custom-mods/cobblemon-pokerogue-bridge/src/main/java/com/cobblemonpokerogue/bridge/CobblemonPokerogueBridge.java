@@ -67,6 +67,7 @@ public final class CobblemonPokerogueBridge {
             DbPoller poller = new DbPoller(event.getServer(), config, links, db, tracker, milestones);
             services = new BridgeServices(config, links, db, tracker, milestones, poller, event.getServer());
             initPresentation(config);
+            com.cobblemonpokerogue.bridge.payout.PayoutEngine.init(); // self-guarded, once per JVM
             poller.start();
         } catch (IOException | RuntimeException e) {
             LOGGER.error("PokeRogue bridge failed to initialize — the bridge is DISABLED this session", e);

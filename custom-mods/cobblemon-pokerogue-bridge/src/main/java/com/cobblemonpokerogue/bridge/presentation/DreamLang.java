@@ -20,14 +20,28 @@ import java.util.Map;
  * because this is a server-only mod: clients do not have the lang file, so translatable
  * components would render as raw keys for them.
  */
-final class DreamLang {
+public final class DreamLang {
     private static final Logger LOG = LoggerFactory.getLogger("pokerogue-bridge");
     private static final String PATH = "/assets/cobblemon_pokerogue_bridge/lang/en_us.json";
+
+    private static volatile DreamLang shared;
 
     private final Map<String, String> strings;
 
     private DreamLang(Map<String, String> strings) {
         this.strings = strings;
+    }
+
+    /** The process-wide instance — command and payout strings resolve through this too. */
+    public static DreamLang shared() {
+        DreamLang s = shared;
+        if (s == null) {
+            synchronized (DreamLang.class) {
+                s = shared;
+                if (s == null) shared = s = load();
+            }
+        }
+        return s;
     }
 
     static DreamLang load() {
@@ -48,7 +62,7 @@ final class DreamLang {
     }
 
     /** Formats the pattern for {@code key}; falls back to the key itself if missing or malformed. */
-    String format(String key, Object... args) {
+    public String format(String key, Object... args) {
         String pattern = strings.get(key);
         if (pattern == null) {
             return key;

@@ -40,6 +40,17 @@ import org.slf4j.LoggerFactory;
  * {@code /pokerogue claim} — rewards are claimed, never auto-mailed (§2.44 immersion ruling:
  * claiming is the shrine moment). Stats already past a threshold at link time grant
  * immediately: they were earned, and the granted-set makes it once-ever.
+ *
+ * <p>Two §2.45 additions share this engine's state and claim flow:
+ * <ul>
+ *   <li>{@code maxClassicWave} — a bridge-side VIRTUAL stat (accountStats has no classic-depth
+ *       column): the deepest classic wave ever observed for the account, fed by
+ *       {@link #observeClassicWave} and injected into every {@link #evaluate} so
+ *       milestones.json can reference it exactly like a real column.</li>
+ *   <li>Ad-hoc payout claims ({@link #enqueuePayout}) — repeatable per-run payouts whose defs
+ *       are not in milestones.json, persisted whole (display + reward commands) in state.json
+ *       and popped by the same {@code /pokerogue claim}.</li>
+ * </ul>
  */
 public final class MilestoneEngine {
 
@@ -49,10 +60,16 @@ public final class MilestoneEngine {
     public record MilestoneDef(String id, String stat, long threshold, int tier, String display,
                                List<String> rewards) {}
 
+    /** The name milestones.json uses to reference the virtual classic-depth stat. */
+    public static final String STAT_MAX_CLASSIC_WAVE = "maxClassicWave";
+
     private static final class AccountState {
         final Set<String> granted = new LinkedHashSet<>();
         final List<String> pending = new ArrayList<>();
+        /** Ad-hoc claims (per-run payouts) persisted whole — their defs are not in milestones.json. */
+        final List<MilestoneDef> pendingPayouts = new ArrayList<>();
         Map<String, Long> lastStats = new HashMap<>();
+        long maxClassicWave = -1;
     }
 
     private final Path stateFile;
@@ -90,6 +107,9 @@ public final class MilestoneEngine {
     private static MilestoneDef parseDef(JsonElement e) {
         try {
             JsonObject o = e.getAsJsonObject();
+            // Comment convention (mirrors the lang file): an entry with "_" and no "id" is
+            // documentation, skipped silently.
+            if (o.has("_") && !o.has("id")) return null;
             String id = o.get("id").getAsString();
             String stat = o.get("stat").getAsString();
             long threshold = o.get("threshold").getAsLong();
@@ -114,6 +134,12 @@ public final class MilestoneEngine {
                                       Map<String, Long> stats, RunSnapshot activeRun) {
         String key = link.username().toLowerCase(Locale.ROOT);
         AccountState st = accounts.computeIfAbsent(key, k -> new AccountState());
+        // Inject the virtual stat (copy — the caller owns the map) so milestone defs can
+        // reference maxClassicWave exactly like an accountStats column.
+        if (st.maxClassicWave >= 0) {
+            stats = new HashMap<>(stats);
+            stats.put(STAT_MAX_CLASSIC_WAVE, st.maxClassicWave);
+        }
         boolean dirty = false;
         for (MilestoneDef def : defs) {
             if (st.granted.contains(def.id())) continue;
@@ -133,9 +159,32 @@ public final class MilestoneEngine {
         if (dirty) saveState();
     }
 
+    /**
+     * Feeds the {@code maxClassicWave} virtual stat: monotonic, persisted, per account.
+     * Called by the poller from live classic-run waves and by the payout engine at run end.
+     */
+    public synchronized void observeClassicWave(String username, int wave) {
+        if (wave < 0) return;
+        AccountState st = accounts.computeIfAbsent(username.toLowerCase(Locale.ROOT), k -> new AccountState());
+        if (wave <= st.maxClassicWave) return;
+        st.maxClassicWave = wave;
+        saveState();
+    }
+
+    /**
+     * Enqueues a repeatable ad-hoc claim (§2.45 per-run payout) for {@code /pokerogue claim}.
+     * The whole def is persisted in state.json — it does not exist in milestones.json.
+     */
+    public synchronized void enqueuePayout(String username, MilestoneDef payout) {
+        AccountState st = accounts.computeIfAbsent(username.toLowerCase(Locale.ROOT), k -> new AccountState());
+        st.pendingPayouts.add(payout);
+        LOGGER.info("payout '{}' enqueued for {} (pending claim)", payout.id(), username);
+        saveState();
+    }
+
     public synchronized int pendingCount(String username) {
         AccountState st = accounts.get(username.toLowerCase(Locale.ROOT));
-        return st == null ? 0 : st.pending.size();
+        return st == null ? 0 : st.pending.size() + st.pendingPayouts.size();
     }
 
     /**
@@ -144,7 +193,7 @@ public final class MilestoneEngine {
      */
     public synchronized List<MilestoneDef> takePending(String username) {
         AccountState st = accounts.get(username.toLowerCase(Locale.ROOT));
-        if (st == null || st.pending.isEmpty()) return List.of();
+        if (st == null || (st.pending.isEmpty() && st.pendingPayouts.isEmpty())) return List.of();
         List<MilestoneDef> out = new ArrayList<>();
         for (String id : st.pending) {
             MilestoneDef def = defs.stream().filter(d -> d.id().equals(id)).findFirst().orElse(null);
@@ -154,7 +203,9 @@ public final class MilestoneEngine {
                 out.add(def);
             }
         }
+        out.addAll(st.pendingPayouts); // ad-hoc payouts carry their own defs
         st.pending.clear();
+        st.pendingPayouts.clear();
         saveState();
         return out;
     }
@@ -177,6 +228,18 @@ public final class MilestoneEngine {
                 JsonObject o = e.getValue().getAsJsonObject();
                 if (o.has("granted")) o.getAsJsonArray("granted").forEach(g -> st.granted.add(g.getAsString()));
                 if (o.has("pending")) o.getAsJsonArray("pending").forEach(p -> st.pending.add(p.getAsString()));
+                if (o.has("maxClassicWave")) st.maxClassicWave = o.get("maxClassicWave").getAsLong();
+                if (o.has("pendingPayouts")) {
+                    for (JsonElement p : o.getAsJsonArray("pendingPayouts")) {
+                        JsonObject po = p.getAsJsonObject();
+                        List<String> rewards = new ArrayList<>();
+                        po.getAsJsonArray("rewards").forEach(r -> rewards.add(r.getAsString()));
+                        st.pendingPayouts.add(new MilestoneDef(
+                                po.get("id").getAsString(), "", 0,
+                                po.has("tier") ? po.get("tier").getAsInt() : 1,
+                                po.get("display").getAsString(), List.copyOf(rewards)));
+                    }
+                }
                 if (o.has("lastStats")) {
                     for (Map.Entry<String, JsonElement> s : o.getAsJsonObject("lastStats").entrySet()) {
                         st.lastStats.put(s.getKey(), s.getValue().getAsLong());
@@ -201,8 +264,21 @@ public final class MilestoneEngine {
             e.getValue().pending.forEach(pending::add);
             JsonObject lastStats = new JsonObject();
             e.getValue().lastStats.forEach(lastStats::addProperty);
+            JsonArray pendingPayouts = new JsonArray();
+            for (MilestoneDef p : e.getValue().pendingPayouts) {
+                JsonObject po = new JsonObject();
+                po.addProperty("id", p.id());
+                po.addProperty("display", p.display());
+                po.addProperty("tier", p.tier());
+                JsonArray rewards = new JsonArray();
+                p.rewards().forEach(rewards::add);
+                po.add("rewards", rewards);
+                pendingPayouts.add(po);
+            }
             o.add("granted", granted);
             o.add("pending", pending);
+            o.add("pendingPayouts", pendingPayouts);
+            if (e.getValue().maxClassicWave >= 0) o.addProperty("maxClassicWave", e.getValue().maxClassicWave);
             o.add("lastStats", lastStats);
             accs.add(e.getKey(), o);
         }

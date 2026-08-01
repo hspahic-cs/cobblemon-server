@@ -2,8 +2,10 @@ package com.cobblemonpokerogue.bridge.command;
 
 import com.cobblemonpokerogue.bridge.BridgeServices;
 import com.cobblemonpokerogue.bridge.CobblemonPokerogueBridge;
+import com.cobblemonpokerogue.bridge.econ.NeoEssentialsEconomy;
 import com.cobblemonpokerogue.bridge.link.LinkStore;
 import com.cobblemonpokerogue.bridge.milestones.MilestoneEngine;
+import com.cobblemonpokerogue.bridge.presentation.DreamLang;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -25,6 +27,7 @@ import net.minecraft.server.level.ServerPlayer;
  * /pokerogue           — clickable play link + linked-account status
  * /pokerogue link <u>  — validate the account exists in the DB, then link (first-come-first-served)
  * /pokerogue unlink    — unlink self; /pokerogue unlink <player> needs permission level 2
+ * /pokerogue enter     — charge the entry fee and arm one classic run (§2.45 pay-to-dream)
  * /pokerogue claim     — pay out pending milestone rewards (commands run as the server console)
  */
 public final class PokerogueCommand {
@@ -44,6 +47,8 @@ public final class PokerogueCommand {
                         .then(Commands.argument("player", GameProfileArgument.gameProfile())
                                 .requires(src -> src.hasPermission(2))
                                 .executes(PokerogueCommand::unlinkOther)))
+                .then(Commands.literal("enter")
+                        .executes(PokerogueCommand::enter))
                 .then(Commands.literal("claim")
                         .executes(PokerogueCommand::claim)));
     }
@@ -177,6 +182,94 @@ public final class PokerogueCommand {
             }
         }
         return count;
+    }
+
+    // ---- /pokerogue enter ----------------------------------------------------------------
+
+    /**
+     * §2.45 pay-to-dream: charge {@code entryFee} of NeoEssentials currency, then write ONE
+     * armed-run credit to bridgeRunArming (the patched rogueserver consumes it when a new
+     * classic run first saves). Ordering is deliberate — everything that can fail cheaply is
+     * checked BEFORE money moves, and the charge itself is an atomic check-and-deduct
+     * (verified: EconomyManager.subtractBalance returns false leaving the balance untouched
+     * when funds are short), so the only compensation path is a refund when the arming INSERT
+     * fails in the narrow window after a successful charge.
+     */
+    private static int enter(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        BridgeServices s = services(ctx.getSource());
+        if (s == null) return 0;
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        DreamLang lang = DreamLang.shared();
+        String username = s.links().usernameFor(player.getUUID());
+        if (username == null) {
+            ctx.getSource().sendFailure(Component.literal(lang.format("pokerogue.enter.not_linked")));
+            return 0;
+        }
+        int fee = s.config().entryFee;
+        if (fee > 0 && !NeoEssentialsEconomy.available()) {
+            // Never treat a missing economy as free entry.
+            ctx.getSource().sendFailure(Component.literal(lang.format("pokerogue.enter.no_economy")));
+            return 0;
+        }
+        UUID mcId = player.getUUID();
+        MinecraftServer server = s.server();
+        // Everything below runs on the poller thread — the only thread that touches the DB.
+        // The economy manager is thread-safe (atomic ConcurrentHashMap.compute), so charging
+        // here keeps charge and credit in one straight-line sequence with no interleaving.
+        s.poller().submit(() -> {
+            byte[] accountUuid;
+            try {
+                accountUuid = s.db().lookupAccountUuid(username);
+            } catch (SQLException e) {
+                s.db().invalidate();
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.db_down"))
+                        .withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (accountUuid == null) {
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.no_account", username))
+                        .withStyle(ChatFormatting.RED));
+                return;
+            }
+            // Charge LAST-but-one: nothing has been taken until this succeeds, and false
+            // means nothing was taken either.
+            if (fee > 0 && !NeoEssentialsEconomy.withdraw(mcId, fee)) {
+                reply(server, mcId, Component.literal(
+                                lang.format("pokerogue.enter.insufficient", fee, NeoEssentialsEconomy.balance(mcId)))
+                        .withStyle(ChatFormatting.RED));
+                return;
+            }
+            boolean armed;
+            try {
+                armed = s.db().armRun(accountUuid);
+            } catch (SQLException e) {
+                s.db().invalidate();
+                refundAndReply(server, mcId, fee, lang, "pokerogue.enter.db_failed_refund");
+                return;
+            }
+            if (!armed) {
+                // bridgeRunArming does not exist yet (unpatched rogueserver) — degrade clearly.
+                refundAndReply(server, mcId, fee, lang, "pokerogue.enter.not_enabled");
+                return;
+            }
+            reply(server, mcId, Component.literal(lang.format("pokerogue.enter.success", fee))
+                    .withStyle(ChatFormatting.GREEN));
+        });
+        ctx.getSource().sendSuccess(() -> Component.literal(lang.format("pokerogue.enter.checking"))
+                .withStyle(ChatFormatting.GRAY), false);
+        return 1;
+    }
+
+    /** Compensation for a charge whose follow-up failed: refund, then explain. */
+    private static void refundAndReply(MinecraftServer server, UUID mcId, int fee, DreamLang lang, String key) {
+        if (fee > 0 && !NeoEssentialsEconomy.deposit(mcId, fee)) {
+            // Should be unreachable (deposit only fails when the economy vanished mid-command);
+            // loud log so staff can compensate by hand.
+            CobblemonPokerogueBridge.LOGGER.error(
+                    "STAFF: failed to refund {} entry fee ({}) after a failed arming write — refund manually",
+                    mcId, fee);
+        }
+        reply(server, mcId, Component.literal(lang.format(key)).withStyle(ChatFormatting.RED));
     }
 
     // ---- /pokerogue claim ----------------------------------------------------------------

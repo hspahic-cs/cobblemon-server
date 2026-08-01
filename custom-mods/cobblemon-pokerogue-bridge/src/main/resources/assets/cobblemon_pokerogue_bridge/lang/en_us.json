@@ -28,5 +28,20 @@
   "pokerogue.presentation.tab.suffix": " 💤%d",
 
   "_ghost.nameplate": "%s = player, %d = current wave",
-  "pokerogue.presentation.ghost.nameplate": "%s's dream — wave %d"
+  "pokerogue.presentation.ghost.nameplate": "%s's dream — wave %d",
+
+  "_enter": "the /pokerogue enter (pay-to-dream) flow; insufficient: %d = fee, %d = balance; no_account: %s = pokerogue username; success: %d = fee",
+  "pokerogue.enter.checking": "Preparing your dream…",
+  "pokerogue.enter.not_linked": "You are not linked to a PokeRogue account — /pokerogue link <username> first.",
+  "pokerogue.enter.no_economy": "The server economy is unavailable — entry cannot be paid right now. Tell staff.",
+  "pokerogue.enter.db_down": "The dream is out of reach (PokeRogue database unreachable). Nothing was charged — try again later.",
+  "pokerogue.enter.no_account": "Your linked PokeRogue account '%s' no longer exists. Nothing was charged — re-link with /pokerogue link.",
+  "pokerogue.enter.insufficient": "Entering the dream costs %d, but you only have %d. Nothing was charged.",
+  "pokerogue.enter.not_enabled": "The dream gate is not active yet on the PokeRogue side. Your fee was refunded — tell staff.",
+  "pokerogue.enter.db_failed_refund": "Something went wrong arming your run; your fee was refunded. Try again later.",
+  "pokerogue.enter.success": "Paid %d — your next NEW classic run is armed. Sweet dreams.",
+
+  "_payout": "repeatable classic payout; display: %d = wave band, %d = key count; earned: %d = key count, %d = wave band",
+  "pokerogue.payout.display": "Dream payout — wave %d (%d pokemon-crate key(s))",
+  "pokerogue.payout.earned": "Your dream left something behind: %d pokemon-crate key(s) for reaching wave %d. Claim them with /pokerogue claim."
 }

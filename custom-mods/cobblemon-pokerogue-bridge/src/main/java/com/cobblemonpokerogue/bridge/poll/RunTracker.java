@@ -60,6 +60,7 @@ public final class RunTracker {
         long timestampMs;       // sessionSaveData.timestamp
         long detailMs;          // bridgeRunState.updatedAt
         int wave = -1;
+        int maxWave = -1;       // deepest wave ever observed for this run (payout depth, §2.45)
         int leadSpecies = -1;
         String gameMode = "";
         boolean live;           // onRunStarted fired and no end fired yet
@@ -120,7 +121,8 @@ public final class RunTracker {
                 // Seed changed on an existing slot: old run ended and a new one began between polls.
                 if (t.live) {
                     boolean victory = isVictory(link, t.seed, wonThisPoll, victoryCheck);
-                    BridgeEventsInternal.fireRunEnded(server, snapshot(t, link), new RunEndSummary(t.wave, victory));
+                    BridgeEventsInternal.fireRunEnded(server, snapshot(t, link),
+                            new RunEndSummary(t.wave, t.maxWave, victory));
                 }
                 Tracked fresh = new Tracked(t.userLower, t.slot);
                 applyDetail(fresh, d);
@@ -158,7 +160,8 @@ public final class RunTracker {
             if (link == null) continue; // account unlinked — drop silently
             if (t.live) {
                 boolean victory = isVictory(link, t.seed, wonThisPoll, victoryCheck);
-                BridgeEventsInternal.fireRunEnded(server, snapshot(t, link), new RunEndSummary(t.wave, victory));
+                BridgeEventsInternal.fireRunEnded(server, snapshot(t, link),
+                        new RunEndSummary(t.wave, t.maxWave, victory));
             }
             // A never-live row deleted (dormant baseline save) is a manual slot delete or a
             // run whose entire life fit between two polls — ends silently, accepted for v1.
@@ -180,6 +183,22 @@ public final class RunTracker {
         return best == null ? null : snapshot(best, link);
     }
 
+    /**
+     * Deepest wave currently observed per account across LIVE CLASSIC runs this server
+     * lifetime (lowercased username -> wave). Feeds the milestone engine's persistent
+     * {@code maxClassicWave} virtual stat each poll, so first-ever wave milestones fire
+     * mid-run at the save that crosses them, not only at run end. Degraded mode (no
+     * bridgeRunState) never observes a wave or a mode, so this map stays empty there.
+     */
+    public synchronized Map<String, Integer> liveClassicMaxWaves() {
+        Map<String, Integer> out = new HashMap<>();
+        for (Tracked t : tracked.values()) {
+            if (!t.live || t.maxWave < 0 || !"classic".equals(t.gameMode)) continue;
+            out.merge(t.userLower, t.maxWave, Math::max);
+        }
+        return out;
+    }
+
     private static boolean isVictory(LinkStore.Entry link, String seed, Set<String> wonThisPoll,
                                      VictoryCheck victoryCheck) {
         if (seed != null && !seed.isEmpty() && victoryCheck.hasCompletion(link.username(), seed)) return true;
@@ -191,6 +210,7 @@ public final class RunTracker {
         t.seed = d.seed();
         t.detailMs = d.updatedAtMs();
         t.wave = d.waveIndex();
+        if (t.wave > t.maxWave) t.maxWave = t.wave;
         t.leadSpecies = d.leadSpecies();
         t.gameMode = gameModeName(d.gameMode());
     }

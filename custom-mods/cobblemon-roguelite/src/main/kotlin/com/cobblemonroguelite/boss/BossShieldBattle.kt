@@ -98,18 +98,19 @@ object BossShieldBattle {
                     // through a dispatch queue so that text lands between the animations it
                     // describes rather than all at once when the turn resolves.
                     battle.dispatchGo {
+                        val action = message.argumentAt(0)
                         render(
-                            action = message.argumentAt(0),
+                            action = action,
                             name = message.argumentAt(1),
                             first = message.argumentAt(2),
                             second = message.argumentAt(3),
-                        )?.let { message ->
-                            battle.broadcastChatMessage(message)
-                            // ALSO the action bar (playtest ruling 2026-07-31: "it shows up in the
-                            // move logs, and that won't work") — the battle overlay owns the screen,
-                            // and the action bar is the one server-writable surface that renders on
-                            // top of it. Chat stays as the scrollback record.
-                            battle.players.forEach { p -> p.displayClientMessage(message, true) }
+                        )?.let { line ->
+                            battle.broadcastChatMessage(line)
+                            // Chat is the scrollback record; the VISUAL is a full-screen title flash
+                            // (playtest ruling 2026-08-01: not chat, not the battle log, not the
+                            // name — a flashing message on the screen). Titles render over the
+                            // battle overlay, which nothing else server-writable reliably does.
+                            flash(battle, action, message.argumentAt(2))
                         }
                     }
                 }
@@ -121,8 +122,34 @@ object BossShieldBattle {
         // both, and a name that appears one packet late is a name the player never sees change —
         // it just is not there.
         CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL) { markBosses(it.battle) }
+    }
 
-        log.debug("roguelite: boss shield messages and send-in marker installed")
+    /**
+     * The shield visual: a title flash over the whole screen — gold on a break, aqua on send-in —
+     * with the count as the headline. Short in (5t), short hold (30t), quick out (10t): it has to
+     * read as an EVENT between battle animations, not as a screen the player is stuck behind.
+     */
+    private fun flash(battle: PokemonBattle, action: String?, first: String?) {
+        val left = first?.toIntOrNull()
+        val (title, subtitle) = when (action) {
+            "start" -> literal("BOSS POKÉMON", ChatFormatting.AQUA) to
+                literal(shieldCountLine(left), ChatFormatting.AQUA)
+            "break" -> literal("SHIELD SHATTERED", ChatFormatting.GOLD) to
+                literal(shieldCountLine(left), ChatFormatting.GOLD)
+            else -> return // absorb stays chat-only: one flash per hit would wallpaper the fight.
+        }
+        battle.players.forEach { p ->
+            p.connection.send(net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket(5, 30, 10))
+            p.connection.send(net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket(subtitle))
+            p.connection.send(net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket(title))
+        }
+    }
+
+    private fun shieldCountLine(left: Int?): String = when (left) {
+        null -> ""
+        0 -> "Last shield is gone!"
+        1 -> "1 shield left"
+        else -> "$left shields left"
     }
 
     /**
@@ -229,14 +256,9 @@ object BossShieldBattle {
                 // Idempotent: BATTLE_STARTED_PRE can be seen more than once for the same Pokémon if
                 // a battle start is retried, and "Boss Boss Onix" is the kind of thing that ships.
                 if (current != null && current.startsWith(NAME_PREFIX)) continue
-                // The shield count rides the NAME — ◆ per shield — because the nickname is the one
-                // thing the battle HP bar renders that the server controls (playtest ruling
-                // 2026-07-31: log lines are not a visual indicator). Static by design: the pips say
-                // "this is a 2-shield boss", the action-bar lines narrate the breaks.
-                val pips = "◆".repeat(BossShields.shieldCount(heldId) ?: 0)
-                val marked = Component.literal(NAME_PREFIX)
-                    .append(pokemon.species.translatedName)
-                    .append(Component.literal(if (pips.isEmpty()) "" else " $pips"))
+                // Name pips were tried and ruled out (2026-08-01: the battle UI does not render the
+                // nickname where the player looks). The visual is [flash] — full-screen titles.
+                val marked = Component.literal(NAME_PREFIX).append(pokemon.species.translatedName)
                 pokemon.nickname = marked
                 // effectedPokemon is a battle-scoped view that is usually — but not always — the
                 // same object as the real one. Setting both means the name is right whether it is

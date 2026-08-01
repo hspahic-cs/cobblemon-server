@@ -1,0 +1,24 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+# Revisit before any public release. "All Rights Reserved" is the safe default while the mod is
+# server-internal — it can be loosened later, whereas a permissive licence cannot be taken back.
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "cobblemon_pokerogue_bridge"
+version = "${mod_version}"
+displayName = "Cobblemon PokeRogue Bridge"
+description = "Bridges a self-hosted PokeRogue instance into the server: /pokerogue link + clickable play link, a read-only poll of the rogueserver DB for run lifecycle events, and a milestone reward engine (rewards claimed via /pokerogue claim)."
+authors = "harris"
+# The modpack ships every jar to clients, but this is pure server logic:
+# @Mod(dist = DEDICATED_SERVER) keeps it from constructing on clients, and
+# IGNORE_ALL_VERSION skips the version handshake so clients that do carry the
+# jar (or don't) connect either way.
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.cobblemon_pokerogue_bridge]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"

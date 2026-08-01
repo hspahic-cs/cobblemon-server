@@ -1,0 +1,33 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "cobblemon_pokerogue_client"
+version = "${mod_version}"
+displayName = "Cobblemon PokeRogue Client"
+description = "Feasibility spike: opens the PokeRogue web game in an in-game Chromium browser (MCEF). /pokerogueui or keybind opens it; ESC closes."
+authors = "harris"
+# Client-only mod. The server never loads it (@Mod dist=CLIENT) and vanilla /
+# mod-less players are unaffected. IGNORE_ALL_VERSION lets a client with this
+# mod connect to servers that don't have it.
+displayTest = "IGNORE_ALL_VERSION"
+
+[[dependencies.cobblemon_pokerogue_client]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "CLIENT"
+
+# MCEF must be present on the client or this mod is useless — but keep it
+# "optional" so a client that lost the mcef jar still boots; the command then
+# reports "browser not available" instead of FML erroring at startup.
+# NOTE versionRange trap (repo memory): [X,) excludes X-beta.N — MCEF versions
+# are plain semver-ish (2.1.6-1.21.1); "[2.1,)" matches them.
+[[dependencies.cobblemon_pokerogue_client]]
+modId = "mcef"
+type = "optional"
+versionRange = "[2.1,)"
+ordering = "AFTER"
+side = "CLIENT"

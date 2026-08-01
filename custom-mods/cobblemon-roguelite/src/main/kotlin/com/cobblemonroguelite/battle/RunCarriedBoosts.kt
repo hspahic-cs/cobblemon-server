@@ -56,15 +56,39 @@ object RunCarriedBoosts {
      * [applyTo] would ever apply to anyway.
      */
     fun snapshot(battle: PokemonBattle, playerId: UUID, lastField: List<UUID>): Map<UUID, Map<String, Int>> {
-        val owner = lastField.firstOrNull() ?: return emptyMap()
+        // battleLog, not showdownMessages: a REAL saved production log (battle_logs/98126a41…)
+        // proves battleLog accumulates the full per-line history and that idents carry the
+        // Pokémon's UUID (`|switch|p1a: <uuid>|…`) — both facts this parser depends on, both now
+        // pinned by [replay]'s unit test against those exact lines.
+        val lines = battle.battleLog.ifEmpty { battle.showdownMessages }
+        val (occupantUuid, stages) = replay(lines)
+        if (stages.isEmpty()) return emptyMap()
+        val owner = occupantUuid ?: lastField.firstOrNull() ?: return emptyMap()
+        return mapOf(owner to stages)
+    }
+
+    /**
+     * Replay the protocol history for slot `p1a`: who ended up in it, at what stages. Pure and
+     * `internal` so the parser is testable against real captured log lines with no battle object.
+     */
+    internal fun replay(lines: List<String>): Pair<UUID?, Map<String, Int>> {
         var stages = mutableMapOf<String, Int>()
-        for (raw in battle.showdownMessages) {
+        var occupant: UUID? = null
+        for (raw in lines) {
             val parts = raw.trim().split('|')
             if (parts.size < 2) continue
-            val p1a = parts.getOrNull(2)?.startsWith("p1a") == true
+            val ident = parts.getOrNull(2) ?: ""
+            val p1a = ident.startsWith("p1a")
             when (parts[1]) {
-                // A new occupant of the slot starts clean; a faint ends the story outright.
-                "switch", "drag", "faint" -> if (p1a) stages = mutableMapOf()
+                // A new occupant starts clean; the ident's payload after "p1a: " is the UUID.
+                "switch", "drag" -> if (p1a) {
+                    stages = mutableMapOf()
+                    occupant = runCatching { UUID.fromString(ident.substringAfter(": ").trim()) }.getOrNull()
+                }
+                "faint" -> if (p1a) {
+                    stages = mutableMapOf()
+                    occupant = null
+                }
                 "-boost" -> if (p1a) bump(stages, parts, +1)
                 "-unboost" -> if (p1a) bump(stages, parts, -1)
                 "-clearboost" -> if (p1a) stages.clear()
@@ -74,8 +98,7 @@ object RunCarriedBoosts {
                 // wrong carry from ignoring them is a curiosity, not a loop; left unhandled by name.
             }
         }
-        val cleaned = stages.filterValues { it != 0 }.mapValues { it.value.coerceIn(-6, 6) }
-        return if (cleaned.isEmpty()) emptyMap() else mapOf(owner to cleaned)
+        return occupant to stages.filterValues { it != 0 }.mapValues { it.value.coerceIn(-6, 6) }
     }
 
     private fun bump(stages: MutableMap<String, Int>, parts: List<String>, sign: Int) {

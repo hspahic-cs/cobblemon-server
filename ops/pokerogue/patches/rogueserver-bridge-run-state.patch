@@ -1,0 +1,67 @@
+diff --git a/db/db.go b/db/db.go
+index 25b0039..ec4cbf8 100644
+--- a/db/db.go
++++ b/db/db.go
+@@ -60,5 +60,22 @@ func Init(username, password, protocol, address, database string) error {
+ 		return err
+ 	}
+ 
++	// cobblemon-server bridge patch: lightweight run-state mirror for the MC reward
++	// bridge — the session blob is zstd-wrapped gob and unreadable outside Go, so we
++	// mirror the few fields the bridge needs into plain columns.
++	_, err = handle.Exec(`CREATE TABLE IF NOT EXISTS bridgeRunState (
++		uuid BINARY(16) NOT NULL,
++		slot TINYINT NOT NULL,
++		seed VARCHAR(64) NOT NULL DEFAULT '',
++		gameMode INT NOT NULL DEFAULT 0,
++		waveIndex INT NOT NULL DEFAULT 0,
++		leadSpecies INT NOT NULL DEFAULT 0,
++		updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
++		PRIMARY KEY (uuid, slot)
++	)`)
++	if err != nil {
++		return err
++	}
++
+ 	return nil
+ }
+diff --git a/db/savedata.go b/db/savedata.go
+index 9226d5e..ad24b2c 100644
+--- a/db/savedata.go
++++ b/db/savedata.go
+@@ -168,6 +168,22 @@ func (s *store) StoreSessionSaveData(uuid []byte, data defs.SessionSaveData, slo
+ 		return err
+ 	}
+ 
++	// cobblemon-server bridge patch: mirror bridge-relevant fields (see db.Init).
++	// Party entries are opaque JSON maps (defs.PokemonData is interface{}).
++	lead := 0
++	if len(data.Party) > 0 {
++		if m, ok := data.Party[0].(map[string]interface{}); ok {
++			if v, ok := m["species"].(float64); ok {
++				lead = int(v)
++			}
++		}
++	}
++	_, err = handle.Exec("REPLACE INTO bridgeRunState (uuid, slot, seed, gameMode, waveIndex, leadSpecies) VALUES (?, ?, ?, ?, ?, ?)",
++		uuid, slot, data.Seed, int(data.GameMode), data.WaveIndex, lead)
++	if err != nil {
++		return err
++	}
++
+ 	return nil
+ }
+ 
+@@ -177,5 +193,12 @@ func (s *store) DeleteSessionSaveData(uuid []byte, slot int) error {
+ 		return err
+ 	}
+ 
++	// cobblemon-server bridge patch: the row's disappearance is the bridge's
++	// run-ended signal (victory vs defeat disambiguated via dailyRunCompletions).
++	_, err = handle.Exec("DELETE FROM bridgeRunState WHERE uuid = ? AND slot = ?", uuid, slot)
++	if err != nil {
++		return err
++	}
++
+ 	return nil
+ }

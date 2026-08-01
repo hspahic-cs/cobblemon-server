@@ -24,6 +24,11 @@ SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 if [[ $WHAT == all || $WHAT == server ]]; then
   ( cd "$VENDOR/rogueserver"
+    # bridgeRunState side table for the MC reward bridge (session blobs are gob,
+    # unreadable outside Go). Restore-then-apply, same idempotence contract as
+    # the frontend patches.
+    git checkout -- db/
+    git apply "$SELF_DIR/patches/rogueserver-bridge-run-state.patch"
     GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -tags=devsetup -o /tmp/rogueserver-linux-amd64 . )
   ssh cobblemon 'mkdir -p ~/pokerogue-staging'
   scp -q /tmp/rogueserver-linux-amd64 "$STAGING/rogueserver"

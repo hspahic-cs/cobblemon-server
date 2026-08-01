@@ -47,6 +47,13 @@ public final class PresentationFeatures {
             }
 
             @Override
+            public void onRunResumed(RunSnapshot s) {
+                // Quiet restore after a server restart: tab suffix and ghost, no announcer.
+                presence.onRunStarted(s);
+                ghost.onRunStartedOrProgress(s);
+            }
+
+            @Override
             public void onWaveProgress(RunSnapshot s, int previousWave) {
                 announcer.onWaveProgress(s, previousWave);
                 presence.onWaveProgress(s);

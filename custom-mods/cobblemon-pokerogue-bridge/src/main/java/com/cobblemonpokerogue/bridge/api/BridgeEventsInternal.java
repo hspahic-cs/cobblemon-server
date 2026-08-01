@@ -34,6 +34,10 @@ public final class BridgeEventsInternal {
         dispatch(server, l -> l.onMilestone(s, m));
     }
 
+    public static void fireRunResumed(MinecraftServer server, RunSnapshot s) {
+        dispatch(server, l -> l.onRunResumed(s));
+    }
+
     private static void dispatch(MinecraftServer server, Consumer<RunEventListener> call) {
         server.execute(() -> {
             for (RunEventListener l : BridgeEvents.LISTENERS) {

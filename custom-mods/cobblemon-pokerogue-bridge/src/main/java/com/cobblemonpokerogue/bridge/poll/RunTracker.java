@@ -71,6 +71,12 @@ public final class RunTracker {
     }
 
     private final Map<String, Tracked> tracked = new HashMap<>();
+    /**
+     * Boot-baseline saves at most this old still count as a live ("resumed") run. Generously
+     * above the client's 300s autosave cadence so a restart mid-dream never drops the 💤.
+     */
+    private static final long RESUME_WINDOW_MS = 15 * 60_000;
+
     private boolean baselined = false;
 
     public synchronized void process(MinecraftServer server,
@@ -102,6 +108,11 @@ public final class RunTracker {
                 if (!baseline) {
                     t.live = true;
                     BridgeEventsInternal.fireRunStarted(server, snapshot(t, link));
+                } else if (System.currentTimeMillis() - h.timestampMs() <= RESUME_WINDOW_MS) {
+                    // Recently-saved run at boot: live, but announce nothing — restarts must
+                    // not repeat dreams in progress. Older rows stay dormant baselines.
+                    t.live = true;
+                    BridgeEventsInternal.fireRunResumed(server, snapshot(t, link));
                 }
                 continue;
             }

@@ -624,7 +624,15 @@ object RunController {
         // and it is what makes a 200-wave run a chain of ten-wave gauntlets rather than a war of
         // attrition the shop alone must carry.
         if (cleared.plan.wave % 10 == 0) {
-            run.partySnapshot().forEach { pokemon -> runCatching { pokemon.heal() } }
+            run.partySnapshot().forEach { pokemon ->
+                runCatching {
+                    pokemon.heal()
+                    // heal() covers HP and status but NOT move PP (playtest, 2026-07-31 — an Ether
+                    // drought after wave 10 read as the heal being broken). PokéRogue's X0 heal is
+                    // full: HP, status, and every move's PP.
+                    pokemon.moveSet.getMoves().forEach { move -> move.currentPp = move.maxPp }
+                }
+            }
             server.playerList.getPlayer(player)?.sendSystemMessage(RunMessages.partyHealed(cleared.plan.wave))
         }
 
@@ -928,6 +936,8 @@ object RunController {
         // after the store write, so nothing below (payouts can throw through a provider) can leave a
         // dead run's numbers on screen.
         RunHud.remove(player)
+        // The passive status badge dies with the run — it is cosmetic run state on a real player.
+        server.playerList.getPlayer(player)?.removeEffect(net.minecraft.world.effect.MobEffects.LUCK)
         val outcome = cause.outcome
 
         // Said out loud, because it is the one casualty of a run end that nothing else accounts for:

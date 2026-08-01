@@ -282,6 +282,19 @@ object RctTrainerParts {
 
     fun spawn(level: ServerLevel, rctId: String, x: Double, y: Double, z: Double, yaw: Float): Entity? {
         if (!resolve()) return null
+        // Belt over the disk-reload discard (playtest, 2026-08-01: a previous run's trainer was
+        // still standing when the next run began): before this wave's NPC exists, any tagged wave
+        // NPC already near the spawn point is a leftover BY DEFINITION — live waves have exactly
+        // one, and it is the one about to be created.
+        runCatching {
+            level.getEntitiesOfClass(
+                Mob::class.java,
+                net.minecraft.world.phys.AABB.ofSize(net.minecraft.world.phys.Vec3(x, y, z), 96.0, 48.0, 96.0),
+            ) { it.tags.contains(WAVE_NPC_TAG) }.forEach { leftover ->
+                log.info("roguelite: discarded a leftover wave trainer before spawning the new one")
+                leftover.discard()
+            }
+        }
         return try {
             val type = mobEntityTypeM!!.invoke(null) as EntityType<*>
             val mob = type.create(level) ?: return null

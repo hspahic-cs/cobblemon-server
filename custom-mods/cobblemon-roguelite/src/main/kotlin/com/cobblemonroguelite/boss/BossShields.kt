@@ -97,6 +97,10 @@ object BossShields {
     fun isShieldItem(showdownId: String?): Boolean =
         showdownId != null && (1..MAX_SHIELDS).any { showdownId == showdownId(it) }
 
+    /** How many shields [showdownId] declares, or null when it is not one of ours. */
+    fun shieldCount(showdownId: String?): Int? =
+        (1..MAX_SHIELDS).firstOrNull { showdownId == showdownId(it) }
+
     /**
      * The HP a boss with [shields] shields, [broken] of them already gone, cannot be taken below by
      * a single hit.

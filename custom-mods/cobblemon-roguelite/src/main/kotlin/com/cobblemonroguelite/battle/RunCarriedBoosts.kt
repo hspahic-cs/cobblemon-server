@@ -43,27 +43,45 @@ object RunCarriedBoosts {
      * active list has already been emptied even at event time, whoever it last reported as on the
      * field is who the stages belong to, read from the full battle team instead.
      */
+    /**
+     * Third wiring, and this one reads a thing that is actually written. `BattlePokemon.statChanges`
+     * is a CLIENT-DISPLAY mirror — nothing on the server ever writes it, so both earlier capture
+     * attempts read an empty map with perfect reliability. The server-side truth is the battle's own
+     * protocol stream ([PokemonBattle.showdownMessages], public and complete), so the stages are
+     * reconstructed the way the client itself learns them: replay `|-boost|`/`|-unboost|` for slot
+     * `p1a`, resetting on switch/drag/faint — Showdown's own reset points.
+     *
+     * Keyed to the §2.10 field tracker's last-reported lead: with lead continuity, the Pokémon that
+     * ends the wave on the field is the one the next wave sends out, which is the only member
+     * [applyTo] would ever apply to anyway.
+     */
     fun snapshot(battle: PokemonBattle, playerId: UUID, lastField: List<UUID>): Map<UUID, Map<String, Int>> {
-        val carried = mutableMapOf<UUID, Map<String, Int>>()
-        // The ACTIVE Pokémon only — PokéRogue's own semantics: stages live on the Pokémon that is on
-        // the field, and a switch already reset them mid-battle. Reading the whole party would carry
-        // stale mirror values for benched members whose |unboost| stream stopped at their switch-out.
-        battle.actors.filter { it.uuid == playerId }.forEach { actor ->
-            val active = actor.activePokemon.mapNotNull { it.battlePokemon }
-            val members = active.ifEmpty {
-                actor.pokemonList.filter { it.effectedPokemon.uuid in lastField }
-            }
-            members.forEach { member: BattlePokemon ->
-                val stages = member.statChanges
-                    .filterValues { it != 0 }
-                    .entries
-                    .associate { (stat, stage) -> stat.showdownId to stage.coerceIn(-6, 6) }
-                if (stages.isNotEmpty() && member.health > 0) {
-                    carried[member.effectedPokemon.uuid] = stages
-                }
+        val owner = lastField.firstOrNull() ?: return emptyMap()
+        var stages = mutableMapOf<String, Int>()
+        for (raw in battle.showdownMessages) {
+            val parts = raw.trim().split('|')
+            if (parts.size < 2) continue
+            val p1a = parts.getOrNull(2)?.startsWith("p1a") == true
+            when (parts[1]) {
+                // A new occupant of the slot starts clean; a faint ends the story outright.
+                "switch", "drag", "faint" -> if (p1a) stages = mutableMapOf()
+                "-boost" -> if (p1a) bump(stages, parts, +1)
+                "-unboost" -> if (p1a) bump(stages, parts, -1)
+                "-clearboost" -> if (p1a) stages.clear()
+                "-clearallboost" -> stages.clear()
+                "-clearnegativeboost" -> if (p1a) stages.entries.removeIf { it.value < 0 }
+                // -copyboost/-swapboost/-setboost are rare enough (Heart Swap, Topsy-Turvy) that a
+                // wrong carry from ignoring them is a curiosity, not a loop; left unhandled by name.
             }
         }
-        return carried
+        val cleaned = stages.filterValues { it != 0 }.mapValues { it.value.coerceIn(-6, 6) }
+        return if (cleaned.isEmpty()) emptyMap() else mapOf(owner to cleaned)
+    }
+
+    private fun bump(stages: MutableMap<String, Int>, parts: List<String>, sign: Int) {
+        val stat = parts.getOrNull(3) ?: return
+        val amount = parts.getOrNull(4)?.trim()?.toIntOrNull() ?: return
+        stages[stat] = (stages[stat] ?: 0) + sign * amount
     }
 
     /** Store a [snapshot] into [run], on the server thread. Split from the read — see [snapshot]. */

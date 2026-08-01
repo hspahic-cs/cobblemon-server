@@ -103,7 +103,14 @@ object BossShieldBattle {
                             name = message.argumentAt(1),
                             first = message.argumentAt(2),
                             second = message.argumentAt(3),
-                        )?.let(battle::broadcastChatMessage)
+                        )?.let { message ->
+                            battle.broadcastChatMessage(message)
+                            // ALSO the action bar (playtest ruling 2026-07-31: "it shows up in the
+                            // move logs, and that won't work") — the battle overlay owns the screen,
+                            // and the action bar is the one server-writable surface that renders on
+                            // top of it. Chat stays as the scrollback record.
+                            battle.players.forEach { p -> p.displayClientMessage(message, true) }
+                        }
                     }
                 }
             }
@@ -222,7 +229,14 @@ object BossShieldBattle {
                 // Idempotent: BATTLE_STARTED_PRE can be seen more than once for the same Pokémon if
                 // a battle start is retried, and "Boss Boss Onix" is the kind of thing that ships.
                 if (current != null && current.startsWith(NAME_PREFIX)) continue
-                val marked = Component.literal(NAME_PREFIX).append(pokemon.species.translatedName)
+                // The shield count rides the NAME — ◆ per shield — because the nickname is the one
+                // thing the battle HP bar renders that the server controls (playtest ruling
+                // 2026-07-31: log lines are not a visual indicator). Static by design: the pips say
+                // "this is a 2-shield boss", the action-bar lines narrate the breaks.
+                val pips = "◆".repeat(BossShields.shieldCount(heldId) ?: 0)
+                val marked = Component.literal(NAME_PREFIX)
+                    .append(pokemon.species.translatedName)
+                    .append(Component.literal(if (pips.isEmpty()) "" else " $pips"))
                 pokemon.nickname = marked
                 // effectedPokemon is a battle-scoped view that is usually — but not always — the
                 // same object as the real one. Setting both means the name is right whether it is

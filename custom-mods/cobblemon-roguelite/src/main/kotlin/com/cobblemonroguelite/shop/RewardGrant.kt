@@ -57,7 +57,7 @@ object RewardGrant {
         RewardTarget.WholeParty -> when (reward) {
             is RunReward.BagItem -> grantBagItem(reward, player, run.seed)
             is RunReward.Credits -> grantCredits(reward, run)
-            is RunReward.Passive -> grantPassive(reward, run)
+            is RunReward.Passive -> grantPassive(reward, run, player)
             else -> GrantResult.Failed("reward ${reward::class.simpleName} needs a party member")
         }
 
@@ -67,7 +67,7 @@ object RewardGrant {
                 // Legal input, same rule as a bag item aimed at a member: [RewardTargeting] ignores a
                 // slot on a party-wide reward, so a caller that resolved a member anyway still means
                 // the run-wide grant.
-                grantPassive(reward, run)
+                grantPassive(reward, run, player)
             } else if (pokemon == null) {
                 // Reachable if the party shrank between targeting and applying — a faint that emptied a
                 // slot, or a swap-or-release resolved in between.
@@ -344,7 +344,7 @@ object RewardGrant {
      * The caller checkpoints the run after a grant (all the shop paths already do), which is what
      * carries the stack across a relog — the map rides [RunState.toNbt] like credits do.
      */
-    private fun grantPassive(reward: RunReward.Passive, run: RunState): GrantResult {
+    private fun grantPassive(reward: RunReward.Passive, run: RunState, player: net.minecraft.server.level.ServerPlayer): GrantResult {
         val passive = reward.passive
         val current = run.passiveStacks[passive.id] ?: 0
         val now = com.cobblemonroguelite.run.RunPassive.stackAfterGrant(current, passive)
@@ -352,6 +352,22 @@ object RewardGrant {
                 "${passive.displayName} is already at its maximum rank (${passive.maxStacks})",
             )
         run.passiveStacks[passive.id] = now
+        // The one persistent VISUAL a permanent buff gets (playtest request 2026-08-01): a Luck
+        // status icon whose amplifier is the combined charm rank. Cosmetic only — the real effect
+        // lives in the EXP hook — infinite, ambient, no particles, so it reads as a status badge
+        // rather than a potion. Refreshed on every grant; RunController clears it at run end.
+        val charmRanks = com.cobblemonroguelite.run.RunPassive.entries
+            .filter { it.expBoostPctPerStack > 0 }
+            .sumOf { run.passiveStacks[it.id] ?: 0 }
+        if (charmRanks > 0) {
+            player.addEffect(
+                net.minecraft.world.effect.MobEffectInstance(
+                    net.minecraft.world.effect.MobEffects.LUCK,
+                    net.minecraft.world.effect.MobEffectInstance.INFINITE_DURATION,
+                    (charmRanks - 1).coerceAtMost(9), true, false, true,
+                ),
+            )
+        }
         return GrantResult.Ok("${passive.displayName} is now rank $now/${passive.maxStacks} — it lasts the whole run")
     }
 

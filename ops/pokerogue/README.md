@@ -32,6 +32,10 @@ means a rebuild, not just a re-setup.
 
 ## Notes
 
+- The frontend build applies the reskin overlays in `reskin/` (server title,
+  splash lines, trainer display names) via `apply-reskin.py` — see
+  `reskin/README.md`. Shipped values are placeholders; real text is
+  human-authored content.
 - rogueserver is built `-tags=devsetup`: it creates/migrates its own schema
   (`CREATE TABLE IF NOT EXISTS ...`) on boot. Accounts are local username/password
   (registration open by default); Discord/Google OAuth is unconfigured and stays off.

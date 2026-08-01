@@ -20,6 +20,7 @@ set -euo pipefail
 WHAT="${1:?usage: build-and-stage.sh <all|frontend|server> [api-url]}"
 VENDOR=~/Repos/vendor
 STAGING=cobblemon:pokerogue-staging
+SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 if [[ $WHAT == all || $WHAT == server ]]; then
   ( cd "$VENDOR/rogueserver"
@@ -38,6 +39,9 @@ if [[ $WHAT == all || $WHAT == frontend ]]; then
     # front the site with TLS.
     git checkout -- src/utils/cookies.ts
     sed -i '' -e 's/;Secure;/;/g' -e 's/Domain=\${window.location.hostname};//' src/utils/cookies.ts
+    # Server reskin (title/splashes/trainer names) — restore-then-merge, same
+    # idempotence contract as the cookie patch. Overlays: ops/pokerogue/reskin/.
+    python3 "$SELF_DIR/apply-reskin.py" .
     cat > .env.production.local <<EOF
 VITE_BYPASS_LOGIN=0
 VITE_BYPASS_TUTORIAL=0

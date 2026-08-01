@@ -35,7 +35,7 @@ import kotlin.test.assertTrue
  * ### What still needs the dev VM
  *
  * That the properties strings produced here actually *build*: that Cobblemon accepts
- * `species=cobblemon:corsola galarian level=53 held_item=cobblemon:leftovers`, that a regional aspect
+ * `species=cobblemon:corsola galarian level=53 helditem=cobblemon:leftovers`, that a regional aspect
  * resolves to the regional form, and that `create()` derives a level-appropriate moveset. Those are
  * assertions about Cobblemon, not about us, and they are checked where the Pokémon is built
  * (cobblemon-bridge's `RogueliteTrainerBattles.teamFor`) against a real server.
@@ -544,13 +544,13 @@ class TrainerTeamGeneratorTest {
         // The roll still happened and is still recorded — it just lost the slot. Suppressing the
         // draw instead would make turning shields on re-roll every other member's item.
         assertNotNull(ace.heldItem)
-        assertFalse(ace.propertiesString().contains("held_item=cobblemon:leftovers"), ace.propertiesString())
+        assertFalse(ace.propertiesString().contains("helditem=cobblemon:leftovers"), ace.propertiesString())
         assertTrue(ace.propertiesString().contains("bossshield3"), ace.propertiesString())
 
         // Everyone behind the ace keeps their ordinary item.
         val rest = members.drop(1)
         assertTrue(rest.all { it.shields == 0 })
-        assertTrue(rest.all { it.propertiesString().contains("held_item=cobblemon:leftovers") })
+        assertTrue(rest.all { it.propertiesString().contains("helditem=cobblemon:leftovers") })
     }
 
     /**

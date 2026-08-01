@@ -79,7 +79,12 @@ object BossShields {
      * with no shields.
      */
     fun heldItemProperty(shields: Int): String =
-        "held_item=minecraft:shield[cobblemon:held_item_effect=" +
+        // `helditem`, NO underscore — Cobblemon's PokemonProperties matches the key `helditem=`
+        // (verified in the 1.7.3 jar: the only literal in the class is `helditem=`, fed to vanilla
+        // ItemParser, which is what makes the component syntax below legal). `held_item=` was an
+        // unknown key, silently ignored: every generated boss fought shieldless for a whole
+        // playtest evening, and every generated trainer's Leftovers never existed either.
+        "helditem=minecraft:shield[cobblemon:held_item_effect=" +
             "{showdownId:\"${showdownId(shields)}\",consumed:false}]"
 
     /**

@@ -51,7 +51,8 @@ data class TeamSpecies(
         // a boss the item and not the mechanic, which is the failure nobody would notice.
         when {
             shields > 0 -> append(' ').append(BossShields.heldItemProperty(shields))
-            heldItem != null -> append(" held_item=").append(heldItem)
+            // `helditem` without the underscore — the only spelling PokemonProperties knows.
+            heldItem != null -> append(" helditem=").append(heldItem)
         }
     }
 }

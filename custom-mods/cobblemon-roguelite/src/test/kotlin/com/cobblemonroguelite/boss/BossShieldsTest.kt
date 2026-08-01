@@ -209,7 +209,9 @@ class BossShieldsTest {
         val fragment = BossShields.heldItemProperty(3)
 
         assertFalse(fragment.any { it.isWhitespace() }, "a space would truncate the value: $fragment")
-        assertEquals("held_item", fragment.substringBefore('='))
+        // `helditem`, no underscore — the ONLY key PokemonProperties matches (jar-verified 2026-07-31;
+        // `held_item=` was an unknown key and every generated boss fought shieldless because of it).
+        assertEquals("helditem", fragment.substringBefore('='))
         assertTrue(fragment.substringAfter('=').startsWith("minecraft:shield["), fragment)
         assertTrue(fragment.contains("cobblemon:held_item_effect"), fragment)
         assertTrue(fragment.contains("showdownId:\"bossshield3\""), fragment)

@@ -59,6 +59,14 @@ if [[ $WHAT == all || $WHAT == frontend ]]; then
     # this order is load-bearing. Restore-then-apply, still ahead of the reskin.
     git checkout -- src/main.ts src/api/api.ts src/phases/title-phase.ts
     git apply "$SELF_DIR/patches/pokerogue-token-precheck.patch"
+    # §2.47 auto-verb: consume the entry link's `&auto=new|resume` one-shot at
+    # the first title menu (resume = Continue, new = Classic incl. the §2.46
+    # pre-check, save-slot prompt auto-resolved to the first empty slot).
+    # Generated on top of the token-precheck patch — this order is load-bearing.
+    # main.ts/title-phase.ts are restored by the checkout above; only
+    # select-starter-phase.ts needs restoring here.
+    git checkout -- src/phases/select-starter-phase.ts
+    git apply "$SELF_DIR/patches/pokerogue-url-auto-entry.patch"
     # Server reskin (title/splashes/trainer names) — restore-then-merge, same
     # idempotence contract as the cookie patch. Overlays: ops/pokerogue/reskin/.
     python3 "$SELF_DIR/apply-reskin.py" .

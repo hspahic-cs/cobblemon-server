@@ -181,6 +181,22 @@ public final class PokerogueDb implements AutoCloseable {
     }
 
     /**
+     * True when the account has ANY {@code sessionSaveData} row — the §2.47 routing signal:
+     * a session exists, so {@code /pokerogue enter} resumes it for free instead of arming.
+     *
+     * @throws SQLException when the DB is unreachable (caller must refuse and charge nothing).
+     */
+    public synchronized boolean hasSession(byte[] accountUuid) throws SQLException {
+        try (PreparedStatement ps = connection().prepareStatement(
+                "SELECT 1 FROM sessionSaveData WHERE uuid = ? LIMIT 1")) {
+            ps.setBytes(1, accountUuid);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    /**
      * All numeric accountStats columns for the given usernames, keyed by lowercased username
      * then by column name (playTime, battles, classicSessionsPlayed, sessionsWon,
      * highestEndlessWave, highestLevel, pokemonSeen, pokemonDefeated, pokemonCaught,

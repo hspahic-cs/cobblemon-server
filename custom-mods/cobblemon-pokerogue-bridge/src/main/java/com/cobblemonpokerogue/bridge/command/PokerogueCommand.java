@@ -29,9 +29,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 
 /**
- * /pokerogue                        — clickable play link, linked account, armed-credit count
- * /pokerogue enter                  — §2.46: mint the account if needed, charge the fee, arm one
- *                                     classic run, hand back a tokenized logged-in link
+ * /pokerogue                        — clickable play link, linked account, §2.47 state line
+ *                                     (dreaming / armed run waiting / next-run cost)
+ * /pokerogue enter                  — §2.46 + §2.47: mint the account if needed, then route —
+ *                                     active session → free resume link; unspent armed credit
+ *                                     → free new-run link; neither → charge, arm, new-run
+ *                                     link. The tokenized link carries auto=new|resume
  * /pokerogue password               — whisper the server-generated password (minted accounts only)
  * /pokerogue claim                  — pay out pending milestone rewards (run as the server console)
  * /pokerogue unlink [player]        — self, or any player at permission level 2+
@@ -121,22 +124,28 @@ public final class PokerogueCommand {
         }
         ctx.getSource().sendSuccess(() -> msg, false);
         if (player == null || username == null) return 1;
-        // The armed-credit count needs the DB, so it arrives as a follow-up line off the
-        // poller executor (the only thread that may touch the DB).
+        // The §2.47 state line needs the DB, so it arrives as a follow-up line off the
+        // poller executor (the only thread that may touch the DB). Same routing order as
+        // /pokerogue enter: session → armed credit → pay.
         UUID mcId = player.getUUID();
         MinecraftServer server = s.server();
         String finalUsername = username;
+        int fee = s.config().entryFee;
         s.poller().submit(() -> {
             String line;
             try {
                 byte[] accountUuid = s.db().lookupAccountUuid(finalUsername);
                 if (accountUuid == null) {
                     line = lang.format("pokerogue.status.armed_unavailable");
+                } else if (s.db().hasSession(accountUuid)) {
+                    line = lang.format("pokerogue.status.dreaming");
                 } else {
                     int credits = s.db().armedCredits(accountUuid);
                     line = credits < 0
                             ? lang.format("pokerogue.status.armed_disabled")
-                            : lang.format("pokerogue.status.armed", credits);
+                            : credits > 0
+                            ? lang.format("pokerogue.status.armed_ready")
+                            : lang.format("pokerogue.status.next_cost", fee);
                 }
             } catch (SQLException e) {
                 s.db().invalidate();
@@ -150,7 +159,8 @@ public final class PokerogueCommand {
     // ---- /pokerogue enter ----------------------------------------------------------------
 
     /**
-     * §2.46 entry flow, in order, entirely on the poller executor (all DB + HTTP off-thread):
+     * §2.46 entry flow + §2.47 one-verb routing, in order, entirely on the poller executor
+     * (all DB + HTTP off-thread):
      *
      * <ol>
      *   <li><b>Mint</b> (unlinked players only): pre-check {@code accounts} for the MC name —
@@ -158,14 +168,27 @@ public final class PokerogueCommand {
      *       account), so refuse and point at staff rather than silently binding it. Otherwise
      *       register via rogueserver with a generated password and store the link. Nothing has
      *       been charged anywhere in this step.</li>
-     *   <li><b>Charge → arm</b> (§2.45 semantics, unchanged): the fee is withdrawn only after
-     *       every cheap check passed, and the only compensation path is a refund when the
-     *       arming INSERT fails after a successful charge.</li>
-     *   <li><b>Tokenized link</b>: mint a one-time session token (frozen §2.46 contract) and
-     *       send {@code <url>/#pt=<token>} — the browser opens already logged in. Any mint
-     *       failure (secret off, 403/404/503, rogueserver down) degrades to the plain URL plus
-     *       a manual-login hint; the run stays armed and the fee stays charged, because entry
-     *       itself succeeded.</li>
+     *   <li><b>Route</b> (§2.47) — three mutually exclusive paths, decided by DB reads that
+     *       charge nothing and can only refuse (db_down) when the DB is unreachable:
+     *       <ul>
+     *         <li><b>Active session</b> (any sessionSaveData row) → FREE resume: no charge,
+     *             no arm, link carries {@code auto=resume}.</li>
+     *         <li><b>No session, armed credit &gt; 0</b> (paid earlier, abandoned before the
+     *             first save) → FREE new run: the banked credit is reused, no charge, link
+     *             carries {@code auto=new}.</li>
+     *         <li><b>Neither</b> → charge → arm (§2.45 semantics, unchanged): the fee is
+     *             withdrawn only after every cheap check passed, and the only compensation
+     *             path is a refund when the arming INSERT fails after a successful charge.
+     *             Link carries {@code auto=new}.</li>
+     *       </ul></li>
+     *   <li><b>Tokenized link</b>: mint a one-time session token (frozen §2.46/§2.47
+     *       contract) and send {@code <url>/#pt=<token>&auto=new|resume} — the browser opens
+     *       already logged in and the frontend consumes the directive one-shot at the first
+     *       TitlePhase. Any mint failure (secret off, 403/404/503, rogueserver down) degrades
+     *       to the plain URL plus a manual-login hint — with NO auto param, because a manual
+     *       login cannot guarantee the right account; whatever charge state the flow reached
+     *       stays (the run is armed / the session exists), so the player just logs in and
+     *       picks the mode by hand.</li>
      * </ol>
      */
     private static int enter(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
@@ -189,8 +212,53 @@ public final class PokerogueCommand {
                 username = mintAccount(s, lang, server, mcId, mcName);
                 if (username == null) return; // refused or failed; player already told, nothing charged
             }
-            if (chargeAndArm(s, lang, server, mcId, username, fee)) {
-                sendPlayLink(s, lang, server, mcId, username);
+            // §2.47 routing. Both reads happen BEFORE any money moves, so a DB failure here
+            // refuses with nothing charged.
+            byte[] accountUuid;
+            boolean hasSession;
+            try {
+                accountUuid = s.db().lookupAccountUuid(username);
+                hasSession = accountUuid != null && s.db().hasSession(accountUuid);
+            } catch (SQLException e) {
+                s.db().invalidate();
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.db_down"))
+                        .withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (accountUuid == null) {
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.no_account", username))
+                        .withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (hasSession) {
+                // FREE: a session exists — resume it. No charge, no arm.
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.resume"))
+                        .withStyle(ChatFormatting.GREEN));
+                sendPlayLink(s, lang, server, mcId, username, "resume");
+                return;
+            }
+            int credits;
+            try {
+                credits = s.db().armedCredits(accountUuid);
+            } catch (SQLException e) {
+                s.db().invalidate();
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.db_down"))
+                        .withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (credits > 0) {
+                // FREE: an unspent armed credit is already banked (paid earlier, abandoned
+                // before the first save) — reuse it. No charge.
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.armed_reuse"))
+                        .withStyle(ChatFormatting.GREEN));
+                sendPlayLink(s, lang, server, mcId, username, "new");
+                return;
+            }
+            // credits < 0 means bridgeRunArming does not exist (unpatched rogueserver) —
+            // fall through: chargeAndArm's armRun sees the same missing table and refuses
+            // with a refund, which keeps that failure path in exactly one place.
+            if (chargeAndArm(s, lang, server, mcId, accountUuid, fee)) {
+                sendPlayLink(s, lang, server, mcId, username, "new");
             }
         });
         ctx.getSource().sendSuccess(() -> Component.literal(lang.format("pokerogue.enter.checking"))
@@ -264,26 +332,13 @@ public final class PokerogueCommand {
 
     /**
      * §2.45 charge → arm (poller thread), semantics unchanged: everything that can fail
-     * cheaply is checked BEFORE money moves, the charge is an atomic check-and-deduct, and the
-     * only compensation path is a refund when the arming INSERT fails after a successful
-     * charge. Returns true when a run is armed (fee charged and kept).
+     * cheaply is checked BEFORE money moves (the account lookup + §2.47 routing already
+     * happened in the caller), the charge is an atomic check-and-deduct, and the only
+     * compensation path is a refund when the arming INSERT fails after a successful charge.
+     * Returns true when a run is armed (fee charged and kept).
      */
     private static boolean chargeAndArm(BridgeServices s, DreamLang lang, MinecraftServer server,
-                                        UUID mcId, String username, int fee) {
-        byte[] accountUuid;
-        try {
-            accountUuid = s.db().lookupAccountUuid(username);
-        } catch (SQLException e) {
-            s.db().invalidate();
-            reply(server, mcId, Component.literal(lang.format("pokerogue.enter.db_down"))
-                    .withStyle(ChatFormatting.RED));
-            return false;
-        }
-        if (accountUuid == null) {
-            reply(server, mcId, Component.literal(lang.format("pokerogue.enter.no_account", username))
-                    .withStyle(ChatFormatting.RED));
-            return false;
-        }
+                                        UUID mcId, byte[] accountUuid, int fee) {
         // Charge LAST-but-one: nothing has been taken until this succeeds, and false means
         // nothing was taken either (verified atomic check-and-deduct).
         if (fee > 0 && !NeoEssentialsEconomy.withdraw(mcId, fee)) {
@@ -323,17 +378,22 @@ public final class PokerogueCommand {
     }
 
     /**
-     * The tokenized link (§2.46 frozen contract), poller thread. Failure never unwinds
-     * anything — the run is armed, so the player just logs in manually.
+     * The tokenized link (§2.46/§2.47 frozen contract), poller thread: the fragment is
+     * {@code #pt=<URL-encoded token>&auto=new|resume}. Failure never unwinds anything —
+     * whatever charge state the flow reached stays — and the degraded plain URL carries NO
+     * auto param, because a manual login cannot guarantee the right account.
+     *
+     * @param auto the §2.47 directive, {@code "new"} or {@code "resume"}.
      */
     private static void sendPlayLink(BridgeServices s, DreamLang lang, MinecraftServer server,
-                                     UUID mcId, String username) {
+                                     UUID mcId, String username, String auto) {
         String base = s.config().url;
         if (base.endsWith("/")) base = base.substring(0, base.length() - 1);
         if (s.api().tokenEnabled()) {
             RogueserverApi.MintOutcome minted = s.api().mintToken(username);
             if (minted.token() != null) {
-                String tokenUrl = base + "/#pt=" + URLEncoder.encode(minted.token(), StandardCharsets.UTF_8);
+                String tokenUrl = base + "/#pt=" + URLEncoder.encode(minted.token(), StandardCharsets.UTF_8)
+                        + "&auto=" + auto;
                 reply(server, mcId, playLink(lang, tokenUrl)
                         .append(Component.literal("\n" + lang.format("pokerogue.enter.logged_in"))
                                 .withStyle(ChatFormatting.GRAY)));

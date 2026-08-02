@@ -2,27 +2,36 @@
 
 Server-side NeoForge 1.21.1 mod that bridges our self-hosted PokéRogue instance (frontend +
 Go `rogueserver` + MariaDB `pokeroguedb`, on the same VM) into the Minecraft server.
-Decision record: `docs/pokerogue-mode-plan.md` §2.44–§2.46.
+Decision record: `docs/pokerogue-mode-plan.md` §2.44–§2.47.
 
 What it does:
 
-- `/pokerogue` — clickable link to the web game, linked-account line, armed-run credit count.
-- `/pokerogue enter` — the §2.46 entry flow, in order:
+- `/pokerogue` — clickable link to the web game, linked-account line, and the §2.47 state
+  line: dreaming (a session exists — `enter` resumes it), an armed run awaits (`enter`
+  starts it free), or the next-run cost.
+- `/pokerogue enter` — the one session verb (§2.46 entry + §2.47 routing), in order:
   1. **Server-minted account** (first entry only): the bridge registers the PokéRogue account
      itself — username = MC name (every MC name is a legal rogueserver username, verified
      against `^\w{1,16}$`), password generated bridge-side (never typed; MC logs commands to
      latest.log) and stored in `accounts.json`. If an account with the MC name already exists
      (a legacy web account), the bridge refuses rather than silently binding it — staff verify
      ownership and repair with `/pokerogue link`.
-  2. **§2.45 pay-to-dream** (unchanged): charges `entryFee` (NeoEssentials currency, atomic
+  2. **§2.47 routing** (DB reads only; if the DB is unreachable here the command refuses and
+     nothing is charged): an **active session** (any `sessionSaveData` row) → free resume
+     link, no charge, no arm; **no session but an unspent armed credit** (paid earlier,
+     abandoned before the first save) → free new-run link, the banked credit is reused;
+     **neither** → step 3.
+  3. **§2.45 pay-to-dream** (unchanged): charges `entryFee` (NeoEssentials currency, atomic
      check-and-deduct) and writes one armed-run credit to `bridgeRunArming` — the ONE table
      the otherwise-SELECT-only DB user may write. The patched rogueserver consumes a credit
      when a NEW classic run first saves and rejects unarmed ones; against an unpatched
      rogueserver the command refuses cleanly (fee refunded, nothing armed).
-  3. **Tokenized link**: the bridge asks rogueserver's secret-gated `/bridge/minttoken` for a
-     one-time session token and sends `<url>/#pt=<token>` — the browser opens already logged
-     in. Any mint failure degrades to the plain URL plus a manual-login hint (run stays
-     armed).
+  4. **Tokenized link**: the bridge asks rogueserver's secret-gated `/bridge/minttoken` for a
+     one-time session token and sends `<url>/#pt=<token>&auto=new|resume` — the browser opens
+     already logged in and the frontend consumes the directive one-shot at the first
+     TitlePhase (`resume` = Continue, `new` = Classic). Any mint failure degrades to the
+     plain URL plus a manual-login hint, with **no** `auto` param (a manual login cannot
+     guarantee the right account); whatever charge state the flow reached stays.
 - `/pokerogue password` — whispers the stored generated password (server-minted accounts
   only; legacy links predate minting and the bridge never knew their password).
 - `/pokerogue unlink [player]` — self, or any player at permission level 2+.

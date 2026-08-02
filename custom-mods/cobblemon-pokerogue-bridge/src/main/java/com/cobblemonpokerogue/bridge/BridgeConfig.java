@@ -23,6 +23,18 @@ public final class BridgeConfig {
 
     /** The public PokeRogue frontend URL players open — the /pokerogue clickable link. */
     public String url = "http://CHANGE-ME:8000";
+    /**
+     * rogueserver's HTTP API base, reached directly (not via the nginx frontend proxy) for
+     * account registration and token minting. Localhost because the bridge and rogueserver
+     * share the VM (§2.44).
+     */
+    public String apiBase = "http://127.0.0.1:8001";
+    /**
+     * Shared secret for the tokenized entry link (§2.46), sent as {@code X-Bridge-Secret} to
+     * rogueserver's {@code /bridge/minttoken}. Minted by setup-vm.sh on the VM; empty disables
+     * the token flow (players get the plain URL and log in manually).
+     */
+    public String tokenSecret = "";
     public Db db = new Db();
     /** DB poll interval in seconds (single background thread, fixed-rate schedule). */
     public int pollSeconds = 10;
@@ -68,6 +80,8 @@ public final class BridgeConfig {
             try {
                 BridgeConfig cfg = GSON.fromJson(Files.readString(file, StandardCharsets.UTF_8), BridgeConfig.class);
                 if (cfg != null) {
+                    if (cfg.apiBase == null || cfg.apiBase.isBlank()) cfg.apiBase = "http://127.0.0.1:8001";
+                    if (cfg.tokenSecret == null) cfg.tokenSecret = "";
                     if (cfg.db == null) cfg.db = new Db();
                     if (cfg.pollSeconds < 1) cfg.pollSeconds = 10;
                     if (cfg.entryFee < 0) cfg.entryFee = 5000;

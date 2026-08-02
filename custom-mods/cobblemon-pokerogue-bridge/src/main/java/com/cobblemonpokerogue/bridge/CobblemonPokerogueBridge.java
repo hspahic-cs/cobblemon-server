@@ -3,6 +3,7 @@ package com.cobblemonpokerogue.bridge;
 import com.cobblemonpokerogue.bridge.command.PokerogueCommand;
 import com.cobblemonpokerogue.bridge.db.PokerogueDb;
 import com.cobblemonpokerogue.bridge.link.LinkStore;
+import com.cobblemonpokerogue.bridge.link.RogueserverApi;
 import com.cobblemonpokerogue.bridge.milestones.MilestoneEngine;
 import com.cobblemonpokerogue.bridge.poll.DbPoller;
 import com.cobblemonpokerogue.bridge.poll.RunTracker;
@@ -63,9 +64,10 @@ public final class CobblemonPokerogueBridge {
             LinkStore links = LinkStore.load(dir.resolve("accounts.json"));
             MilestoneEngine milestones = MilestoneEngine.load(dir.resolve("milestones.json"), dir.resolve("state.json"));
             PokerogueDb db = new PokerogueDb(config.db);
+            RogueserverApi api = new RogueserverApi(config.apiBase, config.tokenSecret);
             RunTracker tracker = new RunTracker();
             DbPoller poller = new DbPoller(event.getServer(), config, links, db, tracker, milestones);
-            services = new BridgeServices(config, links, db, tracker, milestones, poller, event.getServer());
+            services = new BridgeServices(config, links, db, api, tracker, milestones, poller, event.getServer());
             initPresentation(config);
             com.cobblemonpokerogue.bridge.payout.PayoutEngine.init(); // self-guarded, once per JVM
             poller.start();

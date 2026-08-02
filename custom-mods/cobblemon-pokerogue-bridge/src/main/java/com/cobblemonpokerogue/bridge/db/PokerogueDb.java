@@ -162,6 +162,25 @@ public final class PokerogueDb implements AutoCloseable {
     }
 
     /**
+     * Current armed-run credits for the account (for /pokerogue status).
+     *
+     * @return the credit count (0 when no row), or -1 when bridgeRunArming does not exist
+     *         (unpatched rogueserver — the caller reports the gate as inactive).
+     */
+    public synchronized int armedCredits(byte[] accountUuid) throws SQLException {
+        try (PreparedStatement ps = connection().prepareStatement(
+                "SELECT credits FROM bridgeRunArming WHERE uuid = ?")) {
+            ps.setBytes(1, accountUuid);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
+        } catch (SQLException e) {
+            if (isMissingTable(e)) return -1;
+            throw e;
+        }
+    }
+
+    /**
      * All numeric accountStats columns for the given usernames, keyed by lowercased username
      * then by column name (playTime, battles, classicSessionsPlayed, sessionsWon,
      * highestEndlessWave, highestLevel, pokemonSeen, pokemonDefeated, pokemonCaught,

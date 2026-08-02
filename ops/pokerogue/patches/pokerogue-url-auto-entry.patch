@@ -1,0 +1,137 @@
+diff --git a/src/main.ts b/src/main.ts
+index 39b06bf..d98644e 100644
+--- a/src/main.ts
++++ b/src/main.ts
+@@ -25,9 +25,16 @@ preventDoubleTapZoom();
+ // cookie from the fragment BEFORE any session check can run, then strip the
+ // token from the URL and history; the normal boot then finds the cookie and the
+ // player lands on the title screen already logged in.
+-const entryTokenMatch = /^#pt=(.+)$/.exec(window.location.hash);
++// §2.47 auto-verb: the bridge may append `&auto=new|resume` to the fragment.
++// Stash the verb in sessionStorage BEFORE the fragment is stripped; the first
++// TitlePhase menu after boot consumes it one-shot (see title-phase.ts). The
++// URL-encoded token can never contain a literal `&`, so `[^&]+` is exact.
++const entryTokenMatch = /^#pt=([^&]+)(?:&auto=(new|resume))?$/.exec(window.location.hash);
+ if (entryTokenMatch) {
+   setCookie(SESSION_ID_COOKIE_NAME, decodeURIComponent(entryTokenMatch[1]));
++  if (entryTokenMatch[2]) {
++    sessionStorage.setItem("cobblemon.entryAuto", entryTokenMatch[2]);
++  }
+   window.history.replaceState(null, "", window.location.pathname + window.location.search);
+ }
+ 
+diff --git a/src/phases/select-starter-phase.ts b/src/phases/select-starter-phase.ts
+index 8d0e7fc..e73105d 100644
+--- a/src/phases/select-starter-phase.ts
++++ b/src/phases/select-starter-phase.ts
+@@ -19,9 +19,17 @@ export class SelectStarterPhase extends Phase {
+ 
+     audioManager.playBgm("menu");
+ 
++    // cobblemon-server auto-verb patch (§2.47): when the run was started by the
++    // entry link's `auto=new` verb (flag set in title-phase.ts), the save-slot
++    // prompt after starter confirmation is auto-resolved to the FIRST EMPTY
++    // slot. The flag is consumed here unconditionally, so a cancelled starter
++    // select followed by a manual New Game behaves completely normally.
++    const autoSaveSlot = sessionStorage.getItem("cobblemon.autoSaveSlot") != null;
++    sessionStorage.removeItem("cobblemon.autoSaveSlot");
++
+     globalScene.ui.setMode(UiMode.STARTER_SELECT, (starters: Starter[]) => {
+       globalScene.ui.clearText();
+-      globalScene.ui.setMode(UiMode.SAVE_SLOT, SaveSlotUiMode.SAVE, (slotId: number) => {
++      const startWithSlot = (slotId: number) => {
+         // If clicking cancel, back out to title screen
+         if (slotId === -1) {
+           globalScene.phaseManager.toTitleScreen();
+@@ -30,10 +38,44 @@ export class SelectStarterPhase extends Phase {
+         }
+         globalScene.sessionSlotId = slotId;
+         this.initBattle(starters);
+-      });
++      };
++      if (autoSaveSlot) {
++        this.findFirstEmptySessionSlot().then(slotId => {
++          if (slotId != null) {
++            globalScene.ui.setMode(UiMode.MESSAGE);
++            startWithSlot(slotId);
++          } else {
++            // No empty slot (or a slot failed to load): show the normal picker.
++            globalScene.ui.setMode(UiMode.SAVE_SLOT, SaveSlotUiMode.SAVE, startWithSlot);
++          }
++        });
++        return;
++      }
++      globalScene.ui.setMode(UiMode.SAVE_SLOT, SaveSlotUiMode.SAVE, startWithSlot);
+     });
+   }
+ 
++  /**
++   * cobblemon-server auto-verb patch (§2.47): find the first session slot with
++   * no save data, mirroring `SessionSlot#load` (a slot that errors while
++   * loading is treated as occupied, like its `malformed` state).
++   * @returns The first empty slot ID, or `null` if all slots are occupied.
++   */
++  private async findFirstEmptySessionSlot(): Promise<number | null> {
++    // 5 = SESSION_SLOTS_COUNT in save-slot-select-ui-handler.ts (not exported)
++    for (let slotId = 0; slotId < 5; slotId++) {
++      try {
++        const sessionData = await globalScene.gameData.getSession(slotId);
++        if (!sessionData) {
++          return slotId;
++        }
++      } catch (err) {
++        console.warn(`Auto slot pick: failed to load session slot #${slotId}, treating as occupied:`, err);
++      }
++    }
++    return null;
++  }
++
+   /**
+    * Initialize starters before starting the first battle
+    * @param starters - Array of {@linkcode Starter}s with which to start the battle
+diff --git a/src/phases/title-phase.ts b/src/phases/title-phase.ts
+index e9e6e8f..0b58518 100644
+--- a/src/phases/title-phase.ts
++++ b/src/phases/title-phase.ts
+@@ -80,6 +80,41 @@ export class TitlePhase extends Phase {
+   }
+ 
+   private async showOptions(lastSessionSlot: number): Promise<void> {
++    // cobblemon-server auto-verb patch (§2.47): the entry link's `&auto=` verb
++    // (stashed by main.ts) is consumed ONE-SHOT the first time the title menu
++    // would show — cleared before acting, so quit-to-title later is normal.
++    const entryAuto = sessionStorage.getItem("cobblemon.entryAuto");
++    if (entryAuto != null) {
++      sessionStorage.removeItem("cobblemon.entryAuto");
++      if (entryAuto === "resume" && lastSessionSlot > NO_SAVE_SLOT) {
++        // Mimic the Continue option: load the last session slot directly.
++        this.loadSaveSlot(lastSessionSlot);
++        return;
++      }
++      // `resume` with no session falls through to the normal menu.
++      if (entryAuto === "new") {
++        // Mimic the New Game > Classic option, §2.46 pre-check included: a
++        // definite 0 credits shows the shrine message and falls through to
++        // the normal menu; anything else starts the run (starter select),
++        // with the save-slot prompt auto-resolved to the first empty slot
++        // (see select-starter-phase.ts).
++        const credits = await pokerogueApi.getBridgeArmedCredits();
++        if (credits === 0) {
++          await globalScene.ui.setMode(UiMode.MESSAGE);
++          globalScene.ui.clearText();
++          await globalScene.ui.showTextPromise(
++            "The Dream Machine requires an offering — pay at the shrine first.",
++          );
++        } else {
++          sessionStorage.setItem("cobblemon.autoSaveSlot", "1");
++          this.gameMode = GameModes.CLASSIC;
++          globalScene.ui.setMode(UiMode.MESSAGE);
++          globalScene.ui.clearText();
++          this.end();
++          return;
++        }
++      }
++    }
+     const options: OptionSelectItem[] = [];
+     // Add a "continue" menu if the session slot ID is >-1
+     if (lastSessionSlot > NO_SAVE_SLOT) {

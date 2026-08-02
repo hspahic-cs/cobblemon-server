@@ -24,9 +24,10 @@ SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 
 if [[ $WHAT == all || $WHAT == server ]]; then
   ( cd "$VENDOR/rogueserver"
-    # cobblemon-server patches: bridgeRunState mirror + §2.45 run-gate. Applied
-    # in sorted filename order — each patch is generated on top of the previous
-    # one, so the order is load-bearing. Restore-then-apply keeps this idempotent.
+    # cobblemon-server patches: bridgeRunState mirror + §2.45 run-gate + §2.46
+    # token-login/pre-check endpoints. Applied in sorted filename order — each
+    # patch is generated on top of the previous one, so the order is
+    # load-bearing. Restore-then-apply keeps this idempotent.
     git checkout -- .
     for p in "$SELF_DIR"/patches/rogueserver-*.patch; do
       git apply "$p"
@@ -52,6 +53,12 @@ if [[ $WHAT == all || $WHAT == frontend ]]; then
     # locales/, which the reskin applier restores).
     git checkout -- src/api/savedata-api.ts src/api/session-savedata-api.ts src/system/game-data.ts
     git apply "$SELF_DIR/patches/pokerogue-run-not-armed.patch"
+    # §2.46 token-login + New Game pre-check: seed the session cookie from the
+    # #pt= URL fragment at boot, and ask /bridge/armed before starting a new
+    # classic run. Generated on top of the cookie sed + run-not-armed patch —
+    # this order is load-bearing. Restore-then-apply, still ahead of the reskin.
+    git checkout -- src/main.ts src/api/api.ts src/phases/title-phase.ts
+    git apply "$SELF_DIR/patches/pokerogue-token-precheck.patch"
     # Server reskin (title/splashes/trainer names) — restore-then-merge, same
     # idempotence contract as the cookie patch. Overlays: ops/pokerogue/reskin/.
     python3 "$SELF_DIR/apply-reskin.py" .

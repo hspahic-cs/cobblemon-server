@@ -1637,6 +1637,20 @@ enforcement. Shared secret between bridge and rogueserver is minted by setup-vm.
 delegated to the build: rogueserver's username validation vs MC names (underscores) — verified
 against source, with a deterministic fallback mapping if needed.
 
+### 2.47 One session, one verb: auto-start and auto-resume, ruled 2026-08-02
+
+`/pokerogue enter` becomes the only session verb. Bridge-side routing before the link is minted:
+an **active session** (any sessionSaveData row for the account) → free resume link; **no session
+but an unspent armed credit** (paid earlier, abandoned before the first save) → free new-run
+link; **neither** → charge 5,000₽, arm, new-run link. The link's fragment carries the intent —
+`#pt=<token>&auto=new|resume` — and the frontend consumes it one-shot at the first TitlePhase:
+`resume` mimics Continue (latest slot), `new` mimics the Classic option (into starter select,
+save-slot prompt auto-resolved to the first empty slot). Quit-to-title afterwards behaves
+normally — the directive never re-fires. Single-session is enforced *economically*, not by UI
+lockout: a manual second New Game has no credit (enter refuses to arm while a session exists)
+and dies at the §2.45 save gate. Exiting the browser just leaves the save; ending the run pays
+per §2.45.
+
 **Open questions:**
 - *Account linking.* **RESOLVED by §2.46** (server-minted accounts). `/pokerogue link <username>` storing an MC↔account mapping is the shape;
   what proves ownership is not settled. On a small trusted server, first-come-first-served with

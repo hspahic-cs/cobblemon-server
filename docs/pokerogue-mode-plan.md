@@ -1649,7 +1649,12 @@ save-slot prompt auto-resolved to the first empty slot). Quit-to-title afterward
 normally — the directive never re-fires. Single-session is enforced *economically*, not by UI
 lockout: a manual second New Game has no credit (enter refuses to arm while a session exists)
 and dies at the §2.45 save gate. Exiting the browser just leaves the save; ending the run pays
-per §2.45.
+per §2.45. Amended same day after the first playtest: a **classic** run ending (game-over
+confirmed, session cleared) also **logs the browser out** — cookie cleared, token invalidated,
+a "return to the world" message, then back to the login screen — so the session's life is
+exactly fee-to-game-over and re-entry is always `/pokerogue enter`. Non-classic practice runs
+keep the vanilla end-of-run flow (they never went through the fee, and logout would strand
+manual-login practice players).
 
 **Open questions:**
 - *Account linking.* **RESOLVED by §2.46** (server-minted accounts). `/pokerogue link <username>` storing an MC↔account mapping is the shape;

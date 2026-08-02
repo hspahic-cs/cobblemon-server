@@ -12,6 +12,12 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.6] - 2026-08-03
+
+### Fixed
+- **Crate vouchers now actually grant.** TR / Held Item Voucher rewards from the Rare crate pointed at a non-existent item id (`cobblemon:tr_voucher`) and silently gave nothing. They now mint the real tagged voucher through the market grant command, via a new `command`-type gacha loot reward.
+- **Auto tournaments no longer stall after the first round.** A battle's result-routing marker was being cleared the moment the battle *started* (by the shared `cleanup()` at the end of `startBattle`), so the bracket never heard match outcomes and never scheduled the next round. The marker is now cleared only where a match actually terminates.
+
 ## [0.35.5] - 2026-08-03
 
 ### Changed

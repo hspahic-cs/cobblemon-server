@@ -279,6 +279,18 @@ object LootTableLoader {
                     obj.addProperty("level", src.level)
                     obj.addProperty("count", src.count)
                 }
+                is ItemSpec.Command -> {
+                    obj.addProperty("type", "command")
+                    obj.addProperty("command", src.command)
+                    obj.addProperty("count", src.count)
+                    obj.addProperty("displayItem", src.displayItem)
+                    src.displayName?.let { obj.addProperty("displayName", it) }
+                    if (src.loreLines.isNotEmpty()) {
+                        val arr = com.google.gson.JsonArray()
+                        src.loreLines.forEach(arr::add)
+                        obj.add("loreLines", arr)
+                    }
+                }
             }
             return obj
         }
@@ -314,6 +326,13 @@ object LootTableLoader {
                     enchantment = obj["enchantment"].asString,
                     level = obj["level"]?.asInt ?: 1,
                     count = obj["count"]?.asInt ?: 1,
+                )
+                "command" -> ItemSpec.Command(
+                    command = obj["command"].asString,
+                    count = obj["count"]?.asInt ?: 1,
+                    displayItem = obj["displayItem"]?.takeIf { !it.isJsonNull }?.asString ?: "minecraft:paper",
+                    displayName = obj["displayName"]?.takeIf { !it.isJsonNull }?.asString,
+                    loreLines = obj["loreLines"]?.takeIf { !it.isJsonNull }?.asJsonArray?.map { it.asString } ?: emptyList(),
                 )
                 else -> error("unknown ItemSpec type: ${obj["type"]}")
             }

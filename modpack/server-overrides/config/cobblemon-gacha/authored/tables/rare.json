@@ -264,10 +264,11 @@
       "weightPct": 3.9,
       "items": [
         {
-          "type": "placeholder",
-          "kind": "voucher",
-          "label": "TR Voucher",
-          "count": 1
+          "type": "command",
+          "command": "market tm_voucher grant {player} {count}",
+          "count": 1,
+          "displayItem": "minecraft:paper",
+          "displayName": "\u00a7b\u00a7lTR Voucher"
         }
       ],
       "notes": "Exchange for a random TR at the Trading Post"
@@ -278,10 +279,11 @@
       "weightPct": 2.9,
       "items": [
         {
-          "type": "placeholder",
-          "kind": "voucher",
-          "label": "Held Item Voucher",
-          "count": 1
+          "type": "command",
+          "command": "market held_item_voucher grant {player} {count}",
+          "count": 1,
+          "displayItem": "minecraft:paper",
+          "displayName": "\u00a7a\u00a7lHeld Item Voucher"
         }
       ],
       "notes": "Exchange for a random held item at the Trading Post"

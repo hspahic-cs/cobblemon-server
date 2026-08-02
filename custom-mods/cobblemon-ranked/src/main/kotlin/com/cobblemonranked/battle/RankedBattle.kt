@@ -1068,8 +1068,11 @@ object RankedBattleManager {
         autoSelections.remove(uuid2)
         autoReopenQueue.remove(uuid1)
         autoReopenQueue.remove(uuid2)
-        autoBattlePlayers.remove(uuid1)
-        autoBattlePlayers.remove(uuid2)
+        // NOTE: do NOT clear autoBattlePlayers here. cleanup() runs at the END of startBattle (to
+        // drop the team-select state) while the battle is now LIVE — clearing it here would erase
+        // the result-routing marker before the battle ends, so the auto-bracket would never hear
+        // the outcome and would stall after the first round. It's cleared exactly where the match
+        // terminates: resolveMatch() on a real result, or autoVoidAdvance() on a pre-battle void.
     }
 
     /**

@@ -1,0 +1,46 @@
+diff --git a/src/phases/post-game-over-phase.ts b/src/phases/post-game-over-phase.ts
+index 97e9a6c..adccecf 100644
+--- a/src/phases/post-game-over-phase.ts
++++ b/src/phases/post-game-over-phase.ts
+@@ -1,6 +1,11 @@
++import { pokerogueApi } from "#api/api";
++import { SESSION_ID_COOKIE_NAME } from "#app/constants";
+ import { globalScene } from "#app/global-scene";
+ import { Phase } from "#app/phase";
++import { bypassLogin } from "#constants/app-constants";
++import { UiMode } from "#enums/ui-mode";
+ import type { EndCardPhase } from "#phases/end-card-phase";
++import { removeCookie } from "#utils/cookies";
+ 
+ export class PostGameOverPhase extends Phase {
+   public readonly phaseName = "PostGameOverPhase";
+@@ -25,6 +30,29 @@ export class PostGameOverPhase extends Phase {
+           if (!success) {
+             return globalScene.reset(true);
+           }
++          // cobblemon-server logout patch (§2.47 amendment): a CLASSIC run's
++          // end (victory or defeat) is the end of the browser session. The
++          // session row was cleared just above — the §2.45 payout signals have
++          // already fired server-side — so log out (the API call also removes
++          // the session cookie), tell the player, and reload so the app boots
++          // to the login screen. Re-entry is always `/pokerogue enter`. This
++          // phase is only ever reached from GameOverPhase's confirmed game
++          // over, never from mid-run saves or quit-to-title. Non-classic
++          // (practice) runs and bypass-login dev builds keep the vanilla
++          // back-to-title flow.
++          if (globalScene.gameMode.isClassic && !bypassLogin) {
++            pokerogueApi.account.logout().then(async () => {
++              removeCookie(SESSION_ID_COOKIE_NAME); // logout() clears it too; explicit so a failed request can't strand the cookie
++              await globalScene.ui.setMode(UiMode.MESSAGE);
++              globalScene.ui.clearText();
++              globalScene.ui.fadeIn(250);
++              await globalScene.ui.showTextPromise(
++                "The dream is over. Return to the world — /pokerogue enter begins the next one.",
++              );
++              window.location.reload();
++            });
++            return;
++          }
+           globalScene.reset();
+           globalScene.phaseManager.unshiftNew("TitlePhase");
+           this.end();

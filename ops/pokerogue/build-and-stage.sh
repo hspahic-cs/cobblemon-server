@@ -67,6 +67,14 @@ if [[ $WHAT == all || $WHAT == frontend ]]; then
     # select-starter-phase.ts needs restoring here.
     git checkout -- src/phases/select-starter-phase.ts
     git apply "$SELF_DIR/patches/pokerogue-url-auto-entry.patch"
+    # §2.47 amendment (wake-on-run-end): a CLASSIC run ending — victory or
+    # defeat, after the session clear so the §2.45 payout signals are
+    # untouched — logs the browser out (logout API + cookie removal), shows a
+    # "return to the world" message, then reloads to the login screen.
+    # Generated on top of the url-auto-entry patch — this order is
+    # load-bearing. Restore-then-apply, still ahead of the reskin.
+    git checkout -- src/phases/post-game-over-phase.ts
+    git apply "$SELF_DIR/patches/pokerogue-wake-on-run-end.patch"
     # Server reskin (title/splashes/trainer names) — restore-then-merge, same
     # idempotence contract as the cookie patch. Overlays: ops/pokerogue/reskin/.
     python3 "$SELF_DIR/apply-reskin.py" .

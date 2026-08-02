@@ -1633,7 +1633,13 @@ fragment; the frontend reads it, sets the session cookie, strips the fragment �
 already logged in, so the only advertised path into a run is the paid one. The frontend also
 gains the **courtesy pre-check** (an authed credits endpoint consulted at New Game) so an unarmed
 player is told at the button, not a wave in; save-time 402 rejection stays the actual
-enforcement. Shared secret between bridge and rogueserver is minted by setup-vm.sh. Known edge
+enforcement. Shared secret between bridge and rogueserver is minted by setup-vm.sh.
+Amended 2026-08-02 after the auth review: `/account/register` itself is **walled behind the same
+secret** (fail-closed when unset) — the bridge is the only account mint, which closes the last
+squatting path (pre-registering someone's MC name via the portal). Verified live: portal
+register → 403 "accounts are created in-game"; the save-time §2.45 gate was also verified
+empirically against a manually-logged-in creditless account (402), and OAuth callbacks confirmed
+dead (redirect to home, unauthenticated; client IDs null). Known edge
 delegated to the build: rogueserver's username validation vs MC names (underscores) — verified
 against source, with a deterministic fallback mapping if needed.
 

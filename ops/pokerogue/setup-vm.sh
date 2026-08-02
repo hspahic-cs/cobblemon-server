@@ -34,6 +34,12 @@ if [[ -f $ENVFILE ]]; then
 else
   DBPASS=$(openssl rand -hex 24)
 fi
+
+# §2.46 token-login: shared secret between the MC reward bridge and rogueserver's
+# /bridge/minttoken endpoint. Minted once, then reused from the env file so
+# re-runs never invalidate the bridge's copy.
+BRIDGE_TOKEN_SECRET=$(grep '^bridgetokensecret=' "$ENVFILE" 2>/dev/null | cut -d= -f2- || true)
+[[ -n $BRIDGE_TOKEN_SECRET ]] || BRIDGE_TOKEN_SECRET=$(openssl rand -hex 32)
 mysql <<SQL
 CREATE DATABASE IF NOT EXISTS pokeroguedb;
 CREATE USER IF NOT EXISTS 'pokerogue'@'localhost' IDENTIFIED BY '$DBPASS';
@@ -47,10 +53,13 @@ SQL
 # into config/cobblemon-pokerogue-bridge/config.json.
 BRIDGE_CRED=/home/sysadmin/pokerogue-bridge-db.txt
 if [[ -f $BRIDGE_CRED ]]; then
-  BPASS=$(cut -d: -f2 < "$BRIDGE_CRED")
+  # File may carry more lines than the DB credential (see bridge_token_secret
+  # below) — pick the right line, tolerating the original single-line format.
+  BPASS=$(grep '^pokerogue_bridge:' "$BRIDGE_CRED" | cut -d: -f2- || true)
 else
   BPASS=$(openssl rand -hex 24)
 fi
+[[ -n $BPASS ]] || BPASS=$(openssl rand -hex 24)
 mysql <<SQL
 CREATE USER IF NOT EXISTS 'pokerogue_bridge'@'localhost' IDENTIFIED BY '$BPASS';
 ALTER USER 'pokerogue_bridge'@'localhost' IDENTIFIED BY '$BPASS';
@@ -67,6 +76,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON pokeroguedb.bridgeRunArming TO 'pokerogu
 FLUSH PRIVILEGES;
 SQL
 printf 'pokerogue_bridge:%s\n' "$BPASS" > "$BRIDGE_CRED"
+# §2.46: hand the token-mint secret to the bridge alongside the DB credential
+# (same sysadmin-readable file). Replace any existing line rather than duplicate.
+printf 'bridge_token_secret:%s\n' "$BRIDGE_TOKEN_SECRET" >> "$BRIDGE_CRED"
 chown sysadmin:sysadmin "$BRIDGE_CRED"
 chmod 600 "$BRIDGE_CRED"
 
@@ -92,6 +104,7 @@ dbproto=tcp
 dbaddr=localhost
 dbname=pokeroguedb
 gameurl=$GAME_ORIGIN
+bridgetokensecret=$BRIDGE_TOKEN_SECRET
 EOF
 chmod 600 "$ENVFILE"
 

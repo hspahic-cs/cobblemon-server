@@ -1,0 +1,24 @@
+diff --git a/api/endpoints.go b/api/endpoints.go
+index 173fe79..ba3f34c 100644
+--- a/api/endpoints.go
++++ b/api/endpoints.go
+@@ -83,6 +83,19 @@ func handleAccountInfo(w http.ResponseWriter, r *http.Request) {
+ }
+ 
+ func handleAccountRegister(w http.ResponseWriter, r *http.Request) {
++	// cobblemon-server patch (§2.46 follow-up): accounts are minted only by the MC
++	// bridge — registration requires the shared secret. Fail-closed when unset.
++	if BridgeTokenSecret == "" {
++		http.Error(w, "account registration is disabled", http.StatusServiceUnavailable)
++		return
++	}
++	provided := sha256.Sum256([]byte(r.Header.Get("X-Bridge-Secret")))
++	expected := sha256.Sum256([]byte(BridgeTokenSecret))
++	if subtle.ConstantTimeCompare(provided[:], expected[:]) != 1 {
++		http.Error(w, "accounts are created in-game", http.StatusForbidden)
++		return
++	}
++
+ 	err := account.Register(db.Store, r.PostFormValue("username"), r.PostFormValue("password"))
+ 	if err != nil {
+ 		httpError(w, r, err, http.StatusInternalServerError)

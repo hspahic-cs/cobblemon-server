@@ -62,6 +62,9 @@ public final class RogueserverApi {
         try {
             response = send(HttpRequest.newBuilder(URI.create(apiBase + "/account/register"))
                     .timeout(Duration.ofSeconds(10))
+                    // Registration is walled behind the shared secret (§2.46 follow-up):
+                    // the bridge is the only place accounts are minted.
+                    .header("X-Bridge-Secret", tokenSecret)
                     .header("Content-Type", "application/x-www-form-urlencoded")
                     .POST(HttpRequest.BodyPublishers.ofString(form("username", username, "password", password)))
                     .build());

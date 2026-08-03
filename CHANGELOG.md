@@ -12,6 +12,30 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.3] - 2026-08-03
+
+### Fixed
+- **A moderator's `[Mod]` tag vanished from the tablist while they had a
+  PokéRogue dream run going**, and came back when the run ended. This one was
+  ours, not NeoEssentials'.
+
+  `DreamingPresence` appends a wave marker to the tab-list name via
+  `PlayerEvent.TabListNameFormat`. When no other mod had already set a display
+  name it fell back to the bare `getEntity().getName()` — but **setting a
+  tab-list display name makes the client render it verbatim and skip scoreboard
+  team decoration entirely**, and team prefix/suffix is exactly how NeoEssentials
+  paints the rank tag (`TablistManager.updatePlayerTeam`). So the dream marker
+  silently overwrote the rank tag for the duration of the run.
+
+  The fallback now goes through `PlayerTeam.formatNameForTeam`, the same helper
+  vanilla uses when no display name is set, so the tag is reproduced and the wave
+  marker appended to it. Players on no team are unaffected — it returns the name
+  unchanged.
+
+  Worth noting the shape of this bug: it only surfaced because two features that
+  never reference each other both want the last word on one string. Anything else
+  that sets a tab-list display name will knock the rank tag out the same way.
+
 ## [0.35.2] - 2026-08-03
 
 ### Fixed

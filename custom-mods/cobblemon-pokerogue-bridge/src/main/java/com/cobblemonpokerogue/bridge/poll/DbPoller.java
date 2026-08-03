@@ -68,6 +68,20 @@ public final class DbPoller implements AutoCloseable {
         exec.execute(task);
     }
 
+    /**
+     * Fixed-rate task on the poller thread (same single-threaded DB-access rule as
+     * {@link #submit}), wrapped so no exception can kill the schedule.
+     */
+    public void scheduleRepeating(Runnable task, long periodSeconds) {
+        exec.scheduleAtFixedRate(() -> {
+            try {
+                task.run();
+            } catch (Throwable t) {
+                LOGGER.error("scheduled task failed unexpectedly", t);
+            }
+        }, periodSeconds, periodSeconds, TimeUnit.SECONDS);
+    }
+
     @Override
     public void close() {
         exec.shutdownNow();

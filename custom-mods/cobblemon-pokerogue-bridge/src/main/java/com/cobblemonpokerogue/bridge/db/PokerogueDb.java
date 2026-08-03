@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Access to the self-hosted rogueserver MariaDB ({@code pokeroguedb}) — read-only except for
- * the single {@link #armRun} write to {@code bridgeRunArming} (the DB user's grants match).
+ * the {@link #armRun} write to {@code bridgeRunArming} and the {@link #syncDexWhitelist}
+ * append to {@code bridgeDexWhitelist} (the DB user's grants match).
  *
  * <p>Single connection, owned and used exclusively by the poller thread (link validation is
  * routed onto the same executor), recreated lazily after failures. DriverManager is
@@ -166,6 +167,53 @@ public final class PokerogueDb implements AutoCloseable {
     }
 
     /**
+     * Appends species ids (national dex numbers) to {@code bridgeDexWhitelist} for the account —
+     * the OTHER table this otherwise SELECT-only user may write (plan §2.49 dex-locked dreams;
+     * the patched rogueserver's glimpse filter reads it). INSERT IGNORE because the whitelist is
+     * append-only: a server catch cannot be undone, and retries after failures must be free.
+     *
+     * @return true when written; false when the table does not exist yet (setup-vm.sh not
+     *         re-run — warned once; the feeder leaves the ids unmarked so it keeps retrying
+     *         and starts working the moment the table appears).
+     * @throws SQLException on any other failure (caller retries on the next feed).
+     */
+    public synchronized boolean syncDexWhitelist(byte[] accountUuid, Collection<Integer> speciesIds)
+            throws SQLException {
+        if (speciesIds.isEmpty()) return true;
+        Connection c = connection();
+        try {
+            c.setReadOnly(false);
+            try (PreparedStatement ps = c.prepareStatement(
+                    "INSERT IGNORE INTO bridgeDexWhitelist (uuid, speciesId) VALUES (?, ?)")) {
+                for (int id : speciesIds) {
+                    ps.setBytes(1, accountUuid);
+                    ps.setInt(2, id);
+                    ps.addBatch();
+                }
+                ps.executeBatch();
+                return true;
+            }
+        } catch (SQLException e) {
+            if (isMissingTable(e)) {
+                if (!warnedNoWhitelistTable) {
+                    LOGGER.warn("bridgeDexWhitelist table not found — setup-vm.sh predates the glimpse"
+                            + " patch; the dex feeder retries quietly until it exists");
+                    warnedNoWhitelistTable = true;
+                }
+                return false;
+            }
+            throw e;
+        } finally {
+            try {
+                c.setReadOnly(true);
+            } catch (SQLException reset) {
+                // A connection that cannot restore read-only is not worth keeping.
+                invalidate();
+            }
+        }
+    }
+
+    /**
      * Current armed-run credits for the account (for /dream status).
      *
      * @return the credit count (0 when no row), or -1 when bridgeRunArming does not exist
@@ -278,6 +326,7 @@ public final class PokerogueDb implements AutoCloseable {
     private boolean hasPartyColumn = true;
     private boolean warnedNoCompletionsTable = false;
     private boolean warnedNoArmingTable = false;
+    private boolean warnedNoWhitelistTable = false;
 
     /**
      * bridgeRunState rows for the given usernames, or NULL when the table does not exist —

@@ -40,6 +40,12 @@ fi
 # re-runs never invalidate the bridge's copy.
 BRIDGE_TOKEN_SECRET=$(grep '^bridgetokensecret=' "$ENVFILE" 2>/dev/null | cut -d= -f2- || true)
 [[ -n $BRIDGE_TOKEN_SECRET ]] || BRIDGE_TOKEN_SECRET=$(openssl rand -hex 32)
+
+# §2.49 dex-locked dreams gate (rogueserver-side glimpse filter). Preserved across
+# re-runs; flip it in $ENVFILE (then restart rogueserver) — default off until the
+# build is verified. The bridge mod has its own matching flag (dexLockedDreams).
+DEXLOCKED=$(grep '^dexlockeddreams=' "$ENVFILE" 2>/dev/null | cut -d= -f2- || true)
+[[ -n $DEXLOCKED ]] || DEXLOCKED=false
 mysql <<SQL
 CREATE DATABASE IF NOT EXISTS pokeroguedb;
 CREATE USER IF NOT EXISTS 'pokerogue'@'localhost' IDENTIFIED BY '$DBPASS';
@@ -73,6 +79,16 @@ CREATE TABLE IF NOT EXISTS pokeroguedb.bridgeRunArming (
   updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 GRANT SELECT, INSERT, UPDATE, DELETE ON pokeroguedb.bridgeRunArming TO 'pokerogue_bridge'@'localhost';
+-- §2.49 dex-locked dreams: the bridge appends linked players' server-dex CAUGHT species
+-- (national dex numbers) here; the patched rogueserver's glimpse filter reads it.
+-- Append-only contract, so the grant is INSERT (+SELECT) — no UPDATE/DELETE.
+CREATE TABLE IF NOT EXISTS pokeroguedb.bridgeDexWhitelist (
+  uuid BINARY(16) NOT NULL,
+  speciesId INT NOT NULL,
+  createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (uuid, speciesId)
+);
+GRANT SELECT, INSERT ON pokeroguedb.bridgeDexWhitelist TO 'pokerogue_bridge'@'localhost';
 FLUSH PRIVILEGES;
 SQL
 printf 'pokerogue_bridge:%s\n' "$BPASS" > "$BRIDGE_CRED"
@@ -105,6 +121,7 @@ dbaddr=localhost
 dbname=pokeroguedb
 gameurl=$GAME_ORIGIN
 bridgetokensecret=$BRIDGE_TOKEN_SECRET
+dexlockeddreams=$DEXLOCKED
 EOF
 chmod 600 "$ENVFILE"
 

@@ -1734,6 +1734,39 @@ feature and where the testing budget goes.
 - Regional-form starters activate at **base-species level** — confirmed acceptable.
 - Rollout stays config-gated (`dexLockedDreams`, default off) until the build is verified.
 
+**Built 2026-08-02** (integration verify on dev still pending):
+- *Bridge feeder* (`dex/DexFeeder` in the bridge mod, gated by `dexLockedDreams` in
+  config.json): capture-event push + login snapshot + reconcile sweep of online linked
+  players on the poll cadence (covers starter/evolution/hatch/trade without per-event
+  hooks). Species map to national dex numbers (`id % 2000` convention); writes are
+  INSERT IGNORE into `bridgeDexWhitelist` — append-only, so retries and re-pushes are free.
+  setup-vm.sh creates the table and grants the bridge user SELECT+INSERT only.
+- *rogueserver patch* `rogueserver-whitelist-glimpse.patch` (5th in the stack), env-gated
+  by `dexlockeddreams` in rogueserver.env (preserved across setup-vm re-runs, default
+  false). Serving (`get` + `verify`) filters a COPY — masked entries zeroed, never
+  deleted (frontend shape contract) — and stamps the serve time into
+  `appliedMigrators["cobblemonGlimpse"]`, which the client round-trips verbatim and
+  ValidMigrators tolerates (extra incoming keys pass).
+- *The lossless merge* hangs on that marker: on write, a marked save's serve-time mask is
+  reconstructed from `bridgeDexWhitelist.createdAt <= servedAt` — restart-proof, and it
+  kills the mid-session-activation clobber (a species activated after the serve still
+  merges as masked, so the client's zeroed base can't erase the bank). Masked species
+  union: attr bitmasks OR (math/big — attrs exceed int64 and travel as decimal strings),
+  counters SUM, IVs element-wise MAX, ClassicWinCount/ValueReduction MAX, banked moveset
+  kept over nil. Unmarked saves are client-authoritative (matches what was served: the
+  gate-off and fail-open paths never stamp). Serve fails OPEN, write fails CLOSED; the
+  marker is stripped on every store — even gate-off — so it can never poison
+  ValidMigrators. Baseline (27 standard trio starters, verified against the vendored
+  frontend's `defaultStarterSpecies`) is always visible.
+- *Tests*: 9-case suite in the patch itself (`api/savedata/glimpse_test.go`, run
+  `go test ./api/savedata/` after applying) — round-trip losslessness, masked-accrual
+  union, mid-session activation, candy-spend on activated species, omitted keys,
+  attr-type coercion.
+- *Known v1 quirks, accepted*: a hatch of a masked species is selectable client-side
+  until the next serve re-filters (the §2.47 fee→game-over→logout loop makes the next
+  entry a fresh serve anyway); the admin search endpoint serves the true blob (unused on
+  our instance).
+
 ## 3. Preliminary plan
 
 The original three-phase plan described a ten-wave vertical slice, and §2.19's 200-wave decision

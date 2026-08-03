@@ -52,6 +52,13 @@ public final class BridgeConfig {
     /** One unpaid /dream entry per player per ISO week — the newcomer's taste of the mode. */
     public boolean weeklyFreeRun = true;
     /**
+     * §2.49 dex-locked dreams rollout gate (default OFF until the build is verified). When on,
+     * the bridge feeds linked players' server-dex CAUGHT species into bridgeDexWhitelist for
+     * the patched rogueserver's glimpse filter. Enforcement is rogueserver-side; this flag
+     * only controls the feeder.
+     */
+    public boolean dexLockedDreams = false;
+    /**
      * Repeatable classic payout: wave threshold -> pokemon-crate key count. Only the DEEPEST
      * band reached pays (not cumulative), via `gacha grant`. Values are §2.45's, marked (tune).
      */

@@ -71,10 +71,15 @@ public final class CobblemonPokerogueBridge {
             RogueserverApi api = new RogueserverApi(config.apiBase, config.tokenSecret);
             RunTracker tracker = new RunTracker();
             DbPoller poller = new DbPoller(event.getServer(), config, links, db, tracker, milestones);
-            services = new BridgeServices(config, links, db, api, tracker, milestones, journal, freeRuns, poller, event.getServer());
+            com.cobblemonpokerogue.bridge.dex.DexFeeder dexFeeder =
+                    new com.cobblemonpokerogue.bridge.dex.DexFeeder(event.getServer(), config, links, db, poller);
+            services = new BridgeServices(config, links, db, api, tracker, milestones, journal, freeRuns,
+                    poller, dexFeeder, event.getServer());
             initPresentation(config, links, journal, dir);
             com.cobblemonpokerogue.bridge.payout.PayoutEngine.init(); // self-guarded, once per JVM
+            com.cobblemonpokerogue.bridge.dex.DexFeeder.init();       // ditto (§2.49 glimpse feeder)
             poller.start();
+            if (config.dexLockedDreams) dexFeeder.start();
         } catch (IOException | RuntimeException e) {
             LOGGER.error("PokeRogue bridge failed to initialize — the bridge is DISABLED this session", e);
             services = null;

@@ -25,7 +25,8 @@ SELF_DIR="$(cd "$(dirname "$0")" && pwd)"
 if [[ $WHAT == all || $WHAT == server ]]; then
   ( cd "$VENDOR/rogueserver"
     # cobblemon-server patches: bridgeRunState mirror + §2.45 run-gate + §2.46
-    # token-login/pre-check endpoints. Applied in sorted filename order — each
+    # token-login/pre-check endpoints + §2.46 walled register + §2.49 whitelist
+    # glimpse (dex-locked dreams). Applied in sorted filename order — each
     # patch is generated on top of the previous one, so the order is
     # load-bearing. Restore-then-apply keeps this idempotent.
     git checkout -- .

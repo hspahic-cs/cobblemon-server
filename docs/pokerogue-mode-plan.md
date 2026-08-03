@@ -1782,6 +1782,26 @@ server-side: hidden candies/caughtAttr intact, marker stripped), and server-catc
   entry a fresh serve anyway); the admin search endpoint serves the true blob (unused on
   our instance).
 
+### 2.50 One stack per server: the :8000 stack is PROD's, ruled 2026-08-03
+
+Merging to main put the bridge jar on both MC servers, which surfaced a design
+assumption: **one PokéRogue stack serves one MC server.** Two bridges sharing a stack
+superimpose on the same dream accounts (MC usernames are Mojang-unique, so dev and prod
+map to one account): the whitelist becomes the permanent union of both servers' dexes
+(dev `/pokespawn` tests would pre-activate prod glimpses), armed-run credits are
+per-account so dev play-money arms prod runs (fee arbitrage), and per-instance
+milestone/payout state pays every run twice.
+
+**Ruling: the existing, publicly exposed :8000 stack belongs to PROD.** Executed same
+day: 0.34.0 promoted to prod with the bridge pre-configured (real DB credentials +
+token secret, `dexLockedDreams` on); the pokerogue DB snapshotted
+(`/opt/snapshots/pokeroguedb-pre-prod-launch-*.sql.gz`) and wiped to a clean launch
+state; the dev bridge neutralized (placeholder credentials, empty token secret, gate
+off, links file retired) until dev gets its own stack on a separate port — future work,
+which will need setup-vm.sh parameterized for a second instance. Prod's shrine/
+leaderboard/journal-wall anchors and milestones.json are unset — operator content, to
+be placed in the prod world when ready.
+
 ## 3. Preliminary plan
 
 The original three-phase plan described a ten-wave vertical slice, and §2.19's 200-wave decision

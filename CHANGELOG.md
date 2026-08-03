@@ -13,6 +13,18 @@ root README.
 ## [Unreleased]
 
 ### Added
+- **PokéRogue bridge mod in the deploy pipeline** (`cobblemon-pokerogue-bridge`,
+  server-only). The `/dream` reward bridge — including the §2.49 glimpse system
+  (dex-locked dreams: dream unlocks stay dormant until the species is caught on
+  the server, shown greyed in starter select) — now builds and ships with every
+  dev deploy instead of being a hand-installed jar the deploy sweep destroys.
+  Its runtime config (`config/cobblemon-pokerogue-bridge/` — player links,
+  generated account passwords, live DB credentials, `dexLockedDreams` flag) is
+  deliberately unauthored so the non-destructive config overlay never touches
+  it. The dead MCEF client spike moved to `reference/cobblemon-pokerogue-client`
+  so the pipeline can never ship it to clients. The rogueserver/frontend side of
+  the glimpse system stays outside CI/CD by design — it deploys via
+  `ops/pokerogue/build-and-stage.sh` + `setup-vm.sh` (patch stack, §2.44).
 - **Server-wide loot tier list** (`docs/loot-tiers.md`, generated from
   `ops/loot-tiers/`). A canonical T0–T5 rarity ladder covering 433 items, so new
   games, quests, crates and rewards can be priced against what already exists

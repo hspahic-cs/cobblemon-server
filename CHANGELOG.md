@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.1] - 2026-08-03
+
 ### Fixed
 - **Admins got a red "⚑ ADMIN PANEL ⚑" tablist instead of the server stats.**
   `tablist.json` now pins `"groups": {}`.
@@ -29,7 +31,6 @@ root README.
   `layout` into `tablist.json`. Only `groups` is pinned here because it's the one
   causing visible harm; the rest are recorded in the config comment so the next
   surprise is easier to trace. `chat.json` was checked and had nothing injected.
-
 
 ## [0.35.0] - 2026-08-02
 

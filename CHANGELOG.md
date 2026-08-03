@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.34.0] - 2026-08-02
+
 ### Added
 - **PokéRogue bridge mod in the deploy pipeline** (`cobblemon-pokerogue-bridge`,
   server-only). The `/dream` reward bridge — including the §2.49 glimpse system

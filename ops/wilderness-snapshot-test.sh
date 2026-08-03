@@ -9,7 +9,7 @@
 #
 # Prereqs: the NEW cobblemon-wilderness jar is already deployed to dev and the server has
 # booted on it once (so the config migration has added the backup* fields). Run AS sysadmin:
-#   ssh -i ~/.ssh/id_ed25519 sysadmin@192.168.1.20 'bash -s' < ops/wilderness-snapshot-test.sh
+#   ssh cobblemon 'bash -s' < ops/wilderness-snapshot-test.sh
 set -euo pipefail
 
 DIR="/opt/cobblemon-dev"

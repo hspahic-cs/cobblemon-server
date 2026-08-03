@@ -78,6 +78,15 @@ root README.
   fail *open* on a missing class, so a moved API would have degraded silently
   rather than erroring.
 
+- **Rank colour bled into the tablist's rotating stats line.** `groupColors` is
+  now empty. It's applied inside `TablistManager.applyPlaceholders()`, which also
+  runs over the tablist header and footer — so a populated map tinted the server
+  stats at the top of the player list with the viewer's rank colour.
+
+  Rank colour should appear in exactly two places: the `[Admin]`/`[Mod]` tag
+  beside the player's name, and the same tag in chat. Both come from the group
+  prefix and `chat.json`'s `chat-format`, so `groupColors` was redundant on top
+  of `{prefix}` in `playerFormat` even before it caused this.
 - **Documented `/permissions` commands that don't exist.** `docs/staff-roles.md`
   and `ops/apply-staff-groups.sh`'s own completion message both told operators to
   run `permissions groups`, `permissions users`, `permissions group <g> info` and

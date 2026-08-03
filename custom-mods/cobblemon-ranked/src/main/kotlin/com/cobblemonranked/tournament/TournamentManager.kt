@@ -148,6 +148,17 @@ object TournamentManager {
     fun resolveRoster(player: ServerPlayer): List<Pokemon>? {
         val entry = entries[player.uuid] ?: return null
         entry.rentalTeamId?.let { id ->
+            // Player drafts resolve per-player and rebuild fresh each match — an edit mid-tournament
+            // simply changes the roster from the next match on (accepted in the drafts plan doc).
+            if (id.startsWith(com.cobblemonranked.rental.DraftTeams.ID_PREFIX)) {
+                val draft = com.cobblemonranked.rental.DraftTeams.byId(player.uuid, id) ?: return null
+                return try {
+                    com.cobblemonranked.rental.DraftTeams.build(draft)
+                } catch (e: Exception) {
+                    CobblemonRanked.logger.error("Failed to build draft roster '$id' for ${player.name.string}", e)
+                    null
+                }
+            }
             val team = com.cobblemonranked.rental.RentalTeams.byId(id) ?: return null
             return try {
                 com.cobblemonranked.rental.RentalTeams.build(team)

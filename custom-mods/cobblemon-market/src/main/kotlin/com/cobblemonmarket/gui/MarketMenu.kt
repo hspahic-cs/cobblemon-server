@@ -10,6 +10,7 @@ import com.cobblemonmarket.config.effectiveSellClamp
 import com.cobblemonmarket.config.isSellable
 import com.cobblemonmarket.config.vendorScope
 import com.cobblemonmarket.economy.EconomyBridge
+import com.cobblemonmarket.economy.DraftSlotBridge
 import com.cobblemonmarket.economy.HomeUpgradeBridge
 import com.cobblemonmarket.economy.TradeOps
 import com.cobblemonmarket.economy.TradeResult
@@ -84,6 +85,8 @@ object MarketMenu {
 
     /** Content slot the Upgrades tab renders the "extra home slot" purchase into (row 2, center). */
     private const val HOME_UPGRADE_SLOT = 22
+    /** Content slot for the "draft team slot" purchase (row 2, right of the home upgrade). */
+    private const val DRAFT_UPGRADE_SLOT = 24
 
     /** Price of a player's first purchased home slot (beyond the free baseline). */
     private const val FIRST_EXTRA_HOME_PRICE = 100_000
@@ -261,6 +264,7 @@ object MarketMenu {
         } else {
             // Upgrades tab: render the buyable account perks.
             container.setItem(HOME_UPGRADE_SLOT, homeUpgradeStack(player))
+            container.setItem(DRAFT_UPGRADE_SLOT, draftUpgradeStack(player))
         }
 
         // Nav arrows: only fill slots where there's a page to go to.
@@ -440,6 +444,71 @@ object MarketMenu {
         return stack
     }
 
+    private fun draftUpgradeStack(player: ServerPlayer): ItemStack {
+        val stack = ItemStack(Items.WRITABLE_BOOK)
+        val lore = mutableListOf<MutableComponent>()
+        val owned = DraftSlotBridge.ownedSlots(player.uuid)
+        val max = DraftSlotBridge.maxSlots()
+        if (owned == null || max == null) {
+            stack.set(DataComponents.CUSTOM_NAME, line("§7Draft Team Slot"))
+            lore += line("§cUpgrades are temporarily unavailable.")
+            stack.set(DataComponents.LORE, ItemLore(lore.map { it as Component }))
+            return stack
+        }
+        stack.set(DataComponents.CUSTOM_NAME, line("§b✦ Draft Team Slot"))
+        lore += line("§7A permanent slot for a custom rental")
+        lore += line("§7team — see §f/ranked draft§7.")
+        lore += line("")
+        lore += line("§7Slots owned: §f$owned§7/§f$max")
+        if (owned >= max) {
+            lore += line("§cYou own the maximum number of slots.")
+        } else {
+            lore += line("§ePrice: §f\$${DraftSlotBridge.slotCost(owned) ?: "?"}")
+            lore += line("")
+            lore += line("§8Left-click to purchase.")
+        }
+        stack.set(DataComponents.LORE, ItemLore(lore.map { it as Component }))
+        return stack
+    }
+
+    private fun purchaseDraftSlot(player: ServerPlayer) {
+        val owned = DraftSlotBridge.ownedSlots(player.uuid)
+        val max = DraftSlotBridge.maxSlots()
+        if (owned == null || max == null) {
+            player.sendSystemMessage(Component.literal("§c[Upgrades] Draft slots are unavailable right now."))
+            return
+        }
+        if (owned >= max) {
+            player.sendSystemMessage(Component.literal("§c[Upgrades] You already own all $max draft slots."))
+            return
+        }
+        val price = DraftSlotBridge.slotCost(owned)
+        if (price == null) {
+            player.sendSystemMessage(Component.literal("§c[Upgrades] Draft slots are unavailable right now."))
+            return
+        }
+        val balance = EconomyBridge.getBalance(player.uuid)
+        if (balance < price) {
+            player.sendSystemMessage(Component.literal("§c[Upgrades] You need \$$price for the next draft slot — you have \$$balance."))
+            return
+        }
+        // Grant first, then charge — mirrors purchaseHomeSlot so a failed grant never costs money.
+        val newOwned = DraftSlotBridge.grantSlot(player.uuid)
+        if (newOwned == null) {
+            player.sendSystemMessage(Component.literal("§c[Upgrades] Couldn't grant the draft slot — no charge was made. Tell an admin."))
+            return
+        }
+        if (!EconomyBridge.withdraw(player.uuid, price)) {
+            CobblemonMarket.logger.warn(
+                "Upgrades: granted draft slot $newOwned to ${player.gameProfile.name} but withdraw of \$$price failed",
+            )
+            player.sendSystemMessage(Component.literal("§c[Upgrades] Payment failed after the upgrade was applied — please tell an admin."))
+            return
+        }
+        player.sendSystemMessage(Component.literal(
+            "§a[Upgrades] Purchased draft team slot §f$newOwned§a for \$$price! §7Fill it with §f/ranked draft create§7."))
+    }
+
     private fun purchaseHomeSlot(player: ServerPlayer) {
         val current = HomeUpgradeBridge.currentMaxHomes(player)
         if (current == null) {
@@ -535,10 +604,10 @@ object MarketMenu {
             // ── Upgrades tab ──
             if (tab.scope == null) {
                 // Only a plain left-click buys; ignore other clicks so it can't double-fire.
-                if (slotId == HOME_UPGRADE_SLOT &&
+                if ((slotId == HOME_UPGRADE_SLOT || slotId == DRAFT_UPGRADE_SLOT) &&
                     button == 0 && (clickType == ClickType.PICKUP || clickType == ClickType.QUICK_MOVE)
                 ) {
-                    purchaseHomeSlot(sp)
+                    if (slotId == HOME_UPGRADE_SLOT) purchaseHomeSlot(sp) else purchaseDraftSlot(sp)
                     populate(container, viewer, tabs, activeTab, page)
                     broadcastChanges()
                 }

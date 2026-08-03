@@ -12,6 +12,34 @@ root README.
 
 ## [Unreleased]
 
+### Added
+- **Draft teams — custom rentals** (`cobblemon-ranked`). Players can design any
+  team in the Showdown teambuilder, paste it into a book & quill, and
+  `/ranked draft create <name>` it. Draft slots are permanent one-time unlocks
+  sold at the Shopkeeper's **Upgrades** tab next to the `/sethome` slots
+  (`cobblemon-market` reads ranked's `draftSlotCosts` ladder — default $25k →
+  $50k → $100k → $200k → $300k, +$100k per slot beyond — via a new
+  `DraftSlotBridge`, grant-then-charge). Placing a team into an owned slot
+  costs `draftRefillCost` ($10k); deleting a draft keeps the slot;
+  `/ranked admin grantdraftslot` is the operator fallback (up to
+  `maxDraftSlots`, default 10). Edits that keep ≥4 of the 6 species are
+  *tunes* — one free per team, then `draftEditCost` ($10k). Changing more is a
+  *team swap*: `draftSwapCost` ($50k) and once per slot per
+  `draftIdentityCooldownHours` (7 days), with deletes leaving the freed slot
+  locked for the remainder — so one slot can't be re-teamed daily in place of
+  buying more. Drafts appear under "My Drafts" in the rental picker and work in
+  ranked and tournaments. Rules: ranked banlist, ≤1 legendary (any non-banned
+  legendary is draftable — Legendary/Mythical/Paradox all count against the
+  cap), ≤1 Mega, and species-legal moves/abilities checked against Cobblemon
+  learnsets. Drafts battle with the rental de-tune (168 EV cap, flat 25 IVs),
+  so hand-raised teams keep their edge. `/ranked draft export` prints the
+  raw-EV build sheet with a click-to-copy Showdown paste for committing to the
+  real team. Config: `allowDraftTeams`, `draftSlotCosts`, `draftRefillCost`,
+  `draftEditCost`, `draftSwapCost`, `draftIdentityCooldownHours`,
+  `maxDraftSlots`. Ships across two jars — `cobblemon-ranked` and
+  `cobblemon-market` deploy together. Decision record:
+  `docs/rental-drafts-plan.md`.
+
 ## [0.34.1] - 2026-08-02
 
 ### Fixed

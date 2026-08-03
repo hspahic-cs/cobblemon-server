@@ -52,8 +52,6 @@ object DraftTeams {
         val members: List<RentalTeams.RentalMon>,  // RAW spec — de-tuned only in build()
         val createdAt: String,
         val updatedAt: String,
-        /** Every team comes with one free (tune) edit; once spent, tunes cost `draftEditCost`. */
-        val freeEditUsed: Boolean = false,
         /** When this team identity entered the slot (create or swap-edit; tunes don't touch it).
          *  Null in pre-cooldown records — treated as [createdAt]. */
         val identityChangedAt: String? = null,
@@ -70,6 +68,9 @@ object DraftTeams {
         val drafts: List<Draft> = emptyList(),
         val ownedSlots: Int = 0,
         val slotLocks: List<String> = emptyList(),
+        /** Banked free INSTANT swaps — one granted per slot purchase, spent to skip the identity
+         *  cooldown on a team swap without paying `draftSwapCost`. */
+        val swapCredits: Int = 0,
     )
 
     class ValidationException(message: String) : Exception(message)
@@ -117,9 +118,13 @@ object DraftTeams {
     fun grantSlot(player: UUID): Int {
         val state = read(player)
         val owned = state.ownedSlots + 1
-        write(player, PlayerDrafts(state.drafts, owned))
+        // Each slot purchase includes one free instant-swap credit.
+        write(player, state.copy(ownedSlots = owned, swapCredits = state.swapCredits + 1))
         return owned
     }
+
+    /** Banked free instant-swap credits (one granted per slot purchase). */
+    fun swapCredits(player: UUID): Int = read(player).swapCredits
 
     fun byName(player: UUID, name: String): Draft? {
         val slug = slugify(name)
@@ -130,12 +135,12 @@ object DraftTeams {
         if (!id.startsWith(ID_PREFIX)) null
         else read(player).drafts.find { it.slug == id.removePrefix(ID_PREFIX) }
 
-    /** Insert or replace (edit) a draft. Caller has already validated, cooldown-checked, and
-     *  charged; [consumedFreeEdit] marks the team's one free tune spent, [identityChange] marks
-     *  a create or swap-edit (restarts the slot's identity cooldown — tunes leave it alone). */
+    /** Insert or replace (edit) a draft. Caller has already validated, priced, and charged;
+     *  [identityChange] marks a create or swap-edit (restarts the slot's identity cooldown —
+     *  tunes leave it alone), [consumedSwapCredit] spends one banked instant-swap credit. */
     fun save(
         player: UUID, name: String, members: List<RentalTeams.RentalMon>,
-        consumedFreeEdit: Boolean = false, identityChange: Boolean = false,
+        identityChange: Boolean = false, consumedSwapCredit: Boolean = false,
     ): Draft {
         val slug = slugify(name)
         val now = Instant.now().toString()
@@ -144,15 +149,17 @@ object DraftTeams {
         val draft = Draft(
             slug, name, members,
             createdAt = previous?.createdAt ?: now, updatedAt = now,
-            // A swap is a new team: fresh free edit, fresh identity clock.
-            freeEditUsed = if (identityChange) false else (previous?.freeEditUsed ?: false) || consumedFreeEdit,
             identityChangedAt = if (identityChange || previous == null) now
                 else previous.identityChangedAt ?: previous.createdAt,
         )
         val drafts = state.drafts.filterNot { it.slug == slug } + draft
         // Slots are sold by the market's Upgrades vendor, so drafts never outnumber owned slots;
         // the maxOf is a safety net that keeps the invariant if state was hand-edited.
-        write(player, PlayerDrafts(drafts, maxOf(state.ownedSlots, drafts.size), state.slotLocks))
+        write(player, state.copy(
+            drafts = drafts,
+            ownedSlots = maxOf(state.ownedSlots, drafts.size),
+            swapCredits = (state.swapCredits - if (consumedSwapCredit) 1 else 0).coerceAtLeast(0),
+        ))
         return draft
     }
 
@@ -162,10 +169,10 @@ object DraftTeams {
         val victim = state.drafts.find { it.slug == slug } ?: return false
         // ownedSlots survives — the slot is bought, only its contents go. If the departing
         // team's identity cooldown is still running, the freed slot stays locked until it ends
-        // (else delete + create would be a cooldown-free swap).
+        // (else delete + free refill would be a cooldown-free swap).
         val lockUntil = victim.identityChangedInstant().plus(cooldown())
         val locks = state.slotLocks + if (lockUntil.isAfter(Instant.now())) listOf(lockUntil.toString()) else emptyList()
-        write(player, PlayerDrafts(state.drafts.filterNot { it.slug == slug }, state.ownedSlots, locks))
+        write(player, state.copy(drafts = state.drafts.filterNot { it.slug == slug }, slotLocks = locks))
         return true
     }
 

@@ -446,6 +446,7 @@ object MarketMenu {
         stack.set(DataComponents.CUSTOM_NAME, line("§b✦ Draft Team Slot"))
         lore += line("§7A permanent slot for a custom rental")
         lore += line("§7team — see §f/ranked draft§7.")
+        lore += line("§7Fills free; includes 1 instant-swap credit.")
         lore += line("")
         lore += line("§7Slots owned: §f$owned§7/§f$max")
         if (owned >= max) {
@@ -494,7 +495,7 @@ object MarketMenu {
             return
         }
         player.sendSystemMessage(Component.literal(
-            "§a[Upgrades] Purchased draft team slot §f$newOwned§a for \$$price! §7Fill it with §f/ranked draft create§7."))
+            "§a[Upgrades] Purchased draft team slot §f$newOwned§a for \$$price! §7Fill it free with §f/ranked draft create§7 — includes 1 instant-swap credit."))
     }
 
     private fun purchaseHomeSlot(player: ServerPlayer) {

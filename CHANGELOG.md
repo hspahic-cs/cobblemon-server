@@ -12,6 +12,27 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.5] - 2026-08-03
+
+### Changed
+- **Draft economy v2 — "wait = free, pay = instant"** (supersedes the unmerged
+  0.35.5 grace-fee PR #360). Slot ladder is now $20k → $40k → $60k → $100k,
+  flat $100k beyond (still one-time, permanent, max 10). Filling any unlocked
+  empty slot is **free** — just bought or just emptied. Tunes (≥4 of 6 species
+  kept) cost a flat $5k, never gated. A **team swap** (bigger change) is free
+  once the slot's identity cooldown elapses — and the cooldown is now **15
+  days** (`draftIdentityCooldownHours` 360) — or **$20k to do instantly**;
+  each slot purchase includes **one free instant-swap credit**. Deletes still
+  leave the freed slot locked for the cooldown's remainder, so delete+refill
+  can't dodge the timer. `draftRefillCost` is gone. Rationale: money and time
+  are the two scarce resources; every free path costs time, every instant
+  path costs money.
+- **Tournament identity freeze.** While a draft is your locked entry in an
+  open or auto-running tournament, swaps and deletes of it are blocked (tunes
+  stay allowed) — instant swaps would otherwise enable per-round
+  counter-picking. The original "editing mid-tournament changes the roster"
+  acceptance is revoked.
+
 ## [0.35.4] - 2026-08-03
 
 ### Added

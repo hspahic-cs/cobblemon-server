@@ -6,6 +6,8 @@ import com.cobblemonranked.rental.DraftTeams
 import com.cobblemonranked.rental.PokePasteFetcher
 import com.cobblemonranked.rental.RentalTeams
 import com.cobblemonranked.rental.ShowdownPasteParser
+import com.cobblemonranked.tournament.AutoTournamentDriver
+import com.cobblemonranked.tournament.TournamentManager
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import net.minecraft.commands.CommandSourceStack
@@ -23,10 +25,11 @@ import java.time.Instant
 /**
  * `/ranked draft` — player-drafted custom rental teams (docs/rental-drafts-plan.md).
  *
- * The paste travels in a book & quill the player is holding: Showdown teambuilder export, pasted
- * across as many pages as needed. Creation prices climb the `draftSlotCosts` ladder per concurrent
- * draft; each draft's first edit is free and later edits cost the flat `draftEditCost`. Validation
- * runs (and reports problems) BEFORE any money moves.
+ * Team text arrives via a pokepast.es link (primary) or a held book & quill (fallback). Slots are
+ * bought at the market's Upgrades vendor; filling an unlocked empty slot is free. Economics are
+ * "wait = free, pay = instant": tunes (≥4 species kept) cost `draftEditCost` anytime, while a team
+ * swap is free once the slot's identity cooldown elapses and costs `draftSwapCost` (or a banked
+ * per-slot-purchase credit) to do sooner. Validation runs BEFORE any money moves.
  */
 object DraftCommands {
 
@@ -75,17 +78,19 @@ object DraftCommands {
             .joinToString("§7 → §e") { "\$${DraftTeams.slotCost(it)}" }
         listOf(
             "§e[Ranked] §fDraft teams — design a custom rental:",
-            "§7  1. Buy a §fDraft Team Slot§7 at the Shopkeeper's §fUpgrades§7 tab (permanent).",
+            "§7  1. Buy a §fDraft Team Slot§7 at the Shopkeeper's §fUpgrades§7 tab (permanent,",
+            "§7     §8includes 1 free instant-swap credit).",
             "§7  2. Build the team in the Showdown teambuilder, upload it to §fpokepast.es§7.",
-            "§7  3. /ranked draft create <name> <link> §f— puts the team in an open slot (§e\$${config.draftRefillCost}§f)",
+            "§7  3. /ranked draft create <name> <link> §f— puts the team in an open slot, §ffree",
             "§7     §8Quote names with spaces: create \"Rain Team\" <link>. No link? Hold a book &",
             "§7     §8quill containing the pasted export instead.",
-            "§7  /ranked draft edit <name> §f— tune a draft (keep ${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species; 1st free, then §e\$${config.draftEditCost}§f)",
-            "§7  §8Swapping to a mostly-new team costs §e\$${config.draftSwapCost}§8, once per slot per ${config.draftIdentityCooldownHours / 24} days.",
-            "§7  /ranked draft delete <name> §f— empty the slot; you keep it forever",
-            "§7  /ranked draft list §f— your drafts and open slots",
+            "§7  /ranked draft edit <name> <link> §f— tune (keep ${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species): §e\$${config.draftEditCost}§f anytime",
+            "§7  §8A bigger change is a team swap: free once the slot's ${config.draftIdentityCooldownHours / 24}-day cooldown passes,",
+            "§7  §8or instant for §e\$${config.draftSwapCost}§8 / a banked credit.",
+            "§7  /ranked draft delete <name> §f— empty the slot; you keep it forever, refills free",
+            "§7  /ranked draft list §f— your drafts, open slots, credits",
             "§7  /ranked draft export <name> §f— build sheet for making the team real",
-            "§7Slot prices rise: §e$ladder§7 — each is a one-time unlock.",
+            "§7Slot prices: §e$ladder§7 — one-time unlocks.",
             "§7Drafts battle with rental de-tune: §f${DraftTeams.RENTAL_EV_CAP} EV cap, ${DraftTeams.RENTAL_IVS} IVs§7. Rental rules apply.",
         ).forEach { source.sendSystemMessage(Component.literal(it)) }
     }
@@ -185,51 +190,50 @@ object DraftCommands {
             return
         }
 
-        // Classify the edit: keeping ≥4 of 6 species is a tune (unrestricted); fewer is a team
-        // SWAP — cooldown-gated per slot and priced separately, so one slot can't be re-teamed
-        // daily instead of buying more slots. Slot purchases live at the market's Upgrades vendor.
+        // Classify the edit: keeping ≥4 of 6 species is a tune (flat fee, never gated); fewer is
+        // a team SWAP. Swap economics are "wait = free, pay = instant": once the slot's identity
+        // cooldown has elapsed a swap costs nothing (it's equivalent to delete + free refill);
+        // inside the cooldown it costs draftSwapCost — or one banked per-slot-purchase credit.
         val isSwap = isEdit && existing != null &&
             DraftTeams.sharedSpecies(existing.members, members) < DraftTeams.TUNE_MIN_SHARED_SPECIES
-        if (isSwap) {
-            val at = DraftTeams.swapAvailableAt(existing!!)
-            if (at.isAfter(Instant.now())) {
-                player.sendSystemMessage(Component.literal(
-                    "§c[Ranked] That's a new team (fewer than ${DraftTeams.TUNE_MIN_SHARED_SPECIES} species kept) — " +
-                        "this slot can swap teams in §f${remaining(at)}§c."))
-                player.sendSystemMessage(Component.literal(
-                    "§7Tune edits that keep ${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ of the current species are always allowed."))
-                return
-            }
+        if ((isSwap || !isEdit) && existing != null && draftLockedByTournament(player, existing)) {
+            player.sendSystemMessage(Component.literal(
+                "§c[Ranked] §f${existing.name}§c is your locked tournament team — swaps wait until the tournament ends. §7Tunes are still allowed."))
+            return
         }
-        val usesFreeEdit = isEdit && !isSwap && existing?.freeEditUsed == false
+        val cooldownRunning = isSwap && DraftTeams.swapAvailableAt(existing!!).isAfter(Instant.now())
+        val usesCredit = cooldownRunning && DraftTeams.swapCredits(player.uuid) > 0
         val cost = when {
-            !isEdit -> config.draftRefillCost
-            isSwap -> config.draftSwapCost
-            usesFreeEdit -> 0
-            else -> config.draftEditCost
+            !isEdit -> 0                                     // fills of an owned empty slot are free
+            !isSwap -> config.draftEditCost                  // tune
+            !cooldownRunning -> 0                            // patient swap
+            usesCredit -> 0                                  // instant swap on a banked credit
+            else -> config.draftSwapCost                     // instant swap, paid
         }
 
         // Money moves only after the team is proven legal.
         if (!EconomyBridge.withdraw(player.uuid, cost)) {
-            val what = if (isSwap) "team swap" else if (isEdit) "edit" else "team"
+            val hint = if (isSwap) " §7Free swap in ${remaining(DraftTeams.swapAvailableAt(existing!!))}." else ""
             player.sendSystemMessage(Component.literal(
-                "§c[Ranked] This $what costs §e\$$cost§c — you have §e\$${EconomyBridge.getBalance(player.uuid)}§c."))
+                "§c[Ranked] This ${if (isSwap) "instant swap" else "tune"} costs §e\$$cost§c — you have §e\$${EconomyBridge.getBalance(player.uuid)}§c.$hint"))
             return
         }
         val draft = DraftTeams.save(
             player.uuid, name, members,
-            consumedFreeEdit = usesFreeEdit, identityChange = !isEdit || isSwap,
+            identityChange = !isEdit || isSwap, consumedSwapCredit = usesCredit,
         )
-        val verb = if (isSwap) "swapped to a new team" else if (isEdit) "updated" else "created"
-        val price = if (usesFreeEdit) "your free edit" else "§e\$$cost§a"
+        val verb = if (isSwap) "swapped to a new team" else if (isEdit) "tuned" else "created"
+        val price = when {
+            usesCredit -> "§fa free swap credit§a (${DraftTeams.swapCredits(player.uuid)} left)"
+            cost == 0 -> "§ffree§a"
+            else -> "§e\$$cost§a"
+        }
         player.sendSystemMessage(Component.literal(
             "§a[Ranked] Draft §f${draft.name}§a $verb for $price — " +
                 "find it under §fMy Drafts§a in the rental picker."))
-        if (usesFreeEdit) player.sendSystemMessage(Component.literal(
-            "§7That was this team's one free edit — further tunes cost \$${config.draftEditCost}."))
         if (!isEdit || isSwap) player.sendSystemMessage(Component.literal(
-            "§7This slot's next team swap unlocks in ${config.draftIdentityCooldownHours / 24} days (tunes keeping " +
-                "${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species stay available)."))
+            "§7Next §ffree§7 re-team of this slot in ${config.draftIdentityCooldownHours / 24} days — sooner costs " +
+                "\$${config.draftSwapCost} or a swap credit. Tunes (${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species kept) anytime for \$${config.draftEditCost}."))
         player.sendSystemMessage(Component.literal(
             "§7Rental de-tune applies in battle: EVs capped at ${DraftTeams.RENTAL_EV_CAP}, all IVs ${DraftTeams.RENTAL_IVS}."))
     }
@@ -240,13 +244,28 @@ object DraftCommands {
             player.sendSystemMessage(Component.literal("§c[Ranked] No draft named §f$name§c. §7Try /ranked draft list"))
             return
         }
+        if (draftLockedByTournament(player, victim)) {
+            player.sendSystemMessage(Component.literal(
+                "§c[Ranked] §f${victim.name}§c is your locked tournament team — it can't be deleted until the tournament ends."))
+            return
+        }
         val lockUntil = DraftTeams.swapAvailableAt(victim)
         DraftTeams.delete(player.uuid, name)
         val whenFree = if (lockUntil.isAfter(Instant.now()))
-            "it can take a new team in §f${remaining(lockUntil)}§a (its team-change cooldown keeps running)"
-        else "put a new team in it for §e\$${CobblemonRanked.config.draftRefillCost}§a"
+            "it takes a new team §ffree§a in §f${remaining(lockUntil)}§a (the team-change cooldown keeps running)"
+        else "fill it with a new team anytime, §ffree§a"
         player.sendSystemMessage(Component.literal(
             "§a[Ranked] Draft §f$name§a deleted. The slot stays yours — $whenFree."))
+    }
+
+    /** True while [draft] is the roster this player has locked into a tournament that is still
+     *  open or auto-running — its identity is frozen (no swaps/deletes; tunes stay allowed) so
+     *  cheap instant swaps can't counter-pick each bracket round. Manually-driven matches after
+     *  close aren't covered; those are admin-supervised. */
+    private fun draftLockedByTournament(player: ServerPlayer, draft: DraftTeams.Draft): Boolean {
+        val entry = TournamentManager.getEntry(player.uuid) ?: return false
+        if (entry.rentalTeamId != DraftTeams.ID_PREFIX + draft.slug) return false
+        return TournamentManager.isOpen() || AutoTournamentDriver.isActive()
     }
 
     private fun handleList(player: ServerPlayer) {
@@ -261,20 +280,22 @@ object DraftCommands {
         }
         drafts.forEach { d ->
             val roster = d.members.joinToString("§7, §f") { prettySpecies(it) }
-            val edit = if (d.freeEditUsed) "tunes \$${config.draftEditCost}" else "free tune available"
             val swapAt = DraftTeams.swapAvailableAt(d)
-            val swap = if (swapAt.isAfter(Instant.now())) "swap in ${remaining(swapAt)}" else "swap ready"
-            player.sendSystemMessage(Component.literal("§7  • §f${d.name}§7 ($edit, $swap): §f$roster"))
+            val swap = if (swapAt.isAfter(Instant.now())) "free swap in ${remaining(swapAt)}" else "free swap ready"
+            player.sendSystemMessage(Component.literal("§7  • §f${d.name}§7 ($swap): §f$roster"))
         }
         if (drafts.size < owned) {
             val open = DraftTeams.availableEmptySlots(player.uuid)
             val locked = owned - drafts.size - open
             if (open > 0) player.sendSystemMessage(Component.literal(
-                "§7  $open empty slot${if (open == 1) "" else "s"} — fill for §e\$${config.draftRefillCost}§7 each."))
+                "§7  $open empty slot${if (open == 1) "" else "s"} — fill §ffree§7 with /ranked draft create."))
             if (locked > 0) player.sendSystemMessage(Component.literal(
                 "§7  $locked slot${if (locked == 1) "" else "s"} cooling down — next free in §f${
                     DraftTeams.nextSlotUnlockAt(player.uuid)?.let(::remaining) ?: "?"}§7."))
         }
+        val credits = DraftTeams.swapCredits(player.uuid)
+        if (credits > 0) player.sendSystemMessage(Component.literal(
+            "§7  §f$credits§7 free instant-swap credit${if (credits == 1) "" else "s"} banked."))
         if (owned < config.maxDraftSlots) {
             player.sendSystemMessage(Component.literal(
                 "§7  Next slot: §e\$${DraftTeams.slotCost(owned)}§7 at the Shopkeeper's Upgrades tab (one-time, permanent)."))

@@ -12,6 +12,8 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.0] - 2026-08-02
+
 ### Added
 - **Draft teams — custom rentals** (`cobblemon-ranked`). Players can design any
   team in the Showdown teambuilder, paste it into a book & quill, and

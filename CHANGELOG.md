@@ -12,6 +12,35 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.2] - 2026-08-03
+
+### Fixed
+- **The "⚑ ADMIN PANEL ⚑" tablist survived 0.35.1 — an empty `{}` doesn't
+  neutralise a NeoEssentials config map.** `groups` and `groupColors` now carry
+  explicit neutral values instead.
+
+  0.35.1 shipped `"groups": {}` and deployed correctly (`.deployed_version`
+  advanced, the file was rsynced), yet the live config came back with
+  `admin`/`mod`/`vip` — **NeoEssentials treats an empty map as *unset* and
+  re-injects its defaults on load.** Non-empty values are respected, which is why
+  `header` and `playerFormat` had been surviving all along. So the way to
+  neutralise the feature is to *define* it, not blank it.
+
+  `groups.admin` is now a verbatim copy of the global header/footer, so admins
+  see exactly what everyone else does. Only `admin` needs it: NeoEssentials' other
+  defaults are keyed `mod` and `vip`, and our groups are `moderator` and
+  `default`, so those never match.
+
+  `groupColors` had the same problem and a second symptom — it came back as
+  `owner`/`admin`/`mod`/`vip`/`default` with `admin = &c`, which tints an admin's
+  *name* red in the player list. It's now mapped to plain white for the three
+  groups we actually have, leaving rank colour to the `[Admin]`/`[Mod]` tag from
+  `{prefix}`.
+
+  Also worth knowing for anyone editing this file: NeoEssentials rewrites
+  `tablist.json` on load, stripping every `_doc_*` key and appending its own
+  missing ones. The comments only ever exist in the repo copy.
+
 ## [0.35.1] - 2026-08-03
 
 ### Fixed

@@ -76,31 +76,53 @@
     "afkSuffix": " &7[AFK]",
 
     "_doc_groups": [
-      "DELIBERATELY EMPTY — and it must stay declared, not omitted.",
-      "NeoEssentials 1.0.3 added per-group tablist header/footer overrides, and any key this file",
-      "does NOT declare gets NeoEssentials' own default injected on load. Its stock default for",
-      "'admin' is a red-gradient '⚑ ADMIN PANEL ⚑' header plus an 'Admin tools: /vanish /kick",
-      "/ban /mute' footer, which replaced our normal rotating stats line for admins on 0.34.1.",
-      "(Their 'mod' key never matched us — our group is named 'moderator' — so only admins saw it.)",
-      "An empty object means every group shares the header/footer above, which is what we want:",
-      "rank shows up as the [Admin]/[Mod] tag beside the name and in chat, nowhere else.",
-      "GENERAL HAZARD: a NeoEssentials upgrade can introduce new config keys that arrive ENABLED.",
+      "MUST BE NON-EMPTY. An empty {} does NOT work: NeoEssentials treats an empty map as unset",
+      "and re-injects its own defaults on load — 0.35.1 shipped \"groups\": {} and the live file came",
+      "back with admin/mod/vip. Non-empty values are respected (header and playerFormat survive",
+      "untouched), so the way to neutralise the feature is to define it, not to blank it.",
+      "NeoEssentials 1.0.3 added per-group tablist header/footer overrides. Its stock 'admin'",
+      "default is a red-gradient '⚑ ADMIN PANEL ⚑' header plus an 'Admin tools: /vanish /kick /ban",
+      "/mute' footer, which replaced our rotating stats line for admins from 0.34.1 onward.",
+      "Only 'admin' needs overriding: their other defaults are keyed 'mod' and 'vip', and our",
+      "groups are named 'moderator' and 'default', so those never match anything.",
+      "The entry below is a verbatim copy of the global header/footer, so admins see exactly what",
+      "everyone else sees. Keep it in sync if you edit those.",
+      "Note NeoEssentials rewrites this file on load: it strips every _doc_* key and appends its",
+      "own missing keys. These comments therefore live only in the repo copy, never on the server.",
+      "GENERAL HAZARD: a NeoEssentials upgrade can introduce config keys that arrive ENABLED.",
       "1.0.3 also injected independentMode, nametagSettings, players, proxy, fakePlayers and",
       "layout here. Pin anything whose default you don't want."
     ],
-    "groups": {},
+    "groups": {
+      "admin": {
+        "header": [
+          "&6&l{server_name} &8| &e{online}&8/&e{max} &7players",
+          "&6&l{server_name} &8| &eTPS: {tps}",
+          "&6&l{server_name} &8| &e{time}"
+        ],
+        "footer": [
+          "&7TPS: {tps} &8| &7Ping: &a{ping}ms &8| &7{world}",
+          "&7Your coords: &e{x}&7, &e{y}&7, &e{z}",
+          "&7Balance: &a{balance} &8| &7Group: &e{group}"
+        ]
+      }
+    },
 
     "_doc_groupColors": [
-      "DELIBERATELY EMPTY. Rank colour comes from the group prefix ({prefix} in playerFormat)",
-      "and from chat.json's chat-format — nothing else should be tinted by rank.",
-      "groupColors is applied inside TablistManager.applyPlaceholders(), which also runs over the",
-      "header and footer, so populating it bleeds the rank colour into the rotating stats line at",
-      "the top of the player list. We want a red [Admin] beside the name and in chat, not red",
-      "server stats. The prefix already colours the tag, so this map was redundant anyway.",
-      "If you ever repopulate it, keys must be the exact group name from permissions.json —",
-      "the mod group is 'moderator', not 'mod'; a 'mod' key silently never matches."
+      "NEUTRAL ON PURPOSE — never blank this. Same trap as groups above: an empty {} is treated",
+      "as unset and NeoEssentials re-injects its defaults (owner/admin/mod/vip/default, with",
+      "admin = &c), which tints an admin's NAME red in the player list.",
+      "Rank colour belongs on the [Admin]/[Mod] tag only, and that already comes from the group",
+      "prefix via {prefix} in playerFormat. So every group we actually have is mapped to plain",
+      "white here, which is a no-op on top of playerFormat's leading &f.",
+      "Keys must be the exact group name from permissions.json — our mod group is 'moderator',",
+      "not 'mod'; a 'mod' key silently never matches."
     ],
-    "groupColors": {},
+    "groupColors": {
+      "admin":     "&f",
+      "moderator": "&f",
+      "default":   "&f"
+    },
 
     "_doc_layout_examples": [
       "--- Example: Simple static header/footer ---",

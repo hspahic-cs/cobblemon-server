@@ -12,6 +12,50 @@ root README.
 
 ## [Unreleased]
 
+## [0.34.1] - 2026-08-02
+
+### Fixed
+- **Staff rank tags rendered without colour.** `[Admin]` and `[Mod]` showed up in
+  chat as plain white text since 0.33.0. Root cause was a NeoEssentials bug,
+  fixed upstream — **NeoEssentials 1.0.2.5 → 1.0.3**.
+
+  Their 1.0.2.6 release notes name it exactly: with **`clickablePlayerNames`
+  enabled**, `ChatFormatter` swapped `{neoessentials_username}` for a hover
+  placeholder, and the component-building step lost the styling. They replaced
+  the placeholder-swap with `§HNAME§…§/HNAME§` markup tokens resolved by a new
+  `buildComponentFromMarkup()`. Two adjacent fixes in the same release: Gson was
+  HTML-escaping every `&` in a config into its six-character unicode-escape
+  form on write, corrupting chat format strings on save, and
+  group prefixes/suffixes now render as rich text rather than raw colour codes.
+
+  This was worth chasing rather than accepting, because the symptom pointed
+  everywhere except the real cause. Ruled out along the way, all of them wrong:
+  the chat-format config (correct, and the debug trace showed the right group
+  template selected), `&`-vs-`§` codes (`parseColorCodes` handles both — and
+  NeoEssentials silently *strips* a literal `§` from templates on load, so that
+  workaround is a dead end), `richText: false` (irrelevant —
+  `processRichText` still calls `parseColorCodes` when disabled), the delivery
+  path (`ChatHandler` cancels the vanilla event and uses
+  `sendSystemMessage(Component)`, which preserves styling), and ChatBubbles
+  (its `ServerChatEvent` handler only reads `getPlayer()`/`getRawText()`).
+
+  The tell was that NeoEssentials' *own* messages rendered red while player chat
+  did not — those don't go through the clickable-names path.
+
+  All four of our reflection bridges were checked against 1.0.3 before the bump
+  and are unchanged: `PermissionAPI.hasPermission(UUID, String)`
+  (`StaffPermissions`), `EconomyManager.getInstance/getBalance/addBalance/
+  subtractBalance` (four copies of `EconomyBridge`), `HomeManager.getInstance`
+  (`HomeUpgradeBridge`) and `AfkManager.getInstance/isAfk` (`AfkBridge`). They
+  fail *open* on a missing class, so a moved API would have degraded silently
+  rather than erroring.
+
+### Changed
+- **`modpack/pack.toml` version corrected to match the changelog.** It was left
+  at `0.33.1` when 0.34.0 shipped. Cosmetic only — deploys pass the resolved
+  version via `set-pack-version` at build time rather than reading the committed
+  value — but it made the repo look a release behind.
+
 ## [0.34.0] - 2026-08-02
 
 ### Added

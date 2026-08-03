@@ -196,8 +196,8 @@ apply_group admin     "&c[Admin]" "moderator" "$ADMIN_NODES"
 if [ "$DRY_RUN" != "--dry-run" ]; then
   cat <<EOF
 [$(date '+%F %T %Z')] ${ENVNAME}: done. Verify in-game or on the console with:
-  permissions groups
-  permissions group moderator info
+  permissions list groups
+  permissions info group moderator
 
 Roles only — nobody was assigned. Assign people with:
   permissions user <name> setgroup admin

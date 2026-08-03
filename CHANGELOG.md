@@ -78,6 +78,20 @@ root README.
   fail *open* on a missing class, so a moved API would have degraded silently
   rather than erroring.
 
+- **Documented `/permissions` commands that don't exist.** `docs/staff-roles.md`
+  and `ops/apply-staff-groups.sh`'s own completion message both told operators to
+  run `permissions groups`, `permissions users`, `permissions group <g> info` and
+  `permissions user <n> info`. None of those parse.
+
+  The word order flips depending on the verb: **verb first** for create/delete
+  and anything read-only (`permissions list groups`,
+  `permissions info group <g>`), **noun first** for mutating something that
+  already exists (`permissions group <g> add <node>`,
+  `permissions user <n> setgroup <g>`). The correct forms are now verified
+  against a live server and the grammar is written down, because a wrong form is
+  quiet — it logs `Incorrect argument for command` to the console while the
+  caller sees nothing.
+
 ### Changed
 - **`modpack/pack.toml` version corrected to match the changelog.** It was left
   at `0.33.1` when 0.34.0 shipped. Cosmetic only — deploys pass the resolved

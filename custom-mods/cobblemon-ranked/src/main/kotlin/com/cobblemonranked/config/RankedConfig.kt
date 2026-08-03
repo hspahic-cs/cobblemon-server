@@ -55,11 +55,13 @@ data class RankedConfig(
      *  default continues 400k, 500k, … if maxDraftSlots is raised). Deleting a draft empties
      *  the slot but you keep it. */
     val draftSlotCosts: List<Int> = listOf(25_000, 50_000, 100_000, 200_000, 300_000),
-    /** Flat fee per edit — but every team's FIRST edit is free (a new team in the slot gets a
-     *  fresh free edit). */
+    /** Flat fee per tune edit — but every team's FIRST edit is free whatever its size, swap
+     *  included (a new team in the slot gets a fresh free edit; a free swap still obeys the
+     *  cooldown). */
     val draftEditCost: Int = 10_000,
-    /** Fee `/ranked draft create` charges to place a team into an owned empty slot (first fill
-     *  and refills alike — the slot purchase itself happens at the market). */
+    /** Fee `/ranked draft create` charges to place a team into an owned empty slot. Each slot
+     *  purchase includes ONE free fill (its first team), tracked as a per-player credit — this
+     *  fee applies from the second fill of a slot onward. */
     val draftRefillCost: Int = 10_000,
     /** Fee for a team SWAP — an edit that keeps fewer than 4 of the draft's 6 species, i.e. a
      *  new team identity rather than a tune. Swaps are also cooldown-gated

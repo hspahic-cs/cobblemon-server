@@ -70,6 +70,9 @@ object DraftTeams {
         val drafts: List<Draft> = emptyList(),
         val ownedSlots: Int = 0,
         val slotLocks: List<String> = emptyList(),
+        /** Unused "first team included" credits — each slot purchase grants one, and a create
+         *  consumes one instead of charging `draftRefillCost`. */
+        val freeFills: Int = 0,
     )
 
     class ValidationException(message: String) : Exception(message)
@@ -117,9 +120,13 @@ object DraftTeams {
     fun grantSlot(player: UUID): Int {
         val state = read(player)
         val owned = state.ownedSlots + 1
-        write(player, PlayerDrafts(state.drafts, owned))
+        // A purchased slot includes its first team — grant a free-fill credit alongside.
+        write(player, state.copy(ownedSlots = owned, freeFills = state.freeFills + 1))
         return owned
     }
+
+    /** Unused "first team included with your slot" credits. */
+    fun freeFills(player: UUID): Int = read(player).freeFills
 
     fun byName(player: UUID, name: String): Draft? {
         val slug = slugify(name)
@@ -136,6 +143,7 @@ object DraftTeams {
     fun save(
         player: UUID, name: String, members: List<RentalTeams.RentalMon>,
         consumedFreeEdit: Boolean = false, identityChange: Boolean = false,
+        consumedFreeFill: Boolean = false,
     ): Draft {
         val slug = slugify(name)
         val now = Instant.now().toString()
@@ -152,7 +160,10 @@ object DraftTeams {
         val drafts = state.drafts.filterNot { it.slug == slug } + draft
         // Slots are sold by the market's Upgrades vendor, so drafts never outnumber owned slots;
         // the maxOf is a safety net that keeps the invariant if state was hand-edited.
-        write(player, PlayerDrafts(drafts, maxOf(state.ownedSlots, drafts.size), state.slotLocks))
+        write(player, PlayerDrafts(
+            drafts, maxOf(state.ownedSlots, drafts.size), state.slotLocks,
+            freeFills = (state.freeFills - if (consumedFreeFill) 1 else 0).coerceAtLeast(0),
+        ))
         return draft
     }
 
@@ -165,7 +176,7 @@ object DraftTeams {
         // (else delete + create would be a cooldown-free swap).
         val lockUntil = victim.identityChangedInstant().plus(cooldown())
         val locks = state.slotLocks + if (lockUntil.isAfter(Instant.now())) listOf(lockUntil.toString()) else emptyList()
-        write(player, PlayerDrafts(state.drafts.filterNot { it.slug == slug }, state.ownedSlots, locks))
+        write(player, state.copy(drafts = state.drafts.filterNot { it.slug == slug }, slotLocks = locks))
         return true
     }
 

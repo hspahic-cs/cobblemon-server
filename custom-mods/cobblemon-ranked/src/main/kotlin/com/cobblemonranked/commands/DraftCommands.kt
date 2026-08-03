@@ -77,7 +77,7 @@ object DraftCommands {
             "§e[Ranked] §fDraft teams — design a custom rental:",
             "§7  1. Buy a §fDraft Team Slot§7 at the Shopkeeper's §fUpgrades§7 tab (permanent).",
             "§7  2. Build the team in the Showdown teambuilder, upload it to §fpokepast.es§7.",
-            "§7  3. /ranked draft create <name> <link> §f— puts the team in an open slot (§e\$${config.draftRefillCost}§f)",
+            "§7  3. /ranked draft create <name> <link> §f— your slot's first team is §ffree§f; later fills §e\$${config.draftRefillCost}§f",
             "§7     §8Quote names with spaces: create \"Rain Team\" <link>. No link? Hold a book &",
             "§7     §8quill containing the pasted export instead.",
             "§7  /ranked draft edit <name> §f— tune a draft (keep ${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species; 1st free, then §e\$${config.draftEditCost}§f)",
@@ -201,11 +201,14 @@ object DraftCommands {
                 return
             }
         }
-        val usesFreeEdit = isEdit && !isSwap && existing?.freeEditUsed == false
+        // Grace fees: each purchased slot includes its first team, and each team's first edit is
+        // free whatever its size (a free swap still had to clear the cooldown above).
+        val usesFreeFill = !isEdit && DraftTeams.freeFills(player.uuid) > 0
+        val usesFreeEdit = isEdit && existing?.freeEditUsed == false
         val cost = when {
-            !isEdit -> config.draftRefillCost
-            isSwap -> config.draftSwapCost
+            !isEdit -> if (usesFreeFill) 0 else config.draftRefillCost
             usesFreeEdit -> 0
+            isSwap -> config.draftSwapCost
             else -> config.draftEditCost
         }
 
@@ -219,14 +222,19 @@ object DraftCommands {
         val draft = DraftTeams.save(
             player.uuid, name, members,
             consumedFreeEdit = usesFreeEdit, identityChange = !isEdit || isSwap,
+            consumedFreeFill = usesFreeFill,
         )
         val verb = if (isSwap) "swapped to a new team" else if (isEdit) "updated" else "created"
-        val price = if (usesFreeEdit) "your free edit" else "§e\$$cost§a"
+        val price = when {
+            usesFreeFill -> "§ffree§a (included with your slot)"
+            usesFreeEdit -> "your free edit"
+            else -> "§e\$$cost§a"
+        }
         player.sendSystemMessage(Component.literal(
             "§a[Ranked] Draft §f${draft.name}§a $verb for $price — " +
                 "find it under §fMy Drafts§a in the rental picker."))
         if (usesFreeEdit) player.sendSystemMessage(Component.literal(
-            "§7That was this team's one free edit — further tunes cost \$${config.draftEditCost}."))
+            "§7That was this team's one free edit — from now on tunes cost \$${config.draftEditCost}, team swaps \$${config.draftSwapCost}."))
         if (!isEdit || isSwap) player.sendSystemMessage(Component.literal(
             "§7This slot's next team swap unlocks in ${config.draftIdentityCooldownHours / 24} days (tunes keeping " +
                 "${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species stay available)."))
@@ -269,8 +277,12 @@ object DraftCommands {
         if (drafts.size < owned) {
             val open = DraftTeams.availableEmptySlots(player.uuid)
             val locked = owned - drafts.size - open
+            val freeFills = minOf(DraftTeams.freeFills(player.uuid), open)
             if (open > 0) player.sendSystemMessage(Component.literal(
-                "§7  $open empty slot${if (open == 1) "" else "s"} — fill for §e\$${config.draftRefillCost}§7 each."))
+                if (freeFills > 0)
+                    "§7  $open empty slot${if (open == 1) "" else "s"} — $freeFills free fill${if (freeFills == 1) "" else "s"} included, then §e\$${config.draftRefillCost}§7 each."
+                else
+                    "§7  $open empty slot${if (open == 1) "" else "s"} — fill for §e\$${config.draftRefillCost}§7 each."))
             if (locked > 0) player.sendSystemMessage(Component.literal(
                 "§7  $locked slot${if (locked == 1) "" else "s"} cooling down — next free in §f${
                     DraftTeams.nextSlotUnlockAt(player.uuid)?.let(::remaining) ?: "?"}§7."))

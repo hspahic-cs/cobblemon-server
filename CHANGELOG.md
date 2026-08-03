@@ -12,6 +12,18 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.5] - 2026-08-03
+
+### Changed
+- **Draft fee grace, both kinds.** A purchased draft slot now *includes its
+  first team*: the shop grants a free-fill credit per slot purchase and
+  `/ranked draft create` consumes it instead of charging `draftRefillCost`
+  (later fills of the slot still pay). And a team's one free edit now covers
+  *any* first edit — swap included, waiving `draftSwapCost` — not just tunes;
+  a free swap still has to clear the 7-day identity cooldown, which is the
+  actual churn guard. Shop lore/messages and `/ranked draft list` spell both
+  graces out.
+
 ## [0.35.4] - 2026-08-03
 
 ### Added

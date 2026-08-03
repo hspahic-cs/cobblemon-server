@@ -3,6 +3,7 @@ package com.cobblemonranked.commands
 import com.cobblemonranked.CobblemonRanked
 import com.cobblemonranked.economy.EconomyBridge
 import com.cobblemonranked.rental.DraftTeams
+import com.cobblemonranked.rental.PokePasteFetcher
 import com.cobblemonranked.rental.RentalTeams
 import com.cobblemonranked.rental.ShowdownPasteParser
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -34,15 +35,27 @@ object DraftCommands {
             .requires { CobblemonRanked.config.allowDraftTeams }
             .executes { ctx -> showDraftHelp(ctx.source); 1 }
             .then(Commands.literal("create")
-                .then(Commands.argument("name", StringArgumentType.greedyString())
+                .then(Commands.argument("name", StringArgumentType.string())
                     .executes { ctx ->
-                        handleSave(ctx.source.playerOrException, StringArgumentType.getString(ctx, "name"), isEdit = false); 1
-                    }))
+                        handleSaveFromBook(ctx.source.playerOrException, StringArgumentType.getString(ctx, "name"), isEdit = false); 1
+                    }
+                    .then(Commands.argument("url", StringArgumentType.greedyString())
+                        .executes { ctx ->
+                            handleSaveFromUrl(ctx.source.playerOrException,
+                                StringArgumentType.getString(ctx, "name"),
+                                StringArgumentType.getString(ctx, "url"), isEdit = false); 1
+                        })))
             .then(Commands.literal("edit")
-                .then(Commands.argument("name", StringArgumentType.greedyString())
+                .then(Commands.argument("name", StringArgumentType.string())
                     .executes { ctx ->
-                        handleSave(ctx.source.playerOrException, StringArgumentType.getString(ctx, "name"), isEdit = true); 1
-                    }))
+                        handleSaveFromBook(ctx.source.playerOrException, StringArgumentType.getString(ctx, "name"), isEdit = true); 1
+                    }
+                    .then(Commands.argument("url", StringArgumentType.greedyString())
+                        .executes { ctx ->
+                            handleSaveFromUrl(ctx.source.playerOrException,
+                                StringArgumentType.getString(ctx, "name"),
+                                StringArgumentType.getString(ctx, "url"), isEdit = true); 1
+                        })))
             .then(Commands.literal("delete")
                 .then(Commands.argument("name", StringArgumentType.greedyString())
                     .executes { ctx ->
@@ -63,9 +76,10 @@ object DraftCommands {
         listOf(
             "§e[Ranked] §fDraft teams — design a custom rental:",
             "§7  1. Buy a §fDraft Team Slot§7 at the Shopkeeper's §fUpgrades§7 tab (permanent).",
-            "§7  2. Build the team in the Showdown teambuilder, copy the export text.",
-            "§7  3. Paste it into a book & quill (span pages freely) and hold the book.",
-            "§7  4. /ranked draft create <name> §f— puts the team in an open slot (§e\$${config.draftRefillCost}§f)",
+            "§7  2. Build the team in the Showdown teambuilder, upload it to §fpokepast.es§7.",
+            "§7  3. /ranked draft create <name> <link> §f— puts the team in an open slot (§e\$${config.draftRefillCost}§f)",
+            "§7     §8Quote names with spaces: create \"Rain Team\" <link>. No link? Hold a book &",
+            "§7     §8quill containing the pasted export instead.",
             "§7  /ranked draft edit <name> §f— tune a draft (keep ${DraftTeams.TUNE_MIN_SHARED_SPECIES}+ species; 1st free, then §e\$${config.draftEditCost}§f)",
             "§7  §8Swapping to a mostly-new team costs §e\$${config.draftSwapCost}§8, once per slot per ${config.draftIdentityCooldownHours / 24} days.",
             "§7  /ranked draft delete <name> §f— empty the slot; you keep it forever",
@@ -76,30 +90,67 @@ object DraftCommands {
         ).forEach { source.sendSystemMessage(Component.literal(it)) }
     }
 
-    private fun handleSave(player: ServerPlayer, name: String, isEdit: Boolean) {
-        val config = CobblemonRanked.config
-        val slug = DraftTeams.slugify(name)
-        if (slug.isEmpty()) {
-            player.sendSystemMessage(Component.literal("§c[Ranked] \"$name\" isn't a usable draft name."))
+    private fun handleSaveFromBook(player: ServerPlayer, name: String, isEdit: Boolean) {
+        if (!prereqsOk(player, name, isEdit)) return
+        val text = heldBookText(player)
+        if (text.isNullOrBlank()) {
+            player.sendSystemMessage(Component.literal(
+                "§c[Ranked] Hold a book & quill containing your Showdown export — or skip the book: " +
+                    "§f/ranked draft ${if (isEdit) "edit" else "create"} $name <pokepast.es link>"))
             return
+        }
+        saveFromText(player, name, isEdit, text)
+    }
+
+    private fun handleSaveFromUrl(player: ServerPlayer, name: String, rawUrl: String, isEdit: Boolean) {
+        if (!prereqsOk(player, name, isEdit)) return
+        val url = PokePasteFetcher.normalize(rawUrl)
+        if (url == null) {
+            player.sendSystemMessage(Component.literal(
+                "§c[Ranked] Only §fpokepast.es§c links work here (e.g. https://pokepast.es/abc123ef)."))
+            player.sendSystemMessage(Component.literal(
+                "§7Draft names with spaces need quotes: /ranked draft create \"Rain Team\" <link>"))
+            return
+        }
+        player.sendSystemMessage(Component.literal("§7[Ranked] Fetching your team from pokepast.es…"))
+        PokePasteFetcher.fetch(url).whenComplete { text, err ->
+            // Hop back to the server thread before touching player/draft state.
+            player.server.execute {
+                if (err != null || text == null) {
+                    val why = (err?.cause ?: err)?.message ?: "unknown error"
+                    player.sendSystemMessage(Component.literal("§c[Ranked] Couldn't fetch that paste: §f$why"))
+                } else {
+                    saveFromText(player, name, isEdit, text)
+                }
+            }
+        }
+    }
+
+    /** Fast shared checks for both input paths. The URL path runs them before the fetch for a
+     *  quick answer and again inside [saveFromText] in case state changed while fetching. */
+    private fun prereqsOk(player: ServerPlayer, name: String, isEdit: Boolean): Boolean {
+        val config = CobblemonRanked.config
+        if (DraftTeams.slugify(name).isEmpty()) {
+            player.sendSystemMessage(Component.literal("§c[Ranked] \"$name\" isn't a usable draft name."))
+            return false
         }
         val existing = DraftTeams.byName(player.uuid, name)
         if (!isEdit && existing != null) {
             player.sendSystemMessage(Component.literal(
                 "§c[Ranked] You already have a draft named §f${existing.name}§c — use /ranked draft edit $name."))
-            return
+            return false
         }
         if (isEdit && existing == null) {
             player.sendSystemMessage(Component.literal(
                 "§c[Ranked] No draft named §f$name§c to edit — use /ranked draft create $name."))
-            return
+            return false
         }
         if (!isEdit) {
             val owned = DraftTeams.ownedSlots(player.uuid)
             if (owned == 0) {
                 player.sendSystemMessage(Component.literal(
                     "§c[Ranked] You don't own a draft slot yet — buy one at the Shopkeeper's §fUpgrades§c tab (first slot §e\$${DraftTeams.slotCost(0)}§c)."))
-                return
+                return false
             }
             if (DraftTeams.availableEmptySlots(player.uuid) == 0) {
                 val used = DraftTeams.list(player.uuid).size
@@ -116,16 +167,16 @@ object DraftCommands {
                     player.sendSystemMessage(Component.literal(
                         "§c[Ranked] All $owned of your slots are full — $hint."))
                 }
-                return
+                return false
             }
         }
+        return true
+    }
 
-        val text = heldBookText(player)
-        if (text.isNullOrBlank()) {
-            player.sendSystemMessage(Component.literal(
-                "§c[Ranked] Hold a book & quill containing your Showdown export. §7(/ranked draft for the steps)"))
-            return
-        }
+    private fun saveFromText(player: ServerPlayer, name: String, isEdit: Boolean, text: String) {
+        if (!prereqsOk(player, name, isEdit)) return
+        val config = CobblemonRanked.config
+        val existing = DraftTeams.byName(player.uuid, name)
 
         val members = try {
             ShowdownPasteParser.parse(text).also { DraftTeams.validate(it) }

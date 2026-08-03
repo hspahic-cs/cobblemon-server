@@ -83,15 +83,14 @@ object MarketMenu {
     /** Sentinel vendor tag for the consolidated TM Merchant (no items.json scope uses it). */
     const val TM_MERCHANT_TAG = "tm_merchant"
 
-    /** Content slot the Upgrades tab renders the "extra home slot" purchase into (row 2, center). */
+    /** Content slot the Upgrades tab renders the "extra home slot" purchase into (row 2, centered
+     *  pair with the draft-slot upgrade beside it). */
     private const val HOME_UPGRADE_SLOT = 22
-    /** Content slot for the "draft team slot" purchase (row 2, right of the home upgrade). */
-    private const val DRAFT_UPGRADE_SLOT = 24
+    /** Content slot for the "draft team slot" purchase — directly beside the home upgrade. */
+    private const val DRAFT_UPGRADE_SLOT = 23
 
-    /** Price of a player's first purchased home slot (beyond the free baseline). */
-    private const val FIRST_EXTRA_HOME_PRICE = 100_000
-    /** Each subsequent home slot costs this much more than the previous one. */
-    private const val HOME_PRICE_INCREMENT = 50_000
+    /** Flat price per extra home slot (no scaling). */
+    private const val EXTRA_HOME_PRICE = 10_000
 
     /**
      * A category tab. [scope] is the item `vendorTag` this tab shows, or `null` for the Upgrades
@@ -410,17 +409,6 @@ object MarketMenu {
 
     // ─── Upgrades tab ────────────────────────────────────────────────────────────────────────
 
-    /** Extra slots already purchased = effective limit minus the free baseline (never negative). */
-    private fun homeExtrasPurchased(player: ServerPlayer): Int? {
-        val current = HomeUpgradeBridge.currentMaxHomes(player) ?: return null
-        val base = HomeUpgradeBridge.baseMaxHomes() ?: return null
-        return (current - base).coerceAtLeast(0)
-    }
-
-    /** Cost of the player's next home slot, given how many extras they've already bought. */
-    private fun nextHomePrice(extrasAlready: Int): Int =
-        FIRST_EXTRA_HOME_PRICE + HOME_PRICE_INCREMENT * extrasAlready
-
     private fun homeUpgradeStack(player: ServerPlayer): ItemStack {
         val stack = ItemStack(Items.RED_BED)
         val current = HomeUpgradeBridge.currentMaxHomes(player)
@@ -432,7 +420,7 @@ object MarketMenu {
             return stack
         }
         stack.set(DataComponents.CUSTOM_NAME, line("§b✦ Extra Home Slot"))
-        val price = nextHomePrice(homeExtrasPurchased(player) ?: 0)
+        val price = EXTRA_HOME_PRICE
         lore += line("§7Set more homes with §f/sethome <name>§7.")
         lore += line("")
         lore += line("§7Your home limit: §f$current")
@@ -515,7 +503,7 @@ object MarketMenu {
             player.sendSystemMessage(Component.literal("§c[Upgrades] Home upgrades are unavailable right now."))
             return
         }
-        val price = nextHomePrice(homeExtrasPurchased(player) ?: 0)
+        val price = EXTRA_HOME_PRICE
 
         val balance = EconomyBridge.getBalance(player.uuid)
         if (balance < price) {

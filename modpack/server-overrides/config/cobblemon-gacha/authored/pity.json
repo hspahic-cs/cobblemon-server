@@ -1,0 +1,8 @@
+{
+  "pityEvery": 10,
+  "pityWeights": {
+    "Ultra Rare Pokémon Egg": 70.0,
+    "Shiny Egg": 22.5,
+    "Cosmetic Pokémon Egg": 7.5
+  }
+}

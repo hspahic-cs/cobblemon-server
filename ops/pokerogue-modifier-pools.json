@@ -1,0 +1,204 @@
+{
+  "source_commit_or_date": "pagefaultgames/pokerogue@main, commit 0d94c5bbbc7a4fc67014c480e31dab1cfdf7ceb4 (2026-07-25), read 2026-07-31",
+  "source_files": [
+    "src/modifier/init-modifier-pools.ts",
+    "src/modifier/modifier-type.ts",
+    "src/modifier/modifier-pools.ts",
+    "src/phases/select-modifier-phase.ts",
+    "src/battle-scene.ts",
+    "src/enums/modifier-pool-type.ts",
+    "src/enums/modifier-tier.ts"
+  ],
+  "conventions": {
+    "weight": "integer when the source weight is a constant; null when it is a function of party/wave state (see weight_note). max_weight is the declared cap (WeightedModifierType 3rd ctor arg) when present.",
+    "weight_note_shorthand": "wave = globalScene.currentBattle.waveIndex; 'classic' = classic game mode; counts of party members are always capped at 3 unless stated",
+    "zero_weight_meaning": "entries whose computed weight is 0 are excluded from the tier's threshold table for that roll (index ignored)",
+    "max_stack_zeroing": "at threshold build time, any entry whose modifier already exists at max stack count gets weight 0, EXCEPT PokemonHeldItemModifierType and FormChangeItemModifierType entries (regenerateModifierPoolThresholds)"
+  },
+  "player_pool": {
+    "COMMON": [
+      { "id": "POKEBALL", "weight": null, "max_weight": 6, "weight_note": "6, but 0 in classic when pokeball count >= MAX_PER_TYPE_POKEBALLS" },
+      { "id": "RARE_CANDY", "weight": 2 },
+      { "id": "POTION", "weight": null, "max_weight": 9, "weight_note": "3 * min(3, party members with >=10 HP lost, HP ratio <= 0.875, not fainted)" },
+      { "id": "SUPER_POTION", "weight": null, "max_weight": 3, "weight_note": "1 * min(3, party members with >=25 HP lost, HP ratio <= 0.75, not fainted)" },
+      { "id": "ETHER", "weight": null, "max_weight": 9, "weight_note": "3 * min(3, alive members without a Leppa berry that have a move with >half PP used and <=5 PP left)" },
+      { "id": "MAX_ETHER", "weight": null, "max_weight": 3, "weight_note": "1 * same PP-depleted count as ETHER" },
+      { "id": "LURE", "weight": null, "weight_note": "2, but 0 on classic wave 199 or if an active 10-battle lure still has >=60% duration left (lureWeightFunc(10, 2))" },
+      { "id": "TEMP_STAT_STAGE_BOOSTER", "weight": 4 },
+      { "id": "BERRY", "weight": 2 },
+      { "id": "TM_COMMON", "weight": 2 }
+    ],
+    "GREAT": [
+      { "id": "GREAT_BALL", "weight": null, "max_weight": 6, "weight_note": "6, but 0 in classic at max Great Balls" },
+      { "id": "PP_UP", "weight": 2 },
+      { "id": "FULL_HEAL", "weight": null, "max_weight": 18, "weight_note": "6 * min(3, alive members with a status not already covered by a held Toxic/Flame Orb of the same status)" },
+      { "id": "REVIVE", "weight": null, "max_weight": 27, "weight_note": "9 * min(3, fainted party members)" },
+      { "id": "MAX_REVIVE", "weight": null, "max_weight": 9, "weight_note": "3 * min(3, fainted party members)" },
+      { "id": "SACRED_ASH", "weight": null, "max_weight": 1, "weight_note": "1 if fainted members >= ceil(party size / 2), else 0" },
+      { "id": "HYPER_POTION", "weight": null, "max_weight": 9, "weight_note": "3 * min(3, members with >=100 HP lost, HP ratio <= 0.625, not fainted)" },
+      { "id": "MAX_POTION", "weight": null, "max_weight": 3, "weight_note": "1 * min(3, members with >=100 HP lost, HP ratio <= 0.5, not fainted)" },
+      { "id": "FULL_RESTORE", "weight": null, "max_weight": 3, "weight_note": "floor((min(3, MAX_POTION-style HP count) + FULL_HEAL-style status count) / 2)" },
+      { "id": "ELIXIR", "weight": null, "max_weight": 9, "weight_note": "3 * same PP-depleted count as ETHER" },
+      { "id": "MAX_ELIXIR", "weight": null, "max_weight": 3, "weight_note": "1 * same PP-depleted count as ETHER" },
+      { "id": "DIRE_HIT", "weight": 4 },
+      { "id": "SUPER_LURE", "weight": null, "weight_note": "4, lureWeightFunc(15, 4) - 0 on classic wave 199 or active 15-battle lure with >=60% left" },
+      { "id": "NUGGET", "weight": null, "weight_note": "5, but 0 in classic at wave >= 199 (skipInLastClassicWaveOrDefault)" },
+      { "id": "SPECIES_STAT_BOOSTER", "weight": 2 },
+      { "id": "EVOLUTION_ITEM", "weight": null, "max_weight": 8, "weight_note": "min(ceil(wave / 15), 8)" },
+      { "id": "MAP", "weight": null, "max_weight": 2, "weight_note": "2 if classic and wave < 180, else 0" },
+      { "id": "SOOTHE_BELL", "weight": 2 },
+      { "id": "TM_GREAT", "weight": 3 },
+      { "id": "MEMORY_MUSHROOM", "weight": null, "max_weight": 4, "weight_note": "min(1 + floor(modeAdjustedWave / 30), 4)" },
+      { "id": "BASE_STAT_BOOSTER", "weight": 3 },
+      { "id": "TERA_SHARD", "weight": null, "weight_note": "1 if any party member is not Terapagos/Ogerpon/Shedinja, else 0" },
+      { "id": "DNA_SPLICERS", "weight": null, "max_weight": 4, "weight_note": "requires >=2 unfused members; 4 in Spliced-Only mode; 2 in classic during a fusion-boost event; else 0" },
+      { "id": "VOUCHER", "weight": null, "max_weight": 1, "weight_note": "0 in daily mode; else max(1 - rerollCount, 0)" }
+    ],
+    "ULTRA": [
+      { "id": "ULTRA_BALL", "weight": null, "max_weight": 15, "weight_note": "15, but 0 in classic at max Ultra Balls" },
+      { "id": "MAX_LURE", "weight": null, "weight_note": "4, lureWeightFunc(30, 4)" },
+      { "id": "BIG_NUGGET", "weight": null, "weight_note": "12, but 0 in classic at wave >= 199" },
+      { "id": "PP_MAX", "weight": 3 },
+      { "id": "MINT", "weight": 4 },
+      { "id": "RARE_EVOLUTION_ITEM", "weight": null, "max_weight": 32, "weight_note": "min(ceil(wave / 15) * 4, 32)" },
+      { "id": "FORM_CHANGE_ITEM", "weight": null, "max_weight": 24, "weight_note": "min(ceil(wave / 50), 4) * 6" },
+      { "id": "AMULET_COIN", "weight": null, "weight_note": "3, but 0 in classic at wave >= 199" },
+      { "id": "EVIOLITE", "weight": null, "weight_note": "10 if (daily mode OR (Eviolite unlocked AND not fresh-start challenge)) AND some non-G-Max member whose species (or fusion species) can still evolve and is not already holding an Eviolite; else 0" },
+      { "id": "RARE_SPECIES_STAT_BOOSTER", "weight": 12 },
+      { "id": "LEEK", "weight": null, "max_weight": 12, "weight_note": "12 if a party member (or fusion) is Farfetch'd/Galarian Farfetch'd/Sirfetch'd without a Leek; else 0" },
+      { "id": "TOXIC_ORB", "weight": null, "max_weight": 10, "weight_note": "10 if a member not holding either orb can be badly poisoned and has Toxic Boost/Poison Heal, or (Quick Feet/Guts/Marvel Scale/Magic Guard without Flare Boost), or Facade/Psycho Shift; else 0" },
+      { "id": "FLAME_ORB", "weight": null, "max_weight": 10, "weight_note": "10, mirror of TOXIC_ORB for burn (Flare Boost specific; Toxic Boost/Poison Heal treated as opposite)" },
+      { "id": "MYSTICAL_ROCK", "weight": null, "max_weight": 10, "weight_note": "10 if a member below max Mystical Rock stack has a weather/terrain-setting ability (Drought, Drizzle, Sand Stream, etc.) or move (Sunny Day, Rain Dance, terrain moves, etc.); else 0" },
+      { "id": "REVIVER_SEED", "weight": 4 },
+      { "id": "CANDY_JAR", "weight": null, "weight_note": "5, but 0 in classic at wave >= 199" },
+      { "id": "ATTACK_TYPE_BOOSTER", "weight": 9 },
+      { "id": "TM_ULTRA", "weight": 11 },
+      { "id": "RARER_CANDY", "weight": 4 },
+      { "id": "GOLDEN_PUNCH", "weight": null, "weight_note": "2, but 0 in classic at wave >= 199" },
+      { "id": "IV_SCANNER", "weight": null, "weight_note": "4, but 0 in classic at wave >= 199" },
+      { "id": "EXP_CHARM", "weight": null, "weight_note": "8, but 0 in classic at wave >= 199" },
+      { "id": "EXP_SHARE", "weight": null, "weight_note": "10, but 0 in classic at wave >= 199" },
+      { "id": "TERA_ORB", "weight": null, "max_weight": 4, "weight_note": "0 in classic; else min(max(floor(wave / 50) * 2, 1), 4)" },
+      { "id": "QUICK_CLAW", "weight": 3 },
+      { "id": "WIDE_LENS", "weight": 7 }
+    ],
+    "ROGUE": [
+      { "id": "ROGUE_BALL", "weight": null, "max_weight": 16, "weight_note": "16, but 0 in classic at max Rogue Balls" },
+      { "id": "RELIC_GOLD", "weight": null, "weight_note": "2, but 0 in classic at wave >= 199" },
+      { "id": "LEFTOVERS", "weight": 3 },
+      { "id": "SHELL_BELL", "weight": 3 },
+      { "id": "BERRY_POUCH", "weight": 4 },
+      { "id": "GRIP_CLAW", "weight": 5 },
+      { "id": "SCOPE_LENS", "weight": 4 },
+      { "id": "BATON", "weight": 2 },
+      { "id": "SOUL_DEW", "weight": 7 },
+      { "id": "CATCHING_CHARM", "weight": null, "max_weight": 4, "weight_note": "0 in classic, else 4" },
+      { "id": "ABILITY_CHARM", "weight": null, "weight_note": "6, but 0 in classic at wave >= 189 (skipInClassicAfterWave(189, 6))" },
+      { "id": "FOCUS_BAND", "weight": 5 },
+      { "id": "KINGS_ROCK", "weight": 3 },
+      { "id": "LOCK_CAPSULE", "weight": null, "weight_note": "0 in classic, else 3" },
+      { "id": "SUPER_EXP_CHARM", "weight": null, "weight_note": "8, but 0 in classic at wave >= 199" },
+      { "id": "RARE_FORM_CHANGE_ITEM", "weight": null, "max_weight": 24, "weight_note": "min(ceil(wave / 50), 4) * 6" },
+      { "id": "MEGA_BRACELET", "weight": null, "max_weight": 36, "weight_note": "min(ceil(wave / 50), 4) * 9" },
+      { "id": "DYNAMAX_BAND", "weight": null, "max_weight": 36, "weight_note": "min(ceil(wave / 50), 4) * 9" },
+      { "id": "VOUCHER_PLUS", "weight": null, "max_weight": 3, "weight_note": "0 in daily mode; else max(3 - rerollCount, 0)" }
+    ],
+    "MASTER": [
+      { "id": "MASTER_BALL", "weight": null, "max_weight": 24, "weight_note": "24, but 0 in classic at max Master Balls" },
+      { "id": "SHINY_CHARM", "weight": 14 },
+      { "id": "HEALING_CHARM", "weight": 18 },
+      { "id": "MULTI_LENS", "weight": 18 },
+      { "id": "VOUCHER_PREMIUM", "weight": null, "max_weight": 5, "weight_note": "0 in daily/endless/spliced-only modes; else max(5 - 2 * rerollCount, 0)" },
+      { "id": "DNA_SPLICERS", "weight": null, "max_weight": 24, "weight_note": "24 if NOT (classic with fusion-boost event) AND NOT spliced-only AND >=2 unfused members; else 0" },
+      { "id": "MINI_BLACK_HOLE", "weight": null, "max_weight": 1, "weight_note": "1 if daily mode OR (Mini Black Hole unlocked AND not fresh-start challenge); else 0" }
+    ]
+  },
+  "tier_rolling": {
+    "base_roll": "tierValue = randSeedInt(1024) (uniform 0..1023), rolled independently per option slot",
+    "thresholds": {
+      "MASTER": "tierValue == 0 (1/1024 ~ 0.098%)",
+      "ROGUE": "1 <= tierValue <= 12 (12/1024 ~ 1.17%)",
+      "ULTRA": "13 <= tierValue <= 60 (48/1024 ~ 4.69%)",
+      "GREAT": "61 <= tierValue <= 255 (195/1024 ~ 19.04%)",
+      "COMMON": "tierValue >= 256 (768/1024 = 75%)"
+    },
+    "luck_upgrades": {
+      "applies": "PLAYER pool only, and only when tierValue != 0 (a natural MASTER roll never upgrade-rolls) and allowLuckUpgrades",
+      "upgrade_odds": "upgradeOdds = floor(128 / ((partyLuck + 4) / 4)); per-roll upgrade chance = 4 / upgradeOdds",
+      "examples": "luck 0 -> 4/128 = 3.125% per roll; luck 3 -> 4/73 ~ 5.5%; luck 14 -> 4/28 ~ 14.3%",
+      "chaining": "do-while: each successful upgrade roll increments upgradeCount and rolls again, so multiple tier jumps are possible",
+      "tier_clamp": "tier += upgradeCount, then decremented while the pool has no entries at that tier (upgradeCount decremented alongside)",
+      "fixed_tier_variant": "when a tier is forced (tier-lock / guaranteed tiers) and tier < MASTER, a while-loop rolls the same 4/upgradeOdds per step to climb one tier at a time, stopping on first failure"
+    },
+    "party_luck": {
+      "formula": "sum over battle-allowed party members of pokemon.getLuck() (= luck + fusionLuck; per-mon luck is shiny-variant based, 0 for non-shiny), clamped to 0..14; timed-event boosts can add; daily runs use a seeded random 0..14 instead",
+      "display_scale": "0..14 maps to grades D through SSS"
+    },
+    "duplicate_retry": "per option: retryCount = min(count * 5, 50); candidate rerolled while its name or item group matches an already-generated option (or fails a challenge check); tier and upgradeCount are preserved across retries",
+    "generator_retry": "if a ModifierTypeGenerator returns null (no valid target), reroll within same tier; after 100 failed retries drop one tier"
+  },
+  "options_count": {
+    "base": 3,
+    "modifiers": "ExtraModifierModifier (GOLDEN_POKEBALL 'Golden Pokeball') and TempExtraModifierModifier (SILVER_POKEBALL, lasts 100 waves) each add +1 option per stack",
+    "wave_scaling": "none - count does not scale with wave",
+    "custom_override": "CustomModifierSettings (guaranteed tiers/options/funcs) overrides the count; fillRemaining pads back up to the normal count"
+  },
+  "reroll": {
+    "base_cost_unlocked_rarities": 250,
+    "cost_formula": "cost = ceil(wave / 10) * baseValue * 2^rerollCount * multiplier, where baseValue = 250 normally",
+    "tier_locked_base": "with Lock Capsule tier-lock active, baseValue = sum over the current options of tierValues[tier], tierValues = [50, 125, 300, 750, 2000] for COMMON/GREAT/ULTRA/ROGUE/MASTER",
+    "doubling": "2^rerollCount - doubles with every reroll taken this shop screen",
+    "modifiers": "HealShopCostModifier (Black Sludge) multiplies the final cost; WAIVE_ROLL_FEE override makes it 0; customModifierSettings.rerollMultiplier scales it, negative value disables rerolling (-1)",
+    "reroll_effect": "rerollCount is also passed into weight functions (VOUCHER/VOUCHER_PLUS/VOUCHER_PREMIUM decay per reroll); pool thresholds are regenerated each reroll"
+  },
+  "shop": {
+    "availability": "shop present only when wave % 10 != 0 (no shop on x0 boss waves)",
+    "base_cost": "baseCost = getWaveMoneyAmount(1): with W = ceil(wave/10) - 1, moneyValue = ((W + 1 + (0.75 + (((wave-1) % 10) + 1) / 10)) * 100) ^ (1 + 0.005 * W); cost = floor(moneyValue / 10) * 10",
+    "rows_unlocked_formula": "rows shown = first ceil(max(wave + 10, 0) / 30) of the 7 row groups below (so row N unlocks at wave 30*(N-1) - 9, i.e. waves 1 / 21 / 51 / 81 / 111 / 141 / 171)",
+    "rows": [
+      { "unlock_wave": 1, "items": [ { "id": "POTION", "cost_multiplier": 0.2 }, { "id": "ETHER", "cost_multiplier": 0.4 }, { "id": "REVIVE", "cost_multiplier": 2 } ] },
+      { "unlock_wave": 21, "items": [ { "id": "SUPER_POTION", "cost_multiplier": 0.45 }, { "id": "FULL_HEAL", "cost_multiplier": 1 } ] },
+      { "unlock_wave": 51, "items": [ { "id": "ELIXIR", "cost_multiplier": 1 }, { "id": "MAX_ETHER", "cost_multiplier": 1 } ] },
+      { "unlock_wave": 81, "items": [ { "id": "HYPER_POTION", "cost_multiplier": 0.8 }, { "id": "MAX_REVIVE", "cost_multiplier": 2.75 }, { "id": "MEMORY_MUSHROOM", "cost_multiplier": 4 } ] },
+      { "unlock_wave": 111, "items": [ { "id": "MAX_POTION", "cost_multiplier": 1.5 }, { "id": "MAX_ELIXIR", "cost_multiplier": 2.5 } ] },
+      { "unlock_wave": 141, "items": [ { "id": "FULL_RESTORE", "cost_multiplier": 2.25 } ] },
+      { "unlock_wave": 171, "items": [ { "id": "SACRED_ASH", "cost_multiplier": 10 } ] }
+    ],
+    "price": "item price = baseCost * cost_multiplier, then HealShopCostModifier (Black Sludge) applies; prices are fixed per item, not rolled"
+  },
+  "wild_vs_trainer_pools": {
+    "purpose": "IMPORTANT: WILD and TRAINER pools are NOT used for the player's post-battle pick. The player reward pick ALWAYS draws from the PLAYER pool (SelectModifierPhase.getPoolType() returns PLAYER unconditionally). WILD/TRAINER pools generate HELD ITEMS placed on ENEMY Pokemon when a wave spawns (battle type TRAINER -> trainerModifierPool, else wildModifierPool); the player only obtains these by stealing (Grip Claw/Thief) or catching the holder.",
+    "enemy_item_rolling": "same 1024-based tier thresholds, but no luck upgrades (player-only); instead getEnemyModifierTypesForWave passes upgradeChance: a flat 1-in-upgradeChance roll grants +1 tier (base 32; boss 16; final boss divides by a further 8). Item count per enemy = successes over gameMode.getEnemyModifierChance rolls; bosses get at least half; wave % 1000 == 0 adds a guaranteed MINI_BLACK_HOLE",
+    "wild_pool": {
+      "COMMON": [ { "id": "BERRY", "weight": 1 } ],
+      "GREAT": [ { "id": "BASE_STAT_BOOSTER", "weight": 1 } ],
+      "ULTRA": [ { "id": "ATTACK_TYPE_BOOSTER", "weight": 10 }, { "id": "WHITE_HERB", "weight": 0 } ],
+      "ROGUE": [ { "id": "LUCKY_EGG", "weight": 4 } ],
+      "MASTER": [ { "id": "GOLDEN_EGG", "weight": 1 } ]
+    },
+    "trainer_pool": {
+      "COMMON": [ { "id": "BERRY", "weight": 8 }, { "id": "BASE_STAT_BOOSTER", "weight": 3 } ],
+      "GREAT": [ { "id": "BASE_STAT_BOOSTER", "weight": 3 } ],
+      "ULTRA": [ { "id": "ATTACK_TYPE_BOOSTER", "weight": 10 }, { "id": "WHITE_HERB", "weight": 0 } ],
+      "ROGUE": [ { "id": "FOCUS_BAND", "weight": 2 }, { "id": "LUCKY_EGG", "weight": 4 }, { "id": "QUICK_CLAW", "weight": 1 }, { "id": "GRIP_CLAW", "weight": 1 }, { "id": "WIDE_LENS", "weight": 1 } ],
+      "MASTER": [ { "id": "KINGS_ROCK", "weight": 1 }, { "id": "LEFTOVERS", "weight": 1 }, { "id": "SHELL_BELL", "weight": 1 }, { "id": "SCOPE_LENS", "weight": 1 } ]
+    }
+  },
+  "notes": [
+    "ModifierPoolType enum: PLAYER, WILD, TRAINER, ENEMY_BUFF, DAILY_STARTER. ENEMY_BUFF is the Endless-mode enemy team buff pool; DAILY_STARTER seeds daily-run starter held items. Neither affects the post-battle player pick.",
+    "ModifierTier enum: COMMON, GREAT, ULTRA, ROGUE, MASTER, LUXURY. LUXURY has no pool; it is only a display tier.",
+    "Weight selection within a tier: weights are summed into cumulative thresholds (regenerateModifierPoolThresholds), then value = randSeedInt(totalWeight) picks the first threshold > value. Zero-weight entries are excluded from that roll.",
+    "Thresholds are regenerated per shop screen and per reroll with the live party and rerollCount, so conditional weights are evaluated fresh each time.",
+    "Non-stackable items already owned at max stacks are weight-0'd at threshold build time (held-item and form-change generators exempt because they target individual Pokemon).",
+    "Generators (BERRY, TM_*, EVOLUTION_ITEM, ATTACK_TYPE_BOOSTER, BASE_STAT_BOOSTER, MINT, TERA_SHARD, FORM_CHANGE_ITEM, SPECIES_STAT_BOOSTER, etc.) roll their concrete sub-item after the pool entry is selected; sub-item selection logic lives in each generator in modifier-type.ts and is not captured here.",
+    "The free pick can be skipped; picking transfers control via applyChosenModifier. Overrides (ITEM_REWARD_OVERRIDE) can replace rolled options in dev builds.",
+    "LUCKY_EGG boost value is 40 (%); GOLDEN_EGG is the wild MASTER-tier drop.",
+    "Money reward for a wave uses the same getWaveMoneyAmount with different multipliers; shop baseCost uses multiplier 1."
+  ],
+  "unresolved": [
+    "Per-Pokemon luck initialization: getLuck() = this.luck + fusionLuck was verified, but the assignment of this.luck (commonly shiny ? variant + 1 : 0) was not directly read from the constructor in this pass.",
+    "Exact sub-item weighting inside ModifierTypeGenerators (e.g. which berry, which TM, tera-shard type odds) was out of scope and not extracted.",
+    "gameMode.getEnemyModifierChance values (denominator for enemy held-item count rolls) were not read from game-mode.ts.",
+    "Timed-event luck boosts (getEventLuckBoost, event luck-boosted species) depend on live event config, not source constants."
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not content. The band edges and the two fixed",
+    "encounters below exist to show one of each schema feature; the trainer ids name NOTHING and",
+    "are not meant to. Which trainers a run fights, and where they sit, is server content (plan",
+    "§2.7 keeps a transcribed roster out of the mod entirely), so no roster ships loaded.",
+    "",
+    "Write your own at data/<your-namespace>/roguelite/trainer_rosters/<name>.json, or shadow this",
+    "path from your own datapack to delete this example. ops/gen_roguelite_roster.py generates and",
+    "validates these files without booting a server, and can cross-check the ids against an RCT",
+    "trainer datapack - which this mod cannot do, since it never sees RCT's registry.",
+    "",
+    "Bands and fixed encounters hold trainer IDS ONLY. What an id MEANS is decided by the",
+    "'generated' block at the bottom: an id listed there fights a team built at the encounter from",
+    "its signature species, and an id that is not fights its RCT trainer's authored team. Levels",
+    "always come from the wave curve.",
+    "",
+    "Three mechanisms decide who a wave fights, and they are checked fixed -> rival -> band:",
+    "  bands  - the standing rule. A wave range holds a pool and a wave draws from it.",
+    "  fixed  - one wave pinned to one trainer, optionally promoting the wave (see _fixed).",
+    "  rival  - plan 2.36's rival: ONE character met on a fixed schedule whose team GROWS. Not a",
+    "           pool and not a promotion; it needs its own block, and _rival says why.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
+    "unknown field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_authored_for": [
+    "The schedule this roster's coverage is checked against. Optional - these ARE the defaults, and",
+    "are spelled out here only because the block is easy to miss. Change them if your run config",
+    "differs, or the loader will report holes for waves you will never reach (or miss real ones)."
+  ],
+  "authored_for": { "run_length": 200, "trainer_interval": 5, "boss_interval": 10 },
+
+  "_bands": [
+    "Bands are NOT about levels - level scaling is applied to whatever trainer turns up. They exist",
+    "because scaling a team's level does not scale its MOVES, EVs or held items, so a team authored",
+    "for wave 10 fights like a wave-10 team at wave 150 no matter what level it arrives at.",
+    "",
+    "Trainer bands and boss bands are checked separately, and each set must cover every wave of its",
+    "kind in 1..run_length with no gaps and no overlaps. A trainer is drawn from the covering band's",
+    "pool by a seeded draw on (run seed, wave), so a resumed run meets the same trainer.",
+    "",
+    "EDITING A POOL RE-POINTS RUNS ALREADY IN PROGRESS, appending included - the draw is scaled by",
+    "the pool size, so adding a trainer moves which one some later wave of an existing run will",
+    "meet. It does not break those runs; they stay deterministic, they just answer from the new",
+    "pool. Listing an id twice doubles its share - that is the only weighting mechanism, and the",
+    "absence of a weight field is deliberate."
+  ],
+  "bands": [
+    {
+      "id": "example_trainer_early",
+      "kind": "trainer",
+      "min_wave": 1,
+      "max_wave": 60,
+      "trainers": [ "cobblemon_roguelite:example_trainer_a", "cobblemon_roguelite:example_trainer_b" ]
+    },
+    {
+      "id": "example_trainer_mid",
+      "kind": "trainer",
+      "min_wave": 61,
+      "max_wave": 130,
+      "trainers": [ "cobblemon_roguelite:example_trainer_c" ]
+    },
+    {
+      "id": "example_trainer_late",
+      "_max_wave": "Omitted, so this band is open-ended. Level flattens at 100 from about wave 138, so the last band is where difficulty has to come from the team rather than the curve.",
+      "kind": "trainer",
+      "min_wave": 131,
+      "trainers": [ "cobblemon_roguelite:example_trainer_d" ]
+    },
+    {
+      "id": "example_boss_early",
+      "kind": "boss",
+      "min_wave": 1,
+      "max_wave": 60,
+      "trainers": [ "cobblemon_roguelite:example_boss_a" ]
+    },
+    {
+      "id": "example_boss_mid",
+      "kind": "boss",
+      "min_wave": 61,
+      "max_wave": 130,
+      "trainers": [ "cobblemon_roguelite:example_boss_b" ]
+    },
+    {
+      "id": "example_boss_late",
+      "kind": "boss",
+      "min_wave": 131,
+      "trainers": [ "cobblemon_roguelite:example_boss_c" ]
+    }
+  ],
+
+  "_fixed": [
+    "Fixed encounters beat the bands AND the interval schedule. Two forms, and they mean different",
+    "things:",
+    "",
+    "  no \"kind\"  - replace the trainer on a wave that is ALREADY a trainer or boss wave. On a wild",
+    "               wave it would never fire, so the loader reports it: that is what catches a wave",
+    "               number typed one digit wrong.",
+    "  \"kind\"     - PROMOTE this wave to a trainer or boss wave and fight this trainer. This is how",
+    "               a ladder lands on waves the interval cannot reach, and declaring the kind is you",
+    "               saying you know the wave is not scheduled as one. A promoted wave is not",
+    "               catchable, and a promotion to boss takes the boss level multiplier.",
+    "",
+    "The two entries below are examples of each form, NOT a schedule. Authoring the schedule is a",
+    "content decision and is deliberately left undone."
+  ],
+  "fixed": [
+    {
+      "_note": [
+        "Wave 50 is already a boss wave, so this only pins WHICH boss. Note what this is NOT: a rival.",
+        "A rival is met six times with a growing team, which no number of fixed entries can express -",
+        "see the 'rival' block below."
+      ],
+      "wave": 50,
+      "trainer": "cobblemon_roguelite:example_fixed_boss"
+    },
+    {
+      "_note": [
+        "Wave 182 is a wild wave under 5/10. \"kind\" promotes it - without that this entry would",
+        "never fire. This trainer has NO generated entry below, which is deliberate: an Elite Four",
+        "member is exactly the fight worth authoring by hand. A generated team is uniform by nature."
+      ],
+      "wave": 182,
+      "kind": "boss",
+      "trainer": "cobblemon_roguelite:example_fixed_late_boss"
+    }
+  ],
+
+  "_rival": [
+    "Plan 2.36's rival, and the one encounter kind that is neither a pool nor a pin. Optional - a",
+    "roster with no rival block is a complete roster, because 2.14's mode is trainers, bosses and",
+    "wild waves and the rival is an addition.",
+    "",
+    "WHY IT NEEDS ITS OWN BLOCK. A rival is ONE character met repeatedly whose team GROWS: a starter",
+    "to begin with, one more Pokemon at each meeting. Every other opponent in the mode is decided",
+    "from (seed, wave) and nothing else, which is what makes a resumed run meet the same team - but",
+    "any function of the wave gives a DIFFERENT answer at every meeting, so a rival written as six",
+    "band entries or six fixed entries is six strangers who happen to share a face. So the team is",
+    "written ONCE, in acquisition order, and each meeting brings a PREFIX of it.",
+    "",
+    "meetings: ascending, one per meeting, and the POSITION IN THIS LIST IS THE MEETING NUMBER -",
+    "which is what decides how many Pokemon turn up. They are not re-sorted for you: reordering the",
+    "file would silently move the party sizes onto different waves.",
+    "",
+    "Each meeting names a DIFFERENT trainer id on purpose. The character is one person; the NPC is",
+    "one of six numbered stages, which is how the rival progression RCT ships is modelled (see",
+    "ROGUELITE_SKINS in ops/gen_trainer_texture_pack.py - rgl_rival_1..rgl_rival_6, all from one",
+    "variant line so the face does not change). A stage id must appear NOWHERE ELSE: in a band pool",
+    "it can be drawn at an ordinary trainer wave, out of order, with the wrong meeting's team.",
+    "",
+    "teams: the identities a run may draw from. ONE is the ordinary case and means every run meets",
+    "the same rival. Several is PokeRogue's model, where the rival's team follows a region; which one",
+    "a run gets is a seeded draw on the RUN SEED (never the wave, or the character would change",
+    "person mid-run). CAUTION: editing this list re-points runs already in progress, and unlike a",
+    "band pool the damage is WITHIN one run - appending a team changes the draw's divisor, so a",
+    "player can meet a different rival at their next meeting. Do not edit it while runs are live.",
+    "",
+    "slots: exactly a 'generated' signature slot - same alternatives, same weights, same properties",
+    "fragments. What differs is the MEANING OF THE ORDER. A signature is ace-first and truncated from",
+    "the end when a band wants fewer; a rival's slots are ACQUISITION order and truncated from the",
+    "end because the later ones have not been caught yet. Slot one is the starter. Put whatever the",
+    "last meeting should be a surprise last.",
+    "",
+    "party_size: optional, indexed by meeting. Omitted means 2.36's own ramp - two at the first",
+    "meeting, one more each time, capped at Cobblemon's six - derived from the number of meetings, so",
+    "a four-meeting ladder gets a coherent ramp rather than a clamped copy of a six-meeting one.",
+    "",
+    "WHAT A RIVAL WAVE DOES NOT GET, both decisions rather than gaps: no boss level multiplier and no",
+    "boss shields. A rival is hard because of its team - that is the lever it has that a trainer does",
+    "not. Shields cost the held-item slot and are what makes a BOSS wave read as a wall; a rival that",
+    "was one six times would flatten the difference. It is never catchable, like every trainer-owned",
+    "Pokemon (2.14), and it rolls the reward table for its own kind.",
+    "",
+    "THE LADDER BELOW IS A SHAPE REFERENCE, NOT CONTENT. Two meetings and one two-slot team, which is",
+    "the smallest thing that shows the schema. The real ladder - six meetings and the region teams -",
+    "is server content and belongs in a server-side datapack (2.7); ops/gen_pokerogue_roster.py",
+    "generates it. Note that under the default 5/10 schedule five of 2.36's six waves are already",
+    "trainer waves and only wave 8 is a wild one, so the ladder is mostly re-pointing waves that were",
+    "going to be fights anyway."
+  ],
+  "rival": {
+    "meetings": [
+      { "_note": "Wave 8 is a wild wave under 5/10; the rival block promotes it, which is why no \"kind\" is written or accepted here.", "wave": 8, "trainer": "cobblemon_roguelite:example_rival_1" },
+      { "wave": 25, "trainer": "cobblemon_roguelite:example_rival_2" }
+    ],
+    "teams": [
+      {
+        "_note": [
+          "One team, so every run meets this rival. Slot one is the starter - the Pokemon BOTH meetings",
+          "have in common - and is why the order is acquisition order. Three slots for two meetings",
+          "because the default ramp asks for 2 then 3; a team shorter than the deepest meeting's ramp is",
+          "reported at load, since a rival that stops growing is the mechanic quietly not happening."
+        ],
+        "id": "example",
+        "slots": [
+          { "alternatives": [ { "line": [ "cobblemon:chikorita", "cobblemon:bayleef", "cobblemon:meganium" ] } ] },
+          { "alternatives": [ { "line": [ "cobblemon:hoothoot", "cobblemon:noctowl" ] } ] },
+          { "alternatives": [ { "line": [ "cobblemon:mareep", "cobblemon:flaaffy", "cobblemon:ampharos" ] } ] }
+        ]
+      }
+    ]
+  },
+
+  "_generated": [
+    "Trainers whose TEAM is generated at the encounter from their signature species, rather than",
+    "fought as authored. The trainer id must still name a real RCT trainer - the NPC, its name, its",
+    "skin, its bag and its AI all come from there. Only the team is replaced.",
+    "",
+    "A slot is one party position and its alternatives; an alternative is one species' evolution",
+    "LINE, base form first. Which alternative is a seeded pick on (run seed, wave), so a trainer",
+    "differs between runs and is identical on a resumed one; which STAGE comes from the wave.",
+    "",
+    "A stage is a Cobblemon properties fragment, not just a species id - a regional form is an",
+    "ASPECT in Cobblemon ('cobblemon:corsola galarian' is Ghost, 'cobblemon:corsola' is Water), and",
+    "getting that wrong is invisible until somebody notices the types are off.",
+    "",
+    "'weight' exists for branching species: Tyrogue becomes three lines, and without weights a slot",
+    "meant as a coin flip between two species would quietly become one-in-four for the other one.",
+    "",
+    "'filler' is only used when the band's party size is bigger than the number of signature slots.",
+    "No filler means a band asking for six gets four - a smaller party, not an invented one.",
+    "",
+    "THE ONE ENTRY BELOW IS AN EXAMPLE, NOT CONTENT. Generate real ones with",
+    "ops/gen_pokerogue_roster.py, into a SERVER-SIDE datapack - never into this mod (plan 2.7)."
+  ],
+  "generated": [
+    {
+      "_note": "Shape reference only. 'example_trainer_a' is the id used in the early trainer band above.",
+      "trainer": "cobblemon_roguelite:example_trainer_a",
+      "signature": [
+        { "alternatives": [ { "line": [ "cobblemon:onix", "cobblemon:steelix" ] } ] },
+        { "alternatives": [ { "line": [ "cobblemon:geodude", "cobblemon:graveler", "cobblemon:golem" ] } ] },
+        {
+          "_note": "PokeRogue writes this slot as [OMANYTE, KABUTO] - one or the other, per run.",
+          "alternatives": [
+            { "line": [ "cobblemon:omanyte", "cobblemon:omastar" ] },
+            { "line": [ "cobblemon:kabuto", "cobblemon:kabutops" ] }
+          ]
+        },
+        { "alternatives": [ { "line": [ "cobblemon:aerodactyl" ] } ] }
+      ],
+      "filler": [
+        { "alternatives": [ { "line": [ "cobblemon:rhyhorn", "cobblemon:rhydon", "cobblemon:rhyperior" ] } ] }
+      ]
+    }
+  ],
+
+  "_generation": [
+    "The dials generation reads. Optional - everything below IS the default, spelled out because the",
+    "block is easy to miss, EXCEPT held_items which ships empty.",
+    "",
+    "party_size: 4 early, 5 mid, 6 late. This is a difficulty lever, not a detail: levels flatten at",
+    "100 from about wave 138, so party size is one of the few dials still turning up there.",
+    "",
+    "evolution: stage_waves are the intermediate steps; fully_evolved_from is PokeRogue's own rule.",
+    "A line shorter than the schedule is clamped, so a two-stage line is already final where a",
+    "three-stage one is halfway.",
+    "",
+    "held_items: WHICH items is content, so nothing ships. With no tiers, generated trainers hold",
+    "nothing. 'chance' is per Pokemon; 'count' is how many draws one Pokemon gets (Cobblemon holds",
+    "ONE item - the extra draws buy a higher hit rate, not a stack); 'boss' filters by wave kind and",
+    "may be omitted to match both. The two tiers below are an example of the shape.",
+    "",
+    "boss_shields: PokeRogue's segmented boss HP bar. 'shields' shields split the Pokemon's HP into",
+    "shields+1 chunks; no single hit may carry it past a chunk boundary, and each break raises a",
+    "random stat one stage. Boss waves ONLY, whatever min_wave says. Ships empty for the same reason",
+    "held_items does - which waves are walls is a difficulty curve, and that belongs to the server.",
+    "",
+    "It costs the held item slot: a shielded Pokemon carries no other item, because the shields ARE",
+    "its power. 'shields' is 1..5 and the ceiling is not taste - there is one held-item script per",
+    "count, so a 6 is an item Showdown does not have and the boss would fight unshielded. 'members'",
+    "is how many of the party are shielded, counted from the FRONT (signature slot one, which is",
+    "where PokeRogue puts a leader's ace). Unlike everything else here it is NOT a seeded draw:",
+    "wave 100 must be the same wall for everybody."
+  ],
+  "generation": {
+    "party_size": [
+      { "min_wave": 1, "size": 4 },
+      { "min_wave": 60, "size": 5 },
+      { "min_wave": 120, "size": 6 }
+    ],
+    "evolution": { "stage_waves": [ 20 ], "fully_evolved_from": 80 },
+    "held_items": [
+      {
+        "_note": "EXAMPLE. Boss waves from 80 on, two draws each at 40% - about two thirds hold something.",
+        "min_wave": 80,
+        "boss": true,
+        "chance": 0.4,
+        "count": 2,
+        "items": [
+          { "item": "cobblemon:leftovers", "weight": 2.0 },
+          { "item": "cobblemon:sitrus_berry" }
+        ]
+      },
+      {
+        "_note": "EXAMPLE. Everything else from wave 30 on, one draw at 20%.",
+        "min_wave": 30,
+        "chance": 0.2,
+        "items": [ { "item": "cobblemon:oran_berry" } ]
+      }
+    ],
+    "_boss_shields": [
+      "EXAMPLE. Highest passed min_wave wins, so the order written here does not decide anything.",
+      "This ramp gives the first shielded boss at wave 50 and the last at 150, which is roughly",
+      "PokeRogue's own shape at our run length."
+    ],
+    "boss_shields": [
+      { "min_wave": 50, "shields": 2 },
+      { "min_wave": 100, "shields": 3 },
+      { "min_wave": 150, "shields": 4, "members": 2 }
+    ]
+  }
+}

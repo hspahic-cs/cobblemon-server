@@ -133,6 +133,13 @@ class CobblemonBridge(modBus: IEventBus, container: ModContainer) {
             NeoForge.EVENT_BUS.register(CobbleloootsAdapter)
         }
 
+        // PokéRogue mode: cobblemon-roguelite declares a trainer-battle seam and defaults it to one
+        // that refuses, because §1.2/§2.6 leave RCTmod's licence unverified and that module may not
+        // compile against rctapi. We may, so we fill it in — ~40 of a run's 200 waves. No-ops (with
+        // one log line) when roguelite or RCT is absent. Dependency direction is one-way: this mod
+        // knows roguelite's class names, roguelite knows nothing of ours (plan §2.9).
+        com.cobblemonbridge.roguelite.RogueliteTrainerBattles.install()
+
         NeoForge.EVENT_BUS.addListener(::onRegisterCommands)
         NeoForge.EVENT_BUS.addListener(::onServerStarting)
 

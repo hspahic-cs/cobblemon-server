@@ -1,0 +1,51 @@
+diff --git a/src/api/savedata-api.ts b/src/api/savedata-api.ts
+index 279573d..1eb3649 100644
+--- a/src/api/savedata-api.ts
++++ b/src/api/savedata-api.ts
+@@ -26,6 +26,11 @@ export class PokerogueSavedataApi extends ApiBase {
+         typeof v === "bigint" ? (v <= MAX_INT_ATTR_VALUE ? Number(v) : v.toString()) : v,
+       );
+       const response = await this.doPost("/savedata/updateall", rawBodyData);
++      // cobblemon-server run-gate patch (§2.45): normalize the server's
++      // 402 rejection of an unpaid new classic run to its sentinel body.
++      if (response.status === 402) {
++        return "run-not-armed";
++      }
+       return await response.text();
+     } catch (err) {
+       console.warn("Could not update all savedata!", err);
+diff --git a/src/api/session-savedata-api.ts b/src/api/session-savedata-api.ts
+index 0511edd..dd39492 100644
+--- a/src/api/session-savedata-api.ts
++++ b/src/api/session-savedata-api.ts
+@@ -61,6 +61,11 @@ export class PokerogueSessionSavedataApi extends ApiBase {
+       const urlSearchParams = this.toUrlSearchParams(params);
+ 
+       const response = await this.doPost(`/savedata/session/update?${urlSearchParams}`, rawSavedata);
++      // cobblemon-server run-gate patch (§2.45): normalize the server's
++      // 402 rejection of an unpaid new classic run to its sentinel body.
++      if (response.status === 402) {
++        return "run-not-armed";
++      }
+       return await response.text();
+     } catch (err) {
+       console.warn("Could not update session savedata!", err);
+diff --git a/src/system/game-data.ts b/src/system/game-data.ts
+index 1b89c97..806977d 100644
+--- a/src/system/game-data.ts
++++ b/src/system/game-data.ts
+@@ -1355,6 +1355,14 @@ export class GameData {
+       return true;
+     }
+ 
++    // cobblemon-server run-gate patch (§2.45): the server rejected an unpaid
++    // new classic run (HTTP 402 / "run-not-armed"). Tell the player why before
++    // the caller resets to the title screen.
++    if (saveError === "run-not-armed") {
++      await globalScene.ui.showTextPromise("The Dream Machine requires an offering — pay at the shrine first.");
++      return false;
++    }
++
+     // TODO: handle this more gracefully
+     if (saveError.startsWith("session out of date")) {
+       globalScene.phaseManager.clearPhaseQueue();

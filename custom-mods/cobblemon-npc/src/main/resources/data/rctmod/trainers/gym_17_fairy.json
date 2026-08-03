@@ -74,6 +74,7 @@
     },
     {
       "species": "weezing",
+      "aspects": ["galarian"],
       "level": 60,
       "nature": "bold",
       "ivs": {

@@ -1,0 +1,59 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not content. Which biomes a run passes through, in",
+    "what order, with which builds, is DELIBERATELY NOT DECIDED YET (plan §2.24 fixed the mechanism",
+    "and left the contents open), so nothing below is balance or an intended run.",
+    "",
+    "It is DISABLED by \"weight\": 0 - the rotation drops entries at or below zero, exactly the way",
+    "the wild species pool does. That matters more here than it does for the payout example: biomes",
+    "are eligible simply by existing, so an enabled example file would send real runs to an arena",
+    "build that does not exist. Delete this file, or shadow this path from your own datapack.",
+    "",
+    "One biome per file. The id is the file path: this one is 'cobblemon_roguelite:example', and a",
+    "file at .../biomes/volcano/summit.json in namespace 'ns' would be 'ns:volcano/summit'.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
+    "unknown field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_display_name": "What the player is told they arrived in. Free text; there is no language file.",
+  "display_name": "Example Meadow",
+
+  "_arena_palette": [
+    "The arena generated while the run is here - an ArenaPalettes id, i.e. a file at",
+    "data/<ns>/roguelite/arena_palettes/<path>.json. That file is a choice of BLOCKS (floor, rim,",
+    "pillars, size), which is what makes an arena authorable by somebody who cannot build (§2.29).",
+    "",
+    "A run in a biome uses THIS instead of the wave-band build in the arena config, which is what",
+    "stops a server having two answers to 'what does wave 40 look like'.",
+    "",
+    "'arena_template' may be written INSTEAD, naming a hand-built data/<ns>/structure/<path>.nbt for",
+    "an owner who can build. Exactly one of the two - writing both is an error rather than one",
+    "silently winning, because a precedence rule would mean adding a palette to a biome that already",
+    "had a template does nothing, with nothing in the log to say why."
+  ],
+  "arena_palette": "cobblemon_roguelite:example",
+
+  "_minecraft_biome": [
+    "The biome the arena box is repainted to, which is the half a player actually feels: sky colour,",
+    "fog, water and grass tint, ambient loops, biome music. Any registered biome id, including one",
+    "from a datapack or another mod. Not checked at load - the biome registry is built by the same",
+    "reload this file is read in - so a wrong id is reported when the repaint runs."
+  ],
+  "minecraft_biome": "minecraft:meadow",
+
+  "_min_wave": [
+    "Which waves this biome may be entered on. A run changes biome every 10 waves by default, and",
+    "the bounds are what make that a progression rather than a shuffle: without them the endgame's",
+    "biome is as likely at wave 1 as at wave 190. Both are optional - min_wave defaults to 1 and",
+    "max_wave to unbounded, i.e. 'anywhere in the run'."
+  ],
+  "min_wave": 1,
+  "max_wave": 40,
+
+  "_weight": [
+    "Relative likelihood among the biomes eligible for a band. Zero or less disables the entry",
+    "without deleting it, which is why this example never appears in anybody's run."
+  ],
+  "weight": 0
+}

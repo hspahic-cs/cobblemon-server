@@ -1,0 +1,96 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - a shape reference, not content. The prices and items below exist to show one of",
+    "each schema feature; what a run's shop actually sells, and what it costs, is server content and",
+    "a balance decision (plan §2.7 keeps transcribed content out of the mod entirely).",
+    "",
+    "Write your own at data/<your-namespace>/roguelite/shop_tables/<name>.json, or shadow this path",
+    "from your own datapack to delete this example.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other unknown",
+    "field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_this_is_the_PAID_half": [
+    "The between-wave step has TWO halves and this file is only the second one.",
+    "",
+    "  1. THREE FREE OPTIONS, one of which the player takes. Random, rarity-tiered, rerollable for",
+    "     credits. Those come from a REWARD table (reward_tables/*.json), not from here - see",
+    "     RewardOffer. Nothing in this file is free and nothing in it is picked one-of.",
+    "  2. THIS: a short row of ordinary consumables, ALWAYS THE SAME ONES, priced, bought as often",
+    "     as the player can afford. See ShopStock.",
+    "",
+    "The split is the feel of the step. The free pick is a choice under scarcity - three doors, one",
+    "key. This row is PLANNING: the Revive is always there, so a player can skip a purchase now and",
+    "save for it. A shop that randomised its stock could not be planned against and would just be a",
+    "worse copy of the free offer.",
+    "",
+    "So there is NO random draw here, no seed and nothing to reroll: stock is the eligible entries in",
+    "AUTHORED ORDER, capped at the wave's slot count. Order matters - re-sorting would make the row",
+    "look random even with fixed contents.",
+    "",
+    "Two things do change with depth. Prices rise (see price_curve below), and the row GETS LONGER -",
+    "three consumables early, five later. How many is mechanism, not content: ShopRules.shopSlots.",
+    "",
+    "There are no TIERS here, unlike reward_tables. Tiers exist so rarity can ramp with depth; this",
+    "row's ramp is its price."
+  ],
+
+  "_entries": [
+    "'reward' is the SAME object the reward tables take - see RunReward, whose sealed list is §2.12's",
+    "boundary on what a reward can be. A datapack can add entries, prices and whole tables; it cannot",
+    "add a KIND of reward, because there would be no code to apply it.",
+    "",
+    "'price' is authored per entry and never derived. A formula from reward magnitude to cost would be",
+    "wrong in both directions at once: 10 Attack EVs and 10 HP EVs cost the same to compute and are",
+    "worth wildly different amounts, and the same item is a bargain at wave 20 and a rounding error at",
+    "wave 180.",
+    "",
+    "'weight' is relative likelihood among entries eligible at that wave; it says nothing about depth.",
+    "Weight 0 shelves an entry without deleting it, and is reported at load so it is not a surprise.",
+    "",
+    "'min_wave'/'max_wave' are a HARD content rule ('no ability patch before wave 40'), separate from",
+    "pricing on purpose - a rebalance of prices should not reopen content that was closed deliberately.",
+    "",
+    "'price_curve' scales 'price' as a PERCENTAGE at that wave: 100 is the authored price, 300 triple.",
+    "It exists because credits-per-wave grows with depth (CreditRules), so a flat price becomes free by",
+    "the late run. Reuses the reward tables' curve format rather than inventing a second one."
+  ],
+  "entries": [
+    {
+      "_note": "The cheap staple, always stocked. Weight is unused by this half and may be omitted.",
+      "id": "protein",
+      "price": 120,
+      "reward": { "type": "ev", "stat": "attack", "amount": 10 }
+    },
+    {
+      "_note": "Held item, mid-run onward. Weight left at its default of 1.",
+      "id": "leftovers",
+      "price": 450,
+      "min_wave": 25,
+      "reward": { "type": "held_item", "item": "cobblemon:leftovers" }
+    },
+    {
+      "_note": [
+        "Late-run power purchase that gets more expensive as credits inflate. Triples in price between",
+        "wave 40 and wave 200, which roughly tracks the earn curve rather than outrunning it."
+      ],
+      "id": "ability_patch",
+      "price": 400,
+      "min_wave": 40,
+      "price_curve": [
+        { "wave": 40, "weight": 100 },
+        { "wave": 200, "weight": 300 }
+      ],
+      "reward": { "type": "ability" }
+    },
+    {
+      "_note": "An early-only entry, closed off once the run is past the point it would matter.",
+      "id": "rare_candy",
+      "price": 200,
+      "min_wave": 1,
+      "max_wave": 60,
+      "reward": { "type": "level", "amount": 1 }
+    }
+  ]
+}

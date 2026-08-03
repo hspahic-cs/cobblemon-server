@@ -1,0 +1,92 @@
+{
+  "_comment": "All player-facing PokeRogue-bridge flavor text. Resolved SERVER-side with String.format: %s = text, %d = number, in the order documented per key. Rewrite freely; keep the placeholders.",
+
+  "_wave.threshold": "%s = player, %d = wave threshold crossed",
+  "pokerogue.presentation.wave.threshold": "%s's dream deepens... wave %d.",
+
+  "_run.ended": "%s = player, %d = final wave",
+  "pokerogue.presentation.run.ended": "%s woke up — the dream ended at wave %d.",
+
+  "_run.victory": "chat: %s = player, %d = final wave; title has no placeholders; subtitle: %s = player, %d = final wave",
+  "pokerogue.presentation.run.victory.chat": "%s's dream came true — the run was won at wave %d!",
+  "pokerogue.presentation.run.victory.title": "A dream came true",
+  "pokerogue.presentation.run.victory.subtitle": "%s conquered the dream at wave %d",
+
+  "_milestone": "chat: %s = player, %s = milestone name; title: %s = milestone name; subtitle: %s = player",
+  "pokerogue.presentation.milestone.chat": "%s's dream reached a new depth: %s",
+  "pokerogue.presentation.milestone.title": "%s",
+  "pokerogue.presentation.milestone.subtitle": "%s is dreaming",
+
+  "_wake": "shown privately to the runner when their run ends; %d = final wave",
+  "pokerogue.presentation.wake.title": "You wake up…",
+  "pokerogue.presentation.wake.subtitle": "You remember reaching wave %d",
+  "pokerogue.presentation.wake.subtitle.victory": "You remember winning it all at wave %d",
+  "pokerogue.presentation.wake.chat": "The dream fades. You made it to wave %d.",
+  "pokerogue.presentation.wake.chat.victory": "The dream fades — but you won it, at wave %d. It felt real.",
+
+  "_tab.suffix": "appended to the tab-list name while dreaming; %d = current wave (rendered blue by DreamingPresence)",
+  "pokerogue.presentation.tab.suffix": " 💤%d",
+
+  "_ghost.nameplate": "%s = player, %d = current wave",
+  "pokerogue.presentation.ghost.nameplate": "%s's dream ghost — wave %d",
+
+  "_status": "the bare /dream status; linked: %s = pokerogue username; the state line is one of dreaming / armed_ready / next_cost (%d = entry fee)",
+  "pokerogue.status.not_linked": "No PokeRogue account yet — /dream creates one and arms your first run.",
+  "pokerogue.status.linked": "Linked account: %s",
+  "pokerogue.status.dreaming": "You are dreaming — /dream resumes it.",
+  "pokerogue.status.armed_ready": "An armed run awaits — /dream starts it, no charge.",
+  "pokerogue.status.next_cost": "Your next run costs %d — /dream.",
+  "pokerogue.status.free_ready": "A free dream awaits you this week — /dream.",
+  "pokerogue.status.armed_disabled": "The dream gate is not active yet on the PokeRogue side.",
+  "pokerogue.status.armed_unavailable": "Your dream state is unavailable right now.",
+
+  "_enter": "the /dream (pay-to-dream) flow; account_created/account_taken: %s = pokerogue username; insufficient: %d = fee, %d = balance; no_account: %s = pokerogue username; success: %d = fee; manual_login: %s = pokerogue username; resume/armed_reuse are the free §2.47 paths (no placeholders)",
+  "pokerogue.enter.checking": "Preparing your dream…",
+  "pokerogue.enter.no_economy": "The server economy is unavailable — entry cannot be paid right now. Tell staff.",
+  "pokerogue.enter.db_down": "The dream is out of reach (PokeRogue database unreachable). Nothing was charged — try again later.",
+  "pokerogue.enter.account_created": "A PokeRogue account was created for you: '%s'. /dream password shows your login.",
+  "pokerogue.enter.account_taken": "A PokeRogue account named '%s' already exists and is not linked to you — contact staff to claim it. Nothing was charged.",
+  "pokerogue.enter.register_failed": "Your PokeRogue account could not be created. Nothing was charged — tell staff.",
+  "pokerogue.enter.no_account": "Your linked PokeRogue account '%s' no longer exists. Nothing was charged — tell staff.",
+  "pokerogue.enter.insufficient": "Entering the dream costs %d, but you only have %d. Nothing was charged.",
+  "pokerogue.enter.not_enabled": "The dream gate is not active yet on the PokeRogue side. Your fee was refunded — tell staff.",
+  "pokerogue.enter.db_failed_refund": "Something went wrong arming your run; your fee was refunded. Try again later.",
+  "_enter.confirm": "shown before any charge; confirm: %d = fee; the click line runs /dream confirm; expired shown when the 60s window lapsed",
+  "pokerogue.enter.confirm": "Beginning a NEW dream costs %d. Ready?",
+  "pokerogue.enter.confirm_click": "[ Begin the dream ]",
+  "pokerogue.enter.confirm_expired": "Nothing to confirm right now — /dream to begin.",
+
+  "pokerogue.enter.success": "Paid %d — your next NEW classic run is armed. Sweet dreams.",
+  "pokerogue.enter.free_used": "This one's on the house — your weekly free dream is armed. Sweet dreams.",
+  "pokerogue.enter.resume": "Resuming your dream — nothing charged.",
+  "pokerogue.enter.armed_reuse": "Your armed run is still waiting — entering it, nothing charged.",
+  "pokerogue.enter.play": "Step into the dream: ",
+  "pokerogue.enter.logged_in": "You're already logged in — just hit New Game.",
+  "pokerogue.enter.manual_login": "Log in manually as '%s' — /dream password shows your password.",
+
+  "_password": "the /dream password whisper; show: %s = pokerogue username, %s = password",
+  "pokerogue.password.show": "PokeRogue login — username '%s', password: %s",
+  "pokerogue.password.legacy": "Your account predates server minting — you know your own password.",
+  "pokerogue.password.not_linked": "You have no PokeRogue account yet — /dream creates one.",
+
+  "_journal": "the /dream journal book; dreams: %d = run count; victories: %d = victory count; deepest: %d = wave",
+  "pokerogue.journal.title": "Dream Journal",
+  "pokerogue.journal.header": "✦ Dream Journal ✦",
+  "pokerogue.journal.dreams": "%d dreams dreamt",
+  "pokerogue.journal.victories": "%d victories",
+  "pokerogue.journal.deepest": "Deepest wave: %d",
+  "pokerogue.journal.empty": "Your journal is empty — no dreams recorded yet.",
+  "pokerogue.journal.not_linked": "You have no PokeRogue account yet — /dream creates one.",
+
+  "_journalwall": "the personal journal wall; header: %s = player; shown appended to /dream journal when the wall rendered",
+  "pokerogue.journalwall.header": "%s's dreams",
+  "pokerogue.journalwall.shown": "Your dreams are showing on the journal wall at the shrine.",
+
+  "_board": "the leaderboard wall text display; header/empty have no placeholders",
+  "pokerogue.board.header": "☾ Deepest Dreams ☾",
+  "pokerogue.board.empty": "No dreams yet…",
+
+  "_payout": "repeatable classic payout; display: %d = wave band, %d = key count; earned: %d = key count, %d = wave band",
+  "pokerogue.payout.display": "Dream payout — wave %d (%d pokemon-crate key(s))",
+  "pokerogue.payout.earned": "Your dream left something behind: %d pokemon-crate key(s) for reaching wave %d. Claim them with /dream claim."
+}

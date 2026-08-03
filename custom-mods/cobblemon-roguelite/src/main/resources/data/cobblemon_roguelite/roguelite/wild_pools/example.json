@@ -1,0 +1,42 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not content. Which species a run meets, at what depth,",
+    "is DELIBERATELY NOT DECIDED (plan 2.14 fixed the mechanism and left the contents open).",
+    "",
+    "It is DISABLED by \"weight\": 0 on every entry - the generator drops entries at or below zero, the",
+    "same way the biome rotation does. A pool that shipped enabled would decide the wild half of every",
+    "run on every server that installed the mod, which is exactly what the mod does not get to decide.",
+    "",
+    "EVERY file under wild_pools/ is loaded and the UNION is the pool, so an addon datapack can add",
+    "species without editing or shadowing yours. Weights are relative across the whole union.",
+    "",
+    "Without at least one enabled entry somewhere, WILD WAVES REFUSE TO START and the run stops at its",
+    "first non-trainer wave. That is the failure this file exists to make obvious.",
+    "",
+    "Any field whose name starts with '_' is ignored. Every other unknown field is an error, so a typo",
+    "is reported instead of silently taking a default."
+  ],
+  "_entries": [
+    "species  - any registered species id, from any mod. Not checked here: this file is read during the",
+    "           same reload that builds the species registry, so an unknown id is reported when the",
+    "           encounter is built instead.",
+    "weight   - relative likelihood among everything eligible for that wave. <= 0 disables the entry.",
+    "min_wave/max_wave - the depth band this species belongs to. Both optional. The level curve scales",
+    "           whatever is drawn, so a window is about what BELONGS at a depth, not how strong it is.",
+    "properties - extra Cobblemon PokemonProperties tokens, appended after the species and level the",
+    "           generator writes. Shinies, forms and aspects go here; passed through unparsed."
+  ],
+  "entries": [
+    {
+      "species": "cobblemon:bulbasaur",
+      "weight": 0,
+      "max_wave": 20
+    },
+    {
+      "species": "cobblemon:garchomp",
+      "weight": 0,
+      "min_wave": 120,
+      "properties": "shiny=true"
+    }
+  ]
+}

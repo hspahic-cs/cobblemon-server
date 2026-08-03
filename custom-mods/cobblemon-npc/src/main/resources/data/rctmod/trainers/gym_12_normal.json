@@ -45,6 +45,7 @@
     },
     {
       "species": "zoroark",
+      "aspects": ["hisuian"],
       "level": 60,
       "nature": "timid",
       "ivs": {

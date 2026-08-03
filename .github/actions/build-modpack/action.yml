@@ -170,6 +170,20 @@ runs:
         path: custom-mods/cobblemon-soundtracks/build/libs
         key: jar-cobblemon-soundtracks-${{ hashFiles('custom-mods/cobblemon-soundtracks/src/**', 'custom-mods/cobblemon-soundtracks/build.gradle*', 'custom-mods/cobblemon-soundtracks/gradle.properties') }}
 
+    - name: Cache cobblemon-roguelite build
+      id: cache-roguelite
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-roguelite/build/libs
+        key: jar-cobblemon-roguelite-${{ hashFiles('custom-mods/cobblemon-roguelite/src/**', 'custom-mods/cobblemon-roguelite/build.gradle*', 'custom-mods/cobblemon-roguelite/gradle.properties') }}
+
+    - name: Cache cobblemon-pokerogue-bridge build
+      id: cache-pokerogue-bridge
+      uses: actions/cache@v4
+      with:
+        path: custom-mods/cobblemon-pokerogue-bridge/build/libs
+        key: jar-cobblemon-pokerogue-bridge-${{ hashFiles('custom-mods/cobblemon-pokerogue-bridge/src/**', 'custom-mods/cobblemon-pokerogue-bridge/build.gradle*', 'custom-mods/cobblemon-pokerogue-bridge/gradle.properties') }}
+
     - name: Build only mods missing from cache
       shell: bash
       env:
@@ -191,6 +205,8 @@ runs:
           cobblemon-ranked:${{ steps.cache-ranked.outputs.cache-hit }}
           cobblemon-wilderness:${{ steps.cache-wilderness.outputs.cache-hit }}
           cobblemon-soundtracks:${{ steps.cache-soundtracks.outputs.cache-hit }}
+          cobblemon-roguelite:${{ steps.cache-roguelite.outputs.cache-hit }}
+          cobblemon-pokerogue-bridge:${{ steps.cache-pokerogue-bridge.outputs.cache-hit }}
       run: |
         set -euo pipefail
 
@@ -270,7 +286,12 @@ runs:
         # not in the client's mods folder, the server's connect-time channel
         # check rejects every client (PR #51 → 0.7.4 had this bug; fixed in
         # 0.7.5 by moving feedback-client back to modpack/mods/).
-        SERVER_ONLY=(cobblemon-auction cobblemon-bridge cobblemon-carrots cobblemon-feedback cobblemon-gacha cobblemon-market cobblemon-poke-ai cobblemon-ranked cobblemon-wilderness)
+        # cobblemon-pokerogue-bridge is server-only twice over: @Mod(dist=DEDICATED_SERVER)
+        # AND routed here so its jar-in-jar mariadb driver never ships client bytes. Its
+        # runtime config (accounts.json with player links + generated passwords, live
+        # config.json with DB creds) is deliberately NOT authored in the repo — the
+        # non-destructive config overlay therefore never touches it across deploys.
+        SERVER_ONLY=(cobblemon-auction cobblemon-bridge cobblemon-carrots cobblemon-feedback cobblemon-gacha cobblemon-market cobblemon-poke-ai cobblemon-pokerogue-bridge cobblemon-ranked cobblemon-roguelite cobblemon-wilderness)
         # Anything not in SERVER_ONLY ships via modpack/mods/ (both sides).
 
         mkdir -p modpack/mods modpack/server-overrides/mods

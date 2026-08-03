@@ -1,0 +1,47 @@
+{
+  "_comment": [
+    "EXAMPLE ONLY - this is a shape reference, not balance. What a run pays, and how much, is",
+    "DELIBERATELY NOT DECIDED YET (plan §2.20 fixed the shape and deferred the contents), so the",
+    "items and counts below are placeholders picked to show one of each schema feature. Nothing in",
+    "the mod pays this table: runs pay 'cobblemon_roguelite:default', and no such file ships.",
+    "",
+    "Write your own at data/<your-namespace>/roguelite/payout_tables/<name>.json, or shadow this",
+    "path from your own datapack to delete this example.",
+    "",
+    "Payouts are NOT currency (§2.20 - the mode charges currency to enter and has to stay a sink)",
+    "and are NOT rolled: every entry that matches the outcome and the depth pays, in order. The",
+    "randomness lives in the reward tables, inside the run.",
+    "",
+    "Any field whose name starts with '_' is ignored, which is where comments go. Every other",
+    "unknown field is an error, so a typo is reported instead of silently taking a default."
+  ],
+
+  "_entries": [
+    "outcomes is REQUIRED on every entry - one or more of: completed, wiped, abandoned. It has no",
+    "default because an omitted list would have to mean 'all of them', and would quietly pay a",
+    "wipe on wave 3 whatever a full clear pays. min_wave/max_wave are the depth reached."
+  ],
+  "entries": [
+    {
+      "id": "example_clear",
+      "_outcomes": "Only a full clear pays this one.",
+      "outcomes": [ "completed" ],
+      "grant": { "type": "item", "item": "minecraft:diamond", "count": 1 }
+    },
+    {
+      "id": "example_deep_run_consolation",
+      "_outcomes": "A wipe still pays, but only from wave 50 down.",
+      "outcomes": [ "wiped" ],
+      "min_wave": 50,
+      "grant": { "type": "item", "item": "cobblemon:rare_candy", "count": 1 }
+    },
+    {
+      "id": "example_shallow_consolation",
+      "_max_wave": "Bounded so it stops once the deeper entry above takes over, rather than stacking with it.",
+      "outcomes": [ "wiped", "abandoned" ],
+      "min_wave": 1,
+      "max_wave": 49,
+      "grant": { "type": "item", "item": "cobblemon:poke_ball", "count": 1 }
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import com.cobblemongacha.announce.PullAnnouncer
 import com.cobblemongacha.data.KeyTier
 import com.cobblemongacha.data.LootEntry
 import com.cobblemongacha.data.LootTable
+import com.cobblemongacha.data.LootTier
 import com.cobblemongacha.reward.RewardGranter
 import com.cobblemongacha.reward.RewardRoller
 import com.cobblemongacha.util.TickScheduler
@@ -43,6 +44,8 @@ object RollMenu {
         val decided: LootEntry,
         val display: SimpleContainer,
         val cratePos: BlockPos?,
+        /** Pity-progress chat line, composed at decide time (pokemon tier only), sent on finalise. */
+        val pityLine: String? = null,
         var animation: TickScheduler.Cancellable? = null,
         var finalized: Boolean = false,
     )
@@ -53,11 +56,11 @@ object RollMenu {
     fun isRolling(uuid: UUID): Boolean = activeRolls.containsKey(uuid)
 
     fun openFor(player: ServerPlayer, tier: KeyTier, table: LootTable, cratePos: BlockPos?) {
-        val decided = RewardRoller.roll(table)
+        val (decided, pityLine) = decideRoll(player, tier, table)
         val container = SimpleContainer(9)
         val borderColor = tierBorder(tier)
         container.setItem(0, borderColor); container.setItem(8, borderColor)
-        val state = RollState(tier, decided, container, cratePos)
+        val state = RollState(tier, decided, container, cratePos, pityLine)
         activeRolls[player.uuid] = state
 
         val title = Component.literal("§e${tier.displayName} Box — §6Rolling…")
@@ -97,6 +100,35 @@ object RollMenu {
     }
 
     /**
+     * Decides the reward for a roll. Non-pokemon tiers are a plain [RewardRoller.roll]. The
+     * pokemon tier layers the §2.45 pity system on top: the per-player counter increments on
+     * EVERY pokemon-crate roll; on the `pityEvery`th roll the draw is [RewardRoller.pityRoll]
+     * (Jackpot tier only, guaranteed Ultra-Rare-or-better floor); and any Jackpot-tier result —
+     * naturally lucky or via pity — resets the counter to 0, so a natural jackpot can't be
+     * banked alongside a pity one. Counter is persisted immediately (roll decided = key spent),
+     * and the returned pity line is shown to the player after the grant.
+     */
+    private fun decideRoll(player: ServerPlayer, tier: KeyTier, table: LootTable): Pair<LootEntry, String?> {
+        if (tier != KeyTier.POKEMON) return RewardRoller.roll(table) to null
+        val pity = CobblemonGacha.pityConfig
+        val record = CobblemonGacha.playerStore.getOrCreate(player.uuid, player.name.string)
+        record.pokemonPity += 1
+        val decided = if (record.pokemonPity >= pity.pityEvery) {
+            RewardRoller.pityRoll(table, pity.pityWeights)
+        } else {
+            RewardRoller.roll(table)
+        }
+        if (decided.lootTier == LootTier.Jackpot) record.pokemonPity = 0
+        CobblemonGacha.playerStore.save()
+        val line = if (decided.lootTier == LootTier.Jackpot) {
+            "§7Pity reset: §f0/${pity.pityEvery} §7— jackpot-tier drops restart the counter"
+        } else {
+            "§7Pity: §f${record.pokemonPity}/${pity.pityEvery} §7— the ${pity.pityEvery}th roll guarantees §6Ultra Rare§7+"
+        }
+        return decided to line
+    }
+
+    /**
      * Finalise the roll for the given player. Idempotent — safe to call from animation end,
      * container-close handler, or PlayerLoggedOutEvent. Performs grant + announce exactly once.
      */
@@ -114,6 +146,7 @@ object RollMenu {
         PullAnnouncer.broadcast(
             player.server, player, state.tier, state.decided, state.cratePos, result.labelOverride,
         )
+        state.pityLine?.let { player.sendSystemMessage(Component.literal(it)) }
     }
 
     fun onPlayerClosedContainer(player: ServerPlayer) {

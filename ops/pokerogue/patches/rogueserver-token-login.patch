@@ -1,0 +1,139 @@
+diff --git a/api/common.go b/api/common.go
+index a7324ad..ca80f43 100644
+--- a/api/common.go
++++ b/api/common.go
+@@ -67,6 +67,10 @@ func Init(mux *http.ServeMux) error {
+ 	mux.HandleFunc("/auth/{provider}/callback", handleProviderCallback)
+ 	mux.HandleFunc("/auth/{provider}/logout", handleProviderLogout)
+ 
++	// bridge (cobblemon-server token-login patch, §2.46)
++	mux.HandleFunc("POST /bridge/minttoken", handleBridgeMintToken)
++	mux.HandleFunc("GET /bridge/armed", handleBridgeArmed)
++
+ 	// admin
+ 	mux.HandleFunc("POST /admin/account/discordLink", handleAdminDiscordLink)
+ 	mux.HandleFunc("POST /admin/account/discordUnlink", handleAdminDiscordUnlink)
+diff --git a/api/endpoints.go b/api/endpoints.go
+index 906d38f..173fe79 100644
+--- a/api/endpoints.go
++++ b/api/endpoints.go
+@@ -18,6 +18,8 @@
+ package api
+ 
+ import (
++	"crypto/sha256"
++	"crypto/subtle"
+ 	"database/sql"
+ 	"encoding/base64"
+ 	"encoding/json"
+@@ -1011,3 +1013,72 @@ func handleAdminSearch(w http.ResponseWriter, r *http.Request) {
+ 	writeJSON(w, r, adminSearchResult)
+ 	log.Printf("%s: %s searched for username %s", userDiscordId, r.URL.Path, username)
+ }
++
++// bridge (cobblemon-server token-login patch, §2.46)
++
++// BridgeTokenSecret gates /bridge/minttoken. Set from the bridgetokensecret env
++// var in main; empty means token minting is disabled (503).
++var BridgeTokenSecret string
++
++// POST /bridge/minttoken — mint a session token for a username, exactly the way
++// login does (account.GenerateTokenForUsername is login's own token generator
++// and sessions-table insert). Secret-gated: only the MC reward bridge, which
++// holds the shared secret, may call this; it powers the tokenized entry link.
++func handleBridgeMintToken(w http.ResponseWriter, r *http.Request) {
++	if BridgeTokenSecret == "" {
++		httpError(w, r, fmt.Errorf("bridge token minting is not configured"), http.StatusServiceUnavailable)
++		return
++	}
++
++	// Hash both sides so the comparison is constant-time even across length
++	// mismatches (ConstantTimeCompare alone short-circuits on length).
++	provided := sha256.Sum256([]byte(r.Header.Get("X-Bridge-Secret")))
++	expected := sha256.Sum256([]byte(BridgeTokenSecret))
++	if subtle.ConstantTimeCompare(provided[:], expected[:]) != 1 {
++		httpError(w, r, fmt.Errorf("bad bridge secret"), http.StatusForbidden)
++		return
++	}
++
++	username := r.PostFormValue("username")
++	_, err := db.Store.FetchUUIDFromUsername(username)
++	if err != nil {
++		if errors.Is(err, sql.ErrNoRows) {
++			httpError(w, r, fmt.Errorf("unknown username"), http.StatusNotFound)
++			return
++		}
++		httpError(w, r, err, http.StatusInternalServerError)
++		return
++	}
++
++	token, err := account.GenerateTokenForUsername(db.Store, username)
++	if err != nil {
++		httpError(w, r, err, http.StatusInternalServerError)
++		return
++	}
++
++	writeJSON(w, r, struct {
++		Token string `json:"token"`
++	}{Token: token})
++}
++
++// GET /bridge/armed — armed-run credits for the authed account (standard
++// Authorization-token auth, same as every other authed endpoint). The
++// frontend's New Game courtesy pre-check reads this; the save-time 402 in
++// StoreSessionSaveData stays the enforcement.
++func handleBridgeArmed(w http.ResponseWriter, r *http.Request) {
++	uuid, err := uuidFromRequest(r)
++	if err != nil {
++		httpError(w, r, err, http.StatusUnauthorized)
++		return
++	}
++
++	credits, err := db.Store.FetchBridgeRunArming(uuid)
++	if err != nil {
++		httpError(w, r, err, http.StatusInternalServerError)
++		return
++	}
++
++	writeJSON(w, r, struct {
++		Credits int `json:"credits"`
++	}{Credits: credits})
++}
+diff --git a/db/savedata.go b/db/savedata.go
+index c3495b0..e74186d 100644
+--- a/db/savedata.go
++++ b/db/savedata.go
+@@ -242,3 +242,18 @@ func (s *store) DeleteSessionSaveData(uuid []byte, slot int) error {
+ 
+ 	return nil
+ }
++
++// cobblemon-server token-login patch (§2.46): read side of bridgeRunArming for
++// the frontend's courtesy pre-check — 0 (not an error) when the account has no
++// row, since "never armed" and "credits spent" mean the same thing to a caller.
++func (s *store) FetchBridgeRunArming(uuid []byte) (int, error) {
++	var credits int
++	err := handle.QueryRow("SELECT credits FROM bridgeRunArming WHERE uuid = ?", uuid).Scan(&credits)
++	if errors.Is(err, sql.ErrNoRows) {
++		return 0, nil
++	}
++	if err != nil {
++		return 0, err
++	}
++	return credits, nil
++}
+diff --git a/rogueserver.go b/rogueserver.go
+index b69631d..c1d05a7 100644
+--- a/rogueserver.go
++++ b/rogueserver.go
+@@ -59,6 +59,10 @@ func main() {
+ 	discordbottoken := getEnv("discordbottoken", "")
+ 	discordguildid := getEnv("discordguildid", "")
+ 
++	// cobblemon-server token-login patch (§2.46): shared secret gating the
++	// bridge's session-token minting endpoint. Empty (the default) disables it.
++	api.BridgeTokenSecret = getEnv("bridgetokensecret", "")
++
+ 	account.GameURL = gameurl
+ 
+ 	account.DiscordClientID = discordclientid

@@ -1,0 +1,26 @@
+diff --git a/src/ui/handlers/starter-select-ui-handler.ts b/src/ui/handlers/starter-select-ui-handler.ts
+index 18c5b3d..9811da9 100644
+--- a/src/ui/handlers/starter-select-ui-handler.ts
++++ b/src/ui/handlers/starter-select-ui-handler.ts
+@@ -3203,6 +3203,12 @@ export class StarterSelectUiHandler extends MessageUiHandler {
+           return isUncaught;
+         }
+       });
++      // cobblemon-server glimpse shadows (plan §2.49 v2): species "seen only in dreams" —
++      // banked dream catches the glimpse filter serves as seen-only — always show, greyed
++      // by the vanilla seenAttr tint and unselectable, as the go-catch-it-on-the-server
++      // incentive. On this server the ONLY seen-without-caught dex entries a client ever
++      // receives are glimpses, so the extra term changes nothing else.
++      const fitsSeenGlimpse = isUncaught && !!(dexEntry?.seenAttr);
+ 
+       // Passive Filter
+       const isPassiveUnlocked = starterData.passiveAttr > 0;
+@@ -3328,7 +3334,7 @@ export class StarterSelectUiHandler extends MessageUiHandler {
+       if (
+         fitsGen
+         && fitsType
+-        && fitsCaught
++        && (fitsCaught || fitsSeenGlimpse)
+         && fitsPassive
+         && fitsCostReduction
+         && fitsFavorite

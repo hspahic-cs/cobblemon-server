@@ -1,0 +1,797 @@
+diff --git a/api/endpoints.go b/api/endpoints.go
+index ba3f34c..7a874a3 100644
+--- a/api/endpoints.go
++++ b/api/endpoints.go
+@@ -480,7 +480,8 @@ func handleSystem(w http.ResponseWriter, r *http.Request) {
+ 			return
+ 		}
+ 
+-		writeJSON(w, r, save)
++		// cobblemon-server glimpse patch (§2.49): serve a filtered, serve-stamped copy.
++		writeJSON(w, r, savedata.GlimpseServe(db.Store, uuid, save))
+ 	case "update":
+ 		if !active {
+ 			httpError(w, r, fmt.Errorf("session out of date: not active"), http.StatusBadRequest)
+@@ -570,7 +571,9 @@ func handleSystem(w http.ResponseWriter, r *http.Request) {
+ 				return
+ 			}
+ 
+-			response.SystemData = storedSaveData
++			// cobblemon-server glimpse patch (§2.49): verify re-serves server state to the
++			// client, so it must be filtered and stamped exactly like the get path.
++			response.SystemData = savedata.GlimpseServe(db.Store, uuid, storedSaveData)
+ 		}
+ 
+ 		writeJSON(w, r, response)
+diff --git a/api/savedata/glimpse.go b/api/savedata/glimpse.go
+new file mode 100644
+index 0000000..d12d7ba
+--- /dev/null
++++ b/api/savedata/glimpse.go
+@@ -0,0 +1,333 @@
++/*
++	cobblemon-server glimpse patch (plan §2.49 dex-locked dreams).
++
++	Which species a player may START a dream with comes from their server Pokédex: the MC
++	bridge feeds caught species (national dex numbers) into bridgeDexWhitelist, and system
++	saves are READ-FILTERED on the way to the client — starter/dex progress for species
++	outside (whitelist ∪ fresh-account baseline) is zeroed in the served COPY. The stored
++	blob is never mutated (§2.44 amendment). PokeRogue's own unlock engines keep firing;
++	their unlocks stay banked ("glimpsed") in the true blob until the species activates.
++
++	The lossless merge-on-write is the risk center: the client posts back state derived
++	from the FILTERED copy, so storing it verbatim would destroy banked progress. Every
++	served copy is therefore stamped with a serve-time marker inside appliedMigrators
++	(a map[string]int the client round-trips verbatim, and whose server-side validation —
++	ValidMigrators — only requires stored keys to survive, so an extra incoming key
++	passes). On write, the marker tells us the client's base was filtered at time T; the
++	serve-time mask is reconstructed from bridgeDexWhitelist.createdAt <= T (restart-proof,
++	and immune to activations that land mid-session), masked species are unioned
++	(OR bitmasks, SUM counters, MAX ivs), and the marker is ALWAYS stripped so it can
++	never reach the stored blob (a persisted marker would trip ValidMigrators later).
++
++	Gate: dexlockeddreams=true in the rogueserver env (setup-vm.sh). Serving fails OPEN
++	(unfiltered, unstamped — the post is then correctly treated as truth); the write path
++	fails CLOSED (a marked save is never stored without a successful merge).
++*/
++
++package savedata
++
++import (
++	"database/sql"
++	"errors"
++	"fmt"
++	"log"
++	"math/big"
++	"os"
++	"strconv"
++	"time"
++
++	"github.com/aws/aws-sdk-go-v2/service/s3/types"
++	"github.com/pagefaultgames/rogueserver/defs"
++)
++
++// GlimpseMarkerKey rides in appliedMigrators on SERVED copies only; never persisted.
++const GlimpseMarkerKey = "cobblemonGlimpse"
++
++var glimpseOn = func() bool {
++	on, _ := strconv.ParseBool(os.Getenv("dexlockeddreams"))
++	return on
++}()
++
++// Store access the glimpse system needs beyond the existing savedata interfaces.
++type GlimpseStore interface {
++	// speciesId (national dex number) -> whitelist row createdAt (unix seconds)
++	ReadBridgeDexWhitelist(uuid []byte) (map[int]int64, error)
++}
++
++// PokeRogue's vanilla fresh-account unlock set (frontend defaultStarterSpecies, verified
++// against the vendored checkout at build time): the gen 1-9 starter trios, nothing else.
++// Always visible regardless of whitelist — a fresh account must be able to play.
++var glimpseBaseline = map[int]bool{
++	1: true, 4: true, 7: true, // Bulbasaur, Charmander, Squirtle
++	152: true, 155: true, 158: true, // Chikorita, Cyndaquil, Totodile
++	252: true, 255: true, 258: true, // Treecko, Torchic, Mudkip
++	387: true, 390: true, 393: true, // Turtwig, Chimchar, Piplup
++	495: true, 498: true, 501: true, // Snivy, Tepig, Oshawott
++	650: true, 653: true, 656: true, // Chespin, Fennekin, Froakie
++	722: true, 725: true, 728: true, // Rowlet, Litten, Popplio
++	810: true, 813: true, 816: true, // Grookey, Scorbunny, Sobble
++	906: true, 909: true, 912: true, // Sprigatito, Fuecoco, Quaxly
++}
++
++// PokeRogue SpeciesId -> national dex number: 2xxx/4xxx/6xxx/8xxx prefixes are regional
++// forms; the §2.49 ruling activates them at base-species level.
++func glimpseBaseId(id int) int {
++	return id % 2000
++}
++
++// GlimpseServe returns the copy of a system save to send to the client: filtered against
++// the account's whitelist and stamped with the serve-time marker. With the gate off (or on
++// any whitelist read failure) the save is returned untouched and UNstamped — an unstamped
++// post is later treated as client-authoritative truth, which matches what was served.
++func GlimpseServe(store GlimpseStore, uuid []byte, system defs.SystemSaveData) defs.SystemSaveData {
++	if !glimpseOn {
++		return system
++	}
++	// Stamp time is taken BEFORE the whitelist read: a row that lands in the microseconds
++	// between the two is then unioned on write (harmless inflation) instead of clobbered.
++	servedAt := int(time.Now().Unix())
++	wl, err := store.ReadBridgeDexWhitelist(uuid)
++	if err != nil {
++		log.Printf("glimpse: whitelist read failed, serving unfiltered: %s", err)
++		return system
++	}
++
++	allowed := func(id int) bool {
++		base := glimpseBaseId(id)
++		if glimpseBaseline[base] {
++			return true
++		}
++		_, ok := wl[base]
++		return ok
++	}
++
++	dex := make(defs.DexData, len(system.DexData))
++	for id, entry := range system.DexData {
++		if allowed(id) {
++			dex[id] = entry
++			continue
++		}
++		masked := zeroDexEntry()
++		// v2 glimpse shadows: a masked species with BANKED dream-caught progress keeps
++		// its seen bits (caught implies seen) so the frontend renders it greyed — the
++		// "seen only in dreams" hunt incentive. Merely-seen species stay fully zeroed.
++		if toBigAttr(entry.CaughtAttr).Sign() != 0 {
++			masked.SeenAttr = orAttr(entry.SeenAttr, entry.CaughtAttr)
++		}
++		dex[id] = masked
++	}
++	system.DexData = dex
++
++	starters := make(defs.StarterData, len(system.StarterData))
++	for id, entry := range system.StarterData {
++		if allowed(id) {
++			starters[id] = entry
++		} else {
++			starters[id] = zeroStarterEntry()
++		}
++	}
++	system.StarterData = starters
++
++	// Copy-on-write: the maps above are fresh, and AppliedMigrators must not be mutated
++	// on the caller's (stored) save either.
++	migrators := make(map[string]int, len(system.AppliedMigrators)+1)
++	for k, v := range system.AppliedMigrators {
++		migrators[k] = v
++	}
++	migrators[GlimpseMarkerKey] = servedAt
++	system.AppliedMigrators = migrators
++
++	return system
++}
++
++// glimpseAbsorb prepares an incoming system save for storage. A marker means the client's
++// base was a filtered serve at time T: the true blob is re-read, species masked at T are
++// unioned back in, and the marker is stripped. No marker means the client saw the truth
++// and is authoritative. Runs regardless of the gate — a marked save posted after the
++// operator flips the gate off must still merge (and must still lose its marker).
++func glimpseAbsorb[T UpdateSystemStore](store T, uuid []byte, incoming defs.SystemSaveData) (defs.SystemSaveData, error) {
++	servedAt, wasFiltered := 0, false
++	if incoming.AppliedMigrators != nil {
++		if t, ok := incoming.AppliedMigrators[GlimpseMarkerKey]; ok {
++			servedAt, wasFiltered = t, true
++			delete(incoming.AppliedMigrators, GlimpseMarkerKey)
++		}
++	}
++	if !wasFiltered {
++		return incoming, nil
++	}
++
++	stored, err := readTrueSystem(store, uuid)
++	if err != nil {
++		var nokey *types.NoSuchKey
++		if errors.Is(err, sql.ErrNoRows) || errors.As(err, &nokey) {
++			// No stored blob (deleted since the serve): nothing to preserve.
++			return incoming, nil
++		}
++		// Write path fails CLOSED: storing a filtered-base save without its merge would
++		// destroy banked progress. The client sees a 500 and retries its save.
++		return incoming, fmt.Errorf("glimpse: stored save unreadable, refusing lossy store: %s", err)
++	}
++	wl, err := store.ReadBridgeDexWhitelist(uuid)
++	if err != nil {
++		return incoming, fmt.Errorf("glimpse: whitelist unreadable, refusing lossy store: %s", err)
++	}
++
++	allowedAtServe := func(id int) bool {
++		base := glimpseBaseId(id)
++		if glimpseBaseline[base] {
++			return true
++		}
++		t, ok := wl[base]
++		return ok && t <= int64(servedAt)
++	}
++
++	dex := make(defs.DexData, len(incoming.DexData))
++	for id, inc := range incoming.DexData {
++		st, ok := stored.DexData[id]
++		if !ok || allowedAtServe(id) {
++			dex[id] = inc // visible at serve: the client saw the truth for this species
++		} else {
++			dex[id] = mergeDexEntry(st, inc)
++		}
++	}
++	for id, st := range stored.DexData {
++		if _, ok := dex[id]; !ok {
++			dex[id] = st // never drop a species the client omitted
++		}
++	}
++	incoming.DexData = dex
++
++	starters := make(defs.StarterData, len(incoming.StarterData))
++	for id, inc := range incoming.StarterData {
++		st, ok := stored.StarterData[id]
++		if !ok || allowedAtServe(id) {
++			starters[id] = inc
++		} else {
++			starters[id] = mergeStarterEntry(st, inc)
++		}
++	}
++	for id, st := range stored.StarterData {
++		if _, ok := starters[id]; !ok {
++			starters[id] = st
++		}
++	}
++	incoming.StarterData = starters
++
++	return incoming, nil
++}
++
++// The true stored blob, unfiltered — GetSystem's source read without the serve layer.
++func readTrueSystem[T UpdateSystemStore](store T, uuid []byte) (defs.SystemSaveData, error) {
++	if os.Getenv("S3_SYSTEM_BUCKET_NAME") != "" {
++		return store.GetSystemSaveFromS3(uuid)
++	}
++	return store.ReadSystemSaveData(uuid)
++}
++
++// Masked entries are ZEROED, never deleted: the frontend expects every species key present
++// (initDexData shape). Attr fields serialize as decimal strings — the frontend parses them
++// with BigInt() and gob has a builtin encoding for string.
++func zeroDexEntry() defs.DexEntry {
++	return defs.DexEntry{
++		SeenAttr:     "0",
++		CaughtAttr:   "0",
++		NatureAttr:   0,
++		SeenCount:    0,
++		CaughtCount:  0,
++		HatchedCount: 0,
++		Ivs:          []int{0, 0, 0, 0, 0, 0},
++		Ribbons:      "0",
++	}
++}
++
++func zeroStarterEntry() defs.StarterEntry {
++	return defs.StarterEntry{
++		Moveset:         nil,
++		EggMoves:        0,
++		CandyCount:      0,
++		Friendship:      0,
++		AbilityAttr:     0,
++		PassiveAttr:     0,
++		ValueReduction:  0,
++		ClassicWinCount: 0,
++	}
++}
++
++// Union of banked (stored) and session-accrued (incoming, from a zeroed base) progress:
++// bitmasks OR, counters SUM, best-IVs element-wise MAX.
++func mergeDexEntry(st, inc defs.DexEntry) defs.DexEntry {
++	return defs.DexEntry{
++		SeenAttr:     orAttr(st.SeenAttr, inc.SeenAttr),
++		CaughtAttr:   orAttr(st.CaughtAttr, inc.CaughtAttr),
++		NatureAttr:   st.NatureAttr | inc.NatureAttr,
++		SeenCount:    st.SeenCount + inc.SeenCount,
++		CaughtCount:  st.CaughtCount + inc.CaughtCount,
++		HatchedCount: st.HatchedCount + inc.HatchedCount,
++		Ivs:          maxIvs(st.Ivs, inc.Ivs),
++		Ribbons:      orAttrString(st.Ribbons, inc.Ribbons),
++	}
++}
++
++func mergeStarterEntry(st, inc defs.StarterEntry) defs.StarterEntry {
++	moveset := st.Moveset
++	if moveset == nil {
++		moveset = inc.Moveset
++	}
++	return defs.StarterEntry{
++		Moveset:         moveset,
++		EggMoves:        st.EggMoves | inc.EggMoves,
++		CandyCount:      st.CandyCount + inc.CandyCount,
++		Friendship:      st.Friendship + inc.Friendship,
++		AbilityAttr:     st.AbilityAttr | inc.AbilityAttr,
++		PassiveAttr:     st.PassiveAttr | inc.PassiveAttr,
++		ValueReduction:  max(st.ValueReduction, inc.ValueReduction),
++		ClassicWinCount: max(st.ClassicWinCount, inc.ClassicWinCount),
++	}
++}
++
++// Attr bitmasks exceed int64 (DexAttr variant/form bits), so the frontend serializes them
++// as decimal strings; gob-stored saves may hold string or float64. OR via math/big.
++func toBigAttr(v interface{}) *big.Int {
++	switch t := v.(type) {
++	case nil:
++		return new(big.Int)
++	case string:
++		n, ok := new(big.Int).SetString(t, 10)
++		if !ok {
++			return new(big.Int)
++		}
++		return n
++	case float64:
++		n, _ := new(big.Float).SetFloat64(t).Int(nil)
++		return n
++	case int:
++		return big.NewInt(int64(t))
++	case int64:
++		return big.NewInt(t)
++	default:
++		return new(big.Int)
++	}
++}
++
++func orAttr(a, b interface{}) interface{} {
++	return new(big.Int).Or(toBigAttr(a), toBigAttr(b)).String()
++}
++
++func orAttrString(a, b string) string {
++	return new(big.Int).Or(toBigAttr(a), toBigAttr(b)).String()
++}
++
++func maxIvs(a, b []int) []int {
++	if len(b) > len(a) {
++		a, b = b, a
++	}
++	out := make([]int, len(a))
++	copy(out, a)
++	for i := range b {
++		if b[i] > out[i] {
++			out[i] = b[i]
++		}
++	}
++	return out
++}
+diff --git a/api/savedata/glimpse_test.go b/api/savedata/glimpse_test.go
+new file mode 100644
+index 0000000..3fa4f24
+--- /dev/null
++++ b/api/savedata/glimpse_test.go
+@@ -0,0 +1,339 @@
++/*
++	cobblemon-server glimpse patch (plan §2.49): merge-loss tests. The lossless
++	merge-on-write is the risk center of the whole feature — these tests pin the
++	invariants that keep banked gacha progress alive across filtered serves.
++
++	Run with: go test ./api/savedata/
++*/
++
++package savedata
++
++import (
++	"testing"
++
++	"github.com/pagefaultgames/rogueserver/defs"
++)
++
++// Species used throughout: 25 Pikachu (masked or whitelisted per test), 52 Meowth
++// (base of 8052 Galarian Meowth), 1 Bulbasaur (baseline — always visible).
++const (
++	pikachu      = 25
++	meowth       = 52
++	galarMeowth  = 8052
++	bulbasaur    = 1
++	serveTime    = 1_000_000
++	beforeServe  = serveTime - 100
++	afterServe   = serveTime + 100
++)
++
++type glimpseMockStore struct {
++	whitelist map[int]int64
++	stored    defs.SystemSaveData
++	hasStored bool
++}
++
++func (m *glimpseMockStore) ReadBridgeDexWhitelist(uuid []byte) (map[int]int64, error) {
++	return m.whitelist, nil
++}
++
++func (m *glimpseMockStore) ReadSystemSaveData(uuid []byte) (defs.SystemSaveData, error) {
++	return m.stored, nil
++}
++
++func (m *glimpseMockStore) GetSystemSaveFromS3(uuid []byte) (defs.SystemSaveData, error) {
++	return m.stored, nil
++}
++
++func (m *glimpseMockStore) UpdateAccountStats(uuid []byte, stats defs.GameStats, voucherCounts map[string]int) error {
++	return nil
++}
++
++func (m *glimpseMockStore) StoreSystemSaveData(uuid []byte, data defs.SystemSaveData) error {
++	m.stored = data
++	return nil
++}
++
++func (m *glimpseMockStore) StoreSystemSaveDataS3(uuid []byte, data defs.SystemSaveData) error {
++	m.stored = data
++	return nil
++}
++
++// A banked ("glimpsed") rich entry: shiny bits beyond int64, candies, egg moves.
++func bankedSave() defs.SystemSaveData {
++	return defs.SystemSaveData{
++		TrainerId: 7,
++		SecretId:  9,
++		DexData: defs.DexData{
++			bulbasaur: {SeenAttr: "255", CaughtAttr: "255", NatureAttr: 2, SeenCount: 3, CaughtCount: 1,
++				HatchedCount: 0, Ivs: []int{15, 15, 15, 15, 15, 15}, Ribbons: "0"},
++			pikachu: {SeenAttr: "18446744073709551616", CaughtAttr: "18446744073709551616", NatureAttr: 8,
++				SeenCount: 10, CaughtCount: 4, HatchedCount: 2, Ivs: []int{31, 20, 10, 0, 5, 7}, Ribbons: "3"},
++		},
++		StarterData: defs.StarterData{
++			bulbasaur: {Moveset: nil, EggMoves: 0, CandyCount: 1, Friendship: 0, AbilityAttr: 1,
++				PassiveAttr: 0, ValueReduction: 0, ClassicWinCount: 0},
++			pikachu: {Moveset: []interface{}{33.0, 45.0}, EggMoves: 5, CandyCount: 40, Friendship: 70,
++				AbilityAttr: 3, PassiveAttr: 1, ValueReduction: 2, ClassicWinCount: 1},
++		},
++		AppliedMigrators: map[string]int{"someMigrator": 123},
++	}
++}
++
++func attrString(t *testing.T, v interface{}) string {
++	t.Helper()
++	s, ok := v.(string)
++	if !ok {
++		t.Fatalf("attr is %T, want string", v)
++	}
++	return s
++}
++
++func TestGlimpseServeMasksAndStamps(t *testing.T) {
++	glimpseOn = true
++	defer func() { glimpseOn = false }()
++
++	store := &glimpseMockStore{whitelist: map[int]int64{}}
++	stored := bankedSave()
++	served := GlimpseServe(store, nil, stored)
++
++	// Baseline species survives with no whitelist at all.
++	if got := attrString(t, served.DexData[bulbasaur].CaughtAttr); got != "255" {
++		t.Errorf("baseline species masked: caughtAttr %q", got)
++	}
++	// Non-whitelisted species is zeroed in the served copy...
++	if got := attrString(t, served.DexData[pikachu].CaughtAttr); got != "0" {
++		t.Errorf("masked species served caughtAttr %q, want 0", got)
++	}
++	if served.StarterData[pikachu].CandyCount != 0 || served.StarterData[pikachu].EggMoves != 0 {
++		t.Errorf("masked starter entry not zeroed: %+v", served.StarterData[pikachu])
++	}
++	// ...except its seen bits — the v2 glimpse shadow (banked catch => greyed icon).
++	if got := attrString(t, served.DexData[pikachu].SeenAttr); got != "18446744073709551616" {
++		t.Errorf("banked species lost its glimpse shadow seenAttr: %q", got)
++	}
++	// ...but every species key stays present (frontend shape contract).
++	if len(served.DexData) != len(stored.DexData) || len(served.StarterData) != len(stored.StarterData) {
++		t.Error("serving dropped species keys")
++	}
++	// The serve marker is stamped; the caller's save is untouched (copy-on-write).
++	if _, ok := served.AppliedMigrators[GlimpseMarkerKey]; !ok {
++		t.Error("served copy missing glimpse marker")
++	}
++	if _, ok := stored.AppliedMigrators[GlimpseMarkerKey]; ok {
++		t.Error("stored save was mutated by serve")
++	}
++	if got := attrString(t, stored.DexData[pikachu].CaughtAttr); got != "18446744073709551616" {
++		t.Errorf("stored blob mutated: %q", got)
++	}
++}
++
++func TestGlimpseServeWhitelistAndRegionalForm(t *testing.T) {
++	glimpseOn = true
++	defer func() { glimpseOn = false }()
++
++	stored := bankedSave()
++	stored.DexData[galarMeowth] = defs.DexEntry{SeenAttr: "64", CaughtAttr: "64", Ivs: []int{1, 2, 3, 4, 5, 6}}
++	store := &glimpseMockStore{whitelist: map[int]int64{pikachu: beforeServe, meowth: beforeServe}}
++	served := GlimpseServe(store, nil, stored)
++
++	if got := attrString(t, served.DexData[pikachu].CaughtAttr); got != "18446744073709551616" {
++		t.Errorf("whitelisted species masked: %q", got)
++	}
++	if served.StarterData[pikachu].CandyCount != 40 {
++		t.Error("whitelisted starter entry masked")
++	}
++	// Regional form id activates at base-species level (§2.49 ruling).
++	if got := attrString(t, served.DexData[galarMeowth].CaughtAttr); got != "64" {
++		t.Errorf("regional form not activated by base species: %q", got)
++	}
++}
++
++// The hard invariant: serve → client posts back unchanged → absorb == original blob.
++func TestGlimpseRoundTripIsLossless(t *testing.T) {
++	glimpseOn = true
++	defer func() { glimpseOn = false }()
++
++	stored := bankedSave()
++	store := &glimpseMockStore{whitelist: map[int]int64{}, stored: stored}
++	served := GlimpseServe(store, nil, stored)
++
++	merged, err := glimpseAbsorb(store, nil, served)
++	if err != nil {
++		t.Fatalf("absorb: %v", err)
++	}
++	if _, ok := merged.AppliedMigrators[GlimpseMarkerKey]; ok {
++		t.Error("marker survived absorb")
++	}
++	pk := merged.DexData[pikachu]
++	if got := attrString(t, pk.CaughtAttr); got != "18446744073709551616" {
++		t.Errorf("banked caughtAttr lost in round trip: %q", got)
++	}
++	if pk.SeenCount != 10 || pk.CaughtCount != 4 || pk.HatchedCount != 2 {
++		t.Errorf("banked counters changed in round trip: %+v", pk)
++	}
++	if pk.Ivs[0] != 31 {
++		t.Errorf("banked ivs lost: %v", pk.Ivs)
++	}
++	st := merged.StarterData[pikachu]
++	if st.CandyCount != 40 || st.EggMoves != 5 || st.PassiveAttr != 1 || st.ValueReduction != 2 ||
++		st.ClassicWinCount != 1 || st.Friendship != 70 {
++		t.Errorf("banked starter progress lost: %+v", st)
++	}
++	if st.Moveset == nil {
++		t.Error("banked moveset lost")
++	}
++}
++
++// Session accrual on a masked species (egg hatch banking a glimpse) unions with the bank.
++func TestGlimpseMergeUnionsMaskedAccrual(t *testing.T) {
++	stored := bankedSave()
++	store := &glimpseMockStore{whitelist: map[int]int64{}, stored: stored}
++
++	incoming := bankedSave()
++	incoming.AppliedMigrators[GlimpseMarkerKey] = serveTime
++	// Client base was masked-zero; it hatched one Pikachu this session.
++	incoming.DexData[pikachu] = defs.DexEntry{SeenAttr: "4", CaughtAttr: "4", NatureAttr: 16,
++		SeenCount: 1, CaughtCount: 0, HatchedCount: 1, Ivs: []int{0, 31, 0, 0, 0, 0}, Ribbons: "0"}
++	incoming.StarterData[pikachu] = defs.StarterEntry{Moveset: nil, EggMoves: 8, CandyCount: 3,
++		Friendship: 10, AbilityAttr: 4, PassiveAttr: 0, ValueReduction: 0, ClassicWinCount: 0}
++
++	merged, err := glimpseAbsorb(store, nil, incoming)
++	if err != nil {
++		t.Fatalf("absorb: %v", err)
++	}
++	pk := merged.DexData[pikachu]
++	if got := attrString(t, pk.CaughtAttr); got != "18446744073709551620" { // 2^64 | 4
++		t.Errorf("caughtAttr union wrong: %q", got)
++	}
++	if pk.NatureAttr != 24 || pk.SeenCount != 11 || pk.HatchedCount != 3 {
++		t.Errorf("dex union wrong: %+v", pk)
++	}
++	if pk.Ivs[0] != 31 || pk.Ivs[1] != 31 {
++		t.Errorf("ivs max wrong: %v", pk.Ivs)
++	}
++	st := merged.StarterData[pikachu]
++	if st.EggMoves != 13 || st.CandyCount != 43 || st.AbilityAttr != 7 || st.ClassicWinCount != 1 {
++		t.Errorf("starter union wrong: %+v", st)
++	}
++	if st.Moveset == nil {
++		t.Error("banked moveset lost to nil incoming")
++	}
++}
++
++// A species activated mid-session (createdAt AFTER the serve) still merges as masked —
++// the client's zeroed base must not clobber the bank the moment the whitelist row lands.
++func TestGlimpseMidSessionActivationDoesNotClobber(t *testing.T) {
++	stored := bankedSave()
++	store := &glimpseMockStore{whitelist: map[int]int64{pikachu: afterServe}, stored: stored}
++
++	incoming := bankedSave()
++	incoming.AppliedMigrators[GlimpseMarkerKey] = serveTime
++	incoming.DexData[pikachu] = zeroDexEntry()
++	incoming.StarterData[pikachu] = zeroStarterEntry()
++
++	merged, err := glimpseAbsorb(store, nil, incoming)
++	if err != nil {
++		t.Fatalf("absorb: %v", err)
++	}
++	if got := attrString(t, merged.DexData[pikachu].CaughtAttr); got != "18446744073709551616" {
++		t.Errorf("mid-session activation clobbered bank: %q", got)
++	}
++	if merged.StarterData[pikachu].CandyCount != 40 {
++		t.Errorf("mid-session activation clobbered candies: %d", merged.StarterData[pikachu].CandyCount)
++	}
++}
++
++// A species already activated at serve time was served truthfully: client is authoritative
++// (this is what lets candy SPENDING stick instead of being re-inflated by a union).
++func TestGlimpseActivatedSpeciesClientWins(t *testing.T) {
++	stored := bankedSave()
++	store := &glimpseMockStore{whitelist: map[int]int64{pikachu: beforeServe}, stored: stored}
++
++	incoming := bankedSave()
++	incoming.AppliedMigrators[GlimpseMarkerKey] = serveTime
++	spent := incoming.StarterData[pikachu]
++	spent.CandyCount = 15 // spent 25 candies on a passive
++	spent.PassiveAttr = 3
++	incoming.StarterData[pikachu] = spent
++
++	merged, err := glimpseAbsorb(store, nil, incoming)
++	if err != nil {
++		t.Fatalf("absorb: %v", err)
++	}
++	if merged.StarterData[pikachu].CandyCount != 15 {
++		t.Errorf("candy spend on activated species not honored: %d", merged.StarterData[pikachu].CandyCount)
++	}
++	if merged.StarterData[pikachu].PassiveAttr != 3 {
++		t.Errorf("passive unlock lost: %d", merged.StarterData[pikachu].PassiveAttr)
++	}
++}
++
++// No marker = the client saw the truth (gate off, or pre-glimpse client): authoritative.
++func TestGlimpseUnmarkedSaveIsAuthoritative(t *testing.T) {
++	stored := bankedSave()
++	store := &glimpseMockStore{whitelist: map[int]int64{}, stored: stored}
++
++	incoming := bankedSave()
++	spent := incoming.StarterData[pikachu]
++	spent.CandyCount = 0
++	incoming.StarterData[pikachu] = spent
++
++	merged, err := glimpseAbsorb(store, nil, incoming)
++	if err != nil {
++		t.Fatalf("absorb: %v", err)
++	}
++	if merged.StarterData[pikachu].CandyCount != 0 {
++		t.Error("unmarked save was not stored verbatim")
++	}
++}
++
++// Species keys the client omitted entirely (e.g. a client build with a trimmed species
++// registry) must survive from the stored blob.
++func TestGlimpseMergeKeepsOmittedSpecies(t *testing.T) {
++	stored := bankedSave()
++	store := &glimpseMockStore{whitelist: map[int]int64{}, stored: stored}
++
++	incoming := bankedSave()
++	incoming.AppliedMigrators[GlimpseMarkerKey] = serveTime
++	delete(incoming.DexData, pikachu)
++	delete(incoming.StarterData, pikachu)
++
++	merged, err := glimpseAbsorb(store, nil, incoming)
++	if err != nil {
++		t.Fatalf("absorb: %v", err)
++	}
++	if _, ok := merged.DexData[pikachu]; !ok {
++		t.Error("omitted dex species dropped")
++	}
++	if merged.StarterData[pikachu].CandyCount != 40 {
++		t.Error("omitted starter species dropped")
++	}
++}
++
++// Merely-seen masked species (no banked catch) get NO glimpse shadow: fully zeroed.
++func TestGlimpseServeSeenOnlyStaysHidden(t *testing.T) {
++	glimpseOn = true
++	defer func() { glimpseOn = false }()
++
++	stored := bankedSave()
++	stored.DexData[meowth] = defs.DexEntry{SeenAttr: "9", CaughtAttr: "0", SeenCount: 2, Ivs: []int{0, 0, 0, 0, 0, 0}}
++	store := &glimpseMockStore{whitelist: map[int]int64{}}
++	served := GlimpseServe(store, nil, stored)
++
++	if got := attrString(t, served.DexData[meowth].SeenAttr); got != "0" {
++		t.Errorf("seen-only species leaked a shadow: seenAttr %q", got)
++	}
++}
++
++// Attr values may arrive as float64 (JSON numbers) or strings; both must OR correctly.
++func TestGlimpseAttrCoercion(t *testing.T) {
++	if got := orAttrString("", "3"); got != "3" {
++		t.Errorf("empty-string attr: %q", got)
++	}
++	if got := attrString(t, orAttr(float64(6), "9")); got != "15" {
++		t.Errorf("mixed-type or: %q", got)
++	}
++	if got := attrString(t, orAttr(nil, nil)); got != "0" {
++		t.Errorf("nil or: %q", got)
++	}
++}
+diff --git a/api/savedata/system.go b/api/savedata/system.go
+index 7d42bf7..0dd6881 100644
+--- a/api/savedata/system.go
++++ b/api/savedata/system.go
+@@ -62,6 +62,11 @@ type UpdateSystemStore interface {
+ 	UpdateAccountStats(uuid []byte, stats defs.GameStats, voucherCounts map[string]int) error
+ 	StoreSystemSaveDataS3(uuid []byte, data defs.SystemSaveData) error
+ 	StoreSystemSaveData(uuid []byte, data defs.SystemSaveData) error
++	// cobblemon-server glimpse patch: the merge-on-write needs the true stored blob
++	// and the whitelist (see glimpse.go).
++	GetSystemSaveFromS3(uuid []byte) (defs.SystemSaveData, error)
++	ReadSystemSaveData(uuid []byte) (defs.SystemSaveData, error)
++	GlimpseStore
+ }
+ 
+ func UpdateSystem[T UpdateSystemStore](store T, uuid []byte, data defs.SystemSaveData) error {
+@@ -69,7 +74,16 @@ func UpdateSystem[T UpdateSystemStore](store T, uuid []byte, data defs.SystemSav
+ 		return fmt.Errorf("invalid system data")
+ 	}
+ 
+-	err := store.UpdateAccountStats(uuid, data.GameStats, data.VoucherCounts)
++	// cobblemon-server glimpse patch (§2.49): merge a filtered-base save with the banked
++	// entries it couldn't see, and strip the serve marker — ALWAYS, or a later
++	// ValidMigrators comparison against a marker-bearing stored save would reject
++	// every honest client.
++	data, err := glimpseAbsorb(store, uuid, data)
++	if err != nil {
++		return err
++	}
++
++	err = store.UpdateAccountStats(uuid, data.GameStats, data.VoucherCounts)
+ 	if err != nil {
+ 		return fmt.Errorf("failed to update account stats: %s", err)
+ 	}
+diff --git a/db/db.go b/db/db.go
+index 20b4393..d923711 100644
+--- a/db/db.go
++++ b/db/db.go
+@@ -98,5 +98,19 @@ func Init(username, password, protocol, address, database string) error {
+ 		return err
+ 	}
+ 
++	// cobblemon-server glimpse patch (§2.49): dex-locked dreams whitelist. The MC bridge
++	// INSERT IGNOREs each linked player's server-dex CAUGHT species (national dex
++	// numbers); the glimpse filter/merge in api/savedata reads it. Also created by
++	// setup-vm.sh (create-before-grant on a fresh VM); same DDL in both places.
++	_, err = handle.Exec(`CREATE TABLE IF NOT EXISTS bridgeDexWhitelist (
++		uuid BINARY(16) NOT NULL,
++		speciesId INT NOT NULL,
++		createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
++		PRIMARY KEY (uuid, speciesId)
++	)`)
++	if err != nil {
++		return err
++	}
++
+ 	return nil
+ }
+diff --git a/db/savedata.go b/db/savedata.go
+index e74186d..69f3dd7 100644
+--- a/db/savedata.go
++++ b/db/savedata.go
+@@ -257,3 +257,25 @@ func (s *store) FetchBridgeRunArming(uuid []byte) (int, error) {
+ 	}
+ 	return credits, nil
+ }
++
++// cobblemon-server glimpse patch (§2.49): the account's activated species — national dex
++// number -> whitelist row creation time (unix seconds). createdAt reconstructs the
++// serve-time mask on merge (the MC bridge only ever INSERT IGNOREs, so it is stable).
++func (s *store) ReadBridgeDexWhitelist(uuid []byte) (map[int]int64, error) {
++	rows, err := handle.Query("SELECT speciesId, UNIX_TIMESTAMP(createdAt) FROM bridgeDexWhitelist WHERE uuid = ?", uuid)
++	if err != nil {
++		return nil, err
++	}
++	defer rows.Close()
++
++	out := make(map[int]int64)
++	for rows.Next() {
++		var id int
++		var createdAt int64
++		if err := rows.Scan(&id, &createdAt); err != nil {
++			return nil, err
++		}
++		out[id] = createdAt
++	}
++	return out, rows.Err()
++}

@@ -73,6 +73,15 @@ custom-mods/*/run/
 .DS_Store
 Thumbs.db
 
+# Trainer skin downloads awaiting validation (ops/skin-staging/README.md).
+# Ignore everything in the folder except its README: a browser saving a skin sometimes drops
+# the extension entirely, and an *.png rule lets those files through into the repo.
+ops/skin-staging/*
+!ops/skin-staging/README.md
+
+# Generated throwaway smoke-test datapack (ops/gen_roguelite_smoketest.py) — never promoted
+ops/roguelite-smoketest-pack/
+
 # Editor / tool scratch artifacts (a stray .Rhistory and a shell-mishap file
 # both made it into git before these were ignored)
 .Rhistory

@@ -28,8 +28,11 @@ if [[ $WHAT == all || $WHAT == server ]]; then
     # token-login/pre-check endpoints + §2.46 walled register + §2.49 whitelist
     # glimpse (dex-locked dreams). Applied in sorted filename order — each
     # patch is generated on top of the previous one, so the order is
-    # load-bearing. Restore-then-apply keeps this idempotent.
+    # load-bearing. Restore-then-apply keeps this idempotent; the clean removes
+    # files a previous apply CREATED (e.g. the glimpse patch's api/savedata/
+    # glimpse*.go), which checkout alone leaves behind to collide on reapply.
     git checkout -- .
+    git clean -fdq -- api db defs
     for p in "$SELF_DIR"/patches/rogueserver-*.patch; do
       git apply "$p"
     done

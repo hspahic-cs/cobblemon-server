@@ -1734,7 +1734,12 @@ feature and where the testing budget goes.
 - Regional-form starters activate at **base-species level** — confirmed acceptable.
 - Rollout stays config-gated (`dexLockedDreams`, default off) until the build is verified.
 
-**Built 2026-08-02** (integration verify on dev still pending):
+**Built 2026-08-02, VERIFIED on dev 2026-08-03** — full loop confirmed live: login bulk-push
+(56 species), capture→whitelist within one 10s poll, filtered serve (trios only; the two
+dream-only species vanished), bank preserved through a marked post-save (blob decoded
+server-side: hidden candies/caughtAttr intact, marker stripped), and server-catch activation
+(Ekans reappeared with banked candy and was played). Both gates are ON for the dev stack
+(`dexLockedDreams` in the bridge config, `dexlockeddreams` in rogueserver.env). Build notes:
 - *Bridge feeder* (`dex/DexFeeder` in the bridge mod, gated by `dexLockedDreams` in
   config.json): capture-event push + login snapshot + reconcile sweep of online linked
   players on the poll cadence (covers starter/evolution/hatch/trade without per-event

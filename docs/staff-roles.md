@@ -79,6 +79,39 @@ slots and the like survive.
     | inherit | `permissions group <g> inherit add <parent>` | `… inherit <parent>` |
     | clear | `permissions group <g> clear` | — |
 
+### `/permissions` grammar
+
+The word order **flips depending on the verb**, which is the single easiest thing
+to get wrong here — and a wrong form is quiet, logging `Incorrect argument for
+command` to the console while the caller sees nothing.
+
+**Verb first** for create, delete, and anything read-only:
+
+```
+permissions create group <g>
+permissions delete group <g>
+permissions list groups
+permissions list users
+permissions info group <g>
+permissions info user <name>
+```
+
+**Noun first** for mutating something that already exists:
+
+```
+permissions group <g> add <node>
+permissions group <g> remove <node>
+permissions group <g> clear
+permissions group <g> setprefix <prefix>
+permissions group <g> inherit add <parent>
+permissions user <name> setgroup <g>
+permissions user <name> add <node>
+```
+
+So `permissions list groups` works but `permissions groups` does not, and
+`permissions info group moderator` works but `permissions group moderator info`
+does not.
+
 ### Why groups aren't deployed
 
 `config/neoessentials/permissions.json` looks like config but is state.
@@ -119,9 +152,10 @@ permissions user <name> setgroup default
 Check who is what:
 
 ```
-permissions users
-permissions user <name> info
-permissions groups
+permissions list users
+permissions list groups
+permissions info user <name>
+permissions info group <name>
 ```
 
 !!! warning "Group changes need a relog"

@@ -76,19 +76,16 @@
     "afkSuffix": " &7[AFK]",
 
     "_doc_groupColors": [
-      "Optional: per-group colour overrides for player names in the tablist.",
-      "If a player's group matches a key here, their name in the tablist is prefixed with that colour code.",
-      "Leave empty ({}) to use the default playerFormat only.",
-      "Keys must be the exact group name from permissions.json. The mod group is 'moderator',",
-      "not 'mod' — a 'mod' key silently never matches (same bug chat.json had before 0.33.0).",
-      "'vip' has no matching group yet; it is kept as a placeholder for a future donor rank."
+      "DELIBERATELY EMPTY. Rank colour comes from the group prefix ({prefix} in playerFormat)",
+      "and from chat.json's chat-format — nothing else should be tinted by rank.",
+      "groupColors is applied inside TablistManager.applyPlaceholders(), which also runs over the",
+      "header and footer, so populating it bleeds the rank colour into the rotating stats line at",
+      "the top of the player list. We want a red [Admin] beside the name and in chat, not red",
+      "server stats. The prefix already colours the tag, so this map was redundant anyway.",
+      "If you ever repopulate it, keys must be the exact group name from permissions.json —",
+      "the mod group is 'moderator', not 'mod'; a 'mod' key silently never matches."
     ],
-    "groupColors": {
-      "admin":     "&c",
-      "moderator": "&2",
-      "vip":       "&b",
-      "default":   "&f"
-    },
+    "groupColors": {},
 
     "_doc_layout_examples": [
       "--- Example: Simple static header/footer ---",

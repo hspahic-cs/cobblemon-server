@@ -100,10 +100,10 @@ index 906d38f..173fe79 100644
 +	}{Credits: credits})
 +}
 diff --git a/db/savedata.go b/db/savedata.go
-index a0a03d0..be3e016 100644
+index c3495b0..e74186d 100644
 --- a/db/savedata.go
 +++ b/db/savedata.go
-@@ -235,3 +235,18 @@ func (s *store) DeleteSessionSaveData(uuid []byte, slot int) error {
+@@ -242,3 +242,18 @@ func (s *store) DeleteSessionSaveData(uuid []byte, slot int) error {
  
  	return nil
  }

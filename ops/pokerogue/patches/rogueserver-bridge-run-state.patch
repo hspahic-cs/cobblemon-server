@@ -1,8 +1,8 @@
 diff --git a/db/db.go b/db/db.go
-index 25b0039..ec4cbf8 100644
+index 25b0039..e315338 100644
 --- a/db/db.go
 +++ b/db/db.go
-@@ -60,5 +60,22 @@ func Init(username, password, protocol, address, database string) error {
+@@ -60,5 +60,30 @@ func Init(username, password, protocol, address, database string) error {
  		return err
  	}
  
@@ -16,6 +16,7 @@ index 25b0039..ec4cbf8 100644
 +		gameMode INT NOT NULL DEFAULT 0,
 +		waveIndex INT NOT NULL DEFAULT 0,
 +		leadSpecies INT NOT NULL DEFAULT 0,
++		partySpecies VARCHAR(191) NOT NULL DEFAULT '',
 +		updatedAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 +		PRIMARY KEY (uuid, slot)
 +	)`)
@@ -23,28 +24,49 @@ index 25b0039..ec4cbf8 100644
 +		return err
 +	}
 +
++	// Installs whose bridgeRunState predates partySpecies get the column in place
++	// (MariaDB supports ADD COLUMN IF NOT EXISTS).
++	_, err = handle.Exec(`ALTER TABLE bridgeRunState ADD COLUMN IF NOT EXISTS partySpecies VARCHAR(191) NOT NULL DEFAULT ''`)
++	if err != nil {
++		return err
++	}
++
  	return nil
  }
 diff --git a/db/savedata.go b/db/savedata.go
-index 9226d5e..ad24b2c 100644
+index 9226d5e..c4aebd3 100644
 --- a/db/savedata.go
 +++ b/db/savedata.go
-@@ -168,6 +168,22 @@ func (s *store) StoreSessionSaveData(uuid []byte, data defs.SessionSaveData, slo
+@@ -20,6 +20,8 @@ package db
+ import (
+ 	"bytes"
+ 	"encoding/gob"
++	"strconv"
++	"strings"
+ 
+ 	"github.com/klauspost/compress/zstd"
+ 	"github.com/pagefaultgames/rogueserver/defs"
+@@ -168,6 +170,27 @@ func (s *store) StoreSessionSaveData(uuid []byte, data defs.SessionSaveData, slo
  		return err
  	}
  
 +	// cobblemon-server bridge patch: mirror bridge-relevant fields (see db.Init).
-+	// Party entries are opaque JSON maps (defs.PokemonData is interface{}).
++	// Party entries are opaque JSON maps (defs.PokemonData is interface{});
++	// partySpecies is the whole lineup in order as a CSV of numeric SpeciesIds.
 +	lead := 0
-+	if len(data.Party) > 0 {
-+		if m, ok := data.Party[0].(map[string]interface{}); ok {
++	ids := make([]string, 0, len(data.Party))
++	for _, p := range data.Party {
++		if m, ok := p.(map[string]interface{}); ok {
 +			if v, ok := m["species"].(float64); ok {
-+				lead = int(v)
++				if lead == 0 {
++					lead = int(v)
++				}
++				ids = append(ids, strconv.Itoa(int(v)))
 +			}
 +		}
 +	}
-+	_, err = handle.Exec("REPLACE INTO bridgeRunState (uuid, slot, seed, gameMode, waveIndex, leadSpecies) VALUES (?, ?, ?, ?, ?, ?)",
-+		uuid, slot, data.Seed, int(data.GameMode), data.WaveIndex, lead)
++	_, err = handle.Exec("REPLACE INTO bridgeRunState (uuid, slot, seed, gameMode, waveIndex, leadSpecies, partySpecies) VALUES (?, ?, ?, ?, ?, ?, ?)",
++		uuid, slot, data.Seed, int(data.GameMode), data.WaveIndex, lead, strings.Join(ids, ","))
 +	if err != nil {
 +		return err
 +	}
@@ -52,7 +74,7 @@ index 9226d5e..ad24b2c 100644
  	return nil
  }
  
-@@ -177,5 +193,12 @@ func (s *store) DeleteSessionSaveData(uuid []byte, slot int) error {
+@@ -177,5 +200,12 @@ func (s *store) DeleteSessionSaveData(uuid []byte, slot int) error {
  		return err
  	}
  

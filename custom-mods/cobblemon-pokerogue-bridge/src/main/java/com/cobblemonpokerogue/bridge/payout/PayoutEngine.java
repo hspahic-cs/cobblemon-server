@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * §2.45's repeatable payout: pokemon-crate keys by deepest CLASSIC wave. On run end the
  * deepest {@code payoutBands} threshold reached pays its key count — the HIGHEST band only,
- * never cumulative — as a pending {@code gacha grant} claimed via {@code /pokerogue claim}
+ * never cumulative — as a pending {@code gacha grant} claimed via {@code /dream claim}
  * (the shrine flow; nothing is auto-mailed). Non-classic modes are free practice: no payout,
  * matching the rogueserver gate that only charges classic.
  *

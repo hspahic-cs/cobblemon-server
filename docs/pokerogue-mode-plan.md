@@ -1676,6 +1676,63 @@ manual-login practice players).
 - *Public exposure.* Router forwards and the public hostname are operator actions, Discord-only,
   never committed.
 
+### 2.48 The command is `/dream`, ruled 2026-08-02
+
+The bridge command tree is registered as **`/dream`** (enter, password, claim, unlink, link),
+not `/pokerogue` — the verb should sell the fiction, not name the upstream project. Same day,
+the presentation got its palette: the tab-list 💤+wave suffix renders **blue**, and the private
+wake-up moment (title, subtitle, chat line) is **blue for an ordinary wake, gold for a victory
+wake**. Earlier sections that say `/pokerogue <verb>` mean today's `/dream <verb>`; they are
+left as written because this is a decision record.
+
+Amended same day: **bare `/dream` IS the enter verb** — one word, one door. The §2.47 routing
+(resume / armed credit / charge-and-arm) hangs off the bare command; `enter` stays as a legacy
+alias and the old status line moved to `/dream status`. And because a bare word can now cost
+money: the charge path stops at a **confirmation prompt** ("Beginning a NEW dream costs N.
+Ready?" + a clickable `[ Begin the dream ]` running `/dream confirm`, 60-second one-shot
+window) — the free resume/armed-credit paths never prompt, and nothing is charged until
+confirm re-runs the routing and reaches the charge path again.
+
+### 2.49 Dex-locked dreams and the glimpse system, scoped 2026-08-03
+
+**The tether.** The hosted minigame risks out-competing the server it serves. The chosen
+mechanical answer: **which species you may START a dream with comes from your server Pokédex.**
+PokéRogue's own unlock engines — run catches and the egg-gacha voucher loop — keep firing, but
+their unlocks arrive **dormant ("glimpsed")**: recorded, banked, and inert until the species
+registers as caught in your Cobblemon dex, at which point the starter activates *with
+everything the gacha banked on it* (candies, shiny variant, passives). Vouchers become
+reveal-and-escrow currency: the gacha tells you what to hunt; the world is where hunting
+happens. This AMENDS §2.44's save-write ban, narrowly: the save is **read-filtered, never
+mutated** — the player's true blob is always preserved.
+
+**Mechanism.** (1) The bridge feeds each linked account's server-dex caught-species ids into a
+new `bridgeDexWhitelist` table (write grant added alongside bridgeRunArming), on login, on
+capture events, and by periodic reconcile. (2) A rogueserver patch filters the SYSTEM save on
+the way down: starter/dex entries outside `whitelist ∪ activated` are masked out of the served
+copy. (3) **The merge-on-write is the hard part:** the client posts back its (filtered) state,
+so the patch must union the incoming save with the preserved hidden entries or gacha progress
+is silently destroyed. Getting this merge provably lossless is the risk center of the whole
+feature and where the testing budget goes.
+
+**Work breakdown (estimate: 2–3 focused sessions):**
+- Bridge dex feeder (Cobblemon dex API research, capture-event hook, reconcile, table): ~½–1 session.
+- rogueserver glimpse patch (GET filter + lossless POST merge + 5th-patch stack regen +
+  setup-vm grant): ~1 session, dominated by merge testing.
+- Integration verify on dev (hatch non-whitelisted → relog → still banked; server catch →
+  activation ≤1 poll; no clobber from updateAll): ~½ session.
+- Stretch, v2: frontend patch showing glimpsed species greyed in starter select ("seen only in
+  dreams"); without it they simply vanish until activated, which is acceptable for v1.
+
+**Open questions (user decides before build):**
+- Baseline starter set for a fresh account (verify PokéRogue's default unlocks; pick the
+  minimal server-fresh set).
+- Grandfathering: existing accounts' current unlocks — snapshot as activated, or hard-reset to
+  server dex on enable.
+- Does server SEEN count for anything, or CAUGHT only (assumed caught)?
+- Regional-form starters activate at base-species level (2xxx/4xxx/6xxx/8xxx ids) — confirm
+  acceptable.
+- Rollout: config-gated (`dexLockedDreams`, default off) until the answers above land.
+
 ## 3. Preliminary plan
 
 The original three-phase plan described a ten-wave vertical slice, and §2.19's 200-wave decision

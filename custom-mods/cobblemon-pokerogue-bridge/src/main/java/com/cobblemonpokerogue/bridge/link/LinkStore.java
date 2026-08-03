@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <pre>{"links": {"&lt;mc-uuid&gt;": {"username": "&lt;name&gt;", "password": "&lt;generated&gt;"}}}</pre>
  *
  * <p>Since §2.46 accounts are server-minted: the bridge registers the PokeRogue account itself
- * (username = MC name) and stores the generated password here so {@code /pokerogue password}
+ * (username = MC name) and stores the generated password here so {@code /dream password}
  * can whisper it. Legacy entries — a bare string value instead of an object, or an object with
  * no password — remain valid; they are accounts the player registered in the web game and
  * linked before minting existed, and the bridge does not know their password.

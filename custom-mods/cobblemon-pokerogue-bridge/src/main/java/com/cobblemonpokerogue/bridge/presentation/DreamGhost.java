@@ -47,20 +47,20 @@ public final class DreamGhost {
     private static final Logger LOG = LoggerFactory.getLogger("pokerogue-bridge");
     private static final String GHOST_TAG = "pokerogue_dream_ghost";
 
-    private final PresentationConfig config;
+    private final Anchors anchors;
     private final DreamLang lang;
     /** player UUID -> live ghost; only touched on the server main thread (contract guarantee). */
     private final Map<UUID, GhostRef> ghosts = new HashMap<>();
 
-    private record GhostRef(UUID entityUuid, String speciesId) {}
+    private record GhostRef(UUID entityUuid, @Nullable UUID labelUuid, String speciesId) {}
 
-    DreamGhost(PresentationConfig config, DreamLang lang) {
-        this.config = config;
+    DreamGhost(Anchors anchors, DreamLang lang) {
+        this.anchors = anchors;
         this.lang = lang;
     }
 
     private boolean active() {
-        return config.dreamGhostEnabled() && config.shrinePos() != null;
+        return anchors.shrine() != null;
     }
 
     void onRunStartedOrProgress(RunSnapshot s) {
@@ -72,25 +72,54 @@ public final class DreamGhost {
         if (level == null) {
             return;
         }
-        String speciesId = normalizeSpeciesId(s.leadSpecies());
+        Species species = RogueSpecies.resolve(s.leadSpecies());
+        String speciesKey = species == null ? "" : species.getName();
         String nameplate = lang.format("pokerogue.presentation.ghost.nameplate",
                 DreamAnnouncer.playerName(server, s), s.wave());
 
         GhostRef ref = ghosts.get(s.mcPlayerId());
         if (ref != null) {
             Entity existing = level.getEntity(ref.entityUuid());
-            if (existing != null && ref.speciesId().equals(speciesId)) {
-                existing.setCustomName(Component.literal(nameplate));
+            if (existing != null && ref.speciesId().equals(speciesKey)) {
+                placeInRing(level, existing); // shimmer to a new spot in the dream ring
+                Entity label = ref.labelUuid() == null ? null : level.getEntity(ref.labelUuid());
+                if (label != null) {
+                    WallKit.retext(level, label, Component.literal(nameplate));
+                    moveLabelTo(label, existing);
+                }
                 return;
             }
             if (existing != null) {
                 existing.discard(); // lead changed: swap species
             }
+            discardLabel(level, ref);
             ghosts.remove(s.mcPlayerId());
         }
-        PokemonEntity ghost = spawn(level, s, speciesId, nameplate);
+        PokemonEntity ghost = spawn(level, s, species);
         if (ghost != null) {
-            ghosts.put(s.mcPlayerId(), new GhostRef(ghost.getUUID(), speciesId));
+            // The dream label is a free-standing text display kept in lockstep with the ghost
+            // (riding a PokemonEntity fights Cobblemon 1.7's mount logic and desyncs) —
+            // Cobblemon's own overhead label spoiler-guards unseen species, so it is hidden.
+            Entity label = WallKit.spawnText(level, ghost.getX(),
+                    ghost.getY() + ghost.getBbHeight() + 0.4, ghost.getZ(),
+                    0.0f, 1.0f, 0, "center",
+                    Component.literal(nameplate).withStyle(net.minecraft.ChatFormatting.AQUA),
+                    GHOST_TAG);
+            ghosts.put(s.mcPlayerId(), new GhostRef(ghost.getUUID(),
+                    label == null ? null : label.getUUID(), speciesKey));
+        }
+    }
+
+    private static void moveLabelTo(Entity label, Entity ghost) {
+        label.moveTo(ghost.getX(), ghost.getY() + ghost.getBbHeight() + 0.4, ghost.getZ(), 0.0f, 0.0f);
+    }
+
+    private static void discardLabel(ServerLevel level, GhostRef ref) {
+        if (ref.labelUuid() != null) {
+            Entity label = level.getEntity(ref.labelUuid());
+            if (label != null) {
+                label.discard();
+            }
         }
     }
 
@@ -106,15 +135,15 @@ public final class DreamGhost {
             if (existing != null) {
                 existing.discard();
             }
+            discardLabel(level, ref);
         }
     }
 
     @Nullable
-    private PokemonEntity spawn(ServerLevel level, RunSnapshot s, String speciesId, String nameplate) {
-        Species species = PokemonSpecies.getByName(speciesId);
+    private PokemonEntity spawn(ServerLevel level, RunSnapshot s, @Nullable Species species) {
         if (species == null) {
-            LOG.warn("dream ghost: unknown species '{}' (from lead '{}'), skipping ghost for {}",
-                    speciesId, s.leadSpecies(), s.pokerogueUsername());
+            LOG.warn("dream ghost: could not resolve lead species '{}', skipping ghost for {}",
+                    s.leadSpecies(), s.pokerogueUsername());
             return null;
         }
         try {
@@ -122,22 +151,18 @@ public final class DreamGhost {
             pokemon.setSpecies(species);
             PokemonEntity entity = new PokemonEntity(level, pokemon, CobblemonEntities.POKEMON);
             UncatchableProperty.INSTANCE.uncatchable().apply(entity);
+            entity.hideNameRendering(); // "??? Lv. 1" begone — the label rides above instead
             entity.setNoAi(true);
             entity.setInvulnerable(true);
             entity.setSilent(true);
             entity.setPersistenceRequired(); // no natural despawn
             entity.addTag(GHOST_TAG);        // disk-load sweeper marker
-            entity.setCustomName(Component.literal(nameplate));
-            entity.setCustomNameVisible(true);
+            entity.setGlowingTag(true);      // the spectral outline that marks it as a ghost
 
-            // Ring the ghosts around the shrine so simultaneous dreamers do not overlap;
-            // the angle is stable per player, and each ghost faces the shrine.
-            PresentationConfig.ShrinePos shrine = config.shrinePos();
-            double angle = ((s.mcPlayerId().hashCode() & 0xFFFF) / 65536.0) * Math.PI * 2.0;
-            double x = shrine.x() + Math.cos(angle) * 2.0;
-            double z = shrine.z() + Math.sin(angle) * 2.0;
-            float yaw = (float) (Math.toDegrees(angle) - 90.0);
-            entity.moveTo(x, shrine.y(), z, yaw, 0.0f);
+            // Ghosts materialize anywhere inside the shrine's dream ring; every wave update
+            // drifts them to a new spot (see drift), so simultaneous dreamers shimmer around
+            // the area rather than standing in fixed slots.
+            placeInRing(level, entity);
 
             if (!level.addFreshEntity(entity)) {
                 LOG.warn("dream ghost: level rejected the ghost entity for {}", s.pokerogueUsername());
@@ -145,9 +170,23 @@ public final class DreamGhost {
             }
             return entity;
         } catch (RuntimeException e) {
-            LOG.warn("dream ghost: failed to spawn '{}' for {}", speciesId, s.pokerogueUsername(), e);
+            LOG.warn("dream ghost: failed to spawn '{}' for {}", species.getName(), s.pokerogueUsername(), e);
             return null;
         }
+    }
+
+    /** A fresh random spot inside the dream ring (annulus 1.5..radius), facing the shrine heart. */
+    private void placeInRing(ServerLevel level, Entity entity) {
+        PresentationConfig.ShrinePos shrine = anchors.shrine();
+        if (shrine == null) {
+            return;
+        }
+        double angle = level.random.nextDouble() * Math.PI * 2.0;
+        double dist = 1.5 + level.random.nextDouble() * Math.max(0.5, shrine.radius() - 1.5);
+        double x = shrine.x() + Math.cos(angle) * dist;
+        double z = shrine.z() + Math.sin(angle) * dist;
+        float yaw = (float) (Math.toDegrees(Math.atan2(shrine.z() - z, shrine.x() - x)) - 90.0);
+        entity.moveTo(x, shrine.y(), z, yaw, 0.0f);
     }
 
     /** Ghosts are ephemeral: anything tagged that comes back from disk is a leftover — discard it. */
@@ -168,6 +207,7 @@ public final class DreamGhost {
                 if (existing != null) {
                     existing.discard();
                 }
+                discardLabel(level, ref);
             }
         }
         ghosts.clear();
@@ -175,7 +215,7 @@ public final class DreamGhost {
 
     @Nullable
     private ServerLevel shrineLevel(MinecraftServer server) {
-        PresentationConfig.ShrinePos shrine = config.shrinePos();
+        PresentationConfig.ShrinePos shrine = anchors.shrine();
         if (shrine == null) {
             return null;
         }
@@ -190,11 +230,6 @@ public final class DreamGhost {
             LOG.warn("dream ghost: shrine dimension '{}' is not loaded", shrine.dimension());
         }
         return level;
-    }
-
-    /** PokeRogue species names ("Mr. Mime", "PIKACHU") to Cobblemon showdown-style ids ("mrmime"). */
-    private static String normalizeSpeciesId(String leadSpecies) {
-        return leadSpecies == null ? "" : leadSpecies.toLowerCase(Locale.ROOT).replaceAll("[^a-z0-9]", "");
     }
 
     // Kept for API clarity: PokemonProperties is the documented alternate spawn path should the

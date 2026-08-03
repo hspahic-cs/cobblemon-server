@@ -3,6 +3,7 @@ package com.cobblemonpokerogue.bridge.presentation;
 import com.cobblemonpokerogue.bridge.api.Milestone;
 import com.cobblemonpokerogue.bridge.api.RunEndSummary;
 import com.cobblemonpokerogue.bridge.api.RunSnapshot;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -94,20 +95,24 @@ final class DreamAnnouncer {
         broadcast(server, lang.format("pokerogue.presentation.milestone.chat", name, m.display()));
     }
 
-    /** The private wake-up moment for the runner, if they are online. */
+    /** The private wake-up moment for the runner, if they are online. Victory wakes gold, ordinary wakes blue. */
     private void wakeUp(MinecraftServer server, RunSnapshot s, RunEndSummary summary) {
         ServerPlayer player = server.getPlayerList().getPlayer(s.mcPlayerId());
         if (player == null) {
             return;
         }
+        ChatFormatting titleColor = summary.victory() ? ChatFormatting.GOLD : ChatFormatting.BLUE;
+        ChatFormatting subtitleColor = summary.victory() ? ChatFormatting.YELLOW : ChatFormatting.AQUA;
         String subtitle = summary.victory()
                 ? lang.format("pokerogue.presentation.wake.subtitle.victory", summary.finalWave())
                 : lang.format("pokerogue.presentation.wake.subtitle", summary.finalWave());
-        sendTitle(player, lang.format("pokerogue.presentation.wake.title"), subtitle);
+        sendTitle(player,
+                Component.literal(lang.format("pokerogue.presentation.wake.title")).withStyle(titleColor),
+                Component.literal(subtitle).withStyle(subtitleColor));
         String chat = summary.victory()
                 ? lang.format("pokerogue.presentation.wake.chat.victory", summary.finalWave())
                 : lang.format("pokerogue.presentation.wake.chat", summary.finalWave());
-        player.sendSystemMessage(Component.literal(chat));
+        player.sendSystemMessage(Component.literal(chat).withStyle(titleColor));
     }
 
     private static void broadcast(MinecraftServer server, String message) {
@@ -116,14 +121,14 @@ final class DreamAnnouncer {
 
     private static void broadcastTitle(MinecraftServer server, String title, String subtitle) {
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            sendTitle(player, title, subtitle);
+            sendTitle(player, Component.literal(title), Component.literal(subtitle));
         }
     }
 
-    private static void sendTitle(ServerPlayer player, String title, String subtitle) {
+    private static void sendTitle(ServerPlayer player, Component title, Component subtitle) {
         player.connection.send(new ClientboundSetTitlesAnimationPacket(10, 70, 20));
-        player.connection.send(new ClientboundSetTitleTextPacket(Component.literal(title)));
-        player.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal(subtitle)));
+        player.connection.send(new ClientboundSetTitleTextPacket(title));
+        player.connection.send(new ClientboundSetSubtitleTextPacket(subtitle));
     }
 
     /** Prefer the live MC name; fall back to the PokeRogue username for offline runners. */

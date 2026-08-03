@@ -1,25 +1,34 @@
 package com.cobblemonpokerogue.bridge.command;
 
+import com.cobblemonpokerogue.bridge.BridgeConfig;
 import com.cobblemonpokerogue.bridge.BridgeServices;
 import com.cobblemonpokerogue.bridge.CobblemonPokerogueBridge;
 import com.cobblemonpokerogue.bridge.econ.NeoEssentialsEconomy;
+import com.cobblemonpokerogue.bridge.journal.JournalBook;
 import com.cobblemonpokerogue.bridge.link.LinkStore;
 import com.cobblemonpokerogue.bridge.link.RogueserverApi;
 import com.cobblemonpokerogue.bridge.milestones.MilestoneEngine;
+import com.cobblemonpokerogue.bridge.presentation.Anchors;
 import com.cobblemonpokerogue.bridge.presentation.DreamLang;
+import com.cobblemonpokerogue.bridge.presentation.PresentationConfig;
+import com.cobblemonpokerogue.bridge.presentation.PresentationFeatures;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.GameProfileArgument;
 import net.minecraft.network.chat.ClickEvent;
@@ -27,25 +36,35 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 /**
- * /pokerogue                        — clickable play link, linked account, §2.47 state line
- *                                     (dreaming / armed run waiting / next-run cost)
- * /pokerogue enter                  — §2.46 + §2.47: mint the account if needed, then route —
- *                                     active session → free resume link; unspent armed credit
- *                                     → free new-run link; neither → charge, arm, new-run
- *                                     link. The tokenized link carries auto=new|resume
- * /pokerogue password               — whisper the server-generated password (minted accounts only)
- * /pokerogue claim                  — pay out pending milestone rewards (run as the server console)
- * /pokerogue unlink [player]        — self, or any player at permission level 2+
- * /pokerogue link <player> <user>   — STAFF ONLY (perm 2): repair a legacy web-account link
+ * /dream                        — THE verb (§2.46 + §2.47): mint the account if needed, then
+ *                                 route — active session → free resume link; unspent armed
+ *                                 credit → free new-run link; neither → charge, arm, new-run
+ *                                 link. The tokenized link carries auto=new|resume.
+ *                                 (/dream enter is a legacy alias.) A run that would CHARGE
+ *                                 stops at a confirmation prompt first — /dream confirm
+ *                                 (clickable, 60s window) unlocks the charge; the free
+ *                                 resume/armed paths never prompt.
+ * /dream status                 — clickable play link, linked account, §2.47 state line
+ *                                 (dreaming / armed run waiting / next-run cost)
+ * /dream password               — whisper the server-generated password (minted accounts only)
+ * /dream claim                  — pay out pending milestone rewards (run as the server console)
+ * /dream journal                — open the Dream Journal (run history as a written book)
+ * /dream unlink [player]        — self, or any player at permission level 2+
+ * /dream link <player> <user>   — STAFF ONLY (perm 2): repair a legacy web-account link
+ * /dream admin board            — STAFF ONLY (perm 2): hang the leaderboard on the wall face
+ *                                 you are looking at (live rebuild, persisted to config)
+ * /dream admin shrine           — STAFF ONLY (perm 2): plant the shrine anchor at your feet
  *
  * <p>§2.46 killed the public link verb: accounts are server-minted (username = MC name, password
  * generated bridge-side — never typed, because MC logs every issued command to latest.log), so
  * squatting on someone else's username dies by construction. Staff keep a link verb for wiring
  * up legacy accounts that were registered in the web game before minting existed.
  */
-public final class PokerogueCommand {
+public final class DreamCommand {
 
     private static final String USERNAME_PATTERN = "[A-Za-z0-9_]{1,16}";
 
@@ -57,27 +76,49 @@ public final class PokerogueCommand {
     /** Token-mint failure is warned ONCE per JVM (then quietly degraded to the plain link). */
     private static volatile boolean warnedTokenMint = false;
 
-    private PokerogueCommand() {}
+    /**
+     * Pending charge confirmations: player → expiry. Bare /dream stops before money moves and
+     * asks; /dream confirm within the window re-runs the flow with the charge unlocked. The
+     * free paths (resume, banked credit) never prompt. Entries are one-shot.
+     */
+    private static final ConcurrentHashMap<UUID, Long> PENDING_CONFIRM = new ConcurrentHashMap<>();
+    private static final long CONFIRM_WINDOW_MS = 60_000;
+
+    private DreamCommand() {}
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal("pokerogue")
-                .executes(PokerogueCommand::status)
-                .then(Commands.literal("enter")
-                        .executes(PokerogueCommand::enter))
+        dispatcher.register(Commands.literal("dream")
+                .executes(DreamCommand::enter)
+                .then(Commands.literal("enter") // legacy alias for the bare verb
+                        .executes(DreamCommand::enter))
+                .then(Commands.literal("confirm")
+                        .executes(DreamCommand::confirm))
+                .then(Commands.literal("status")
+                        .executes(DreamCommand::status))
                 .then(Commands.literal("password")
-                        .executes(PokerogueCommand::password))
+                        .executes(DreamCommand::password))
                 .then(Commands.literal("claim")
-                        .executes(PokerogueCommand::claim))
+                        .executes(DreamCommand::claim))
+                .then(Commands.literal("journal")
+                        .executes(DreamCommand::journal))
                 .then(Commands.literal("unlink")
-                        .executes(PokerogueCommand::unlinkSelf)
+                        .executes(DreamCommand::unlinkSelf)
                         .then(Commands.argument("player", GameProfileArgument.gameProfile())
                                 .requires(src -> src.hasPermission(2))
-                                .executes(PokerogueCommand::unlinkOther)))
+                                .executes(DreamCommand::unlinkOther)))
+                .then(Commands.literal("admin")
+                        .requires(src -> src.hasPermission(2))
+                        .then(Commands.literal("board")
+                                .executes(DreamCommand::adminBoard))
+                        .then(Commands.literal("journal")
+                                .executes(DreamCommand::adminJournal))
+                        .then(Commands.literal("shrine")
+                                .executes(DreamCommand::adminShrine)))
                 .then(Commands.literal("link")
                         .requires(src -> src.hasPermission(2))
                         .then(Commands.argument("player", GameProfileArgument.gameProfile())
                                 .then(Commands.argument("username", StringArgumentType.word())
-                                        .executes(PokerogueCommand::staffLink)))));
+                                        .executes(DreamCommand::staffLink)))));
     }
 
     private static BridgeServices services(CommandSourceStack src) {
@@ -94,7 +135,7 @@ public final class PokerogueCommand {
         });
     }
 
-    // ---- /pokerogue ----------------------------------------------------------------------
+    // ---- /dream --------------------------------------------------------------------------
 
     private static int status(CommandContext<CommandSourceStack> ctx) {
         BridgeServices s = services(ctx.getSource());
@@ -117,7 +158,7 @@ public final class PokerogueCommand {
                         .withStyle(ChatFormatting.GRAY));
                 int pending = s.milestones().pendingCount(username);
                 if (pending > 0) {
-                    msg.append(Component.literal("\n" + pending + " milestone reward(s) waiting — /pokerogue claim")
+                    msg.append(Component.literal("\n" + pending + " milestone reward(s) waiting — /dream claim")
                             .withStyle(ChatFormatting.YELLOW));
                 }
             }
@@ -126,7 +167,7 @@ public final class PokerogueCommand {
         if (player == null || username == null) return 1;
         // The §2.47 state line needs the DB, so it arrives as a follow-up line off the
         // poller executor (the only thread that may touch the DB). Same routing order as
-        // /pokerogue enter: session → armed credit → pay.
+        // /dream enter: session → armed credit → pay.
         UUID mcId = player.getUUID();
         MinecraftServer server = s.server();
         String finalUsername = username;
@@ -145,6 +186,8 @@ public final class PokerogueCommand {
                             ? lang.format("pokerogue.status.armed_disabled")
                             : credits > 0
                             ? lang.format("pokerogue.status.armed_ready")
+                            : fee > 0 && s.config().weeklyFreeRun && s.freeRuns().availableNow(mcId)
+                            ? lang.format("pokerogue.status.free_ready")
                             : lang.format("pokerogue.status.next_cost", fee);
                 }
             } catch (SQLException e) {
@@ -156,7 +199,7 @@ public final class PokerogueCommand {
         return 1;
     }
 
-    // ---- /pokerogue enter ----------------------------------------------------------------
+    // ---- /dream enter ----------------------------------------------------------------
 
     /**
      * §2.46 entry flow + §2.47 one-verb routing, in order, entirely on the poller executor
@@ -192,6 +235,24 @@ public final class PokerogueCommand {
      * </ol>
      */
     private static int enter(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return enterFlow(ctx, false);
+    }
+
+    /** /dream confirm — one-shot, windowed unlock of the charge path prompted by bare /dream. */
+    private static int confirm(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        Long expiry = PENDING_CONFIRM.remove(player.getUUID());
+        if (expiry == null || expiry < System.currentTimeMillis()) {
+            ctx.getSource().sendSuccess(() -> Component.literal(
+                            DreamLang.shared().format("pokerogue.enter.confirm_expired"))
+                    .withStyle(ChatFormatting.GRAY), false);
+            return 0;
+        }
+        return enterFlow(ctx, true);
+    }
+
+    private static int enterFlow(CommandContext<CommandSourceStack> ctx, boolean confirmed)
+            throws CommandSyntaxException {
         BridgeServices s = services(ctx.getSource());
         if (s == null) return 0;
         ServerPlayer player = ctx.getSource().getPlayerOrException();
@@ -257,7 +318,24 @@ public final class PokerogueCommand {
             // credits < 0 means bridgeRunArming does not exist (unpatched rogueserver) —
             // fall through: chargeAndArm's armRun sees the same missing table and refuses
             // with a refund, which keeps that failure path in exactly one place.
-            if (chargeAndArm(s, lang, server, mcId, accountUuid, fee)) {
+            boolean freeRun = fee > 0 && s.config().weeklyFreeRun && s.freeRuns().availableNow(mcId);
+            if (!confirmed && fee > 0 && !freeRun) {
+                // This is the only path where money would move: stop and ask first.
+                PENDING_CONFIRM.put(mcId, System.currentTimeMillis() + CONFIRM_WINDOW_MS);
+                reply(server, mcId, Component.literal(lang.format("pokerogue.enter.confirm", fee))
+                        .withStyle(ChatFormatting.YELLOW)
+                        .append(Component.literal("\n" + lang.format("pokerogue.enter.confirm_click"))
+                                .withStyle(style -> style
+                                        .withColor(ChatFormatting.GOLD)
+                                        .withUnderlined(true)
+                                        .withClickEvent(new ClickEvent(
+                                                ClickEvent.Action.RUN_COMMAND, "/dream confirm")))));
+                return;
+            }
+            if (chargeAndArm(s, lang, server, mcId, accountUuid, freeRun ? 0 : fee, freeRun)) {
+                if (freeRun) {
+                    s.freeRuns().markUsed(mcId);
+                }
                 sendPlayLink(s, lang, server, mcId, username, "new");
             }
         });
@@ -285,11 +363,11 @@ public final class PokerogueCommand {
         }
         if (existing != null) {
             // A legacy web account with this MC name exists and is not linked to this player.
-            // Never silently bind it — staff verify ownership and repair with /pokerogue link.
+            // Never silently bind it — staff verify ownership and repair with /dream link.
             CobblemonPokerogueBridge.LOGGER.warn(
                     "STAFF: cannot mint a PokeRogue account for MC player {} ({}) — account '{}' already"
                             + " exists (legacy web account?); verify ownership and link with"
-                            + " /pokerogue link {} {}",
+                            + " /dream link {} {}",
                     mcName, mcId, existing, mcName, existing);
             reply(server, mcId, Component.literal(lang.format("pokerogue.enter.account_taken", existing))
                     .withStyle(ChatFormatting.RED));
@@ -301,7 +379,7 @@ public final class PokerogueCommand {
             // Race with the pre-check above — same staff path as an existing legacy account.
             CobblemonPokerogueBridge.LOGGER.warn(
                     "STAFF: registration for MC player {} ({}) hit a duplicate username '{}' — verify"
-                            + " ownership and link with /pokerogue link {} {}",
+                            + " ownership and link with /dream link {} {}",
                     mcName, mcId, mcName, mcName, mcName);
             reply(server, mcId, Component.literal(lang.format("pokerogue.enter.account_taken", mcName))
                     .withStyle(ChatFormatting.RED));
@@ -338,7 +416,7 @@ public final class PokerogueCommand {
      * Returns true when a run is armed (fee charged and kept).
      */
     private static boolean chargeAndArm(BridgeServices s, DreamLang lang, MinecraftServer server,
-                                        UUID mcId, byte[] accountUuid, int fee) {
+                                        UUID mcId, byte[] accountUuid, int fee, boolean freeRun) {
         // Charge LAST-but-one: nothing has been taken until this succeeds, and false means
         // nothing was taken either (verified atomic check-and-deduct).
         if (fee > 0 && !NeoEssentialsEconomy.withdraw(mcId, fee)) {
@@ -360,7 +438,9 @@ public final class PokerogueCommand {
             refundAndReply(server, mcId, fee, lang, "pokerogue.enter.not_enabled");
             return false;
         }
-        reply(server, mcId, Component.literal(lang.format("pokerogue.enter.success", fee))
+        reply(server, mcId, Component.literal(freeRun
+                        ? lang.format("pokerogue.enter.free_used")
+                        : lang.format("pokerogue.enter.success", fee))
                 .withStyle(ChatFormatting.GREEN));
         return true;
     }
@@ -426,7 +506,7 @@ public final class PokerogueCommand {
         return sb.toString();
     }
 
-    // ---- /pokerogue password -------------------------------------------------------------
+    // ---- /dream password -------------------------------------------------------------
 
     private static int password(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         BridgeServices s = services(ctx.getSource());
@@ -448,7 +528,121 @@ public final class PokerogueCommand {
         return 1;
     }
 
-    // ---- /pokerogue link <player> <username> (staff repair, perm 2) ----------------------
+    // ---- /dream admin (perm 2): live anchor placement ------------------------------------
+
+    /** Hangs the leaderboard on the wall face the staff member is looking at, item-frame style. */
+    private static int adminBoard(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return adminWall(ctx, false);
+    }
+
+    /** Same placement flow for the personal journal wall. */
+    private static int adminJournal(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        return adminWall(ctx, true);
+    }
+
+    private static int adminWall(CommandContext<CommandSourceStack> ctx, boolean journalWall)
+            throws CommandSyntaxException {
+        BridgeServices s = services(ctx.getSource());
+        if (s == null) return 0;
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        Anchors anchors = PresentationFeatures.anchors();
+        if (anchors == null) {
+            ctx.getSource().sendFailure(Component.literal("The presentation layer is not initialized."));
+            return 0;
+        }
+        HitResult hit = player.pick(10.0, 1.0f, false);
+        if (hit.getType() != HitResult.Type.BLOCK || !(hit instanceof BlockHitResult blockHit)) {
+            ctx.getSource().sendFailure(Component.literal(
+                    "Look at the wall block you want it hung on (within 10 blocks)."));
+            return 0;
+        }
+        Direction face = blockHit.getDirection();
+        if (face.getAxis().isVertical()) {
+            ctx.getSource().sendFailure(Component.literal(
+                    "Look at a SIDE face of the wall, not its top or bottom."));
+            return 0;
+        }
+        BlockPos pos = blockHit.getBlockPos().relative(face);
+        String dimension = player.level().dimension().location().toString();
+        BridgeConfig.Board prev = journalWall ? s.config().journalWall : s.config().leaderboard;
+        BridgeConfig.Board board = new BridgeConfig.Board();
+        board.dimension = dimension;
+        board.x = pos.getX();
+        board.y = pos.getY();
+        board.z = pos.getZ();
+        board.facing = face.getName();
+        if (prev != null) {
+            board.size = prev.size;
+            board.scale = prev.scale;
+            board.spriteDir = prev.spriteDir;
+        }
+        PresentationConfig.BoardPos anchor = new PresentationConfig.BoardPos(
+                dimension, board.x, board.y, board.z, board.facing, board.size, board.scale,
+                board.spriteDir);
+        String what;
+        if (journalWall) {
+            s.config().journalWall = board;
+            anchors.setJournal(anchor);
+            what = "Journal wall";
+        } else {
+            s.config().leaderboard = board;
+            anchors.setBoard(anchor);
+            what = "Leaderboard";
+        }
+        saveConfig(s);
+        if (!journalWall) {
+            PresentationFeatures.refreshBoard();
+        }
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                        what + " hung at " + pos.getX() + " " + pos.getY() + " " + pos.getZ()
+                                + " facing " + face.getName() + " — rows stack downward. Saved.")
+                .withStyle(ChatFormatting.GREEN), true);
+        return 1;
+    }
+
+    /** Plants the shrine anchor (ghost ring center) at the staff member's feet. */
+    private static int adminShrine(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        BridgeServices s = services(ctx.getSource());
+        if (s == null) return 0;
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        Anchors anchors = PresentationFeatures.anchors();
+        if (anchors == null) {
+            ctx.getSource().sendFailure(Component.literal("The presentation layer is not initialized."));
+            return 0;
+        }
+        BlockPos pos = player.blockPosition();
+        String dimension = player.level().dimension().location().toString();
+        BridgeConfig.Shrine prev = s.config().shrine;
+        BridgeConfig.Shrine shrine = new BridgeConfig.Shrine();
+        shrine.dimension = dimension;
+        shrine.x = pos.getX();
+        shrine.y = pos.getY();
+        shrine.z = pos.getZ();
+        if (prev != null) {
+            shrine.radius = prev.radius;
+        }
+        s.config().shrine = shrine;
+        saveConfig(s);
+        anchors.setShrine(new PresentationConfig.ShrinePos(
+                dimension, pos.getX(), pos.getY(), pos.getZ(), Math.max(2, shrine.radius)));
+        ctx.getSource().sendSuccess(() -> Component.literal(
+                        "Shrine anchored at your feet (" + pos.getX() + " " + pos.getY() + " " + pos.getZ()
+                                + ") — dream ghosts ring this point. Saved.")
+                .withStyle(ChatFormatting.GREEN), true);
+        return 1;
+    }
+
+    private static void saveConfig(BridgeServices s) {
+        try {
+            s.config().save(net.neoforged.fml.loading.FMLPaths.CONFIGDIR.get()
+                    .resolve("cobblemon-pokerogue-bridge").resolve("config.json"));
+        } catch (IOException e) {
+            CobblemonPokerogueBridge.LOGGER.error(
+                    "failed to persist config after /dream admin — the anchor is live but will not survive a restart", e);
+        }
+    }
+
+    // ---- /dream link <player> <username> (staff repair, perm 2) ----------------------
 
     /**
      * Staff-only legacy repair: wires an MC player to a pre-minting web account after staff
@@ -516,7 +710,7 @@ public final class PokerogueCommand {
         return 1;
     }
 
-    // ---- /pokerogue unlink [player] ------------------------------------------------------
+    // ---- /dream unlink [player] ------------------------------------------------------
 
     private static int unlinkSelf(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         BridgeServices s = services(ctx.getSource());
@@ -550,7 +744,39 @@ public final class PokerogueCommand {
         return count;
     }
 
-    // ---- /pokerogue claim ----------------------------------------------------------------
+    // ---- /dream journal ------------------------------------------------------------------
+
+    private static int journal(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        BridgeServices s = services(ctx.getSource());
+        if (s == null) return 0;
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
+        DreamLang lang = DreamLang.shared();
+        String username = s.links().usernameFor(player.getUUID());
+        if (username == null) {
+            ctx.getSource().sendFailure(Component.literal(lang.format("pokerogue.journal.not_linked")));
+            return 0;
+        }
+        var entries = s.journal().entriesFor(username);
+        if (entries.isEmpty()) {
+            ctx.getSource().sendSuccess(() -> Component.literal(lang.format("pokerogue.journal.empty"))
+                    .withStyle(ChatFormatting.GRAY), false);
+            return 1;
+        }
+        long deepest = s.milestones().maxClassicWave(username);
+        for (var e : entries) {
+            deepest = Math.max(deepest, e.wave());
+        }
+        JournalBook.open(player, lang, entries, deepest);
+        // And the sprite view: render this player's history on the journal wall, if one is hung.
+        var wall = PresentationFeatures.journalWall();
+        if (wall != null && wall.show(player, entries)) {
+            ctx.getSource().sendSuccess(() -> Component.literal(lang.format("pokerogue.journalwall.shown"))
+                    .withStyle(ChatFormatting.GRAY), false);
+        }
+        return 1;
+    }
+
+    // ---- /dream claim ----------------------------------------------------------------
 
     private static int claim(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         BridgeServices s = services(ctx.getSource());
@@ -559,7 +785,7 @@ public final class PokerogueCommand {
         String username = s.links().usernameFor(player.getUUID());
         if (username == null) {
             ctx.getSource().sendFailure(Component.literal(
-                    "You have no PokeRogue account yet — /pokerogue enter creates one."));
+                    "You have no PokeRogue account yet — /dream creates one."));
             return 0;
         }
         var claims = s.milestones().takePending(username);

@@ -21,7 +21,7 @@ public final class BridgeConfig {
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().serializeNulls().create();
 
-    /** The public PokeRogue frontend URL players open — the /pokerogue clickable link. */
+    /** The public PokeRogue frontend URL players open — the /dream clickable link. */
     public String url = "http://CHANGE-ME:8000";
     /**
      * rogueserver's HTTP API base, reached directly (not via the nginx frontend proxy) for
@@ -40,11 +40,17 @@ public final class BridgeConfig {
     public int pollSeconds = 10;
     /** Optional shrine anchor for presentation features; null disables it. */
     public Shrine shrine = null;
+    /** Optional leaderboard-wall anchor (floating text display); null disables it. */
+    public Board leaderboard = null;
+    /** Optional journal-wall anchor (/dream journal renders the asker's runs there); null disables it. */
+    public Board journalWall = null;
     /**
-     * /pokerogue enter fee in NeoEssentials currency (plan §2.45 pay-to-dream). 0 makes
+     * /dream enter fee in NeoEssentials currency (plan §2.45 pay-to-dream). 0 makes
      * entry free (still writes the arming credit); the gate itself lives in rogueserver.
      */
     public int entryFee = 5000;
+    /** One unpaid /dream entry per player per ISO week — the newcomer's taste of the mode. */
+    public boolean weeklyFreeRun = true;
     /**
      * Repeatable classic payout: wave threshold -> pokemon-crate key count. Only the DEEPEST
      * band reached pays (not cumulative), via `gacha grant`. Values are §2.45's, marked (tune).
@@ -73,6 +79,29 @@ public final class BridgeConfig {
         public int x;
         public int y;
         public int z;
+        /** Dream ghosts drift anywhere within this many blocks of the anchor. */
+        public int radius = 5;
+    }
+
+    public static final class Board {
+        public String dimension = "minecraft:overworld";
+        /** Anchor BLOCK the top row's frame hangs on; rows stack downward from here. */
+        public int x;
+        public int y;
+        public int z;
+        /** Which way the frames face (the side players view from): north|south|east|west. */
+        public String facing = "south";
+        /** Leaderboard rows shown. */
+        public int size = 10;
+        /** Painting width in blocks (the bubble is half this tall). */
+        public float scale = 3.0f;
+        /** PokéRogue party-icon tree: <spriteDir>/<gen>/<speciesId>.png. */
+        public String spriteDir = "/opt/pokerogue/frontend/images/pokemon/icons";
+    }
+
+    /** Persists the current state — /dream admin anchor updates survive restarts through this. */
+    public void save(Path file) throws IOException {
+        Files.writeString(file, GSON.toJson(this), StandardCharsets.UTF_8);
     }
 
     public static BridgeConfig loadOrCreate(Path file) throws IOException {

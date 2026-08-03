@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * never granted before (per PokeRogue account, persisted in {@code state.json} together with
  * pending unclaimed ids and the last-seen stat values). Granting records a PENDING claim and
  * fires {@code onMilestone}; the reward commands only run when the player runs
- * {@code /pokerogue claim} — rewards are claimed, never auto-mailed (§2.44 immersion ruling:
+ * {@code /dream claim} — rewards are claimed, never auto-mailed (§2.44 immersion ruling:
  * claiming is the shrine moment). Stats already past a threshold at link time grant
  * immediately: they were earned, and the granted-set makes it once-ever.
  *
@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  *       milestones.json can reference it exactly like a real column.</li>
  *   <li>Ad-hoc payout claims ({@link #enqueuePayout}) — repeatable per-run payouts whose defs
  *       are not in milestones.json, persisted whole (display + reward commands) in state.json
- *       and popped by the same {@code /pokerogue claim}.</li>
+ *       and popped by the same {@code /dream claim}.</li>
  * </ul>
  */
 public final class MilestoneEngine {
@@ -149,7 +149,7 @@ public final class MilestoneEngine {
             dirty = true;
             LOGGER.info("milestone '{}' reached by {} (pending claim)", def.id(), link.username());
             RunSnapshot s = activeRun != null ? activeRun
-                    : new RunSnapshot(link.mcId(), link.username(), -1, -1, "", "");
+                    : new RunSnapshot(link.mcId(), link.username(), -1, -1, "", "", "");
             BridgeEventsInternal.fireMilestone(server, s, new Milestone(def.id(), def.display(), def.tier()));
         }
         if (!stats.equals(st.lastStats)) {
@@ -172,7 +172,7 @@ public final class MilestoneEngine {
     }
 
     /**
-     * Enqueues a repeatable ad-hoc claim (§2.45 per-run payout) for {@code /pokerogue claim}.
+     * Enqueues a repeatable ad-hoc claim (§2.45 per-run payout) for {@code /dream claim}.
      * The whole def is persisted in state.json — it does not exist in milestones.json.
      */
     public synchronized void enqueuePayout(String username, MilestoneDef payout) {
@@ -180,6 +180,22 @@ public final class MilestoneEngine {
         st.pendingPayouts.add(payout);
         LOGGER.info("payout '{}' enqueued for {} (pending claim)", payout.id(), username);
         saveState();
+    }
+
+    /** Deepest classic wave ever observed for the account, or -1 if never. */
+    public synchronized long maxClassicWave(String username) {
+        AccountState st = accounts.get(username.toLowerCase(Locale.ROOT));
+        return st == null ? -1 : st.maxClassicWave;
+    }
+
+    /** Top-N accounts by {@code maxClassicWave}, deepest first; keys are lowercased usernames. */
+    public synchronized List<Map.Entry<String, Long>> topClassicWaves(int n) {
+        return accounts.entrySet().stream()
+                .filter(e -> e.getValue().maxClassicWave > 0)
+                .map(e -> Map.entry(e.getKey(), e.getValue().maxClassicWave))
+                .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
+                .limit(Math.max(0, n))
+                .toList();
     }
 
     public synchronized int pendingCount(String username) {

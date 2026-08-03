@@ -43,9 +43,13 @@ public final class PokerogueDb implements AutoCloseable {
     /** One sessionSaveData row header — existence + timestamp is the authoritative lifecycle signal. */
     public record SessionHeader(String usernameLower, int slot, long timestampMs) {}
 
-    /** One bridgeRunState row: live run detail maintained by the patched rogueserver. */
+    /**
+     * One bridgeRunState row: live run detail maintained by the patched rogueserver.
+     * {@code partySpecies} is the lineup in order as a CSV of numeric SpeciesIds, or empty —
+     * including when rogueserver predates the partySpecies patch column.
+     */
     public record RunStateRow(String usernameLower, int slot, String seed, int gameMode,
-                              int waveIndex, int leadSpecies, long updatedAtMs) {}
+                              int waveIndex, int leadSpecies, String partySpecies, long updatedAtMs) {}
 
     private final BridgeConfig.Db cfg;
     private Connection conn;
@@ -145,7 +149,7 @@ public final class PokerogueDb implements AutoCloseable {
             if (isMissingTable(e)) {
                 if (!warnedNoArmingTable) {
                     LOGGER.warn("bridgeRunArming table not found — rogueserver is missing the arming"
-                            + " patch; /pokerogue enter refuses (and charges nothing) until it lands");
+                            + " patch; /dream enter refuses (and charges nothing) until it lands");
                     warnedNoArmingTable = true;
                 }
                 return false;
@@ -162,7 +166,7 @@ public final class PokerogueDb implements AutoCloseable {
     }
 
     /**
-     * Current armed-run credits for the account (for /pokerogue status).
+     * Current armed-run credits for the account (for /dream status).
      *
      * @return the credit count (0 when no row), or -1 when bridgeRunArming does not exist
      *         (unpatched rogueserver — the caller reports the gate as inactive).
@@ -182,7 +186,7 @@ public final class PokerogueDb implements AutoCloseable {
 
     /**
      * True when the account has ANY {@code sessionSaveData} row — the §2.47 routing signal:
-     * a session exists, so {@code /pokerogue enter} resumes it for free instead of arming.
+     * a session exists, so {@code /dream enter} resumes it for free instead of arming.
      *
      * @throws SQLException when the DB is unreachable (caller must refuse and charge nothing).
      */
@@ -270,6 +274,8 @@ public final class PokerogueDb implements AutoCloseable {
     }
 
     private boolean warnedNoBridgeTable = false;
+    /** Cleared (with one warning) when bridgeRunState lacks the partySpecies patch column. */
+    private boolean hasPartyColumn = true;
     private boolean warnedNoCompletionsTable = false;
     private boolean warnedNoArmingTable = false;
 
@@ -282,7 +288,8 @@ public final class PokerogueDb implements AutoCloseable {
     public synchronized List<RunStateRow> fetchRunStates(Collection<String> usernames) throws SQLException {
         if (usernames.isEmpty()) return List.of();
         String sql = "SELECT a.username AS bridge_username, r.slot, r.seed, r.gameMode, r.waveIndex,"
-                + " r.leadSpecies, r.updatedAt FROM bridgeRunState r"
+                + " r.leadSpecies, " + (hasPartyColumn ? "r.partySpecies, " : "") + "r.updatedAt"
+                + " FROM bridgeRunState r"
                 + " JOIN accounts a ON a.uuid = r.uuid WHERE a.username IN (" + placeholders(usernames.size()) + ")";
         try (PreparedStatement ps = connection().prepareStatement(sql)) {
             bind(ps, usernames);
@@ -290,6 +297,7 @@ public final class PokerogueDb implements AutoCloseable {
                 List<RunStateRow> out = new ArrayList<>();
                 while (rs.next()) {
                     Timestamp ts = rs.getTimestamp("updatedAt");
+                    String party = hasPartyColumn ? rs.getString("partySpecies") : "";
                     out.add(new RunStateRow(
                             rs.getString("bridge_username").toLowerCase(Locale.ROOT),
                             rs.getInt("slot"),
@@ -297,6 +305,7 @@ public final class PokerogueDb implements AutoCloseable {
                             rs.getInt("gameMode"),
                             rs.getInt("waveIndex"),
                             rs.getInt("leadSpecies"),
+                            party == null ? "" : party,
                             ts == null ? 0L : ts.getTime()));
                 }
                 return out;
@@ -309,6 +318,13 @@ public final class PokerogueDb implements AutoCloseable {
                     warnedNoBridgeTable = true;
                 }
                 return null;
+            }
+            if (hasPartyColumn && isMissingColumn(e)) {
+                // rogueserver predates the partySpecies column: degrade to lead-only, once.
+                LOGGER.warn("bridgeRunState.partySpecies not found — rogueserver predates the party"
+                        + " patch; team lineups degrade to lead-only until it is promoted");
+                hasPartyColumn = false;
+                return fetchRunStates(usernames);
             }
             throw e;
         }
@@ -345,6 +361,11 @@ public final class PokerogueDb implements AutoCloseable {
     /** MariaDB "table doesn't exist": error 1146 / SQLSTATE 42S02. */
     private static boolean isMissingTable(SQLException e) {
         return e.getErrorCode() == 1146 || "42S02".equals(e.getSQLState());
+    }
+
+    /** MariaDB "unknown column": error 1054 / SQLSTATE 42S22. */
+    private static boolean isMissingColumn(SQLException e) {
+        return e.getErrorCode() == 1054 || "42S22".equals(e.getSQLState());
     }
 
     private static String placeholders(int n) {

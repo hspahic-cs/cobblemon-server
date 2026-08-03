@@ -49,7 +49,7 @@ public final class NeoEssentialsEconomy {
             manager = m;
             return m;
         } catch (ClassNotFoundException e) {
-            warnOnce("NeoEssentials Economy not loaded — /pokerogue enter cannot charge and is disabled");
+            warnOnce("NeoEssentials Economy not loaded — /dream enter cannot charge and is disabled");
             return null;
         } catch (Throwable t) {
             warnOnce("NeoEssentials Economy reflection failed: " + t.getClass().getSimpleName() + ": " + t.getMessage());

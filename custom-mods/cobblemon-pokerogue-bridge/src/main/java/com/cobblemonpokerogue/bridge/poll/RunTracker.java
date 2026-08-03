@@ -62,6 +62,7 @@ public final class RunTracker {
         int wave = -1;
         int maxWave = -1;       // deepest wave ever observed for this run (payout depth, §2.45)
         int leadSpecies = -1;
+        String party = "";      // CSV of numeric SpeciesIds, empty when unknown
         String gameMode = "";
         boolean live;           // onRunStarted fired and no end fired yet
 
@@ -212,12 +213,14 @@ public final class RunTracker {
         t.wave = d.waveIndex();
         if (t.wave > t.maxWave) t.maxWave = t.wave;
         t.leadSpecies = d.leadSpecies();
+        t.party = d.partySpecies() == null ? "" : d.partySpecies();
         t.gameMode = gameModeName(d.gameMode());
     }
 
     private static RunSnapshot snapshot(Tracked t, LinkStore.Entry link) {
         return new RunSnapshot(link.mcId(), link.username(), t.slot, t.wave,
                 t.leadSpecies >= 0 ? String.valueOf(t.leadSpecies) : "",
+                t.party == null ? "" : t.party,
                 t.gameMode == null ? "" : t.gameMode);
     }
 

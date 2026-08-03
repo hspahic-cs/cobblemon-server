@@ -18,25 +18,55 @@ import org.slf4j.LoggerFactory;
 public final class PresentationFeatures {
     private static final Logger LOG = LoggerFactory.getLogger("pokerogue-bridge");
     private static boolean initialized;
+    private static Anchors anchors;
+    private static DreamBoard boardRef;
+    private static JournalWall journalWallRef;
 
     private PresentationFeatures() {}
 
-    public static void init(PresentationConfig cfg) {
+    /** The live anchors, for {@code /dream admin}; null before init. */
+    public static Anchors anchors() {
+        return anchors;
+    }
+
+    /** Rebuilds the leaderboard now (server main thread only). */
+    public static void refreshBoard() {
+        if (boardRef != null) {
+            boardRef.refresh();
+        }
+    }
+
+    /** The journal wall renderer; null before init. */
+    public static JournalWall journalWall() {
+        return journalWallRef;
+    }
+
+    public static void init(PresentationConfig cfg,
+                            com.cobblemonpokerogue.bridge.link.LinkStore links,
+                            com.cobblemonpokerogue.bridge.journal.DreamJournal journal,
+                            java.nio.file.Path stateDir) {
         if (initialized) {
             LOG.warn("PresentationFeatures.init called twice; ignoring the second call");
             return;
         }
         initialized = true;
 
+        anchors = new Anchors(cfg.shrinePos(), cfg.boardPos(), cfg.journalPos());
         DreamLang lang = DreamLang.shared();
         DreamAnnouncer announcer = new DreamAnnouncer(lang);
         DreamingPresence presence = new DreamingPresence(lang);
-        DreamGhost ghost = new DreamGhost(cfg, lang);
+        DreamGhost ghost = new DreamGhost(anchors, lang);
+        DreamBoard board = new DreamBoard(anchors, lang, journal, links, stateDir);
+        boardRef = board;
+        JournalWall wall = new JournalWall(anchors, lang, stateDir);
+        journalWallRef = wall;
 
         NeoForge.EVENT_BUS.register(presence);
         // Always registered: its disk-load sweeper must clean up leftover ghosts even when the
         // feature is currently disabled; spawning itself is gated inside DreamGhost.
         NeoForge.EVENT_BUS.register(ghost);
+        NeoForge.EVENT_BUS.register(board); // same rule: its sweeper always runs
+        NeoForge.EVENT_BUS.register(wall);  // and again
 
         BridgeEvents.register(new RunEventListener() {
             @Override
@@ -65,6 +95,7 @@ public final class PresentationFeatures {
                 announcer.onRunEnded(s, summary);
                 presence.onRunEnded(s);
                 ghost.onRunEnded(s, summary);
+                board.refresh(); // run end is when maxClassicWave can move
             }
 
             @Override
@@ -73,7 +104,8 @@ public final class PresentationFeatures {
             }
         });
 
-        LOG.info("PokeRogue presentation layer initialised (dream ghost: {})",
-                cfg.dreamGhostEnabled() && cfg.shrinePos() != null ? "on" : "off");
+        LOG.info("PokeRogue presentation layer initialised (dream ghost: {}, leaderboard: {})",
+                cfg.dreamGhostEnabled() && cfg.shrinePos() != null ? "on" : "off",
+                cfg.boardPos() != null ? "on" : "off");
     }
 }

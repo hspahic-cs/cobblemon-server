@@ -9,13 +9,13 @@ What it does:
 - `/pokerogue` — clickable link to the web game, linked-account line, and the §2.47 state
   line: dreaming (a session exists — `enter` resumes it), an armed run awaits (`enter`
   starts it free), or the next-run cost.
-- `/pokerogue enter` — the one session verb (§2.46 entry + §2.47 routing), in order:
+- `/dream enter` — the one session verb (§2.46 entry + §2.47 routing), in order:
   1. **Server-minted account** (first entry only): the bridge registers the PokéRogue account
      itself — username = MC name (every MC name is a legal rogueserver username, verified
      against `^\w{1,16}$`), password generated bridge-side (never typed; MC logs commands to
      latest.log) and stored in `accounts.json`. If an account with the MC name already exists
      (a legacy web account), the bridge refuses rather than silently binding it — staff verify
-     ownership and repair with `/pokerogue link`.
+     ownership and repair with `/dream link`.
   2. **§2.47 routing** (DB reads only; if the DB is unreachable here the command refuses and
      nothing is charged): an **active session** (any `sessionSaveData` row) → free resume
      link, no charge, no arm; **no session but an unspent armed credit** (paid earlier,
@@ -32,16 +32,16 @@ What it does:
      TitlePhase (`resume` = Continue, `new` = Classic). Any mint failure degrades to the
      plain URL plus a manual-login hint, with **no** `auto` param (a manual login cannot
      guarantee the right account); whatever charge state the flow reached stays.
-- `/pokerogue password` — whispers the stored generated password (server-minted accounts
+- `/dream password` — whispers the stored generated password (server-minted accounts
   only; legacy links predate minting and the bridge never knew their password).
-- `/pokerogue unlink [player]` — self, or any player at permission level 2+.
-- `/pokerogue link <player> <username>` — **staff only** (permission level 2): repairs a
+- `/dream unlink [player]` — self, or any player at permission level 2+.
+- `/dream link <player> <username>` — **staff only** (permission level 2): repairs a
   legacy web-account link after verifying ownership out of band. There is no public link verb
   anymore (§2.46 — squatting dies by construction).
-- `/pokerogue claim` — pays out pending milestone rewards as server-console commands.
+- `/dream claim` — pays out pending milestone rewards as server-console commands.
 - Repeatable classic payout: on classic run end, the deepest `payoutBands` wave band reached
   (default 50/100/150/200 → 1/2/3/4 pokemon-crate keys; highest band only, not cumulative)
-  is enqueued as a `gacha grant` pending claim for `/pokerogue claim`.
+  is enqueued as a `gacha grant` pending claim for `/dream claim`.
 - A single background thread polls the DB read-only (`accountStats`, `sessionSaveData`
   headers, `activeClientSessions`-adjacent tables, and the `bridgeRunState` side table our
   patched rogueserver maintains) and fires run lifecycle events

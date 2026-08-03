@@ -1,6 +1,6 @@
 [
   {
-    "_": "Entries with only a '_' key are comments and skipped. 'stat' names any numeric accountStats column (sessionsWon, pokemonCaught, highestEndlessWave, ...) OR the bridge-side virtual stat 'maxClassicWave': the deepest CLASSIC wave the bridge has ever observed for the account (accountStats has no classic-depth column; the bridge tracks it from run saves and persists it in state.json). Milestones are one-time per account; rewards run as the server console on /pokerogue claim."
+    "_": "Entries with only a '_' key are comments and skipped. 'stat' names any numeric accountStats column (sessionsWon, pokemonCaught, highestEndlessWave, ...) OR the bridge-side virtual stat 'maxClassicWave': the deepest CLASSIC wave the bridge has ever observed for the account (accountStats has no classic-depth column; the bridge tracks it from run saves and persists it in state.json). Milestones are one-time per account; rewards run as the server console on /dream claim."
   },
   {
     "id": "placeholder_first_clear",

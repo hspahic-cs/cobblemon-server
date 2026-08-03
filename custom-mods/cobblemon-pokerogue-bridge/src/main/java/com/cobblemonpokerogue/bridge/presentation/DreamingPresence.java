@@ -51,7 +51,7 @@ public final class DreamingPresence {
         Component base = event.getDisplayName() != null ? event.getDisplayName() : event.getEntity().getName();
         event.setDisplayName(base.copy()
                 .append(Component.literal(lang.format("pokerogue.presentation.tab.suffix", wave))
-                        .withStyle(net.minecraft.ChatFormatting.GRAY)));
+                        .withStyle(net.minecraft.ChatFormatting.BLUE)));
     }
 
     @SubscribeEvent

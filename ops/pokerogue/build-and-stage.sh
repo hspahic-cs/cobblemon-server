@@ -79,6 +79,11 @@ if [[ $WHAT == all || $WHAT == frontend ]]; then
     # load-bearing. Restore-then-apply, still ahead of the reskin.
     git checkout -- src/phases/post-game-over-phase.ts
     git apply "$SELF_DIR/patches/pokerogue-wake-on-run-end.patch"
+    # §2.49 v2 glimpse shadows: species the glimpse filter serves as seen-only
+    # (banked dream catches) always show greyed in starter select. Touches only
+    # starter-select-ui-handler.ts — independent of the other patches' files.
+    git checkout -- src/ui/handlers/starter-select-ui-handler.ts
+    git apply "$SELF_DIR/patches/pokerogue-glimpse-shadows.patch"
     # Server reskin (title/splashes/trainer names) — restore-then-merge, same
     # idempotence contract as the cookie patch. Overlays: ops/pokerogue/reskin/.
     python3 "$SELF_DIR/apply-reskin.py" .

@@ -1722,6 +1722,16 @@ feature and where the testing budget goes.
   activation ≤1 poll; no clobber from updateAll): ~½ session.
 - Stretch, v2: frontend patch showing glimpsed species greyed in starter select ("seen only in
   dreams"); without it they simply vanish until activated, which is acceptable for v1.
+  **SHIPPED + verified same day** (vanish-until-activated lasted one playtest — the user
+  wanted the hunt signal visible): the glimpse filter serves masked species with BANKED
+  dream-caught progress keeping their seen bits (caught OR'd in, since caught implies seen;
+  merely-seen species stay fully zeroed), and a one-hunk frontend patch
+  (`pokerogue-glimpse-shadows.patch`) makes seen-only species always pass the starter-select
+  caught filter — vanilla's own seenAttr handling then grey-tints them and blocks selection.
+  Same day, line semantics aligned with PokéRogue's own: vanilla marks every pre-evolution
+  caught on catch (starter unlock lands on the line root), so the bridge feeder whitelists
+  the full pre-evolution chain of each server catch — catching an evolved form in the world
+  activates its line's starter, matching the dream side.
 
 **Rulings, 2026-08-03 (all four open questions resolved):**
 - Fresh-account baseline = **the starter Pokémon only** (the standard trios; verify PokéRogue's

@@ -98,10 +98,11 @@ public final class DexFeeder {
         if (svc == null || !svc.config().dexLockedDreams || svc.dexFeeder() == null) return;
         String username = svc.links().usernameFor(event.getPlayer().getUUID());
         if (username == null) return;
-        int dex = event.getPokemon().getSpecies().getNationalPokedexNumber();
-        if (dex <= 0) return;
+        Set<Integer> ids = new HashSet<>();
+        addWithPreEvolutions(ids, event.getPokemon().getSpecies());
+        if (ids.isEmpty()) return;
         String key = username.toLowerCase(Locale.ROOT);
-        svc.poller().submit(() -> svc.dexFeeder().push(key, Set.of(dex)));
+        svc.poller().submit(() -> svc.dexFeeder().push(key, ids));
     }
 
     /** Main thread (NeoForge login event). */
@@ -123,12 +124,24 @@ public final class DexFeeder {
         PokedexManager dex = Cobblemon.INSTANCE.getPlayerDataManager().getPokedexData(player);
         for (Map.Entry<ResourceLocation, SpeciesDexRecord> e : dex.getSpeciesRecords().entrySet()) {
             if (!e.getValue().hasAtLeast(PokedexEntryProgress.CAUGHT)) continue;
-            Species species = PokemonSpecies.getByIdentifier(e.getKey());
-            if (species != null && species.getNationalPokedexNumber() > 0) {
-                out.add(species.getNationalPokedexNumber());
-            }
+            addWithPreEvolutions(out, PokemonSpecies.getByIdentifier(e.getKey()));
         }
         return out;
+    }
+
+    /**
+     * Adds the species' national dex number AND its whole pre-evolution chain. PokeRogue's
+     * own catch semantics mark every pre-evolution caught (the starter unlock lands on the
+     * line root), so a server catch of an evolved form must activate the same line or the
+     * root starter would stay masked. Hop cap guards against cyclic species data.
+     */
+    private static void addWithPreEvolutions(Set<Integer> out, Species species) {
+        Species cur = species;
+        for (int hops = 0; cur != null && hops < 6; hops++) {
+            if (cur.getNationalPokedexNumber() > 0) out.add(cur.getNationalPokedexNumber());
+            var pre = cur.getPreEvolution();
+            cur = pre == null ? null : pre.getSpecies();
+        }
     }
 
     /**

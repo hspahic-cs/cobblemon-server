@@ -25,10 +25,10 @@ index ba3f34c..7a874a3 100644
  		writeJSON(w, r, response)
 diff --git a/api/savedata/glimpse.go b/api/savedata/glimpse.go
 new file mode 100644
-index 0000000..1e13254
+index 0000000..d12d7ba
 --- /dev/null
 +++ b/api/savedata/glimpse.go
-@@ -0,0 +1,326 @@
+@@ -0,0 +1,333 @@
 +/*
 +	cobblemon-server glimpse patch (plan §2.49 dex-locked dreams).
 +
@@ -136,9 +136,16 @@ index 0000000..1e13254
 +	for id, entry := range system.DexData {
 +		if allowed(id) {
 +			dex[id] = entry
-+		} else {
-+			dex[id] = zeroDexEntry()
++			continue
 +		}
++		masked := zeroDexEntry()
++		// v2 glimpse shadows: a masked species with BANKED dream-caught progress keeps
++		// its seen bits (caught implies seen) so the frontend renders it greyed — the
++		// "seen only in dreams" hunt incentive. Merely-seen species stay fully zeroed.
++		if toBigAttr(entry.CaughtAttr).Sign() != 0 {
++			masked.SeenAttr = orAttr(entry.SeenAttr, entry.CaughtAttr)
++		}
++		dex[id] = masked
 +	}
 +	system.DexData = dex
 +
@@ -357,10 +364,10 @@ index 0000000..1e13254
 +}
 diff --git a/api/savedata/glimpse_test.go b/api/savedata/glimpse_test.go
 new file mode 100644
-index 0000000..5046a35
+index 0000000..3fa4f24
 --- /dev/null
 +++ b/api/savedata/glimpse_test.go
-@@ -0,0 +1,320 @@
+@@ -0,0 +1,339 @@
 +/*
 +	cobblemon-server glimpse patch (plan §2.49): merge-loss tests. The lossless
 +	merge-on-write is the risk center of the whole feature — these tests pin the
@@ -469,6 +476,10 @@ index 0000000..5046a35
 +	}
 +	if served.StarterData[pikachu].CandyCount != 0 || served.StarterData[pikachu].EggMoves != 0 {
 +		t.Errorf("masked starter entry not zeroed: %+v", served.StarterData[pikachu])
++	}
++	// ...except its seen bits — the v2 glimpse shadow (banked catch => greyed icon).
++	if got := attrString(t, served.DexData[pikachu].SeenAttr); got != "18446744073709551616" {
++		t.Errorf("banked species lost its glimpse shadow seenAttr: %q", got)
 +	}
 +	// ...but every species key stays present (frontend shape contract).
 +	if len(served.DexData) != len(stored.DexData) || len(served.StarterData) != len(stored.StarterData) {
@@ -669,6 +680,21 @@ index 0000000..5046a35
 +	}
 +}
 +
++// Merely-seen masked species (no banked catch) get NO glimpse shadow: fully zeroed.
++func TestGlimpseServeSeenOnlyStaysHidden(t *testing.T) {
++	glimpseOn = true
++	defer func() { glimpseOn = false }()
++
++	stored := bankedSave()
++	stored.DexData[meowth] = defs.DexEntry{SeenAttr: "9", CaughtAttr: "0", SeenCount: 2, Ivs: []int{0, 0, 0, 0, 0, 0}}
++	store := &glimpseMockStore{whitelist: map[int]int64{}}
++	served := GlimpseServe(store, nil, stored)
++
++	if got := attrString(t, served.DexData[meowth].SeenAttr); got != "0" {
++		t.Errorf("seen-only species leaked a shadow: seenAttr %q", got)
++	}
++}
++
 +// Attr values may arrive as float64 (JSON numbers) or strings; both must OR correctly.
 +func TestGlimpseAttrCoercion(t *testing.T) {
 +	if got := orAttrString("", "3"); got != "3" {
@@ -716,10 +742,10 @@ index 7d42bf7..0dd6881 100644
  		return fmt.Errorf("failed to update account stats: %s", err)
  	}
 diff --git a/db/db.go b/db/db.go
-index 164977e..fc66616 100644
+index 20b4393..d923711 100644
 --- a/db/db.go
 +++ b/db/db.go
-@@ -90,5 +90,19 @@ func Init(username, password, protocol, address, database string) error {
+@@ -98,5 +98,19 @@ func Init(username, password, protocol, address, database string) error {
  		return err
  	}
  
@@ -740,10 +766,10 @@ index 164977e..fc66616 100644
  	return nil
  }
 diff --git a/db/savedata.go b/db/savedata.go
-index be3e016..078c168 100644
+index e74186d..69f3dd7 100644
 --- a/db/savedata.go
 +++ b/db/savedata.go
-@@ -250,3 +250,25 @@ func (s *store) FetchBridgeRunArming(uuid []byte) (int, error) {
+@@ -257,3 +257,25 @@ func (s *store) FetchBridgeRunArming(uuid []byte) (int, error) {
  	}
  	return credits, nil
  }

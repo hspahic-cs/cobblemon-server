@@ -45,6 +45,34 @@ data class RankedConfig(
     /** Wiki page explaining the rental teams. Surfaced as a clickable link via `/ranked guide`
      *  and hinted in the rental menu. Blank hides the guide command/hint. */
     val rentalGuideUrl: String = "https://hspahic-cs.github.io/cobblemon-server/rental-teams.html",
+    /** Master switch for player-drafted custom rentals (`/ranked draft`, "My Drafts" in the
+     *  rental picker). Requires [allowRentalsInRanked] for the picker to be reachable at all.
+     *  See docs/rental-drafts-plan.md. */
+    val allowDraftTeams: Boolean = true,
+    /** Draft slots are PERMANENT purchases sold by the market's Upgrades vendor (which reads
+     *  this ladder through `DraftTeams.slotCost`): unlocking your Nth slot costs entry N, once.
+     *  Past the end of the list the price keeps climbing by the list's final step (so the
+     *  default continues 400k, 500k, … if maxDraftSlots is raised). Deleting a draft empties
+     *  the slot but you keep it. */
+    val draftSlotCosts: List<Int> = listOf(25_000, 50_000, 100_000, 200_000, 300_000),
+    /** Flat fee per edit — but every team's FIRST edit is free (a new team in the slot gets a
+     *  fresh free edit). */
+    val draftEditCost: Int = 10_000,
+    /** Fee `/ranked draft create` charges to place a team into an owned empty slot (first fill
+     *  and refills alike — the slot purchase itself happens at the market). */
+    val draftRefillCost: Int = 10_000,
+    /** Fee for a team SWAP — an edit that keeps fewer than 4 of the draft's 6 species, i.e. a
+     *  new team identity rather than a tune. Swaps are also cooldown-gated
+     *  ([draftIdentityCooldownHours]); together these stop one slot from being re-teamed daily
+     *  instead of buying more slots. */
+    val draftSwapCost: Int = 50_000,
+    /** Hours before a slot can take a NEW team identity again (via swap-edit, or via delete +
+     *  create — deleting leaves the freed slot locked for the remainder). Tune-edits (≥4
+     *  species kept) are exempt. Default one week. */
+    val draftIdentityCooldownHours: Int = 168,
+    /** How many slots a player can ever unlock. The rental picker shows at most 18 (two rows).
+     *  Beyond the 5-entry ladder, slots 6-10 extrapolate to 400k…800k. */
+    val maxDraftSlots: Int = 10,
     val forcesPerDayPerPair: Int = 1,
     /** Off by default in 0.7.8. Decay is paused while we tune; flip to `true` (and ensure
      *  [minimumElo] is the desired decay floor) to re-enable. */

@@ -2,6 +2,7 @@ package com.cobblemonranked.gui
 
 import com.cobblemon.mod.common.pokemon.Pokemon
 import com.cobblemonranked.CobblemonRanked
+import com.cobblemonranked.rental.DraftTeams
 import com.cobblemonranked.rental.RentalTeams
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
@@ -69,6 +70,18 @@ class RentalTeamMenu private constructor(
             display.setItem(slot, if (team != null) teamStack(team) else filler(Items.GRAY_STAINED_GLASS_PANE))
         }
 
+        // "My Drafts" row — the player's custom rentals (docs/rental-drafts-plan.md). Same de-tune,
+        // same click flows; only shown when the feature is on and the player has drafted something.
+        if (CobblemonRanked.config.allowDraftTeams && player != null) {
+            // No section label — the draft rows sit below the built-ins and each stack's
+            // "Your custom draft" archetype line identifies it.
+            val drafts = DraftTeams.list(player.uuid)
+            for (i in DRAFT_SLOTS.indices) {
+                val draft = drafts.getOrNull(i) ?: continue
+                display.setItem(DRAFT_SLOTS[i], teamStack(DraftTeams.asRentalTeam(draft)))
+            }
+        }
+
         display.setItem(4, named(Items.WRITABLE_BOOK,
             Component.literal("Rent a Team").withStyle(Style.EMPTY.withBold(true))).also {
             it.set(DataComponents.LORE, ItemLore(listOf(
@@ -133,9 +146,14 @@ class RentalTeamMenu private constructor(
     override fun clicked(slotId: Int, button: Int, type: ClickType, player: Player) {
         val sp = this.player ?: return
         when (slotId) {
-            in TEAM_SLOT_TO_INDEX -> {
-                val idx = TEAM_SLOT_TO_INDEX.getValue(slotId)
-                val team = RentalTeams.all().getOrNull(idx) ?: return
+            in TEAM_SLOT_TO_INDEX, in DRAFT_SLOT_TO_INDEX -> {
+                val team = if (slotId in TEAM_SLOT_TO_INDEX) {
+                    RentalTeams.all().getOrNull(TEAM_SLOT_TO_INDEX.getValue(slotId)) ?: return
+                } else {
+                    if (!CobblemonRanked.config.allowDraftTeams) return
+                    val draft = DraftTeams.list(sp.uuid).getOrNull(DRAFT_SLOT_TO_INDEX.getValue(slotId)) ?: return
+                    DraftTeams.asRentalTeam(draft)
+                }
                 // Tournament "rent as roster" mode: hand back the team, skip building a battle party.
                 onPickTeam?.let { pick ->
                     navigatingAway = true
@@ -195,6 +213,11 @@ class RentalTeamMenu private constructor(
         private val TEAM_SLOTS = intArrayOf(19, 21, 23, 25)
         private val TEAM_SLOT_TO_INDEX: Map<Int, Int> =
             TEAM_SLOTS.withIndex().associate { (idx, slot) -> slot to idx }
+
+        /** Rows 4-5 — the player's custom drafts, in DraftTeams.list order (cap: 18 shown). */
+        private val DRAFT_SLOTS = (27..44).toList().toIntArray()
+        private val DRAFT_SLOT_TO_INDEX: Map<Int, Int> =
+            DRAFT_SLOTS.withIndex().associate { (idx, slot) -> slot to idx }
 
         internal fun forServer(
             containerId: Int,

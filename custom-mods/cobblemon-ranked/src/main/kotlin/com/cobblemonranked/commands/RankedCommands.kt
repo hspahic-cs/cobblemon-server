@@ -62,6 +62,7 @@ object RankedCommands {
                     }
                 )
                 .then(BpCommands.buildBpCommand())
+                .then(DraftCommands.buildDraftCommand())
                 .then(Commands.literal("challenge")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes { ctx ->
@@ -159,6 +160,19 @@ object RankedCommands {
                                     1
                                 }
                             )
+                        )
+                    )
+                    .then(Commands.literal("grantdraftslot")
+                        .then(Commands.argument("player", EntityArgument.player())
+                            .executes { ctx ->
+                                val target = EntityArgument.getPlayer(ctx, "player")
+                                val owned = com.cobblemonranked.rental.DraftTeams.grantSlot(target.uuid)
+                                ctx.source.sendSystemMessage(Component.literal(
+                                    "[Ranked] ${target.name.string} now owns $owned draft slot(s)."))
+                                target.sendSystemMessage(Component.literal(
+                                    "§a[Ranked] You were granted a draft team slot — you now own §f$owned§a."))
+                                1
+                            }
                         )
                     )
                     .then(Commands.literal("reload")
@@ -450,6 +464,7 @@ object RankedCommands {
             "§7  /ranked challenge <player> §f— challenge a player to a ranked match",
             "§7  /ranked accept §f— accept a pending challenge",
             "§7  /ranked decline §f— decline a pending challenge",
+            "§7  /ranked draft §f— design a custom rental team (paid, de-tuned like rentals)",
             "§7  /ranked stats [player] §f— view ELO, wins, losses",
             "§7  /ranked leaderboard §f— top players by ELO",
             "§7  /queue §f— join open matchmaking",

@@ -1723,15 +1723,16 @@ feature and where the testing budget goes.
 - Stretch, v2: frontend patch showing glimpsed species greyed in starter select ("seen only in
   dreams"); without it they simply vanish until activated, which is acceptable for v1.
 
-**Open questions (user decides before build):**
-- Baseline starter set for a fresh account (verify PokéRogue's default unlocks; pick the
-  minimal server-fresh set).
-- Grandfathering: existing accounts' current unlocks — snapshot as activated, or hard-reset to
-  server dex on enable.
-- Does server SEEN count for anything, or CAUGHT only (assumed caught)?
-- Regional-form starters activate at base-species level (2xxx/4xxx/6xxx/8xxx ids) — confirm
-  acceptable.
-- Rollout: config-gated (`dexLockedDreams`, default off) until the answers above land.
+**Rulings, 2026-08-03 (all four open questions resolved):**
+- Fresh-account baseline = **the starter Pokémon only** (the standard trios; verify PokéRogue's
+  vanilla fresh-account set at build time and trim to exactly that intent).
+- **No grandfathering of dream-side unlocks.** On enable, the whitelist is simply the player's
+  server dex as it stands — species already caught on the server activate immediately (veteran
+  server players start rich, which is the point); dream-only unlocks beyond that go dormant as
+  glimpses.
+- Server **CAUGHT only** activates; seen counts for nothing.
+- Regional-form starters activate at **base-species level** — confirmed acceptable.
+- Rollout stays config-gated (`dexLockedDreams`, default off) until the build is verified.
 
 ## 3. Preliminary plan
 

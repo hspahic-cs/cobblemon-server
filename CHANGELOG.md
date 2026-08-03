@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+### Fixed
+- **Admins got a red "⚑ ADMIN PANEL ⚑" tablist instead of the server stats.**
+  `tablist.json` now pins `"groups": {}`.
+
+  NeoEssentials 1.0.3 added per-group tablist header/footer overrides, and **any
+  key our shipped config doesn't declare gets NeoEssentials' own default injected
+  on load**. Its stock `admin` default is a red-gradient `⚑ ADMIN PANEL ⚑` header
+  plus an `Admin tools: /vanish /kick /ban /mute` footer, which replaced the
+  normal rotating stats line for admins the moment 0.34.1 deployed. Their `mod`
+  key never matched us — our group is named `moderator` — so only admins saw it.
+
+  This is the same class of hazard as Cobblemon's `replaceWithNewVersion`: a mod
+  upgrade introducing config keys that arrive **enabled**. 1.0.3 also injected
+  `independentMode`, `nametagSettings`, `players`, `proxy`, `fakePlayers` and
+  `layout` into `tablist.json`. Only `groups` is pinned here because it's the one
+  causing visible harm; the rest are recorded in the config comment so the next
+  surprise is easier to trace. `chat.json` was checked and had nothing injected.
+
+
 ## [0.35.0] - 2026-08-02
 
 ### Added

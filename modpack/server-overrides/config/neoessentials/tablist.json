@@ -75,6 +75,21 @@
     "_doc_afkSuffix": "The text appended to AFK players' names in the tablist. Supports colour codes with &.",
     "afkSuffix": " &7[AFK]",
 
+    "_doc_groups": [
+      "DELIBERATELY EMPTY — and it must stay declared, not omitted.",
+      "NeoEssentials 1.0.3 added per-group tablist header/footer overrides, and any key this file",
+      "does NOT declare gets NeoEssentials' own default injected on load. Its stock default for",
+      "'admin' is a red-gradient '⚑ ADMIN PANEL ⚑' header plus an 'Admin tools: /vanish /kick",
+      "/ban /mute' footer, which replaced our normal rotating stats line for admins on 0.34.1.",
+      "(Their 'mod' key never matched us — our group is named 'moderator' — so only admins saw it.)",
+      "An empty object means every group shares the header/footer above, which is what we want:",
+      "rank shows up as the [Admin]/[Mod] tag beside the name and in chat, nowhere else.",
+      "GENERAL HAZARD: a NeoEssentials upgrade can introduce new config keys that arrive ENABLED.",
+      "1.0.3 also injected independentMode, nametagSettings, players, proxy, fakePlayers and",
+      "layout here. Pin anything whose default you don't want."
+    ],
+    "groups": {},
+
     "_doc_groupColors": [
       "DELIBERATELY EMPTY. Rank colour comes from the group prefix ({prefix} in playerFormat)",
       "and from chat.json's chat-format — nothing else should be tinted by rank.",

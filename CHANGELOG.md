@@ -12,6 +12,25 @@ root README.
 
 ## [Unreleased]
 
+## [0.35.4] - 2026-08-03
+
+### Added
+- **Draft import via pokepast.es link** — `/ranked draft create <name> <link>`
+  (and `edit`). Minecraft truncates clipboard pastes to one book page, which
+  made the book & quill flow miserable for a full six-mon export; now players
+  upload the Showdown export to pokepast.es and hand the link to the command.
+  The server fetches it async (never blocks the tick loop) and is host-locked
+  to pokepast.es — no other URL is ever requested (the box sits on a home
+  network, so free-form fetches from a player command would be an SSRF hole).
+  The book path remains as a fallback. Draft names with spaces now need quotes
+  in create/edit (`create "Rain Team" <link>`).
+
+### Changed
+- **Upgrades tab: the two upgrade items now sit adjacent** (home slot + draft
+  team slot, row 2 center pair) instead of having a gap between them.
+- **Extra `/sethome` slots are now a flat $10k each** — was $100k for the
+  first and +$50k per slot after.
+
 ## [0.35.3] - 2026-08-03
 
 ### Fixed

@@ -60,6 +60,24 @@ sealed class ItemSpec {
         val level: Int,
         val count: Int = 1,
     ) : ItemSpec()
+
+    /**
+     * Grant a reward by running a server command at pull time (perm level 4, output suppressed),
+     * instead of materialising an ItemStack. Used for rewards that live in another mod and can only
+     * be minted through its command — e.g. BP vouchers (`market tm_voucher grant {player} {count}`),
+     * whose real item is a tagged paper the gacha mod can't build itself.
+     *
+     * [command] supports `{player}` (the puller's name) and `{count}` placeholders. [displayItem]
+     * / [displayName] / [loreLines] drive the odds-screen and roll-reveal icon only (no gameplay
+     * effect) — the actual reward comes from the command.
+     */
+    data class Command(
+        val command: String,
+        val count: Int = 1,
+        val displayItem: String = "minecraft:paper",
+        val displayName: String? = null,
+        val loreLines: List<String> = emptyList(),
+    ) : ItemSpec()
 }
 
 /**

@@ -54,6 +54,13 @@ object RewardGranter {
                         if (labelOverride == null) labelOverride = outcome.announceLabel
                     }
                 }
+                is ItemSpec.Command -> {
+                    // Reward lives in another mod — mint it by running that mod's command. The
+                    // returned stack is display-only (announce/inventory placeholder is skipped;
+                    // the real item is created by the command).
+                    dispatchCommand(player, spec)
+                    stacks.add(commandDisplayStack(spec))
+                }
                 else -> {
                     val stack = materialize(spec) ?: continue
                     if (stack.isEmpty) continue
@@ -105,6 +112,37 @@ object RewardGranter {
         // and `representative()` falls back to a display-only egg via `eggDisplayStack`.
         is ItemSpec.CobbreedingEgg -> eggDisplayStack(spec)
         is ItemSpec.EnchantedBook -> buildEnchantedBook(spec)
+        // Command grants show a display-only icon in odds/reveal; the real reward is minted by the
+        // command in `grant()`.
+        is ItemSpec.Command -> commandDisplayStack(spec)
+    }
+
+    /** Run [spec]'s command server-side (perm 4, output suppressed), substituting placeholders. */
+    private fun dispatchCommand(player: ServerPlayer, spec: ItemSpec.Command) {
+        val cmd = spec.command
+            .replace("{player}", player.gameProfile.name)
+            .replace("{count}", spec.count.toString())
+        val src = player.server.createCommandSourceStack()
+            .withPermission(4)
+            .withSuppressedOutput()
+        try {
+            player.server.commands.performPrefixedCommand(src, cmd)
+        } catch (e: Exception) {
+            CobblemonGacha.logger.error("Command reward failed to run: '{}'", cmd, e)
+        }
+    }
+
+    /** Display-only stack for a [ItemSpec.Command] reward (odds screen + roll reveal). */
+    private fun commandDisplayStack(spec: ItemSpec.Command): ItemStack {
+        val item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(spec.displayItem))
+            .takeIf { it != Items.AIR } ?: Items.PAPER
+        val stack = ItemStack(item, spec.count)
+        spec.displayName?.let { stack.set(DataComponents.CUSTOM_NAME, Component.literal(it)) }
+        if (spec.loreLines.isNotEmpty()) {
+            stack.set(DataComponents.LORE, net.minecraft.world.item.component.ItemLore(
+                spec.loreLines.map { Component.literal(it) }))
+        }
+        return stack
     }
 
     /**
